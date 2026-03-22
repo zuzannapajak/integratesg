@@ -8,7 +8,7 @@ datasource db {
 
 model Profile {
   id        String   @id
-  email     String   @unique
+  email     String
   fullName  String?
   role      UserRole @default(student)
   createdAt DateTime @default(now())

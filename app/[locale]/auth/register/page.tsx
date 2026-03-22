@@ -1,10 +1,11 @@
-import RegisterForm from "../../../../components/auth/register-form";
+import RegisterClientPage from "./register-client-page";
 
-export default function RegisterPage() {
-  return (
-    <main className="mx-auto max-w-md p-8">
-      <h1 className="mb-6 text-2xl font-bold">Register</h1>
-      <RegisterForm />
-    </main>
-  );
+type Props = {
+  params: Promise<{ locale: string }>;
+};
+
+export default async function RegisterPage({ params }: Props) {
+  const { locale } = await params;
+
+  return <RegisterClientPage locale={locale} />;
 }

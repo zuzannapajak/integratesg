@@ -19,22 +19,15 @@ export default async function DashboardPage({ params }: Props) {
     redirect(`/${locale}/auth/login`);
   }
 
-  const email = user.email ?? "brak adresu e-mail";
-
-  const roleFromMetadata = user.user_metadata?.role === "educator" ? "educator" : "student";
-
-  const profile = await prisma.profile.upsert({
+  const profile = await prisma.profile.findUnique({
     where: { id: user.id },
-    update: {
-      email,
-      role: roleFromMetadata,
-    },
-    create: {
-      id: user.id,
-      email,
-      role: roleFromMetadata,
-    },
   });
+
+  if (!profile) {
+    redirect(`/${locale}/auth/complete-profile`);
+  }
+
+  const email = user.email ?? "brak adresu e-mail";
 
   return (
     <main className="p-8 space-y-4">
@@ -48,7 +41,7 @@ export default async function DashboardPage({ params }: Props) {
       {profile.role === "educator" && (
         <div className="rounded border p-4">
           <p className="font-medium">Educator panel</p>
-          <p>Access to scenario creation, analytics, etc.</p>
+          <p>Access to scenarios, analytics, etc.</p>
         </div>
       )}
 
