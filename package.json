@@ -16,9 +16,6 @@
     ],
     "*.{json,md,yml,yaml}": [
       "prettier --write"
-    ],
-    "prisma/*.prisma": [
-      "prettier --write"
     ]
   },
   "dependencies": {
