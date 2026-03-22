@@ -11,6 +11,7 @@ type RegisterFormProps = {
 export default function RegisterForm({ role }: RegisterFormProps) {
   const supabase = createClient();
 
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState<string | null>(null);
@@ -25,6 +26,7 @@ export default function RegisterForm({ role }: RegisterFormProps) {
       options: {
         data: {
           role,
+          full_name: fullName,
         },
       },
     });
@@ -40,6 +42,7 @@ export default function RegisterForm({ role }: RegisterFormProps) {
           userId: data.user.id,
           email: data.user.email,
           role,
+          fullName: fullName || null,
         });
       } catch {
         setMessage("User created, but failed to save profile.");
@@ -53,13 +56,19 @@ export default function RegisterForm({ role }: RegisterFormProps) {
   return (
     <form onSubmit={handleRegister} className="space-y-4">
       <input
+        type="text"
+        placeholder="Full name"
+        className="w-full rounded border p-3"
+        value={fullName}
+        onChange={(e) => { setFullName(e.target.value); }}
+      />
+
+      <input
         type="email"
         placeholder="Email"
         className="w-full rounded border p-3"
         value={email}
-        onChange={(e) => {
-          setEmail(e.target.value);
-        }}
+        onChange={(e) => { setEmail(e.target.value); }}
         required
       />
 
@@ -68,9 +77,7 @@ export default function RegisterForm({ role }: RegisterFormProps) {
         placeholder="Password"
         className="w-full rounded border p-3"
         value={password}
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
+        onChange={(e) => { setPassword(e.target.value); }}
         required
       />
 

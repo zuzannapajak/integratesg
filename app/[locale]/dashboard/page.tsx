@@ -32,26 +32,25 @@ export default async function DashboardPage({ params }: Props) {
   return (
     <main className="p-8 space-y-4">
       <h1 className="text-2xl font-bold">Dashboard</h1>
-
       <p>Zalogowano jako: {email}</p>
+      <p>
+        Name: <strong>{profile.fullName ?? "—"}</strong>
+      </p>{" "}
       <p>
         Rola: <strong>{profile.role}</strong>
       </p>
-
       {profile.role === "educator" && (
         <div className="rounded border p-4">
           <p className="font-medium">Educator panel</p>
           <p>Access to scenarios, analytics, etc.</p>
         </div>
       )}
-
       {profile.role === "student" && (
         <div className="rounded border p-4">
           <p className="font-medium">Student panel</p>
           <p>Access to learning scenarios</p>
         </div>
       )}
-
       <div className="mt-6">
         <LogoutButton />
       </div>

@@ -22,8 +22,7 @@ export default function CompleteProfileForm({ locale, email }: Props) {
     startTransition(async () => {
       try {
         await completeCurrentUserProfile({ role });
-        router.push(`/${locale}/dashboard`);
-        router.refresh();
+        router.replace(`/${locale}/dashboard`);
       } catch {
         setError("Failed to save profile.");
       }
@@ -42,9 +41,7 @@ export default function CompleteProfileForm({ locale, email }: Props) {
           <div className="grid grid-cols-2 gap-3">
             <button
               type="button"
-              onClick={() => {
-                setRole("student");
-              }}
+              onClick={() => { setRole("student"); }}
               className={`rounded border p-4 text-left ${
                 role === "student" ? "border-black bg-gray-50" : ""
               }`}
@@ -55,9 +52,7 @@ export default function CompleteProfileForm({ locale, email }: Props) {
 
             <button
               type="button"
-              onClick={() => {
-                setRole("educator");
-              }}
+              onClick={() => { setRole("educator"); }}
               className={`rounded border p-4 text-left ${
                 role === "educator" ? "border-black bg-gray-50" : ""
               }`}
