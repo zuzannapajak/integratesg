@@ -85,5 +85,6 @@
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.patterns": {
     "package.json": ".eslintrc*, eslint.config.*, .prettierrc*, prettier.config.*, tsconfig.json, tsconfig.*.json, next.config.*, postcss.config.*, tailwind.config.*, .env*"
-  }
+  },
+  "cSpell.words": ["supabase"]
 }
