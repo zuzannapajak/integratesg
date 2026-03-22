@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
-import { createClient } from "../../../../lib/supabase/server";
+import { createClient } from "../../../../../lib/supabase/server";
 import CompleteProfileForm from "./complete-profile-form";
 
 type Props = {
