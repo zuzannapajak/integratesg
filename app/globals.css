@@ -94,28 +94,44 @@ button {
 .mock-hero-bg {
   position: relative;
   overflow: hidden;
-  background: #efefef;
+  background-color: #ffffff; /* Mockup looks white or very light gray */
+  min-height: calc(100vh - 64px); /* Adjust based on navbar height */
 }
 
 .mock-hero-orange {
   position: absolute;
+  top: -20;
   left: 0;
-  top: 0;
-  width: 38%;
-  height: 92%;
-  background: #ef6c23;
-  clip-path: polygon(0 0, 100% 0, 100% 18%, 62% 40%, 100% 100%, 84% 100%, 0 10%);
+  width: 35vw;
+  height: 110%;
+  background: #ec6725;
+  clip-path: url(#orange-rounded);
+  z-index: 1;
 }
 
 .mock-hero-blue {
   position: absolute;
-  right: -10%;
-  bottom: -14%;
-  width: 48%;
-  height: 52%;
-  background: #0d7fc2;
-  border-top-left-radius: 80px;
-  transform: rotate(-14deg);
+  right: -2%; /* Zmniejszyłem nieco, żeby nie "uciekał" za bardzo */
+  bottom: -5%;
+  width: 55%;
+  height: 60%;
+  background: #007bc2;
+  clip-path: url(#blue-trapezoid);
+  z-index: 1;
+}
+
+.image-blob-container {
+  position: relative;
+  z-index: 10;
+  width: 320px;
+  height: 320px;
+  background: white;
+  border-radius: 40% 60% 40% 60% / 60% 40% 60% 40%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
 }
 
 .mock-logo-box {

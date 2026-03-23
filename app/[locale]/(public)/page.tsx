@@ -1,20 +1,33 @@
+import Image from "next/image";
+
 export default function HomePage() {
   return (
-    <main className="mock-page mock-hero-bg">
+    <main className="mock-hero-bg flex items-center justify-center">
+      {/* Background Decorations */}
       <div className="mock-hero-orange" />
       <div className="mock-hero-blue" />
 
-      <div className="relative mx-auto grid min-h-[calc(100vh-78px)] max-w-295 grid-cols-1 items-center gap-10 px-6 py-16 md:grid-cols-[360px_1fr]">
-        <div className="flex items-center justify-center">
-          <div className="h-62.5 w-62.5 rounded-[36px] bg-[#d9e4ec] shadow-sm" />
+      {/* Content Container */}
+      <div className="relative z-20 mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-8 py-20 md:grid-cols-2">
+        {/* Left Side: The Image with Blob Mask */}
+        <div className="flex justify-center md:justify-end">
+          <div className="image-blob-container">
+            <Image
+              src="/images/writer_flat_composition.jpg"
+              alt="Writer Illustration"
+              width={400}
+              height={400}
+              className="h-full w-full object-cover"
+              priority
+            />
+          </div>
         </div>
 
-        <div className="max-w-140">
-          <h1 className="text-[44px] font-bold leading-[1.15] text-[#2f3542] md:text-[58px]">
-            Lorem ipsum dolor
-            <br />
-            sit amet, consecte-
-            <br />
+        {/* Right Side: Typography */}
+        <div className="text-left">
+          <h1 className="max-w-md text-[40px] font-extrabold leading-[1.1] text-[#3a3a3a] md:text-[58px]">
+            Lorem ipsum dolor <br />
+            sit amet, consecte- <br />
             tur adipiscing elit.
           </h1>
         </div>
