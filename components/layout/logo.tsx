@@ -9,7 +9,7 @@ export default function Logo({ locale }: Props) {
   return (
     <Link href={`/${locale}`} className="flex items-center">
       <Image
-        src="/branding/logo.png"
+        src="/branding/logo-white.png"
         alt="IntegratESG"
         width={210}
         height={50}

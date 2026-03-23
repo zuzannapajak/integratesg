@@ -94,44 +94,62 @@ button {
 .mock-hero-bg {
   position: relative;
   overflow: hidden;
-  background-color: #ffffff; /* Mockup looks white or very light gray */
-  min-height: calc(100vh - 64px); /* Adjust based on navbar height */
+  background-color: #ffffff;
+  min-height: 100vh; /* Pełna wysokość */
+  display: flex;
+  align-items: center;
 }
 
 .mock-hero-orange {
   position: absolute;
-  top: -20;
+  top: 0;
   left: 0;
-  width: 35vw;
-  height: 110%;
+  width: 36vw;
+  height: 100%;
   background: #ec6725;
-  clip-path: url(#orange-rounded);
+  clip-path: url(#orange-shape);
   z-index: 1;
 }
 
 .mock-hero-blue {
   position: absolute;
-  right: -2%; /* Zmniejszyłem nieco, żeby nie "uciekał" za bardzo */
-  bottom: -5%;
-  width: 55%;
-  height: 60%;
+  right: 0;
+  bottom: 0;
+  width: 43vw;
+  height: 55vh;
   background: #007bc2;
-  clip-path: url(#blue-trapezoid);
-  z-index: 1;
+  clip-path: url(#blue-shape);
+  z-index: 2;
 }
 
 .image-blob-container {
   position: relative;
-  z-index: 10;
+  z-index: 30;
   width: 320px;
   height: 320px;
   background: white;
-  border-radius: 40% 60% 40% 60% / 60% 40% 60% 40%;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  clip-path: shape(
+    from 73.93% 67.77%,
+    curve to 49.69% 79.81% with 72.23% 94.79%,
+    line to 22.64% 61.84%,
+    curve to 24.34% 34.83% with 0.1% 46.86%,
+    line to 53.43% 20.39%,
+    curve to 75.97% 35.37% with 77.67% 8.35%
+  );
+  transform: translateY(-130px) translateX(40px);
+}
+
+@media (min-width: 768px) {
+  .image-blob-container {
+    width: 400px;
+    height: 400px;
+    transform: translateY(-130px) translateX(40px);
+  }
+}
+
+.image-blob-container img {
+  transform: scale(0.9) translateX(40px) translateY(30px);
+  object-fit: cover;
 }
 
 .mock-logo-box {
