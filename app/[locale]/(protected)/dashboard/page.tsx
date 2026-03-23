@@ -32,12 +32,12 @@ export default async function DashboardPage({ params }: Props) {
   const avatarColor = isEducator ? "bg-[#0b9c72]" : "bg-[#ef6c23]";
 
   return (
-    <main className="mx-auto max-w-[980px] px-6 py-10">
+    <main className="mx-auto max-w-245 px-6 py-10">
       <section className="flex flex-col gap-8 md:flex-row md:items-start">
         <div className="text-[56px] text-[#8d8d8d]">⚙</div>
 
         <div
-          className={`flex h-[176px] w-[176px] items-center justify-center rounded-full ${avatarColor} text-[72px] text-white`}
+          className={`flex h-44 w-44 items-center justify-center rounded-full ${avatarColor} text-[72px] text-white`}
         >
           ○
         </div>
@@ -65,7 +65,7 @@ export default async function DashboardPage({ params }: Props) {
         <section className="mt-10">
           <div className="mb-12 flex items-center gap-3">
             <span className="text-[42px] text-[#0b9c72]">▼</span>
-            <div className="min-w-[360px] border-b-[6px] border-[#0b9c72] pb-1 text-[30px] text-[#31425a]">
+            <div className="min-w-90er-b-[6px] border-[#0b9c72] pb-1 text-[30px] text-[#31425a]">
               Lorem ipsum
             </div>
           </div>
@@ -92,7 +92,7 @@ export default async function DashboardPage({ params }: Props) {
         </section>
       ) : (
         <section className="mt-12">
-          <div className="grid max-w-[520px] grid-cols-2 gap-10">
+          <div className="grid max-w-130 grid-cols-2 gap-10">
             {["Course 1", "Course 2", "Course 3", "Course 4"].map((course) => (
               <div key={course} className="mock-card-student">
                 <div className="mock-card-student-inner">{course}</div>

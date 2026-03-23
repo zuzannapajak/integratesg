@@ -8,6 +8,11 @@ html,
 body {
   padding: 0;
   margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 :root {
@@ -91,11 +96,18 @@ button {
   padding-bottom: 8px;
 }
 
+.hero-title {
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: #3a3a3a;
+}
+
 .mock-hero-bg {
   position: relative;
   overflow: hidden;
   background-color: #ffffff;
-  min-height: 100vh; /* Pełna wysokość */
+  min-height: 100vh;
   display: flex;
   align-items: center;
 }
@@ -136,7 +148,6 @@ button {
     line to 53.43% 20.39%,
     curve to 75.97% 35.37% with 77.67% 8.35%
   );
-  transform: translateY(-130px) translateX(40px);
 }
 
 @media (min-width: 768px) {
