@@ -11,6 +11,7 @@ type Props = {
 export default function PublicNavbar({ locale }: Props) {
   const [isCompact, setIsCompact] = useState(false);
   const tickingRef = useRef(false);
+  const compactRef = useRef(false);
 
   useEffect(() => {
     const onScroll = () => {
@@ -20,7 +21,15 @@ export default function PublicNavbar({ locale }: Props) {
 
       window.requestAnimationFrame(() => {
         const y = window.scrollY;
-        setIsCompact(y > 96);
+
+        if (!compactRef.current && y > 120) {
+          compactRef.current = true;
+          setIsCompact(true);
+        } else if (compactRef.current && y < 28) {
+          compactRef.current = false;
+          setIsCompact(false);
+        }
+
         tickingRef.current = false;
       });
     };

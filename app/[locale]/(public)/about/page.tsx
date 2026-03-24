@@ -60,36 +60,77 @@ export default async function AboutPage({ params }: Props) {
 
   return (
     <main className="bg-[#ececec]">
-      <section className="relative overflow-hidden bg-white px-6 pb-16 pt-18 md:px-10 md:pb-20 md:pt-24 lg:px-14">
-        <div className="absolute inset-x-0 top-0 h-full bg-[radial-gradient(circle_at_top_left,rgba(236,103,37,0.10),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(13,127,194,0.12),transparent_32%)]" />
+      <section className="relative overflow-hidden bg-white px-6 pt-6 md:px-10 md:pt-8 lg:px-14 lg:pt-10">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(236,103,37,0.18),transparent_26%),radial-gradient(circle_at_86%_24%,rgba(13,127,194,0.22),transparent_30%),linear-gradient(180deg,rgba(255,255,255,1)_0%,rgba(249,250,251,0.98)_58%,rgba(255,255,255,0.96)_100%)]" />
 
-        <div className="relative mx-auto max-w-340">
-          <div className="max-w-215">
-            <p className="landing-section-eyebrow">About the project</p>
-
-            <h1 className="mt-4 text-[2.4rem] font-black tracking-[-0.05em] text-[#31425a] sm:text-[3.2rem] lg:text-[4.1rem]">
-              IntegratESG connects vocational education with real-world ESG implementation.
+        <div className="relative mx-auto grid max-w-340 min-h-[calc(100vh-104px)] items-center gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
+          <div className="max-w-215 pb-4 lg:pb-0">
+            <h1 className="mt-4 text-[2.2rem] font-black leading-[0.95] tracking-[-0.05em] text-[#31425a] sm:text-[3rem] lg:text-[3.65rem]">
+              Bridging the gap between vocational education and{" "}
+              <span className="whitespace-nowrap">real-world</span> ESG implementation.
             </h1>
 
-            <p className="mt-6 max-w-[65ch] text-[1.05rem] leading-8 text-[#596170] sm:text-[1.12rem]">
-              The project helps VET providers and business managers build the knowledge, skills, and
-              practical tools needed to integrate Environmental, Social, and Governance principles
-              into business strategies and vocational training.
+            <p className="mt-5 max-w-[62ch] text-[1.02rem] leading-8 text-[#596170] sm:text-[1.08rem]">
+              Our goal is to help VET providers and business managers build the knowledge, skills,
+              and practical tools needed to integrate Environmental, Social, and Governance
+              principles into business strategies and vocational training.
             </p>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <Link href={`/${locale}/auth/register`} className="landing-primary-cta">
                 Join the platform
               </Link>
-              <Link href={`/${locale}`} className="landing-secondary-cta">
-                Back to homepage
-              </Link>
+
+              <a href="#about-content" className="landing-secondary-cta">
+                Read more
+              </a>
+            </div>
+          </div>
+
+          <div className="relative hidden lg:block">
+            <div className="relative mx-auto h-95 w-full max-w-125">
+              <div className="absolute left-0 top-8 h-55 w-55 rounded-4xl bg-[#ec6725]/18 blur-3xl" />
+              <div className="absolute right-0 top-0 h-62.5 w-62.5 rounded-[40px] bg-[#0d7fc2]/24 blur-3xl" />
+
+              <div className="absolute left-6 top-8 w-63.75 rounded-[30px] border border-white/70 bg-white/86 p-6 shadow-[0_18px_48px_rgba(35,45,62,0.08)] backdrop-blur-xl">
+                <p className="inline-flex rounded-full bg-[#0d7fc2]/8 px-3 py-1 text-[0.72rem] font-bold uppercase tracking-[0.16em] text-[#0d7fc2]">
+                  Practical package
+                </p>
+                <h2 className="mt-4 text-[1.28rem] font-semibold tracking-[-0.03em] text-[#31425a]">
+                  Curriculum, eLearning, ePortfolio, and Scenario Simulator.
+                </h2>
+                <p className="mt-4 text-[0.95rem] leading-7 text-[#5e6776]">
+                  A connected learning ecosystem designed to support ESG awareness and applied
+                  competence.
+                </p>
+              </div>
+
+              <div className="absolute right-6 top-18 w-48.75 rounded-[28px] border border-white/70 bg-white/82 p-5 shadow-[0_16px_40px_rgba(35,45,62,0.07)] backdrop-blur-xl">
+                <p className="text-[0.74rem] font-bold uppercase tracking-[0.16em] text-[#ef6c23]">
+                  Open access
+                </p>
+                <p className="mt-3 text-[0.92rem] leading-7 text-[#5e6776]">
+                  Freely available resources designed for adaptation and use.
+                </p>
+              </div>
+
+              <div className="absolute bottom-6 right-10 w-55 rounded-[28px] border border-white/70 bg-white/82 p-5 shadow-[0_16px_40px_rgba(35,45,62,0.07)] backdrop-blur-xl">
+                <p className="text-[0.74rem] font-bold uppercase tracking-[0.16em] text-[#0b9c72]">
+                  EU relevance
+                </p>
+                <p className="mt-3 text-[0.92rem] leading-7 text-[#5e6776]">
+                  Supports Green Deal priorities and innovation in vocational education.
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="relative z-10 px-6 py-10 md:px-10 md:py-14 lg:px-14">
+      <section
+        id="about-content"
+        className="relative z-10 scroll-mt-28 px-6 py-10 md:px-10 md:py-14 lg:px-14"
+      >
         <div className="mx-auto grid max-w-340 gap-8 xl:grid-cols-[1.15fr_0.85fr]">
           <article className="rounded-4xl border border-white/60 bg-white/90 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.07)] backdrop-blur md:p-8 lg:p-10">
             <p className="landing-section-eyebrow">Project</p>

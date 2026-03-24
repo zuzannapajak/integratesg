@@ -13,8 +13,8 @@ export default async function AccessibilityPage({ params }: Props) {
       <section className="relative overflow-hidden bg-white px-6 pb-14 pt-18 md:px-10 md:pb-18 md:pt-24 lg:px-14">
         <div className="absolute inset-x-0 top-0 h-full bg-[radial-gradient(circle_at_top_left,rgba(11,156,114,0.10),transparent_28%),radial-gradient(circle_at_bottom_right,rgba(13,127,194,0.10),transparent_32%)]" />
 
-        <div className="relative mx-auto max-w-[1360px]">
-          <div className="max-w-[860px]">
+        <div className="relative mx-auto max-w-340">
+          <div className="max-w-215">
             <p className="landing-section-eyebrow">Accessibility statement</p>
 
             <h1 className="mt-4 text-[2.4rem] font-black tracking-[-0.05em] text-[#31425a] sm:text-[3.1rem] lg:text-[4rem]">
@@ -40,7 +40,7 @@ export default async function AccessibilityPage({ params }: Props) {
       </section>
 
       <section className="px-6 py-10 md:px-10 md:py-14 lg:px-14">
-        <div className="mx-auto grid max-w-[1360px] gap-8 xl:grid-cols-[0.8fr_1.2fr]">
+        <div className="mx-auto grid max-w-340 gap-8 xl:grid-cols-[0.8fr_1.2fr]">
           <aside className="rounded-[28px] border border-white/60 bg-white/88 p-6 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur md:p-8">
             <p className="landing-section-eyebrow">Accessibility focus</p>
             <h2 className="mt-3 text-[1.5rem] font-semibold tracking-[-0.03em] text-[#31425a]">
@@ -65,7 +65,7 @@ export default async function AccessibilityPage({ params }: Props) {
             </div>
           </aside>
 
-          <div className="rounded-[32px] border border-white/60 bg-white/90 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.07)] backdrop-blur md:p-8 lg:p-10">
+          <div className="rounded-4xl border border-white/60 bg-white/90 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.07)] backdrop-blur md:p-8 lg:p-10">
             <div className="space-y-10">
               <section>
                 <h2 className="text-[1.5rem] font-semibold tracking-[-0.03em] text-[#31425a]">
