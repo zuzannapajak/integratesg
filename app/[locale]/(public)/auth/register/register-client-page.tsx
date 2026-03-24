@@ -2,6 +2,7 @@
 
 import GoogleSignupButton from "@/components/auth/google-signup-button";
 import RegisterForm from "@/components/auth/register-form";
+import { APP_ROLES, SelfServiceRole } from "@/lib/auth/roles";
 import { useState } from "react";
 
 type Props = {
@@ -9,10 +10,10 @@ type Props = {
 };
 
 export default function RegisterClientPage({ locale }: Props) {
-  const [role, setRole] = useState<"student" | "educator">("student");
+  const [role, setRole] = useState<SelfServiceRole>(APP_ROLES.student);
 
   return (
-    <main className="mx-auto max-w-md p-8 space-y-6">
+    <main className="mx-auto max-w-md space-y-6 p-8">
       <h1 className="text-2xl font-bold">Create account</h1>
 
       <div className="space-y-3">
@@ -25,27 +26,27 @@ export default function RegisterClientPage({ locale }: Props) {
           <button
             type="button"
             onClick={() => {
-              setRole("student");
+              setRole(APP_ROLES.student);
             }}
             className={`rounded border p-4 text-left ${
-              role === "student" ? "border-black bg-gray-50" : ""
+              role === APP_ROLES.student ? "border-black bg-gray-50" : ""
             }`}
           >
             <p className="font-medium">Student</p>
-            <p className="text-sm text-gray-600">Access learning scenarios</p>
+            <p className="text-sm text-gray-600">Access case studies and scenarios</p>
           </button>
 
           <button
             type="button"
             onClick={() => {
-              setRole("educator");
+              setRole(APP_ROLES.educator);
             }}
             className={`rounded border p-4 text-left ${
-              role === "educator" ? "border-black bg-gray-50" : ""
+              role === APP_ROLES.educator ? "border-black bg-gray-50" : ""
             }`}
           >
             <p className="font-medium">Educator</p>
-            <p className="text-sm text-gray-600">Create and manage scenarios</p>
+            <p className="text-sm text-gray-600">Access curriculum and teaching resources</p>
           </button>
         </div>
       </div>

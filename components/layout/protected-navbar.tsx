@@ -1,31 +1,25 @@
 import Logo from "@/components/layout/logo";
+import { APP_ROLES, AppRole, ROLE_LABELS, canAccessCurriculum } from "@/lib/auth/roles";
 import Link from "next/link";
 
 type Props = {
   locale: string;
-  role: "educator" | "student";
+  role: AppRole;
   email: string;
 };
 
 export default function ProtectedNavbar({ locale, role }: Props) {
-  const label = role === "educator" ? "Educator1" : "Student1";
-
-  const educatorLinks = [
-    { href: `/${locale}/eportfolio`, label: "Courses" },
-    { href: `/${locale}/dashboard`, label: "Students" },
-    { href: `/${locale}/scenarios`, label: "Work Packages" },
-    { href: `/${locale}/dashboard`, label: "Messages" },
-    { href: `/${locale}/dashboard`, label: "Settings" },
-  ];
-
-  const studentLinks = [
-    { href: `/${locale}/dashboard`, label: "Overview" },
-    { href: `/${locale}/eportfolio`, label: "Courses" },
-    { href: `/${locale}/dashboard`, label: "Messages" },
-    { href: `/${locale}/dashboard`, label: "Settings" },
-  ];
-
-  const links = role === "educator" ? educatorLinks : studentLinks;
+  const links =
+    role === APP_ROLES.admin
+      ? [{ href: `/${locale}/stats`, label: "Statistics" }]
+      : [
+          { href: `/${locale}/dashboard`, label: "Dashboard" },
+          { href: `/${locale}/eportfolio`, label: "ePortfolio" },
+          { href: `/${locale}/scenarios`, label: "Scenarios" },
+          ...(canAccessCurriculum(role)
+            ? [{ href: `/${locale}/curriculum`, label: "Curriculum" }]
+            : []),
+        ];
 
   return (
     <header className="mock-topbar">
@@ -35,8 +29,7 @@ export default function ProtectedNavbar({ locale, role }: Props) {
         <div className="flex items-center gap-8 text-[17px] text-white">
           <nav className="flex items-center gap-8">
             <Link href={`/${locale}`}>About</Link>
-            <Link href={`/${locale}/dashboard`}>Educators</Link>
-            <Link href={`/${locale}/dashboard`}>Students</Link>
+            <Link href={`/${locale}/dashboard`}>Platform</Link>
           </nav>
 
           <div className="h-12 w-px bg-white/70" />
@@ -44,7 +37,7 @@ export default function ProtectedNavbar({ locale, role }: Props) {
           <div className="group relative">
             <button className="flex items-center gap-2 text-white">
               <span>▼</span>
-              <span>{label}</span>
+              <span>{ROLE_LABELS[role]}</span>
               <span className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white text-2xl">
                 ○
               </span>

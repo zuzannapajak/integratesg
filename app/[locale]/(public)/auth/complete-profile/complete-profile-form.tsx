@@ -1,6 +1,7 @@
 "use client";
 
 import { completeCurrentUserProfile } from "@/features/auth/actions";
+import { APP_ROLES, SelfServiceRole, getDefaultProtectedRoute } from "@/lib/auth/roles";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
@@ -11,7 +12,7 @@ type Props = {
 
 export default function CompleteProfileForm({ locale, email }: Props) {
   const router = useRouter();
-  const [role, setRole] = useState<"student" | "educator">("student");
+  const [role, setRole] = useState<SelfServiceRole>(APP_ROLES.student);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -22,7 +23,7 @@ export default function CompleteProfileForm({ locale, email }: Props) {
     startTransition(async () => {
       try {
         await completeCurrentUserProfile({ role });
-        router.replace(`/${locale}/dashboard`);
+        router.replace(getDefaultProtectedRoute(locale, role));
       } catch {
         setError("Failed to save profile.");
       }
@@ -30,7 +31,7 @@ export default function CompleteProfileForm({ locale, email }: Props) {
   };
 
   return (
-    <main className="mx-auto max-w-md p-8 space-y-6">
+    <main className="mx-auto max-w-md space-y-6 p-8">
       <h1 className="text-2xl font-bold">Complete your profile</h1>
       <p className="text-sm text-gray-600">{email}</p>
 
@@ -41,24 +42,28 @@ export default function CompleteProfileForm({ locale, email }: Props) {
           <div className="grid grid-cols-2 gap-3">
             <button
               type="button"
-              onClick={() => { setRole("student"); }}
+              onClick={() => {
+                setRole(APP_ROLES.student);
+              }}
               className={`rounded border p-4 text-left ${
-                role === "student" ? "border-black bg-gray-50" : ""
+                role === APP_ROLES.student ? "border-black bg-gray-50" : ""
               }`}
             >
               <p className="font-medium">Student</p>
-              <p className="text-sm text-gray-600">Access learning scenarios</p>
+              <p className="text-sm text-gray-600">Access case studies and scenarios</p>
             </button>
 
             <button
               type="button"
-              onClick={() => { setRole("educator"); }}
+              onClick={() => {
+                setRole(APP_ROLES.educator);
+              }}
               className={`rounded border p-4 text-left ${
-                role === "educator" ? "border-black bg-gray-50" : ""
+                role === APP_ROLES.educator ? "border-black bg-gray-50" : ""
               }`}
             >
               <p className="font-medium">Educator</p>
-              <p className="text-sm text-gray-600">Create and manage scenarios</p>
+              <p className="text-sm text-gray-600">Access curriculum and teaching resources</p>
             </button>
           </div>
         </div>

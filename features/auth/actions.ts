@@ -1,5 +1,6 @@
 "use server";
 
+import { SelfServiceRole } from "@/lib/auth/roles";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 
@@ -11,7 +12,7 @@ export async function createProfile({
 }: {
   userId: string;
   email: string;
-  role: "student" | "educator";
+  role: SelfServiceRole;
   fullName?: string | null;
 }) {
   await prisma.profile.upsert({
@@ -30,7 +31,7 @@ export async function createProfile({
   });
 }
 
-export async function completeCurrentUserProfile({ role }: { role: "student" | "educator" }) {
+export async function completeCurrentUserProfile({ role }: { role: SelfServiceRole }) {
   const supabase = await createClient();
   const {
     data: { user },
@@ -46,9 +47,9 @@ export async function completeCurrentUserProfile({ role }: { role: "student" | "
   }
 
   const fullName =
-    typeof user.user_metadata?.full_name === "string"
+    typeof user.user_metadata.full_name === "string"
       ? user.user_metadata.full_name
-      : typeof user.user_metadata?.name === "string"
+      : typeof user.user_metadata.name === "string"
         ? user.user_metadata.name
         : null;
 

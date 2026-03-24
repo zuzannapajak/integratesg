@@ -2,14 +2,18 @@
 
 import { createClient } from "@/lib/supabase/client";
 
-export default function SocialLoginButtons() {
+type Props = {
+  locale: string;
+};
+
+export default function SocialLoginButtons({ locale }: Props) {
   const supabase = createClient();
 
   const signInWithGoogle = async () => {
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback?next=/en/dashboard`,
+        redirectTo: `${window.location.origin}/${locale}/auth/callback?next=/${locale}/dashboard`,
       },
     });
   };

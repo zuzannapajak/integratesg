@@ -8,7 +8,7 @@ datasource db {
 
 model Profile {
   id        String   @id
-  email     String
+  email     String   @unique
   fullName  String?
   role      UserRole @default(student)
   createdAt DateTime @default(now())
@@ -18,4 +18,5 @@ model Profile {
 enum UserRole {
   educator
   student
+  admin
 }

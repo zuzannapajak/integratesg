@@ -1,32 +1,25 @@
 import LogoutButton from "@/components/auth/logout-button";
+import { APP_ROLES, AppRole, ROLE_LABELS, canAccessCurriculum } from "@/lib/auth/roles";
 import Link from "next/link";
-
-type Role = "educator" | "student";
 
 type Props = {
   locale: string;
-  role: Role;
+  role: AppRole;
   email: string;
 };
 
 export default function AppSidebar({ locale, role, email }: Props) {
-  const educatorLinks = [
-    { href: `/${locale}/dashboard`, label: "Overview" },
-    { href: `/${locale}/eportfolio`, label: "Courses" },
-    { href: `/${locale}/dashboard`, label: "Students" },
-    { href: `/${locale}/scenarios`, label: "Work Packages" },
-    { href: `/${locale}/dashboard`, label: "Messages" },
-    { href: `/${locale}/dashboard`, label: "Settings" },
-  ];
-
-  const studentLinks = [
-    { href: `/${locale}/dashboard`, label: "Overview" },
-    { href: `/${locale}/eportfolio`, label: "Courses" },
-    { href: `/${locale}/dashboard`, label: "Messages" },
-    { href: `/${locale}/dashboard`, label: "Settings" },
-  ];
-
-  const links = role === "educator" ? educatorLinks : studentLinks;
+  const links =
+    role === APP_ROLES.admin
+      ? [{ href: `/${locale}/stats`, label: "Statistics" }]
+      : [
+          { href: `/${locale}/dashboard`, label: "Overview" },
+          { href: `/${locale}/eportfolio`, label: "ePortfolio" },
+          { href: `/${locale}/scenarios`, label: "Scenarios" },
+          ...(canAccessCurriculum(role)
+            ? [{ href: `/${locale}/curriculum`, label: "Curriculum" }]
+            : []),
+        ];
 
   return (
     <aside className="border-r bg-white px-5 py-6">
@@ -37,7 +30,7 @@ export default function AppSidebar({ locale, role, email }: Props) {
       </div>
 
       <div className="mb-8 rounded-xl border p-4">
-        <p className="text-sm font-semibold capitalize">{role}</p>
+        <p className="text-sm font-semibold">{ROLE_LABELS[role]}</p>
         <p className="mt-1 break-all text-sm text-neutral-500">{email}</p>
       </div>
 

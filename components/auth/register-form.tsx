@@ -1,11 +1,12 @@
 "use client";
 
 import { createProfile } from "@/features/auth/actions";
+import { SelfServiceRole } from "@/lib/auth/roles";
 import { createClient } from "@/lib/supabase/client";
 import { useState } from "react";
 
 type RegisterFormProps = {
-  role: "student" | "educator";
+  role: SelfServiceRole;
 };
 
 export default function RegisterForm({ role }: RegisterFormProps) {
@@ -60,7 +61,9 @@ export default function RegisterForm({ role }: RegisterFormProps) {
         placeholder="Full name"
         className="w-full rounded border p-3"
         value={fullName}
-        onChange={(e) => { setFullName(e.target.value); }}
+        onChange={(e) => {
+          setFullName(e.target.value);
+        }}
       />
 
       <input
@@ -68,7 +71,9 @@ export default function RegisterForm({ role }: RegisterFormProps) {
         placeholder="Email"
         className="w-full rounded border p-3"
         value={email}
-        onChange={(e) => { setEmail(e.target.value); }}
+        onChange={(e) => {
+          setEmail(e.target.value);
+        }}
         required
       />
 
@@ -77,7 +82,9 @@ export default function RegisterForm({ role }: RegisterFormProps) {
         placeholder="Password"
         className="w-full rounded border p-3"
         value={password}
-        onChange={(e) => { setPassword(e.target.value); }}
+        onChange={(e) => {
+          setPassword(e.target.value);
+        }}
         required
       />
 
