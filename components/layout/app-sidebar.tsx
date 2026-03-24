@@ -13,26 +13,34 @@ export default function AppSidebar({ locale, role, email }: Props) {
   const commonLinks = [{ href: `/${locale}/dashboard`, label: "Overview" }];
 
   const educatorLinks = [
-    { href: `/${locale}/eportfolio`, label: "ePortfolio" },
-    { href: `/${locale}/curriculum`, label: "Curriculum" },
+    { href: `/${locale}/eportfolio`, label: "Courses" },
+    { href: `/${locale}/dashboard`, label: "Students" },
+    { href: `/${locale}/scenarios`, label: "Work Packages" },
+    { href: `/${locale}/dashboard`, label: "Messages" },
+    { href: `/${locale}/settings`, label: "Settings" },
   ];
 
   const studentLinks = [
-    { href: `/${locale}/eportfolio`, label: "ePortfolio" },
-    { href: `/${locale}/scenarios`, label: "Scenarios" },
+    { href: `/${locale}/dashboard`, label: "Overview" },
+    { href: `/${locale}/eportfolio`, label: "Courses" },
+    { href: `/${locale}/dashboard`, label: "Messages" },
+    { href: `/${locale}/settings`, label: "Settings" },
   ];
 
-  const adminLinks = [{ href: `/${locale}/admin/stats`, label: "Program statistics" }];
+  const adminLinks = [
+    { href: `/${locale}/admin/stats`, label: "Program statistics" },
+    { href: `/${locale}/settings`, label: "Settings" },
+  ];
 
   const links =
     role === "educator"
       ? [...commonLinks, ...educatorLinks]
       : role === "admin"
         ? [...commonLinks, ...adminLinks]
-        : [...commonLinks, ...studentLinks];
+        : studentLinks;
 
   return (
-    <aside className="hidden w-72 border-r bg-white px-5 py-6 lg:block">
+    <aside className="border-r bg-white px-5 py-6">
       <div className="mb-8">
         <Link href={`/${locale}`} className="text-xl font-semibold">
           IntegratESG
@@ -47,7 +55,7 @@ export default function AppSidebar({ locale, role, email }: Props) {
       <nav className="space-y-2">
         {links.map((link) => (
           <Link
-            key={link.href}
+            key={link.label}
             href={link.href}
             className="block rounded-lg px-3 py-2 text-sm transition hover:bg-neutral-100"
           >

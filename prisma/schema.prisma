@@ -7,12 +7,13 @@ datasource db {
 }
 
 model Profile {
-  id        String   @id
-  email     String   @unique
-  fullName  String?
-  role      UserRole @default(student)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                String   @id
+  email             String   @unique
+  fullName          String?
+  role              UserRole @default(student)
+  preferredLanguage String   @default("en")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
 
 enum UserRole {

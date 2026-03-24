@@ -31,40 +31,28 @@ export default async function AdminStatsPage({ params }: Props) {
   }
 
   const totalProfiles = await prisma.profile.count();
-  const totalStudents = await prisma.profile.count({
-    where: { role: "student" },
-  });
-  const totalEducators = await prisma.profile.count({
-    where: { role: "educator" },
-  });
-  const totalAdmins = await prisma.profile.count({
-    where: { role: "admin" },
-  });
-
-  const stats = [
-    { label: "All users", value: totalProfiles },
-    { label: "Students", value: totalStudents },
-    { label: "Educators", value: totalEducators },
-    { label: "Admins", value: totalAdmins },
-  ];
+  const totalStudents = await prisma.profile.count({ where: { role: "student" } });
+  const totalEducators = await prisma.profile.count({ where: { role: "educator" } });
+  const totalAdmins = await prisma.profile.count({ where: { role: "admin" } });
 
   return (
-    <main className="mx-auto max-w-6xl">
-      <section className="rounded-3xl bg-white p-8 shadow-sm">
-        <h1 className="text-3xl font-bold text-[#31425a]">Program statistics</h1>
-        <p className="mt-4 max-w-3xl text-neutral-600">
-          This basic admin view can be used later for IntegratESG reporting.
-        </p>
+    <main className="mx-auto max-w-6xl rounded-3xl bg-white p-8 shadow-sm">
+      <h1 className="text-3xl font-bold text-[#31425a]">Program statistics</h1>
+      <p className="mt-4 text-neutral-600">Basic reporting view for platform activity.</p>
 
-        <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {stats.map((stat) => (
-            <div key={stat.label} className="rounded-2xl border bg-neutral-50 p-5">
-              <p className="text-sm text-neutral-500">{stat.label}</p>
-              <p className="mt-3 text-3xl font-bold text-[#31425a]">{stat.value}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+      <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        {[
+          { label: "All users", value: totalProfiles },
+          { label: "Students", value: totalStudents },
+          { label: "Educators", value: totalEducators },
+          { label: "Admins", value: totalAdmins },
+        ].map((item) => (
+          <div key={item.label} className="rounded-2xl border bg-neutral-50 p-5">
+            <p className="text-sm text-neutral-500">{item.label}</p>
+            <p className="mt-3 text-3xl font-bold text-[#31425a]">{item.value}</p>
+          </div>
+        ))}
+      </div>
     </main>
   );
 }
