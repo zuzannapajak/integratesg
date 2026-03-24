@@ -3,18 +3,22 @@ import Link from "next/link";
 
 type Props = {
   locale: string;
+  className?: string;
+  variant?: "light" | "dark";
 };
 
-export default function Logo({ locale }: Props) {
+export default function Logo({ locale, className = "", variant = "light" }: Props) {
+  const src = variant === "dark" ? "/branding/logo.png" : "/branding/logo-white.png";
+
   return (
-    <Link href={`/${locale}`} className="flex items-center">
+    <Link href={`/${locale}`} className={`flex items-center ${className}`}>
       <Image
-        src="/branding/logo-white.png"
+        src={src}
         alt="IntegratESG"
         width={210}
         height={50}
         priority
-        className="h-auto w-42.5"
+        className="h-auto w-full"
       />
     </Link>
   );

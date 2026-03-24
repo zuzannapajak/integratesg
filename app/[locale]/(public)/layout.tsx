@@ -10,7 +10,7 @@ export default async function PublicLayout({ children, params }: Props) {
   const { locale } = await params;
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#f5f5f3]">
       <BackgroundMasks />
       <PublicNavbar locale={locale} />
       {children}
