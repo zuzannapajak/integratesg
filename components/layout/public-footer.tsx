@@ -36,7 +36,7 @@ export default function PublicFooter({ locale }: Props) {
             <Logo locale={locale} className="w-55" />
 
             <p className="mt-4 text-[0.82rem] leading-6 text-white/90 lg:text-right">
-              © 2025 INTEGRAT-ESG PROJECT – All Rights Reserved
+              © 2026 INTEGRAT-ESG PROJECT – All Rights Reserved
               <br />
               <Link href={`/${locale}/privacy`} className="hover:underline">
                 Privacy Policy

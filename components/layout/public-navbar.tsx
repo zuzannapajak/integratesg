@@ -21,7 +21,6 @@ export default function PublicNavbar({ locale }: Props) {
       window.requestAnimationFrame(() => {
         const y = window.scrollY;
         setIsCompact(y > 96);
-
         tickingRef.current = false;
       });
     };
@@ -44,7 +43,7 @@ export default function PublicNavbar({ locale }: Props) {
 
         <div className="flex items-center gap-4 text-white md:gap-6 lg:gap-8">
           <nav className="hidden items-center gap-6 lg:flex">
-            <Link className="mock-topbar-link" href={`/${locale}`}>
+            <Link className="mock-topbar-link" href={`/${locale}/about`}>
               About
             </Link>
             <Link className="mock-topbar-link" href={`/${locale}/auth/login`}>
