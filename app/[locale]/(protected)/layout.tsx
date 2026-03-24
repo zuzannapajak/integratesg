@@ -1,3 +1,5 @@
+import AppSidebar from "@/components/layout/app-sidebar";
+import AppTopbar from "@/components/layout/app-topbar";
 import ProtectedNavbar from "@/components/layout/protected-navbar";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
@@ -31,7 +33,15 @@ export default async function ProtectedLayout({ children, params }: Props) {
   return (
     <div className="min-h-screen">
       <ProtectedNavbar locale={locale} role={profile.role} email={profile.email} />
-      <div className="mock-page">{children}</div>
+
+      <div className="mock-page lg:flex">
+        <AppSidebar locale={locale} role={profile.role} email={profile.email} />
+
+        <div className="min-w-0 flex-1">
+          <AppTopbar email={profile.email} role={profile.role} />
+          <div className="px-6 py-8">{children}</div>
+        </div>
+      </div>
     </div>
   );
 }

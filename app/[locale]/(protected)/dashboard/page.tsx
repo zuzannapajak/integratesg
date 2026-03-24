@@ -1,5 +1,3 @@
-import LogoutButton from "@/components/auth/logout-button";
-import { APP_ROLES, AppRole, ROLE_LABELS, canAccessCurriculum } from "@/lib/auth/roles";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
@@ -9,11 +7,63 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-const roleColors: Record<AppRole, string> = {
-  [APP_ROLES.student]: "bg-[#ef6c23]",
-  [APP_ROLES.educator]: "bg-[#0b9c72]",
-  [APP_ROLES.admin]: "bg-[#31425a]",
+type Role = "educator" | "student" | "admin";
+
+type QuickLink = {
+  title: string;
+  description: string;
+  href: string;
 };
+
+function getDashboardContent(locale: string, role: Role): QuickLink[] {
+  if (role === "educator") {
+    return [
+      {
+        title: "Courses",
+        description: "Open course modules and access educator learning resources.",
+        href: `/${locale}/curriculum`,
+      },
+      {
+        title: "Curriculum",
+        description: "Continue with pre-quiz, post-quiz, and self-assessment flows.",
+        href: `/${locale}/curriculum`,
+      },
+      {
+        title: "ePortfolio",
+        description: "Review ESG case studies and structured examples.",
+        href: `/${locale}/eportfolio`,
+      },
+      {
+        title: "Scenarios",
+        description: "Launch interactive Storyline scenarios.",
+        href: `/${locale}/scenarios`,
+      },
+    ];
+  }
+
+  if (role === "admin") {
+    return [
+      {
+        title: "Program statistics",
+        description: "View basic reporting indicators for platform activity.",
+        href: `/${locale}/admin/stats`,
+      },
+    ];
+  }
+
+  return [
+    {
+      title: "Scenarios",
+      description: "Continue interactive ESG learning scenarios.",
+      href: `/${locale}/scenarios`,
+    },
+    {
+      title: "ePortfolio",
+      description: "Browse case studies and practical ESG examples.",
+      href: `/${locale}/eportfolio`,
+    },
+  ];
+}
 
 export default async function DashboardPage({ params }: Props) {
   const { locale } = await params;
@@ -32,96 +82,58 @@ export default async function DashboardPage({ params }: Props) {
   });
 
   if (!profile) {
-    redirect(`/${locale}/auth/complete-profile`);
+    redirect(`/${locale}/auth/login`);
   }
 
-  const quickLinks =
-    profile.role === APP_ROLES.admin
-      ? [
-          {
-            href: `/${locale}/stats`,
-            label: "View statistics",
-            description: "Open the read-only analytics dashboard.",
-          },
-        ]
-      : [
-          {
-            href: `/${locale}/eportfolio`,
-            label: "Browse ePortfolio",
-            description: "Access structured ESG case studies.",
-          },
-          {
-            href: `/${locale}/scenarios`,
-            label: "Open scenarios",
-            description: "Launch interactive ESG simulations.",
-          },
-          ...(canAccessCurriculum(profile.role)
-            ? [
-                {
-                  href: `/${locale}/curriculum`,
-                  label: "Go to curriculum",
-                  description: "Access educator learning modules and quizzes.",
-                },
-              ]
-            : []),
-        ];
+  const role = profile.role as Role;
+  const displayName = profile.fullName || profile.email || "User";
+
+  const intro =
+    role === "educator"
+      ? "Welcome back. You can continue with courses, curriculum, scenarios, and case studies."
+      : role === "admin"
+        ? "Welcome back. Here you can access the basic reporting and activity overview."
+        : "Welcome back. You can continue with scenarios and explore the ePortfolio resources.";
+
+  const quickLinks = getDashboardContent(locale, role);
 
   return (
-    <main className="mx-auto max-w-245 px-6 py-10">
-      <section className="flex flex-col gap-8 md:flex-row md:items-start">
-        <div className="text-[56px] text-[#8d8d8d]">⚙</div>
-
-        <div
-          className={`flex h-44 w-44 items-center justify-center rounded-full ${roleColors[profile.role]} text-[72px] text-white`}
-        >
-          ○
-        </div>
-
-        <div className="flex-1 space-y-4 pt-3">
-          <div className="flex items-center gap-4 text-[46px] text-[#8d8d8d]">
-            <span>✎</span>
-            <span className="text-[34px] text-[#31425a]">
-              {profile.fullName ?? ROLE_LABELS[profile.role]}
-            </span>
+    <main className="mx-auto max-w-6xl">
+      <section className="rounded-3xl bg-white p-8 shadow-sm">
+        <div className="flex flex-col gap-6 md:flex-row md:items-center">
+          <div
+            className={`flex h-24 w-24 items-center justify-center rounded-full text-4xl text-white ${
+              role === "educator"
+                ? "bg-[#0b9c72]"
+                : role === "admin"
+                  ? "bg-[#31425a]"
+                  : "bg-[#ef6c23]"
+            }`}
+          >
+            ○
           </div>
 
-          <div className="flex items-center gap-4 text-[46px] text-[#8d8d8d]">
-            <span>✉</span>
-            <span className="text-[34px] text-[#31425a]">{user.email ?? profile.email}</span>
-          </div>
-
-          <div className="flex items-center gap-4 text-[46px] text-[#8d8d8d]">
-            <span>☰</span>
-            <span className="text-[34px] text-[#31425a]">{ROLE_LABELS[profile.role]}</span>
-          </div>
-
-          <div className="pt-2">
-            <LogoutButton />
+          <div className="flex-1">
+            <p className="text-sm uppercase tracking-[0.18em] text-neutral-500">{role}</p>
+            <h1 className="mt-2 text-3xl font-bold text-[#31425a]">{displayName}</h1>
+            <p className="mt-3 max-w-3xl text-base text-neutral-600">{intro}</p>
           </div>
         </div>
       </section>
 
-      <div className="mock-divider mt-10" />
-
-      <section className="mt-12">
-        <div className="mb-8 flex items-center gap-3">
-          <span className="text-[42px] text-[#0b9c72]">▼</span>
-          <div className="min-w-90 border-b-[6px] border-[#0b9c72] pb-1 text-[30px] text-[#31425a]">
-            Role-based access overview
-          </div>
-        </div>
+      <section className="mt-8">
+        <h2 className="mb-4 text-2xl font-semibold text-[#31425a]">Quick access</h2>
 
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {quickLinks.map((item) => (
             <Link
-              key={item.href}
+              key={item.href + item.title}
               href={item.href}
-              className="rounded-3xl border border-[#d8dee7] bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              className="rounded-3xl border bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
             >
-              <div className="space-y-3">
-                <p className="text-[24px] text-[#31425a]">{item.label}</p>
-                <p className="text-[16px] leading-7 text-[#667085]">{item.description}</p>
-              </div>
+              <h3 className="text-xl font-semibold text-[#31425a]">{item.title}</h3>
+              <p className="mt-3 text-sm leading-6 text-neutral-600">{item.description}</p>
+              <span className="mt-5 inline-block text-sm font-semibold text-[#0d7fc2]">Open →</span>
             </Link>
           ))}
         </div>
