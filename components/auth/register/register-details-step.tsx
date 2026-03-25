@@ -80,7 +80,7 @@ export default function RegisterDetailsStep({
   };
 
   return (
-    <div className="mx-auto w-full max-w-[880px]">
+    <div className="mx-auto w-full max-w-220">
       <button
         type="button"
         onClick={onBack}
@@ -106,7 +106,7 @@ export default function RegisterDetailsStep({
 
       <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
         <div className="order-2 min-w-0 lg:order-1">
-          <div className="flex h-full min-h-[360px] flex-col rounded-[1.5rem] border border-[#e7edf3] bg-white px-6 py-6">
+          <div className="flex h-full min-h-90-col roundrounded-3xler border-[#e7edf3] bg-white px-6 py-6">
             <div className="mb-4">
               <p className="text-[1rem] font-semibold text-[#31425a]">Continue with email</p>
               <p className="mt-2 text-[0.9rem] leading-6 text-[#667180]">
@@ -188,7 +188,7 @@ export default function RegisterDetailsStep({
         </div>
 
         <div className="order-1 min-w-0 lg:order-2">
-          <div className="flex h-full min-h-[360px] flex-col rounded-[1.5rem] border border-[#e7edf3] bg-[linear-gradient(180deg,rgba(247,249,252,0.92)_0%,rgba(255,255,255,0.88)_100%)] px-6 py-6">
+          <div className="flex h-full min-h-90 flex-col rounded-3xl border border-[#e7edf3] bg-[linear-gradient(180deg,rgba(247,249,252,0.92)_0%,rgba(255,255,255,0.88)_100%)] px-6 py-6">
             <div className="mx-auto flex h-full w-full max-w-[320px] flex-col justify-center text-center">
               <div>
                 <p className="text-[1rem] font-semibold text-[#31425a]">Continue with Google</p>

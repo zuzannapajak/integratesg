@@ -11,7 +11,7 @@ type Props = {
 
 export default function RegisterRoleStep({ role, onRoleChange, onContinue }: Props) {
   return (
-    <div className="mx-auto w-full max-w-[880px]">
+    <div className="mx-auto w-full max-w-220">
       <div className="mb-6 text-left">
         <p className="text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-[#7a8594]">
           Create your account
@@ -31,7 +31,7 @@ export default function RegisterRoleStep({ role, onRoleChange, onContinue }: Pro
             onRoleChange(APP_ROLES.student);
           }}
           aria-pressed={role === APP_ROLES.student}
-          className={`rounded-[1.5rem] border p-5 text-left transition-all duration-200 ${
+          className={`rounded-3xl border p-5 text-left transition-all duration-200 ${
             role === APP_ROLES.student
               ? "border-[#31425a] bg-[#f4f8fc] shadow-[0_12px_28px_rgba(49,66,90,0.08)]"
               : "border-[#d9e1ea] bg-white hover:border-[#bcc9d7] hover:bg-[#fbfcfd]"
@@ -70,7 +70,7 @@ export default function RegisterRoleStep({ role, onRoleChange, onContinue }: Pro
             onRoleChange(APP_ROLES.educator);
           }}
           aria-pressed={role === APP_ROLES.educator}
-          className={`rounded-[1.5rem] border p-5 text-left transition-all duration-200 ${
+          className={`rounded-3xl border p-5 text-left transition-all duration-200 ${
             role === APP_ROLES.educator
               ? "border-[#31425a] bg-[#f4f8fc] shadow-[0_12px_28px_rgba(49,66,90,0.08)]"
               : "border-[#d9e1ea] bg-white hover:border-[#bcc9d7] hover:bg-[#fbfcfd]"
@@ -108,7 +108,7 @@ export default function RegisterRoleStep({ role, onRoleChange, onContinue }: Pro
         <button
           type="button"
           onClick={onContinue}
-          className="inline-flex min-h-[3.25rem] items-center justify-center rounded-full bg-[#31425a] px-7 font-semibold text-white transition hover:bg-[#243246]"
+          className="inline-flex min-h-13 items-center justify-center rounded-full bg-[#31425a] px-7 font-semibold text-white transition hover:bg-[#243246]"
         >
           Continue
         </button>
