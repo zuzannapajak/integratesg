@@ -35,17 +35,27 @@ export default function PublicFooter({ locale }: Props) {
           <div className="flex flex-col items-start lg:items-end">
             <Logo locale={locale} className="w-55" />
 
-            <p className="mt-4 text-[0.82rem] leading-6 text-white/90 lg:text-right">
-              © 2026 INTEGRAT-ESG PROJECT – All Rights Reserved
-              <br />
-              <Link href={`/${locale}/privacy`} className="hover:underline">
-                Privacy Policy
-              </Link>{" "}
-              –{" "}
-              <Link href={`/${locale}/accessibility`} className="hover:underline">
-                Accessibility statement
-              </Link>
-            </p>
+            <div className="mt-4 text-[0.82rem] leading-6 text-white/90 lg:text-right">
+              <p>© 2026 INTEGRAT-ESG PROJECT – All Rights Reserved</p>
+
+              <div className="mt-2 flex flex-wrap gap-x-2 gap-y-1 lg:justify-end">
+                <Link href={`/${locale}/privacy`} className="hover:underline">
+                  Privacy Policy
+                </Link>
+                <span>–</span>
+                <Link href={`/${locale}/accessibility`} className="hover:underline">
+                  Accessibility statement
+                </Link>
+                <span>–</span>
+                <Link href={`/${locale}/terms`} className="hover:underline">
+                  Terms of Use
+                </Link>
+                <span>–</span>
+                <Link href={`/${locale}/legal-notice`} className="hover:underline">
+                  Legal Notice
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -65,6 +65,8 @@ export default async function AboutPage({ params }: Props) {
 
         <div className="relative mx-auto grid max-w-340 min-h-[calc(100vh-104px)] items-center gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
           <div className="max-w-215 pb-4 lg:pb-0">
+            <p className="landing-section-eyebrow">About the project</p>
+
             <h1 className="mt-4 text-[2.2rem] font-black leading-[0.95] tracking-[-0.05em] text-[#31425a] sm:text-[3rem] lg:text-[3.65rem]">
               Bridging the gap between vocational education and{" "}
               <span className="whitespace-nowrap">real-world</span> ESG implementation.
