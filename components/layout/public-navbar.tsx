@@ -55,10 +55,10 @@ export default function PublicNavbar({ locale }: Props) {
             <Link className="mock-topbar-link" href={`/${locale}/about`}>
               About
             </Link>
-            <Link className="mock-topbar-link" href={`/${locale}/auth/login`}>
+            <Link className="mock-topbar-link" href={`/${locale}/educators`}>
               Educators
             </Link>
-            <Link className="mock-topbar-link" href={`/${locale}/auth/login`}>
+            <Link className="mock-topbar-link" href={`/${locale}/students`}>
               Students
             </Link>
           </nav>
