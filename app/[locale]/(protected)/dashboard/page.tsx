@@ -1,4 +1,4 @@
-import LogoutButton from "@/components/auth/logout-button";
+import LogoutButton from "@/components/auth/login/logout-button";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";

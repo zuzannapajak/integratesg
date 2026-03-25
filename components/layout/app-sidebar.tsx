@@ -1,4 +1,4 @@
-import LogoutButton from "@/components/auth/logout-button";
+import LogoutButton from "@/components/auth/login/logout-button";
 import Link from "next/link";
 
 type Role = "educator" | "student" | "admin";

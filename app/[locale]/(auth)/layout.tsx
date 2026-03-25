@@ -10,10 +10,12 @@ export default async function AuthLayout({ children, params }: Props) {
   const { locale } = await params;
 
   return (
-    <div className="grid h-dvh grid-rows-[auto_1fr] overflow-hidden bg-[#f5f5f3]">
+    <div className="min-h-dvh bg-[#f5f5f3]">
       <BackgroundMasks />
-      <PublicNavbar locale={locale} forceCompact forceSolid />
-      <div className="min-h-0 overflow-hidden">{children}</div>
+      <div className="grid min-h-dvh grid-rows-[auto_1fr]">
+        <PublicNavbar locale={locale} forceCompact forceSolid />
+        <div>{children}</div>
+      </div>
     </div>
   );
 }

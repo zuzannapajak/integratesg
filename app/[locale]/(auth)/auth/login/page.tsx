@@ -1,5 +1,5 @@
-import LoginForm from "@/components/auth/login-form";
-import SocialLoginButtons from "@/components/auth/social-login-buttons";
+import LoginForm from "@/components/auth/login/login-form";
+import SocialLoginButtons from "@/components/auth/login/social-login-buttons";
 import Link from "next/link";
 
 type Props = {
