@@ -90,24 +90,8 @@ export default async function AboutPage({ params }: Props) {
           </div>
 
           <div className="relative hidden lg:block">
-            <div className="relative mx-auto h-95 w-full max-w-125">
-              <div className="absolute left-0 top-8 h-55 w-55 rounded-4xl bg-[#ec6725]/18 blur-3xl" />
-              <div className="absolute right-0 top-0 h-62.5 w-62.5 rounded-[40px] bg-[#0d7fc2]/24 blur-3xl" />
-
-              <div className="absolute left-6 top-8 w-63.75 rounded-[30px] border border-white/70 bg-white/86 p-6 shadow-[0_18px_48px_rgba(35,45,62,0.08)] backdrop-blur-xl">
-                <p className="inline-flex rounded-full bg-[#0d7fc2]/8 px-3 py-1 text-[0.72rem] font-bold uppercase tracking-[0.16em] text-[#0d7fc2]">
-                  Practical package
-                </p>
-                <h2 className="mt-4 text-[1.28rem] font-semibold tracking-[-0.03em] text-[#31425a]">
-                  Curriculum, eLearning, ePortfolio, and Scenario Simulator.
-                </h2>
-                <p className="mt-4 text-[0.95rem] leading-7 text-[#5e6776]">
-                  A connected learning ecosystem designed to support ESG awareness and applied
-                  competence.
-                </p>
-              </div>
-
-              <div className="absolute right-6 top-18 w-48.75 rounded-[28px] border border-white/70 bg-white/82 p-5 shadow-[0_16px_40px_rgba(35,45,62,0.07)] backdrop-blur-xl">
+            <div className="relative mx-auto h-125 w-full max-w-145">
+              <div className="absolute right-10 top-0 w-60 rounded-[28px] border border-white/80 bg-white/90 p-5 shadow-[0_20px_50px_rgba(35,45,62,0.1)] backdrop-blur-xl z-30">
                 <p className="text-[0.74rem] font-bold uppercase tracking-[0.16em] text-[#ef6c23]">
                   Open access
                 </p>
@@ -116,7 +100,19 @@ export default async function AboutPage({ params }: Props) {
                 </p>
               </div>
 
-              <div className="absolute bottom-6 right-10 w-55 rounded-[28px] border border-white/70 bg-white/82 p-5 shadow-[0_16px_40px_rgba(35,45,62,0.07)] backdrop-blur-xl">
+              <div className="absolute left-10 top-25 w-85 rounded-[30px] border border-white/70 bg-white/86 p-6 shadow-[0_18px_48px_rgba(35,45,62,0.08)] backdrop-blur-xl z-20">
+                <p className="inline-flex rounded-full bg-[#0d7fc2]/8 px-3 py-1 text-[0.72rem] font-bold uppercase tracking-[0.16em] text-[#0d7fc2]">
+                  Practical package
+                </p>
+                <h2 className="mt-4 text-[1.2rem] font-semibold tracking-[-0.03em] text-[#31425a] lg:max-w-55">
+                  Curriculum, eLearning, ePortfolio, and Scenario Simulator.
+                </h2>
+                <p className="mt-4 text-[0.92rem] leading-6 text-[#5e6776] lg:max-w-60">
+                  A connected learning ecosystem designed to support ESG awareness.
+                </p>
+              </div>
+
+              <div className="absolute right-10 top-72.5 w-62.5 rounded-[28px] border border-white/70 bg-white/90 p-5 shadow-[0_20px_50px_rgba(35,45,62,0.1)] backdrop-blur-xl z-30">
                 <p className="text-[0.74rem] font-bold uppercase tracking-[0.16em] text-[#0b9c72]">
                   EU relevance
                 </p>
@@ -124,6 +120,9 @@ export default async function AboutPage({ params }: Props) {
                   Supports Green Deal priorities and innovation in vocational education.
                 </p>
               </div>
+
+              <div className="absolute left-10 top-20 -z-10 h-64 w-64 rounded-full bg-[#ec6725]/10 blur-3xl" />
+              <div className="absolute right-10 bottom-10 -z-10 h-64 w-64 rounded-full bg-[#0d7fc2]/15 blur-3xl" />
             </div>
           </div>
         </div>

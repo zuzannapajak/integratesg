@@ -43,7 +43,6 @@ button {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(58, 58, 58, 0.94);
   color: white;
   backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);

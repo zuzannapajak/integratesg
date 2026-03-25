@@ -87,40 +87,39 @@ export default async function StudentsPage({ params }: Props) {
           </div>
 
           <div className="relative hidden lg:block">
-            <div className="relative mx-auto h-[390px] w-full max-w-[520px]">
-              <div className="absolute left-0 top-10 h-[220px] w-[220px] rounded-[32px] bg-[#ec6725]/18 blur-3xl" />
-              <div className="absolute right-0 top-0 h-[250px] w-[250px] rounded-[40px] bg-[#0d7fc2]/24 blur-3xl" />
-
-              <div className="absolute left-8 top-8 w-[260px] rounded-[30px] border border-white/70 bg-white/86 p-6 shadow-[0_18px_48px_rgba(35,45,62,0.08)] backdrop-blur-xl">
-                <p className="inline-flex rounded-full bg-[#0d7fc2]/8 px-3 py-1 text-[0.72rem] font-bold uppercase tracking-[0.16em] text-[#0d7fc2]">
-                  Applied learning
-                </p>
-                <h2 className="mt-4 text-[1.28rem] font-semibold tracking-[-0.03em] text-[#31425a]">
-                  Learn ESG through scenarios, tasks, and practical examples.
-                </h2>
-                <p className="mt-4 text-[0.95rem] leading-7 text-[#5e6776]">
-                  A learning space designed to make ESG more understandable, interactive, and easier
-                  to connect with real situations.
-                </p>
-              </div>
-
-              <div className="absolute right-8 top-20 w-[195px] rounded-[28px] border border-white/70 bg-white/82 p-5 shadow-[0_16px_40px_rgba(35,45,62,0.07)] backdrop-blur-xl">
+            <div className="relative mx-auto h-125 w-full max-w-145">
+              <div className="absolute right-10 top-0 w-60 rounded-[28px] border border-white/80 bg-white/90 p-5 shadow-[0_20px_50px_rgba(35,45,62,0.1)] backdrop-blur-xl z-30">
                 <p className="text-[0.74rem] font-bold uppercase tracking-[0.16em] text-[#ef6c23]">
-                  Scenarios
+                  Practical use
                 </p>
                 <p className="mt-3 text-[0.92rem] leading-7 text-[#5e6776]">
-                  Engage with step-by-step, decision-oriented learning experiences.
+                  Resources that can support workshops, lessons, and blended learning.
                 </p>
               </div>
 
-              <div className="absolute bottom-8 right-12 w-[220px] rounded-[28px] border border-white/70 bg-white/82 p-5 shadow-[0_16px_40px_rgba(35,45,62,0.07)] backdrop-blur-xl">
-                <p className="text-[0.74rem] font-bold uppercase tracking-[0.16em] text-[#0b9c72]">
-                  Case studies
+              <div className="absolute left-10 top-25 w-85 rounded-[30px] border border-white/70 bg-white/86 p-6 shadow-[0_18px_48px_rgba(35,45,62,0.08)] backdrop-blur-xl z-20">
+                <p className="inline-flex rounded-full bg-[#0d7fc2]/8 px-3 py-1 text-[0.72rem] font-bold uppercase tracking-[0.16em] text-[#0d7fc2]">
+                  Teaching toolkit
                 </p>
-                <p className="mt-3 text-[0.92rem] leading-7 text-[#5e6776]">
-                  Explore examples that show how ESG principles appear in practice.
+                <h2 className="mt-4 text-[1.2rem] font-semibold tracking-[-0.03em] text-[#31425a] lg:max-w-55">
+                  Curriculum, scenarios, and case studies in one environment.
+                </h2>
+                <p className="mt-4 text-[0.92rem] leading-6 text-[#5e6776] lg:max-w-60">
+                  Designed to support explanation, discussion, and applied ESG teaching.
                 </p>
               </div>
+
+              <div className="absolute right-10 top-72.5 w-62.5 rounded-[28px] border border-white/70 bg-white/90 p-5 shadow-[0_20px_50px_rgba(35,45,62,0.1)] backdrop-blur-xl z-30">
+                <p className="text-[0.74rem] font-bold uppercase tracking-[0.16em] text-[#0b9c72]">
+                  Learning design
+                </p>
+                <p className="mt-3 text-[0.92rem] leading-7 text-[#5e6776]">
+                  Structured for clear navigation, engagement, and pedagogical clarity.
+                </p>
+              </div>
+
+              <div className="absolute left-10 top-20 -z-10 h-64 w-64 rounded-full bg-[#ec6725]/12 blur-3xl" />
+              <div className="absolute right-10 bottom-10 -z-10 h-64 w-64 rounded-full bg-[#0d7fc2]/16 blur-3xl" />
             </div>
           </div>
         </div>

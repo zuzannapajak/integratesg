@@ -29,7 +29,7 @@ export default async function DashboardPage({ params }: Props) {
   }
 
   const role = profile.role;
-  const displayName = profile.fullName || user.email?.split("@")[0] || "User";
+  const displayName = profile.fullName ?? user.email?.split("@")[0] ?? "User";
   const avatarColor =
     role === "educator" ? "bg-[#0b9c72]" : role === "admin" ? "bg-[#31425a]" : "bg-[#ef6c23]";
 
