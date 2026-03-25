@@ -1,7 +1,7 @@
 "use client";
 
-import GoogleSignupButton from "@/components/auth/google-signup-button";
 import RegisterForm from "@/components/auth/register-form";
+import GoogleSignupButton from "@/components/auth/social-login-buttons";
 import { APP_ROLES, SelfServiceRole } from "@/lib/auth/roles";
 import { useState } from "react";
 

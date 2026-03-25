@@ -63,11 +63,13 @@ export async function completeCurrentUserProfile({ role }: { role: PublicRole })
     throw new Error("Missing user email.");
   }
 
+  const metadata = user.user_metadata;
+
   const fullName =
-    typeof user.user_metadata?.full_name === "string"
-      ? user.user_metadata.full_name
-      : typeof user.user_metadata?.name === "string"
-        ? user.user_metadata.name
+    typeof metadata.full_name === "string"
+      ? metadata.full_name
+      : typeof metadata.name === "string"
+        ? metadata.name
         : null;
 
   const finalRole = resolveRole(email, role);
