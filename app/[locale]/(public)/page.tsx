@@ -46,6 +46,9 @@ export default async function HomePage({ params }: Props) {
       <section className="mock-hero-bg">
         <div className="mock-hero-orange" />
         <div className="mock-hero-blue" />
+        <div className="landing-hero-orange-glow" />
+        <div className="landing-hero-blue-glow" />
+        <div className="hero-bottom-fade" />
 
         <div className="relative z-30 mx-auto grid max-w-7xl w-full grid-cols-1 items-center gap-4 px-8 md:grid-cols-2">
           <div className="flex items-center justify-center md:justify-end">
@@ -62,15 +65,30 @@ export default async function HomePage({ params }: Props) {
           </div>
 
           <div className="z-40 text-center md:-ml-20 md:-mt-47.5 md:pl-12 md:text-left">
-            <h1 className="hero-title text-[38px] sm:text-[46px] md:text-[52px]">
+            <p className="landing-section-eyebrow mb-4">IntegratESG platform</p>
+
+            <h1 className="hero-title text-[2.2rem] font-black leading-[0.95] tracking-[-0.05em] text-[#31425a] sm:text-[3rem] lg:text-[3.65rem]">
               Practical ESG learning <br className="hidden md:block" />
               for students and educators.
             </h1>
+
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row md:justify-start">
+              <Link href={`/${locale}/auth/register`} className="landing-primary-cta">
+                Join the platform
+              </Link>
+
+              <a href="#platform-overview" className="landing-secondary-cta">
+                Read more
+              </a>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="landing-intro-section relative z-20 bg-[#ececec] px-6 pb-10 pt-10 md:px-10 lg:px-14">
+      <section
+        id="platform-overview"
+        className="landing-intro-section relative z-20 bg-[#ececec] px-6 pb-10 pt-10 md:px-10 lg:px-14"
+      >
         <div className="mx-auto max-w-340 space-y-8">
           <div className="rounded-4xl border border-white/60 bg-white/88 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.07)] backdrop-blur md:p-8 lg:p-10">
             <div className="max-w-215">
