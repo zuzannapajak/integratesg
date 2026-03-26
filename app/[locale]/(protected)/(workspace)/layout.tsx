@@ -1,5 +1,4 @@
 import AppSidebar from "@/components/layout/app-sidebar";
-import AppTopbar from "@/components/layout/app-topbar";
 import ProtectedNavbar from "@/components/layout/protected-navbar";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
@@ -10,7 +9,7 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export default async function ProtectedLayout({ children, params }: Props) {
+export default async function ProtectedWorkspaceLayout({ children, params }: Props) {
   const { locale } = await params;
 
   const supabase = await createClient();
@@ -31,15 +30,15 @@ export default async function ProtectedLayout({ children, params }: Props) {
   }
 
   return (
-    <div className="min-h-screen">
-      <ProtectedNavbar locale={locale} role={profile.role} email={profile.email} />
-      <div className="mock-page lg:flex">
-        <AppSidebar locale={locale} role={profile.role} email={profile.email} />
+    <div className="min-h-dvh bg-[#f5f5f3]">
+      <ProtectedNavbar locale={locale} role={profile.role} email={user.email ?? ""} />
 
-        <div className="min-w-0 flex-1">
-          <AppTopbar email={profile.email} role={profile.role} />
-          <div className="px-6 py-8">{children}</div>
+      <div className="mx-auto grid max-w-400 grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)]">
+        <div className="hidden lg:block">
+          <AppSidebar locale={locale} role={profile.role} />
         </div>
+
+        <main className="min-w-0 px-6 py-8 md:px-8 lg:px-10">{children}</main>
       </div>
     </div>
   );
