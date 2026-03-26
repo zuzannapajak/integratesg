@@ -6,6 +6,24 @@ datasource db {
   provider = "postgresql"
 }
 
+// Enums
+enum UserRole {
+  educator
+  student
+  admin
+}
+
+enum PublicationStatus {
+  draft
+  published
+}
+
+enum QuizType {
+  pre
+  post
+}
+
+// Models
 model Profile {
   id                String   @id
   email             String   @unique
@@ -16,12 +34,6 @@ model Profile {
   updatedAt         DateTime @updatedAt
 }
 
-enum UserRole {
-  educator
-  student
-  admin
-}
-
 model Course {
   id           String              @id @default(cuid())
   slug         String              @unique
@@ -29,6 +41,7 @@ model Course {
   createdAt    DateTime            @default(now())
   updatedAt    DateTime            @updatedAt
   translations CourseTranslation[]
+  quizzes      Quiz[]
 }
 
 model CourseTranslation {
@@ -48,7 +61,50 @@ model CourseTranslation {
   @@index([courseId])
 }
 
-enum PublicationStatus {
-  draft
-  published
+model Quiz {
+  id           String   @id @default(cuid())
+  courseId     String
+  type         QuizType
+  title        String?
+  description  String?
+  passingScore Int?
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  course    Course     @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  questions Question[]
+
+  @@unique([courseId, type])
+  @@index([courseId])
+}
+
+model Question {
+  id          String   @id @default(cuid())
+  quizId      String
+  prompt      String
+  explanation String?
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  quiz    Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  answers Answer[]
+
+  @@index([quizId])
+}
+
+model Answer {
+  id           String   @id @default(cuid())
+  questionId   String
+  text         String
+  isCorrect    Boolean  @default(false)
+  feedbackText String?
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@index([questionId])
 }
