@@ -23,25 +23,34 @@ enum QuizType {
   post
 }
 
+enum CourseAttemptStatus {
+  not_started
+  in_progress
+  completed
+  failed
+}
+
 // Models
 model Profile {
-  id                String   @id
-  email             String   @unique
-  fullName          String?
-  role              UserRole @default(student)
-  preferredLanguage String   @default("en")
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  id                 String              @id
+  email              String              @unique
+  fullName           String?
+  role               UserRole            @default(student)
+  preferredLanguage  String              @default("en")
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  userCourseAttempts UserCourseAttempt[]
 }
 
 model Course {
-  id           String              @id @default(cuid())
-  slug         String              @unique
-  status       PublicationStatus   @default(draft)
-  createdAt    DateTime            @default(now())
-  updatedAt    DateTime            @updatedAt
-  translations CourseTranslation[]
-  quizzes      Quiz[]
+  id                 String              @id @default(cuid())
+  slug               String              @unique
+  status             PublicationStatus   @default(draft)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  translations       CourseTranslation[]
+  quizzes            Quiz[]
+  userCourseAttempts UserCourseAttempt[]
 }
 
 model CourseTranslation {
@@ -107,4 +116,26 @@ model Answer {
   question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
   @@index([questionId])
+}
+
+model UserCourseAttempt {
+  id            String              @id @default(cuid())
+  userId        String
+  courseId      String
+  status        CourseAttemptStatus @default(not_started)
+  preQuizScore  Int?
+  postQuizScore Int?
+  startedAt     DateTime?
+  lastOpenedAt  DateTime?
+  completedAt   DateTime?
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+
+  user   Profile @relation(fields: [userId], references: [id], onDelete: Cascade)
+  course Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+  @@index([userId])
+  @@index([courseId])
+  @@index([status])
 }
