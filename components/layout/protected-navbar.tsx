@@ -134,7 +134,9 @@ export default function ProtectedNavbar({ locale, role, forceSolid = false }: Pr
           <div ref={menuRef} className="relative">
             <button
               type="button"
-              onClick={() => { setIsMenuOpen((prev) => !prev); }}
+              onClick={() => {
+                setIsMenuOpen((prev) => !prev);
+              }}
               className="flex items-center gap-3 text-white"
               aria-haspopup="menu"
               aria-expanded={isMenuOpen}
@@ -161,7 +163,7 @@ export default function ProtectedNavbar({ locale, role, forceSolid = false }: Pr
                   ? "pointer-events-auto translate-y-0 opacity-100"
                   : "pointer-events-none -translate-y-1 opacity-0"
               }`}
-              style={{ top: "calc(100% + 1.1094rem)" }}
+              style={{ top: "calc(100% + 1.0625rem)" }}
             >
               <div
                 className={`border p-3 transition-all duration-300 ${
@@ -198,10 +200,10 @@ export default function ProtectedNavbar({ locale, role, forceSolid = false }: Pr
                   </Link>
                 ))}
 
-                <div className="mt-2 border-t border-white/15 pt-3">
+                <div className="mt-3 pt-1">
                   <LogoutButton
                     redirectTo={`/${locale}/auth/login`}
-                    className="flex w-full items-center justify-center rounded-2xl border border-red-400/40 bg-red-500/12 px-4 py-3 text-[16px] font-semibold text-red-100 transition hover:bg-red-500/18 hover:text-white"
+                    className="flex w-full items-center justify-center rounded-2xl border border-red-400/40 bg-white/6 px-4 py-1.5 text-[16px] text-white/92 transition hover:bg-white/10"
                   >
                     Log out
                   </LogoutButton>
