@@ -30,6 +30,18 @@ enum CourseAttemptStatus {
   failed
 }
 
+enum CourseArea {
+  environmental
+  social
+  governance
+  cross_cutting
+}
+
+enum CourseDifficulty {
+  foundation
+  intermediate
+}
+
 // Models
 model Profile {
   id                 String              @id
@@ -43,14 +55,26 @@ model Profile {
 }
 
 model Course {
-  id                 String              @id @default(cuid())
-  slug               String              @unique
-  status             PublicationStatus   @default(draft)
-  createdAt          DateTime            @default(now())
-  updatedAt          DateTime            @updatedAt
-  translations       CourseTranslation[]
-  quizzes            Quiz[]
-  userCourseAttempts UserCourseAttempt[]
+  id                       String              @id @default(cuid())
+  slug                     String              @unique
+  status                   PublicationStatus   @default(draft)
+  area                     CourseArea
+  difficulty               CourseDifficulty    @default(foundation)
+  estimatedDurationMinutes Int?
+  lessonsCount             Int                 @default(0)
+  sortOrder                Int                 @default(0)
+  isFeatured               Boolean             @default(false)
+  createdAt                DateTime            @default(now())
+  updatedAt                DateTime            @updatedAt
+  translations             CourseTranslation[]
+  quizzes                  Quiz[]
+  userCourseAttempts       UserCourseAttempt[]
+
+  @@index([status])
+  @@index([area])
+  @@index([difficulty])
+  @@index([sortOrder])
+  @@index([isFeatured])
 }
 
 model CourseTranslation {
@@ -58,6 +82,7 @@ model CourseTranslation {
   courseId    String
   language    String
   title       String
+  subtitle    String?
   description String?
   content     String?
   createdAt   DateTime @default(now())
@@ -119,17 +144,18 @@ model Answer {
 }
 
 model UserCourseAttempt {
-  id            String              @id @default(cuid())
-  userId        String
-  courseId      String
-  status        CourseAttemptStatus @default(not_started)
-  preQuizScore  Int?
-  postQuizScore Int?
-  startedAt     DateTime?
-  lastOpenedAt  DateTime?
-  completedAt   DateTime?
-  createdAt     DateTime            @default(now())
-  updatedAt     DateTime            @updatedAt
+  id              String              @id @default(cuid())
+  userId          String
+  courseId        String
+  status          CourseAttemptStatus @default(not_started)
+  progressPercent Int                 @default(0)
+  preQuizScore    Int?
+  postQuizScore   Int?
+  startedAt       DateTime?
+  lastOpenedAt    DateTime?
+  completedAt     DateTime?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
 
   user   Profile @relation(fields: [userId], references: [id], onDelete: Cascade)
   course Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)

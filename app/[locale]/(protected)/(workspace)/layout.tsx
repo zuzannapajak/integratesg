@@ -9,36 +9,30 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export default async function ProtectedWorkspaceLayout({ children, params }: Props) {
+export default async function ProtectedOverviewLayout({ children, params }: Props) {
   const { locale } = await params;
-
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
-    redirect(`/${locale}/auth/login`);
-  }
+  if (!user) redirect(`/${locale}/auth/login`);
 
-  const profile = await prisma.profile.findUnique({
-    where: { id: user.id },
-  });
-
-  if (!profile) {
-    redirect(`/${locale}/auth/login`);
-  }
+  const profile = await prisma.profile.findUnique({ where: { id: user.id } });
+  if (!profile) redirect(`/${locale}/auth/login`);
 
   return (
-    <div className="min-h-dvh bg-[#f5f5f3]">
-      <ProtectedNavbar locale={locale} role={profile.role} email={user.email ?? ""} />
+    <div className="flex h-dvh flex-col bg-[#f5f5f3]">
+      <div className="z-50 shrink-0">
+        <ProtectedNavbar locale={locale} role={profile.role} email={user.email ?? ""} />
+      </div>
 
-      <div className="mx-auto grid max-w-400 grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)]">
-        <div className="hidden lg:block">
-          <AppSidebar locale={locale} role={profile.role} />
-        </div>
+      <div className="flex flex-1 overflow-hidden">
+        <AppSidebar locale={locale} role={profile.role} />
 
-        <main className="min-w-0 px-6 py-8 md:px-8 lg:px-10">{children}</main>
+        <main className="flex-1 overflow-y-auto transition-all duration-500 cubic-bezier(0.4,0,0.2,1) min-w-0 relative">
+          {children}
+        </main>
       </div>
     </div>
   );

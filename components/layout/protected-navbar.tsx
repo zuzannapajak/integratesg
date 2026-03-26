@@ -2,7 +2,7 @@
 
 import LogoutButton from "@/components/auth/login/logout-button";
 import Logo from "@/components/layout/logo";
-import Image from "next/image";
+import { UserRound } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
@@ -145,15 +145,7 @@ export default function ProtectedNavbar({ locale, role, forceSolid = false }: Pr
               <span className="hidden text-sm sm:inline">{isMenuOpen ? "▲" : "▼"}</span>
 
               <span className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-white">
-                <Image
-                  src="/icons/user.svg"
-                  alt=""
-                  aria-hidden="true"
-                  width={28}
-                  height={28}
-                  className="h-7 w-7"
-                  style={{ filter: "brightness(0) invert(1)" }}
-                />
+                <UserRound aria-hidden="true" className="h-6 w-6 text-white" strokeWidth={2.2} />
               </span>
             </button>
 
