@@ -93,12 +93,7 @@ export default function AppSidebar({ locale, role }: Props) {
   const studentLinks: NavLink[] = [
     { href: `/${locale}/dashboard`, label: "Dashboard", match: "exact", icon: LayoutDashboard },
     { href: `/${locale}/eportfolio`, label: "ePortfolio", match: "prefix", icon: FolderOpen },
-    {
-      href: `/${locale}/scenarios`,
-      label: "Scenario Simulator",
-      match: "prefix",
-      icon: PlayCircle,
-    },
+    { href: `/${locale}/scenarios`, label: "Scenario", match: "prefix", icon: PlayCircle },
     { href: `/${locale}/settings`, label: "Settings", match: "prefix", icon: Settings },
   ];
 

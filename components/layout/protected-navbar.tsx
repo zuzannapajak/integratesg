@@ -78,22 +78,25 @@ export default function ProtectedNavbar({ locale, role, forceSolid = false }: Pr
   }, []);
 
   const educatorLinks = [
-    { href: `/${locale}/eportfolio`, label: "Courses" },
-    { href: `/${locale}/dashboard`, label: "Students" },
-    { href: `/${locale}/scenarios`, label: "Work Packages" },
-    { href: `/${locale}/dashboard`, label: "Messages" },
+    { href: `/${locale}/dashboard`, label: "Dashboard" },
+    { href: `/${locale}/curriculum`, label: "Curriculum" },
+    { href: `/${locale}/eportfolio`, label: "ePortfolio" },
     { href: `/${locale}/settings`, label: "Settings" },
   ];
 
   const studentLinks = [
-    { href: `/${locale}/dashboard`, label: "Overview" },
-    { href: `/${locale}/eportfolio`, label: "Courses" },
-    { href: `/${locale}/dashboard`, label: "Messages" },
+    { href: `/${locale}/dashboard`, label: "Dashboard" },
+    { href: `/${locale}/eportfolio`, label: "ePortfolio" },
+    { href: `/${locale}/scenarios`, label: "Scenario" },
     { href: `/${locale}/settings`, label: "Settings" },
   ];
 
   const adminLinks = [
-    { href: `/${locale}/admin/stats`, label: "Program statistics" },
+    { href: `/${locale}/dashboard`, label: "Dashboard" },
+    {
+      href: `/${locale}/admin/stats`,
+      label: "Program statistics",
+    },
     { href: `/${locale}/settings`, label: "Settings" },
   ];
 
