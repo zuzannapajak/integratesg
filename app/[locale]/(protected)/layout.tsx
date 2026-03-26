@@ -33,7 +33,6 @@ export default async function ProtectedLayout({ children, params }: Props) {
   return (
     <div className="min-h-screen">
       <ProtectedNavbar locale={locale} role={profile.role} email={profile.email} />
-
       <div className="mock-page lg:flex">
         <AppSidebar locale={locale} role={profile.role} email={profile.email} />
 

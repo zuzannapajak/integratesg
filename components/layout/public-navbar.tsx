@@ -64,6 +64,7 @@ export default function PublicNavbar({ locale, forceCompact = false, forceSolid 
       <div className="mx-auto flex max-w-385 items-center justify-between px-6 md:px-10 lg:px-14">
         <Logo
           locale={locale}
+          href={`/${locale}`}
           className={`transition-all duration-500 ${isCompact ? "w-47" : "w-57"}`}
         />
 
@@ -90,14 +91,6 @@ export default function PublicNavbar({ locale, forceCompact = false, forceSolid 
               Register
             </Link>
           </div>
-
-          <Link
-            href={`/${locale}/auth/login`}
-            className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-white text-xl sm:hidden"
-            aria-label="Sign in"
-          >
-            ○
-          </Link>
         </div>
       </div>
     </header>

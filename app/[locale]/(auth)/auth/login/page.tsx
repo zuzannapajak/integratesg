@@ -26,7 +26,7 @@ export default async function LoginPage({ params }: Props) {
             </div>
 
             <div className="mt-8 space-y-6">
-              <LoginForm />
+              <SocialLoginButtons locale={locale} />
 
               <div className="flex items-center gap-4">
                 <div className="h-px flex-1 bg-[#d9e1ea]" />
@@ -36,7 +36,7 @@ export default async function LoginPage({ params }: Props) {
                 <div className="h-px flex-1 bg-[#d9e1ea]" />
               </div>
 
-              <SocialLoginButtons locale={locale} />
+              <LoginForm />
 
               <p className="text-center text-[0.95rem] text-[#5e6776]">
                 Don&apos;t have an account?{" "}
