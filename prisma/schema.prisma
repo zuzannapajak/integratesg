@@ -21,3 +21,34 @@ enum UserRole {
   student
   admin
 }
+
+model Course {
+  id           String              @id @default(cuid())
+  slug         String              @unique
+  status       PublicationStatus   @default(draft)
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+  translations CourseTranslation[]
+}
+
+model CourseTranslation {
+  id          String   @id @default(cuid())
+  courseId    String
+  language    String
+  title       String
+  description String?
+  content     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([courseId, language])
+  @@index([language])
+  @@index([courseId])
+}
+
+enum PublicationStatus {
+  draft
+  published
+}
