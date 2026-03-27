@@ -384,6 +384,54 @@ const courses = [
   },
 ];
 
+function buildStoredAttempt({
+  question,
+  selectedAnswer,
+  attemptNumber,
+  submittedAt,
+  flaggedQuestionIds = [],
+}) {
+  const correctAnswer = question.answers.find((answer) => answer.isCorrect);
+
+  if (!correctAnswer) {
+    throw new Error(`Question "${question.prompt}" does not have a correct answer.`);
+  }
+
+  const isCorrect = selectedAnswer.id === correctAnswer.id;
+  const correctCount = isCorrect ? 1 : 0;
+  const totalQuestions = 1;
+  const score = Math.round((correctCount / totalQuestions) * 100);
+
+  return {
+    attemptNumber,
+    score,
+    correctCount,
+    totalQuestions,
+    submittedAt: submittedAt.toISOString(),
+    flaggedQuestionIds,
+    selectedAnswers: [
+      {
+        questionId: question.id,
+        answerId: selectedAnswer.id,
+        isCorrect,
+      },
+    ],
+  };
+}
+
+function pickAnswer(question, kind = "correct") {
+  const answer =
+    kind === "correct"
+      ? question.answers.find((item) => item.isCorrect)
+      : question.answers.find((item) => !item.isCorrect);
+
+  if (!answer) {
+    throw new Error(`Unable to find "${kind}" answer for question "${question.prompt}".`);
+  }
+
+  return answer;
+}
+
 async function upsertCourse(courseData) {
   const course = await prisma.course.upsert({
     where: { slug: courseData.slug },
@@ -493,7 +541,26 @@ async function upsertCourse(courseData) {
     }
   }
 
-  return course;
+  const fullCourse = await prisma.course.findUnique({
+    where: { id: course.id },
+    include: {
+      quizzes: {
+        orderBy: { sortOrder: "asc" },
+        include: {
+          questions: {
+            orderBy: { sortOrder: "asc" },
+            include: {
+              answers: {
+                orderBy: { sortOrder: "asc" },
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+
+  return fullCourse;
 }
 
 async function seedAttempts(courseMap) {
@@ -515,66 +582,163 @@ async function seedAttempts(courseMap) {
 
   const now = Date.now();
 
+  const foundationsCourse = courseMap.get("esg-foundations-for-vet");
+  const environmentalCourse = courseMap.get("environmental-decision-making");
+  const socialCourse = courseMap.get("social-impact-in-practice");
+  const governanceCourse = courseMap.get("governance-in-practice");
+
+  if (!foundationsCourse || !environmentalCourse || !socialCourse || !governanceCourse) {
+    throw new Error("Missing seeded course data required to seed attempts.");
+  }
+
+  const foundationsPreQuiz = foundationsCourse.quizzes.find((quiz) => quiz.type === "pre");
+  const socialPreQuiz = socialCourse.quizzes.find((quiz) => quiz.type === "pre");
+  const socialPostQuiz = socialCourse.quizzes.find((quiz) => quiz.type === "post");
+  const governancePreQuiz = governanceCourse.quizzes.find((quiz) => quiz.type === "pre");
+
+  if (!foundationsPreQuiz || !socialPreQuiz || !socialPostQuiz || !governancePreQuiz) {
+    throw new Error("Missing seeded quizzes required to seed attempts.");
+  }
+
+  const foundationsPreQuestion = foundationsPreQuiz.questions[0];
+  const socialPreQuestion = socialPreQuiz.questions[0];
+  const socialPostQuestion = socialPostQuiz.questions[0];
+  const governancePreQuestion = governancePreQuiz.questions[0];
+
+  if (
+    !foundationsPreQuestion ||
+    !socialPreQuestion ||
+    !socialPostQuestion ||
+    !governancePreQuestion
+  ) {
+    throw new Error("Missing seeded questions required to seed attempts.");
+  }
+
   const attempts = [
     {
-      courseSlug: "esg-foundations-for-vet",
+      courseId: foundationsCourse.id,
       status: "in_progress",
-      progressPercent: 58,
-      preQuizScore: 80,
+      currentStage: "lessons",
+      currentLessonIndex: 3,
+      completedLessons: 2,
+      progressPercent: 50,
+      preQuizScore: 100,
       postQuizScore: null,
+      preQuizAttempts: [
+        buildStoredAttempt({
+          question: foundationsPreQuestion,
+          selectedAnswer: pickAnswer(foundationsPreQuestion, "correct"),
+          attemptNumber: 1,
+          submittedAt: new Date(now - 2 * 24 * 60 * 60 * 1000),
+        }),
+      ],
+      postQuizAttempts: [],
       startedAt: new Date(now - 2 * 24 * 60 * 60 * 1000),
       lastOpenedAt: new Date(now),
       completedAt: null,
     },
     {
-      courseSlug: "governance-in-practice",
+      courseId: governanceCourse.id,
       status: "in_progress",
-      progressPercent: 26,
-      preQuizScore: 60,
+      currentStage: "lessons",
+      currentLessonIndex: 2,
+      completedLessons: 1,
+      progressPercent: 32,
+      preQuizScore: 100,
       postQuizScore: null,
+      preQuizAttempts: [
+        buildStoredAttempt({
+          question: governancePreQuestion,
+          selectedAnswer: pickAnswer(governancePreQuestion, "correct"),
+          attemptNumber: 1,
+          submittedAt: new Date(now - 3 * 24 * 60 * 60 * 1000),
+        }),
+      ],
+      postQuizAttempts: [],
       startedAt: new Date(now - 3 * 24 * 60 * 60 * 1000),
       lastOpenedAt: new Date(now - 24 * 60 * 60 * 1000),
       completedAt: null,
     },
     {
-      courseSlug: "social-impact-in-practice",
+      courseId: socialCourse.id,
       status: "completed",
+      currentStage: "completed",
+      currentLessonIndex: 3,
+      completedLessons: 3,
       progressPercent: 100,
-      preQuizScore: 70,
-      postQuizScore: 90,
+      preQuizScore: 100,
+      postQuizScore: 100,
+      preQuizAttempts: [
+        buildStoredAttempt({
+          question: socialPreQuestion,
+          selectedAnswer: pickAnswer(socialPreQuestion, "correct"),
+          attemptNumber: 1,
+          submittedAt: new Date(now - 5 * 24 * 60 * 60 * 1000),
+        }),
+      ],
+      postQuizAttempts: [
+        buildStoredAttempt({
+          question: socialPostQuestion,
+          selectedAnswer: pickAnswer(socialPostQuestion, "correct"),
+          attemptNumber: 1,
+          submittedAt: new Date(now - 2 * 24 * 60 * 60 * 1000),
+        }),
+      ],
       startedAt: new Date(now - 5 * 24 * 60 * 60 * 1000),
       lastOpenedAt: new Date(now - 2 * 24 * 60 * 60 * 1000),
       completedAt: new Date(now - 2 * 24 * 60 * 60 * 1000),
     },
+    {
+      courseId: environmentalCourse.id,
+      status: "in_progress",
+      currentStage: "pre_quiz",
+      currentLessonIndex: 0,
+      completedLessons: 0,
+      progressPercent: 0,
+      preQuizScore: null,
+      postQuizScore: null,
+      preQuizAttempts: [],
+      postQuizAttempts: [],
+      startedAt: new Date(now - 12 * 60 * 60 * 1000),
+      lastOpenedAt: new Date(now - 6 * 60 * 60 * 1000),
+      completedAt: null,
+    },
   ];
 
   for (const attempt of attempts) {
-    const courseId = courseMap.get(attempt.courseSlug);
-    if (!courseId) continue;
-
     await prisma.userCourseAttempt.upsert({
       where: {
         userId_courseId: {
           userId: educator.id,
-          courseId,
+          courseId: attempt.courseId,
         },
       },
       update: {
         status: attempt.status,
+        currentStage: attempt.currentStage,
+        currentLessonIndex: attempt.currentLessonIndex,
+        completedLessons: attempt.completedLessons,
         progressPercent: attempt.progressPercent,
         preQuizScore: attempt.preQuizScore,
         postQuizScore: attempt.postQuizScore,
+        preQuizAttempts: attempt.preQuizAttempts,
+        postQuizAttempts: attempt.postQuizAttempts,
         startedAt: attempt.startedAt,
         lastOpenedAt: attempt.lastOpenedAt,
         completedAt: attempt.completedAt,
       },
       create: {
         userId: educator.id,
-        courseId,
+        courseId: attempt.courseId,
         status: attempt.status,
+        currentStage: attempt.currentStage,
+        currentLessonIndex: attempt.currentLessonIndex,
+        completedLessons: attempt.completedLessons,
         progressPercent: attempt.progressPercent,
         preQuizScore: attempt.preQuizScore,
         postQuizScore: attempt.postQuizScore,
+        preQuizAttempts: attempt.preQuizAttempts,
+        postQuizAttempts: attempt.postQuizAttempts,
         startedAt: attempt.startedAt,
         lastOpenedAt: attempt.lastOpenedAt,
         completedAt: attempt.completedAt,
@@ -592,7 +756,7 @@ async function main() {
 
   for (const courseData of courses) {
     const course = await upsertCourse(courseData);
-    courseMap.set(course.slug, course.id);
+    courseMap.set(course.slug, course);
   }
 
   await seedAttempts(courseMap);

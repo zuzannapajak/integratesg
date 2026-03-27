@@ -5,13 +5,11 @@ import StatsChart from "@/components/dashboard/stats-chart";
 import { motion, type Variants } from "framer-motion";
 import {
   ArrowRight,
-  BookOpen,
   CheckCircle2,
   Clock,
   FolderKanban,
   LineChart,
   LogOut,
-  PlayCircle,
   Settings,
   TrendingUp,
   UserRound,
@@ -21,11 +19,51 @@ import React from "react";
 
 export type DashboardRole = "educator" | "student" | "admin";
 
+export type DashboardStat = {
+  label: string;
+  value: string;
+};
+
+export type DashboardChartPoint = {
+  label: string;
+  value: number;
+};
+
+export type DashboardMetric = {
+  label: string;
+  value: string;
+};
+
+export type DashboardKpi = {
+  label: string;
+  value: string;
+  hint: string;
+};
+
+export type DashboardContinueItem = {
+  title: string;
+  description: string;
+  progress: number;
+  href: string;
+  badge: string;
+  ctaLabel: string;
+  kindLabel: string;
+};
+
 type Props = {
   locale: string;
   role: DashboardRole;
   displayName: string;
   email: string;
+  heroStats: DashboardStat[];
+  continueLearning: DashboardContinueItem | null;
+  publishedCoursesCount: number;
+  learnerSummaryMetrics: DashboardMetric[];
+  learnerActivityData: DashboardChartPoint[];
+  learnerTrendLabel: string;
+  adminActivityData: DashboardChartPoint[];
+  adminTrendLabel: string;
+  adminKpis: DashboardKpi[];
 };
 
 type RoleConfig = {
@@ -82,7 +120,21 @@ const SURFACE =
 
 const SOFT_INNER_BORDER = "border border-[#edf1f5]";
 
-export default function DashboardShell({ locale, role, displayName }: Props) {
+export default function DashboardShell({
+  locale,
+  role,
+  displayName,
+  email,
+  heroStats,
+  continueLearning,
+  publishedCoursesCount,
+  learnerSummaryMetrics,
+  learnerActivityData,
+  learnerTrendLabel,
+  adminActivityData,
+  adminTrendLabel,
+  adminKpis,
+}: Props) {
   const roleConfig = roleConfigs[role];
 
   return (
@@ -95,6 +147,8 @@ export default function DashboardShell({ locale, role, displayName }: Props) {
           role={role}
           roleConfig={roleConfig}
           displayName={displayName}
+          email={email}
+          stats={heroStats}
         />
 
         <motion.div
@@ -103,9 +157,39 @@ export default function DashboardShell({ locale, role, displayName }: Props) {
           variants={STAGGER_CONTAINER}
           className="space-y-8"
         >
-          {role === "student" && <StudentDashboard locale={locale} roleConfig={roleConfig} />}
-          {role === "educator" && <EducatorDashboard locale={locale} roleConfig={roleConfig} />}
-          {role === "admin" && <AdminDashboard locale={locale} roleConfig={roleConfig} />}
+          {role === "student" && (
+            <LearnerDashboard
+              locale={locale}
+              roleConfig={roleConfig}
+              continueLearning={continueLearning}
+              publishedCoursesCount={publishedCoursesCount}
+              summaryMetrics={learnerSummaryMetrics}
+              activityData={learnerActivityData}
+              activityTrendLabel={learnerTrendLabel}
+            />
+          )}
+
+          {role === "educator" && (
+            <LearnerDashboard
+              locale={locale}
+              roleConfig={roleConfig}
+              continueLearning={continueLearning}
+              publishedCoursesCount={publishedCoursesCount}
+              summaryMetrics={learnerSummaryMetrics}
+              activityData={learnerActivityData}
+              activityTrendLabel={learnerTrendLabel}
+            />
+          )}
+
+          {role === "admin" && (
+            <AdminDashboard
+              locale={locale}
+              roleConfig={roleConfig}
+              kpis={adminKpis}
+              activityData={adminActivityData}
+              activityTrendLabel={adminTrendLabel}
+            />
+          )}
         </motion.div>
       </div>
     </main>
@@ -114,34 +198,18 @@ export default function DashboardShell({ locale, role, displayName }: Props) {
 
 function DashboardHero({
   locale,
-  role,
   roleConfig,
   displayName,
+  email,
+  stats,
 }: {
   locale: string;
   role: DashboardRole;
   roleConfig: RoleConfig;
   displayName: string;
+  email: string;
+  stats: DashboardStat[];
 }) {
-  const stats =
-    role === "educator"
-      ? [
-          { label: "Modules in progress", value: "2" },
-          { label: "Completed", value: "5" },
-          { label: "Weekly streak", value: "4 days" },
-        ]
-      : role === "admin"
-        ? [
-            { label: "Active users", value: "184" },
-            { label: "Started modules", value: "72" },
-            { label: "Completion rate", value: "68%" },
-          ]
-        : [
-            { label: "In progress", value: "2" },
-            { label: "Completed", value: "7" },
-            { label: "Weekly streak", value: "4 days" },
-          ];
-
   return (
     <header className={`${SURFACE} mb-10 p-6 md:p-8`}>
       <div className="flex flex-col justify-between gap-6 md:flex-row md:items-start">
@@ -157,6 +225,10 @@ function DashboardHero({
               {roleConfig.welcome}, {displayName}
             </h1>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">{roleConfig.intro}</p>
+
+            <div className="mt-3 inline-flex rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-500">
+              {email}
+            </div>
 
             <div className="mt-5 flex flex-wrap gap-3">
               {stats.map((s) => (
@@ -196,121 +268,23 @@ function DashboardHero({
   );
 }
 
-function StudentDashboard({ locale, roleConfig }: { locale: string; roleConfig: RoleConfig }) {
-  return (
-    <div className="grid grid-cols-1 gap-6 xl:grid-cols-12">
-      <motion.div variants={FADE_UP} className={`xl:col-span-5 ${SURFACE} p-8`}>
-        <div className="mb-5 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">
-            <Clock className="h-4 w-4" />
-            Last activity
-          </div>
-
-          <span className="rounded-full border border-orange-100 bg-orange-50 px-2.5 py-1 text-xs font-semibold text-orange-700">
-            ePortfolio
-          </span>
-        </div>
-
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900">
-          Introduction to sustainability
-        </h2>
-        <p className="mt-2 text-sm leading-6 text-slate-500">
-          Continue your latest ePortfolio lesson to stay on track and move closer to completion.
-        </p>
-
-        <div className="mt-6">
-          <div className="mb-2 flex justify-between text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">
-            <span>Progress</span>
-            <span className="text-slate-900">64%</span>
-          </div>
-          <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100">
-            <div
-              className="h-full rounded-full"
-              style={{ width: "64%", backgroundColor: roleConfig.accent }}
-            />
-          </div>
-        </div>
-
-        <div className="mt-7">
-          <Link
-            href={`/${locale}/eportfolio`}
-            className="inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5"
-            style={{
-              backgroundColor: roleConfig.accent,
-              boxShadow: "0 10px 24px rgba(35,45,62,0.10)",
-            }}
-          >
-            Continue module
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-      </motion.div>
-
-      <motion.div
-        variants={FADE_UP}
-        className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:col-span-7"
-      >
-        <CoreAreaCard
-          icon={<BookOpen className="h-5 w-5" />}
-          title="ePortfolio"
-          description="Explore structured lessons, case studies, and learning materials."
-          meta="12 lessons"
-          href={`/${locale}/eportfolio`}
-          accentColor={roleConfig.accent}
-          toneClass="bg-[linear-gradient(180deg,rgba(255,247,242,0.95)_0%,rgba(255,255,255,0.96)_100%)] border-orange-100/80"
-          iconToneClass="bg-orange-100 text-orange-700"
-          metaToneClass="border-orange-100 bg-orange-50 text-orange-700"
-        />
-
-        <CoreAreaCard
-          icon={<PlayCircle className="h-5 w-5" />}
-          title="Scenario Simulator"
-          description="Practice decision-making through guided interactive scenarios."
-          meta="3 scenarios"
-          href={`/${locale}/scenarios`}
-          accentColor={roleConfig.accent}
-          toneClass="bg-[linear-gradient(180deg,rgba(245,249,255,0.96)_0%,rgba(255,255,255,0.96)_100%)] border-sky-100/80"
-          iconToneClass="bg-sky-100 text-sky-700"
-          metaToneClass="border-sky-100 bg-sky-50 text-sky-700"
-        />
-      </motion.div>
-
-      <motion.div variants={FADE_UP} className={`xl:col-span-7 ${SURFACE} p-8`}>
-        <div className="mb-8 flex items-center justify-between gap-4">
-          <div>
-            <h3 className="text-xl font-bold tracking-tight text-slate-900">Your activity</h3>
-            <p className="mt-1 text-sm leading-6 text-slate-500">
-              A lightweight view of your recent learning rhythm.
-            </p>
-          </div>
-
-          <span className="rounded-full border border-orange-100 bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-700">
-            +8.2% vs last week
-          </span>
-        </div>
-
-        <StatsChart accentColor={roleConfig.accent} data={studentChartData} height={240} />
-      </motion.div>
-
-      <motion.div variants={FADE_UP} className={`xl:col-span-5 ${SURFACE} p-8`}>
-        <div className="mb-6">
-          <h3 className="text-xl font-bold tracking-tight text-slate-900">Progress summary</h3>
-          <p className="mt-1 text-sm leading-6 text-slate-500">
-            Key indicators that help you stay motivated.
-          </p>
-        </div>
-
-        <div className="space-y-3">
-          <MetricRow label="Completed modules" value="7" />
-          <MetricRow label="Finished scenarios" value="3" />
-          <MetricRow label="Average test score" value="84%" />
-        </div>
-      </motion.div>
-    </div>
-  );
-}
-
-function EducatorDashboard({ locale, roleConfig }: { locale: string; roleConfig: RoleConfig }) {
+function LearnerDashboard({
+  locale,
+  roleConfig,
+  continueLearning,
+  publishedCoursesCount,
+  summaryMetrics,
+  activityData,
+  activityTrendLabel,
+}: {
+  locale: string;
+  roleConfig: RoleConfig;
+  continueLearning: DashboardContinueItem | null;
+  publishedCoursesCount: number;
+  summaryMetrics: DashboardMetric[];
+  activityData: DashboardChartPoint[];
+  activityTrendLabel: string;
+}) {
   return (
     <div className="grid grid-cols-1 gap-6 xl:grid-cols-12">
       <motion.div variants={FADE_UP} className={`xl:col-span-5 ${SURFACE} p-8`}>
@@ -321,40 +295,48 @@ function EducatorDashboard({ locale, roleConfig }: { locale: string; roleConfig:
           </div>
 
           <span className="rounded-full border border-emerald-100 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
-            Curriculum
+            {continueLearning?.badge ?? "Curriculum"}
           </span>
         </div>
 
         <h2 className="text-2xl font-bold tracking-tight text-slate-900">
-          ESG foundations for VET providers
+          {continueLearning?.title ?? "No module opened yet"}
         </h2>
         <p className="mt-2 text-sm leading-6 text-slate-500">
-          Resume your current curriculum module and continue your learning journey.
+          {continueLearning?.description ??
+            "Open your first curriculum module to start building activity on the dashboard."}
         </p>
+
+        <div className="mt-4 inline-flex rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600">
+          {continueLearning?.kindLabel ?? "Ready to start"}
+        </div>
 
         <div className="mt-6">
           <div className="mb-2 flex justify-between text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">
             <span>Progress</span>
-            <span className="text-slate-900">58%</span>
+            <span className="text-slate-900">{continueLearning?.progress ?? 0}%</span>
           </div>
           <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100">
             <div
               className="h-full rounded-full"
-              style={{ width: "58%", backgroundColor: roleConfig.accent }}
+              style={{
+                width: `${continueLearning?.progress ?? 0}%`,
+                backgroundColor: roleConfig.accent,
+              }}
             />
           </div>
         </div>
 
         <div className="mt-7">
           <Link
-            href={`/${locale}/curriculum`}
+            href={continueLearning?.href ?? `/${locale}/curriculum`}
             className="inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5"
             style={{
               backgroundColor: roleConfig.accent,
               boxShadow: "0 10px 24px rgba(35,45,62,0.10)",
             }}
           >
-            Continue curriculum
+            {continueLearning?.ctaLabel ?? "Browse curriculum"}
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
@@ -367,8 +349,8 @@ function EducatorDashboard({ locale, roleConfig }: { locale: string; roleConfig:
         <CoreAreaCard
           icon={<FolderKanban className="h-5 w-5" />}
           title="Curriculum"
-          description="Access learning modules, quizzes, and structured course flow."
-          meta="4 modules"
+          description="Open structured modules, checkpoints, and guided learning flow."
+          meta={`${publishedCoursesCount} published modules`}
           href={`/${locale}/curriculum`}
           accentColor={roleConfig.accent}
           toneClass="bg-[linear-gradient(180deg,rgba(243,252,248,0.96)_0%,rgba(255,255,255,0.96)_100%)] border-emerald-100/80"
@@ -377,15 +359,15 @@ function EducatorDashboard({ locale, roleConfig }: { locale: string; roleConfig:
         />
 
         <CoreAreaCard
-          icon={<BookOpen className="h-5 w-5" />}
-          title="ePortfolio"
-          description="Open case studies and supporting educational materials."
-          meta="12 case studies"
-          href={`/${locale}/eportfolio`}
+          icon={<Settings className="h-5 w-5" />}
+          title="Account settings"
+          description="Manage your profile preferences and platform settings."
+          meta="Profile and preferences"
+          href={`/${locale}/settings`}
           accentColor={roleConfig.accent}
-          toneClass="bg-[linear-gradient(180deg,rgba(250,247,242,0.96)_0%,rgba(255,255,255,0.96)_100%)] border-amber-100/80"
-          iconToneClass="bg-amber-100 text-amber-700"
-          metaToneClass="border-amber-100 bg-amber-50 text-amber-700"
+          toneClass="bg-[linear-gradient(180deg,rgba(247,249,252,0.96)_0%,rgba(255,255,255,0.96)_100%)] border-slate-100/80"
+          iconToneClass="bg-slate-100 text-slate-700"
+          metaToneClass="border-slate-200 bg-slate-50 text-slate-700"
         />
       </motion.div>
 
@@ -394,44 +376,60 @@ function EducatorDashboard({ locale, roleConfig }: { locale: string; roleConfig:
           <div>
             <h3 className="text-xl font-bold tracking-tight text-slate-900">Your activity</h3>
             <p className="mt-1 text-sm leading-6 text-slate-500">
-              A simple view of your own learning activity over the last 7 days.
+              Real events from your curriculum activity over the last 7 days.
             </p>
           </div>
 
           <span className="rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
-            +6.4% vs last week
+            {activityTrendLabel}
           </span>
         </div>
 
-        <StatsChart accentColor={roleConfig.accent} data={educatorChartData} height={240} />
+        <StatsChart
+          accentColor={roleConfig.accent}
+          data={activityData}
+          height={240}
+          valueLabel="Events"
+        />
       </motion.div>
 
       <motion.div variants={FADE_UP} className={`xl:col-span-5 ${SURFACE} p-8`}>
         <div className="mb-6">
           <h3 className="text-xl font-bold tracking-tight text-slate-900">Progress summary</h3>
           <p className="mt-1 text-sm leading-6 text-slate-500">
-            A compact overview of your current learning progress.
+            A compact overview built from your real curriculum data.
           </p>
         </div>
 
         <div className="space-y-3">
-          <MetricRow label="Completed curriculum modules" value="5" />
-          <MetricRow label="Completed ePortfolio items" value="8" />
-          <MetricRow label="Average score" value="81%" />
+          {summaryMetrics.map((metric) => (
+            <MetricRow key={metric.label} label={metric.label} value={metric.value} />
+          ))}
         </div>
       </motion.div>
     </div>
   );
 }
 
-function AdminDashboard({ locale, roleConfig }: { locale: string; roleConfig: RoleConfig }) {
+function AdminDashboard({
+  locale,
+  roleConfig,
+  kpis,
+  activityData,
+  activityTrendLabel,
+}: {
+  locale: string;
+  roleConfig: RoleConfig;
+  kpis: DashboardKpi[];
+  activityData: DashboardChartPoint[];
+  activityTrendLabel: string;
+}) {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <KpiCard label="Active users" value="184" hint="+12%" />
-        <KpiCard label="Started modules" value="72" hint="+5%" />
-        <KpiCard label="Course completion" value="68%" hint="Stable" />
-        <KpiCard label="Scenario launches" value="49" hint="+8%" />
+        {kpis.map((kpi) => (
+          <KpiCard key={kpi.label} label={kpi.label} value={kpi.value} hint={kpi.hint} />
+        ))}
       </div>
 
       <motion.div variants={FADE_UP} className={`${SURFACE} p-8`}>
@@ -439,20 +437,20 @@ function AdminDashboard({ locale, roleConfig }: { locale: string; roleConfig: Ro
           <div>
             <h3 className="text-xl font-bold tracking-tight text-slate-900">Platform activity</h3>
             <p className="mt-1 text-sm leading-6 text-slate-500">
-              An overview of platform usage and engagement in the last 7 days.
+              Distinct active users per day based on real curriculum activity.
             </p>
           </div>
 
           <span className="inline-flex rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-600">
-            Last sync: 5 min ago
+            {activityTrendLabel}
           </span>
         </div>
 
         <StatsChart
           accentColor={roleConfig.accent}
-          data={adminChartData}
+          data={activityData}
           height={260}
-          valueLabel="Users"
+          valueLabel="Active users"
         />
       </motion.div>
 
@@ -460,21 +458,21 @@ function AdminDashboard({ locale, roleConfig }: { locale: string; roleConfig: Ro
         <HubCard
           icon={<LineChart className="h-5 w-5" />}
           title="Full report"
-          meta="Indicators and trends"
+          meta="Curriculum platform overview"
           href={`/${locale}/admin/stats`}
           accentColor={roleConfig.accent}
         />
         <HubCard
           icon={<TrendingUp className="h-5 w-5" />}
           title="Participation"
-          meta="Activity and engagement"
+          meta="User activity and launches"
           href={`/${locale}/admin/stats`}
           accentColor={roleConfig.accent}
         />
         <HubCard
           icon={<CheckCircle2 className="h-5 w-5" />}
           title="Completions"
-          meta="Progress and outcomes"
+          meta="Finished modules and results"
           href={`/${locale}/admin/stats`}
           accentColor={roleConfig.accent}
         />
@@ -601,33 +599,3 @@ function KpiCard({ label, value, hint }: { label: string; value: string; hint: s
     </motion.div>
   );
 }
-
-const studentChartData = [
-  { label: "Mon", value: 18 },
-  { label: "Tue", value: 26 },
-  { label: "Wed", value: 32 },
-  { label: "Thu", value: 28 },
-  { label: "Fri", value: 41 },
-  { label: "Sat", value: 34 },
-  { label: "Sun", value: 39 },
-];
-
-const educatorChartData = [
-  { label: "Mon", value: 14 },
-  { label: "Tue", value: 19 },
-  { label: "Wed", value: 24 },
-  { label: "Thu", value: 22 },
-  { label: "Fri", value: 31 },
-  { label: "Sat", value: 26 },
-  { label: "Sun", value: 29 },
-];
-
-const adminChartData = [
-  { label: "Mon", value: 42 },
-  { label: "Tue", value: 57 },
-  { label: "Wed", value: 64 },
-  { label: "Thu", value: 61 },
-  { label: "Fri", value: 79 },
-  { label: "Sat", value: 48 },
-  { label: "Sun", value: 53 },
-];
