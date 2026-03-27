@@ -183,16 +183,16 @@ export default function CourseDetailShell({ locale, module }: Props) {
 
           <aside className="flex h-full flex-col gap-4">
             <div className="rounded-[28px] border border-[#e7edf3] bg-white/82 px-5 py-6 shadow-[0_10px_30px_rgba(35,45,62,0.05)] backdrop-blur-xl">
-              <div className="mb-4 flex items-baseline gap-2">
-                <div className="text-[1.7rem] font-bold leading-none tracking-tight text-[#31425a]">
+              <div className="mb-3 flex items-baseline gap-2">
+                <div className="text-[1.3rem] font-bold leading-none tracking-tight text-[#31425a]">
                   {module.progress}%
                 </div>
-                <div className="text-[0.72rem] font-bold uppercase tracking-[0.16em] text-[#8a97a6]">
+                <div className="text-[0.7rem] font-bold uppercase tracking-[0.16em] text-[#8a97a6]">
                   Completed
                 </div>
               </div>
 
-              <div className="h-2.5 overflow-hidden rounded-full bg-[#edf2f7]">
+              <div className="h-2 overflow-hidden rounded-full bg-[#edf2f7]">
                 <motion.div
                   initial={{ width: 0 }}
                   animate={{ width: `${module.progress}%` }}
@@ -304,7 +304,7 @@ export default function CourseDetailShell({ locale, module }: Props) {
               transition={{ duration: 0.18 }}
               className="p-5 md:p-7"
             >
-              <SectionTitle eyebrow="Learning outcomes" title="What the educator should gain" />
+              <SectionTitle eyebrow="Learning outcomes" title="What you will learn" />
 
               <div className="mt-5 grid gap-3">
                 {module.outcomes.map((outcome, index) => (
