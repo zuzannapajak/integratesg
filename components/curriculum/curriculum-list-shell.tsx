@@ -1,5 +1,6 @@
 "use client";
 
+import { CurriculumModuleViewModel } from "@/lib/curriculum/types";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowLeft,
@@ -17,107 +18,20 @@ import {
   Target,
   Users,
 } from "lucide-react";
+import Link from "next/link";
 import { ChangeEvent, useMemo, useState } from "react";
 
 type ModuleArea = "environmental" | "social" | "governance" | "cross-cutting";
 type ModuleStatus = "not_started" | "in_progress" | "completed";
 
-type CurriculumModule = {
-  slug: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  area: ModuleArea;
-  status: ModuleStatus;
-  progress: number;
-  duration: string;
-  lessons: number;
-  quizzes: number;
-  lastOpened: string;
-  difficulty: "Foundation" | "Intermediate";
-  outcomes: string[];
-  structure: string[];
+type Props = {
+  modules: CurriculumModuleViewModel[];
 };
 
 const SURFACE =
   "rounded-[28px] border border-white/70 bg-white/88 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";
 
 const ITEMS_PER_PAGE = 12;
-
-const modules: CurriculumModule[] = [
-  {
-    slug: "esg-foundations-for-vet",
-    title: "ESG foundations for VET providers",
-    subtitle: "Start here",
-    description:
-      "Build a shared understanding of ESG integration, material topics, and practical decision-making in educational and organisational contexts.",
-    area: "cross-cutting",
-    status: "in_progress",
-    progress: 58,
-    duration: "40 min",
-    lessons: 4,
-    quizzes: 2,
-    lastOpened: "Today",
-    difficulty: "Foundation",
-    outcomes: ["Understand ESG integration", "Recognise interactions", "Prepare for scenarios"],
-    structure: ["Introduction", "Pre-test", "Core content", "Post-test"],
-  },
-  {
-    slug: "environmental-decision-making",
-    title: "Environmental decision-making",
-    subtitle: "Environmental pillar",
-    description:
-      "Explore trade-offs around environmental impact, resource efficiency, and sustainability-related decisions using realistic learning contexts.",
-    area: "environmental",
-    status: "not_started",
-    progress: 0,
-    duration: "35 min",
-    lessons: 3,
-    quizzes: 2,
-    lastOpened: "Not started yet",
-    difficulty: "Foundation",
-    outcomes: ["Identify decision points", "Interpret implications", "Build confidence"],
-    structure: ["Introduction", "Pre-test", "Content", "Post-test"],
-  },
-  {
-    slug: "social-impact-in-practice",
-    title: "Social impact in practice",
-    subtitle: "Social pillar",
-    description:
-      "Examine inclusion, stakeholder sensitivity, wellbeing, and responsibility through applied examples aligned with the social dimension of ESG.",
-    area: "social",
-    status: "completed",
-    progress: 100,
-    duration: "30 min",
-    lessons: 3,
-    quizzes: 2,
-    lastOpened: "2 days ago",
-    difficulty: "Foundation",
-    outcomes: [
-      "Recognise social risks",
-      "Apply people-centred thinking",
-      "Evaluate responsibility",
-    ],
-    structure: ["Introduction", "Pre-test", "Content", "Post-test"],
-  },
-  {
-    slug: "governance-in-practice",
-    title: "Governance in practice",
-    subtitle: "Governance pillar",
-    description:
-      "Focus on accountability, transparency, and decision structures that support credible ESG integration across teams and institutions.",
-    area: "governance",
-    status: "in_progress",
-    progress: 26,
-    duration: "45 min",
-    lessons: 5,
-    quizzes: 2,
-    lastOpened: "Yesterday",
-    difficulty: "Intermediate",
-    outcomes: ["Understand credibility", "Relate policies", "Translate concepts"],
-    structure: ["Introduction", "Pre-test", "Case-based", "Post-test"],
-  },
-];
 
 function getAreaMeta(area: ModuleArea) {
   switch (area) {
@@ -175,7 +89,7 @@ function getStatusMeta(status: ModuleStatus) {
   }
 }
 
-export default function CurriculumListShell() {
+export default function CurriculumListShell({ modules }: Props) {
   const [search, setSearch] = useState("");
   const [selectedArea, setSelectedArea] = useState<ModuleArea | "all">("all");
   const [selectedStatus, setSelectedStatus] = useState<ModuleStatus | "all">("all");
@@ -193,19 +107,23 @@ export default function CurriculumListShell() {
         normalized.length === 0 ||
         module.title.toLowerCase().includes(normalized) ||
         module.description.toLowerCase().includes(normalized);
+
       const matchesArea = selectedArea === "all" || module.area === selectedArea;
       const matchesStatus = selectedStatus === "all" || module.status === selectedStatus;
+
       return matchesSearch && matchesArea && matchesStatus;
     });
 
     return [...next].sort((a, b) => {
       if (sortBy === "title") return a.title.localeCompare(b.title);
       if (sortBy === "progress") return b.progress - a.progress;
-      const weight = (m: CurriculumModule) =>
+
+      const weight = (m: CurriculumModuleViewModel) =>
         m.status === "in_progress" ? 3 : m.status === "not_started" ? 2 : 1;
+
       return weight(b) - weight(a);
     });
-  }, [search, selectedArea, selectedStatus, sortBy]);
+  }, [modules, search, selectedArea, selectedStatus, sortBy]);
 
   const totalPages = Math.ceil(filteredModules.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -219,7 +137,7 @@ export default function CurriculumListShell() {
       modules.find((m) => m.status === "in_progress")?.slug ??
       modules.find((m) => m.status === "not_started")?.slug
     );
-  }, []);
+  }, [modules]);
 
   return (
     <div className="space-y-8">
@@ -380,10 +298,14 @@ export default function CurriculumListShell() {
                         >
                           {statusMeta.icon} {statusMeta.label}
                         </span>
-                        <button className="inline-flex items-center gap-2 rounded-xl bg-[#31425a] px-4 py-2.5 text-xs font-bold text-white transition shadow-sm hover:bg-[#253347]">
+
+                        <Link
+                          href={`./curriculum/${module.slug}`}
+                          className="inline-flex items-center gap-2 rounded-xl bg-[#31425a] px-4 py-2.5 text-xs font-bold text-white transition shadow-sm hover:bg-[#253347]"
+                        >
                           {module.status === "completed" ? "Review" : "Continue"}
                           <ArrowRight className="h-3.5 w-3.5" />
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   </motion.article>
@@ -405,9 +327,7 @@ export default function CurriculumListShell() {
               <div className="flex items-center gap-2">
                 <button
                   type="button"
-                  onClick={() => {
-                    setCurrentPage((p) => Math.max(1, p - 1));
-                  }}
+                  onClick={() => { setCurrentPage((p) => Math.max(1, p - 1)); }}
                   disabled={currentPage === 1}
                   className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#d9e2ec] bg-white transition disabled:opacity-30 hover:bg-[#f8fafc]"
                 >
@@ -419,9 +339,7 @@ export default function CurriculumListShell() {
                     <button
                       key={i + 1}
                       type="button"
-                      onClick={() => {
-                        setCurrentPage(i + 1);
-                      }}
+                      onClick={() => { setCurrentPage(i + 1); }}
                       className={`h-10 min-w-10 rounded-xl text-xs font-bold transition ${
                         currentPage === i + 1
                           ? "bg-[#31425a] text-white shadow-md"
@@ -435,9 +353,7 @@ export default function CurriculumListShell() {
 
                 <button
                   type="button"
-                  onClick={() => {
-                    setCurrentPage((p) => Math.min(totalPages, p + 1));
-                  }}
+                  onClick={() => { setCurrentPage((p) => Math.min(totalPages, p + 1)); }}
                   disabled={currentPage === totalPages}
                   className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#d9e2ec] bg-white transition disabled:opacity-30 hover:bg-[#f8fafc]"
                 >

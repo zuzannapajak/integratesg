@@ -2,12 +2,18 @@
 
 import CurriculumListShell from "@/components/curriculum/curriculum-list-shell";
 import MyCoursesShell from "@/components/curriculum/my-courses-shell";
+import { CurriculumModuleViewModel } from "@/lib/curriculum/types";
 import { BookOpen, Sparkles } from "lucide-react";
 import { useState } from "react";
 
 type ViewMode = "my-courses" | "all-courses";
 
-export default function CurriculumSwitcher() {
+type Props = {
+  myCourses: CurriculumModuleViewModel[];
+  allCourses: CurriculumModuleViewModel[];
+};
+
+export default function CurriculumSwitcher({ myCourses, allCourses }: Props) {
   const [viewMode, setViewMode] = useState<ViewMode>("my-courses");
 
   return (
@@ -46,7 +52,11 @@ export default function CurriculumSwitcher() {
         </div>
       </div>
 
-      {viewMode === "my-courses" ? <MyCoursesShell /> : <CurriculumListShell />}
+      {viewMode === "my-courses" ? (
+        <MyCoursesShell modules={myCourses} />
+      ) : (
+        <CurriculumListShell modules={allCourses} />
+      )}
     </section>
   );
 }

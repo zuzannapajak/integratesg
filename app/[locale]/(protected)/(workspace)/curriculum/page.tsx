@@ -1,6 +1,7 @@
 import CurriculumSwitcher from "@/components/curriculum/curriculum-switcher";
 import { requireRole } from "@/features/auth/requireRole";
 import { APP_ROLES } from "@/lib/auth/roles";
+import { getAllCurriculumModules, getMyCurriculumModules } from "@/lib/curriculum/queries";
 import { BookOpen } from "lucide-react";
 
 type Props = {
@@ -9,7 +10,12 @@ type Props = {
 
 export default async function CurriculumPage({ params }: Props) {
   const { locale } = await params;
-  await requireRole(locale, APP_ROLES.educator);
+  const { user } = await requireRole(locale, APP_ROLES.educator);
+
+  const [myCourses, allCourses] = await Promise.all([
+    getMyCurriculumModules({ userId: user.id, locale }),
+    getAllCurriculumModules({ userId: user.id, locale }),
+  ]);
 
   return (
     <main className="relative min-h-screen bg-[#f5f5f3] pb-20 transition-all duration-300">
@@ -29,7 +35,7 @@ export default async function CurriculumPage({ params }: Props) {
           </div>
         </header>
 
-        <CurriculumSwitcher />
+        <CurriculumSwitcher myCourses={myCourses} allCourses={allCourses} />
       </div>
     </main>
   );
