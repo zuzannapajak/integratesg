@@ -18,6 +18,11 @@ type CompleteLessonInput = {
   lessonIndex: number;
 };
 
+type RetakeCourseInput = {
+  locale: string;
+  courseSlug: string;
+};
+
 type StoredSelectedAnswer = {
   questionId: string;
   answerId: string;
@@ -120,7 +125,7 @@ export async function submitQuizAttemptAction(input: SubmitQuizInput) {
     throw new Error("Course not found.");
   }
 
-  const quiz = course.quizzes.at(0);
+  const quiz = course.quizzes[0];
   if (!quiz) {
     throw new Error("Quiz not found.");
   }
@@ -324,6 +329,65 @@ export async function completeLessonAction(input: CompleteLessonInput) {
         hasFinishedPreQuiz: true,
         hasFinishedPostQuiz: false,
       }),
+      lastOpenedAt: new Date(),
+    },
+  });
+
+  const courseModule = await getCourseLearningWorkspace({
+    userId,
+    locale: input.locale,
+    slug: input.courseSlug,
+  });
+
+  return { module: courseModule };
+}
+
+export async function retakeCourseAction(input: RetakeCourseInput) {
+  const userId = await getAuthedUserId();
+
+  const course = await prisma.course.findUnique({
+    where: { slug: input.courseSlug },
+    select: {
+      id: true,
+    },
+  });
+
+  if (!course) {
+    throw new Error("Course not found.");
+  }
+
+  const courseAttempt = await prisma.userCourseAttempt.findUnique({
+    where: {
+      userId_courseId: {
+        userId,
+        courseId: course.id,
+      },
+    },
+  });
+
+  if (!courseAttempt) {
+    throw new Error("Course attempt not found.");
+  }
+
+  await prisma.userCourseAttempt.update({
+    where: {
+      userId_courseId: {
+        userId,
+        courseId: course.id,
+      },
+    },
+    data: {
+      status: "in_progress",
+      currentStage: "pre_quiz",
+      currentLessonIndex: 0,
+      completedLessons: 0,
+      progressPercent: 0,
+      preQuizAttempts: [],
+      postQuizAttempts: [],
+      preQuizScore: null,
+      postQuizScore: null,
+      completedAt: null,
+      startedAt: new Date(),
       lastOpenedAt: new Date(),
     },
   });

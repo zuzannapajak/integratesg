@@ -277,7 +277,7 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
 
               <p className="mt-3 text-sm leading-6 text-[#667180]">
                 {module.progressState.currentStage === "completed"
-                  ? "This module is finished. You can review it or continue with another topic."
+                  ? "This module is finished. You can review or retake it."
                   : "Continue from your current step or explore the full learning flow first."}
               </p>
 

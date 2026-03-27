@@ -1,6 +1,10 @@
 "use client";
 
-import { completeLessonAction, submitQuizAttemptAction } from "@/features/curriculum/actions";
+import {
+  completeLessonAction,
+  retakeCourseAction,
+  submitQuizAttemptAction,
+} from "@/features/curriculum/actions";
 import { CurriculumModuleViewModel } from "@/lib/curriculum/types";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -10,6 +14,7 @@ import {
   Circle,
   Flag,
   PlayCircle,
+  RotateCcw,
   Sparkles,
   Trophy,
   X,
@@ -45,6 +50,7 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
   const [flaggedQuestionIds, setFlaggedQuestionIds] = useState<string[]>([]);
   const [reviewState, setReviewState] = useState<ReviewState | null>(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [retakeConfirmOpen, setRetakeConfirmOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const stage = module.progressState.currentStage;
@@ -190,6 +196,28 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
         });
 
         if (result.module) {
+          setModule(result.module);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    });
+  };
+
+  const handleRetakeModule = () => {
+    startTransition(async () => {
+      try {
+        const result = await retakeCourseAction({
+          locale,
+          courseSlug: module.slug,
+        });
+
+        if (result.module) {
+          setSelectedAnswers({});
+          setFlaggedQuestionIds([]);
+          setReviewState(null);
+          setConfirmOpen(false);
+          setRetakeConfirmOpen(false);
           setModule(result.module);
         }
       } catch (error) {
@@ -618,9 +646,21 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                 </p>
 
                 <div className="mt-6 flex flex-wrap gap-3">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setRetakeConfirmOpen(true);
+                    }}
+                    disabled={isPending}
+                    className="inline-flex items-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347] disabled:opacity-60"
+                  >
+                    <RotateCcw className="h-4.5 w-4.5" />
+                    Retake module
+                  </button>
+
                   <Link
                     href={`/${locale}/curriculum/${module.slug}`}
-                    className="inline-flex items-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347]"
+                    className="inline-flex items-center gap-2 rounded-2xl border border-[#d9e2ec] bg-white px-5 py-3 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc]"
                   >
                     Review module overview
                   </Link>
@@ -648,8 +688,8 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                 <div className="rounded-3xl border border-[#e8edf3] bg-white/90 p-5 shadow-[0_10px_28px_rgba(35,45,62,0.05)]">
                   <p className="text-sm font-semibold text-[#31425a]">What’s next</p>
                   <p className="mt-2 text-sm leading-6 text-[#667180]">
-                    Revisit the module detail page for your learning history, or move on to another
-                    related topic.
+                    Retake the module from the beginning, revisit the overview, or move on to
+                    another related topic.
                   </p>
                 </div>
               </div>
@@ -742,6 +782,90 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                     >
                       Submit checkpoint
                       <ArrowRight className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {retakeConfirmOpen ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(15,23,42,0.42)] px-4 backdrop-blur-[6px]"
+          >
+            <motion.div
+              initial={{ opacity: 0, y: 12, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 8, scale: 0.98 }}
+              className="w-full max-w-xl overflow-hidden rounded-[30px] border border-white/70 bg-white shadow-[0_24px_70px_rgba(35,45,62,0.22)]"
+            >
+              <div className="relative px-6 pb-6 pt-6 md:px-7">
+                <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(245,158,11,0.12),transparent_28%),linear-gradient(180deg,rgba(255,255,255,0.82)_0%,rgba(255,255,255,1)_100%)]" />
+
+                <div className="relative">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-start gap-3">
+                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-50 text-amber-700">
+                        <RotateCcw className="h-5 w-5" />
+                      </div>
+
+                      <div>
+                        <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
+                          Retake module
+                        </p>
+                        <h3 className="mt-1 text-xl font-bold tracking-tight text-[#31425a] md:text-[1.35rem]">
+                          Start this module again from the beginning?
+                        </h3>
+                        <p className="mt-2 max-w-lg text-sm leading-7 text-[#667180]">
+                          This will reset your current progress, lesson state, and checkpoint
+                          attempts for this module.
+                        </p>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setRetakeConfirmOpen(false);
+                      }}
+                      className="rounded-xl p-2 text-[#7b8794] transition hover:bg-[#f4f7fa]"
+                    >
+                      <X className="h-5 w-5" />
+                    </button>
+                  </div>
+
+                  <div className="mt-6 rounded-2xl border border-[#e8edf3] bg-[#f8fafc] px-4 py-4">
+                    <p className="text-sm leading-6 text-[#556274]">
+                      Your saved history for this current run will be cleared and the module will
+                      reopen at the opening checkpoint.
+                    </p>
+                  </div>
+
+                  <div className="mt-6 flex flex-wrap justify-end gap-3">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setRetakeConfirmOpen(false);
+                      }}
+                      className="inline-flex items-center gap-2 rounded-2xl border border-[#d9e2ec] bg-white px-4 py-3 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc]"
+                    >
+                      Cancel
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={handleRetakeModule}
+                      disabled={isPending}
+                      className="inline-flex items-center gap-2 rounded-2xl bg-[#31425a] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347] disabled:opacity-60"
+                    >
+                      <RotateCcw className="h-4 w-4" />
+                      Retake module
                     </button>
                   </div>
                 </div>
