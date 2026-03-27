@@ -17,12 +17,13 @@ import {
   Sparkles,
   Target,
   Users,
+  XCircle,
 } from "lucide-react";
 import Link from "next/link";
 import { ChangeEvent, useMemo, useState } from "react";
 
 type ModuleArea = "environmental" | "social" | "governance" | "cross-cutting";
-type ModuleStatus = "not_started" | "in_progress" | "completed";
+type ModuleStatus = "not_started" | "in_progress" | "completed" | "failed";
 
 type Props = {
   modules: CurriculumModuleViewModel[];
@@ -79,6 +80,12 @@ function getStatusMeta(status: ModuleStatus) {
         label: "In progress",
         icon: <CircleDashed className="h-4 w-4" />,
         badgeClass: "border-orange-100 bg-orange-50 text-orange-700",
+      };
+    case "failed":
+      return {
+        label: "Needs Review",
+        icon: <XCircle className="h-4 w-4" />,
+        badgeClass: "border-red-100 bg-red-50 text-red-700",
       };
     default:
       return {
@@ -196,7 +203,7 @@ export default function CurriculumListShell({ modules }: Props) {
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2">
-          {(["all", "cross-cutting", "environmental", "social", "governance"] as const).map(
+          {(["all", "environmental", "social", "governance", "cross-cutting"] as const).map(
             (area) => (
               <button
                 key={area}
@@ -327,7 +334,9 @@ export default function CurriculumListShell({ modules }: Props) {
               <div className="flex items-center gap-2">
                 <button
                   type="button"
-                  onClick={() => { setCurrentPage((p) => Math.max(1, p - 1)); }}
+                  onClick={() => {
+                    setCurrentPage((p) => Math.max(1, p - 1));
+                  }}
                   disabled={currentPage === 1}
                   className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#d9e2ec] bg-white transition disabled:opacity-30 hover:bg-[#f8fafc]"
                 >
@@ -339,7 +348,9 @@ export default function CurriculumListShell({ modules }: Props) {
                     <button
                       key={i + 1}
                       type="button"
-                      onClick={() => { setCurrentPage(i + 1); }}
+                      onClick={() => {
+                        setCurrentPage(i + 1);
+                      }}
                       className={`h-10 min-w-10 rounded-xl text-xs font-bold transition ${
                         currentPage === i + 1
                           ? "bg-[#31425a] text-white shadow-md"
@@ -353,7 +364,9 @@ export default function CurriculumListShell({ modules }: Props) {
 
                 <button
                   type="button"
-                  onClick={() => { setCurrentPage((p) => Math.min(totalPages, p + 1)); }}
+                  onClick={() => {
+                    setCurrentPage((p) => Math.min(totalPages, p + 1));
+                  }}
                   disabled={currentPage === totalPages}
                   className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#d9e2ec] bg-white transition disabled:opacity-30 hover:bg-[#f8fafc]"
                 >

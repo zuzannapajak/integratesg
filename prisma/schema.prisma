@@ -62,6 +62,43 @@ model Profile {
   userCourseAttempts UserCourseAttempt[]
 }
 
+model CaseStudy {
+  id           String                 @id @default(cuid())
+  slug         String                 @unique
+  area         CourseArea
+  status       PublicationStatus      @default(draft)
+  sortOrder    Int                    @default(0)
+  isFeatured   Boolean                @default(false)
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+  translations CaseStudyTranslation[]
+
+  @@index([status])
+  @@index([area])
+  @@index([sortOrder])
+  @@index([isFeatured])
+}
+
+model CaseStudyTranslation {
+  id           String   @id @default(cuid())
+  caseStudyId  String
+  language     String
+  title        String
+  summary      String?
+  content      String
+  keyTakeaways Json?
+  organization String?
+  industry     String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  caseStudy CaseStudy @relation(fields: [caseStudyId], references: [id], onDelete: Cascade)
+
+  @@unique([caseStudyId, language])
+  @@index([language])
+  @@index([caseStudyId])
+}
+
 model Course {
   id                       String              @id @default(cuid())
   slug                     String              @unique
@@ -178,41 +215,4 @@ model UserCourseAttempt {
   @@index([courseId])
   @@index([status])
   @@index([currentStage])
-}
-
-model CaseStudy {
-  id           String                 @id @default(cuid())
-  slug         String                 @unique
-  area         CourseArea
-  status       PublicationStatus      @default(draft)
-  sortOrder    Int                    @default(0)
-  isFeatured   Boolean                @default(false)
-  createdAt    DateTime               @default(now())
-  updatedAt    DateTime               @updatedAt
-  translations CaseStudyTranslation[]
-
-  @@index([status])
-  @@index([area])
-  @@index([sortOrder])
-  @@index([isFeatured])
-}
-
-model CaseStudyTranslation {
-  id           String   @id @default(cuid())
-  caseStudyId  String
-  language     String
-  title        String
-  summary      String?
-  content      String
-  keyTakeaways Json?
-  organization String?
-  industry     String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  caseStudy CaseStudy @relation(fields: [caseStudyId], references: [id], onDelete: Cascade)
-
-  @@unique([caseStudyId, language])
-  @@index([language])
-  @@index([caseStudyId])
 }

@@ -155,9 +155,16 @@ export async function submitQuizAttemptAction(input: SubmitQuizInput) {
     throw new Error("All questions must be answered before finishing the quiz.");
   }
 
-  const maxAttempts = input.quizType === "pre" ? 1 : 2;
-  const rawAttempts =
-    input.quizType === "pre" ? courseAttempt.preQuizAttempts : courseAttempt.postQuizAttempts;
+  let maxAttempts: number;
+  let rawAttempts: typeof courseAttempt.preQuizAttempts;
+
+  if (input.quizType === "pre") {
+    maxAttempts = 1;
+    rawAttempts = courseAttempt.preQuizAttempts;
+  } else {
+    maxAttempts = 2;
+    rawAttempts = courseAttempt.postQuizAttempts;
+  }
   const attempts = parseAttemptArray(rawAttempts);
 
   if (attempts.length >= maxAttempts) {

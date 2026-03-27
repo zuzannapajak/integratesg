@@ -1,6 +1,10 @@
 "use client";
 
-import { CurriculumModuleViewModel } from "@/lib/curriculum/types";
+import {
+  CurriculumArea,
+  CurriculumModuleViewModel,
+  CurriculumStatus,
+} from "@/lib/curriculum/types";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
@@ -12,11 +16,9 @@ import {
   ShieldCheck,
   Target,
   Users,
+  XCircle,
 } from "lucide-react";
 import Link from "next/link";
-
-type ModuleArea = "environmental" | "social" | "governance" | "cross-cutting";
-type ModuleStatus = "not_started" | "in_progress" | "completed";
 
 type Props = {
   modules: CurriculumModuleViewModel[];
@@ -25,7 +27,7 @@ type Props = {
 const SURFACE =
   "rounded-[28px] border border-white/70 bg-white/88 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";
 
-function getAreaMeta(area: ModuleArea) {
+function getAreaMeta(area: CurriculumArea) {
   switch (area) {
     case "environmental":
       return {
@@ -58,34 +60,43 @@ function getAreaMeta(area: ModuleArea) {
   }
 }
 
-function getStatusMeta(status: ModuleStatus) {
+function getStatusMeta(status: CurriculumStatus) {
   switch (status) {
     case "completed":
       return {
         label: "Completed",
+        icon: <BookOpen className="h-3.5 w-3.5" />,
         badgeClass: "text-emerald-700",
       };
     case "in_progress":
       return {
         label: "In progress",
+        icon: <CircleDashed className="h-3.5 w-3.5" />,
         badgeClass: "text-orange-700",
+      };
+    case "failed":
+      return {
+        label: "Retake Required",
+        icon: <XCircle className="h-3.5 w-3.5" />,
+        badgeClass: "text-red-600",
       };
     default:
       return {
         label: "Not started",
+        icon: <BookOpen className="h-3.5 w-3.5" />,
         badgeClass: "text-slate-600",
       };
   }
 }
 
 export default function MyCoursesShell({ modules }: Props) {
-  const inProgressModules = modules.filter((module) => module.status === "in_progress");
+  const activeModules = modules.filter((m) => m.status === "in_progress" || m.status === "failed");
 
   return (
     <section className="space-y-6">
-      {inProgressModules.length > 0 ? (
+      {activeModules.length > 0 ? (
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {inProgressModules.map((module) => {
+          {activeModules.map((module) => {
             const areaMeta = getAreaMeta(module.area);
             const statusMeta = getStatusMeta(module.status);
 
@@ -110,9 +121,16 @@ export default function MyCoursesShell({ modules }: Props) {
                       {areaMeta.label}
                     </span>
 
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0b9c72] px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wider text-white shadow-sm">
-                      <CircleDashed className="h-3 w-3" />
-                      In progress
+                    {/* Dynamic Status Badge */}
+                    <span
+                      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wider shadow-sm ${
+                        module.status === "failed"
+                          ? "bg-red-500 text-white"
+                          : "bg-[#0b9c72] text-white"
+                      }`}
+                    >
+                      {statusMeta.icon}
+                      {statusMeta.label}
                     </span>
                   </div>
 
@@ -146,7 +164,7 @@ export default function MyCoursesShell({ modules }: Props) {
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${module.progress}%` }}
-                        className="h-full bg-[#0b9c72]"
+                        className={`h-full ${module.status === "failed" ? "bg-red-400" : "bg-[#0b9c72]"}`}
                       />
                     </div>
                   </div>
@@ -155,7 +173,7 @@ export default function MyCoursesShell({ modules }: Props) {
                     <span
                       className={`inline-flex items-center gap-1.5 text-xs font-bold ${statusMeta.badgeClass}`}
                     >
-                      <BookOpen className="h-3.5 w-3.5" />
+                      {statusMeta.icon}
                       {statusMeta.label}
                     </span>
 
@@ -163,7 +181,7 @@ export default function MyCoursesShell({ modules }: Props) {
                       href={`./curriculum/${module.slug}`}
                       className="inline-flex items-center gap-2 rounded-xl bg-[#31425a] px-4 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#253347]"
                     >
-                      Continue
+                      {module.status === "failed" ? "Restart" : "Continue"}
                       <ArrowRight className="h-3.5 w-3.5" />
                     </Link>
                   </div>
@@ -180,7 +198,7 @@ export default function MyCoursesShell({ modules }: Props) {
             </div>
             <h3 className="text-lg font-bold text-[#31425a]">No active courses yet</h3>
             <p className="text-sm text-[#667180]">
-              Once you start a curriculum module, it will appear here.
+              Start a curriculum module to track your progress here.
             </p>
           </div>
         </div>
