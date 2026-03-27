@@ -17,6 +17,243 @@ const prisma = new PrismaClient({
   adapter,
 });
 
+const caseStudies = [
+  {
+    slug: "green-campus-procurement",
+    status: "published",
+    area: "environmental",
+    sortOrder: 1,
+    isFeatured: true,
+    translations: [
+      {
+        language: "en",
+        title: "Green campus procurement",
+        summary:
+          "A case study about introducing sustainability criteria into procurement decisions for campus equipment and services.",
+        content:
+          "This case study examines how a vocational education provider redesigned procurement rules to include environmental criteria, lifecycle thinking, and supplier transparency. Learners can analyse trade-offs between upfront costs, long-term efficiency, and ESG accountability.",
+        keyTakeaways: [
+          "Environmental criteria can be embedded into procurement workflows.",
+          "Lifecycle cost analysis supports more informed decisions.",
+          "Supplier transparency improves ESG accountability.",
+        ],
+        organization: "IntegratESG Demo Institution",
+        industry: "Vocational Education",
+      },
+      {
+        language: "pl",
+        title: "Zielone zamówienia kampusowe",
+        summary:
+          "Studium przypadku dotyczące wdrożenia kryteriów zrównoważonego rozwoju do decyzji zakupowych związanych z wyposażeniem i usługami kampusu.",
+        content:
+          "To studium przypadku pokazuje, w jaki sposób instytucja kształcenia zawodowego przeprojektowała zasady zakupowe, aby uwzględnić kryteria środowiskowe, podejście cyklu życia oraz przejrzystość dostawców. Użytkownicy analizują kompromisy między kosztami początkowymi, długoterminową efektywnością i odpowiedzialnością ESG.",
+        keyTakeaways: [
+          "Kryteria środowiskowe można osadzić w procesach zakupowych.",
+          "Analiza kosztu cyklu życia wspiera trafniejsze decyzje.",
+          "Przejrzystość dostawców wzmacnia odpowiedzialność ESG.",
+        ],
+        organization: "Instytucja demonstracyjna IntegratESG",
+        industry: "Edukacja zawodowa",
+      },
+    ],
+  },
+  {
+    slug: "inclusive-recruitment-and-wellbeing",
+    status: "published",
+    area: "social",
+    sortOrder: 2,
+    isFeatured: true,
+    translations: [
+      {
+        language: "en",
+        title: "Inclusive recruitment and wellbeing",
+        summary:
+          "A case study exploring inclusive hiring, onboarding, and wellbeing practices in an educational organisation.",
+        content:
+          "This case study presents an organisation that revised its recruitment and onboarding process to improve inclusion, accessibility, and employee wellbeing. It helps learners understand how social ESG commitments become operational practices.",
+        keyTakeaways: [
+          "Social ESG requires concrete people-focused processes.",
+          "Inclusive onboarding influences retention and trust.",
+          "Wellbeing policies affect implementation quality.",
+        ],
+        organization: "Regional Training Centre",
+        industry: "Education and Training",
+      },
+      {
+        language: "pl",
+        title: "Rekrutacja inkluzywna i dobrostan",
+        summary:
+          "Studium przypadku analizujące inkluzywną rekrutację, onboarding oraz praktyki wspierające dobrostan w organizacji edukacyjnej.",
+        content:
+          "To studium przypadku przedstawia organizację, która zmieniła proces rekrutacji i wdrożenia pracowników, aby zwiększyć inkluzywność, dostępność i dobrostan zespołu. Pomaga zrozumieć, jak społeczne zobowiązania ESG przekładają się na codzienną praktykę operacyjną.",
+        keyTakeaways: [
+          "Społeczny wymiar ESG wymaga konkretnych procesów ukierunkowanych na ludzi.",
+          "Inkluzywny onboarding wpływa na retencję i zaufanie.",
+          "Polityki dobrostanu oddziałują na jakość wdrożenia.",
+        ],
+        organization: "Regionalne Centrum Szkoleniowe",
+        industry: "Edukacja i szkolenia",
+      },
+    ],
+  },
+  {
+    slug: "board-oversight-and-transparency",
+    status: "published",
+    area: "governance",
+    sortOrder: 3,
+    isFeatured: false,
+    translations: [
+      {
+        language: "en",
+        title: "Board oversight and transparency",
+        summary:
+          "A governance-focused case study about decision rights, reporting lines, and transparent oversight in ESG implementation.",
+        content:
+          "This case study focuses on governance arrangements in an institution that introduced clearer reporting responsibilities, board oversight, and decision escalation rules for ESG-related topics. Learners evaluate how structures influence trust and accountability.",
+        keyTakeaways: [
+          "Governance defines responsibility and escalation pathways.",
+          "Transparent reporting improves institutional credibility.",
+          "Oversight mechanisms strengthen ESG implementation.",
+        ],
+        organization: "Public Skills Institute",
+        industry: "Public Education",
+      },
+      {
+        language: "pl",
+        title: "Nadzór zarządczy i przejrzystość",
+        summary:
+          "Studium przypadku skoncentrowane na governance: uprawnieniach decyzyjnych, liniach raportowania i przejrzystym nadzorze nad wdrażaniem ESG.",
+        content:
+          "To studium przypadku koncentruje się na rozwiązaniach governance w instytucji, która wprowadziła jaśniejsze odpowiedzialności raportowe, nadzór kierownictwa oraz zasady eskalacji decyzji w obszarze ESG. Użytkownicy oceniają, jak struktury wpływają na zaufanie i odpowiedzialność.",
+        keyTakeaways: [
+          "Governance definiuje odpowiedzialność i ścieżki eskalacji.",
+          "Przejrzyste raportowanie zwiększa wiarygodność instytucji.",
+          "Mechanizmy nadzoru wzmacniają wdrażanie ESG.",
+        ],
+        organization: "Publiczny Instytut Kompetencji",
+        industry: "Edukacja publiczna",
+      },
+    ],
+  },
+  {
+    slug: "energy-efficiency-retrofit",
+    status: "draft",
+    area: "environmental",
+    sortOrder: 4,
+    isFeatured: false,
+    translations: [
+      {
+        language: "en",
+        title: "Energy efficiency retrofit",
+        summary:
+          "A draft case study about balancing renovation cost, emissions reduction, and operational performance.",
+        content:
+          "This draft case study explores how an organisation assessed an energy retrofit project for its facilities. It is intended to help learners reason about environmental impact, financial constraints, and implementation sequencing.",
+        keyTakeaways: [
+          "Retrofit decisions require balancing environmental and financial goals.",
+          "Operational continuity influences sustainability planning.",
+          "Phased implementation can reduce delivery risk.",
+        ],
+        organization: "Demonstration Campus",
+        industry: "Facilities Management",
+      },
+      {
+        language: "pl",
+        title: "Modernizacja efektywności energetycznej",
+        summary:
+          "Robocze studium przypadku o równoważeniu kosztów modernizacji, redukcji emisji i wydajności operacyjnej.",
+        content:
+          "To robocze studium przypadku pokazuje, jak organizacja analizowała projekt modernizacji energetycznej swoich obiektów. Ma pomóc użytkownikom rozumieć zależności między wpływem środowiskowym, ograniczeniami finansowymi i kolejnością wdrożenia.",
+        keyTakeaways: [
+          "Decyzje modernizacyjne wymagają równoważenia celów środowiskowych i finansowych.",
+          "Ciągłość działania wpływa na planowanie zrównoważonych inwestycji.",
+          "Wdrożenie etapowe może ograniczyć ryzyko realizacyjne.",
+        ],
+        organization: "Kampus demonstracyjny",
+        industry: "Zarządzanie obiektami",
+      },
+    ],
+  },
+  {
+    slug: "community-engagement-in-training-programmes",
+    status: "draft",
+    area: "social",
+    sortOrder: 5,
+    isFeatured: false,
+    translations: [
+      {
+        language: "en",
+        title: "Community engagement in training programmes",
+        summary:
+          "A draft case study about designing educational programmes with stronger community participation.",
+        content:
+          "This draft case study describes how a training provider involved local stakeholders in programme design to improve inclusion, relevance, and social value. Learners examine participation models and the tension between broad consultation and delivery speed.",
+        keyTakeaways: [
+          "Community input can improve relevance and legitimacy.",
+          "Participation requires deliberate process design.",
+          "Social value often depends on stakeholder engagement quality.",
+        ],
+        organization: "Community Skills Hub",
+        industry: "Training Services",
+      },
+      {
+        language: "pl",
+        title: "Zaangażowanie społeczności w programy szkoleniowe",
+        summary:
+          "Robocze studium przypadku o projektowaniu programów edukacyjnych z silniejszym udziałem społeczności.",
+        content:
+          "To robocze studium przypadku opisuje, jak dostawca szkoleń włączył lokalnych interesariuszy w projektowanie programu, aby zwiększyć inkluzywność, trafność i wartość społeczną. Użytkownicy analizują modele partycypacji oraz napięcie między szerokimi konsultacjami a szybkością wdrożenia.",
+        keyTakeaways: [
+          "Głos społeczności może zwiększyć trafność i legitymację działań.",
+          "Partycypacja wymaga świadomego zaprojektowania procesu.",
+          "Wartość społeczna często zależy od jakości zaangażowania interesariuszy.",
+        ],
+        organization: "Lokalne Centrum Kompetencji",
+        industry: "Usługi szkoleniowe",
+      },
+    ],
+  },
+  {
+    slug: "ethics-and-reporting-controls",
+    status: "draft",
+    area: "governance",
+    sortOrder: 6,
+    isFeatured: false,
+    translations: [
+      {
+        language: "en",
+        title: "Ethics and reporting controls",
+        summary:
+          "A draft case study about strengthening governance through reporting controls and ethics procedures.",
+        content:
+          "This draft case study focuses on reporting controls, issue escalation, and ethics procedures in an organisation developing ESG governance maturity. It supports analysis of how internal rules influence trust, traceability, and accountability.",
+        keyTakeaways: [
+          "Controls and procedures support governance maturity.",
+          "Traceable reporting improves accountability.",
+          "Ethics frameworks should connect with operational practice.",
+        ],
+        organization: "Institutional Governance Lab",
+        industry: "Organisational Development",
+      },
+      {
+        language: "pl",
+        title: "Etyka i mechanizmy raportowania",
+        summary:
+          "Robocze studium przypadku dotyczące wzmacniania governance przez mechanizmy raportowania i procedury etyczne.",
+        content:
+          "To robocze studium przypadku koncentruje się na kontrolach raportowych, eskalacji problemów i procedurach etycznych w organizacji rozwijającej dojrzałość governance w obszarze ESG. Wspiera analizę tego, jak wewnętrzne reguły wpływają na zaufanie, śledzalność i odpowiedzialność.",
+        keyTakeaways: [
+          "Kontrole i procedury wspierają dojrzałość governance.",
+          "Śledzalne raportowanie wzmacnia odpowiedzialność.",
+          "Ramowe zasady etyczne powinny łączyć się z praktyką operacyjną.",
+        ],
+        organization: "Laboratorium Governance",
+        industry: "Rozwój organizacyjny",
+      },
+    ],
+  },
+];
+
 const courses = [
   {
     slug: "esg-foundations-for-vet",
@@ -432,6 +669,56 @@ function pickAnswer(question, kind = "correct") {
   return answer;
 }
 
+async function upsertCaseStudy(caseStudyData) {
+  const caseStudy = await prisma.caseStudy.upsert({
+    where: { slug: caseStudyData.slug },
+    update: {
+      status: caseStudyData.status,
+      area: caseStudyData.area,
+      sortOrder: caseStudyData.sortOrder,
+      isFeatured: caseStudyData.isFeatured,
+    },
+    create: {
+      slug: caseStudyData.slug,
+      status: caseStudyData.status,
+      area: caseStudyData.area,
+      sortOrder: caseStudyData.sortOrder,
+      isFeatured: caseStudyData.isFeatured,
+    },
+  });
+
+  for (const translation of caseStudyData.translations) {
+    await prisma.caseStudyTranslation.upsert({
+      where: {
+        caseStudyId_language: {
+          caseStudyId: caseStudy.id,
+          language: translation.language,
+        },
+      },
+      update: {
+        title: translation.title,
+        summary: translation.summary,
+        content: translation.content,
+        keyTakeaways: translation.keyTakeaways,
+        organization: translation.organization,
+        industry: translation.industry,
+      },
+      create: {
+        caseStudyId: caseStudy.id,
+        language: translation.language,
+        title: translation.title,
+        summary: translation.summary,
+        content: translation.content,
+        keyTakeaways: translation.keyTakeaways,
+        organization: translation.organization,
+        industry: translation.industry,
+      },
+    });
+  }
+
+  return caseStudy;
+}
+
 async function upsertCourse(courseData) {
   const course = await prisma.course.upsert({
     where: { slug: courseData.slug },
@@ -750,7 +1037,11 @@ async function seedAttempts(courseMap) {
 }
 
 async function main() {
-  console.log("Seeding curriculum data...");
+  console.log("Seeding curriculum and ePortfolio data...");
+
+  for (const caseStudyData of caseStudies) {
+    await upsertCaseStudy(caseStudyData);
+  }
 
   const courseMap = new Map();
 
@@ -761,12 +1052,12 @@ async function main() {
 
   await seedAttempts(courseMap);
 
-  console.log("Curriculum seed completed.");
+  console.log("Curriculum and ePortfolio seed completed.");
 }
 
 main()
   .catch((error) => {
-    console.error("Curriculum seed failed.");
+    console.error("Curriculum and ePortfolio seed failed.");
     console.error(error);
     process.exit(1);
   })
