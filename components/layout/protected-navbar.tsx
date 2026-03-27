@@ -13,7 +13,7 @@ type Props = {
   forceSolid?: boolean;
 };
 
-export default function ProtectedNavbar({ locale, role, forceSolid = false }: Props) {
+export default function ProtectedNavbar({ locale, forceSolid = false }: Props) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -77,30 +77,7 @@ export default function ProtectedNavbar({ locale, role, forceSolid = false }: Pr
     };
   }, []);
 
-  const educatorLinks = [
-    { href: `/${locale}/dashboard`, label: "Dashboard" },
-    { href: `/${locale}/curriculum`, label: "Curriculum" },
-    { href: `/${locale}/eportfolio`, label: "ePortfolio" },
-    { href: `/${locale}/settings`, label: "Settings" },
-  ];
-
-  const studentLinks = [
-    { href: `/${locale}/dashboard`, label: "Dashboard" },
-    { href: `/${locale}/eportfolio`, label: "ePortfolio" },
-    { href: `/${locale}/scenarios`, label: "Scenario" },
-    { href: `/${locale}/settings`, label: "Settings" },
-  ];
-
-  const adminLinks = [
-    { href: `/${locale}/dashboard`, label: "Dashboard" },
-    {
-      href: `/${locale}/admin/stats`,
-      label: "Program statistics",
-    },
-    { href: `/${locale}/settings`, label: "Settings" },
-  ];
-
-  const links = role === "educator" ? educatorLinks : role === "admin" ? adminLinks : studentLinks;
+  const links = [{ href: `/${locale}/settings`, label: "Settings" }];
 
   const scrolledClasses = forceSolid
     ? "bg-[rgba(58,58,58,0.94)] backdrop-blur-md border-b border-white/8 shadow-none"
