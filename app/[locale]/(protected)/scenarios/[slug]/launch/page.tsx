@@ -1,7 +1,7 @@
 import ScenarioLaunchShell from "@/components/scenarios/scenario-launch-shell";
 import { requireRole } from "@/features/auth/requireRole";
 import { APP_ROLES } from "@/lib/auth/roles";
-import { getScenarioLaunch } from "@/lib/scenarios/queries";
+import { getScenarioLaunch, logScenarioLaunch } from "@/lib/scenarios/queries";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -10,11 +10,17 @@ type Props = {
 
 export default async function ScenarioLaunchPage({ params }: Props) {
   const { locale, slug } = await params;
-  const { user } = await requireRole(locale, [APP_ROLES.student, APP_ROLES.educator]);
+  const { profile } = await requireRole(locale, [APP_ROLES.student, APP_ROLES.educator]);
+
+  await logScenarioLaunch({
+    locale,
+    userId: profile.id,
+    slug,
+  });
 
   const scenario = await getScenarioLaunch({
     locale,
-    userId: user.id,
+    userId: profile.id,
     slug,
   });
 
