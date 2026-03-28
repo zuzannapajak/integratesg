@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { ScenarioListItemViewModel, ScenarioProgressStatus } from "@/lib/scenarios/types";
 
 type ScenarioVariantRecord = {
+  id: string;
   language: string;
   title: string;
   description: string | null;
@@ -14,10 +15,19 @@ type ScenarioVariantRecord = {
   availabilityStatus: string;
 };
 
+type UserScenarioAttemptRecord = {
+  status: string;
+  startedAt: Date;
+  lastOpenedAt: Date | null;
+  completedAt: Date | null;
+  createdAt: Date;
+};
+
 type ScenarioRecord = {
   slug: string;
   area: string;
   variants: ScenarioVariantRecord[];
+  userAttempts: UserScenarioAttemptRecord[];
 };
 
 function mapArea(area: string): ScenarioListItemViewModel["area"] {
@@ -31,10 +41,6 @@ function mapArea(area: string): ScenarioListItemViewModel["area"] {
     default:
       return "cross-cutting";
   }
-}
-
-function mapScenarioStatus(): ScenarioProgressStatus {
-  return "not_started";
 }
 
 function pickVariant(
@@ -54,6 +60,22 @@ function pickVariant(
   return variants.length > 0 ? variants[0] : null;
 }
 
+function mapScenarioStatus(attempts: UserScenarioAttemptRecord[]): ScenarioProgressStatus {
+  if (attempts.length === 0) {
+    return "not_started";
+  }
+
+  const hasCompletedAttempt = attempts.some(
+    (attempt) => attempt.status === "completed" || attempt.status === "passed",
+  );
+
+  if (hasCompletedAttempt) {
+    return "completed";
+  }
+
+  return "in_progress";
+}
+
 function mapScenarioToViewModel(
   scenario: ScenarioRecord,
   locale: string,
@@ -64,6 +86,9 @@ function mapScenarioToViewModel(
     return null;
   }
 
+  const status = mapScenarioStatus(scenario.userAttempts);
+  const hasAttempt = scenario.userAttempts.length > 0;
+
   return {
     slug: scenario.slug,
     language: variant.language,
@@ -72,20 +97,31 @@ function mapScenarioToViewModel(
     area: mapArea(scenario.area),
     packagePath: variant.launchUrl,
     estimatedDurationMinutes: variant.estimatedDurationMinutes,
-    status: mapScenarioStatus(),
+    status,
+    hasAttempt,
   };
 }
 
-export async function getScenarioLibrary(params: { locale: string }) {
+async function getScenarioLibraryBase(params: { locale: string; userId: string; onlyMy: boolean }) {
   const scenarios = await prisma.scenario.findMany({
     where: {
       status: "published",
+      ...(params.onlyMy
+        ? {
+            userAttempts: {
+              some: {
+                userId: params.userId,
+              },
+            },
+          }
+        : {}),
     },
     select: {
       slug: true,
       area: true,
       variants: {
         select: {
+          id: true,
           language: true,
           title: true,
           description: true,
@@ -98,6 +134,19 @@ export async function getScenarioLibrary(params: { locale: string }) {
           availabilityStatus: true,
         },
       },
+      userAttempts: {
+        where: {
+          userId: params.userId,
+        },
+        select: {
+          status: true,
+          startedAt: true,
+          lastOpenedAt: true,
+          completedAt: true,
+          createdAt: true,
+        },
+        orderBy: [{ createdAt: "desc" }],
+      },
     },
     orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
   });
@@ -105,4 +154,20 @@ export async function getScenarioLibrary(params: { locale: string }) {
   return scenarios
     .map((scenario) => mapScenarioToViewModel(scenario, params.locale))
     .filter((scenario): scenario is ScenarioListItemViewModel => scenario !== null);
+}
+
+export async function getAllScenarioLibrary(params: { locale: string; userId: string }) {
+  return getScenarioLibraryBase({
+    locale: params.locale,
+    userId: params.userId,
+    onlyMy: false,
+  });
+}
+
+export async function getMyScenarioLibrary(params: { locale: string; userId: string }) {
+  return getScenarioLibraryBase({
+    locale: params.locale,
+    userId: params.userId,
+    onlyMy: true,
+  });
 }

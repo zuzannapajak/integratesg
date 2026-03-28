@@ -13,4 +13,5 @@ export type ScenarioListItemViewModel = {
   packagePath: string;
   estimatedDurationMinutes: number | null;
   status: ScenarioProgressStatus;
+  hasAttempt: boolean;
 };

@@ -303,7 +303,6 @@ export default async function DashboardPage({ params }: Props) {
 
   const role = profile.role as DashboardRole;
   const displayName = profile.fullName ?? user.email?.split("@")[0] ?? "User";
-  const email = user.email ?? "";
 
   const [myAttempts, allAttempts, publishedCoursesCount] = await Promise.all([
     prisma.userCourseAttempt.findMany({
@@ -364,7 +363,6 @@ export default async function DashboardPage({ params }: Props) {
       locale={locale}
       role={role}
       displayName={displayName}
-      email={email}
       heroStats={
         role === "admin" ? buildAdminHeroStats(allAttempts) : buildLearnerHeroStats(myAttempts)
       }

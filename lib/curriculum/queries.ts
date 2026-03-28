@@ -445,7 +445,9 @@ export async function getMyCurriculumModules(params: { userId: string; locale: s
       userCourseAttempts: {
         some: {
           userId: params.userId,
-          status: "in_progress",
+          status: {
+            in: ["in_progress", "completed"],
+          },
         },
       },
     },

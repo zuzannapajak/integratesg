@@ -21,6 +21,8 @@ import { ChangeEvent, useMemo, useState } from "react";
 
 type Props = {
   items: ScenarioListItemViewModel[];
+  emptyTitle?: string;
+  emptyDescription?: string;
 };
 
 const SURFACE =
@@ -89,7 +91,11 @@ function getTrackingMeta(status?: ScenarioProgressStatus | null) {
   }
 }
 
-export default function ScenarioLibraryShell({ items }: Props) {
+export default function ScenarioLibraryShell({
+  items,
+  emptyTitle = "No scenarios found",
+  emptyDescription = "Try adjusting the ESG area filter or search phrase to explore scenario metadata.",
+}: Props) {
   const [search, setSearch] = useState("");
   const [selectedArea, setSelectedArea] = useState<ScenarioArea | "all">("all");
   const [sortBy, setSortBy] = useState<"title" | "duration">("title");
@@ -122,7 +128,13 @@ export default function ScenarioLibraryShell({ items }: Props) {
         return aDuration - bDuration || a.title.localeCompare(b.title);
       }
 
-      return a.title.localeCompare(b.title);
+      const statusWeight = (status: ScenarioProgressStatus) => {
+        if (status === "in_progress") return 0;
+        if (status === "completed") return 1;
+        return 2;
+      };
+
+      return statusWeight(a.status) - statusWeight(b.status) || a.title.localeCompare(b.title);
     });
   }, [items, search, selectedArea, sortBy]);
 
@@ -332,10 +344,8 @@ export default function ScenarioLibraryShell({ items }: Props) {
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f4f7fa] text-[#607086]">
               <Search className="h-6 w-6" />
             </div>
-            <h2 className="mt-5 text-xl font-semibold text-[#1f2a37]">No scenarios found</h2>
-            <p className="mt-3 text-sm leading-6 text-[#5f6c7b]">
-              Try adjusting the ESG area filter or search phrase to explore scenario metadata.
-            </p>
+            <h2 className="mt-5 text-xl font-semibold text-[#1f2a37]">{emptyTitle}</h2>
+            <p className="mt-3 text-sm leading-6 text-[#5f6c7b]">{emptyDescription}</p>
           </div>
         </section>
       )}

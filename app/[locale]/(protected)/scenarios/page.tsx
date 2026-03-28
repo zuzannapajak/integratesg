@@ -1,9 +1,8 @@
-import ScenarioLibraryShell from "@/components/scenarios/scenario-library-shell";
-import { prisma } from "@/lib/prisma";
-import { getScenarioLibrary } from "@/lib/scenarios/queries";
-import { createClient } from "@/lib/supabase/server";
+import ScenarioSwitcher from "@/components/scenarios/scenario-switcher";
+import { requireRole } from "@/features/auth/requireRole";
+import { APP_ROLES } from "@/lib/auth/roles";
+import { getAllScenarioLibrary, getMyScenarioLibrary } from "@/lib/scenarios/queries";
 import { PlayCircle } from "lucide-react";
-import { redirect } from "next/navigation";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -11,29 +10,16 @@ type Props = {
 
 export default async function ScenariosPage({ params }: Props) {
   const { locale } = await params;
+  const { user } = await requireRole(locale, [APP_ROLES.student, APP_ROLES.educator]);
 
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect(`/${locale}/auth/login`);
-  }
-
-  const profile = await prisma.profile.findUnique({
-    where: { id: user.id },
-  });
-
-  if (!profile) {
-    redirect(`/${locale}/auth/login`);
-  }
-
-  const items = await getScenarioLibrary({ locale });
+  const [myScenarios, allScenarios] = await Promise.all([
+    getMyScenarioLibrary({ userId: user.id, locale }),
+    getAllScenarioLibrary({ userId: user.id, locale }),
+  ]);
 
   return (
-    <main className="relative min-h-screen bg-[#f5f5f3] px-4 pb-20 pt-8 text-[#31425a] sm:px-6 lg:px-8">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_14%_10%,rgba(236,103,37,0.05),transparent_22%),radial-gradient(circle_at_84%_12%,rgba(13,127,194,0.05),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.72)_0%,rgba(245,245,243,1)_100%)]" />
+    <main className="relative min-h-screen bg-[#f5f5f3] pb-20 transition-all duration-300">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_12%,rgba(11,156,114,0.07),transparent_22%),radial-gradient(circle_at_84%_14%,rgba(13,127,194,0.07),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.72)_0%,rgba(245,245,243,1)_100%)]" />
 
       <div className="relative mx-auto max-w-360 px-4 pt-10 sm:px-6 lg:px-8 transition-all duration-300">
         <header className="mb-8 flex items-center gap-4 px-1">
@@ -43,11 +29,13 @@ export default async function ScenariosPage({ params }: Props) {
 
           <div>
             <h1 className="text-3xl font-bold tracking-tight text-[#31425a]">Scenario simulator</h1>
-            <p className="text-[#667180]">Practice decision-making in realistic contexts.</p>
+            <p className="text-[#667180]">
+              Practice decision-making in realistic contexts with trackable scenario progress
+            </p>
           </div>
         </header>
 
-        <ScenarioLibraryShell items={items} />
+        <ScenarioSwitcher myScenarios={myScenarios} allScenarios={allScenarios} />
       </div>
     </main>
   );
