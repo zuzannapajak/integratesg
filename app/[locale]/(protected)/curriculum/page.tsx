@@ -35,7 +35,7 @@ export default async function CurriculumPage({ params }: Props) {
           </div>
         </header>
 
-        <CurriculumSwitcher myCourses={myCourses} allCourses={allCourses} />
+        <CurriculumSwitcher locale={locale} myCourses={myCourses} allCourses={allCourses} />
       </div>
     </main>
   );

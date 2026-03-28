@@ -1,5 +1,9 @@
 import { prisma } from "@/lib/prisma";
-import { ScenarioListItemViewModel, ScenarioProgressStatus } from "@/lib/scenarios/types";
+import {
+  ScenarioDetailViewModel,
+  ScenarioListItemViewModel,
+  ScenarioProgressStatus,
+} from "@/lib/scenarios/types";
 
 type ScenarioVariantRecord = {
   id: string;
@@ -28,6 +32,24 @@ type ScenarioRecord = {
   area: string;
   variants: ScenarioVariantRecord[];
   userAttempts: UserScenarioAttemptRecord[];
+};
+
+type ScenarioAttemptDetailRecord = {
+  status: string;
+  score: number | null;
+  startedAt: Date;
+  lastOpenedAt: Date | null;
+  completedAt: Date | null;
+  lessonLocation: string | null;
+  createdAt: Date;
+};
+
+type ScenarioDetailRecord = {
+  slug: string;
+  area: string;
+  isFeatured: boolean;
+  variants: ScenarioVariantRecord[];
+  userAttempts: ScenarioAttemptDetailRecord[];
 };
 
 function mapArea(area: string): ScenarioListItemViewModel["area"] {
@@ -120,6 +142,9 @@ async function getScenarioLibraryBase(params: { locale: string; userId: string; 
       slug: true,
       area: true,
       variants: {
+        where: {
+          availabilityStatus: "available",
+        },
         select: {
           id: true,
           language: true,
@@ -170,4 +195,150 @@ export async function getMyScenarioLibrary(params: { locale: string; userId: str
     userId: params.userId,
     onlyMy: true,
   });
+}
+
+function mapScenarioToDetailViewModel(
+  scenario: ScenarioDetailRecord,
+  locale: string,
+): ScenarioDetailViewModel | null {
+  const variant = pickVariant(scenario.variants, locale);
+
+  if (!variant) {
+    return null;
+  }
+
+  const latestAttempt = scenario.userAttempts[0] ?? null;
+
+  return {
+    slug: scenario.slug,
+    language: variant.language,
+    title: variant.title,
+    description: variant.description?.trim() ?? "Scenario description has not been added yet.",
+    instruction:
+      variant.instruction?.trim() ??
+      "Move through the experience step by step, make your decisions, and reflect on the outcome.",
+    area: mapArea(scenario.area),
+    estimatedDurationMinutes: variant.estimatedDurationMinutes,
+    status: mapScenarioStatus(scenario.userAttempts),
+    launchUrl: variant.launchUrl,
+    thumbnailUrl: variant.thumbnailUrl,
+    isFeatured: scenario.isFeatured,
+    hasAttempt: latestAttempt !== null,
+    score: latestAttempt?.score ?? null,
+    startedAt: latestAttempt?.startedAt.toISOString() ?? null,
+    lastOpenedAt: latestAttempt?.lastOpenedAt?.toISOString() ?? null,
+    completedAt: latestAttempt?.completedAt?.toISOString() ?? null,
+    lessonLocation: latestAttempt?.lessonLocation ?? null,
+  };
+}
+
+export async function getScenarioDetail(params: { locale: string; userId: string; slug: string }) {
+  const scenario = await prisma.scenario.findFirst({
+    where: {
+      slug: params.slug,
+      status: "published",
+    },
+    select: {
+      slug: true,
+      area: true,
+      isFeatured: true,
+      variants: {
+        where: {
+          availabilityStatus: "available",
+        },
+        select: {
+          id: true,
+          language: true,
+          title: true,
+          description: true,
+          instruction: true,
+          launchUrl: true,
+          packagePath: true,
+          entryPoint: true,
+          thumbnailUrl: true,
+          estimatedDurationMinutes: true,
+          availabilityStatus: true,
+        },
+      },
+      userAttempts: {
+        where: {
+          userId: params.userId,
+        },
+        select: {
+          status: true,
+          score: true,
+          startedAt: true,
+          lastOpenedAt: true,
+          completedAt: true,
+          lessonLocation: true,
+          createdAt: true,
+        },
+        orderBy: [{ createdAt: "desc" }],
+      },
+    },
+  });
+
+  if (!scenario) {
+    return null;
+  }
+
+  const mappedScenario = mapScenarioToDetailViewModel(scenario, params.locale);
+
+  if (!mappedScenario) {
+    return null;
+  }
+
+  const relatedScenarios = await prisma.scenario.findMany({
+    where: {
+      status: "published",
+      slug: {
+        not: params.slug,
+      },
+      area: scenario.area,
+    },
+    select: {
+      slug: true,
+      area: true,
+      variants: {
+        where: {
+          availabilityStatus: "available",
+        },
+        select: {
+          id: true,
+          language: true,
+          title: true,
+          description: true,
+          instruction: true,
+          launchUrl: true,
+          packagePath: true,
+          entryPoint: true,
+          thumbnailUrl: true,
+          estimatedDurationMinutes: true,
+          availabilityStatus: true,
+        },
+      },
+      userAttempts: {
+        where: {
+          userId: params.userId,
+        },
+        select: {
+          status: true,
+          startedAt: true,
+          lastOpenedAt: true,
+          completedAt: true,
+          createdAt: true,
+        },
+        orderBy: [{ createdAt: "desc" }],
+      },
+    },
+    orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+    take: 3,
+  });
+
+  return {
+    scenario: mappedScenario,
+    relatedScenarios: relatedScenarios
+      .map((item) => mapScenarioToViewModel(item, params.locale))
+      .filter((item): item is ScenarioListItemViewModel => item !== null),
+  };
 }

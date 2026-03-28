@@ -1,6 +1,6 @@
 "use client";
 
-import ScenarioLibraryShell from "@/components/scenarios/scenario-list-shell";
+import ScenarioListShell from "@/components/scenarios/scenario-list-shell";
 import { ScenarioListItemViewModel } from "@/lib/scenarios/types";
 import { PlayCircle, Sparkles } from "lucide-react";
 import { useState } from "react";
@@ -8,11 +8,12 @@ import { useState } from "react";
 type ViewMode = "my-scenarios" | "all-scenarios";
 
 type Props = {
+  locale: string;
   myScenarios: ScenarioListItemViewModel[];
   allScenarios: ScenarioListItemViewModel[];
 };
 
-export default function ScenarioSwitcher({ myScenarios, allScenarios }: Props) {
+export default function ScenarioSwitcher({ locale, myScenarios, allScenarios }: Props) {
   const [viewMode, setViewMode] = useState<ViewMode>("my-scenarios");
 
   return (
@@ -52,14 +53,16 @@ export default function ScenarioSwitcher({ myScenarios, allScenarios }: Props) {
       </div>
 
       {viewMode === "my-scenarios" ? (
-        <ScenarioLibraryShell
+        <ScenarioListShell
+          locale={locale}
           items={myScenarios}
           showRefineControls={false}
           emptyTitle="No tracked scenarios yet"
           emptyDescription="Start a scenario to build your personal scenario library and return to it later."
         />
       ) : (
-        <ScenarioLibraryShell
+        <ScenarioListShell
+          locale={locale}
           items={allScenarios}
           showRefineControls
           emptyTitle="No scenarios found"

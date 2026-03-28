@@ -15,3 +15,23 @@ export type ScenarioListItemViewModel = {
   status: ScenarioProgressStatus;
   hasAttempt: boolean;
 };
+
+export type ScenarioDetailViewModel = {
+  slug: string;
+  language: string;
+  title: string;
+  description: string;
+  instruction: string;
+  area: ScenarioArea;
+  estimatedDurationMinutes: number | null;
+  status: ScenarioProgressStatus;
+  launchUrl: string;
+  thumbnailUrl: string | null;
+  isFeatured: boolean;
+  hasAttempt: boolean;
+  score: number | null;
+  startedAt: string | null;
+  lastOpenedAt: string | null;
+  completedAt: string | null;
+  lessonLocation: string | null;
+};

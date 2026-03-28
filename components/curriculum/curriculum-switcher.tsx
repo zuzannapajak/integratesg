@@ -1,7 +1,6 @@
 "use client";
 
 import CurriculumListShell from "@/components/curriculum/curriculum-list-shell";
-import MyCoursesShell from "@/components/curriculum/my-courses-shell";
 import { CurriculumModuleViewModel } from "@/lib/curriculum/types";
 import { BookOpen, Sparkles } from "lucide-react";
 import { useState } from "react";
@@ -9,11 +8,12 @@ import { useState } from "react";
 type ViewMode = "my-courses" | "all-courses";
 
 type Props = {
+  locale: string;
   myCourses: CurriculumModuleViewModel[];
   allCourses: CurriculumModuleViewModel[];
 };
 
-export default function CurriculumSwitcher({ myCourses, allCourses }: Props) {
+export default function CurriculumSwitcher({ locale, myCourses, allCourses }: Props) {
   const [viewMode, setViewMode] = useState<ViewMode>("my-courses");
 
   return (
@@ -53,9 +53,21 @@ export default function CurriculumSwitcher({ myCourses, allCourses }: Props) {
       </div>
 
       {viewMode === "my-courses" ? (
-        <MyCoursesShell modules={myCourses} />
+        <CurriculumListShell
+          locale={locale}
+          items={myCourses}
+          showRefineControls={false}
+          emptyTitle="No learning modules yet"
+          emptyDescription="Start a module to build your personal learning library and return to it later."
+        />
       ) : (
-        <CurriculumListShell modules={allCourses} />
+        <CurriculumListShell
+          locale={locale}
+          items={allCourses}
+          showRefineControls
+          emptyTitle="No learning modules found"
+          emptyDescription="Try adjusting the search phrase or filters to explore available modules."
+        />
       )}
     </section>
   );

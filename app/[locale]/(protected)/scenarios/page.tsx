@@ -35,7 +35,7 @@ export default async function ScenariosPage({ params }: Props) {
           </div>
         </header>
 
-        <ScenarioSwitcher myScenarios={myScenarios} allScenarios={allScenarios} />
+        <ScenarioSwitcher locale={locale} myScenarios={myScenarios} allScenarios={allScenarios} />
       </div>
     </main>
   );

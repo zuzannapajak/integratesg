@@ -8,6 +8,7 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
+  CircleDashed,
   Leaf,
   PlayCircle,
   Search,
@@ -20,6 +21,7 @@ import Link from "next/link";
 import { ChangeEvent, useMemo, useState } from "react";
 
 type Props = {
+  locale: string;
   items: ScenarioListItemViewModel[];
   emptyTitle?: string;
   emptyDescription?: string;
@@ -29,7 +31,7 @@ type Props = {
 const SURFACE =
   "rounded-[28px] border border-white/70 bg-white/88 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";
 
-const ITEMS_PER_PAGE = 9;
+const ITEMS_PER_PAGE = 12;
 
 function getAreaMeta(area: ScenarioArea) {
   switch (area) {
@@ -92,7 +94,8 @@ function getTrackingMeta(status?: ScenarioProgressStatus | null) {
   }
 }
 
-export default function ScenarioLibraryShell({
+export default function ScenarioListShell({
+  locale,
   items,
   emptyTitle = "No scenarios found",
   emptyDescription = "Try adjusting the ESG area filter or search phrase to explore scenario metadata.",
@@ -115,9 +118,7 @@ export default function ScenarioLibraryShell({
         !showRefineControls ||
         normalized.length === 0 ||
         item.title.toLowerCase().includes(normalized) ||
-        item.description.toLowerCase().includes(normalized) ||
-        item.packagePath.toLowerCase().includes(normalized);
-
+        item.description.toLowerCase().includes(normalized);
       const matchesArea =
         !showRefineControls || selectedArea === "all" || item.area === selectedArea;
 
@@ -240,28 +241,28 @@ export default function ScenarioLibraryShell({
 
           <div className="grid gap-6 xl:grid-cols-3">
             <AnimatePresence mode="popLayout">
-              {paginatedItems.map((item) => {
+              {paginatedItems.map((item, index) => {
                 const areaMeta = getAreaMeta(item.area);
                 const trackingMeta = getTrackingMeta(item.status);
 
                 return (
                   <motion.article
-                    key={`${item.slug}-${item.language}`}
+                    key={item.slug}
                     layout
-                    initial={{ opacity: 0, scale: 0.97 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.97 }}
-                    transition={{ duration: 0.2 }}
-                    className={`${SURFACE} group relative flex h-full flex-col overflow-hidden p-6`}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 12 }}
+                    transition={{ duration: 0.22, delay: index * 0.02 }}
+                    className={`${SURFACE} group relative overflow-hidden p-5 md:p-6`}
                   >
                     <div
-                      className={`pointer-events-none absolute inset-0 opacity-90 ${areaMeta.glowClass}`}
+                      className={`pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 ${areaMeta.glowClass}`}
                     />
 
-                    <div className="relative flex h-full flex-1 flex-col">
-                      <div className="flex items-center justify-between gap-2">
+                    <div className="relative">
+                      <div className="flex flex-wrap items-center gap-2">
                         <span
-                          className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.7rem] font-bold uppercase tracking-wider ${areaMeta.badgeClass}`}
+                          className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[0.72rem] font-bold uppercase tracking-[0.14em] ${areaMeta.badgeClass}`}
                         >
                           {areaMeta.icon}
                           {areaMeta.label}
@@ -275,38 +276,27 @@ export default function ScenarioLibraryShell({
                         <p className="mt-3 text-sm leading-6 text-[#5f6c7b]">{item.description}</p>
                       </div>
 
-                      <div className="mt-auto grid gap-3 pt-5 sm:grid-cols-2">
-                        <div className="flex h-full min-h-23 flex-col rounded-2xl border border-[#edf1f5] bg-white px-4 py-3.5">
-                          <div className="flex items-center gap-2 text-[#7b8794]">
-                            <PlayCircle className="h-4 w-4" />
-                            <span className="text-[0.72rem] font-semibold uppercase tracking-[0.12em]">
-                              Duration
-                            </span>
-                          </div>
-                          <p className="mt-auto pt-2 font-medium text-[#31425a]">
-                            {formatDuration(item.estimatedDurationMinutes)}
-                          </p>
-                        </div>
+                      <div className="grid gap-3 pt-5 sm:grid-cols-2">
+                        <InfoPill
+                          heading="Duration"
+                          icon={<PlayCircle />}
+                          label={formatDuration(item.estimatedDurationMinutes)}
+                        />
 
-                        <div className="flex h-full min-h-23 flex-col rounded-2xl border border-[#edf1f5] bg-white px-4 py-3.5">
-                          <div className="flex items-center gap-2 text-[#7b8794]">
-                            <ShieldCheck className="h-4 w-4" />
-                            <span className="text-[0.72rem] font-semibold uppercase tracking-[0.12em]">
-                              Tracking
-                            </span>
-                          </div>
-                          <p className={`mt-auto pt-2 font-medium ${trackingMeta.className}`}>
-                            {trackingMeta.label}
-                          </p>
-                        </div>
+                        <InfoPill
+                          heading="Progress"
+                          icon={<CircleDashed />}
+                          label={trackingMeta.label}
+                          labelClassName={trackingMeta.className}
+                        />
                       </div>
 
-                      <div className="mt-6">
+                      <div className="mt-6 flex justify-end">
                         <Link
-                          href={item.packagePath}
+                          href={`/${locale}/scenarios/${item.slug}`}
                           className="inline-flex items-center gap-2 rounded-full bg-[#31425a] px-4 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#263548]"
                         >
-                          Open scenario
+                          Continue
                           <ArrowRight className="h-4 w-4" />
                         </Link>
                       </div>
@@ -354,16 +344,36 @@ export default function ScenarioLibraryShell({
           )}
         </div>
       ) : (
-        <section className={`${SURFACE} p-8 text-center`}>
-          <div className="mx-auto max-w-xl">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f4f7fa] text-[#607086]">
-              <Search className="h-6 w-6" />
-            </div>
-            <h2 className="mt-5 text-xl font-semibold text-[#1f2a37]">{emptyTitle}</h2>
-            <p className="mt-3 text-sm leading-6 text-[#5f6c7b]">{emptyDescription}</p>
-          </div>
-        </section>
+        <div className={`${SURFACE} p-8 text-center`}>
+          <h3 className="text-lg font-semibold text-[#31425a]">{emptyTitle}</h3>
+          <p className="mt-2 text-[#667180]">{emptyDescription}</p>
+        </div>
       )}
+    </div>
+  );
+}
+
+function InfoPill({
+  heading,
+  icon,
+  label,
+  labelClassName,
+}: {
+  heading: string;
+  icon: React.ReactNode;
+  label: string;
+  labelClassName?: string;
+}) {
+  return (
+    <div className="flex min-h-23 flex-col rounded-2xl border border-[#edf1f5] bg-white px-4 py-3.5 text-[#556274] [&_svg]:h-4.5 [&_svg]:w-4.5">
+      <div className="flex items-center gap-2 text-[#7b8794]">
+        <span className="text-[#0b9c72]">{icon}</span>
+        <span className="text-[0.72rem] font-semibold uppercase tracking-[0.12em]">{heading}</span>
+      </div>
+
+      <p className={`mt-auto pt-2 text-sm font-medium ${labelClassName ?? "text-[#31425a]"}`}>
+        {label}
+      </p>
     </div>
   );
 }

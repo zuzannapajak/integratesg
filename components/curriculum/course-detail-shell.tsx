@@ -40,6 +40,8 @@ function getAreaMeta(area: ModuleArea) {
         icon: <Leaf className="h-4 w-4" />,
         badgeClass: "border-emerald-100 bg-emerald-50 text-emerald-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.18),transparent_46%)]",
+        accentClass: "from-emerald-100/90 via-white to-emerald-50/80",
+        orbitClass: "border-emerald-200/70 bg-emerald-100/55 text-emerald-700",
       };
     case "social":
       return {
@@ -47,6 +49,8 @@ function getAreaMeta(area: ModuleArea) {
         icon: <Users className="h-4 w-4" />,
         badgeClass: "border-sky-100 bg-sky-50 text-sky-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.15),transparent_46%)]",
+        accentClass: "from-sky-100/90 via-white to-sky-50/80",
+        orbitClass: "border-sky-200/70 bg-sky-100/55 text-sky-700",
       };
     case "governance":
       return {
@@ -54,6 +58,8 @@ function getAreaMeta(area: ModuleArea) {
         icon: <ShieldCheck className="h-4 w-4" />,
         badgeClass: "border-violet-100 bg-violet-50 text-violet-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(139,92,246,0.15),transparent_46%)]",
+        accentClass: "from-violet-100/90 via-white to-violet-50/80",
+        orbitClass: "border-violet-200/70 bg-violet-100/55 text-violet-700",
       };
     default:
       return {
@@ -61,6 +67,8 @@ function getAreaMeta(area: ModuleArea) {
         icon: <Layers3 className="h-4 w-4" />,
         badgeClass: "border-amber-100 bg-amber-50 text-amber-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(245,158,11,0.18),transparent_46%)]",
+        accentClass: "from-amber-100/90 via-white to-amber-50/80",
+        orbitClass: "border-amber-200/70 bg-amber-100/55 text-amber-700",
       };
   }
 }
@@ -248,7 +256,9 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
           </div>
 
           <aside className="flex h-full flex-col gap-4">
-            <div className="rounded-[28px] border border-[#e7edf3] bg-white/84 px-5 py-6 shadow-[0_10px_30px_rgba(35,45,62,0.05)] backdrop-blur-xl">
+            <div
+              className={`relative overflow-hidden rounded-[28px] border border-white/70 bg-linear-to-br ${areaMeta.accentClass} p-5 shadow-[0_12px_30px_rgba(35,45,62,0.06)]`}
+            >
               <div className="mt-3 flex items-baseline gap-2">
                 <div className="text-[1.9rem] font-bold leading-none tracking-tight text-[#31425a]">
                   {module.progress}%
@@ -265,7 +275,7 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
                   initial={{ width: 0 }}
                   animate={{ width: `${module.progress}%` }}
                   transition={{ duration: 0.5, ease: "easeOut" }}
-                  className="h-full rounded-full bg-[#0b9c72]"
+                  className="h-full rounded-full bg-[#31425a]"
                 />
               </div>
             </div>

@@ -6,6 +6,7 @@ import {
   ArrowRight,
   Building2,
   FolderOpen,
+  Layers3,
   Leaf,
   Search,
   ShieldCheck,
@@ -24,7 +25,7 @@ type Props = {
 const SURFACE =
   "rounded-[28px] border border-white/70 bg-white/88 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";
 
-const ITEMS_PER_PAGE = 9;
+const ITEMS_PER_PAGE = 12;
 
 function getAreaMeta(area: CaseStudyArea) {
   switch (area) {
@@ -33,28 +34,36 @@ function getAreaMeta(area: CaseStudyArea) {
         label: "Environmental",
         icon: <Leaf className="h-4 w-4" />,
         badgeClass: "border-emerald-100 bg-emerald-50 text-emerald-700",
-        glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.16),transparent_45%)]",
+        glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.18),transparent_46%)]",
+        accentClass: "from-emerald-100/90 via-white to-emerald-50/80",
+        orbitClass: "border-emerald-200/70 bg-emerald-100/55 text-emerald-700",
       };
     case "social":
       return {
         label: "Social",
         icon: <Users className="h-4 w-4" />,
         badgeClass: "border-sky-100 bg-sky-50 text-sky-700",
-        glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.14),transparent_45%)]",
+        glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.15),transparent_46%)]",
+        accentClass: "from-sky-100/90 via-white to-sky-50/80",
+        orbitClass: "border-sky-200/70 bg-sky-100/55 text-sky-700",
       };
     case "governance":
       return {
         label: "Governance",
         icon: <ShieldCheck className="h-4 w-4" />,
         badgeClass: "border-violet-100 bg-violet-50 text-violet-700",
-        glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(139,92,246,0.14),transparent_45%)]",
+        glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(139,92,246,0.15),transparent_46%)]",
+        accentClass: "from-violet-100/90 via-white to-violet-50/80",
+        orbitClass: "border-violet-200/70 bg-violet-100/55 text-violet-700",
       };
     default:
       return {
         label: "Cross-cutting",
-        icon: <FolderOpen className="h-4 w-4" />,
+        icon: <Layers3 className="h-4 w-4" />,
         badgeClass: "border-amber-100 bg-amber-50 text-amber-700",
-        glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(245,158,11,0.16),transparent_45%)]",
+        glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(245,158,11,0.18),transparent_46%)]",
+        accentClass: "from-amber-100/90 via-white to-amber-50/80",
+        orbitClass: "border-amber-200/70 bg-amber-100/55 text-amber-700",
       };
   }
 }
@@ -200,7 +209,7 @@ export default function CaseStudyListShell({ locale, items }: Props) {
                     className={`${SURFACE} group relative flex flex-col overflow-hidden p-6`}
                   >
                     <div
-                      className={`pointer-events-none absolute inset-0 opacity-90 ${areaMeta.glowClass}`}
+                      className={`pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100 ${areaMeta.glowClass}`}
                     />
 
                     <div className="relative flex flex-1 flex-col">
@@ -243,7 +252,7 @@ export default function CaseStudyListShell({ locale, items }: Props) {
                         </div>
                       </div>
 
-                      <div className="mt-6 pt-2">
+                      <div className="mt-6 flex justify-end">
                         <Link
                           href={`/${locale}/eportfolio/${item.slug}`}
                           className="inline-flex items-center gap-2 rounded-full bg-[#31425a] px-4 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#263548]"
