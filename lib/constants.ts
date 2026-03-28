@@ -9,3 +9,9 @@ export const USER_ROLES = {
 } as const;
 
 export const ESG_AREAS = ["environmental", "social", "governance"] as const;
+
+export const ESG_colors = {
+  GREEN: "#1E9B73",
+  BLUE: "#447FC1",
+  ORANGE: "#D56F2D",
+} as const;

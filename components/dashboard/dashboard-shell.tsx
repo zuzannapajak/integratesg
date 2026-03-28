@@ -2,14 +2,17 @@
 
 import LogoutButton from "@/components/auth/login/logout-button";
 import StatsChart from "@/components/dashboard/stats-chart";
+import { ESG_colors } from "@/lib/constants";
 import { motion, type Variants } from "framer-motion";
 import {
   ArrowRight,
+  BookOpen,
   CheckCircle2,
   Clock,
-  FolderKanban,
+  FolderOpen,
   LineChart,
   LogOut,
+  PlayCircle,
   Settings,
   TrendingUp,
   UserRound,
@@ -54,7 +57,6 @@ type Props = {
   locale: string;
   role: DashboardRole;
   displayName: string;
-  email: string;
   heroStats: DashboardStat[];
   continueLearning: DashboardContinueItem | null;
   publishedCoursesCount: number;
@@ -124,7 +126,6 @@ export default function DashboardShell({
   locale,
   role,
   displayName,
-  email,
   heroStats,
   continueLearning,
   publishedCoursesCount,
@@ -147,7 +148,6 @@ export default function DashboardShell({
           role={role}
           roleConfig={roleConfig}
           displayName={displayName}
-          email={email}
           stats={heroStats}
         />
 
@@ -157,21 +157,10 @@ export default function DashboardShell({
           variants={STAGGER_CONTAINER}
           className="space-y-8"
         >
-          {role === "student" && (
+          {(role === "student" || role === "educator") && (
             <LearnerDashboard
               locale={locale}
-              roleConfig={roleConfig}
-              continueLearning={continueLearning}
-              publishedCoursesCount={publishedCoursesCount}
-              summaryMetrics={learnerSummaryMetrics}
-              activityData={learnerActivityData}
-              activityTrendLabel={learnerTrendLabel}
-            />
-          )}
-
-          {role === "educator" && (
-            <LearnerDashboard
-              locale={locale}
+              role={role}
               roleConfig={roleConfig}
               continueLearning={continueLearning}
               publishedCoursesCount={publishedCoursesCount}
@@ -200,14 +189,12 @@ function DashboardHero({
   locale,
   roleConfig,
   displayName,
-  email,
   stats,
 }: {
   locale: string;
   role: DashboardRole;
   roleConfig: RoleConfig;
   displayName: string;
-  email: string;
   stats: DashboardStat[];
 }) {
   return (
@@ -225,10 +212,6 @@ function DashboardHero({
               {roleConfig.welcome}, {displayName}
             </h1>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">{roleConfig.intro}</p>
-
-            <div className="mt-3 inline-flex rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-500">
-              {email}
-            </div>
 
             <div className="mt-5 flex flex-wrap gap-3">
               {stats.map((s) => (
@@ -270,6 +253,7 @@ function DashboardHero({
 
 function LearnerDashboard({
   locale,
+  role,
   roleConfig,
   continueLearning,
   publishedCoursesCount,
@@ -278,6 +262,7 @@ function LearnerDashboard({
   activityTrendLabel,
 }: {
   locale: string;
+  role: DashboardRole;
   roleConfig: RoleConfig;
   continueLearning: DashboardContinueItem | null;
   publishedCoursesCount: number;
@@ -285,6 +270,103 @@ function LearnerDashboard({
   activityData: DashboardChartPoint[];
   activityTrendLabel: string;
 }) {
+  const primaryCard =
+    role === "educator"
+      ? {
+          icon: <BookOpen className="h-5 w-5" />,
+          title: "Curriculum",
+          description: "Open structured modules, checkpoints, and guided learning flow.",
+          meta: `${publishedCoursesCount} published modules`,
+          href: `/${locale}/curriculum`,
+          accentColor: ESG_colors.BLUE,
+          backgroundStyle: {
+            background:
+              "linear-gradient(180deg, rgba(244,248,255,0.98) 0%, rgba(255,255,255,0.96) 100%)",
+            borderColor: "rgba(68,127,193,0.20)",
+          },
+          iconStyle: {
+            backgroundColor: "rgba(68,127,193,0.14)",
+            color: ESG_colors.BLUE,
+          },
+          metaStyle: {
+            borderColor: "rgba(68,127,193,0.22)",
+            backgroundColor: "rgba(68,127,193,0.10)",
+            color: ESG_colors.BLUE,
+          },
+        }
+      : {
+          icon: <PlayCircle className="h-5 w-5" />,
+          title: "Scenario simulator",
+          description:
+            "Launch interactive scenarios and practice decision-making in realistic contexts.",
+          meta: "Interactive scenario flows",
+          href: `/${locale}/scenarios`,
+          accentColor: ESG_colors.GREEN,
+          backgroundStyle: {
+            background:
+              "linear-gradient(180deg, rgba(243,251,247,0.98) 0%, rgba(255,255,255,0.96) 100%)",
+            borderColor: "rgba(30,155,115,0.20)",
+          },
+          iconStyle: {
+            backgroundColor: "rgba(30,155,115,0.14)",
+            color: ESG_colors.GREEN,
+          },
+          metaStyle: {
+            borderColor: "rgba(30,155,115,0.22)",
+            backgroundColor: "rgba(30,155,115,0.10)",
+            color: ESG_colors.GREEN,
+          },
+        };
+
+  const secondaryCard =
+    role === "educator"
+      ? {
+          icon: <FolderOpen className="h-5 w-5" />,
+          title: "ePortfolio",
+          description:
+            "Browse case studies and practical ESG examples prepared for applied learning.",
+          meta: "Case studies and examples",
+          href: `/${locale}/eportfolio`,
+          accentColor: ESG_colors.ORANGE,
+          backgroundStyle: {
+            background:
+              "linear-gradient(180deg, rgba(255,248,243,0.98) 0%, rgba(255,255,255,0.96) 100%)",
+            borderColor: "rgba(213,111,45,0.20)",
+          },
+          iconStyle: {
+            backgroundColor: "rgba(213,111,45,0.14)",
+            color: ESG_colors.ORANGE,
+          },
+          metaStyle: {
+            borderColor: "rgba(213,111,45,0.22)",
+            backgroundColor: "rgba(213,111,45,0.10)",
+            color: ESG_colors.ORANGE,
+          },
+        }
+      : {
+          icon: <FolderOpen className="h-5 w-5" />,
+          title: "ePortfolio",
+          description:
+            "Browse case studies and practical ESG examples to support your learning journey.",
+          meta: "Case studies and examples",
+          href: `/${locale}/eportfolio`,
+          accentColor: ESG_colors.BLUE,
+          backgroundStyle: {
+            background:
+              "linear-gradient(180deg, rgba(244,248,255,0.98) 0%, rgba(255,255,255,0.96) 100%)",
+            borderColor: "rgba(68,127,193,0.20)",
+          },
+          iconStyle: {
+            backgroundColor: "rgba(68,127,193,0.14)",
+            color: ESG_colors.BLUE,
+          },
+          metaStyle: {
+            borderColor: "rgba(68,127,193,0.22)",
+            backgroundColor: "rgba(68,127,193,0.10)",
+            color: ESG_colors.BLUE,
+          },
+        };
+
   return (
     <div className="grid grid-cols-1 gap-6 xl:grid-cols-12">
       <motion.div variants={FADE_UP} className={`xl:col-span-5 ${SURFACE} p-8`}>
@@ -293,10 +375,6 @@ function LearnerDashboard({
             <Clock className="h-4 w-4" />
             Continue learning
           </div>
-
-          <span className="rounded-full border border-emerald-100 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
-            {continueLearning?.badge ?? "Curriculum"}
-          </span>
         </div>
 
         <h2 className="text-2xl font-bold tracking-tight text-slate-900">
@@ -304,12 +382,8 @@ function LearnerDashboard({
         </h2>
         <p className="mt-2 text-sm leading-6 text-slate-500">
           {continueLearning?.description ??
-            "Open your first curriculum module to start building activity on the dashboard."}
+            "Recently accessed modules will appear here, once you start it."}
         </p>
-
-        <div className="mt-4 inline-flex rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600">
-          {continueLearning?.kindLabel ?? "Ready to start"}
-        </div>
 
         <div className="mt-6">
           <div className="mb-2 flex justify-between text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">
@@ -347,27 +421,27 @@ function LearnerDashboard({
         className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:col-span-7"
       >
         <CoreAreaCard
-          icon={<FolderKanban className="h-5 w-5" />}
-          title="Curriculum"
-          description="Open structured modules, checkpoints, and guided learning flow."
-          meta={`${publishedCoursesCount} published modules`}
-          href={`/${locale}/curriculum`}
-          accentColor={roleConfig.accent}
-          toneClass="bg-[linear-gradient(180deg,rgba(243,252,248,0.96)_0%,rgba(255,255,255,0.96)_100%)] border-emerald-100/80"
-          iconToneClass="bg-emerald-100 text-emerald-700"
-          metaToneClass="border-emerald-100 bg-emerald-50 text-emerald-700"
+          icon={primaryCard.icon}
+          title={primaryCard.title}
+          description={primaryCard.description}
+          meta={primaryCard.meta}
+          href={primaryCard.href}
+          accentColor={primaryCard.accentColor}
+          backgroundStyle={primaryCard.backgroundStyle}
+          iconStyle={primaryCard.iconStyle}
+          metaStyle={primaryCard.metaStyle}
         />
 
         <CoreAreaCard
-          icon={<Settings className="h-5 w-5" />}
-          title="Account settings"
-          description="Manage your profile preferences and platform settings."
-          meta="Profile and preferences"
-          href={`/${locale}/settings`}
-          accentColor={roleConfig.accent}
-          toneClass="bg-[linear-gradient(180deg,rgba(247,249,252,0.96)_0%,rgba(255,255,255,0.96)_100%)] border-slate-100/80"
-          iconToneClass="bg-slate-100 text-slate-700"
-          metaToneClass="border-slate-200 bg-slate-50 text-slate-700"
+          icon={secondaryCard.icon}
+          title={secondaryCard.title}
+          description={secondaryCard.description}
+          meta={secondaryCard.meta}
+          href={secondaryCard.href}
+          accentColor={secondaryCard.accentColor}
+          backgroundStyle={secondaryCard.backgroundStyle}
+          iconStyle={secondaryCard.iconStyle}
+          metaStyle={secondaryCard.metaStyle}
         />
       </motion.div>
 
@@ -488,9 +562,9 @@ function CoreAreaCard({
   meta,
   href,
   accentColor,
-  toneClass = "",
-  iconToneClass = "",
-  metaToneClass = "",
+  backgroundStyle,
+  iconStyle,
+  metaStyle,
 }: {
   icon: React.ReactNode;
   title: string;
@@ -498,41 +572,63 @@ function CoreAreaCard({
   meta: string;
   href: string;
   accentColor: string;
-  toneClass?: string;
-  iconToneClass?: string;
-  metaToneClass?: string;
+  backgroundStyle?: React.CSSProperties;
+  iconStyle?: React.CSSProperties;
+  metaStyle?: React.CSSProperties;
 }) {
+  const buttonLabel =
+    title === "Curriculum"
+      ? "Open module"
+      : title === "Scenario simulator"
+        ? "Open scenarios"
+        : "Open ePortfolio";
+
   return (
     <Link
       href={href}
-      className={`${SURFACE} ${toneClass} group flex h-full flex-col justify-between p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(35,45,62,0.06)]`}
+      className={`${SURFACE} group flex h-full flex-col justify-between p-6 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(35,45,62,0.06)]`}
+      style={backgroundStyle}
     >
       <div>
-        <div
-          className={`mb-5 flex h-12 w-12 items-center justify-center rounded-2xl ${iconToneClass}`}
-          style={
-            iconToneClass ? undefined : { backgroundColor: `${accentColor}12`, color: accentColor }
-          }
-        >
-          <span className="flex h-5 w-5 items-center justify-center">{icon}</span>
-        </div>
-
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <h4 className="text-lg font-bold tracking-tight text-slate-900">{title}</h4>
-            <p className="mt-2 text-sm leading-6 text-slate-500">{description}</p>
+        <div className="mb-5 flex items-start justify-between gap-4">
+          <div
+            className="flex h-12 w-12 items-center justify-center rounded-2xl"
+            style={iconStyle ?? { backgroundColor: `${accentColor}12`, color: accentColor }}
+          >
+            <span className="flex h-5 w-5 items-center justify-center">{icon}</span>
           </div>
 
-          <ArrowRight className="mt-1 h-4 w-4 shrink-0 text-slate-300 transition-all duration-300 group-hover:translate-x-1" />
+          <span
+            className="shrink-0 rounded-full border px-3 py-1 text-xs font-medium"
+            style={
+              metaStyle ?? {
+                borderColor: `${accentColor}33`,
+                backgroundColor: `${accentColor}14`,
+                color: accentColor,
+              }
+            }
+          >
+            {meta}
+          </span>
+        </div>
+
+        <div>
+          <h4 className="text-lg font-bold tracking-tight text-slate-900">{title}</h4>
+          <p className="mt-2 text-sm leading-6 text-slate-500">{description}</p>
         </div>
       </div>
 
       <div className="mt-6">
-        <span
-          className={`rounded-full border px-3 py-1 text-xs font-medium ${metaToneClass || "border-slate-200 bg-slate-50 text-slate-600"}`}
+        <div
+          className="inline-flex items-center gap-2 rounded-2xl px-4 py-2.5 text-sm font-semibold text-white transition-all duration-300 group-hover:-translate-y-0.5"
+          style={{
+            backgroundColor: accentColor,
+            boxShadow: "0 10px 24px rgba(35,45,62,0.10)",
+          }}
         >
-          {meta}
-        </span>
+          <span>{buttonLabel}</span>
+          <ArrowRight className="h-4 w-4" />
+        </div>
       </div>
     </Link>
   );

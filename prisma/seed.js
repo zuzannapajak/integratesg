@@ -17,238 +17,115 @@ const prisma = new PrismaClient({
   adapter,
 });
 
-const caseStudies = [
+const scenarios = [
   {
-    slug: "green-campus-procurement",
+    slug: "environmental-impact-decision-path",
     status: "published",
     area: "environmental",
     sortOrder: 1,
     isFeatured: true,
-    translations: [
+    variants: [
       {
         language: "en",
-        title: "Green campus procurement",
-        summary:
-          "A case study about introducing sustainability criteria into procurement decisions for campus equipment and services.",
-        content:
-          "This case study examines how a vocational education provider redesigned procurement rules to include environmental criteria, lifecycle thinking, and supplier transparency. Learners can analyse trade-offs between upfront costs, long-term efficiency, and ESG accountability.",
-        keyTakeaways: [
-          "Environmental criteria can be embedded into procurement workflows.",
-          "Lifecycle cost analysis supports more informed decisions.",
-          "Supplier transparency improves ESG accountability.",
-        ],
-        organization: "IntegratESG Demo Institution",
-        industry: "Vocational Education",
+        title: "Environmental impact decision path",
+        description:
+          "A scenario focused on environmental trade-offs, operational choices, and resource efficiency.",
+        instruction:
+          "Review the context, make staged decisions, and reflect on how each choice affects environmental outcomes.",
+        launchUrl: "/storyline/environmental-impact-decision-path/en/index_lms.html",
+        packagePath: "storyline/environmental-impact-decision-path/en.zip",
+        entryPoint: "index_lms.html",
+        thumbnailUrl: "/scenario-thumbnails/environmental-impact-decision-path.jpg",
+        estimatedDurationMinutes: 15,
+        availabilityStatus: "available",
       },
       {
         language: "pl",
-        title: "Zielone zamówienia kampusowe",
-        summary:
-          "Studium przypadku dotyczące wdrożenia kryteriów zrównoważonego rozwoju do decyzji zakupowych związanych z wyposażeniem i usługami kampusu.",
-        content:
-          "To studium przypadku pokazuje, w jaki sposób instytucja kształcenia zawodowego przeprojektowała zasady zakupowe, aby uwzględnić kryteria środowiskowe, podejście cyklu życia oraz przejrzystość dostawców. Użytkownicy analizują kompromisy między kosztami początkowymi, długoterminową efektywnością i odpowiedzialnością ESG.",
-        keyTakeaways: [
-          "Kryteria środowiskowe można osadzić w procesach zakupowych.",
-          "Analiza kosztu cyklu życia wspiera trafniejsze decyzje.",
-          "Przejrzystość dostawców wzmacnia odpowiedzialność ESG.",
-        ],
-        organization: "Instytucja demonstracyjna IntegratESG",
-        industry: "Edukacja zawodowa",
+        title: "Ścieżka decyzji o wpływie środowiskowym",
+        description:
+          "Scenariusz dotyczący kompromisów środowiskowych, wyborów operacyjnych i efektywności zasobów.",
+        instruction:
+          "Przeanalizuj kontekst, podejmuj decyzje etapami i sprawdź, jak każdy wybór wpływa na wyniki środowiskowe.",
+        launchUrl: "/storyline/environmental-impact-decision-path/pl/index_lms.html",
+        packagePath: "storyline/environmental-impact-decision-path/pl.zip",
+        entryPoint: "index_lms.html",
+        thumbnailUrl: "/scenario-thumbnails/environmental-impact-decision-path.jpg",
+        estimatedDurationMinutes: 15,
+        availabilityStatus: "available",
       },
     ],
   },
   {
-    slug: "inclusive-recruitment-and-wellbeing",
+    slug: "social-inclusion-under-pressure",
     status: "published",
     area: "social",
     sortOrder: 2,
     isFeatured: true,
-    translations: [
+    variants: [
       {
         language: "en",
-        title: "Inclusive recruitment and wellbeing",
-        summary:
-          "A case study exploring inclusive hiring, onboarding, and wellbeing practices in an educational organisation.",
-        content:
-          "This case study presents an organisation that revised its recruitment and onboarding process to improve inclusion, accessibility, and employee wellbeing. It helps learners understand how social ESG commitments become operational practices.",
-        keyTakeaways: [
-          "Social ESG requires concrete people-focused processes.",
-          "Inclusive onboarding influences retention and trust.",
-          "Wellbeing policies affect implementation quality.",
-        ],
-        organization: "Regional Training Centre",
-        industry: "Education and Training",
+        title: "Social inclusion under pressure",
+        description:
+          "A scenario about inclusion, stakeholder sensitivity, and people-focused ESG decisions.",
+        instruction:
+          "Move through the scenario step by step and decide how the organisation should respond to competing social priorities.",
+        launchUrl: "/storyline/social-inclusion-under-pressure/en/index_lms.html",
+        packagePath: "storyline/social-inclusion-under-pressure/en.zip",
+        entryPoint: "index_lms.html",
+        thumbnailUrl: "/scenario-thumbnails/social-inclusion-under-pressure.jpg",
+        estimatedDurationMinutes: 18,
+        availabilityStatus: "available",
       },
       {
         language: "pl",
-        title: "Rekrutacja inkluzywna i dobrostan",
-        summary:
-          "Studium przypadku analizujące inkluzywną rekrutację, onboarding oraz praktyki wspierające dobrostan w organizacji edukacyjnej.",
-        content:
-          "To studium przypadku przedstawia organizację, która zmieniła proces rekrutacji i wdrożenia pracowników, aby zwiększyć inkluzywność, dostępność i dobrostan zespołu. Pomaga zrozumieć, jak społeczne zobowiązania ESG przekładają się na codzienną praktykę operacyjną.",
-        keyTakeaways: [
-          "Społeczny wymiar ESG wymaga konkretnych procesów ukierunkowanych na ludzi.",
-          "Inkluzywny onboarding wpływa na retencję i zaufanie.",
-          "Polityki dobrostanu oddziałują na jakość wdrożenia.",
-        ],
-        organization: "Regionalne Centrum Szkoleniowe",
-        industry: "Edukacja i szkolenia",
+        title: "Inkluzywność społeczna pod presją",
+        description:
+          "Scenariusz o inkluzywności, wrażliwości na interesariuszy i decyzjach ESG skoncentrowanych na ludziach.",
+        instruction:
+          "Przechodź scenariusz krok po kroku i zdecyduj, jak organizacja powinna odpowiedzieć na konkurujące priorytety społeczne.",
+        launchUrl: "/storyline/social-inclusion-under-pressure/pl/index_lms.html",
+        packagePath: "storyline/social-inclusion-under-pressure/pl.zip",
+        entryPoint: "index_lms.html",
+        thumbnailUrl: "/scenario-thumbnails/social-inclusion-under-pressure.jpg",
+        estimatedDurationMinutes: 18,
+        availabilityStatus: "available",
       },
     ],
   },
   {
-    slug: "board-oversight-and-transparency",
+    slug: "governance-and-reporting-escalation",
     status: "published",
     area: "governance",
     sortOrder: 3,
     isFeatured: false,
-    translations: [
+    variants: [
       {
         language: "en",
-        title: "Board oversight and transparency",
-        summary:
-          "A governance-focused case study about decision rights, reporting lines, and transparent oversight in ESG implementation.",
-        content:
-          "This case study focuses on governance arrangements in an institution that introduced clearer reporting responsibilities, board oversight, and decision escalation rules for ESG-related topics. Learners evaluate how structures influence trust and accountability.",
-        keyTakeaways: [
-          "Governance defines responsibility and escalation pathways.",
-          "Transparent reporting improves institutional credibility.",
-          "Oversight mechanisms strengthen ESG implementation.",
-        ],
-        organization: "Public Skills Institute",
-        industry: "Public Education",
+        title: "Governance and reporting escalation",
+        description:
+          "A scenario focused on accountability, escalation rules, and transparent governance processes.",
+        instruction:
+          "Assess the reporting situation, choose escalation paths, and evaluate how governance structures affect outcomes.",
+        launchUrl: "/storyline/governance-and-reporting-escalation/en/index_lms.html",
+        packagePath: "storyline/governance-and-reporting-escalation/en.zip",
+        entryPoint: "index_lms.html",
+        thumbnailUrl: "/scenario-thumbnails/governance-and-reporting-escalation.jpg",
+        estimatedDurationMinutes: 20,
+        availabilityStatus: "available",
       },
       {
         language: "pl",
-        title: "Nadzór zarządczy i przejrzystość",
-        summary:
-          "Studium przypadku skoncentrowane na governance: uprawnieniach decyzyjnych, liniach raportowania i przejrzystym nadzorze nad wdrażaniem ESG.",
-        content:
-          "To studium przypadku koncentruje się na rozwiązaniach governance w instytucji, która wprowadziła jaśniejsze odpowiedzialności raportowe, nadzór kierownictwa oraz zasady eskalacji decyzji w obszarze ESG. Użytkownicy oceniają, jak struktury wpływają na zaufanie i odpowiedzialność.",
-        keyTakeaways: [
-          "Governance definiuje odpowiedzialność i ścieżki eskalacji.",
-          "Przejrzyste raportowanie zwiększa wiarygodność instytucji.",
-          "Mechanizmy nadzoru wzmacniają wdrażanie ESG.",
-        ],
-        organization: "Publiczny Instytut Kompetencji",
-        industry: "Edukacja publiczna",
-      },
-    ],
-  },
-  {
-    slug: "energy-efficiency-retrofit",
-    status: "draft",
-    area: "environmental",
-    sortOrder: 4,
-    isFeatured: false,
-    translations: [
-      {
-        language: "en",
-        title: "Energy efficiency retrofit",
-        summary:
-          "A draft case study about balancing renovation cost, emissions reduction, and operational performance.",
-        content:
-          "This draft case study explores how an organisation assessed an energy retrofit project for its facilities. It is intended to help learners reason about environmental impact, financial constraints, and implementation sequencing.",
-        keyTakeaways: [
-          "Retrofit decisions require balancing environmental and financial goals.",
-          "Operational continuity influences sustainability planning.",
-          "Phased implementation can reduce delivery risk.",
-        ],
-        organization: "Demonstration Campus",
-        industry: "Facilities Management",
-      },
-      {
-        language: "pl",
-        title: "Modernizacja efektywności energetycznej",
-        summary:
-          "Robocze studium przypadku o równoważeniu kosztów modernizacji, redukcji emisji i wydajności operacyjnej.",
-        content:
-          "To robocze studium przypadku pokazuje, jak organizacja analizowała projekt modernizacji energetycznej swoich obiektów. Ma pomóc użytkownikom rozumieć zależności między wpływem środowiskowym, ograniczeniami finansowymi i kolejnością wdrożenia.",
-        keyTakeaways: [
-          "Decyzje modernizacyjne wymagają równoważenia celów środowiskowych i finansowych.",
-          "Ciągłość działania wpływa na planowanie zrównoważonych inwestycji.",
-          "Wdrożenie etapowe może ograniczyć ryzyko realizacyjne.",
-        ],
-        organization: "Kampus demonstracyjny",
-        industry: "Zarządzanie obiektami",
-      },
-    ],
-  },
-  {
-    slug: "community-engagement-in-training-programmes",
-    status: "draft",
-    area: "social",
-    sortOrder: 5,
-    isFeatured: false,
-    translations: [
-      {
-        language: "en",
-        title: "Community engagement in training programmes",
-        summary:
-          "A draft case study about designing educational programmes with stronger community participation.",
-        content:
-          "This draft case study describes how a training provider involved local stakeholders in programme design to improve inclusion, relevance, and social value. Learners examine participation models and the tension between broad consultation and delivery speed.",
-        keyTakeaways: [
-          "Community input can improve relevance and legitimacy.",
-          "Participation requires deliberate process design.",
-          "Social value often depends on stakeholder engagement quality.",
-        ],
-        organization: "Community Skills Hub",
-        industry: "Training Services",
-      },
-      {
-        language: "pl",
-        title: "Zaangażowanie społeczności w programy szkoleniowe",
-        summary:
-          "Robocze studium przypadku o projektowaniu programów edukacyjnych z silniejszym udziałem społeczności.",
-        content:
-          "To robocze studium przypadku opisuje, jak dostawca szkoleń włączył lokalnych interesariuszy w projektowanie programu, aby zwiększyć inkluzywność, trafność i wartość społeczną. Użytkownicy analizują modele partycypacji oraz napięcie między szerokimi konsultacjami a szybkością wdrożenia.",
-        keyTakeaways: [
-          "Głos społeczności może zwiększyć trafność i legitymację działań.",
-          "Partycypacja wymaga świadomego zaprojektowania procesu.",
-          "Wartość społeczna często zależy od jakości zaangażowania interesariuszy.",
-        ],
-        organization: "Lokalne Centrum Kompetencji",
-        industry: "Usługi szkoleniowe",
-      },
-    ],
-  },
-  {
-    slug: "ethics-and-reporting-controls",
-    status: "draft",
-    area: "governance",
-    sortOrder: 6,
-    isFeatured: false,
-    translations: [
-      {
-        language: "en",
-        title: "Ethics and reporting controls",
-        summary:
-          "A draft case study about strengthening governance through reporting controls and ethics procedures.",
-        content:
-          "This draft case study focuses on reporting controls, issue escalation, and ethics procedures in an organisation developing ESG governance maturity. It supports analysis of how internal rules influence trust, traceability, and accountability.",
-        keyTakeaways: [
-          "Controls and procedures support governance maturity.",
-          "Traceable reporting improves accountability.",
-          "Ethics frameworks should connect with operational practice.",
-        ],
-        organization: "Institutional Governance Lab",
-        industry: "Organisational Development",
-      },
-      {
-        language: "pl",
-        title: "Etyka i mechanizmy raportowania",
-        summary:
-          "Robocze studium przypadku dotyczące wzmacniania governance przez mechanizmy raportowania i procedury etyczne.",
-        content:
-          "To robocze studium przypadku koncentruje się na kontrolach raportowych, eskalacji problemów i procedurach etycznych w organizacji rozwijającej dojrzałość governance w obszarze ESG. Wspiera analizę tego, jak wewnętrzne reguły wpływają na zaufanie, śledzalność i odpowiedzialność.",
-        keyTakeaways: [
-          "Kontrole i procedury wspierają dojrzałość governance.",
-          "Śledzalne raportowanie wzmacnia odpowiedzialność.",
-          "Ramowe zasady etyczne powinny łączyć się z praktyką operacyjną.",
-        ],
-        organization: "Laboratorium Governance",
-        industry: "Rozwój organizacyjny",
+        title: "Governance i eskalacja raportowania",
+        description:
+          "Scenariusz skupiony na odpowiedzialności, zasadach eskalacji i przejrzystych procesach governance.",
+        instruction:
+          "Oceń sytuację raportową, wybierz ścieżki eskalacji i sprawdź, jak struktury governance wpływają na rezultaty.",
+        launchUrl: "/storyline/governance-and-reporting-escalation/pl/index_lms.html",
+        packagePath: "storyline/governance-and-reporting-escalation/pl.zip",
+        entryPoint: "index_lms.html",
+        thumbnailUrl: "/scenario-thumbnails/governance-and-reporting-escalation.jpg",
+        estimatedDurationMinutes: 20,
+        availabilityStatus: "available",
       },
     ],
   },
@@ -669,54 +546,67 @@ function pickAnswer(question, kind = "correct") {
   return answer;
 }
 
-async function upsertCaseStudy(caseStudyData) {
-  const caseStudy = await prisma.caseStudy.upsert({
-    where: { slug: caseStudyData.slug },
+async function upsertScenario(scenarioData) {
+  const scenario = await prisma.scenario.upsert({
+    where: { slug: scenarioData.slug },
     update: {
-      status: caseStudyData.status,
-      area: caseStudyData.area,
-      sortOrder: caseStudyData.sortOrder,
-      isFeatured: caseStudyData.isFeatured,
+      status: scenarioData.status,
+      area: scenarioData.area,
+      sortOrder: scenarioData.sortOrder,
+      isFeatured: scenarioData.isFeatured,
     },
     create: {
-      slug: caseStudyData.slug,
-      status: caseStudyData.status,
-      area: caseStudyData.area,
-      sortOrder: caseStudyData.sortOrder,
-      isFeatured: caseStudyData.isFeatured,
+      slug: scenarioData.slug,
+      status: scenarioData.status,
+      area: scenarioData.area,
+      sortOrder: scenarioData.sortOrder,
+      isFeatured: scenarioData.isFeatured,
     },
   });
 
-  for (const translation of caseStudyData.translations) {
-    await prisma.caseStudyTranslation.upsert({
+  for (const variant of scenarioData.variants) {
+    await prisma.scenarioVariant.upsert({
       where: {
-        caseStudyId_language: {
-          caseStudyId: caseStudy.id,
-          language: translation.language,
+        scenarioId_language: {
+          scenarioId: scenario.id,
+          language: variant.language,
         },
       },
       update: {
-        title: translation.title,
-        summary: translation.summary,
-        content: translation.content,
-        keyTakeaways: translation.keyTakeaways,
-        organization: translation.organization,
-        industry: translation.industry,
+        title: variant.title,
+        description: variant.description,
+        instruction: variant.instruction,
+        launchUrl: variant.launchUrl,
+        packagePath: variant.packagePath,
+        entryPoint: variant.entryPoint,
+        thumbnailUrl: variant.thumbnailUrl,
+        estimatedDurationMinutes: variant.estimatedDurationMinutes,
+        availabilityStatus: variant.availabilityStatus,
       },
       create: {
-        caseStudyId: caseStudy.id,
-        language: translation.language,
-        title: translation.title,
-        summary: translation.summary,
-        content: translation.content,
-        keyTakeaways: translation.keyTakeaways,
-        organization: translation.organization,
-        industry: translation.industry,
+        scenarioId: scenario.id,
+        language: variant.language,
+        title: variant.title,
+        description: variant.description,
+        instruction: variant.instruction,
+        launchUrl: variant.launchUrl,
+        packagePath: variant.packagePath,
+        entryPoint: variant.entryPoint,
+        thumbnailUrl: variant.thumbnailUrl,
+        estimatedDurationMinutes: variant.estimatedDurationMinutes,
+        availabilityStatus: variant.availabilityStatus,
       },
     });
   }
 
-  return caseStudy;
+  return prisma.scenario.findUnique({
+    where: { id: scenario.id },
+    include: {
+      variants: {
+        orderBy: { language: "asc" },
+      },
+    },
+  });
 }
 
 async function upsertCourse(courseData) {
@@ -850,7 +740,137 @@ async function upsertCourse(courseData) {
   return fullCourse;
 }
 
-async function seedAttempts(courseMap) {
+async function seedScenarioAttempts(scenarioMap) {
+  const student =
+    (await prisma.profile.findFirst({
+      where: { role: "student" },
+      orderBy: { createdAt: "asc" },
+    })) ??
+    (process.env.DEMO_STUDENT_EMAIL
+      ? await prisma.profile.findUnique({
+          where: { email: process.env.DEMO_STUDENT_EMAIL },
+        })
+      : null);
+
+  if (!student) {
+    console.log("No student profile found. Skipping UserScenarioAttempt seed.");
+    return;
+  }
+
+  const environmentalScenario = scenarioMap.get("environmental-impact-decision-path");
+  const socialScenario = scenarioMap.get("social-inclusion-under-pressure");
+  const governanceScenario = scenarioMap.get("governance-and-reporting-escalation");
+
+  if (!environmentalScenario || !socialScenario || !governanceScenario) {
+    throw new Error("Missing seeded scenario data required to seed attempts.");
+  }
+
+  const environmentalVariant =
+    environmentalScenario.variants.find((variant) => variant.language === "en") ??
+    environmentalScenario.variants[0];
+
+  const socialVariant =
+    socialScenario.variants.find((variant) => variant.language === "en") ??
+    socialScenario.variants[0];
+
+  const governanceVariant =
+    governanceScenario.variants.find((variant) => variant.language === "en") ??
+    governanceScenario.variants[0];
+
+  const now = Date.now();
+
+  const attempts = [
+    {
+      userId: student.id,
+      scenarioId: environmentalScenario.id,
+      scenarioVariantId: environmentalVariant.id,
+      attemptNumber: 1,
+      score: 82,
+      status: "completed",
+      startedAt: new Date(now - 4 * 24 * 60 * 60 * 1000),
+      lastOpenedAt: new Date(now - 4 * 24 * 60 * 60 * 1000 + 18 * 60 * 1000),
+      completedAt: new Date(now - 4 * 24 * 60 * 60 * 1000 + 18 * 60 * 1000),
+      suspendData: null,
+      lessonLocation: "final-feedback",
+      sessionTime: "0000:18:12.45",
+      totalTime: "0000:18:12.45",
+      rawTrackingData: {
+        lesson_status: "completed",
+        score_raw: "82",
+        lesson_location: "final-feedback",
+      },
+    },
+    {
+      userId: student.id,
+      scenarioId: socialScenario.id,
+      scenarioVariantId: socialVariant.id,
+      attemptNumber: 1,
+      score: null,
+      status: "incomplete",
+      startedAt: new Date(now - 24 * 60 * 60 * 1000),
+      lastOpenedAt: new Date(now - 2 * 60 * 60 * 1000),
+      completedAt: null,
+      suspendData: '{"scene":"decision-2","state":"resume"}',
+      lessonLocation: "decision-2",
+      sessionTime: "0000:09:48.10",
+      totalTime: "0000:09:48.10",
+      rawTrackingData: {
+        lesson_status: "incomplete",
+        lesson_location: "decision-2",
+      },
+    },
+    {
+      userId: student.id,
+      scenarioId: governanceScenario.id,
+      scenarioVariantId: governanceVariant.id,
+      attemptNumber: 1,
+      score: 64,
+      status: "failed",
+      startedAt: new Date(now - 2 * 24 * 60 * 60 * 1000),
+      lastOpenedAt: new Date(now - 2 * 24 * 60 * 60 * 1000 + 16 * 60 * 1000),
+      completedAt: new Date(now - 2 * 24 * 60 * 60 * 1000 + 16 * 60 * 1000),
+      suspendData: null,
+      lessonLocation: "final-score",
+      sessionTime: "0000:16:03.00",
+      totalTime: "0000:16:03.00",
+      rawTrackingData: {
+        lesson_status: "failed",
+        score_raw: "64",
+        lesson_location: "final-score",
+      },
+    },
+  ];
+
+  for (const attempt of attempts) {
+    await prisma.userScenarioAttempt.upsert({
+      where: {
+        userId_scenarioVariantId_attemptNumber: {
+          userId: attempt.userId,
+          scenarioVariantId: attempt.scenarioVariantId,
+          attemptNumber: attempt.attemptNumber,
+        },
+      },
+      update: {
+        scenarioId: attempt.scenarioId,
+        score: attempt.score,
+        status: attempt.status,
+        startedAt: attempt.startedAt,
+        lastOpenedAt: attempt.lastOpenedAt,
+        completedAt: attempt.completedAt,
+        suspendData: attempt.suspendData,
+        lessonLocation: attempt.lessonLocation,
+        sessionTime: attempt.sessionTime,
+        totalTime: attempt.totalTime,
+        rawTrackingData: attempt.rawTrackingData,
+      },
+      create: attempt,
+    });
+  }
+
+  console.log(`Seeded scenario attempts for student: ${student.email}`);
+}
+
+async function seedCourseAttempts(courseMap) {
   const educator =
     (await prisma.profile.findFirst({
       where: { role: "educator" },
@@ -1037,27 +1057,29 @@ async function seedAttempts(courseMap) {
 }
 
 async function main() {
-  console.log("Seeding curriculum and ePortfolio data...");
+  console.log("Seeding curriculum and scenario data...");
 
-  for (const caseStudyData of caseStudies) {
-    await upsertCaseStudy(caseStudyData);
+  const scenarioMap = new Map();
+  for (const scenarioData of scenarios) {
+    const scenario = await upsertScenario(scenarioData);
+    scenarioMap.set(scenario.slug, scenario);
   }
 
   const courseMap = new Map();
-
   for (const courseData of courses) {
     const course = await upsertCourse(courseData);
     courseMap.set(course.slug, course);
   }
 
-  await seedAttempts(courseMap);
+  await seedScenarioAttempts(scenarioMap);
+  await seedCourseAttempts(courseMap);
 
-  console.log("Curriculum and ePortfolio seed completed.");
+  console.log("Curriculum and scenario seed completed.");
 }
 
 main()
   .catch((error) => {
-    console.error("Curriculum and ePortfolio seed failed.");
+    console.error("Curriculum and scenario seed failed.");
     console.error(error);
     process.exit(1);
   })

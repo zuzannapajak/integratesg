@@ -50,16 +50,30 @@ enum CourseStage {
   completed
 }
 
+enum ScenarioAvailabilityStatus {
+  available
+  unavailable
+}
+
+enum ScenarioAttemptStatus {
+  passed
+  completed
+  failed
+  incomplete
+  browsed
+}
+
 // Models
 model Profile {
-  id                 String              @id
-  email              String              @unique
-  fullName           String?
-  role               UserRole            @default(student)
-  preferredLanguage  String              @default("en")
-  createdAt          DateTime            @default(now())
-  updatedAt          DateTime            @updatedAt
-  userCourseAttempts UserCourseAttempt[]
+  id                   String                @id
+  email                String                @unique
+  fullName             String?
+  role                 UserRole              @default(student)
+  preferredLanguage    String                @default("en")
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  userCourseAttempts   UserCourseAttempt[]
+  userScenarioAttempts UserScenarioAttempt[]
 }
 
 model CaseStudy {
@@ -215,4 +229,78 @@ model UserCourseAttempt {
   @@index([courseId])
   @@index([status])
   @@index([currentStage])
+}
+
+model Scenario {
+  id           String                @id @default(cuid())
+  slug         String                @unique
+  area         CourseArea
+  status       PublicationStatus     @default(draft)
+  sortOrder    Int                   @default(0)
+  isFeatured   Boolean               @default(false)
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+  variants     ScenarioVariant[]
+  userAttempts UserScenarioAttempt[]
+
+  @@index([status])
+  @@index([area])
+  @@index([sortOrder])
+  @@index([isFeatured])
+}
+
+model ScenarioVariant {
+  id                       String                     @id @default(cuid())
+  scenarioId               String
+  language                 String
+  title                    String
+  description              String?
+  instruction              String?
+  launchUrl                String
+  packagePath              String
+  entryPoint               String                     @default("index_lms.html")
+  thumbnailUrl             String?
+  estimatedDurationMinutes Int?
+  availabilityStatus       ScenarioAvailabilityStatus @default(available)
+  createdAt                DateTime                   @default(now())
+  updatedAt                DateTime                   @updatedAt
+
+  scenario     Scenario              @relation(fields: [scenarioId], references: [id], onDelete: Cascade)
+  userAttempts UserScenarioAttempt[]
+
+  @@unique([scenarioId, language])
+  @@index([scenarioId])
+  @@index([language])
+  @@index([availabilityStatus])
+}
+
+model UserScenarioAttempt {
+  id                String                @id @default(cuid())
+  userId            String
+  scenarioId        String
+  scenarioVariantId String
+  attemptNumber     Int                   @default(1)
+  score             Int?
+  status            ScenarioAttemptStatus @default(incomplete)
+  startedAt         DateTime              @default(now())
+  lastOpenedAt      DateTime?
+  completedAt       DateTime?
+  suspendData       String?
+  lessonLocation    String?
+  sessionTime       String?
+  totalTime         String?
+  rawTrackingData   Json?
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+
+  user            Profile         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scenario        Scenario        @relation(fields: [scenarioId], references: [id], onDelete: Cascade)
+  scenarioVariant ScenarioVariant @relation(fields: [scenarioVariantId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, scenarioVariantId, attemptNumber])
+  @@index([userId])
+  @@index([scenarioId])
+  @@index([scenarioVariantId])
+  @@index([status])
+  @@index([startedAt])
 }
