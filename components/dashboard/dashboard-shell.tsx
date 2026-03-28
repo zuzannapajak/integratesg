@@ -173,7 +173,7 @@ function DashboardHero({
   gamificationStats: DashboardGamificationStat[];
 }) {
   return (
-    <header className={`${SURFACE} mb-8 overflow-hidden pt-6 px-6 pb-2 md:pt-6 md:px-6 md:pb-3`}>
+    <header className={`${SURFACE} mb-8 overflow-hidden pt-6 px-6 pb-2 md:pt-6 md:px-6 md:pb-5`}>
       <div className="flex flex-col gap-4">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-start">
           <div className="flex items-start gap-5">

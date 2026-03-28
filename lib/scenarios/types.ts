@@ -35,3 +35,16 @@ export type ScenarioDetailViewModel = {
   completedAt: string | null;
   lessonLocation: string | null;
 };
+
+export type ScenarioLaunchViewModel = {
+  slug: string;
+  language: string;
+  title: string;
+  description: string;
+  area: ScenarioArea;
+  launchUrl: string | null;
+  status: ScenarioProgressStatus;
+  hasAttempt: boolean;
+  score: number | null;
+  lessonLocation: string | null;
+};

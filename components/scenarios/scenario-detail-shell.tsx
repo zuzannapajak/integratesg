@@ -377,7 +377,7 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
 
               <div className="mt-5 grid gap-3">
                 <Link
-                  href={scenario.launchUrl}
+                  href={`/${locale}/scenarios/${scenario.slug}/launch`}
                   className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#31425a] px-4 py-4 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347]"
                 >
                   <PlayCircle className="h-4.5 w-4.5" />

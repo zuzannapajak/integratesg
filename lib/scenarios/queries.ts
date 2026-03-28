@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import {
   ScenarioDetailViewModel,
+  ScenarioLaunchViewModel,
   ScenarioListItemViewModel,
   ScenarioProgressStatus,
 } from "@/lib/scenarios/types";
@@ -48,6 +49,13 @@ type ScenarioDetailRecord = {
   slug: string;
   area: string;
   isFeatured: boolean;
+  variants: ScenarioVariantRecord[];
+  userAttempts: ScenarioAttemptDetailRecord[];
+};
+
+type ScenarioLaunchRecord = {
+  slug: string;
+  area: string;
   variants: ScenarioVariantRecord[];
   userAttempts: ScenarioAttemptDetailRecord[];
 };
@@ -232,6 +240,33 @@ function mapScenarioToDetailViewModel(
   };
 }
 
+function mapScenarioToLaunchViewModel(
+  scenario: ScenarioLaunchRecord,
+  locale: string,
+): ScenarioLaunchViewModel | null {
+  const variant = pickVariant(scenario.variants, locale);
+
+  if (!variant) {
+    return null;
+  }
+
+  const latestAttempt = scenario.userAttempts.at(0) ?? null;
+  const trimmedLaunchUrl = variant.launchUrl.trim();
+
+  return {
+    slug: scenario.slug,
+    language: variant.language,
+    title: variant.title,
+    description: variant.description?.trim() ?? "Scenario description has not been added yet.",
+    area: mapArea(scenario.area),
+    launchUrl: trimmedLaunchUrl.length > 0 ? trimmedLaunchUrl : null,
+    status: mapScenarioStatus(scenario.userAttempts),
+    hasAttempt: latestAttempt !== null,
+    score: latestAttempt?.score ?? null,
+    lessonLocation: latestAttempt?.lessonLocation ?? null,
+  };
+}
+
 export async function getScenarioDetail(params: { locale: string; userId: string; slug: string }) {
   const scenario = await prisma.scenario.findFirst({
     where: {
@@ -341,4 +376,56 @@ export async function getScenarioDetail(params: { locale: string; userId: string
       .map((item) => mapScenarioToViewModel(item, params.locale))
       .filter((item): item is ScenarioListItemViewModel => item !== null),
   };
+}
+
+export async function getScenarioLaunch(params: { locale: string; userId: string; slug: string }) {
+  const scenario = await prisma.scenario.findFirst({
+    where: {
+      slug: params.slug,
+      status: "published",
+    },
+    select: {
+      slug: true,
+      area: true,
+      variants: {
+        where: {
+          availabilityStatus: "available",
+        },
+        select: {
+          id: true,
+          language: true,
+          title: true,
+          description: true,
+          instruction: true,
+          launchUrl: true,
+          packagePath: true,
+          entryPoint: true,
+          thumbnailUrl: true,
+          estimatedDurationMinutes: true,
+          availabilityStatus: true,
+        },
+      },
+      userAttempts: {
+        where: {
+          userId: params.userId,
+        },
+        select: {
+          status: true,
+          score: true,
+          startedAt: true,
+          lastOpenedAt: true,
+          completedAt: true,
+          lessonLocation: true,
+          createdAt: true,
+        },
+        orderBy: [{ createdAt: "desc" }],
+      },
+    },
+  });
+
+  if (!scenario) {
+    return null;
+  }
+
+  return mapScenarioToLaunchViewModel(scenario, params.locale);
 }
