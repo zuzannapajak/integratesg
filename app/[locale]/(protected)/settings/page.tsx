@@ -22,10 +22,10 @@ export default async function SettingsPage({ params }: Props) {
   if (!profile) redirect(`/${locale}/auth/login`);
 
   return (
-    <main className="relative min-h-screen bg-[#f5f5f3] pb-20">
+    <main className="relative min-h-screen bg-[#f5f5f3] px-4 pb-20 pt-8 text-[#31425a] sm:px-6 lg:px-8">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_12%,rgba(236,103,37,0.08),transparent_22%),radial-gradient(circle_at_84%_14%,rgba(13,127,194,0.08),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.72)_0%,rgba(245,245,243,1)_100%)]" />
 
-      <div className="relative mx-auto max-w-5xl px-4 pt-10 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-360 px-4 pt-10 sm:px-6 lg:px-8 transition-all duration-300">
         <div className="mb-6 px-2">
           <Link
             href={`/${locale}/dashboard`}
