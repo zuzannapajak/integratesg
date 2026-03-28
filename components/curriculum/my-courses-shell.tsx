@@ -89,116 +89,157 @@ function getStatusMeta(status: CurriculumStatus) {
   }
 }
 
+function getStatusOrder(status: CurriculumStatus) {
+  switch (status) {
+    case "in_progress":
+      return 0;
+    case "failed":
+      return 1;
+    case "completed":
+      return 2;
+    default:
+      return 3;
+  }
+}
+
 export default function MyCoursesShell({ modules }: Props) {
-  const activeModules = modules.filter((m) => m.status === "in_progress" || m.status === "failed");
+  const myModules = [...modules]
+    .filter((module) => ["in_progress", "completed", "failed"].includes(module.status))
+    .sort((a, b) => {
+      const byStatus = getStatusOrder(a.status) - getStatusOrder(b.status);
+      if (byStatus !== 0) return byStatus;
+
+      return a.title.localeCompare(b.title);
+    });
 
   return (
-    <section className="space-y-6">
-      {activeModules.length > 0 ? (
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {activeModules.map((module) => {
-            const areaMeta = getAreaMeta(module.area);
-            const statusMeta = getStatusMeta(module.status);
+    <section className="space-y-4">
+      {myModules.length > 0 ? (
+        <>
+          <div className="flex justify-end">
+            <div className="px-3 py-1.5 text-sm text-[#667180]">
+              Showing <span className="font-semibold text-[#31425a]">{myModules.length}</span>{" "}
+              modules
+            </div>
+          </div>
 
-            return (
-              <motion.article
-                key={module.slug}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2 }}
-                className={`${SURFACE} group relative flex flex-col overflow-hidden p-6`}
-              >
-                <div
-                  className={`pointer-events-none absolute inset-0 opacity-90 ${areaMeta.glowClass}`}
-                />
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {myModules.map((module) => {
+              const areaMeta = getAreaMeta(module.area);
+              const statusMeta = getStatusMeta(module.status);
 
-                <div className="relative flex flex-1 flex-col">
-                  <div className="flex items-center justify-between gap-2">
-                    <span
-                      className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.7rem] font-bold uppercase tracking-wider ${areaMeta.badgeClass}`}
-                    >
-                      {areaMeta.icon}
-                      {areaMeta.label}
-                    </span>
+              return (
+                <motion.article
+                  key={module.slug}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className={`${SURFACE} group relative flex flex-col overflow-hidden p-6`}
+                >
+                  <div
+                    className={`pointer-events-none absolute inset-0 opacity-90 ${areaMeta.glowClass}`}
+                  />
 
-                    {/* Dynamic Status Badge */}
-                    <span
-                      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wider shadow-sm ${
-                        module.status === "failed"
-                          ? "bg-red-500 text-white"
-                          : "bg-[#0b9c72] text-white"
-                      }`}
-                    >
-                      {statusMeta.icon}
-                      {statusMeta.label}
-                    </span>
-                  </div>
+                  <div className="relative flex flex-1 flex-col">
+                    <div className="flex items-center justify-between gap-2">
+                      <span
+                        className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.7rem] font-bold uppercase tracking-wider ${areaMeta.badgeClass}`}
+                      >
+                        {areaMeta.icon}
+                        {areaMeta.label}
+                      </span>
 
-                  <div className="mt-5">
-                    <p className="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                      {module.subtitle}
-                    </p>
-                    <h2 className="mt-1 text-xl font-bold tracking-tight text-[#31425a]">
-                      {module.title}
-                    </h2>
-                  </div>
-
-                  <p className="mt-4 flex-1 text-sm leading-6 text-[#667180] line-clamp-3">
-                    {module.description}
-                  </p>
-
-                  <div className="mt-6 grid grid-cols-2 gap-2">
-                    <InfoPill icon={<Clock3 className="h-3.5 w-3.5" />} label={module.duration} />
-                    <InfoPill
-                      icon={<Target className="h-3.5 w-3.5" />}
-                      label={`${module.lessons} lessons`}
-                    />
-                  </div>
-
-                  <div className="mt-6">
-                    <div className="mb-2 flex items-center justify-between text-[0.7rem] font-bold uppercase tracking-wider text-[#8a97a6]">
-                      <span>Progress</span>
-                      <span className="text-[#31425a]">{module.progress}%</span>
+                      <span
+                        className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wider shadow-sm ${
+                          module.status === "failed"
+                            ? "bg-red-500 text-white"
+                            : module.status === "completed"
+                              ? "bg-emerald-600 text-white"
+                              : "bg-[#0b9c72] text-white"
+                        }`}
+                      >
+                        {statusMeta.icon}
+                        {statusMeta.label}
+                      </span>
                     </div>
-                    <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#edf2f7]">
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={{ width: `${module.progress}%` }}
-                        className={`h-full ${module.status === "failed" ? "bg-red-400" : "bg-[#0b9c72]"}`}
+
+                    <div className="mt-5">
+                      <p className="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
+                        {module.subtitle}
+                      </p>
+                      <h2 className="mt-1 text-xl font-bold tracking-tight text-[#31425a]">
+                        {module.title}
+                      </h2>
+                    </div>
+
+                    <p className="mt-4 flex-1 text-sm leading-6 text-[#667180] line-clamp-3">
+                      {module.description}
+                    </p>
+
+                    <div className="mt-6 grid grid-cols-2 gap-2">
+                      <InfoPill icon={<Clock3 className="h-3.5 w-3.5" />} label={module.duration} />
+                      <InfoPill
+                        icon={<Target className="h-3.5 w-3.5" />}
+                        label={`${module.lessons} lessons`}
                       />
                     </div>
-                  </div>
 
-                  <div className="mt-6 flex items-center justify-between gap-4">
-                    <span
-                      className={`inline-flex items-center gap-1.5 text-xs font-bold ${statusMeta.badgeClass}`}
-                    >
-                      {statusMeta.icon}
-                      {statusMeta.label}
-                    </span>
+                    <div className="mt-6">
+                      <div className="mb-2 flex items-center justify-between text-[0.7rem] font-bold uppercase tracking-wider text-[#8a97a6]">
+                        <span>Progress</span>
+                        <span className="text-[#31425a]">{module.progress}%</span>
+                      </div>
+                      <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#edf2f7]">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${module.progress}%` }}
+                          className={`h-full ${
+                            module.status === "failed"
+                              ? "bg-red-400"
+                              : module.status === "completed"
+                                ? "bg-emerald-500"
+                                : "bg-[#0b9c72]"
+                          }`}
+                        />
+                      </div>
+                    </div>
 
-                    <Link
-                      href={`./curriculum/${module.slug}`}
-                      className="inline-flex items-center gap-2 rounded-xl bg-[#31425a] px-4 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#253347]"
-                    >
-                      {module.status === "failed" ? "Restart" : "Continue"}
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </Link>
+                    <div className="mt-6 flex items-center justify-between gap-4">
+                      <span
+                        className={`inline-flex items-center gap-1.5 text-xs font-bold ${statusMeta.badgeClass}`}
+                      >
+                        {statusMeta.icon}
+                        {statusMeta.label}
+                      </span>
+
+                      <Link
+                        href={`./curriculum/${module.slug}`}
+                        className="inline-flex items-center gap-2 rounded-xl bg-[#31425a] px-4 py-2.5 text-xs font-bold text-white shadow-sm transition hover:bg-[#253347]"
+                      >
+                        {module.status === "failed"
+                          ? "Restart"
+                          : module.status === "completed"
+                            ? "Review"
+                            : "Continue"}
+                        <ArrowRight className="h-3.5 w-3.5" />
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              </motion.article>
-            );
-          })}
-        </div>
+                </motion.article>
+              );
+            })}
+          </div>
+        </>
       ) : (
         <div className={`${SURFACE} p-12 text-center`}>
           <div className="mx-auto max-w-md space-y-3">
             <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#f4f7fa] text-[#98a2b3]">
               <BookOpen className="h-6 w-6" />
             </div>
-            <h3 className="text-lg font-bold text-[#31425a]">No active courses yet</h3>
+            <h3 className="text-lg font-bold text-[#31425a]">No tracked courses yet</h3>
             <p className="text-sm text-[#667180]">
-              Start a curriculum module to track your progress here.
+              Start a curriculum module to build your personal course library and return to it
+              later.
             </p>
           </div>
         </div>

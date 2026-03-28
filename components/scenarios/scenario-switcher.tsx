@@ -1,6 +1,6 @@
 "use client";
 
-import ScenarioLibraryShell from "@/components/scenarios/scenario-library-shell";
+import ScenarioLibraryShell from "@/components/scenarios/scenario-list-shell";
 import { ScenarioListItemViewModel } from "@/lib/scenarios/types";
 import { PlayCircle, Sparkles } from "lucide-react";
 import { useState } from "react";
@@ -54,12 +54,14 @@ export default function ScenarioSwitcher({ myScenarios, allScenarios }: Props) {
       {viewMode === "my-scenarios" ? (
         <ScenarioLibraryShell
           items={myScenarios}
+          showRefineControls={false}
           emptyTitle="No tracked scenarios yet"
           emptyDescription="Start a scenario to build your personal scenario library and return to it later."
         />
       ) : (
         <ScenarioLibraryShell
           items={allScenarios}
+          showRefineControls
           emptyTitle="No scenarios found"
           emptyDescription="Try adjusting the ESG area filter or search phrase to explore scenario metadata."
         />

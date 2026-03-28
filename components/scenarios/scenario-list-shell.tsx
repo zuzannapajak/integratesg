@@ -23,6 +23,7 @@ type Props = {
   items: ScenarioListItemViewModel[];
   emptyTitle?: string;
   emptyDescription?: string;
+  showRefineControls?: boolean;
 };
 
 const SURFACE =
@@ -95,6 +96,7 @@ export default function ScenarioLibraryShell({
   items,
   emptyTitle = "No scenarios found",
   emptyDescription = "Try adjusting the ESG area filter or search phrase to explore scenario metadata.",
+  showRefineControls = true,
 }: Props) {
   const [search, setSearch] = useState("");
   const [selectedArea, setSelectedArea] = useState<ScenarioArea | "all">("all");
@@ -110,18 +112,20 @@ export default function ScenarioLibraryShell({
 
     const next = items.filter((item) => {
       const matchesSearch =
+        !showRefineControls ||
         normalized.length === 0 ||
         item.title.toLowerCase().includes(normalized) ||
         item.description.toLowerCase().includes(normalized) ||
         item.packagePath.toLowerCase().includes(normalized);
 
-      const matchesArea = selectedArea === "all" || item.area === selectedArea;
+      const matchesArea =
+        !showRefineControls || selectedArea === "all" || item.area === selectedArea;
 
       return matchesSearch && matchesArea;
     });
 
     return [...next].sort((a, b) => {
-      if (sortBy === "duration") {
+      if (showRefineControls && sortBy === "duration") {
         const aDuration = a.estimatedDurationMinutes ?? Number.MAX_SAFE_INTEGER;
         const bDuration = b.estimatedDurationMinutes ?? Number.MAX_SAFE_INTEGER;
 
@@ -136,7 +140,7 @@ export default function ScenarioLibraryShell({
 
       return statusWeight(a.status) - statusWeight(b.status) || a.title.localeCompare(b.title);
     });
-  }, [items, search, selectedArea, sortBy]);
+  }, [items, search, selectedArea, sortBy, showRefineControls]);
 
   const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -144,85 +148,96 @@ export default function ScenarioLibraryShell({
 
   return (
     <div className="space-y-8">
-      <section className={`${SURFACE} p-5 md:p-6`}>
-        <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
-          <div className="flex items-center gap-2 text-[0.82rem] font-semibold uppercase tracking-[0.14em] text-[#7b8794]">
-            <SlidersHorizontal className="h-4 w-4" />
-            Refine scenario view
+      {showRefineControls && (
+        <section className={`${SURFACE} p-5 md:p-6`}>
+          <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+            <div className="flex items-center gap-2 text-[0.82rem] font-semibold uppercase tracking-[0.14em] text-[#7b8794]">
+              <SlidersHorizontal className="h-4 w-4" />
+              Refine scenario view
+            </div>
+
+            <div className="text-sm text-[#667180]">
+              Showing <span className="font-semibold text-[#31425a]">{filteredItems.length}</span>{" "}
+              scenarios
+            </div>
           </div>
 
-          <div className="text-sm text-[#667180]">
-            Showing <span className="font-semibold text-[#31425a]">{filteredItems.length}</span>{" "}
-            scenarios
-          </div>
-        </div>
-
-        <div className="mt-5 grid gap-4 lg:grid-cols-[minmax(0,1.5fr)_repeat(2,minmax(0,1fr))]">
-          <label className="group flex items-center gap-3 rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 transition focus-within:border-[#0b9c72]/30 focus-within:shadow-[0_8px_24px_rgba(35,45,62,0.05)]">
-            <Search className="h-4.5 w-4.5 text-[#98a2b3]" />
-            <input
-              value={search}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                setSearch(e.target.value);
-                handleFilterChange();
-              }}
-              placeholder="Search scenarios..."
-              className="w-full border-none bg-transparent text-[0.95rem] text-[#31425a] outline-none"
-            />
-          </label>
-
-          <select
-            value={selectedArea}
-            onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-              setSelectedArea(e.target.value as ScenarioArea | "all");
-              handleFilterChange();
-            }}
-            className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
-          >
-            <option value="all">All ESG areas</option>
-            <option value="environmental">Environmental</option>
-            <option value="social">Social</option>
-            <option value="governance">Governance</option>
-            <option value="cross-cutting">Cross-cutting</option>
-          </select>
-
-          <select
-            value={sortBy}
-            onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-              setSortBy(e.target.value as "title" | "duration");
-              handleFilterChange();
-            }}
-            className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
-          >
-            <option value="title">Sort: Title</option>
-            <option value="duration">Sort: Duration</option>
-          </select>
-        </div>
-
-        <div className="mt-4 flex flex-wrap gap-2">
-          {(["all", "environmental", "social", "governance", "cross-cutting"] as const).map(
-            (area) => (
-              <button
-                key={area}
-                onClick={() => {
-                  setSelectedArea(area);
+          <div className="mt-5 grid gap-4 lg:grid-cols-[minmax(0,1.5fr)_repeat(2,minmax(0,1fr))]">
+            <label className="group flex items-center gap-3 rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 transition focus-within:border-[#0b9c72]/30 focus-within:shadow-[0_8px_24px_rgba(35,45,62,0.05)]">
+              <Search className="h-4.5 w-4.5 text-[#98a2b3]" />
+              <input
+                value={search}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  setSearch(e.target.value);
                   handleFilterChange();
                 }}
-                className={`rounded-full px-4 py-2 text-sm font-medium capitalize transition ${
-                  selectedArea === area
-                    ? "bg-[#31425a] text-white shadow-md"
-                    : "bg-[#f4f7fa] text-[#516071] hover:bg-[#eaf0f5]"
-                }`}
-              >
-                {area.replace("-", " ")}
-              </button>
-            ),
-          )}
-        </div>
-      </section>
+                placeholder="Search scenarios..."
+                className="w-full border-none bg-transparent text-[0.95rem] text-[#31425a] outline-none"
+              />
+            </label>
+
+            <select
+              value={selectedArea}
+              onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                setSelectedArea(e.target.value as ScenarioArea | "all");
+                handleFilterChange();
+              }}
+              className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
+            >
+              <option value="all">All ESG areas</option>
+              <option value="environmental">Environmental</option>
+              <option value="social">Social</option>
+              <option value="governance">Governance</option>
+              <option value="cross-cutting">Cross-cutting</option>
+            </select>
+
+            <select
+              value={sortBy}
+              onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+                setSortBy(e.target.value as "title" | "duration");
+                handleFilterChange();
+              }}
+              className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
+            >
+              <option value="title">Sort: Title</option>
+              <option value="duration">Sort: Duration</option>
+            </select>
+          </div>
+
+          <div className="mt-4 flex flex-wrap gap-2">
+            {(["all", "environmental", "social", "governance", "cross-cutting"] as const).map(
+              (area) => (
+                <button
+                  key={area}
+                  onClick={() => {
+                    setSelectedArea(area);
+                    handleFilterChange();
+                  }}
+                  className={`rounded-full px-4 py-2 text-sm font-medium capitalize transition ${
+                    selectedArea === area
+                      ? "bg-[#31425a] text-white shadow-md"
+                      : "bg-[#f4f7fa] text-[#516071] hover:bg-[#eaf0f5]"
+                  }`}
+                >
+                  {area.replace("-", " ")}
+                </button>
+              ),
+            )}
+          </div>
+        </section>
+      )}
 
       {paginatedItems.length > 0 ? (
-        <div className="space-y-8">
+        <div className="space-y-4">
+          {!showRefineControls && (
+            <div className="flex justify-end">
+              <div className="px-3 py-1.5 text-sm text-[#667180]">
+                Showing <span className="font-semibold text-[#31425a]">{filteredItems.length}</span>{" "}
+                scenarios
+              </div>
+            </div>
+          )}
+
           <div className="grid gap-6 xl:grid-cols-3">
             <AnimatePresence mode="popLayout">
               {paginatedItems.map((item) => {
