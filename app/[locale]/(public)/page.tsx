@@ -1,41 +1,12 @@
 import PublicFooter from "@/components/layout/public-footer";
 import AnimatedStat from "@/components/public/animated-stat";
+import { FOCUS_CARD, PARTNERS } from "@/lib/constants";
 import Image from "next/image";
 import Link from "next/link";
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
-
-const focusCards = [
-  {
-    eyebrow: "For students",
-    title: "Scenario Simulator",
-    description:
-      "Explore ESG topics through interactive decision-making scenarios and practical learning paths.",
-  },
-  {
-    eyebrow: "For educators",
-    title: "Curriculum and self-assessment",
-    description:
-      "Access structured learning modules, pre- and post-quizzes, and feedback-driven teaching resources.",
-  },
-  {
-    eyebrow: "For all users",
-    title: "ePortfolio of case studies",
-    description:
-      "Review standardized ESG case studies prepared across partner languages and contexts.",
-  },
-];
-
-const partners = [
-  { name: "Lodz University of Technology", src: "/images/partners/lodz_logo.png" },
-  { name: "SBC", src: "/images/partners/sbc_logo.png" },
-  { name: "Egina", src: "/images/partners/egina_logo.png" },
-  { name: "Institute of Development N. Charalambous", src: "/images/partners/iod_logo.png" },
-  { name: "dieBerater", src: "/images/partners/dieberater_logo.png" },
-  { name: "CleverMind", src: "/images/partners/clever_mind_logo.png" },
-];
 
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
@@ -116,7 +87,7 @@ export default async function HomePage({ params }: Props) {
             </div>
 
             <div className="mt-8 grid gap-5 lg:grid-cols-3">
-              {focusCards.map((card) => (
+              {FOCUS_CARD.map((card) => (
                 <article key={card.title} className="landing-focus-card">
                   <p className="landing-card-eyebrow">{card.eyebrow}</p>
                   <h3 className="mt-3 text-[1.35rem] font-semibold tracking-[-0.02em] text-[#31425a]">
@@ -152,7 +123,7 @@ export default async function HomePage({ params }: Props) {
           </h2>
 
           <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
-            {partners.map((partner) => (
+            {PARTNERS.map((partner) => (
               <div key={partner.name} className="partner-logo-card">
                 <div className="partner-logo-inner">
                   <Image
