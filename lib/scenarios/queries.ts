@@ -73,10 +73,7 @@ function mapArea(area: string): ScenarioListItemViewModel["area"] {
   }
 }
 
-function pickVariant(
-  variants: ScenarioVariantRecord[],
-  locale: string,
-): ScenarioVariantRecord | null {
+function pickVariant<T extends { language: string }>(variants: T[], locale: string): T | null {
   const localeVariant = variants.find((variant) => variant.language === locale);
   if (localeVariant) {
     return localeVariant;
@@ -393,15 +390,7 @@ export async function logScenarioLaunch(params: { locale: string; userId: string
         select: {
           id: true,
           language: true,
-          title: true,
-          description: true,
-          instruction: true,
           launchUrl: true,
-          packagePath: true,
-          entryPoint: true,
-          thumbnailUrl: true,
-          estimatedDurationMinutes: true,
-          availabilityStatus: true,
         },
       },
     },
