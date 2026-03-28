@@ -1,11 +1,12 @@
-import DashboardShell, {
-  type DashboardChartPoint,
-  type DashboardContinueItem,
-  type DashboardKpi,
-  type DashboardMetric,
-  type DashboardRole,
-  type DashboardStat,
-} from "@/components/dashboard/dashboard-shell";
+import DashboardShell from "@/components/dashboard/dashboard-shell";
+import {
+  DashboardChartPoint,
+  DashboardContinueItem,
+  DashboardKpi,
+  DashboardMetric,
+  DashboardRole,
+  DashboardStat,
+} from "@/lib/dashboard/types";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
@@ -198,7 +199,6 @@ function buildContinueLearningItem(
     description:
       translation?.description ??
       "Continue your latest learning module and pick up from your current progress.",
-    progress: latest.progressPercent,
     href: isCompleted
       ? `/${locale}/curriculum/${latest.course.slug}`
       : `/${locale}/curriculum/${latest.course.slug}/learn`,
@@ -374,6 +374,7 @@ export default async function DashboardPage({ params }: Props) {
       adminActivityData={adminActivityData}
       adminTrendLabel={adminTrendLabel}
       adminKpis={buildAdminKpis(allAttempts)}
+      gamificationStats={[]}
     />
   );
 }

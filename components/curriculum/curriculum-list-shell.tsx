@@ -130,7 +130,7 @@ export default function CurriculumListShell({
         normalized.length === 0 ||
         module.title.toLowerCase().includes(normalized) ||
         module.description.toLowerCase().includes(normalized) ||
-        module.subtitle?.toLowerCase().includes(normalized);
+        module.subtitle.toLowerCase().includes(normalized);
 
       const matchesArea =
         !showRefineControls || selectedArea === "all" || module.area === selectedArea;

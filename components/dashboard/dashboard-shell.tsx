@@ -1,57 +1,32 @@
 "use client";
 
-import LogoutButton from "@/components/auth/login/logout-button";
 import StatsChart from "@/components/dashboard/stats-chart";
 import { ESG_colors } from "@/lib/constants";
+import {
+  DashboardChartPoint,
+  DashboardContinueItem,
+  DashboardGamificationStat,
+  DashboardKpi,
+  DashboardMetric,
+  DashboardRole,
+  DashboardStat,
+  RoleConfig,
+} from "@/lib/dashboard/types";
 import { motion, type Variants } from "framer-motion";
 import {
   ArrowRight,
   BookOpen,
   CheckCircle2,
   Clock,
+  Flame,
   FolderOpen,
   LineChart,
-  LogOut,
   PlayCircle,
-  Settings,
   TrendingUp,
   UserRound,
 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-
-export type DashboardRole = "educator" | "student" | "admin";
-
-export type DashboardStat = {
-  label: string;
-  value: string;
-};
-
-export type DashboardChartPoint = {
-  label: string;
-  value: number;
-};
-
-export type DashboardMetric = {
-  label: string;
-  value: string;
-};
-
-export type DashboardKpi = {
-  label: string;
-  value: string;
-  hint: string;
-};
-
-export type DashboardContinueItem = {
-  title: string;
-  description: string;
-  progress: number;
-  href: string;
-  badge: string;
-  ctaLabel: string;
-  kindLabel: string;
-};
 
 type Props = {
   locale: string;
@@ -59,6 +34,7 @@ type Props = {
   displayName: string;
   heroStats: DashboardStat[];
   continueLearning: DashboardContinueItem | null;
+  gamificationStats: DashboardGamificationStat[];
   publishedCoursesCount: number;
   learnerSummaryMetrics: DashboardMetric[];
   learnerActivityData: DashboardChartPoint[];
@@ -66,13 +42,6 @@ type Props = {
   adminActivityData: DashboardChartPoint[];
   adminTrendLabel: string;
   adminKpis: DashboardKpi[];
-};
-
-type RoleConfig = {
-  accent: string;
-  avatar: string;
-  welcome: string;
-  intro: string;
 };
 
 const roleConfigs: Record<DashboardRole, RoleConfig> = {
@@ -128,6 +97,7 @@ export default function DashboardShell({
   displayName,
   heroStats,
   continueLearning,
+  gamificationStats,
   publishedCoursesCount,
   learnerSummaryMetrics,
   learnerActivityData,
@@ -139,7 +109,7 @@ export default function DashboardShell({
   const roleConfig = roleConfigs[role];
 
   return (
-    <main className="relative min-h-screen bg-[#f5f5f3] pb-20 text-[#31425a]">
+    <main className="relative min-h-screen bg-[#f5f5f3] pb-10 text-[#31425a]">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_12%,rgba(236,103,37,0.05),transparent_22%),radial-gradient(circle_at_84%_14%,rgba(13,127,194,0.05),transparent_24%),linear-gradient(180deg,rgba(255,255,255,0.72)_0%,rgba(245,245,243,1)_100%)]" />
 
       <div className="relative mx-auto max-w-7xl px-4 pt-8 sm:px-6 md:pt-10 lg:px-8">
@@ -149,6 +119,8 @@ export default function DashboardShell({
           roleConfig={roleConfig}
           displayName={displayName}
           stats={heroStats}
+          continueLearning={role === "student" || role === "educator" ? continueLearning : null}
+          gamificationStats={role === "student" || role === "educator" ? gamificationStats : []}
         />
 
         <motion.div
@@ -162,7 +134,6 @@ export default function DashboardShell({
               locale={locale}
               role={role}
               roleConfig={roleConfig}
-              continueLearning={continueLearning}
               publishedCoursesCount={publishedCoursesCount}
               summaryMetrics={learnerSummaryMetrics}
               activityData={learnerActivityData}
@@ -187,67 +158,215 @@ export default function DashboardShell({
 
 function DashboardHero({
   locale,
+  role,
   roleConfig,
   displayName,
-  stats,
+  continueLearning,
+  gamificationStats,
 }: {
   locale: string;
   role: DashboardRole;
   roleConfig: RoleConfig;
   displayName: string;
   stats: DashboardStat[];
+  continueLearning: DashboardContinueItem | null;
+  gamificationStats: DashboardGamificationStat[];
 }) {
   return (
-    <header className={`${SURFACE} mb-10 p-6 md:p-8`}>
-      <div className="flex flex-col justify-between gap-6 md:flex-row md:items-start">
-        <div className="flex items-start gap-5">
-          <div
-            className={`flex h-16 w-16 items-center justify-center rounded-2xl ${roleConfig.avatar} text-white shadow-[0_12px_24px_rgba(35,45,62,0.10)]`}
-          >
-            <UserRound className="h-8 w-8" />
-          </div>
+    <header className={`${SURFACE} mb-8 overflow-hidden pt-6 px-6 pb-2 md:pt-6 md:px-6 md:pb-3`}>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-start">
+          <div className="flex items-start gap-5">
+            <div
+              className={`flex h-16 w-16 items-center justify-center rounded-2xl ${roleConfig.avatar} text-white shadow-[0_12px_24px_rgba(35,45,62,0.10)]`}
+            >
+              <UserRound className="h-8 w-8" />
+            </div>
 
-          <div className="min-w-0">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">
-              {roleConfig.welcome}, {displayName}
-            </h1>
-            <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">{roleConfig.intro}</p>
-
-            <div className="mt-5 flex flex-wrap gap-3">
-              {stats.map((s) => (
-                <div
-                  key={s.label}
-                  className="rounded-2xl border border-[#edf1f5] bg-white px-4 py-3 shadow-[0_4px_16px_rgba(35,45,62,0.03)]"
-                >
-                  <div className="text-base font-bold text-slate-900">{s.value}</div>
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">
-                    {s.label}
-                  </div>
-                </div>
-              ))}
+            <div className="min-w-0">
+              <h1 className="text-2xl font-bold tracking-tight text-slate-900 md:text-3xl">
+                {roleConfig.welcome}, {displayName}
+              </h1>
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">{roleConfig.intro}</p>
             </div>
           </div>
+
+          {(role === "student" || role === "educator") && (
+            <TopStreakBadge gamificationStats={gamificationStats} roleConfig={roleConfig} />
+          )}
         </div>
 
-        <div className="flex items-center gap-3">
-          <Link
-            href={`/${locale}/settings`}
-            className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-500 transition hover:-translate-y-0.5 hover:bg-slate-50 hover:text-slate-700"
-            title="Settings"
-          >
-            <Settings className="h-5 w-5" />
-          </Link>
-
-          <LogoutButton
-            redirectTo={`/${locale}/auth/login`}
-            className="flex h-11 items-center gap-2 rounded-2xl border border-slate-200 bg-white px-5 text-sm font-semibold text-slate-700 transition hover:-translate-y-0.5 hover:bg-slate-50"
-          >
-            <LogOut className="h-4 w-4" />
-            <span>Log out</span>
-          </LogoutButton>
-        </div>
+        {(role === "student" || role === "educator") && (
+          <ContinueLearningHeroCard
+            locale={locale}
+            role={role}
+            roleConfig={roleConfig}
+            continueLearning={continueLearning}
+          />
+        )}
       </div>
     </header>
+  );
+}
+
+function TopStreakBadge({
+  gamificationStats,
+  roleConfig,
+}: {
+  gamificationStats: DashboardGamificationStat[];
+  roleConfig: RoleConfig;
+}) {
+  const streakStat =
+    gamificationStats.find((item) => item.label.toLowerCase().includes("streak")) ?? null;
+
+  if (!streakStat) return null;
+
+  const flameVariants: Variants = {
+    initial: { scale: 1, opacity: 0.8 },
+    animate: {
+      scale: [1, 1.1, 1],
+      opacity: [0.8, 1, 0.8],
+      transition: {
+        duration: 2,
+        repeat: Infinity,
+        ease: "easeInOut",
+      },
+    },
+  };
+
+  return (
+    <motion.div
+      whileHover={{ scale: 1.02 }}
+      className="relative flex items-center gap-4 self-start rounded-3xl border p-1 pr-5 shadow-lg backdrop-blur-md"
+      style={{
+        borderColor: `${roleConfig.accent}33`,
+        background: `linear-gradient(135deg, ${roleConfig.accent}08 0%, #ffffff 100%)`,
+      }}
+    >
+      <div className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-[20px]">
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{ backgroundColor: roleConfig.accent }}
+        />
+        <motion.div
+          variants={flameVariants}
+          initial="initial"
+          animate="animate"
+          className="relative z-10"
+        >
+          <Flame
+            className="h-7 w-7"
+            style={{
+              fill: roleConfig.accent,
+              color: roleConfig.accent,
+              filter: `drop-shadow(0 0 8px ${roleConfig.accent}66)`,
+            }}
+          />
+        </motion.div>
+      </div>
+
+      <div className="flex flex-col">
+        <span
+          className="text-[10px] font-bold uppercase tracking-[0.15em]"
+          style={{ color: roleConfig.accent }}
+        >
+          {streakStat.label}
+        </span>
+        <div className="flex items-baseline gap-1">
+          <span className="text-2xl font-black text-slate-900">{streakStat.value}</span>
+          <span className="text-xs font-medium text-slate-500">dni</span>
+        </div>
+
+        <div className="mt-1.5 flex gap-1">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div
+              key={i}
+              className="h-1 w-3 rounded-full"
+              style={{
+                backgroundColor:
+                  i <= parseInt(streakStat.value) % 5 || parseInt(streakStat.value) >= 5
+                    ? roleConfig.accent
+                    : `${roleConfig.accent}20`,
+              }}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div
+        className="absolute -right-2 -top-2 h-12 w-12 blur-3xl opacity-20"
+        style={{ backgroundColor: roleConfig.accent }}
+      />
+    </motion.div>
+  );
+}
+
+function ContinueLearningHeroCard({
+  locale,
+  role,
+  roleConfig,
+  continueLearning,
+}: {
+  locale: string;
+  role: DashboardRole;
+  roleConfig: RoleConfig;
+  continueLearning: DashboardContinueItem | null;
+}) {
+  const fallbackHref = role === "educator" ? `/${locale}/curriculum` : `/${locale}/scenarios`;
+  const fallbackTitle = "Resume your latest activity";
+  const fallbackDescription =
+    role === "educator"
+      ? "Quick return to the module you opened most recently."
+      : "Quick return to the learning flow you opened most recently.";
+
+  return (
+    <motion.div
+      variants={FADE_UP}
+      initial="hidden"
+      animate="visible"
+      className="relative overflow-hidden rounded-[30px] border border-white/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.97)_0%,rgba(251,251,249,0.94)_100%)] p-6 md:p-7 shadow-[0_18px_50px_rgba(35,45,62,0.08)]"
+    >
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: `radial-gradient(circle at top right, ${roleConfig.accent}14 0%, transparent 42%), radial-gradient(circle at bottom left, ${roleConfig.accent}08 0%, transparent 38%)`,
+        }}
+      />
+
+      <div className="flex flex-col justify-between md:flex-row md:items-end">
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/80 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500 shadow-sm">
+              <Clock className="h-4 w-4" />
+              Resume
+            </div>
+          </div>
+
+          <div className="mt-4">
+            <h2 className="max-w-xl text-xl font-bold tracking-tight text-slate-900 md:text-2xl">
+              {continueLearning?.title ?? fallbackTitle}
+            </h2>
+
+            <p className="mt-2 max-w-xl text-sm leading-6 text-slate-500">
+              {continueLearning?.description ?? fallbackDescription}
+            </p>
+          </div>
+        </div>
+        <div className="flex shrink-0 justify-end md:pb-1">
+          <Link
+            href={continueLearning?.href ?? fallbackHref}
+            className="inline-flex items-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5"
+            style={{
+              backgroundColor: roleConfig.accent,
+              boxShadow: "0 12px 28px rgba(35,45,62,0.12)",
+            }}
+          >
+            Resume learning
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </motion.div>
   );
 }
 
@@ -255,7 +374,6 @@ function LearnerDashboard({
   locale,
   role,
   roleConfig,
-  continueLearning,
   publishedCoursesCount,
   summaryMetrics,
   activityData,
@@ -264,7 +382,6 @@ function LearnerDashboard({
   locale: string;
   role: DashboardRole;
   roleConfig: RoleConfig;
-  continueLearning: DashboardContinueItem | null;
   publishedCoursesCount: number;
   summaryMetrics: DashboardMetric[];
   activityData: DashboardChartPoint[];
@@ -368,57 +485,10 @@ function LearnerDashboard({
         };
 
   return (
-    <div className="grid grid-cols-1 gap-6 xl:grid-cols-12">
-      <motion.div variants={FADE_UP} className={`xl:col-span-5 ${SURFACE} p-8`}>
-        <div className="mb-5 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">
-            <Clock className="h-4 w-4" />
-            Continue learning
-          </div>
-        </div>
-
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900">
-          {continueLearning?.title ?? "No module opened yet"}
-        </h2>
-        <p className="mt-2 text-sm leading-6 text-slate-500">
-          {continueLearning?.description ??
-            "Recently accessed modules will appear here, once you start it."}
-        </p>
-
-        <div className="mt-6">
-          <div className="mb-2 flex justify-between text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-400">
-            <span>Progress</span>
-            <span className="text-slate-900">{continueLearning?.progress ?? 0}%</span>
-          </div>
-          <div className="h-2 w-full overflow-hidden rounded-full bg-slate-100">
-            <div
-              className="h-full rounded-full"
-              style={{
-                width: `${continueLearning?.progress ?? 0}%`,
-                backgroundColor: roleConfig.accent,
-              }}
-            />
-          </div>
-        </div>
-
-        <div className="mt-7">
-          <Link
-            href={continueLearning?.href ?? `/${locale}/curriculum`}
-            className="inline-flex items-center gap-2 rounded-2xl px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5"
-            style={{
-              backgroundColor: roleConfig.accent,
-              boxShadow: "0 10px 24px rgba(35,45,62,0.10)",
-            }}
-          >
-            {continueLearning?.ctaLabel ?? "Browse curriculum"}
-            <ArrowRight className="h-4 w-4" />
-          </Link>
-        </div>
-      </motion.div>
-
+    <div className="grid grid-cols-1 gap-4 xl:grid-cols-12">
       <motion.div
         variants={FADE_UP}
-        className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:col-span-7"
+        className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:col-span-12"
       >
         <CoreAreaCard
           icon={primaryCard.icon}

@@ -125,7 +125,8 @@ export async function submitQuizAttemptAction(input: SubmitQuizInput) {
     throw new Error("Course not found.");
   }
 
-  const quiz = course.quizzes[0];
+  const quiz = course.quizzes.at(0);
+
   if (!quiz) {
     throw new Error("Quiz not found.");
   }

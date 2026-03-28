@@ -207,7 +207,7 @@ function mapScenarioToDetailViewModel(
     return null;
   }
 
-  const latestAttempt = scenario.userAttempts[0] ?? null;
+  const latestAttempt = scenario.userAttempts.at(0) ?? null;
 
   return {
     slug: scenario.slug,
