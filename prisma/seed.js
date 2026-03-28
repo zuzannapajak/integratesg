@@ -741,19 +741,14 @@ async function upsertCourse(courseData) {
 }
 
 async function seedScenarioAttempts(scenarioMap) {
-  const student =
-    (await prisma.profile.findFirst({
-      where: { role: "student" },
-      orderBy: { createdAt: "asc" },
-    })) ??
-    (process.env.DEMO_STUDENT_EMAIL
-      ? await prisma.profile.findUnique({
-          where: { email: process.env.DEMO_STUDENT_EMAIL },
-        })
-      : null);
+  const students = await prisma.profile.findMany({
+    where: { role: "student" },
+    orderBy: { createdAt: "asc" },
+    take: 3,
+  });
 
-  if (!student) {
-    console.log("No student profile found. Skipping UserScenarioAttempt seed.");
+  if (students.length === 0) {
+    console.log("No student profiles found. Skipping UserScenarioAttempt seed.");
     return;
   }
 
@@ -778,10 +773,18 @@ async function seedScenarioAttempts(scenarioMap) {
     governanceScenario.variants[0];
 
   const now = Date.now();
+  const seededAttemptKeys = [];
 
-  const attempts = [
+  const buildAttemptKey = (userId, scenarioVariantId, attemptNumber) =>
+    `${userId}:${scenarioVariantId}:${attemptNumber}`;
+
+  const allAttempts = [];
+
+  const primaryStudent = students[0];
+
+  allAttempts.push(
     {
-      userId: student.id,
+      userId: primaryStudent.id,
       scenarioId: environmentalScenario.id,
       scenarioVariantId: environmentalVariant.id,
       attemptNumber: 1,
@@ -801,7 +804,7 @@ async function seedScenarioAttempts(scenarioMap) {
       },
     },
     {
-      userId: student.id,
+      userId: primaryStudent.id,
       scenarioId: socialScenario.id,
       scenarioVariantId: socialVariant.id,
       attemptNumber: 1,
@@ -820,7 +823,7 @@ async function seedScenarioAttempts(scenarioMap) {
       },
     },
     {
-      userId: student.id,
+      userId: primaryStudent.id,
       scenarioId: governanceScenario.id,
       scenarioVariantId: governanceVariant.id,
       attemptNumber: 1,
@@ -839,9 +842,133 @@ async function seedScenarioAttempts(scenarioMap) {
         lesson_location: "final-score",
       },
     },
-  ];
+    {
+      userId: primaryStudent.id,
+      scenarioId: environmentalScenario.id,
+      scenarioVariantId: environmentalVariant.id,
+      attemptNumber: 2,
+      score: 91,
+      status: "passed",
+      startedAt: new Date(now - 8 * 60 * 60 * 1000),
+      lastOpenedAt: new Date(now - 7 * 60 * 60 * 1000),
+      completedAt: new Date(now - 7 * 60 * 60 * 1000),
+      suspendData: null,
+      lessonLocation: "final-feedback",
+      sessionTime: "0000:14:39.10",
+      totalTime: "0000:14:39.10",
+      rawTrackingData: {
+        lesson_status: "passed",
+        score_raw: "91",
+        lesson_location: "final-feedback",
+      },
+    },
+  );
 
-  for (const attempt of attempts) {
+  if (students[1]) {
+    const secondStudent = students[1];
+
+    allAttempts.push(
+      {
+        userId: secondStudent.id,
+        scenarioId: socialScenario.id,
+        scenarioVariantId: socialVariant.id,
+        attemptNumber: 1,
+        score: 88,
+        status: "passed",
+        startedAt: new Date(now - 3 * 24 * 60 * 60 * 1000),
+        lastOpenedAt: new Date(now - 3 * 24 * 60 * 60 * 1000 + 21 * 60 * 1000),
+        completedAt: new Date(now - 3 * 24 * 60 * 60 * 1000 + 21 * 60 * 1000),
+        suspendData: null,
+        lessonLocation: "final-feedback",
+        sessionTime: "0000:21:02.90",
+        totalTime: "0000:21:02.90",
+        rawTrackingData: {
+          lesson_status: "passed",
+          score_raw: "88",
+          lesson_location: "final-feedback",
+        },
+      },
+      {
+        userId: secondStudent.id,
+        scenarioId: governanceScenario.id,
+        scenarioVariantId: governanceVariant.id,
+        attemptNumber: 1,
+        score: null,
+        status: "browsed",
+        startedAt: new Date(now - 36 * 60 * 60 * 1000),
+        lastOpenedAt: new Date(now - 35 * 60 * 60 * 1000),
+        completedAt: null,
+        suspendData: '{"scene":"intro","state":"browsed"}',
+        lessonLocation: "intro",
+        sessionTime: "0000:03:11.20",
+        totalTime: "0000:03:11.20",
+        rawTrackingData: {
+          lesson_status: "browsed",
+          lesson_location: "intro",
+        },
+      },
+    );
+  }
+
+  if (students[2]) {
+    const thirdStudent = students[2];
+
+    allAttempts.push(
+      {
+        userId: thirdStudent.id,
+        scenarioId: environmentalScenario.id,
+        scenarioVariantId: environmentalVariant.id,
+        attemptNumber: 1,
+        score: 73,
+        status: "completed",
+        startedAt: new Date(now - 6 * 24 * 60 * 60 * 1000),
+        lastOpenedAt: new Date(now - 6 * 24 * 60 * 60 * 1000 + 19 * 60 * 1000),
+        completedAt: new Date(now - 6 * 24 * 60 * 60 * 1000 + 19 * 60 * 1000),
+        suspendData: null,
+        lessonLocation: "final-feedback",
+        sessionTime: "0000:19:10.00",
+        totalTime: "0000:19:10.00",
+        rawTrackingData: {
+          lesson_status: "completed",
+          score_raw: "73",
+          lesson_location: "final-feedback",
+        },
+      },
+      {
+        userId: thirdStudent.id,
+        scenarioId: socialScenario.id,
+        scenarioVariantId: socialVariant.id,
+        attemptNumber: 1,
+        score: null,
+        status: "incomplete",
+        startedAt: new Date(now - 10 * 60 * 60 * 1000),
+        lastOpenedAt: new Date(now - 90 * 60 * 1000),
+        completedAt: null,
+        suspendData: '{"scene":"stakeholder-decision","state":"resume"}',
+        lessonLocation: "stakeholder-decision",
+        sessionTime: "0000:11:22.15",
+        totalTime: "0000:11:22.15",
+        rawTrackingData: {
+          lesson_status: "incomplete",
+          lesson_location: "stakeholder-decision",
+        },
+      },
+    );
+  }
+
+  for (const attempt of allAttempts) {
+    const uniqueKey = buildAttemptKey(
+      attempt.userId,
+      attempt.scenarioVariantId,
+      attempt.attemptNumber,
+    );
+
+    if (seededAttemptKeys.includes(uniqueKey)) {
+      continue;
+    }
+
+    seededAttemptKeys.push(uniqueKey);
+
     await prisma.userScenarioAttempt.upsert({
       where: {
         userId_scenarioVariantId_attemptNumber: {
@@ -867,7 +994,9 @@ async function seedScenarioAttempts(scenarioMap) {
     });
   }
 
-  console.log(`Seeded scenario attempts for student: ${student.email}`);
+  console.log(
+    `Seeded ${seededAttemptKeys.length} scenario attempts for ${students.length} student profile(s).`,
+  );
 }
 
 async function seedCourseAttempts(courseMap) {

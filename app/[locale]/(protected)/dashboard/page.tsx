@@ -5,10 +5,12 @@ import {
   DashboardKpi,
   DashboardMetric,
   DashboardRole,
+  DashboardScenarioAttemptRow,
   DashboardStat,
 } from "@/lib/dashboard/types";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
+import { Prisma } from "@prisma/client";
 import { redirect } from "next/navigation";
 
 type Props = {
@@ -37,6 +39,33 @@ type AttemptWithCourse = {
   };
 };
 
+const scenarioAttemptWithRelations = Prisma.validator<Prisma.UserScenarioAttemptDefaultArgs>()({
+  include: {
+    user: {
+      select: {
+        fullName: true,
+        email: true,
+      },
+    },
+    scenario: {
+      select: {
+        slug: true,
+        area: true,
+      },
+    },
+    scenarioVariant: {
+      select: {
+        language: true,
+        title: true,
+      },
+    },
+  },
+});
+
+type ScenarioAttemptWithRelations = Prisma.UserScenarioAttemptGetPayload<
+  typeof scenarioAttemptWithRelations
+>;
+
 function pickTranslation(translations: TranslationRecord[], locale: string) {
   const localeMatch = translations.find((translation) => translation.language === locale);
   if (localeMatch) return localeMatch;
@@ -61,6 +90,16 @@ function formatRelativeDate(date: Date | null) {
   return new Intl.DateTimeFormat("en", {
     day: "numeric",
     month: "short",
+  }).format(date);
+}
+
+function formatTableDate(date: Date | null) {
+  if (!date) return "—";
+
+  return new Intl.DateTimeFormat("en", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
   }).format(date);
 }
 
@@ -175,6 +214,46 @@ function buildPreviousWeekTotal(attempts: AttemptWithCourse[]) {
   }
 
   return total;
+}
+
+function mapScenarioArea(area: ScenarioAttemptWithRelations["scenario"]["area"]) {
+  switch (area) {
+    case "environmental":
+      return "environmental";
+    case "social":
+      return "social";
+    case "governance":
+      return "governance";
+    default:
+      return "cross-cutting";
+  }
+}
+
+function buildScenarioAttemptRows(
+  attempts: ScenarioAttemptWithRelations[],
+): DashboardScenarioAttemptRow[] {
+  return [...attempts]
+    .sort((a, b) => {
+      const left = a.lastOpenedAt?.getTime() ?? a.startedAt.getTime();
+      const right = b.lastOpenedAt?.getTime() ?? b.startedAt.getTime();
+      return right - left;
+    })
+    .slice(0, 12)
+    .map((attempt) => ({
+      id: attempt.id,
+      learnerName: attempt.user.fullName ?? attempt.user.email.split("@")[0],
+      learnerEmail: attempt.user.email,
+      scenarioTitle: attempt.scenarioVariant.title,
+      scenarioSlug: attempt.scenario.slug,
+      area: mapScenarioArea(attempt.scenario.area),
+      language: attempt.scenarioVariant.language.toUpperCase(),
+      attemptNumber: attempt.attemptNumber,
+      status: attempt.status,
+      scoreLabel: attempt.score !== null ? `${attempt.score}%` : "—",
+      startedAtLabel: formatTableDate(attempt.startedAt),
+      lastOpenedAtLabel: formatTableDate(attempt.lastOpenedAt),
+      completedAtLabel: formatTableDate(attempt.completedAt),
+    }));
 }
 
 function buildContinueLearningItem(
@@ -304,49 +383,56 @@ export default async function DashboardPage({ params }: Props) {
   const role = profile.role as DashboardRole;
   const displayName = profile.fullName ?? user.email?.split("@")[0] ?? "User";
 
-  const [myAttempts, allAttempts, publishedCoursesCount] = await Promise.all([
-    prisma.userCourseAttempt.findMany({
-      where: { userId: user.id },
-      include: {
-        course: {
-          select: {
-            slug: true,
-            translations: {
-              where: { language: { in: [locale, "en"] } },
-              select: {
-                language: true,
-                title: true,
-                description: true,
-              },
-            },
-          },
-        },
-      },
-      orderBy: [{ lastOpenedAt: "desc" }],
-    }),
-    role === "admin"
-      ? prisma.userCourseAttempt.findMany({
-          include: {
-            course: {
-              select: {
-                slug: true,
-                translations: {
-                  where: { language: { in: [locale, "en"] } },
-                  select: {
-                    language: true,
-                    title: true,
-                    description: true,
-                  },
+  const [myAttempts, allAttempts, adminScenarioAttemptsRaw, publishedCoursesCount] =
+    await Promise.all([
+      prisma.userCourseAttempt.findMany({
+        where: { userId: user.id },
+        include: {
+          course: {
+            select: {
+              slug: true,
+              translations: {
+                where: { language: { in: [locale, "en"] } },
+                select: {
+                  language: true,
+                  title: true,
+                  description: true,
                 },
               },
             },
           },
-        })
-      : Promise.resolve([]),
-    prisma.course.count({
-      where: { status: "published" },
-    }),
-  ]);
+        },
+        orderBy: [{ lastOpenedAt: "desc" }],
+      }),
+      role === "admin"
+        ? prisma.userCourseAttempt.findMany({
+            include: {
+              course: {
+                select: {
+                  slug: true,
+                  translations: {
+                    where: { language: { in: [locale, "en"] } },
+                    select: {
+                      language: true,
+                      title: true,
+                      description: true,
+                    },
+                  },
+                },
+              },
+            },
+          })
+        : Promise.resolve([]),
+      role === "admin"
+        ? prisma.userScenarioAttempt.findMany({
+            ...scenarioAttemptWithRelations,
+            orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }],
+          })
+        : Promise.resolve<ScenarioAttemptWithRelations[]>([]),
+      prisma.course.count({
+        where: { status: "published" },
+      }),
+    ]);
 
   const continueLearning = buildContinueLearningItem(myAttempts, locale);
   const learnerActivityData = buildUserActivityData(myAttempts);
@@ -357,6 +443,7 @@ export default async function DashboardPage({ params }: Props) {
 
   const adminActivityData = buildAdminActivityData(allAttempts);
   const adminTrendLabel = buildTrendLabel(adminActivityData, 0);
+  const adminScenarioAttempts = buildScenarioAttemptRows(adminScenarioAttemptsRaw);
 
   return (
     <DashboardShell
@@ -374,6 +461,7 @@ export default async function DashboardPage({ params }: Props) {
       adminActivityData={adminActivityData}
       adminTrendLabel={adminTrendLabel}
       adminKpis={buildAdminKpis(allAttempts)}
+      adminScenarioAttempts={adminScenarioAttempts}
       gamificationStats={[]}
     />
   );

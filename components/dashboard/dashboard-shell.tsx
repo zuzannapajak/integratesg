@@ -1,6 +1,7 @@
 "use client";
 
 import StatsChart from "@/components/dashboard/stats-chart";
+import UserScenarioAttemptsTable from "@/components/dashboard/user-scenario-attempts-table";
 import { ESG_colors } from "@/lib/constants";
 import {
   DashboardChartPoint,
@@ -9,6 +10,7 @@ import {
   DashboardKpi,
   DashboardMetric,
   DashboardRole,
+  DashboardScenarioAttemptRow,
   DashboardStat,
   RoleConfig,
 } from "@/lib/dashboard/types";
@@ -42,6 +44,7 @@ type Props = {
   adminActivityData: DashboardChartPoint[];
   adminTrendLabel: string;
   adminKpis: DashboardKpi[];
+  adminScenarioAttempts: DashboardScenarioAttemptRow[];
 };
 
 const roleConfigs: Record<DashboardRole, RoleConfig> = {
@@ -105,6 +108,7 @@ export default function DashboardShell({
   adminActivityData,
   adminTrendLabel,
   adminKpis,
+  adminScenarioAttempts,
 }: Props) {
   const roleConfig = roleConfigs[role];
 
@@ -148,6 +152,7 @@ export default function DashboardShell({
               kpis={adminKpis}
               activityData={adminActivityData}
               activityTrendLabel={adminTrendLabel}
+              scenarioAttempts={adminScenarioAttempts}
             />
           )}
         </motion.div>
@@ -561,12 +566,14 @@ function AdminDashboard({
   kpis,
   activityData,
   activityTrendLabel,
+  scenarioAttempts,
 }: {
   locale: string;
   roleConfig: RoleConfig;
   kpis: DashboardKpi[];
   activityData: DashboardChartPoint[];
   activityTrendLabel: string;
+  scenarioAttempts: DashboardScenarioAttemptRow[];
 }) {
   return (
     <div className="space-y-6">
@@ -596,6 +603,26 @@ function AdminDashboard({
           height={260}
           valueLabel="Active users"
         />
+      </motion.div>
+
+      <motion.div variants={FADE_UP} className={`${SURFACE} p-6 md:p-8`}>
+        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <h3 className="text-xl font-bold tracking-tight text-slate-900">
+              User scenario attempts
+            </h3>
+            <p className="mt-1 text-sm leading-6 text-slate-500">
+              Latest learner activity across the scenario simulator, including status, score, and
+              timing.
+            </p>
+          </div>
+
+          <span className="inline-flex rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-semibold text-slate-600">
+            {scenarioAttempts.length} records
+          </span>
+        </div>
+
+        <UserScenarioAttemptsTable rows={scenarioAttempts} />
       </motion.div>
 
       <div className="grid gap-4 lg:grid-cols-3">
