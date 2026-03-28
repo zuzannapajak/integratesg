@@ -3,7 +3,7 @@ export default function BackgroundMasks() {
     <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
       <defs>
         <clipPath id="orange-shape" clipPathUnits="objectBoundingBox">
-          <path d="M 0.1, 0 L 1, 0 L 1, 0.75 Q 0.95, 0.95 0.7, 0.7 L 0.1, 0 Z" />
+          <path d="M 0.1,0 L 1,0 L 1,0.65 Q 0.95,0.82 0.7,0.6 L 0.1,0 Z" />
         </clipPath>
 
         <clipPath id="blue-shape" clipPathUnits="objectBoundingBox">

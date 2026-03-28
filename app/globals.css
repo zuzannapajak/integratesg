@@ -123,8 +123,8 @@ button {
 .mock-hero-bg {
   position: relative;
   overflow: hidden;
-  background-color: #ffffff;
-  min-height: calc(100vh - 78px);
+  background: linear-gradient(180deg, #ffffff 0%, #f9fafb 58%, #f1f2f4 82%, #ececec 100%);
+  min-height: calc(100vh - 78px + 80px);
   display: flex;
   align-items: center;
 }
@@ -132,33 +132,19 @@ button {
 .hero-bottom-fade {
   position: absolute;
   inset-inline: 0;
-  bottom: -20px;
-  height: 220px;
+  bottom: -1px;
+  height: 260px;
   background: linear-gradient(
     180deg,
     rgba(236, 236, 236, 0) 0%,
-    rgba(236, 236, 236, 0) 50%,
-    rgba(236, 236, 236, 0.14) 70%,
-    rgba(236, 236, 236, 0.4) 84%,
+    rgba(236, 236, 236, 0.02) 18%,
+    rgba(236, 236, 236, 0.08) 38%,
+    rgba(236, 236, 236, 0.18) 56%,
+    rgba(236, 236, 236, 0.4) 74%,
+    rgba(236, 236, 236, 0.72) 88%,
     #ececec 100%
   );
-  z-index: 5;
-  pointer-events: none;
-}
-
-.landing-intro-section::before {
-  content: "";
-  position: absolute;
-  inset-inline: 0;
-  top: -140px;
-  height: 170px;
-  background: linear-gradient(
-    180deg,
-    rgba(236, 236, 236, 0) 0%,
-    rgba(236, 236, 236, 0.1) 45%,
-    rgba(236, 236, 236, 0.36) 72%,
-    #ececec 100%
-  );
+  z-index: 6;
   pointer-events: none;
 }
 
@@ -185,13 +171,20 @@ button {
 
 .landing-hero-blue-glow {
   position: absolute;
-  right: 8%;
-  top: 14%;
-  width: 18rem;
-  height: 18rem;
+  right: 2%;
+  top: 20%;
+  width: 28rem;
+  height: 30rem;
   border-radius: 999px;
-  background: rgba(13, 127, 194, 0.18);
-  filter: blur(78px);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(13, 127, 194, 0.2) 0%,
+    rgba(13, 127, 194, 0.14) 34%,
+    rgba(13, 127, 194, 0.08) 58%,
+    rgba(13, 127, 194, 0.03) 78%,
+    rgba(13, 127, 194, 0) 100%
+  );
+  filter: blur(110px);
   pointer-events: none;
   z-index: 3;
 }
@@ -210,12 +203,36 @@ button {
 .mock-hero-blue {
   position: absolute;
   right: 0;
-  bottom: 0;
-  width: 43vw;
-  height: 55vh;
-  background: #007bc2;
+  bottom: -4%;
+  width: 46vw;
+  height: 62vh;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 123, 194, 1) 0%,
+    rgba(0, 123, 194, 0.92) 36%,
+    rgba(0, 123, 194, 0.68) 56%,
+    rgba(0, 123, 194, 0.36) 72%,
+    rgba(0, 123, 194, 0.1) 88%,
+    rgba(0, 123, 194, 0) 100%
+  );
   clip-path: url(#blue-shape);
   z-index: 2;
+}
+
+.landing-intro-section::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: -46px;
+  height: 50px;
+  background: linear-gradient(
+    180deg,
+    rgba(236, 236, 236, 0) 0%,
+    rgba(236, 236, 236, 0.1) 40%,
+    rgba(236, 236, 236, 0.22) 72%,
+    rgba(236, 236, 236, 0.32) 100%
+  );
+  pointer-events: none;
 }
 
 .image-blob-container {
@@ -233,7 +250,6 @@ button {
     line to 53.43% 20.39%,
     curve to 75.97% 35.37% with 77.67% 8.35%
   );
-  transform: translateY(-130px) translateX(40px);
 }
 
 .image-blob-container img {
@@ -518,7 +534,7 @@ button {
   .image-blob-container {
     width: 400px;
     height: 400px;
-    transform: translateY(-130px) translateX(40px);
+    transform: translateY(-120px) translateX(40px);
   }
 }
 
@@ -535,8 +551,8 @@ button {
 
 @media (max-width: 767px) {
   .mock-hero-bg {
-    min-height: calc(100vh - 78px);
-    padding: 2rem 0;
+    min-height: calc(100vh - 78px + 80px);
+    padding: 2rem 0 4rem;
   }
 
   .landing-hero-orange-glow {
@@ -549,28 +565,36 @@ button {
   }
 
   .landing-hero-blue-glow {
-    width: 22rem;
-    height: 20rem;
-    right: -18%;
-    top: 14%;
+    width: 24rem;
+    height: 24rem;
+    right: -16%;
+    top: 18%;
     background: radial-gradient(
       circle,
-      rgba(13, 127, 194, 0.24) 0%,
-      rgba(13, 127, 194, 0.14) 36%,
-      rgba(13, 127, 194, 0.06) 68%,
+      rgba(13, 127, 194, 0.2) 0%,
+      rgba(13, 127, 194, 0.12) 36%,
+      rgba(13, 127, 194, 0.05) 68%,
       rgba(13, 127, 194, 0) 100%
     );
-    filter: blur(92px);
+    filter: blur(100px);
+  }
+
+  .hero-blue-bottom-haze {
+    right: -20%;
+    bottom: -10%;
+    width: 24rem;
+    height: 12rem;
+    filter: blur(72px);
   }
 
   .hero-bottom-fade {
-    height: 180px;
-    bottom: -40px;
+    height: 170px;
+    bottom: -1px;
   }
 
   .landing-intro-section::before {
-    top: -130px;
-    height: 160px;
+    top: -50px;
+    height: 70px;
   }
 
   .mock-hero-orange {
