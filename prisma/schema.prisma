@@ -65,27 +65,29 @@ enum ScenarioAttemptStatus {
 
 // Models
 model Profile {
-  id                   String                @id
-  email                String                @unique
-  fullName             String?
-  role                 UserRole              @default(student)
-  preferredLanguage    String                @default("en")
-  createdAt            DateTime              @default(now())
-  updatedAt            DateTime              @updatedAt
-  userCourseAttempts   UserCourseAttempt[]
-  userScenarioAttempts UserScenarioAttempt[]
+  id                    String                  @id
+  email                 String                  @unique
+  fullName              String?
+  role                  UserRole                @default(student)
+  preferredLanguage     String                  @default("en")
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  userCourseAttempts    UserCourseAttempt[]
+  userScenarioAttempts  UserScenarioAttempt[]
+  userCaseStudyProgress UserCaseStudyProgress[]
 }
 
 model CaseStudy {
-  id           String                 @id @default(cuid())
-  slug         String                 @unique
+  id           String                  @id @default(cuid())
+  slug         String                  @unique
   area         CourseArea
-  status       PublicationStatus      @default(draft)
-  sortOrder    Int                    @default(0)
-  isFeatured   Boolean                @default(false)
-  createdAt    DateTime               @default(now())
-  updatedAt    DateTime               @updatedAt
+  status       PublicationStatus       @default(draft)
+  sortOrder    Int                     @default(0)
+  isFeatured   Boolean                 @default(false)
+  createdAt    DateTime                @default(now())
+  updatedAt    DateTime                @updatedAt
   translations CaseStudyTranslation[]
+  userProgress UserCaseStudyProgress[]
 
   @@index([status])
   @@index([area])
@@ -111,6 +113,23 @@ model CaseStudyTranslation {
   @@unique([caseStudyId, language])
   @@index([language])
   @@index([caseStudyId])
+}
+
+model UserCaseStudyProgress {
+  id          String    @id @default(cuid())
+  userId      String
+  caseStudyId String
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user      Profile   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  caseStudy CaseStudy @relation(fields: [caseStudyId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, caseStudyId])
+  @@index([userId])
+  @@index([caseStudyId])
+  @@index([completedAt])
 }
 
 model Course {

@@ -28,7 +28,11 @@ export default async function CaseStudyDetailPage({ params }: Props) {
     redirect(`/${locale}/auth/login`);
   }
 
-  const caseStudy = await getCaseStudyDetail({ locale, slug });
+  const caseStudy = await getCaseStudyDetail({
+    locale,
+    userId: profile.id,
+    slug,
+  });
 
   if (!caseStudy) {
     notFound();

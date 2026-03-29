@@ -15,11 +15,17 @@ type CaseStudyTranslationRecord = {
   industry: string | null;
 };
 
+type CaseStudyProgressRecord = {
+  completedAt: Date | null;
+};
+
 type CaseStudyRecord = {
+  id: string;
   slug: string;
   area: string;
   isFeatured: boolean;
   translations: CaseStudyTranslationRecord[];
+  userProgress: CaseStudyProgressRecord[];
 };
 
 const supportedLanguages: string[] = ["en", "pl", "es"];
@@ -38,7 +44,7 @@ function pickTranslation(
     return englishTranslation;
   }
 
-  return translations.length > 0 ? translations[0] : null;
+  return translations[0] ?? null;
 }
 
 function mapArea(area: string): CaseStudyArea {
@@ -74,11 +80,22 @@ function buildSummary(translation: CaseStudyTranslationRecord | null): string {
   return "No summary available yet.";
 }
 
+function getCompletionState(progress: CaseStudyProgressRecord[]) {
+  const latestProgress = progress[0] ?? null;
+  const completedAt = latestProgress?.completedAt ?? null;
+
+  return {
+    isCompleted: completedAt !== null,
+    completedAt: completedAt?.toISOString() ?? null,
+  };
+}
+
 function mapCaseStudyToListItem(
   caseStudy: CaseStudyRecord,
   locale: string,
 ): CaseStudyListItemViewModel {
   const translation = pickTranslation(caseStudy.translations, locale);
+  const completion = getCompletionState(caseStudy.userProgress);
 
   return {
     slug: caseStudy.slug,
@@ -88,6 +105,8 @@ function mapCaseStudyToListItem(
     organization: translation?.organization ?? null,
     industry: translation?.industry ?? null,
     isFeatured: caseStudy.isFeatured,
+    isCompleted: completion.isCompleted,
+    completedAt: completion.completedAt,
   };
 }
 
@@ -96,6 +115,7 @@ function mapCaseStudyToDetail(
   locale: string,
 ): CaseStudyDetailViewModel {
   const translation = pickTranslation(caseStudy.translations, locale);
+  const completion = getCompletionState(caseStudy.userProgress);
 
   return {
     slug: caseStudy.slug,
@@ -109,15 +129,18 @@ function mapCaseStudyToDetail(
     industry: translation?.industry ?? null,
     isFeatured: caseStudy.isFeatured,
     keyTakeaways: parseKeyTakeaways(translation?.keyTakeaways),
+    isCompleted: completion.isCompleted,
+    completedAt: completion.completedAt,
   };
 }
 
-export async function getAllCaseStudies(params: { locale: string }) {
+export async function getAllCaseStudies(params: { locale: string; userId: string }) {
   const caseStudies = await prisma.caseStudy.findMany({
     where: {
       status: "published",
     },
     select: {
+      id: true,
       slug: true,
       area: true,
       isFeatured: true,
@@ -137,6 +160,16 @@ export async function getAllCaseStudies(params: { locale: string }) {
           industry: true,
         },
       },
+      userProgress: {
+        where: {
+          userId: params.userId,
+        },
+        select: {
+          completedAt: true,
+        },
+        orderBy: [{ updatedAt: "desc" }],
+        take: 1,
+      },
     },
     orderBy: [{ isFeatured: "desc" }, { sortOrder: "asc" }, { createdAt: "desc" }],
   });
@@ -144,13 +177,14 @@ export async function getAllCaseStudies(params: { locale: string }) {
   return caseStudies.map((caseStudy) => mapCaseStudyToListItem(caseStudy, params.locale));
 }
 
-export async function getCaseStudyDetail(params: { locale: string; slug: string }) {
+export async function getCaseStudyDetail(params: { locale: string; userId: string; slug: string }) {
   const caseStudy = await prisma.caseStudy.findFirst({
     where: {
       slug: params.slug,
       status: "published",
     },
     select: {
+      id: true,
       slug: true,
       area: true,
       isFeatured: true,
@@ -170,6 +204,16 @@ export async function getCaseStudyDetail(params: { locale: string; slug: string 
           industry: true,
         },
       },
+      userProgress: {
+        where: {
+          userId: params.userId,
+        },
+        select: {
+          completedAt: true,
+        },
+        orderBy: [{ updatedAt: "desc" }],
+        take: 1,
+      },
     },
   });
 
@@ -178,4 +222,41 @@ export async function getCaseStudyDetail(params: { locale: string; slug: string 
   }
 
   return mapCaseStudyToDetail(caseStudy, params.locale);
+}
+
+export async function markCaseStudyCompleted(params: { userId: string; slug: string }) {
+  const caseStudy = await prisma.caseStudy.findUnique({
+    where: {
+      slug: params.slug,
+    },
+    select: {
+      id: true,
+      status: true,
+    },
+  });
+
+  if (caseStudy?.status !== "published") {
+    return null;
+  }
+
+  const now = new Date();
+
+  await prisma.userCaseStudyProgress.upsert({
+    where: {
+      userId_caseStudyId: {
+        userId: params.userId,
+        caseStudyId: caseStudy.id,
+      },
+    },
+    update: {
+      completedAt: now,
+    },
+    create: {
+      userId: params.userId,
+      caseStudyId: caseStudy.id,
+      completedAt: now,
+    },
+  });
+
+  return { completedAt: now.toISOString() };
 }

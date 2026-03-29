@@ -1,3 +1,4 @@
+import CaseStudyCompletionButton from "@/components/eportfolio/case-study-completion-button";
 import { ArrowLeft, Building2, Leaf, ShieldCheck, Sparkles, Users } from "lucide-react";
 import Link from "next/link";
 
@@ -14,6 +15,8 @@ type CaseStudyDetail = {
   industry: string | null;
   isFeatured: boolean;
   keyTakeaways: string[];
+  isCompleted: boolean;
+  completedAt: string | null;
 };
 
 type Props = {
@@ -92,6 +95,13 @@ export default function CaseStudyLaunchShell({ locale, caseStudy }: Props) {
                   Featured
                 </span>
               )}
+
+              {caseStudy.isCompleted && (
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1.5 text-[0.72rem] font-bold uppercase tracking-wider text-emerald-700">
+                  <Sparkles className="h-3 w-3" />
+                  Completed
+                </span>
+              )}
             </div>
 
             <div>
@@ -142,6 +152,12 @@ export default function CaseStudyLaunchShell({ locale, caseStudy }: Props) {
           </section>
 
           <aside className="space-y-6">
+            <CaseStudyCompletionButton
+              slug={caseStudy.slug}
+              initialIsCompleted={caseStudy.isCompleted}
+              initialCompletedAt={caseStudy.completedAt}
+            />
+
             <section className={`${SURFACE} p-6`}>
               <h2 className="text-lg font-semibold text-slate-900">Key takeaways</h2>
               {caseStudy.keyTakeaways.length > 0 ? (

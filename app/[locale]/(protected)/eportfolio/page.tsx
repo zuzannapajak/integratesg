@@ -29,7 +29,10 @@ export default async function EportfolioPage({ params }: Props) {
     redirect(`/${locale}/auth/login`);
   }
 
-  const items = await getAllCaseStudies({ locale });
+  const items = await getAllCaseStudies({
+    locale,
+    userId: profile.id,
+  });
 
   return (
     <main className="relative min-h-screen bg-[#f5f5f3] pb-20 transition-all duration-300">

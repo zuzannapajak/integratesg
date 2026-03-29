@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowRight,
   Building2,
+  CheckCircle2,
   FolderOpen,
   Layers3,
   Leaf,
@@ -71,6 +72,7 @@ function getAreaMeta(area: CaseStudyArea) {
 export default function CaseStudyListShell({ locale, items }: Props) {
   const [search, setSearch] = useState("");
   const [selectedArea, setSelectedArea] = useState<CaseStudyArea | "all">("all");
+  const [selectedStatus, setSelectedStatus] = useState<"all" | "todo" | "completed">("all");
   const [sortBy, setSortBy] = useState<"recommended" | "title">("recommended");
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -90,8 +92,12 @@ export default function CaseStudyListShell({ locale, items }: Props) {
         (item.industry?.toLowerCase().includes(normalized) ?? false);
 
       const matchesArea = selectedArea === "all" || item.area === selectedArea;
+      const matchesStatus =
+        selectedStatus === "all" ||
+        (selectedStatus === "completed" && item.isCompleted) ||
+        (selectedStatus === "todo" && !item.isCompleted);
 
-      return matchesSearch && matchesArea;
+      return matchesSearch && matchesArea && matchesStatus;
     });
 
     return [...next].sort((a, b) => {
@@ -99,10 +105,15 @@ export default function CaseStudyListShell({ locale, items }: Props) {
         return a.title.localeCompare(b.title);
       }
 
-      const weight = (item: CaseStudyListItemViewModel) => (item.isFeatured ? 2 : 1);
+      const weight = (item: CaseStudyListItemViewModel) => {
+        const featuredWeight = item.isFeatured ? 3 : 0;
+        const todoWeight = item.isCompleted ? 0 : 1;
+        return featuredWeight + todoWeight;
+      };
+
       return weight(b) - weight(a) || a.title.localeCompare(b.title);
     });
-  }, [items, search, selectedArea, sortBy]);
+  }, [items, search, selectedArea, selectedStatus, sortBy]);
 
   const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -126,7 +137,7 @@ export default function CaseStudyListShell({ locale, items }: Props) {
           </div>
         </div>
 
-        <div className="mt-5 grid gap-4 lg:grid-cols-[minmax(0,1.5fr)_repeat(2,minmax(0,1fr))]">
+        <div className="mt-5 grid gap-4 lg:grid-cols-[minmax(0,1.5fr)_repeat(3,minmax(0,1fr))]">
           <label className="group flex items-center gap-3 rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 transition focus-within:border-[#0b9c72]/30 focus-within:shadow-[0_8px_24px_rgba(35,45,62,0.05)]">
             <Search className="h-4.5 w-4.5 text-[#98a2b3]" />
             <input
@@ -153,6 +164,19 @@ export default function CaseStudyListShell({ locale, items }: Props) {
             <option value="social">Social</option>
             <option value="governance">Governance</option>
             <option value="cross-cutting">Cross-cutting</option>
+          </select>
+
+          <select
+            value={selectedStatus}
+            onChange={(e: ChangeEvent<HTMLSelectElement>) => {
+              setSelectedStatus(e.target.value as "all" | "todo" | "completed");
+              handleFilterChange();
+            }}
+            className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
+          >
+            <option value="all">Status: All</option>
+            <option value="todo">Status: To do</option>
+            <option value="completed">Status: Completed</option>
           </select>
 
           <select
@@ -220,11 +244,20 @@ export default function CaseStudyListShell({ locale, items }: Props) {
                           {areaMeta.icon} {areaMeta.label}
                         </span>
 
-                        {isFeatured && (
-                          <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0b9c72] px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wider text-white shadow-sm">
-                            <Sparkles className="h-3 w-3" /> Featured
-                          </span>
-                        )}
+                        <div className="flex flex-wrap items-center justify-end gap-2">
+                          {item.isCompleted && (
+                            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-100 bg-emerald-50 px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wider text-emerald-700">
+                              <CheckCircle2 className="h-3 w-3" />
+                              Completed
+                            </span>
+                          )}
+
+                          {isFeatured && (
+                            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0b9c72] px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wider text-white shadow-sm">
+                              <Sparkles className="h-3 w-3" /> Featured
+                            </span>
+                          )}
+                        </div>
                       </div>
 
                       <div className="mt-5 space-y-4">
@@ -309,8 +342,8 @@ export default function CaseStudyListShell({ locale, items }: Props) {
             </div>
             <h2 className="mt-5 text-xl font-semibold text-[#1f2a37]">No case studies found</h2>
             <p className="mt-3 text-sm leading-6 text-[#5f6c7b]">
-              Try adjusting the ESG area filter or search phrase to explore the available ePortfolio
-              resources.
+              Try adjusting the ESG area, status filter, or search phrase to explore the available
+              ePortfolio resources.
             </p>
           </div>
         </section>

@@ -8,6 +8,8 @@ export type CaseStudyListItemViewModel = {
   organization: string | null;
   industry: string | null;
   isFeatured: boolean;
+  isCompleted: boolean;
+  completedAt: string | null;
 };
 
 export type CaseStudyDetailViewModel = {
@@ -20,4 +22,6 @@ export type CaseStudyDetailViewModel = {
   industry: string | null;
   isFeatured: boolean;
   keyTakeaways: string[];
+  isCompleted: boolean;
+  completedAt: string | null;
 };
