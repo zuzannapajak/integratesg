@@ -2,6 +2,7 @@ import {
   CaseStudyArea,
   CaseStudyDetailViewModel,
   CaseStudyListItemViewModel,
+  CaseStudyProgressStatus,
 } from "@/lib/eportfolio/types";
 import { prisma } from "@/lib/prisma";
 
@@ -16,6 +17,9 @@ type CaseStudyTranslationRecord = {
 };
 
 type CaseStudyProgressRecord = {
+  status: string;
+  startedAt: Date | null;
+  lastOpenedAt: Date | null;
   completedAt: Date | null;
 };
 
@@ -80,13 +84,28 @@ function buildSummary(translation: CaseStudyTranslationRecord | null): string {
   return "No summary available yet.";
 }
 
-function getCompletionState(progress: CaseStudyProgressRecord[]) {
+function mapProgressStatus(status?: string | null): CaseStudyProgressStatus {
+  if (status === "completed") {
+    return "completed";
+  }
+
+  if (status === "in_progress") {
+    return "in_progress";
+  }
+
+  return "not_started";
+}
+
+function getProgressState(progress: CaseStudyProgressRecord[]) {
   const latestProgress = progress.at(0);
-  const completedAt = latestProgress?.completedAt ?? null;
+  const status = mapProgressStatus(latestProgress?.status);
 
   return {
-    isCompleted: completedAt !== null,
-    completedAt: completedAt?.toISOString() ?? null,
+    status,
+    isCompleted: status === "completed",
+    startedAt: latestProgress?.startedAt?.toISOString() ?? null,
+    lastOpenedAt: latestProgress?.lastOpenedAt?.toISOString() ?? null,
+    completedAt: latestProgress?.completedAt?.toISOString() ?? null,
   };
 }
 
@@ -95,7 +114,7 @@ function mapCaseStudyToListItem(
   locale: string,
 ): CaseStudyListItemViewModel {
   const translation = pickTranslation(caseStudy.translations, locale);
-  const completion = getCompletionState(caseStudy.userProgress);
+  const progress = getProgressState(caseStudy.userProgress);
 
   return {
     slug: caseStudy.slug,
@@ -105,8 +124,11 @@ function mapCaseStudyToListItem(
     organization: translation?.organization ?? null,
     industry: translation?.industry ?? null,
     isFeatured: caseStudy.isFeatured,
-    isCompleted: completion.isCompleted,
-    completedAt: completion.completedAt,
+    status: progress.status,
+    isCompleted: progress.isCompleted,
+    startedAt: progress.startedAt,
+    lastOpenedAt: progress.lastOpenedAt,
+    completedAt: progress.completedAt,
   };
 }
 
@@ -115,7 +137,7 @@ function mapCaseStudyToDetail(
   locale: string,
 ): CaseStudyDetailViewModel {
   const translation = pickTranslation(caseStudy.translations, locale);
-  const completion = getCompletionState(caseStudy.userProgress);
+  const progress = getProgressState(caseStudy.userProgress);
 
   return {
     slug: caseStudy.slug,
@@ -129,8 +151,11 @@ function mapCaseStudyToDetail(
     industry: translation?.industry ?? null,
     isFeatured: caseStudy.isFeatured,
     keyTakeaways: parseKeyTakeaways(translation?.keyTakeaways),
-    isCompleted: completion.isCompleted,
-    completedAt: completion.completedAt,
+    status: progress.status,
+    isCompleted: progress.isCompleted,
+    startedAt: progress.startedAt,
+    lastOpenedAt: progress.lastOpenedAt,
+    completedAt: progress.completedAt,
   };
 }
 
@@ -165,6 +190,9 @@ export async function getAllCaseStudies(params: { locale: string; userId: string
           userId: params.userId,
         },
         select: {
+          status: true,
+          startedAt: true,
+          lastOpenedAt: true,
           completedAt: true,
         },
         orderBy: [{ updatedAt: "desc" }],
@@ -209,6 +237,9 @@ export async function getCaseStudyDetail(params: { locale: string; userId: strin
           userId: params.userId,
         },
         select: {
+          status: true,
+          startedAt: true,
+          lastOpenedAt: true,
           completedAt: true,
         },
         orderBy: [{ updatedAt: "desc" }],
@@ -222,6 +253,65 @@ export async function getCaseStudyDetail(params: { locale: string; userId: strin
   }
 
   return mapCaseStudyToDetail(caseStudy, params.locale);
+}
+
+export async function touchCaseStudyProgress(params: { userId: string; slug: string }) {
+  const caseStudy = await prisma.caseStudy.findUnique({
+    where: {
+      slug: params.slug,
+    },
+    select: {
+      id: true,
+      status: true,
+    },
+  });
+
+  if (caseStudy?.status !== "published") {
+    return null;
+  }
+
+  const now = new Date();
+  const existing = await prisma.userCaseStudyProgress.findUnique({
+    where: {
+      userId_caseStudyId: {
+        userId: params.userId,
+        caseStudyId: caseStudy.id,
+      },
+    },
+    select: {
+      status: true,
+      startedAt: true,
+      completedAt: true,
+    },
+  });
+
+  if (!existing) {
+    await prisma.userCaseStudyProgress.create({
+      data: {
+        userId: params.userId,
+        caseStudyId: caseStudy.id,
+        status: "in_progress",
+        startedAt: now,
+        lastOpenedAt: now,
+      },
+    });
+  } else {
+    await prisma.userCaseStudyProgress.update({
+      where: {
+        userId_caseStudyId: {
+          userId: params.userId,
+          caseStudyId: caseStudy.id,
+        },
+      },
+      data: {
+        status: existing.status === "completed" ? "completed" : "in_progress",
+        startedAt: existing.startedAt ?? now,
+        lastOpenedAt: now,
+      },
+    });
+  }
+
+  return { lastOpenedAt: now.toISOString() };
 }
 
 export async function markCaseStudyCompleted(params: { userId: string; slug: string }) {
@@ -239,6 +329,18 @@ export async function markCaseStudyCompleted(params: { userId: string; slug: str
     return null;
   }
 
+  const existing = await prisma.userCaseStudyProgress.findUnique({
+    where: {
+      userId_caseStudyId: {
+        userId: params.userId,
+        caseStudyId: caseStudy.id,
+      },
+    },
+    select: {
+      startedAt: true,
+    },
+  });
+
   const now = new Date();
 
   await prisma.userCaseStudyProgress.upsert({
@@ -249,14 +351,24 @@ export async function markCaseStudyCompleted(params: { userId: string; slug: str
       },
     },
     update: {
+      status: "completed",
+      startedAt: existing?.startedAt ?? now,
+      lastOpenedAt: now,
       completedAt: now,
     },
     create: {
       userId: params.userId,
       caseStudyId: caseStudy.id,
+      status: "completed",
+      startedAt: now,
+      lastOpenedAt: now,
       completedAt: now,
     },
   });
 
-  return { completedAt: now.toISOString() };
+  return {
+    status: "completed" as const,
+    completedAt: now.toISOString(),
+    lastOpenedAt: now.toISOString(),
+  };
 }

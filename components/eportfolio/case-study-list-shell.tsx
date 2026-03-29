@@ -237,29 +237,29 @@ export default function CaseStudyListShell({ locale, items }: Props) {
                     />
 
                     <div className="relative flex flex-1 flex-col">
-                      <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-start justify-between gap-3">
                         <span
                           className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.7rem] font-bold uppercase tracking-wider ${areaMeta.badgeClass}`}
                         >
                           {areaMeta.icon} {areaMeta.label}
                         </span>
 
-                        <div className="flex flex-wrap items-center justify-end gap-2">
+                        <div className="flex shrink-0 flex-col items-end gap-2">
+                          {isFeatured && (
+                            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0b9c72] px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wider text-white shadow-sm">
+                              <Sparkles className="h-3 w-3" />
+                              Featured
+                            </span>
+                          )}
+
                           {item.isCompleted && (
                             <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-100 bg-emerald-50 px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wider text-emerald-700">
                               <CheckCircle2 className="h-3 w-3" />
                               Completed
                             </span>
                           )}
-
-                          {isFeatured && (
-                            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0b9c72] px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wider text-white shadow-sm">
-                              <Sparkles className="h-3 w-3" /> Featured
-                            </span>
-                          )}
                         </div>
                       </div>
-
                       <div className="mt-5 space-y-4">
                         <div>
                           <h2 className="text-xl font-semibold tracking-tight text-[#1f2a37]">

@@ -63,6 +63,12 @@ enum ScenarioAttemptStatus {
   browsed
 }
 
+enum CaseStudyProgressStatus {
+  not_started
+  in_progress
+  completed
+}
+
 // Models
 model Profile {
   id                    String                  @id
@@ -116,12 +122,15 @@ model CaseStudyTranslation {
 }
 
 model UserCaseStudyProgress {
-  id          String    @id @default(cuid())
-  userId      String
-  caseStudyId String
-  completedAt DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id           String                  @id @default(cuid())
+  userId       String
+  caseStudyId  String
+  status       CaseStudyProgressStatus @default(not_started)
+  startedAt    DateTime?
+  lastOpenedAt DateTime?
+  completedAt  DateTime?
+  createdAt    DateTime                @default(now())
+  updatedAt    DateTime                @updatedAt
 
   user      Profile   @relation(fields: [userId], references: [id], onDelete: Cascade)
   caseStudy CaseStudy @relation(fields: [caseStudyId], references: [id], onDelete: Cascade)
@@ -129,6 +138,8 @@ model UserCaseStudyProgress {
   @@unique([userId, caseStudyId])
   @@index([userId])
   @@index([caseStudyId])
+  @@index([status])
+  @@index([lastOpenedAt])
   @@index([completedAt])
 }
 

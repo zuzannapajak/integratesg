@@ -1,5 +1,5 @@
 import CaseStudyLaunchShell from "@/components/eportfolio/case-study-launch-shell";
-import { getCaseStudyDetail } from "@/lib/eportfolio/queries";
+import { getCaseStudyDetail, touchCaseStudyProgress } from "@/lib/eportfolio/queries";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 import { notFound, redirect } from "next/navigation";
@@ -27,6 +27,11 @@ export default async function CaseStudyDetailPage({ params }: Props) {
   if (!profile) {
     redirect(`/${locale}/auth/login`);
   }
+
+  await touchCaseStudyProgress({
+    userId: profile.id,
+    slug,
+  });
 
   const caseStudy = await getCaseStudyDetail({
     locale,
