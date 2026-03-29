@@ -130,10 +130,6 @@ function mapScenarioStatus(attempts: UserScenarioAttemptRecord[]): ScenarioProgr
 
   const latestAttempt = attempts[0];
 
-  if (!latestAttempt) {
-    return "not_started";
-  }
-
   if (latestAttempt.status === "completed" || latestAttempt.status === "passed") {
     return "completed";
   }
@@ -200,7 +196,7 @@ function parseScormTimeToCentiseconds(value: string | null | undefined) {
   const hours = Number(match[1]);
   const minutes = Number(match[2]);
   const seconds = Number(match[3]);
-  const centisecondsPart = match[4] ?? "0";
+  const centisecondsPart = match[4] || "0";
   const centiseconds = Number(centisecondsPart.padEnd(2, "0").slice(0, 2));
 
   if (
