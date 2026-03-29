@@ -18,6 +18,7 @@ import {
   Layers3,
   Leaf,
   PlayCircle,
+  RotateCcw,
   ShieldCheck,
   Sparkles,
   Target,
@@ -125,7 +126,7 @@ function formatDate(date: string | null) {
 function getHeroIntro(scenario: ScenarioDetailViewModel) {
   switch (scenario.status) {
     case "completed":
-      return "You have already completed this scenario. Reopen it to review your decisions or take another run.";
+      return "You have already completed this scenario. Start a new run whenever you want to practice the flow again and compare your decisions.";
     case "in_progress":
       return scenario.lessonLocation
         ? "Your last session can be resumed from the point where you paused."
@@ -153,14 +154,36 @@ function getProgressSummary(scenario: ScenarioDetailViewModel) {
 
 function getProgressValue(scenario: ScenarioDetailViewModel) {
   if (scenario.status === "completed") return 100;
-  if (scenario.status === "in_progress") return 58;
+  if (scenario.status === "in_progress") {
+    return scenario.lessonLocation ? 58 : 12;
+  }
   return 8;
 }
 
 function getPrimaryActionLabel(scenario: ScenarioDetailViewModel) {
-  if (scenario.status === "completed") return "Review scenario";
+  if (scenario.status === "completed") return "Restart scenario";
   if (scenario.status === "in_progress") return "Resume scenario";
   return "Launch scenario";
+}
+
+function getPrimaryActionIcon(status: ScenarioProgressStatus) {
+  if (status === "completed") {
+    return <RotateCcw className="h-4.5 w-4.5" />;
+  }
+
+  return <PlayCircle className="h-4.5 w-4.5" />;
+}
+
+function getNextActionCopy(status: ScenarioProgressStatus) {
+  if (status === "completed") {
+    return "Launch a fresh attempt to go through the scenario again and compare how a new run unfolds.";
+  }
+
+  if (status === "in_progress") {
+    return "Continue from your latest checkpoint and keep building momentum.";
+  }
+
+  return "Launch the scenario to begin the guided experience.";
 }
 
 function getPracticePoints(area: ScenarioArea) {
@@ -335,7 +358,6 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
           </div>
 
           <aside className="flex h-full flex-col gap-4">
-            {/* <div className="rounded-[28px] border border-[#e7edf3] bg-white/84 px-5 py-6 shadow-[0_10px_30px_rgba(35,45,62,0.05)] backdrop-blur-xl"> */}
             <div
               className={`relative overflow-hidden rounded-[28px] border border-white/70 bg-linear-to-br ${areaMeta.accentClass} p-5 shadow-[0_12px_30px_rgba(35,45,62,0.06)]`}
             >
@@ -368,11 +390,7 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
               </p>
 
               <p className="mt-3 text-sm leading-6 text-[#667180]">
-                {scenario.status === "completed"
-                  ? "Open the scenario again to review how the full experience unfolded."
-                  : scenario.status === "in_progress"
-                    ? "Continue from your latest checkpoint and keep building momentum."
-                    : "Launch the scenario to begin the guided experience."}
+                {getNextActionCopy(scenario.status)}
               </p>
 
               <div className="mt-5 grid gap-3">
@@ -380,7 +398,7 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
                   href={`/${locale}/scenarios/${scenario.slug}/launch`}
                   className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#31425a] px-4 py-4 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347]"
                 >
-                  <PlayCircle className="h-4.5 w-4.5" />
+                  {getPrimaryActionIcon(scenario.status)}
                   {getPrimaryActionLabel(scenario)}
                 </Link>
 

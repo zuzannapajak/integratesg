@@ -2,22 +2,85 @@
 
 import { CircleAlert, CircleDashed, RefreshCcw } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type Props = {
   title: string;
   src: string | null;
   backHref: string;
+  initialLessonLocation?: string | null;
+  initialSuspendData?: string | null;
+  initialLessonStatus?: string | null;
+  initialScoreRaw?: number | null;
+  initialSessionTime?: string | null;
 };
 
 const LOAD_TIMEOUT_MS = 12000;
 
 type FrameState = "idle" | "loading" | "ready" | "error";
 
-export default function ScenarioPlayerFrame({ title, src, backHref }: Props) {
+type ScormApi = {
+  LMSInitialize: (value: string) => string;
+  LMSFinish: (value: string) => string;
+  LMSGetValue: (element: string) => string;
+  LMSSetValue: (element: string, value: string) => string;
+  LMSCommit: (value: string) => string;
+  LMSGetLastError: () => string;
+  LMSGetErrorString: (code: string) => string;
+  LMSGetDiagnostic: (code: string) => string;
+};
+
+type RuntimeStore = Record<string, string>;
+
+declare global {
+  interface Window {
+    API?: ScormApi;
+  }
+}
+
+function createInitialRuntimeStore(params: {
+  lessonLocation?: string | null;
+  suspendData?: string | null;
+  lessonStatus?: string | null;
+  scoreRaw?: number | null;
+  sessionTime?: string | null;
+}): RuntimeStore {
+  return {
+    "cmi.core.lesson_location": params.lessonLocation ?? "",
+    "cmi.suspend_data": params.suspendData ?? "",
+    "cmi.core.lesson_status": params.lessonStatus ?? "incomplete",
+    "cmi.core.score.raw":
+      params.scoreRaw !== null && params.scoreRaw !== undefined ? String(params.scoreRaw) : "",
+    "cmi.core.session_time": params.sessionTime ?? "",
+  };
+}
+
+export default function ScenarioPlayerFrame({
+  title,
+  src,
+  backHref,
+  initialLessonLocation = null,
+  initialSuspendData = null,
+  initialLessonStatus = null,
+  initialScoreRaw = null,
+  initialSessionTime = null,
+}: Props) {
   const [frameKey, setFrameKey] = useState(0);
   const [readyToken, setReadyToken] = useState<string | null>(null);
   const [timedOutToken, setTimedOutToken] = useState<string | null>(null);
+
+  const runtimeStoreRef = useRef<RuntimeStore>(
+    createInitialRuntimeStore({
+      lessonLocation: initialLessonLocation,
+      suspendData: initialSuspendData,
+      lessonStatus: initialLessonStatus,
+      scoreRaw: initialScoreRaw,
+      sessionTime: initialSessionTime,
+    }),
+  );
+
+  const initializedRef = useRef(false);
+  const lastErrorRef = useRef("0");
 
   const hasValidSrc = useMemo(() => {
     return typeof src === "string" && src.trim().length > 0;
@@ -44,6 +107,22 @@ export default function ScenarioPlayerFrame({ title, src, backHref }: Props) {
   }, [hasValidSrc, loadToken, readyToken, timedOutToken]);
 
   useEffect(() => {
+    runtimeStoreRef.current = createInitialRuntimeStore({
+      lessonLocation: initialLessonLocation,
+      suspendData: initialSuspendData,
+      lessonStatus: initialLessonStatus,
+      scoreRaw: initialScoreRaw,
+      sessionTime: initialSessionTime,
+    });
+  }, [
+    initialLessonLocation,
+    initialSuspendData,
+    initialLessonStatus,
+    initialScoreRaw,
+    initialSessionTime,
+  ]);
+
+  useEffect(() => {
     if (!hasValidSrc) {
       return;
     }
@@ -56,6 +135,92 @@ export default function ScenarioPlayerFrame({ title, src, backHref }: Props) {
       window.clearTimeout(timeout);
     };
   }, [hasValidSrc, loadToken]);
+
+  useEffect(() => {
+    const api: ScormApi = {
+      LMSInitialize: () => {
+        initializedRef.current = true;
+        lastErrorRef.current = "0";
+        return "true";
+      },
+
+      LMSFinish: () => {
+        if (!initializedRef.current) {
+          lastErrorRef.current = "301";
+          return "false";
+        }
+
+        lastErrorRef.current = "0";
+        initializedRef.current = false;
+        return "true";
+      },
+
+      LMSGetValue: (element) => {
+        if (!initializedRef.current) {
+          lastErrorRef.current = "301";
+          return "";
+        }
+
+        lastErrorRef.current = "0";
+        return runtimeStoreRef.current[element] ?? "";
+      },
+
+      LMSSetValue: (element, value) => {
+        if (!initializedRef.current) {
+          lastErrorRef.current = "301";
+          return "false";
+        }
+
+        runtimeStoreRef.current[element] = value;
+        lastErrorRef.current = "0";
+        return "true";
+      },
+
+      LMSCommit: () => {
+        if (!initializedRef.current) {
+          lastErrorRef.current = "301";
+          return "false";
+        }
+
+        lastErrorRef.current = "0";
+        return "true";
+      },
+
+      LMSGetLastError: () => {
+        return lastErrorRef.current;
+      },
+
+      LMSGetErrorString: (code) => {
+        switch (code) {
+          case "0":
+            return "No error";
+          case "301":
+            return "Not initialized";
+          default:
+            return "General error";
+        }
+      },
+
+      LMSGetDiagnostic: (code) => {
+        switch (code) {
+          case "0":
+            return "No error";
+          case "301":
+            return "The SCORM runtime has not been initialized.";
+          default:
+            return "No additional diagnostic information is available.";
+        }
+      },
+    };
+
+    window.API = api;
+
+    return () => {
+      if (window.API === api) {
+        delete window.API;
+      }
+    };
+  }, []);
 
   const handleRetry = () => {
     if (!hasValidSrc) {
