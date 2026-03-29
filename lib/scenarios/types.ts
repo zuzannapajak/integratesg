@@ -47,4 +47,6 @@ export type ScenarioLaunchViewModel = {
   hasAttempt: boolean;
   score: number | null;
   lessonLocation: string | null;
+  lastOpenedAt: string | null;
+  completedAt: string | null;
 };
