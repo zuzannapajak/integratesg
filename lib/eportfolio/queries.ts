@@ -81,7 +81,7 @@ function buildSummary(translation: CaseStudyTranslationRecord | null): string {
 }
 
 function getCompletionState(progress: CaseStudyProgressRecord[]) {
-  const latestProgress = progress[0] ?? null;
+  const latestProgress = progress.at(0);
   const completedAt = latestProgress?.completedAt ?? null;
 
   return {
