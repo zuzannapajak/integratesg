@@ -1,6 +1,9 @@
 "use client";
 
 import StatsChart from "@/components/dashboard/stats-chart";
+import UserCurriculumAttemptsTable from "@/components/stats/user-curriculum-attempts-table";
+import UserEportfolioProgressTable from "@/components/stats/user-eportfolio-progress-table";
+import UserScenarioAttemptsTable from "@/components/stats/user-scenario-attempts-table";
 import type {
   AdminCourseStat,
   AdminLanguageStat,
@@ -1289,6 +1292,19 @@ export default function AdminStatsShell({ stats }: Props) {
                 </div>
               )}
             </Surface>
+            <Surface className="mt-8 p-6">
+              <SectionHeader
+                title="User scenario attempts"
+                subtitle="Latest learner activity across the scenario simulator, including status, score, and timing."
+                right={
+                  <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm">
+                    {stats.scenarioAttemptRows.length} records
+                  </div>
+                }
+              />
+
+              <UserScenarioAttemptsTable rows={stats.scenarioAttemptRows} />
+            </Surface>
           </>
         )}
 
@@ -1371,6 +1387,19 @@ export default function AdminStatsShell({ stats }: Props) {
                 </div>
               )}
             </Surface>
+            <Surface className="mt-8 p-6">
+              <SectionHeader
+                title="User curriculum attempts"
+                subtitle="Latest learner activity across curriculum modules, including progress, assessment, and timing."
+                right={
+                  <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm">
+                    {stats.curriculumAttemptRows.length} records
+                  </div>
+                }
+              />
+
+              <UserCurriculumAttemptsTable rows={stats.curriculumAttemptRows} />
+            </Surface>
           </>
         )}
 
@@ -1388,6 +1417,19 @@ export default function AdminStatsShell({ stats }: Props) {
                 onWindowChange={setActivityWindow}
               />
             </section>
+            <Surface className="mt-8 p-6">
+              <SectionHeader
+                title="User ePortfolio progress"
+                subtitle="Latest learner progress across case studies, including completion and timing."
+                right={
+                  <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm">
+                    {stats.eportfolioProgressRows.length} records
+                  </div>
+                }
+              />
+
+              <UserEportfolioProgressTable rows={stats.eportfolioProgressRows} />
+            </Surface>
           </>
         )}
       </motion.div>

@@ -170,4 +170,53 @@ export type BasicAdminStats = {
   languageBreakdown: AdminLanguageStat[];
   scenarioBreakdown: AdminScenarioStat[];
   courseBreakdown: AdminCourseStat[];
+
+  scenarioAttemptRows: DashboardScenarioAttemptRow[];
+  curriculumAttemptRows: DashboardCurriculumAttemptRow[];
+  eportfolioProgressRows: DashboardEportfolioProgressRow[];
+};
+
+export type DashboardScenarioAttemptRow = {
+  id: string;
+  learnerName: string;
+  learnerEmail: string;
+  scenarioTitle: string;
+  scenarioSlug: string;
+  area: "environmental" | "social" | "governance" | "cross-cutting";
+  language: string;
+  attemptNumber: number;
+  status: "passed" | "completed" | "failed" | "incomplete" | "browsed";
+  scoreLabel: string;
+  startedAtLabel: string;
+  lastOpenedAtLabel: string;
+  completedAtLabel: string;
+};
+
+export type DashboardCurriculumAttemptRow = {
+  id: string;
+  learnerName: string;
+  learnerEmail: string;
+  courseTitle: string;
+  courseSlug: string;
+  area: "environmental" | "social" | "governance" | "cross-cutting";
+  attemptNumber: number;
+  status: "completed" | "in_progress" | "failed";
+  preQuizScoreLabel: string;
+  postQuizScoreLabel: string;
+  startedAtLabel: string;
+  lastOpenedAtLabel: string;
+  completedAtLabel: string;
+};
+
+export type DashboardEportfolioProgressRow = {
+  id: string;
+  learnerName: string;
+  learnerEmail: string;
+  caseStudyTitle: string;
+  caseStudySlug: string;
+  language: string;
+  isCompleted: boolean;
+  startedAtLabel: string;
+  lastOpenedAtLabel: string;
+  completedAtLabel: string;
 };

@@ -4,6 +4,9 @@ import type {
   AdminScenarioStat,
   BasicAdminStats,
   ChartPoint,
+  DashboardCurriculumAttemptRow,
+  DashboardEportfolioProgressRow,
+  DashboardScenarioAttemptRow,
   LocalizedTitleItem,
 } from "@/lib/admin/types";
 import { prisma } from "@/lib/prisma";
@@ -27,6 +30,12 @@ function averageNullable(values: Array<number | null>) {
   const filtered = values.filter((value): value is number => value !== null);
   if (filtered.length === 0) return null;
   return Math.round(filtered.reduce((sum, value) => sum + value, 0) / filtered.length);
+}
+
+function formatScore(value: number | null) {
+  if (value === null) return "—";
+  const rounded = Number.isInteger(value) ? value : Math.round(value * 10) / 10;
+  return `${rounded}%`;
 }
 
 function startOfDay(date: Date) {
@@ -192,6 +201,25 @@ function buildEportfolioWindowStats(params: {
   };
 }
 
+function formatDateTimeLabel(date: Date | null, locale: string) {
+  if (date === null) return "—";
+
+  return new Intl.DateTimeFormat(locale === "pl" ? "pl-PL" : "en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(date);
+}
+
+function normalizeArea(area: string): "environmental" | "social" | "governance" | "cross-cutting" {
+  if (area === "environmental") return "environmental";
+  if (area === "social") return "social";
+  if (area === "governance") return "governance";
+  return "cross-cutting";
+}
+
 export async function getBasicAdminStats(locale = "en"): Promise<BasicAdminStats> {
   const now = new Date();
   const today = startOfDay(now);
@@ -212,6 +240,9 @@ export async function getBasicAdminStats(locale = "en"): Promise<BasicAdminStats
     scenarioAttempts,
     courseAttempts,
     caseStudyProgressRecords,
+    scenarioAttemptRowsRaw,
+    curriculumAttemptRowsRaw,
+    eportfolioProgressRowsRaw,
   ] = await Promise.all([
     prisma.profile.findMany({
       select: {
@@ -252,9 +283,11 @@ export async function getBasicAdminStats(locale = "en"): Promise<BasicAdminStats
       where: { status: "published" },
       select: {
         id: true,
+        slug: true,
         translations: {
           select: {
             language: true,
+            title: true,
           },
         },
       },
@@ -314,6 +347,99 @@ export async function getBasicAdminStats(locale = "en"): Promise<BasicAdminStats
     prisma.userCaseStudyProgress.findMany({
       select: {
         completedAt: true,
+      },
+    }),
+
+    prisma.userScenarioAttempt.findMany({
+      take: 20,
+      orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }],
+      select: {
+        id: true,
+        attemptNumber: true,
+        status: true,
+        score: true,
+        startedAt: true,
+        lastOpenedAt: true,
+        completedAt: true,
+        user: {
+          select: {
+            fullName: true,
+            email: true,
+          },
+        },
+        scenario: {
+          select: {
+            slug: true,
+            area: true,
+          },
+        },
+        scenarioVariant: {
+          select: {
+            language: true,
+            title: true,
+          },
+        },
+      },
+    }),
+
+    prisma.userCourseAttempt.findMany({
+      take: 20,
+      orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }],
+      select: {
+        id: true,
+        status: true,
+        preQuizScore: true,
+        postQuizScore: true,
+        startedAt: true,
+        lastOpenedAt: true,
+        completedAt: true,
+        user: {
+          select: {
+            fullName: true,
+            email: true,
+          },
+        },
+        course: {
+          select: {
+            slug: true,
+            area: true,
+            translations: {
+              select: {
+                language: true,
+                title: true,
+              },
+            },
+          },
+        },
+      },
+    }),
+
+    prisma.userCaseStudyProgress.findMany({
+      take: 20,
+      orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }, { completedAt: "desc" }],
+      select: {
+        id: true,
+        startedAt: true,
+        lastOpenedAt: true,
+        completedAt: true,
+        user: {
+          select: {
+            fullName: true,
+            email: true,
+            preferredLanguage: true,
+          },
+        },
+        caseStudy: {
+          select: {
+            slug: true,
+            translations: {
+              select: {
+                language: true,
+                title: true,
+              },
+            },
+          },
+        },
       },
     }),
   ]);
@@ -580,6 +706,61 @@ export async function getBasicAdminStats(locale = "en"): Promise<BasicAdminStats
     };
   });
 
+  const scenarioAttemptRows: DashboardScenarioAttemptRow[] = scenarioAttemptRowsRaw.map(
+    (attempt) => ({
+      id: attempt.id,
+      learnerName: attempt.user.fullName ?? attempt.user.email.split("@")[0],
+      learnerEmail: attempt.user.email,
+      scenarioTitle: attempt.scenarioVariant.title,
+      scenarioSlug: attempt.scenario.slug,
+      area: normalizeArea(attempt.scenario.area),
+      language: attempt.scenarioVariant.language.toUpperCase(),
+      attemptNumber: attempt.attemptNumber,
+      status: attempt.status as DashboardScenarioAttemptRow["status"],
+      scoreLabel: formatScore(attempt.score),
+      startedAtLabel: formatDateTimeLabel(attempt.startedAt, locale),
+      lastOpenedAtLabel: formatDateTimeLabel(attempt.lastOpenedAt, locale),
+      completedAtLabel: formatDateTimeLabel(attempt.completedAt, locale),
+    }),
+  );
+
+  const curriculumAttemptRows: DashboardCurriculumAttemptRow[] = curriculumAttemptRowsRaw.map(
+    (attempt, index) => ({
+      id: attempt.id,
+      learnerName: attempt.user.fullName ?? attempt.user.email.split("@")[0],
+      learnerEmail: attempt.user.email,
+      courseTitle: pickLocalizedTitle(attempt.course.translations, locale, attempt.course.slug),
+      courseSlug: attempt.course.slug,
+      area: normalizeArea(attempt.course.area),
+      attemptNumber: index + 1,
+      status: attempt.status as DashboardCurriculumAttemptRow["status"],
+      preQuizScoreLabel: formatScore(attempt.preQuizScore),
+      postQuizScoreLabel: formatScore(attempt.postQuizScore),
+      startedAtLabel: formatDateTimeLabel(attempt.startedAt, locale),
+      lastOpenedAtLabel: formatDateTimeLabel(attempt.lastOpenedAt, locale),
+      completedAtLabel: formatDateTimeLabel(attempt.completedAt, locale),
+    }),
+  );
+
+  const eportfolioProgressRows: DashboardEportfolioProgressRow[] = eportfolioProgressRowsRaw.map(
+    (progress) => ({
+      id: progress.id,
+      learnerName: progress.user.fullName ?? progress.user.email.split("@")[0],
+      learnerEmail: progress.user.email,
+      caseStudyTitle: pickLocalizedTitle(
+        progress.caseStudy.translations,
+        locale,
+        progress.caseStudy.slug,
+      ),
+      caseStudySlug: progress.caseStudy.slug,
+      language: progress.user.preferredLanguage.toUpperCase(),
+      isCompleted: progress.completedAt !== null,
+      startedAtLabel: formatDateTimeLabel(progress.startedAt, locale),
+      lastOpenedAtLabel: formatDateTimeLabel(progress.lastOpenedAt, locale),
+      completedAtLabel: formatDateTimeLabel(progress.completedAt, locale),
+    }),
+  );
+
   return {
     generatedAt: new Date().toISOString(),
     users: {
@@ -678,5 +859,8 @@ export async function getBasicAdminStats(locale = "en"): Promise<BasicAdminStats
     languageBreakdown,
     scenarioBreakdown,
     courseBreakdown,
+    scenarioAttemptRows,
+    curriculumAttemptRows,
+    eportfolioProgressRows,
   };
 }

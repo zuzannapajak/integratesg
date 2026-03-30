@@ -1,6 +1,6 @@
 "use client";
 
-import { DashboardScenarioAttemptRow } from "@/lib/dashboard/types";
+import { DashboardCurriculumAttemptRow } from "@/lib/admin/types";
 import {
   CheckCircle2,
   CircleDashed,
@@ -12,10 +12,10 @@ import {
 } from "lucide-react";
 
 type Props = {
-  rows: DashboardScenarioAttemptRow[];
+  rows: DashboardCurriculumAttemptRow[];
 };
 
-function getAreaMeta(area: DashboardScenarioAttemptRow["area"]) {
+function getAreaMeta(area: DashboardCurriculumAttemptRow["area"]) {
   switch (area) {
     case "environmental":
       return {
@@ -44,12 +44,11 @@ function getAreaMeta(area: DashboardScenarioAttemptRow["area"]) {
   }
 }
 
-function getStatusMeta(status: DashboardScenarioAttemptRow["status"]) {
+function getStatusMeta(status: DashboardCurriculumAttemptRow["status"]) {
   switch (status) {
     case "completed":
-    case "passed":
       return {
-        label: status === "passed" ? "Passed" : "Completed",
+        label: "Completed",
         icon: <CheckCircle2 className="h-3.5 w-3.5" />,
         className: "border-emerald-100 bg-emerald-50 text-emerald-700",
       };
@@ -59,28 +58,22 @@ function getStatusMeta(status: DashboardScenarioAttemptRow["status"]) {
         icon: <XCircle className="h-3.5 w-3.5" />,
         className: "border-red-100 bg-red-50 text-red-700",
       };
-    case "browsed":
-      return {
-        label: "Browsed",
-        icon: <Sparkles className="h-3.5 w-3.5" />,
-        className: "border-slate-200 bg-slate-50 text-slate-600",
-      };
     default:
       return {
-        label: "Incomplete",
+        label: "In progress",
         icon: <CircleDashed className="h-3.5 w-3.5" />,
         className: "border-orange-100 bg-orange-50 text-orange-700",
       };
   }
 }
 
-export default function UserScenarioAttemptsTable({ rows }: Props) {
+export default function UserCurriculumAttemptsTable({ rows }: Props) {
   if (rows.length === 0) {
     return (
-      <div className="rounded-3xlrder border-dashed border-[#dbe3eb] bg-[#fbfcfd] px-6 py-10 text-center">
-        <p className="text-sm font-semibold text-[#31425a]">No scenario activity yet</p>
+      <div className="rounded-3xl border border-dashed border-[#dbe3eb] bg-[#fbfcfd] px-6 py-10 text-center">
+        <p className="text-sm font-semibold text-[#31425a]">No curriculum activity yet</p>
         <p className="mt-2 text-sm leading-6 text-[#667180]">
-          Scenario attempts will appear here once learners start interacting with the simulator.
+          Curriculum attempts will appear here once learners start opening and completing modules.
         </p>
       </div>
     );
@@ -94,12 +87,12 @@ export default function UserScenarioAttemptsTable({ rows }: Props) {
             <tr className="bg-[#f8fafc]">
               {[
                 "Learner",
-                "Scenario",
+                "Curriculum",
                 "Area",
-                "Language",
                 "Attempt",
                 "Status",
-                "Score",
+                "Pre-quiz",
+                "Post-quiz",
                 "Started",
                 "Last opened",
                 "Completed",
@@ -130,8 +123,8 @@ export default function UserScenarioAttemptsTable({ rows }: Props) {
 
                   <td className="border-b border-[#eef2f6] px-4 py-4">
                     <div className="min-w-55">
-                      <div className="font-semibold text-[#31425a]">{row.scenarioTitle}</div>
-                      <div className="mt-1 text-sm text-[#667180]">{row.scenarioSlug}</div>
+                      <div className="font-semibold text-[#31425a]">{row.courseTitle}</div>
+                      <div className="mt-1 text-sm text-[#667180]">{row.courseSlug}</div>
                     </div>
                   </td>
 
@@ -141,12 +134,6 @@ export default function UserScenarioAttemptsTable({ rows }: Props) {
                     >
                       {areaMeta.icon}
                       {areaMeta.label}
-                    </span>
-                  </td>
-
-                  <td className="border-b border-[#eef2f6] px-4 py-4">
-                    <span className="inline-flex rounded-full border border-[#e5ecf3] bg-[#f8fafc] px-2.5 py-1 text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#516071]">
-                      {row.language}
                     </span>
                   </td>
 
@@ -164,7 +151,11 @@ export default function UserScenarioAttemptsTable({ rows }: Props) {
                   </td>
 
                   <td className="border-b border-[#eef2f6] px-4 py-4 text-sm font-semibold text-[#31425a]">
-                    {row.scoreLabel}
+                    {row.preQuizScoreLabel}
+                  </td>
+
+                  <td className="border-b border-[#eef2f6] px-4 py-4 text-sm font-semibold text-[#31425a]">
+                    {row.postQuizScoreLabel}
                   </td>
 
                   <td className="border-b border-[#eef2f6] px-4 py-4 text-sm text-[#667180]">
