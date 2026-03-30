@@ -29,7 +29,7 @@ export function canAccessStats(role: AppRole) {
 
 export function getDefaultProtectedRoute(locale: string, role: AppRole) {
   if (canAccessStats(role)) {
-    return `/${locale}/stats`;
+    return `/${locale}/admin/stats`;
   }
 
   if (canAccessCurriculum(role)) {

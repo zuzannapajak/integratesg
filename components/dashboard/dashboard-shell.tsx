@@ -18,13 +18,10 @@ import { motion, type Variants } from "framer-motion";
 import {
   ArrowRight,
   BookOpen,
-  CheckCircle2,
   Clock,
   Flame,
   FolderOpen,
-  LineChart,
   PlayCircle,
-  TrendingUp,
   UserRound,
 } from "lucide-react";
 import Link from "next/link";
@@ -561,7 +558,6 @@ function LearnerDashboard({
 }
 
 function AdminDashboard({
-  locale,
   roleConfig,
   kpis,
   activityData,
@@ -624,30 +620,6 @@ function AdminDashboard({
 
         <UserScenarioAttemptsTable rows={scenarioAttempts} />
       </motion.div>
-
-      <div className="grid gap-4 lg:grid-cols-3">
-        <HubCard
-          icon={<LineChart className="h-5 w-5" />}
-          title="Full report"
-          meta="Curriculum platform overview"
-          href={`/${locale}/admin/stats`}
-          accentColor={roleConfig.accent}
-        />
-        <HubCard
-          icon={<TrendingUp className="h-5 w-5" />}
-          title="Participation"
-          meta="User activity and launches"
-          href={`/${locale}/admin/stats`}
-          accentColor={roleConfig.accent}
-        />
-        <HubCard
-          icon={<CheckCircle2 className="h-5 w-5" />}
-          title="Completions"
-          meta="Finished modules and results"
-          href={`/${locale}/admin/stats`}
-          accentColor={roleConfig.accent}
-        />
-      </div>
     </div>
   );
 }
@@ -727,43 +699,6 @@ function CoreAreaCard({
           <ArrowRight className="h-4 w-4" />
         </div>
       </div>
-    </Link>
-  );
-}
-
-function HubCard({
-  icon,
-  title,
-  meta,
-  href,
-  accentColor,
-}: {
-  icon: React.ReactNode;
-  title: string;
-  meta: string;
-  href: string;
-  accentColor: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className={`${SURFACE} group flex items-center justify-between p-5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_30px_rgba(35,45,62,0.06)]`}
-    >
-      <div className="flex items-center gap-4">
-        <div
-          className="flex h-11 w-11 items-center justify-center rounded-2xl"
-          style={{ backgroundColor: `${accentColor}12`, color: accentColor }}
-        >
-          <span className="flex h-5 w-5 items-center justify-center">{icon}</span>
-        </div>
-
-        <div>
-          <h4 className="text-sm font-bold text-slate-900">{title}</h4>
-          <p className="mt-1 text-xs font-medium text-slate-500">{meta}</p>
-        </div>
-      </div>
-
-      <ArrowRight className="h-4 w-4 text-slate-300 transition-all duration-300 group-hover:translate-x-1" />
     </Link>
   );
 }

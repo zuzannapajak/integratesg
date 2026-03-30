@@ -101,7 +101,7 @@ export default function AppSidebar({ locale, role }: Props) {
     { href: `/${locale}/dashboard`, label: "Dashboard", match: "exact", icon: LayoutDashboard },
     {
       href: `/${locale}/admin/stats`,
-      label: "Program statistics",
+      label: "Statistics",
       match: "prefix",
       icon: BarChart3,
     },
