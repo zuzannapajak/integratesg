@@ -3,6 +3,7 @@ import { requireRole } from "@/features/auth/requireRole";
 import { APP_ROLES } from "@/lib/auth/roles";
 import { getAllScenarioLibrary, getMyScenarioLibrary } from "@/lib/scenarios/queries";
 import { PlayCircle } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -10,6 +11,7 @@ type Props = {
 
 export default async function ScenariosPage({ params }: Props) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Protected.ScenariosPage" });
   const { user } = await requireRole(locale, [APP_ROLES.student, APP_ROLES.educator]);
 
   const [myScenarios, allScenarios] = await Promise.all([
@@ -28,10 +30,8 @@ export default async function ScenariosPage({ params }: Props) {
           </div>
 
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-[#31425a]">Scenario simulator</h1>
-            <p className="text-[#667180]">
-              Practice decision-making in realistic contexts with trackable scenario progress
-            </p>
+            <h1 className="text-3xl font-bold tracking-tight text-[#31425a]">{t("title")}</h1>
+            <p className="text-[#667180]">{t("subtitle")}</p>
           </div>
         </header>
 

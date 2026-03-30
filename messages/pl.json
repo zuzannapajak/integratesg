@@ -632,5 +632,70 @@
         }
       }
     }
+  },
+  "Protected": {
+    "DashboardPage": {
+      "fallback": {
+        "noActivity": "Brak aktywności",
+        "today": "Dzisiaj",
+        "yesterday": "Wczoraj",
+        "daysAgo": "{count} dni temu",
+        "untitledModule": "Moduł bez tytułu",
+        "continueDescription": "Kontynuuj ostatni moduł i wróć do bieżącego postępu.",
+        "curriculumBadge": "Curriculum",
+        "reviewModule": "Przejrzyj moduł",
+        "continueModule": "Kontynuuj moduł",
+        "lastCompleted": "Ostatnio ukończone",
+        "lastOpened": "Ostatnio otwarte",
+        "noChange": "Bez zmian względem poprzedniego tygodnia",
+        "vsPreviousWeek": "{value} względem poprzedniego tygodnia"
+      }
+    },
+    "CurriculumPage": {
+      "title": "Curriculum",
+      "subtitle": "Moduły edukacyjne dla edukatorów z prowadzonym przebiegiem, quizami i widocznością postępu"
+    },
+    "ScenariosPage": {
+      "title": "Symulator scenariuszy",
+      "subtitle": "Ćwicz podejmowanie decyzji w realistycznych kontekstach z możliwością śledzenia postępu"
+    },
+    "EportfolioPage": {
+      "title": "ePortfolio",
+      "subtitle": "Studia przypadków o praktycznym charakterze osadzone w realnym kontekście."
+    },
+    "SettingsPage": {
+      "back": "Powrót do dashboardu",
+      "title": "Ustawienia",
+      "subtitle": "Zarządzaj profilem i preferencjami konta"
+    },
+    "SettingsForm": {
+      "profile": {
+        "title": "Dane osobowe",
+        "subtitle": "Zaktualizuj swoje imię i nazwisko oraz preferowany język interfejsu.",
+        "fullName": "Imię i nazwisko",
+        "fullNamePlaceholder": "np. Jan Kowalski",
+        "email": "Adres e-mail",
+        "language": "Język",
+        "languageOptions": {
+          "en": "English (US)",
+          "pl": "Polski (PL)",
+          "es": "Español (ES)"
+        },
+        "save": "Zapisz zmiany",
+        "saved": "Zmiany zostały zapisane.",
+        "failed": "Nie udało się zapisać zmian."
+      },
+      "security": {
+        "title": "Bezpieczeństwo",
+        "subtitle": "Zadbaj o bezpieczeństwo konta, używając długiego i losowego hasła.",
+        "memberSince": "Członek od",
+        "newPassword": "Nowe hasło",
+        "confirmPassword": "Potwierdź hasło",
+        "updatePassword": "Zaktualizuj hasło",
+        "passwordUpdated": "Hasło zostało zaktualizowane.",
+        "minLength": "Minimum 8 znaków.",
+        "mismatch": "Hasła nie są takie same."
+      }
+    }
   }
 }

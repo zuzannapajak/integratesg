@@ -3,6 +3,7 @@ import { getAllCaseStudies } from "@/lib/eportfolio/queries";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 import { FolderOpen } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
 type Props = {
@@ -11,6 +12,7 @@ type Props = {
 
 export default async function EportfolioPage({ params }: Props) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Protected.EportfolioPage" });
 
   const supabase = await createClient();
   const {
@@ -45,10 +47,8 @@ export default async function EportfolioPage({ params }: Props) {
           </div>
 
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-[#31425a]">ePortfolio</h1>
-            <p className="text-[#667180]">
-              Practice-oriented case studies with a real-world context.
-            </p>
+            <h1 className="text-3xl font-bold tracking-tight text-[#31425a]">{t("title")}</h1>
+            <p className="text-[#667180]">{t("subtitle")}</p>
           </div>
         </header>
 

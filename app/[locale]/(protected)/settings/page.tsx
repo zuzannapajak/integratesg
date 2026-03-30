@@ -2,6 +2,7 @@ import AccountSettingsForm from "@/components/settings/account-settings-form";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 import { ArrowLeft, Settings as SettingsIcon } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -11,6 +12,8 @@ type Props = {
 
 export default async function SettingsPage({ params }: Props) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Protected.SettingsPage" });
+
   const supabase = await createClient();
   const {
     data: { user },
@@ -32,7 +35,7 @@ export default async function SettingsPage({ params }: Props) {
             className="inline-flex items-center gap-2 text-[0.95rem] font-medium text-[#5f6977] transition hover:text-[#31425a]"
           >
             <ArrowLeft className="h-4.5 w-4.5" />
-            Back to dashboard
+            {t("back")}
           </Link>
         </div>
 
@@ -41,8 +44,8 @@ export default async function SettingsPage({ params }: Props) {
             <SettingsIcon className="h-6 w-6" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-[#31425a]">Settings</h1>
-            <p className="text-[#667180]">Manage your profile and account preferences</p>
+            <h1 className="text-3xl font-bold tracking-tight text-[#31425a]">{t("title")}</h1>
+            <p className="text-[#667180]">{t("subtitle")}</p>
           </div>
         </header>
 

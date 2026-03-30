@@ -632,5 +632,70 @@
         }
       }
     }
+  },
+  "Protected": {
+    "DashboardPage": {
+      "fallback": {
+        "noActivity": "No activity yet",
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "daysAgo": "{count} days ago",
+        "untitledModule": "Untitled module",
+        "continueDescription": "Continue your latest learning module and pick up from your current progress.",
+        "curriculumBadge": "Curriculum",
+        "reviewModule": "Review module",
+        "continueModule": "Continue module",
+        "lastCompleted": "Last completed",
+        "lastOpened": "Last opened",
+        "noChange": "No change vs previous week",
+        "vsPreviousWeek": "{value} vs previous week"
+      }
+    },
+    "CurriculumPage": {
+      "title": "Curriculum",
+      "subtitle": "Educator-only learning modules with guided flow, quizzes, and progress visibility"
+    },
+    "ScenariosPage": {
+      "title": "Scenario simulator",
+      "subtitle": "Practice decision-making in realistic contexts with trackable scenario progress"
+    },
+    "EportfolioPage": {
+      "title": "ePortfolio",
+      "subtitle": "Practice-oriented case studies with a real-world context."
+    },
+    "SettingsPage": {
+      "back": "Back to dashboard",
+      "title": "Settings",
+      "subtitle": "Manage your profile and account preferences"
+    },
+    "SettingsForm": {
+      "profile": {
+        "title": "Personal details",
+        "subtitle": "Update your name and preferred language for the interface.",
+        "fullName": "Full name",
+        "fullNamePlaceholder": "e.g. John Doe",
+        "email": "Email address",
+        "language": "Language",
+        "languageOptions": {
+          "en": "English (US)",
+          "pl": "Polski (PL)",
+          "es": "Español (ES)"
+        },
+        "save": "Save changes",
+        "saved": "Changes saved.",
+        "failed": "Failed to save."
+      },
+      "security": {
+        "title": "Security",
+        "subtitle": "Ensure your account is using a long, random password to stay secure.",
+        "memberSince": "Member since",
+        "newPassword": "New password",
+        "confirmPassword": "Confirm password",
+        "updatePassword": "Update password",
+        "passwordUpdated": "Password updated.",
+        "minLength": "Min. 8 characters.",
+        "mismatch": "Passwords mismatch."
+      }
+    }
   }
 }

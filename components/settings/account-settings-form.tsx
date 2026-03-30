@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   User,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 
@@ -31,6 +32,7 @@ export default function AccountSettingsForm({
   preferredLanguage,
   createdAt,
 }: Props) {
+  const t = useTranslations("Protected.SettingsForm");
   const router = useRouter();
   const supabase = useMemo(() => createClient(), []);
 
@@ -60,13 +62,13 @@ export default function AccountSettingsForm({
           locale,
         });
 
-        setProfileSuccess("Changes saved.");
+        setProfileSuccess(t("profile.saved"));
         setTimeout(() => {
           setProfileSuccess(null);
         }, 3000);
         router.refresh();
       } catch {
-        setProfileError("Failed to save.");
+        setProfileError(t("profile.failed"));
       }
     });
   };
@@ -77,12 +79,12 @@ export default function AccountSettingsForm({
     setPasswordSuccess(null);
 
     if (passwordValue.length < 8) {
-      setPasswordError("Min. 8 characters.");
+      setPasswordError(t("security.minLength"));
       return;
     }
 
     if (passwordValue !== passwordConfirmValue) {
-      setPasswordError("Passwords mismatch.");
+      setPasswordError(t("security.mismatch"));
       return;
     }
 
@@ -94,7 +96,7 @@ export default function AccountSettingsForm({
         return;
       }
 
-      setPasswordSuccess("Password updated.");
+      setPasswordSuccess(t("security.passwordUpdated"));
       setPasswordValue("");
       setPasswordConfirmValue("");
 
@@ -108,10 +110,8 @@ export default function AccountSettingsForm({
     <div className="space-y-10">
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="lg:col-span-1">
-          <h3 className="text-lg font-semibold text-[#31425a]">Personal Details</h3>
-          <p className="mt-1 text-sm text-[#667180]">
-            Update your name and preferred language for the interface.
-          </p>
+          <h3 className="text-lg font-semibold text-[#31425a]">{t("profile.title")}</h3>
+          <p className="mt-1 text-sm text-[#667180]">{t("profile.subtitle")}</p>
         </div>
 
         <form
@@ -121,7 +121,7 @@ export default function AccountSettingsForm({
           <div className="grid gap-6 sm:grid-cols-2">
             <div className="space-y-2 sm:col-span-2">
               <label className="flex items-center gap-2 text-sm font-semibold text-[#31425a]">
-                <User className="h-4 w-4 text-[#8793a2]" /> Full Name
+                <User className="h-4 w-4 text-[#8793a2]" /> {t("profile.fullName")}
               </label>
               <input
                 type="text"
@@ -130,13 +130,13 @@ export default function AccountSettingsForm({
                   setNameValue(e.target.value);
                 }}
                 className="w-full rounded-2xl border border-[#e2e7ee] bg-white/50 px-4 py-3 text-[#31425a] outline-none transition focus:border-[#0d7fc2] focus:ring-4 focus:ring-[#0d7fc2]/5"
-                placeholder="e.g. John Doe"
+                placeholder={t("profile.fullNamePlaceholder")}
               />
             </div>
 
             <div className="space-y-2">
               <label className="flex items-center gap-2 text-sm font-semibold text-[#31425a]">
-                <Mail className="h-4 w-4 text-[#8793a2]" /> Email Address
+                <Mail className="h-4 w-4 text-[#8793a2]" /> {t("profile.email")}
               </label>
               <div className="group relative">
                 <input
@@ -153,7 +153,7 @@ export default function AccountSettingsForm({
 
             <div className="space-y-2">
               <label className="flex items-center gap-2 text-sm font-semibold text-[#31425a]">
-                <Languages className="h-4 w-4 text-[#8793a2]" /> Language
+                <Languages className="h-4 w-4 text-[#8793a2]" /> {t("profile.language")}
               </label>
               <select
                 value={languageValue}
@@ -162,9 +162,9 @@ export default function AccountSettingsForm({
                 }}
                 className="w-full appearance-none rounded-2xl border border-[#e2e7ee] bg-white/50 px-4 py-3 text-[#31425a] outline-none transition focus:border-[#0d7fc2] focus:ring-4 focus:ring-[#0d7fc2]/5"
               >
-                <option value="en">English (US)</option>
-                <option value="pl">Polski (PL)</option>
-                <option value="es">Español (ES)</option>
+                <option value="en">{t("profile.languageOptions.en")}</option>
+                <option value="pl">{t("profile.languageOptions.pl")}</option>
+                <option value="es">{t("profile.languageOptions.es")}</option>
               </select>
             </div>
           </div>
@@ -188,7 +188,7 @@ export default function AccountSettingsForm({
               className="flex items-center gap-2 rounded-xl bg-[#31425a] px-6 py-2.5 text-sm font-bold text-white transition hover:bg-[#243347] active:scale-95 disabled:opacity-50"
             >
               {isProfilePending && <Loader2 className="h-4 w-4 animate-spin" />}
-              Save Changes
+              {t("profile.save")}
             </button>
           </div>
         </form>
@@ -198,16 +198,14 @@ export default function AccountSettingsForm({
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
         <div className="lg:col-span-1">
-          <h3 className="text-lg font-semibold text-[#31425a]">Security</h3>
-          <p className="mt-1 text-sm text-[#667180]">
-            Ensure your account is using a long, random password to stay secure.
-          </p>
+          <h3 className="text-lg font-semibold text-[#31425a]">{t("security.title")}</h3>
+          <p className="mt-1 text-sm text-[#667180]">{t("security.subtitle")}</p>
 
           <div className="mt-6 hidden rounded-2xl border border-[#e2e7ee] bg-[#f8fafc]/50 p-4 lg:block">
             <div className="flex items-center gap-3 text-[#667180]">
               <Calendar className="h-4 w-4" />
               <div className="text-xs">
-                <p>Member since</p>
+                <p>{t("security.memberSince")}</p>
                 <p className="font-semibold text-[#31425a]">
                   {new Date(createdAt).toLocaleDateString()}
                 </p>
@@ -223,7 +221,7 @@ export default function AccountSettingsForm({
           <div className="grid gap-6 sm:grid-cols-2">
             <div className="space-y-2">
               <label className="flex items-center gap-2 text-sm font-semibold text-[#31425a]">
-                <Lock className="h-4 w-4 text-[#8793a2]" /> New Password
+                <Lock className="h-4 w-4 text-[#8793a2]" /> {t("security.newPassword")}
               </label>
               <input
                 type="password"
@@ -238,7 +236,7 @@ export default function AccountSettingsForm({
 
             <div className="space-y-2">
               <label className="flex items-center gap-2 text-sm font-semibold text-[#31425a]">
-                Confirm Password
+                {t("security.confirmPassword")}
               </label>
               <input
                 type="password"
@@ -268,9 +266,10 @@ export default function AccountSettingsForm({
 
             <button
               disabled={isPasswordPending}
-              className="rounded-xl bg-[#0d7fc2] px-6 py-2.5 text-sm font-bold text-white transition hover:bg-[#0b6ca5] active:scale-95"
+              className="flex items-center gap-2 rounded-xl bg-[#31425a] px-6 py-2.5 text-sm font-bold text-white transition hover:bg-[#243347] active:scale-95 disabled:opacity-50"
             >
-              Update Password
+              {isPasswordPending && <Loader2 className="h-4 w-4 animate-spin" />}
+              {t("security.updatePassword")}
             </button>
           </div>
         </form>

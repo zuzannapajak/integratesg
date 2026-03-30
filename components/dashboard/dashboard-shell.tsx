@@ -9,7 +9,6 @@ import {
   DashboardKpi,
   DashboardMetric,
   DashboardRole,
-  DashboardStat,
   RoleConfig,
 } from "@/lib/dashboard/types";
 import { motion, type Variants } from "framer-motion";
@@ -29,7 +28,6 @@ type Props = {
   locale: string;
   role: DashboardRole;
   displayName: string;
-  heroStats: DashboardStat[];
   continueLearning: DashboardContinueItem | null;
   gamificationStats: DashboardGamificationStat[];
   publishedCoursesCount: number;
@@ -92,7 +90,6 @@ export default function DashboardShell({
   locale,
   role,
   displayName,
-  heroStats,
   continueLearning,
   gamificationStats,
   publishedCoursesCount,
@@ -115,7 +112,6 @@ export default function DashboardShell({
           role={role}
           roleConfig={roleConfig}
           displayName={displayName}
-          stats={heroStats}
           continueLearning={role === "student" || role === "educator" ? continueLearning : null}
           gamificationStats={role === "student" || role === "educator" ? gamificationStats : []}
         />
@@ -165,7 +161,6 @@ function DashboardHero({
   role: DashboardRole;
   roleConfig: RoleConfig;
   displayName: string;
-  stats: DashboardStat[];
   continueLearning: DashboardContinueItem | null;
   gamificationStats: DashboardGamificationStat[];
 }) {

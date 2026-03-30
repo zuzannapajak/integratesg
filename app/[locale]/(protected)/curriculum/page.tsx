@@ -3,6 +3,7 @@ import { requireRole } from "@/features/auth/requireRole";
 import { APP_ROLES } from "@/lib/auth/roles";
 import { getAllCurriculumModules, getMyCurriculumModules } from "@/lib/curriculum/queries";
 import { BookOpen } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -10,6 +11,7 @@ type Props = {
 
 export default async function CurriculumPage({ params }: Props) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Protected.CurriculumPage" });
   const { user } = await requireRole(locale, APP_ROLES.educator);
 
   const [myCourses, allCourses] = await Promise.all([
@@ -28,10 +30,8 @@ export default async function CurriculumPage({ params }: Props) {
           </div>
 
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-[#31425a]">Curriculum</h1>
-            <p className="text-[#667180]">
-              Educator-only learning modules with guided flow, quizzes, and progress visibility
-            </p>
+            <h1 className="text-3xl font-bold tracking-tight text-[#31425a]">{t("title")}</h1>
+            <p className="text-[#667180]">{t("subtitle")}</p>
           </div>
         </header>
 
