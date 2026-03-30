@@ -1,6 +1,7 @@
 import PublicFooter from "@/components/layout/public-footer";
 import AnimatedStat from "@/components/public/animated-stat";
-import { FOCUS_CARD, PARTNERS } from "@/lib/constants";
+import { PARTNERS } from "@/lib/constants";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,7 +11,26 @@ type Props = {
 
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Home" });
   const languageCount = 6;
+
+  const focusCards = [
+    {
+      eyebrow: t("cards.students.eyebrow"),
+      title: t("cards.students.title"),
+      description: t("cards.students.description"),
+    },
+    {
+      eyebrow: t("cards.educators.eyebrow"),
+      title: t("cards.educators.title"),
+      description: t("cards.educators.description"),
+    },
+    {
+      eyebrow: t("cards.allUsers.eyebrow"),
+      title: t("cards.allUsers.title"),
+      description: t("cards.allUsers.description"),
+    },
+  ];
 
   return (
     <main className="bg-[#ececec]">
@@ -28,7 +48,7 @@ export default async function HomePage({ params }: Props) {
             <div className="image-blob-container">
               <Image
                 src="/images/writer_flat_composition.jpg"
-                alt="IntegratESG learning platform illustration"
+                alt={t("hero.imageAlt")}
                 fill
                 className="object-cover"
                 priority
@@ -39,16 +59,16 @@ export default async function HomePage({ params }: Props) {
 
           <div className="z-40 text-center md:-ml-20 md:-mt-52 md:pl-12 md:text-left">
             <h1 className="hero-title text-[2.2rem] font-black leading-[0.95] tracking-[-0.05em] text-[#31425a] sm:text-[3rem] lg:text-[3.65rem]">
-              Practical ESG learning for students and educators.
+              {t("hero.title")}
             </h1>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row md:justify-start">
               <Link href={`/${locale}/auth/register`} className="landing-primary-cta">
-                Join the platform
+                {t("hero.join")}
               </Link>
 
               <a href="#platform-overview" className="landing-secondary-cta">
-                Read more
+                {t("hero.readMore")}
               </a>
             </div>
           </div>
@@ -62,31 +82,28 @@ export default async function HomePage({ params }: Props) {
         <div className="mx-auto max-w-340 space-y-8">
           <div className="rounded-4xl border border-white/40 bg-white/72 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.05)] backdrop-blur md:p-8 lg:p-10">
             <div className="max-w-215">
-              <p className="landing-section-eyebrow">Platform overview</p>
+              <p className="landing-section-eyebrow">{t("overview.eyebrow")}</p>
 
               <h2 className="mt-3 text-[1.9rem] font-semibold tracking-[-0.03em] text-[#31425a] sm:text-[2.2rem]">
-                Discover case studies, interactive scenarios, and structured learning resources in a
-                single multilingual environment designed around the WP4 experience.
+                {t("overview.title")}
               </h2>
 
               <p className="mt-4 max-w-[64ch] text-[1rem] leading-7 text-[#596170]">
-                The platform combines experiential learning resources, interactive simulation, and
-                structured educational pathways in a form that stays clear, accessible, and easy to
-                navigate.
+                {t("overview.description")}
               </p>
             </div>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href={`/${locale}/auth/register`} className="landing-primary-cta">
-                Create account
+                {t("overview.createAccount")}
               </Link>
               <Link href={`/${locale}/auth/login`} className="landing-secondary-cta">
-                Sign in
+                {t("overview.signIn")}
               </Link>
             </div>
 
             <div className="mt-8 grid gap-5 lg:grid-cols-3">
-              {FOCUS_CARD.map((card) => (
+              {focusCards.map((card) => (
                 <article key={card.title} className="landing-focus-card">
                   <p className="landing-card-eyebrow">{card.eyebrow}</p>
                   <h3 className="mt-3 text-[1.35rem] font-semibold tracking-[-0.02em] text-[#31425a]">
@@ -100,16 +117,16 @@ export default async function HomePage({ params }: Props) {
 
           <div className="rounded-4xl border border-white/60 bg-white/78 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.05)] backdrop-blur md:p-8">
             <div className="max-w-175">
-              <p className="landing-section-eyebrow">At a glance</p>
+              <p className="landing-section-eyebrow">{t("stats.eyebrow")}</p>
               <h2 className="mt-3 text-[1.65rem] font-semibold tracking-[-0.03em] text-[#31425a] sm:text-[1.9rem]">
-                Key numbers behind the learning experience.
+                {t("stats.title")}
               </h2>
             </div>
 
             <div className="mt-6 grid gap-3 sm:grid-cols-3">
-              <AnimatedStat value={6} label="Case studies" />
-              <AnimatedStat value={3} label="Scenario areas" />
-              <AnimatedStat value={languageCount} label="Partner languages" />
+              <AnimatedStat value={6} label={t("stats.caseStudies")} />
+              <AnimatedStat value={3} label={t("stats.scenarioAreas")} />
+              <AnimatedStat value={languageCount} label={t("stats.partnerLanguages")} />
             </div>
           </div>
         </div>
@@ -118,7 +135,7 @@ export default async function HomePage({ params }: Props) {
       <section className="partners-band py-14">
         <div className="relative z-10 mx-auto max-w-295 px-5 md:px-8">
           <h2 className="text-center text-[1.9rem] font-semibold tracking-[-0.03em] text-white">
-            Partners
+            {t("partners.title")}
           </h2>
 
           <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6">
@@ -142,22 +159,21 @@ export default async function HomePage({ params }: Props) {
       <section className="landing-cta-band px-6 py-12 md:px-10 lg:px-14">
         <div className="mx-auto flex max-w-340 flex-col gap-6 rounded-[28px] border border-white/50 bg-white/85 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.08)] backdrop-blur md:flex-row md:items-center md:justify-between md:p-8">
           <div className="max-w-190">
-            <p className="landing-section-eyebrow">Get started</p>
+            <p className="landing-section-eyebrow">{t("cta.eyebrow")}</p>
             <h2 className="mt-3 text-[1.8rem] font-semibold tracking-[-0.03em] text-[#31425a] sm:text-[2.1rem]">
-              Access the platform and continue your ESG learning journey.
+              {t("cta.title")}
             </h2>
             <p className="mt-4 max-w-[60ch] text-[1rem] leading-7 text-[#596170]">
-              Register to explore scenarios, ePortfolio resources, and learning materials designed
-              for students, educators, and project stakeholders.
+              {t("cta.description")}
             </p>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link href={`/${locale}/auth/register`} className="landing-primary-cta">
-              Register
+              {t("cta.register")}
             </Link>
             <Link href={`/${locale}/auth/login`} className="landing-secondary-cta">
-              Sign in
+              {t("cta.signIn")}
             </Link>
           </div>
         </div>

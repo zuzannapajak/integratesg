@@ -1,10 +1,13 @@
 "use client";
 
 import { createClient } from "@/lib/supabase/client";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function LoginForm() {
+  const t = useTranslations("Auth.LoginForm");
+  const locale = useLocale();
   const supabase = createClient();
   const router = useRouter();
 
@@ -29,7 +32,7 @@ export default function LoginForm() {
       return;
     }
 
-    router.push("/en/dashboard");
+    router.push(`/${locale}/dashboard`);
     router.refresh();
   };
 
@@ -40,14 +43,14 @@ export default function LoginForm() {
           htmlFor="email"
           className="block text-[0.92rem] font-semibold tracking-[-0.01em] text-[#31425a]"
         >
-          Email address
+          {t("emailLabel")}
         </label>
         <input
           id="email"
           type="email"
           inputMode="email"
           autoComplete="email"
-          placeholder="you@example.com"
+          placeholder={t("emailPlaceholder")}
           className="w-full rounded-2xl border border-[#d9e1ea] bg-white px-4 py-3.5 text-[1rem] text-[#31425a] outline-none transition placeholder:text-[#98a2b3] focus:border-[#0d7fc2] focus:ring-4 focus:ring-[#0d7fc2]/10"
           value={email}
           onChange={(e) => {
@@ -63,7 +66,7 @@ export default function LoginForm() {
             htmlFor="password"
             className="block text-[0.92rem] font-semibold tracking-[-0.01em] text-[#31425a]"
           >
-            Password
+            {t("passwordLabel")}
           </label>
         </div>
 
@@ -71,7 +74,7 @@ export default function LoginForm() {
           id="password"
           type="password"
           autoComplete="current-password"
-          placeholder="Enter your password"
+          placeholder={t("passwordPlaceholder")}
           className="w-full rounded-2xl border border-[#d9e1ea] bg-white px-4 py-3.5 text-[1rem] text-[#31425a] outline-none transition placeholder:text-[#98a2b3] focus:border-[#0d7fc2] focus:ring-4 focus:ring-[#0d7fc2]/10"
           value={password}
           onChange={(e) => {
@@ -92,7 +95,7 @@ export default function LoginForm() {
         disabled={isSubmitting}
         className="flex min-h-13.5 w-full items-center justify-center rounded-full bg-[#31425a] px-5 text-[1rem] font-semibold text-white shadow-[0_10px_26px_rgba(49,66,90,0.18)] transition hover:-translate-y-0.5 hover:bg-[#263549] disabled:cursor-not-allowed disabled:opacity-70"
       >
-        {isSubmitting ? "Signing in..." : "Login"}
+        {isSubmitting ? t("submitting") : t("submit")}
       </button>
     </form>
   );

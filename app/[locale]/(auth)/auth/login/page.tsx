@@ -1,5 +1,6 @@
 import LoginForm from "@/components/auth/login/login-form";
 import SocialLoginButtons from "@/components/auth/login/social-login-buttons";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 
 type Props = {
@@ -8,6 +9,8 @@ type Props = {
 
 export default async function LoginPage({ params }: Props) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Auth.LoginPage" });
+  const common = await getTranslations({ locale, namespace: "Common" });
 
   return (
     <main className="flex h-full min-h-0 overflow-hidden bg-[#ececec]">
@@ -18,11 +21,9 @@ export default async function LoginPage({ params }: Props) {
           <div className="w-full rounded-4xl border border-white/70 bg-white/88 p-6 shadow-[0_20px_55px_rgba(35,45,62,0.10)] backdrop-blur-xl md:p-8">
             <div className="max-w-105">
               <h1 className="text-[1.9rem] font-semibold tracking-[-0.03em] text-[#31425a]">
-                Access your account
+                {t("title")}
               </h1>
-              <p className="mt-3 text-[0.98rem] leading-7 text-[#596170]">
-                Sign in with your email or continue with Google.
-              </p>
+              <p className="mt-3 text-[0.98rem] leading-7 text-[#596170]">{t("subtitle")}</p>
             </div>
 
             <div className="mt-8 space-y-6">
@@ -31,7 +32,7 @@ export default async function LoginPage({ params }: Props) {
               <div className="flex items-center gap-4">
                 <div className="h-px flex-1 bg-[#d9e1ea]" />
                 <span className="text-[0.82rem] font-semibold uppercase tracking-[0.14em] text-[#7a8594]">
-                  Or
+                  {common("or")}
                 </span>
                 <div className="h-px flex-1 bg-[#d9e1ea]" />
               </div>
@@ -39,12 +40,12 @@ export default async function LoginPage({ params }: Props) {
               <LoginForm />
 
               <p className="text-center text-[0.95rem] text-[#5e6776]">
-                Don&apos;t have an account?{" "}
+                {t("noAccount")}{" "}
                 <Link
                   href={`/${locale}/auth/register`}
                   className="font-semibold text-[#31425a] hover:text-[#0d7fc2]"
                 >
-                  Create one
+                  {t("createOne")}
                 </Link>
               </p>
             </div>

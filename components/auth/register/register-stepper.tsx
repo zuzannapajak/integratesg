@@ -1,6 +1,7 @@
 "use client";
 
 import { Check } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 type Step = 1 | 2;
 
@@ -8,12 +9,14 @@ type Props = {
   step: Step;
 };
 
-const steps = [
-  { id: 1 as const, label: "Role" },
-  { id: 2 as const, label: "Account details" },
-];
-
 export default function RegisterStepper({ step }: Props) {
+  const t = useTranslations("Register.Stepper");
+
+  const steps = [
+    { id: 1 as const, label: t("role") },
+    { id: 2 as const, label: t("accountDetails") },
+  ];
+
   return (
     <div className="w-full">
       <div className="flex items-center">
@@ -23,7 +26,7 @@ export default function RegisterStepper({ step }: Props) {
 
           return (
             <div key={item.id} className="flex min-w-0 flex-1 items-center">
-              <div className="flex items-center gap-3 min-w-0">
+              <div className="flex min-w-0 items-center gap-3">
                 <div
                   className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-[0.78rem] font-semibold transition-all duration-200 ${
                     isCompleted

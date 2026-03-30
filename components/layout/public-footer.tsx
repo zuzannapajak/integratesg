@@ -1,4 +1,5 @@
 import Logo from "@/components/layout/logo";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -6,7 +7,9 @@ type Props = {
   locale: string;
 };
 
-export default function PublicFooter({ locale }: Props) {
+export default async function PublicFooter({ locale }: Props) {
+  const t = await getTranslations({ locale, namespace: "Footer" });
+
   return (
     <footer className="landing-footer px-6 py-12 md:px-10 lg:px-14">
       <div className="mx-auto max-w-340">
@@ -15,7 +18,7 @@ export default function PublicFooter({ locale }: Props) {
             <div className="flex items-center gap-4">
               <Image
                 src="/images/cofunder-eu.png"
-                alt="Co-funded by the European Union"
+                alt={t("euAlt")}
                 width={220}
                 height={54}
                 className="h-auto w-auto object-contain"
@@ -23,12 +26,9 @@ export default function PublicFooter({ locale }: Props) {
             </div>
 
             <p className="mt-5 max-w-180 text-[0.78rem] leading-6 text-white/85">
-              Co-Funded by the European Union. Views and opinions expressed are however those of the
-              author(s) only and do not necessarily reflect those of the European Union or the
-              Foundation for the Development of the Education System (FRSE). Neither the European
-              Union nor FRSE can be held responsible for them.
+              {t("disclaimer")}
               <br />
-              Agreement number: 2024-1-PL01-KA220-VET-000253738.
+              {t("agreementNumber")}
             </p>
           </div>
 
@@ -36,23 +36,23 @@ export default function PublicFooter({ locale }: Props) {
             <Logo locale={locale} className="w-55" />
 
             <div className="mt-4 text-[0.82rem] leading-6 text-white/90 lg:text-right">
-              <p>© 2026 INTEGRAT-ESG PROJECT – All Rights Reserved</p>
+              <p>{t("copyright")}</p>
 
               <div className="mt-2 flex flex-wrap gap-x-2 gap-y-1 lg:justify-end">
                 <Link href={`/${locale}/privacy`} className="hover:underline">
-                  Privacy Policy
+                  {t("privacy")}
                 </Link>
                 <span>–</span>
                 <Link href={`/${locale}/accessibility`} className="hover:underline">
-                  Accessibility statement
+                  {t("accessibility")}
                 </Link>
                 <span>–</span>
                 <Link href={`/${locale}/terms`} className="hover:underline">
-                  Terms of Use
+                  {t("terms")}
                 </Link>
                 <span>–</span>
                 <Link href={`/${locale}/legal-notice`} className="hover:underline">
-                  Legal Notice
+                  {t("legalNotice")}
                 </Link>
               </div>
             </div>
@@ -62,7 +62,7 @@ export default function PublicFooter({ locale }: Props) {
         <div className="mt-10 flex items-center justify-center gap-4">
           <a
             href="https://www.facebook.com/integratesg"
-            aria-label="Facebook"
+            aria-label={t("facebook")}
             className="footer-social-icon"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current">
@@ -72,7 +72,7 @@ export default function PublicFooter({ locale }: Props) {
 
           <a
             href="https://www.linkedin.com/company/integrat-esg/"
-            aria-label="LinkedIn"
+            aria-label={t("linkedin")}
             className="footer-social-icon"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current">

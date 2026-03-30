@@ -1,82 +1,121 @@
 "use client";
 
-import RegisterDetailsStep from "@/components/auth/register/register-details-step";
-import RegisterRoleStep from "@/components/auth/register/register-role-step";
-import RegisterStepper from "@/components/auth/register/register-stepper";
 import { APP_ROLES, SelfServiceRole } from "@/lib/auth/roles";
-import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { BookOpen, GraduationCap } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 type Props = {
-  locale: string;
+  role: SelfServiceRole;
+  onRoleChange: (role: SelfServiceRole) => void;
+  onContinue: () => void;
 };
 
-type Step = 1 | 2;
-
-export default function RegisterClientPage({ locale }: Props) {
-  const [step, setStep] = useState<Step>(1);
-  const [role, setRole] = useState<SelfServiceRole>(APP_ROLES.student);
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function RegisterRoleStep({ role, onRoleChange, onContinue }: Props) {
+  const t = useTranslations("Register.RoleStep");
+  const roles = useTranslations("Roles");
+  const common = useTranslations("Common");
 
   return (
-    <main className="min-h-full bg-white">
-      <section className="relative flex w-full justify-center bg-white px-6 py-8 md:px-8 md:py-10 lg:px-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(236,103,37,0.14),transparent_24%),radial-gradient(circle_at_86%_22%,rgba(13,127,194,0.16),transparent_28%),linear-gradient(180deg,rgba(255,255,255,1)_0%,rgba(249,250,251,0.98)_58%,rgba(255,255,255,0.96)_100%)]" />
+    <div className="mx-auto w-full max-w-220">
+      <div className="mb-6 text-left">
+        <p className="text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-[#7a8594]">
+          {t("eyebrow")}
+        </p>
+        <h1 className="mt-3 text-[1.9rem] font-semibold tracking-[-0.03em] text-[#31425a]">
+          {t("title")}
+        </h1>
+        <p className="mt-3 max-w-[42ch] text-[0.98rem] leading-7 text-[#5f6977]">{t("subtitle")}</p>
+      </div>
 
-        <div className="relative z-20 mx-auto w-full max-w-245">
-          <div className="w-full overflow-hidden rounded-4xl border border-white/70 bg-white/88 shadow-[0_20px_55px_rgba(35,45,62,0.10)] backdrop-blur-xl">
-            <div className="border-b border-[#e8edf3] px-6 py-5 md:px-8">
-              <RegisterStepper step={step} />
+      <div className="grid gap-4 md:grid-cols-2">
+        <button
+          type="button"
+          onClick={() => {
+            onRoleChange(APP_ROLES.student);
+          }}
+          aria-pressed={role === APP_ROLES.student}
+          className={`rounded-3xl border p-5 text-left transition-all duration-200 ${
+            role === APP_ROLES.student
+              ? "border-[#31425a] bg-[#f4f8fc] shadow-[0_12px_28px_rgba(49,66,90,0.08)]"
+              : "border-[#d9e1ea] bg-white hover:border-[#bcc9d7] hover:bg-[#fbfcfd]"
+          }`}
+        >
+          <div className="flex items-start gap-4">
+            <div
+              className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${
+                role === APP_ROLES.student
+                  ? "bg-[#31425a] text-white"
+                  : "bg-[#eef3f8] text-[#31425a]"
+              }`}
+            >
+              <BookOpen className="h-5 w-5" />
             </div>
 
-            <div className="px-6 py-6 md:px-8 md:py-8">
-              <AnimatePresence mode="wait" initial={false}>
-                {step === 1 ? (
-                  <motion.div
-                    key="register-step-1"
-                    initial={{ opacity: 0, x: 18 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -18 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                  >
-                    <RegisterRoleStep
-                      role={role}
-                      onRoleChange={setRole}
-                      onContinue={() => {
-                        setStep(2);
-                      }}
-                    />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="register-step-2"
-                    initial={{ opacity: 0, x: 18 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -18 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                  >
-                    <RegisterDetailsStep
-                      locale={locale}
-                      role={role}
-                      fullName={fullName}
-                      email={email}
-                      password={password}
-                      onFullNameChange={setFullName}
-                      onEmailChange={setEmail}
-                      onPasswordChange={setPassword}
-                      onBack={() => {
-                        setStep(1);
-                      }}
-                    />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+            <div className="min-w-0 flex-1 pr-1">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-[1rem] font-semibold text-[#31425a]">{roles("student")}</p>
+                {role === APP_ROLES.student ? (
+                  <span className="rounded-full bg-[#31425a] px-2.5 py-1 text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-white">
+                    {common("selected")}
+                  </span>
+                ) : null}
+              </div>
+              <p className="mt-2 text-[0.92rem] leading-6 text-[#667180]">
+                {t("studentDescription")}
+              </p>
             </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </button>
+
+        <button
+          type="button"
+          onClick={() => {
+            onRoleChange(APP_ROLES.educator);
+          }}
+          aria-pressed={role === APP_ROLES.educator}
+          className={`rounded-3xl border p-5 text-left transition-all duration-200 ${
+            role === APP_ROLES.educator
+              ? "border-[#31425a] bg-[#f4f8fc] shadow-[0_12px_28px_rgba(49,66,90,0.08)]"
+              : "border-[#d9e1ea] bg-white hover:border-[#bcc9d7] hover:bg-[#fbfcfd]"
+          }`}
+        >
+          <div className="flex items-start gap-4">
+            <div
+              className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${
+                role === APP_ROLES.educator
+                  ? "bg-[#31425a] text-white"
+                  : "bg-[#eef3f8] text-[#31425a]"
+              }`}
+            >
+              <GraduationCap className="h-5 w-5" />
+            </div>
+
+            <div className="min-w-0 flex-1 pr-1">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-[1rem] font-semibold text-[#31425a]">{roles("educator")}</p>
+                {role === APP_ROLES.educator ? (
+                  <span className="rounded-full bg-[#31425a] px-2.5 py-1 text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-white">
+                    {common("selected")}
+                  </span>
+                ) : null}
+              </div>
+              <p className="mt-2 text-[0.92rem] leading-6 text-[#667180]">
+                {t("educatorDescription")}
+              </p>
+            </div>
+          </div>
+        </button>
+      </div>
+
+      <div className="mt-6 flex items-center justify-end">
+        <button
+          type="button"
+          onClick={onContinue}
+          className="inline-flex min-h-13 items-center justify-center rounded-full bg-[#31425a] px-7 font-semibold text-white transition hover:bg-[#243246]"
+        >
+          {t("continue")}
+        </button>
+      </div>
+    </div>
   );
 }

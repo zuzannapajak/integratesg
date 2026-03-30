@@ -5,6 +5,7 @@ import { createProfile } from "@/features/auth/actions";
 import { APP_ROLES, SelfServiceRole } from "@/lib/auth/roles";
 import { createClient } from "@/lib/supabase/client";
 import { ArrowLeft } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -31,12 +32,14 @@ export default function RegisterDetailsStep({
   onPasswordChange,
   onBack,
 }: Props) {
+  const t = useTranslations("Register.DetailsStep");
+  const roles = useTranslations("Roles");
   const supabase = createClient();
 
   const [message, setMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const roleLabel = role === APP_ROLES.educator ? "Educator" : "Student";
+  const roleLabel = role === APP_ROLES.educator ? roles("educator") : roles("student");
 
   const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -69,13 +72,13 @@ export default function RegisterDetailsStep({
           fullName: fullName || null,
         });
       } catch {
-        setMessage("Account created, but the profile could not be saved.");
+        setMessage(t("profileSaveError"));
         setIsSubmitting(false);
         return;
       }
     }
 
-    setMessage("Account created successfully. Check your email to continue.");
+    setMessage(t("success"));
     setIsSubmitting(false);
   };
 
@@ -92,10 +95,10 @@ export default function RegisterDetailsStep({
       <div className="mb-4 flex items-start justify-between gap-4">
         <div className="min-w-0">
           <h1 className="text-[1.9rem] font-semibold tracking-[-0.03em] text-[#31425a]">
-            Account details
+            {t("title")}
           </h1>
           <p className="mt-1 max-w-[40ch] text-[0.98rem] leading-7 text-[#5f6977]">
-            Create your account using Google or email.
+            {t("subtitle")}
           </p>
         </div>
 
@@ -106,11 +109,11 @@ export default function RegisterDetailsStep({
 
       <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
         <div className="order-2 min-w-0 lg:order-1">
-          <div className="flex h-full min-h-90-col roundrounded-3xler border-[#e7edf3] bg-white px-6 py-6">
+          <div className="flex h-full min-h-90 flex-col rounded-3xl border border-[#e7edf3] bg-white px-6 py-6">
             <div className="mb-4">
-              <p className="text-[1rem] font-semibold text-[#31425a]">Continue with email</p>
+              <p className="text-[1rem] font-semibold text-[#31425a]">{t("continueWithEmail")}</p>
               <p className="mt-2 text-[0.9rem] leading-6 text-[#667180]">
-                Fill in your details to create the account manually.
+                {t("continueWithEmailDescription")}
               </p>
             </div>
 
@@ -118,12 +121,12 @@ export default function RegisterDetailsStep({
               <div className="space-y-4">
                 <div className="space-y-2">
                   <label htmlFor="fullName" className="text-[0.93rem] font-medium text-[#31425a]">
-                    Full name
+                    {t("fullName")}
                   </label>
                   <input
                     id="fullName"
                     type="text"
-                    placeholder="Enter your full name"
+                    placeholder={t("fullNamePlaceholder")}
                     className="min-h-[3.15rem] w-full rounded-2xl border border-[#d7dee8] bg-white px-4 text-[#31425a] outline-none transition focus:border-[#9fb4ca] focus:ring-4 focus:ring-[#dfeaf5]"
                     value={fullName}
                     onChange={(event) => {
@@ -135,12 +138,12 @@ export default function RegisterDetailsStep({
 
                 <div className="space-y-2">
                   <label htmlFor="email" className="text-[0.93rem] font-medium text-[#31425a]">
-                    Email
+                    {t("email")}
                   </label>
                   <input
                     id="email"
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder={t("emailPlaceholder")}
                     className="min-h-[3.15rem] w-full rounded-2xl border border-[#d7dee8] bg-white px-4 text-[#31425a] outline-none transition focus:border-[#9fb4ca] focus:ring-4 focus:ring-[#dfeaf5]"
                     value={email}
                     onChange={(event) => {
@@ -153,12 +156,12 @@ export default function RegisterDetailsStep({
 
                 <div className="space-y-2">
                   <label htmlFor="password" className="text-[0.93rem] font-medium text-[#31425a]">
-                    Password
+                    {t("password")}
                   </label>
                   <input
                     id="password"
                     type="password"
-                    placeholder="Create a password"
+                    placeholder={t("passwordPlaceholder")}
                     className="min-h-[3.15rem] w-full rounded-2xl border border-[#d7dee8] bg-white px-4 text-[#31425a] outline-none transition focus:border-[#9fb4ca] focus:ring-4 focus:ring-[#dfeaf5]"
                     value={password}
                     onChange={(event) => {
@@ -176,7 +179,7 @@ export default function RegisterDetailsStep({
                   disabled={isSubmitting}
                   className="inline-flex min-h-[3.15rem] w-full items-center justify-center rounded-full bg-[#31425a] px-6 font-semibold text-white transition hover:bg-[#243246] disabled:cursor-not-allowed disabled:opacity-70"
                 >
-                  {isSubmitting ? "Creating..." : "Create account"}
+                  {isSubmitting ? t("submitting") : t("submit")}
                 </button>
 
                 {message ? (
@@ -191,9 +194,11 @@ export default function RegisterDetailsStep({
           <div className="flex h-full min-h-90 flex-col rounded-3xl border border-[#e7edf3] bg-[linear-gradient(180deg,rgba(247,249,252,0.92)_0%,rgba(255,255,255,0.88)_100%)] px-6 py-6">
             <div className="mx-auto flex h-full w-full max-w-[320px] flex-col justify-center text-center">
               <div>
-                <p className="text-[1rem] font-semibold text-[#31425a]">Continue with Google</p>
+                <p className="text-[1rem] font-semibold text-[#31425a]">
+                  {t("continueWithGoogle")}
+                </p>
                 <p className="mt-2 text-[0.92rem] leading-6 text-[#667180]">
-                  Recommended for faster setup.
+                  {t("continueWithGoogleDescription")}
                 </p>
               </div>
 
@@ -201,22 +206,19 @@ export default function RegisterDetailsStep({
                 <SocialLoginButtons locale={locale} nextPath={`/${locale}/auth/complete-profile`} />
               </div>
 
-              <p className="mt-6 text-[0.88rem] leading-6 text-[#7a8594]">
-                Use your Google account to continue with your selected role and finish setup with
-                fewer steps.
-              </p>
+              <p className="mt-6 text-[0.88rem] leading-6 text-[#7a8594]">{t("googleHint")}</p>
             </div>
           </div>
         </div>
       </div>
 
       <p className="mt-5 text-left text-[0.92rem] text-[#5e6776]">
-        Already have an account?{" "}
+        {t("alreadyHaveAccount")}{" "}
         <Link
           href={`/${locale}/auth/login`}
           className="font-semibold text-[#31425a] transition hover:text-[#0d7fc2]"
         >
-          Sign in
+          {t("signIn")}
         </Link>
       </p>
     </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { createClient } from "@/lib/supabase/client";
+import { useTranslations } from "next-intl";
 
 type Props = {
   locale: string;
@@ -8,6 +9,7 @@ type Props = {
 };
 
 export default function SocialLoginButtons({ locale, nextPath = `/${locale}/dashboard` }: Props) {
+  const t = useTranslations("Auth.SocialLogin");
   const supabase = createClient();
 
   const signInWithGoogle = async () => {
@@ -41,7 +43,7 @@ export default function SocialLoginButtons({ locale, nextPath = `/${locale}/dash
           />
         </svg>
 
-        <span>Continue with Google</span>
+        <span>{t("continueWithGoogle")}</span>
       </button>
     </div>
   );

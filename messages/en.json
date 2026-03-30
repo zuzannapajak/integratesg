@@ -1,5 +1,197 @@
 {
-  "HomePage": {
-    "title": "IntegratESG Platform"
+  "Common": {
+    "or": "Or",
+    "selected": "Selected",
+    "continue": "Continue",
+    "saving": "Saving...",
+    "createAccount": "Create account",
+    "signIn": "Sign in",
+    "register": "Register",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "about": "About",
+    "educators": "Educators",
+    "students": "Students",
+    "logOut": "Log out",
+    "signedIn": "Signed in",
+    "openAccountMenu": "Open account menu"
+  },
+  "Roles": {
+    "student": "Student",
+    "educator": "Educator",
+    "admin": "Admin"
+  },
+  "PublicNavbar": {
+    "about": "About",
+    "educators": "Educators",
+    "students": "Students",
+    "signIn": "Sign in",
+    "register": "Register"
+  },
+  "ProtectedNavbar": {
+    "about": "About",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "logOut": "Log out",
+    "openAccountMenu": "Open account menu"
+  },
+  "Footer": {
+    "euAlt": "Co-funded by the European Union",
+    "disclaimer": "Co-Funded by the European Union. Views and opinions expressed are however those of the author(s) only and do not necessarily reflect those of the European Union or the Foundation for the Development of the Education System (FRSE). Neither the European Union nor FRSE can be held responsible for them.",
+    "agreementNumber": "Agreement number: 2024-1-PL01-KA220-VET-000253738.",
+    "copyright": "© 2026 INTEGRAT-ESG PROJECT – All Rights Reserved",
+    "privacy": "Privacy Policy",
+    "accessibility": "Accessibility statement",
+    "terms": "Terms of Use",
+    "legalNotice": "Legal Notice",
+    "facebook": "Facebook",
+    "linkedin": "LinkedIn"
+  },
+  "Sidebar": {
+    "dashboard": "Dashboard",
+    "curriculum": "Curriculum",
+    "eportfolio": "ePortfolio",
+    "scenario": "Scenario",
+    "statistics": "Statistics",
+    "settings": "Settings",
+    "collapse": "Collapse sidebar",
+    "expand": "Expand sidebar"
+  },
+  "Topbar": {
+    "badge": {
+      "student": "student",
+      "educator": "educator",
+      "admin": "admin"
+    },
+    "title": {
+      "student": "Student dashboard",
+      "educator": "Educator dashboard",
+      "admin": "Admin dashboard"
+    },
+    "subtitle": {
+      "student": "Continue learning, review your courses, and access your profile areas.",
+      "educator": "Access curriculum resources, courses, and work package areas.",
+      "admin": "Review statistics, platform status, and administrative settings."
+    },
+    "signedIn": "Signed in"
+  },
+  "Auth": {
+    "LoginPage": {
+      "title": "Access your account",
+      "subtitle": "Sign in with your email or continue with Google.",
+      "noAccount": "Don't have an account?",
+      "createOne": "Create one"
+    },
+    "LoginForm": {
+      "emailLabel": "Email address",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submit": "Login",
+      "submitting": "Signing in..."
+    },
+    "SocialLogin": {
+      "continueWithGoogle": "Continue with Google"
+    },
+    "CompleteProfile": {
+      "title": "Complete your profile",
+      "chooseRole": "Choose your role",
+      "studentDescription": "Access case studies and scenarios",
+      "educatorDescription": "Access curriculum and teaching resources",
+      "error": "Failed to save profile.",
+      "submit": "Continue",
+      "submitting": "Saving..."
+    }
+  },
+  "Register": {
+    "Stepper": {
+      "role": "Role",
+      "accountDetails": "Account details"
+    },
+    "RoleStep": {
+      "eyebrow": "Create your account",
+      "title": "Choose your role",
+      "subtitle": "Select how you will use the platform.",
+      "studentDescription": "Case studies, scenarios, and self-assessment.",
+      "educatorDescription": "Curriculum tools and teaching resources.",
+      "continue": "Continue"
+    },
+    "DetailsStep": {
+      "title": "Account details",
+      "subtitle": "Create your account using Google or email.",
+      "continueWithEmail": "Continue with email",
+      "continueWithEmailDescription": "Fill in your details to create the account manually.",
+      "fullName": "Full name",
+      "fullNamePlaceholder": "Enter your full name",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Create a password",
+      "submit": "Create account",
+      "submitting": "Creating...",
+      "continueWithGoogle": "Continue with Google",
+      "continueWithGoogleDescription": "Recommended for faster setup.",
+      "googleHint": "Use your Google account to continue with your selected role and finish setup with fewer steps.",
+      "alreadyHaveAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "profileSaveError": "Account created, but the profile could not be saved.",
+      "success": "Account created successfully. Check your email to continue."
+    }
+  },
+  "Home": {
+    "hero": {
+      "title": "Practical ESG learning for students and educators.",
+      "join": "Join the platform",
+      "readMore": "Read more",
+      "imageAlt": "IntegratESG learning platform illustration"
+    },
+    "overview": {
+      "eyebrow": "Platform overview",
+      "title": "Discover case studies, interactive scenarios, and structured learning resources in a single multilingual environment designed around the WP4 experience.",
+      "description": "The platform combines experiential learning resources, interactive simulation, and structured educational pathways in a form that stays clear, accessible, and easy to navigate.",
+      "createAccount": "Create account",
+      "signIn": "Sign in"
+    },
+    "cards": {
+      "students": {
+        "eyebrow": "For students",
+        "title": "Scenario Simulator",
+        "description": "Explore ESG topics through interactive decision-making scenarios and practical learning paths."
+      },
+      "educators": {
+        "eyebrow": "For educators",
+        "title": "Curriculum and self-assessment",
+        "description": "Access structured learning modules, pre- and post-quizzes, and feedback-driven teaching resources."
+      },
+      "allUsers": {
+        "eyebrow": "For all users",
+        "title": "ePortfolio of case studies",
+        "description": "Review standardized ESG case studies prepared across partner languages and contexts."
+      }
+    },
+    "stats": {
+      "eyebrow": "At a glance",
+      "title": "Key numbers behind the learning experience.",
+      "caseStudies": "Case studies",
+      "scenarioAreas": "Scenario areas",
+      "partnerLanguages": "Partner languages"
+    },
+    "partners": {
+      "title": "Partners"
+    },
+    "cta": {
+      "eyebrow": "Get started",
+      "title": "Access the platform and continue your ESG learning journey.",
+      "description": "Register to explore scenarios, ePortfolio resources, and learning materials designed for students, educators, and project stakeholders.",
+      "register": "Register",
+      "signIn": "Sign in"
+    }
+  },
+  "NotFound": {
+    "badge": "Page not found",
+    "title": "Upsss! This page took a coffee break.",
+    "description": "We looked around and even checked behind the button… but this page is not here.",
+    "errorCodeLabel": "Error code:",
+    "errorCodeDescription": "page wandered off."
   }
 }

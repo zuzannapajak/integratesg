@@ -1,5 +1,197 @@
 {
-  "HomePage": {
-    "title": "Platforma IntegratESG"
+  "Common": {
+    "or": "Lub",
+    "selected": "Wybrano",
+    "continue": "Kontynuuj",
+    "saving": "Zapisywanie...",
+    "createAccount": "Utwórz konto",
+    "signIn": "Zaloguj się",
+    "register": "Zarejestruj się",
+    "dashboard": "Dashboard",
+    "settings": "Ustawienia",
+    "about": "O projekcie",
+    "educators": "Dla edukatorów",
+    "students": "Dla studentów",
+    "logOut": "Wyloguj się",
+    "signedIn": "Zalogowano jako",
+    "openAccountMenu": "Otwórz menu konta"
+  },
+  "Roles": {
+    "student": "Student",
+    "educator": "Edukator",
+    "admin": "Administrator"
+  },
+  "PublicNavbar": {
+    "about": "O projekcie",
+    "educators": "Dla edukatorów",
+    "students": "Dla studentów",
+    "signIn": "Zaloguj się",
+    "register": "Zarejestruj się"
+  },
+  "ProtectedNavbar": {
+    "about": "O projekcie",
+    "dashboard": "Dashboard",
+    "settings": "Ustawienia",
+    "logOut": "Wyloguj się",
+    "openAccountMenu": "Otwórz menu konta"
+  },
+  "Footer": {
+    "euAlt": "Współfinansowane przez Unię Europejską",
+    "disclaimer": "Projekt współfinansowany przez Unię Europejską. Wyrażone poglądy i opinie są jednak wyłącznie poglądami autora(ów) i niekoniecznie odzwierciedlają poglądy Unii Europejskiej ani Fundacji Rozwoju Systemu Edukacji (FRSE). Ani Unia Europejska, ani FRSE nie ponoszą za nie odpowiedzialności.",
+    "agreementNumber": "Numer umowy: 2024-1-PL01-KA220-VET-000253738.",
+    "copyright": "© 2026 PROJEKT INTEGRAT-ESG – Wszelkie prawa zastrzeżone",
+    "privacy": "Polityka prywatności",
+    "accessibility": "Deklaracja dostępności",
+    "terms": "Warunki korzystania",
+    "legalNotice": "Nota prawna",
+    "facebook": "Facebook",
+    "linkedin": "LinkedIn"
+  },
+  "Sidebar": {
+    "dashboard": "Dashboard",
+    "curriculum": "Curriculum",
+    "eportfolio": "ePortfolio",
+    "scenario": "Scenariusze",
+    "statistics": "Statystyki",
+    "settings": "Ustawienia",
+    "collapse": "Zwiń panel boczny",
+    "expand": "Rozwiń panel boczny"
+  },
+  "Topbar": {
+    "badge": {
+      "student": "student",
+      "educator": "edukator",
+      "admin": "admin"
+    },
+    "title": {
+      "student": "Panel studenta",
+      "educator": "Panel edukatora",
+      "admin": "Panel administratora"
+    },
+    "subtitle": {
+      "student": "Kontynuuj naukę, przeglądaj swoje materiały i korzystaj z obszarów profilu.",
+      "educator": "Uzyskaj dostęp do materiałów curriculum, kursów i obszarów work package.",
+      "admin": "Przeglądaj statystyki, status platformy i ustawienia administracyjne."
+    },
+    "signedIn": "Zalogowano jako"
+  },
+  "Auth": {
+    "LoginPage": {
+      "title": "Uzyskaj dostęp do swojego konta",
+      "subtitle": "Zaloguj się e-mailem lub kontynuuj przez Google.",
+      "noAccount": "Nie masz jeszcze konta?",
+      "createOne": "Utwórz je"
+    },
+    "LoginForm": {
+      "emailLabel": "Adres e-mail",
+      "emailPlaceholder": "twoj@email.com",
+      "passwordLabel": "Hasło",
+      "passwordPlaceholder": "Wpisz hasło",
+      "submit": "Zaloguj się",
+      "submitting": "Logowanie..."
+    },
+    "SocialLogin": {
+      "continueWithGoogle": "Kontynuuj z Google"
+    },
+    "CompleteProfile": {
+      "title": "Uzupełnij profil",
+      "chooseRole": "Wybierz swoją rolę",
+      "studentDescription": "Dostęp do case studies i scenariuszy",
+      "educatorDescription": "Dostęp do curriculum i materiałów dydaktycznych",
+      "error": "Nie udało się zapisać profilu.",
+      "submit": "Kontynuuj",
+      "submitting": "Zapisywanie..."
+    }
+  },
+  "Register": {
+    "Stepper": {
+      "role": "Rola",
+      "accountDetails": "Dane konta"
+    },
+    "RoleStep": {
+      "eyebrow": "Utwórz konto",
+      "title": "Wybierz swoją rolę",
+      "subtitle": "Wybierz, w jaki sposób będziesz korzystać z platformy.",
+      "studentDescription": "Case studies, scenariusze i samoocena.",
+      "educatorDescription": "Narzędzia curriculum i materiały dydaktyczne.",
+      "continue": "Kontynuuj"
+    },
+    "DetailsStep": {
+      "title": "Dane konta",
+      "subtitle": "Utwórz konto przez Google lub e-mail.",
+      "continueWithEmail": "Kontynuuj przez e-mail",
+      "continueWithEmailDescription": "Wypełnij dane, aby utworzyć konto ręcznie.",
+      "fullName": "Imię i nazwisko",
+      "fullNamePlaceholder": "Wpisz imię i nazwisko",
+      "email": "E-mail",
+      "emailPlaceholder": "Wpisz adres e-mail",
+      "password": "Hasło",
+      "passwordPlaceholder": "Utwórz hasło",
+      "submit": "Utwórz konto",
+      "submitting": "Tworzenie...",
+      "continueWithGoogle": "Kontynuuj z Google",
+      "continueWithGoogleDescription": "Polecane dla szybszej konfiguracji.",
+      "googleHint": "Użyj konta Google, aby kontynuować z wybraną rolą i zakończyć konfigurację w mniejszej liczbie kroków.",
+      "alreadyHaveAccount": "Masz już konto?",
+      "signIn": "Zaloguj się",
+      "profileSaveError": "Konto zostało utworzone, ale nie udało się zapisać profilu.",
+      "success": "Konto zostało utworzone. Sprawdź e-mail, aby kontynuować."
+    }
+  },
+  "Home": {
+    "hero": {
+      "title": "Praktyczna nauka ESG dla studentów i edukatorów.",
+      "join": "Dołącz do platformy",
+      "readMore": "Czytaj więcej",
+      "imageAlt": "Ilustracja platformy edukacyjnej IntegratESG"
+    },
+    "overview": {
+      "eyebrow": "Przegląd platformy",
+      "title": "Odkrywaj case studies, interaktywne scenariusze i uporządkowane zasoby edukacyjne w jednym wielojęzycznym środowisku zaprojektowanym wokół doświadczenia WP4.",
+      "description": "Platforma łączy zasoby do nauki przez doświadczenie, interaktywną symulację i uporządkowane ścieżki edukacyjne w formie, która pozostaje czytelna, dostępna i łatwa w nawigacji.",
+      "createAccount": "Utwórz konto",
+      "signIn": "Zaloguj się"
+    },
+    "cards": {
+      "students": {
+        "eyebrow": "Dla studentów",
+        "title": "Symulator scenariuszy",
+        "description": "Poznawaj zagadnienia ESG poprzez interaktywne scenariusze decyzyjne i praktyczne ścieżki uczenia się."
+      },
+      "educators": {
+        "eyebrow": "Dla edukatorów",
+        "title": "Curriculum i samoocena",
+        "description": "Korzystaj z uporządkowanych modułów edukacyjnych, quizów pre- i post-test oraz materiałów dydaktycznych opartych na informacji zwrotnej."
+      },
+      "allUsers": {
+        "eyebrow": "Dla wszystkich użytkowników",
+        "title": "ePortfolio studiów przypadków",
+        "description": "Przeglądaj ustandaryzowane case studies ESG przygotowane w językach partnerów i różnych kontekstach."
+      }
+    },
+    "stats": {
+      "eyebrow": "Najważniejsze liczby",
+      "title": "Kluczowe wskaźniki doświadczenia edukacyjnego.",
+      "caseStudies": "Studia przypadków",
+      "scenarioAreas": "Obszary scenariuszy",
+      "partnerLanguages": "Języki partnerów"
+    },
+    "partners": {
+      "title": "Partnerzy"
+    },
+    "cta": {
+      "eyebrow": "Zacznij teraz",
+      "title": "Uzyskaj dostęp do platformy i kontynuuj swoją ścieżkę nauki ESG.",
+      "description": "Zarejestruj się, aby odkrywać scenariusze, zasoby ePortfolio i materiały edukacyjne przygotowane dla studentów, edukatorów i interesariuszy projektu.",
+      "register": "Zarejestruj się",
+      "signIn": "Zaloguj się"
+    }
+  },
+  "NotFound": {
+    "badge": "Nie znaleziono strony",
+    "title": "Upsss! Ta strona zrobiła sobie przerwę na kawę.",
+    "description": "Rozejrzeliśmy się i sprawdziliśmy nawet za przyciskiem… ale tej strony tu nie ma.",
+    "errorCodeLabel": "Kod błędu:",
+    "errorCodeDescription": "strona gdzieś się zawieruszyła."
   }
 }

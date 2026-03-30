@@ -2,6 +2,7 @@
 
 import { completeCurrentUserProfile } from "@/features/auth/actions";
 import { APP_ROLES, SelfServiceRole, getDefaultProtectedRoute } from "@/lib/auth/roles";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
@@ -11,6 +12,8 @@ type Props = {
 };
 
 export default function CompleteProfileForm({ locale, email }: Props) {
+  const t = useTranslations("Auth.CompleteProfile");
+  const roles = useTranslations("Roles");
   const router = useRouter();
   const [role, setRole] = useState<SelfServiceRole>(APP_ROLES.student);
   const [error, setError] = useState<string | null>(null);
@@ -25,19 +28,19 @@ export default function CompleteProfileForm({ locale, email }: Props) {
         await completeCurrentUserProfile({ role });
         router.replace(getDefaultProtectedRoute(locale, role));
       } catch {
-        setError("Failed to save profile.");
+        setError(t("error"));
       }
     });
   };
 
   return (
     <main className="mx-auto max-w-md space-y-6 p-8">
-      <h1 className="text-2xl font-bold">Complete your profile</h1>
+      <h1 className="text-2xl font-bold">{t("title")}</h1>
       <p className="text-sm text-gray-600">{email}</p>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-3">
-          <p className="font-medium">Choose your role</p>
+          <p className="font-medium">{t("chooseRole")}</p>
 
           <div className="grid grid-cols-2 gap-3">
             <button
@@ -49,8 +52,8 @@ export default function CompleteProfileForm({ locale, email }: Props) {
                 role === APP_ROLES.student ? "border-black bg-gray-50" : ""
               }`}
             >
-              <p className="font-medium">Student</p>
-              <p className="text-sm text-gray-600">Access case studies and scenarios</p>
+              <p className="font-medium">{roles("student")}</p>
+              <p className="text-sm text-gray-600">{t("studentDescription")}</p>
             </button>
 
             <button
@@ -62,8 +65,8 @@ export default function CompleteProfileForm({ locale, email }: Props) {
                 role === APP_ROLES.educator ? "border-black bg-gray-50" : ""
               }`}
             >
-              <p className="font-medium">Educator</p>
-              <p className="text-sm text-gray-600">Access curriculum and teaching resources</p>
+              <p className="font-medium">{roles("educator")}</p>
+              <p className="text-sm text-gray-600">{t("educatorDescription")}</p>
             </button>
           </div>
         </div>
@@ -73,7 +76,7 @@ export default function CompleteProfileForm({ locale, email }: Props) {
           disabled={isPending}
           className="w-full rounded bg-black px-4 py-2 text-white disabled:opacity-50"
         >
-          {isPending ? "Saving..." : "Continue"}
+          {isPending ? t("submitting") : t("submit")}
         </button>
 
         {error && <p className="text-sm text-red-600">{error}</p>}

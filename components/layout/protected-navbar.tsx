@@ -3,6 +3,7 @@
 import LogoutButton from "@/components/auth/login/logout-button";
 import Logo from "@/components/layout/logo";
 import { UserRound } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
@@ -14,6 +15,9 @@ type Props = {
 };
 
 export default function ProtectedNavbar({ locale, forceSolid = false }: Props) {
+  const t = useTranslations("ProtectedNavbar");
+  const common = useTranslations("Common");
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -77,7 +81,7 @@ export default function ProtectedNavbar({ locale, forceSolid = false }: Props) {
     };
   }, []);
 
-  const links = [{ href: `/${locale}/settings`, label: "Settings" }];
+  const links = [{ href: `/${locale}/settings`, label: t("settings") }];
 
   const scrolledClasses = forceSolid
     ? "bg-[rgba(58,58,58,0.94)] backdrop-blur-md border-b border-white/8 shadow-none"
@@ -102,10 +106,10 @@ export default function ProtectedNavbar({ locale, forceSolid = false }: Props) {
         <div className="flex items-center gap-4 text-white md:gap-6 lg:gap-8">
           <nav className="hidden items-center gap-6 lg:flex">
             <Link className="mock-topbar-link" href={`/${locale}`}>
-              About
+              {t("about")}
             </Link>
             <Link className="mock-topbar-link" href={`/${locale}/dashboard`}>
-              Dashboard
+              {t("dashboard")}
             </Link>
           </nav>
 
@@ -120,7 +124,7 @@ export default function ProtectedNavbar({ locale, forceSolid = false }: Props) {
               className="flex items-center gap-3 text-white"
               aria-haspopup="menu"
               aria-expanded={isMenuOpen}
-              aria-label="Open account menu"
+              aria-label={common("openAccountMenu")}
             >
               <span className="hidden text-sm sm:inline">{isMenuOpen ? "▲" : "▼"}</span>
 
@@ -150,14 +154,14 @@ export default function ProtectedNavbar({ locale, forceSolid = false }: Props) {
                     className="mock-menu-link text-[16px]"
                     onClick={closeMenu}
                   >
-                    About
+                    {t("about")}
                   </Link>
                   <Link
                     href={`/${locale}/dashboard`}
                     className="mock-menu-link text-[16px]"
                     onClick={closeMenu}
                   >
-                    Dashboard
+                    {t("dashboard")}
                   </Link>
                 </div>
 
@@ -177,7 +181,7 @@ export default function ProtectedNavbar({ locale, forceSolid = false }: Props) {
                     redirectTo={`/${locale}/auth/login`}
                     className="flex w-full items-center justify-center rounded-2xl border border-red-400/40 bg-white/6 px-4 py-1.5 text-[16px] text-white/92 transition hover:bg-white/10"
                   >
-                    Log out
+                    {t("logOut")}
                   </LogoutButton>
                 </div>
               </div>

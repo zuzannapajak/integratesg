@@ -1,6 +1,7 @@
 "use client";
 
 import Logo from "@/components/layout/logo";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
@@ -11,6 +12,7 @@ type Props = {
 };
 
 export default function PublicNavbar({ locale, forceCompact = false, forceSolid = false }: Props) {
+  const t = useTranslations("PublicNavbar");
   const [isScrolledCompact, setIsScrolledCompact] = useState(false);
   const tickingRef = useRef(false);
   const compactRef = useRef(false);
@@ -71,13 +73,13 @@ export default function PublicNavbar({ locale, forceCompact = false, forceSolid 
         <div className="flex items-center gap-4 text-white md:gap-6 lg:gap-8">
           <nav className="hidden items-center gap-6 lg:flex">
             <Link className="mock-topbar-link" href={`/${locale}/about`}>
-              About
+              {t("about")}
             </Link>
             <Link className="mock-topbar-link" href={`/${locale}/educators`}>
-              Educators
+              {t("educators")}
             </Link>
             <Link className="mock-topbar-link" href={`/${locale}/students`}>
-              Students
+              {t("students")}
             </Link>
           </nav>
 
@@ -85,10 +87,10 @@ export default function PublicNavbar({ locale, forceCompact = false, forceSolid 
 
           <div className="hidden items-center gap-3 sm:flex">
             <Link href={`/${locale}/auth/login`} className="landing-nav-login">
-              Sign in
+              {t("signIn")}
             </Link>
             <Link href={`/${locale}/auth/register`} className="landing-nav-register">
-              Register
+              {t("register")}
             </Link>
           </div>
         </div>
