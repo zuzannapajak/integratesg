@@ -1,62 +1,26 @@
 import PublicFooter from "@/components/layout/public-footer";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
 
-const studentBenefits = [
-  {
-    title: "Interactive scenarios",
-    description:
-      "Learn ESG concepts by making decisions, completing tasks, and moving through applied learning situations.",
-  },
-  {
-    title: "Case study exploration",
-    description:
-      "Browse a structured ePortfolio of examples that make ESG ideas easier to understand in context.",
-  },
-  {
-    title: "Clear learning journey",
-    description:
-      "Move through content in a way that feels organised, readable, and easier to follow than disconnected materials.",
-  },
-  {
-    title: "Accessible multilingual platform",
-    description:
-      "Use the platform across devices and access content prepared for different partner language contexts.",
-  },
-];
-
-const studentUseCases = [
-  {
-    title: "Learning by doing",
-    description:
-      "Students can engage with ESG through scenarios that simulate decisions and practical situations.",
-  },
-  {
-    title: "Connecting theory with examples",
-    description:
-      "Case studies help transform abstract concepts into something more concrete and understandable.",
-  },
-  {
-    title: "Guided self-development",
-    description:
-      "The platform supports exploration, reflection, and a more active way of learning than static reading alone.",
-  },
-];
-
-const studentHighlights = [
-  "Interactive scenario experience",
-  "Practical ESG examples",
-  "Structured case study format",
-  "Clear interface and navigation",
-  "Designed for active engagement",
-  "Usable across desktop and mobile devices",
-];
-
 export default async function StudentsPage({ params }: Props) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "PublicContent.Students" });
+
+  const studentBenefits = [1, 2, 3, 4].map((index) => ({
+    title: t(`benefits.items.${index}.title`),
+    description: t(`benefits.items.${index}.description`),
+  }));
+
+  const studentUseCases = [1, 2, 3].map((index) => ({
+    title: t(`usage.items.${index}.title`),
+    description: t(`usage.items.${index}.description`),
+  }));
+
+  const studentHighlights = [1, 2, 3, 4, 5, 6].map((index) => t(`highlights.items.${index}`));
 
   return (
     <main className="bg-[#ececec]">
@@ -65,56 +29,55 @@ export default async function StudentsPage({ params }: Props) {
 
         <div className="relative mx-auto grid max-w-340 min-h-[calc(100vh-104px)] items-center gap-6 lg:grid-cols-[1.02fr_0.98fr] lg:gap-8">
           <div className="max-w-215 pb-4 lg:pb-0">
-            <p className="landing-section-eyebrow">For students</p>
+            <p className="landing-section-eyebrow">{t("hero.eyebrow")}</p>
 
             <h1 className="mt-4 text-[2.2rem] font-black leading-[0.95] tracking-[-0.05em] text-[#31425a] sm:text-[3rem] lg:text-[3.65rem]">
-              A more engaging way to explore ESG through practice and applied learning.
+              {t("hero.title")}
             </h1>
 
             <p className="mt-5 max-w-[62ch] text-[1.02rem] leading-8 text-[#596170] sm:text-[1.08rem]">
-              The platform helps students understand ESG through interactive scenarios, structured
-              case studies, and a learning experience designed to connect theory with real examples.
+              {t("hero.description")}
             </p>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <a href="#students-content" className="landing-secondary-cta">
-                Read more
+                {t("hero.secondaryCta")}
               </a>
               <Link href={`/${locale}/auth/register`} className="landing-primary-cta">
-                Create student account
+                {t("hero.primaryCta")}
               </Link>
             </div>
           </div>
 
           <div className="relative hidden lg:block">
             <div className="relative mx-auto h-125 w-full max-w-145">
-              <div className="absolute right-10 top-0 w-60 rounded-[28px] border border-white/80 bg-white/90 p-5 shadow-[0_20px_50px_rgba(35,45,62,0.1)] backdrop-blur-xl z-30">
+              <div className="absolute right-10 top-0 z-30 w-60 rounded-[28px] border border-white/80 bg-white/90 p-5 shadow-[0_20px_50px_rgba(35,45,62,0.1)] backdrop-blur-xl">
                 <p className="text-[0.74rem] font-bold uppercase tracking-[0.16em] text-[#ef6c23]">
-                  Practical use
+                  {t("heroCards.card1Title")}
                 </p>
                 <p className="mt-3 text-[0.92rem] leading-7 text-[#5e6776]">
-                  Resources that can support workshops, lessons, and blended learning.
+                  {t("heroCards.card1Description")}
                 </p>
               </div>
 
-              <div className="absolute left-10 top-25 w-85 rounded-[30px] border border-white/70 bg-white/86 p-6 shadow-[0_18px_48px_rgba(35,45,62,0.08)] backdrop-blur-xl z-20">
+              <div className="absolute left-10 top-25 z-20 w-85 rounded-[30px] border border-white/70 bg-white/86 p-6 shadow-[0_18px_48px_rgba(35,45,62,0.08)] backdrop-blur-xl">
                 <p className="inline-flex rounded-full bg-[#0d7fc2]/8 px-3 py-1 text-[0.72rem] font-bold uppercase tracking-[0.16em] text-[#0d7fc2]">
-                  Teaching toolkit
+                  {t("heroCards.card2Badge")}
                 </p>
                 <h2 className="mt-4 text-[1.2rem] font-semibold tracking-[-0.03em] text-[#31425a] lg:max-w-55">
-                  Curriculum, scenarios, and case studies in one environment.
+                  {t("heroCards.card2Title")}
                 </h2>
                 <p className="mt-4 text-[0.92rem] leading-6 text-[#5e6776] lg:max-w-60">
-                  Designed to support explanation, discussion, and applied ESG teaching.
+                  {t("heroCards.card2Description")}
                 </p>
               </div>
 
-              <div className="absolute right-10 top-72.5 w-62.5 rounded-[28px] border border-white/70 bg-white/90 p-5 shadow-[0_20px_50px_rgba(35,45,62,0.1)] backdrop-blur-xl z-30">
+              <div className="absolute right-10 top-72.5 z-30 w-62.5 rounded-[28px] border border-white/70 bg-white/90 p-5 shadow-[0_20px_50px_rgba(35,45,62,0.1)] backdrop-blur-xl">
                 <p className="text-[0.74rem] font-bold uppercase tracking-[0.16em] text-[#0b9c72]">
-                  Learning design
+                  {t("heroCards.card3Title")}
                 </p>
                 <p className="mt-3 text-[0.92rem] leading-7 text-[#5e6776]">
-                  Structured for clear navigation, engagement, and pedagogical clarity.
+                  {t("heroCards.card3Description")}
                 </p>
               </div>
 
@@ -132,13 +95,12 @@ export default async function StudentsPage({ params }: Props) {
         <div className="mx-auto max-w-340 space-y-8">
           <div className="rounded-4xl border border-white/60 bg-white/90 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.07)] backdrop-blur md:p-8 lg:p-10">
             <div className="max-w-210">
-              <p className="landing-section-eyebrow">What students gain</p>
+              <p className="landing-section-eyebrow">{t("benefits.eyebrow")}</p>
               <h2 className="mt-3 text-[1.9rem] font-semibold tracking-[-0.03em] text-[#31425a] sm:text-[2.2rem]">
-                A clearer and more active way to learn ESG.
+                {t("benefits.title")}
               </h2>
               <p className="mt-4 max-w-[64ch] text-[1rem] leading-7 text-[#596170]">
-                Instead of relying only on theory, students can work with examples, decisions, and
-                interactive resources that make ESG easier to understand and remember.
+                {t("benefits.description")}
               </p>
             </div>
 
@@ -160,9 +122,9 @@ export default async function StudentsPage({ params }: Props) {
 
           <div className="grid gap-8 xl:grid-cols-[1.08fr_0.92fr]">
             <article className="rounded-4xl border border-white/60 bg-white/88 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.06)] backdrop-blur md:p-8 lg:p-10">
-              <p className="landing-section-eyebrow">How students can use it</p>
+              <p className="landing-section-eyebrow">{t("usage.eyebrow")}</p>
               <h2 className="mt-3 text-[1.75rem] font-semibold tracking-[-0.03em] text-[#31425a] sm:text-[2rem]">
-                A learning environment built around understanding through interaction.
+                {t("usage.title")}
               </h2>
 
               <div className="mt-8 space-y-5">
@@ -191,9 +153,9 @@ export default async function StudentsPage({ params }: Props) {
             </article>
 
             <aside className="rounded-4xl border border-white/60 bg-white/80 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.05)] backdrop-blur md:p-8">
-              <p className="landing-section-eyebrow">Key highlights</p>
+              <p className="landing-section-eyebrow">{t("highlights.eyebrow")}</p>
               <h2 className="mt-3 text-[1.55rem] font-semibold tracking-[-0.03em] text-[#31425a]">
-                What makes the student experience engaging
+                {t("highlights.title")}
               </h2>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -214,22 +176,21 @@ export default async function StudentsPage({ params }: Props) {
       <section className="landing-cta-band px-6 py-12 md:px-10 lg:px-14">
         <div className="mx-auto flex max-w-340 flex-col gap-6 rounded-[28px] border border-white/50 bg-white/85 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.08)] backdrop-blur md:flex-row md:items-center md:justify-between md:p-8">
           <div className="max-w-190">
-            <p className="landing-section-eyebrow">Get started as a student</p>
+            <p className="landing-section-eyebrow">{t("cta.eyebrow")}</p>
             <h2 className="mt-3 text-[1.8rem] font-semibold tracking-[-0.03em] text-[#31425a] sm:text-[2.1rem]">
-              Create your account and explore the platform.
+              {t("cta.title")}
             </h2>
             <p className="mt-4 max-w-[60ch] text-[1rem] leading-7 text-[#596170]">
-              Access interactive scenarios, practical ESG examples, and structured learning
-              resources designed to make ESG easier to understand in context.
+              {t("cta.description")}
             </p>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link href={`/${locale}/auth/register`} className="landing-primary-cta">
-              Register now
+              {t("cta.primary")}
             </Link>
             <Link href={`/${locale}/auth/login`} className="landing-secondary-cta">
-              Sign in
+              {t("cta.secondary")}
             </Link>
           </div>
         </div>

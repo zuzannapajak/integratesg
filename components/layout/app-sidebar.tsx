@@ -21,9 +21,17 @@ type Props = {
   role: Role;
 };
 
+type SidebarTranslationKey =
+  | "dashboard"
+  | "curriculum"
+  | "eportfolio"
+  | "settings"
+  | "scenario"
+  | "statistics";
+
 type NavLink = {
   href: string;
-  label: string;
+  labelKey: SidebarTranslationKey;
   match?: "exact" | "prefix";
   icon: React.ComponentType<{ className?: string }>;
 };
@@ -86,28 +94,78 @@ export default function AppSidebar({ locale, role }: Props) {
   }, [role]);
 
   const educatorLinks: NavLink[] = [
-    { href: `/${locale}/dashboard`, label: t("dashboard"), match: "exact", icon: LayoutDashboard },
-    { href: `/${locale}/curriculum`, label: t("curriculum"), match: "prefix", icon: BookOpen },
-    { href: `/${locale}/eportfolio`, label: t("eportfolio"), match: "prefix", icon: FolderOpen },
-    { href: `/${locale}/settings`, label: t("settings"), match: "prefix", icon: Settings },
+    {
+      href: `/${locale}/dashboard`,
+      labelKey: "dashboard",
+      match: "exact",
+      icon: LayoutDashboard,
+    },
+    {
+      href: `/${locale}/curriculum`,
+      labelKey: "curriculum",
+      match: "prefix",
+      icon: BookOpen,
+    },
+    {
+      href: `/${locale}/eportfolio`,
+      labelKey: "eportfolio",
+      match: "prefix",
+      icon: FolderOpen,
+    },
+    {
+      href: `/${locale}/settings`,
+      labelKey: "settings",
+      match: "prefix",
+      icon: Settings,
+    },
   ];
 
   const studentLinks: NavLink[] = [
-    { href: `/${locale}/dashboard`, label: t("dashboard"), match: "exact", icon: LayoutDashboard },
-    { href: `/${locale}/scenarios`, label: t("scenario"), match: "prefix", icon: PlayCircle },
-    { href: `/${locale}/eportfolio`, label: t("eportfolio"), match: "prefix", icon: FolderOpen },
-    { href: `/${locale}/settings`, label: t("settings"), match: "prefix", icon: Settings },
+    {
+      href: `/${locale}/dashboard`,
+      labelKey: "dashboard",
+      match: "exact",
+      icon: LayoutDashboard,
+    },
+    {
+      href: `/${locale}/scenarios`,
+      labelKey: "scenario",
+      match: "prefix",
+      icon: PlayCircle,
+    },
+    {
+      href: `/${locale}/eportfolio`,
+      labelKey: "eportfolio",
+      match: "prefix",
+      icon: FolderOpen,
+    },
+    {
+      href: `/${locale}/settings`,
+      labelKey: "settings",
+      match: "prefix",
+      icon: Settings,
+    },
   ];
 
   const adminLinks: NavLink[] = [
-    { href: `/${locale}/dashboard`, label: t("dashboard"), match: "exact", icon: LayoutDashboard },
+    {
+      href: `/${locale}/dashboard`,
+      labelKey: "dashboard",
+      match: "exact",
+      icon: LayoutDashboard,
+    },
     {
       href: `/${locale}/admin/stats`,
-      label: t("statistics"),
+      labelKey: "statistics",
       match: "prefix",
       icon: BarChart3,
     },
-    { href: `/${locale}/settings`, label: t("settings"), match: "prefix", icon: Settings },
+    {
+      href: `/${locale}/settings`,
+      labelKey: "settings",
+      match: "prefix",
+      icon: Settings,
+    },
   ];
 
   const links = role === "educator" ? educatorLinks : role === "admin" ? adminLinks : studentLinks;
@@ -126,62 +184,77 @@ export default function AppSidebar({ locale, role }: Props) {
 
   return (
     <aside
-      className={`group hidden h-full border-r border-[#e6ebf1] bg-white/88 backdrop-blur-xl transition-[width] duration-300 md:flex md:flex-col ${
-        collapsed ? "md:w-[88px]" : "md:w-[272px]"
-      }`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      className={`relative z-40 h-full shrink-0 border-r border-[#e6ebf1] bg-[rgba(255,255,255,0.78)] backdrop-blur-2xl transition-[width] duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
+        collapsed ? "w-23" : "w-67"
+      }`}
       aria-label={collapsed ? t("expand") : t("collapse")}
     >
-      <div className="flex h-20 items-center justify-between px-5">
-        <div className="flex min-w-0 items-center gap-3">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#f3f6f9]">
-            <LayoutDashboard className={`h-5 w-5 ${theme.icon}`} />
-          </div>
-
-          {!collapsed ? (
-            <div className="min-w-0">
-              <p className="truncate text-[0.82rem] font-medium uppercase tracking-[0.14em] text-[#94a0af]">
-                IntegratESG
-              </p>
-              <p className="truncate text-[1rem] font-semibold text-[#31425a]">{t("dashboard")}</p>
-            </div>
-          ) : null}
-        </div>
-
-        {!collapsed ? <ChevronRight className="h-4 w-4 text-[#9aa5b4]" /> : null}
+      <div
+        className={`absolute -right-4 top-1/2 z-60 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-[#e6ebf1] bg-white text-[#31425a] shadow-md transition-all duration-300 md:flex ${
+          collapsed ? "" : "rotate-180"
+        }`}
+      >
+        <ChevronRight className="h-4 w-4" />
       </div>
 
-      <nav className="flex-1 space-y-1 px-4 pb-5">
-        {links.map((link) => {
-          const isActive = isActiveLink(link);
-          const Icon = link.icon;
+      <div className="sticky top-24 flex h-[calc(100vh-7rem)] flex-col overflow-hidden px-4 py-5">
+        <nav className="mt-2 flex-1 space-y-2">
+          {links.map((link) => {
+            const isActive = isActiveLink(link);
+            const Icon = link.icon;
+            const label = t(link.labelKey);
 
-          return (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`flex min-h-13 items-center gap-3 rounded-2xl border px-3 transition-all duration-200 ${
-                isActive
-                  ? `${theme.active} ${theme.hoverGlow} border`
-                  : "border-transparent text-[#617084] hover:border-[#e5ebf1] hover:bg-[#f8fafc] hover:text-[#31425a]"
-              }`}
-            >
-              <span
-                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${
-                  isActive ? "bg-white/80" : "bg-[#f3f6f9]"
-                }`}
-              >
-                <Icon className={`h-5 w-5 ${isActive ? theme.icon : "text-[#7f8b99]"}`} />
-              </span>
+            return (
+              <div key={link.href} className="group relative">
+                <Link
+                  href={link.href}
+                  className={`flex items-center rounded-2xl border px-3 py-3 transition-all duration-250 ${
+                    collapsed ? "justify-center" : "gap-3"
+                  } ${
+                    isActive
+                      ? `${theme.active} shadow-md`
+                      : `border-transparent text-[#31425a] hover:bg-[#f4f7fa] ${theme.hoverGlow}`
+                  }`}
+                >
+                  <span
+                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border transition-all duration-200 ${
+                      isActive ? "border-white/50 bg-white/70" : "border-[#edf1f5] bg-white"
+                    }`}
+                  >
+                    <Icon
+                      className={`h-[1.05rem] w-[1.05rem] ${isActive ? theme.icon : "text-[#607086]"}`}
+                    />
+                  </span>
 
-              {!collapsed ? (
-                <span className="truncate text-[0.96rem] font-medium">{link.label}</span>
-              ) : null}
-            </Link>
-          );
-        })}
-      </nav>
+                  <span
+                    className={`truncate text-[0.96rem] font-medium transition-all duration-200 ease-in-out ${
+                      collapsed
+                        ? "invisible ml-0 max-w-0 overflow-hidden opacity-0"
+                        : "visible ml-0 max-w-50 opacity-100"
+                    }`}
+                  >
+                    {label}
+                  </span>
+                </Link>
+
+                {collapsed && (
+                  <div className="pointer-events-none absolute left-full top-1/2 z-30 ml-3 -translate-y-1/2 whitespace-nowrap rounded-xl border border-[#e6ebf1] bg-white px-3 py-2 text-sm font-medium opacity-0 transition-opacity group-hover:opacity-100">
+                    {label}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </nav>
+
+        <div
+          className={`mt-auto rounded-3xl border border-[#e9eef4] bg-white p-3 transition-all duration-300 ${
+            collapsed ? "invisible opacity-0" : "visible opacity-100"
+          }`}
+        />
+      </div>
     </aside>
   );
 }

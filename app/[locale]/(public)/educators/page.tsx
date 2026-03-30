@@ -1,62 +1,26 @@
 import PublicFooter from "@/components/layout/public-footer";
+import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
 
-const educatorBenefits = [
-  {
-    title: "Structured curriculum access",
-    description:
-      "Use organised ESG learning modules that support teaching, guided learning, and professional development.",
-  },
-  {
-    title: "Scenario-based learning",
-    description:
-      "Bring practice into the classroom with interactive scenarios that help learners apply ESG concepts in context.",
-  },
-  {
-    title: "Case study ePortfolio",
-    description:
-      "Work with practical examples presented in a shared structure, making comparison and discussion easier.",
-  },
-  {
-    title: "Multilingual learning environment",
-    description:
-      "Access resources in partner languages and support more inclusive, cross-context educational use.",
-  },
-];
-
-const educatorUseCases = [
-  {
-    title: "Teaching support",
-    description:
-      "Educators can integrate platform resources into lectures, workshops, or guided project work.",
-  },
-  {
-    title: "Self-assessment and reflection",
-    description:
-      "The platform supports pre- and post-learning reflection, helping users monitor progress and understanding.",
-  },
-  {
-    title: "Practice-oriented explanation",
-    description:
-      "Abstract ESG concepts can be explained through scenarios and real or modelled examples.",
-  },
-];
-
-const educatorHighlights = [
-  "Roadmap-oriented learning support",
-  "Scenario-based teaching resources",
-  "Structured ESG case studies",
-  "Content suitable for practical classroom use",
-  "Clear, modern interface for guided learning",
-  "Designed for vocational and applied education contexts",
-];
-
 export default async function EducatorsPage({ params }: Props) {
   const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "PublicContent.Educators" });
+
+  const educatorBenefits = [1, 2, 3, 4].map((index) => ({
+    title: t(`benefits.items.${index}.title`),
+    description: t(`benefits.items.${index}.description`),
+  }));
+
+  const educatorUseCases = [1, 2, 3].map((index) => ({
+    title: t(`usage.items.${index}.title`),
+    description: t(`usage.items.${index}.description`),
+  }));
+
+  const educatorHighlights = [1, 2, 3, 4, 5, 6].map((index) => t(`highlights.items.${index}`));
 
   return (
     <main className="bg-[#ececec]">
@@ -65,24 +29,22 @@ export default async function EducatorsPage({ params }: Props) {
 
         <div className="relative mx-auto grid max-w-340 min-h-[calc(100vh-104px)] items-center gap-6 lg:grid-cols-[1.02fr_0.98fr] lg:gap-8">
           <div className="max-w-215 pb-4 lg:pb-0">
-            <p className="landing-section-eyebrow">For educators</p>
+            <p className="landing-section-eyebrow">{t("hero.eyebrow")}</p>
 
             <h1 className="mt-4 text-[2.2rem] font-black leading-[0.95] tracking-[-0.05em] text-[#31425a] sm:text-[3rem] lg:text-[3.65rem]">
-              A practical ESG teaching space designed for vocational education.
+              {t("hero.title")}
             </h1>
 
             <p className="mt-5 max-w-[62ch] text-[1.02rem] leading-8 text-[#596170] sm:text-[1.08rem]">
-              The platform helps educators explain ESG topics through structured learning resources,
-              interactive scenarios, and case-based content that supports practical, applied
-              teaching.
+              {t("hero.description")}
             </p>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
               <a href="#educators-content" className="landing-secondary-cta">
-                Read more
+                {t("hero.secondaryCta")}
               </a>
               <Link href={`/${locale}/auth/register`} className="landing-primary-cta">
-                Create educator account
+                {t("hero.primaryCta")}
               </Link>
             </div>
           </div>
@@ -92,33 +54,33 @@ export default async function EducatorsPage({ params }: Props) {
               <div className="absolute left-10 top-20 -z-10 h-64 w-64 rounded-full bg-[#ec6725]/12 blur-3xl" />
               <div className="absolute right-10 bottom-10 -z-10 h-64 w-64 rounded-full bg-[#0d7fc2]/16 blur-3xl" />
 
-              <div className="absolute right-10 top-0 w-60 rounded-[28px] border border-white/80 bg-white/90 p-5 shadow-[0_20px_50px_rgba(35,45,62,0.1)] backdrop-blur-xl z-30">
+              <div className="absolute right-10 top-0 z-30 w-60 rounded-[28px] border border-white/80 bg-white/90 p-5 shadow-[0_20px_50px_rgba(35,45,62,0.1)] backdrop-blur-xl">
                 <p className="text-[0.74rem] font-bold uppercase tracking-[0.16em] text-[#ef6c23]">
-                  Practical use
+                  {t("heroCards.card1Title")}
                 </p>
                 <p className="mt-3 text-[0.92rem] leading-7 text-[#5e6776]">
-                  Resources that can support workshops, lessons, and blended learning.
+                  {t("heroCards.card1Description")}
                 </p>
               </div>
 
-              <div className="absolute left-10 top-25 w-85 rounded-[30px] border border-white/70 bg-white/86 p-6 shadow-[0_18px_48px_rgba(35,45,62,0.08)] backdrop-blur-xl z-20">
+              <div className="absolute left-10 top-25 z-20 w-85 rounded-[30px] border border-white/70 bg-white/86 p-6 shadow-[0_18px_48px_rgba(35,45,62,0.08)] backdrop-blur-xl">
                 <p className="inline-flex rounded-full bg-[#0d7fc2]/8 px-3 py-1 text-[0.72rem] font-bold uppercase tracking-[0.16em] text-[#0d7fc2]">
-                  Teaching toolkit
+                  {t("heroCards.card2Badge")}
                 </p>
                 <h2 className="mt-4 text-[1.2rem] font-semibold tracking-[-0.03em] text-[#31425a] lg:max-w-55">
-                  Curriculum, scenarios, and case studies in one environment.
+                  {t("heroCards.card2Title")}
                 </h2>
                 <p className="mt-4 text-[0.92rem] leading-6 text-[#5e6776] lg:max-w-60">
-                  Designed to support explanation, discussion, and applied ESG teaching.
+                  {t("heroCards.card2Description")}
                 </p>
               </div>
 
-              <div className="absolute right-10 top-72.5 w-62.5 rounded-[28px] border border-white/70 bg-white/90 p-5 shadow-[0_20px_50px_rgba(35,45,62,0.1)] backdrop-blur-xl z-30">
+              <div className="absolute right-10 top-72.5 z-30 w-62.5 rounded-[28px] border border-white/70 bg-white/90 p-5 shadow-[0_20px_50px_rgba(35,45,62,0.1)] backdrop-blur-xl">
                 <p className="text-[0.74rem] font-bold uppercase tracking-[0.16em] text-[#0b9c72]">
-                  Learning design
+                  {t("heroCards.card3Title")}
                 </p>
                 <p className="mt-3 text-[0.92rem] leading-7 text-[#5e6776]">
-                  Structured for clear navigation, engagement, and pedagogical clarity.
+                  {t("heroCards.card3Description")}
                 </p>
               </div>
             </div>
@@ -133,13 +95,12 @@ export default async function EducatorsPage({ params }: Props) {
         <div className="mx-auto max-w-340 space-y-8">
           <div className="rounded-4xl border border-white/60 bg-white/90 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.07)] backdrop-blur md:p-8 lg:p-10">
             <div className="max-w-210">
-              <p className="landing-section-eyebrow">What educators gain</p>
+              <p className="landing-section-eyebrow">{t("benefits.eyebrow")}</p>
               <h2 className="mt-3 text-[1.9rem] font-semibold tracking-[-0.03em] text-[#31425a] sm:text-[2.2rem]">
-                Resources that help move from theory to applied ESG teaching.
+                {t("benefits.title")}
               </h2>
               <p className="mt-4 max-w-[64ch] text-[1rem] leading-7 text-[#596170]">
-                From curriculum support to case-based learning, the platform is designed to help
-                educators present ESG topics in a clearer, more practice-oriented way.
+                {t("benefits.description")}
               </p>
             </div>
 
@@ -161,9 +122,9 @@ export default async function EducatorsPage({ params }: Props) {
 
           <div className="grid gap-8 xl:grid-cols-[1.08fr_0.92fr]">
             <article className="rounded-4xl border border-white/60 bg-white/88 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.06)] backdrop-blur md:p-8 lg:p-10">
-              <p className="landing-section-eyebrow">How it can be used</p>
+              <p className="landing-section-eyebrow">{t("usage.eyebrow")}</p>
               <h2 className="mt-3 text-[1.75rem] font-semibold tracking-[-0.03em] text-[#31425a] sm:text-[2rem]">
-                A platform that supports explanation, engagement, and structured learning.
+                {t("usage.title")}
               </h2>
 
               <div className="mt-8 space-y-5">
@@ -192,9 +153,9 @@ export default async function EducatorsPage({ params }: Props) {
             </article>
 
             <aside className="rounded-4xl border border-white/60 bg-white/80 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.05)] backdrop-blur md:p-8">
-              <p className="landing-section-eyebrow">Key highlights</p>
+              <p className="landing-section-eyebrow">{t("highlights.eyebrow")}</p>
               <h2 className="mt-3 text-[1.55rem] font-semibold tracking-[-0.03em] text-[#31425a]">
-                What makes the educator experience valuable
+                {t("highlights.title")}
               </h2>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -215,22 +176,21 @@ export default async function EducatorsPage({ params }: Props) {
       <section className="landing-cta-band px-6 py-12 md:px-10 lg:px-14">
         <div className="mx-auto flex max-w-340 flex-col gap-6 rounded-[28px] border border-white/50 bg-white/85 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.08)] backdrop-blur md:flex-row md:items-center md:justify-between md:p-8">
           <div className="max-w-190">
-            <p className="landing-section-eyebrow">Get started as an educator</p>
+            <p className="landing-section-eyebrow">{t("cta.eyebrow")}</p>
             <h2 className="mt-3 text-[1.8rem] font-semibold tracking-[-0.03em] text-[#31425a] sm:text-[2.1rem]">
-              Create your account and start exploring the platform.
+              {t("cta.title")}
             </h2>
             <p className="mt-4 max-w-[60ch] text-[1rem] leading-7 text-[#596170]">
-              Access structured ESG learning resources, interactive scenarios, and case-based
-              educational content designed for practical teaching.
+              {t("cta.description")}
             </p>
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link href={`/${locale}/auth/register`} className="landing-primary-cta">
-              Register now
+              {t("cta.primary")}
             </Link>
             <Link href={`/${locale}/auth/login`} className="landing-secondary-cta">
-              Sign in
+              {t("cta.secondary")}
             </Link>
           </div>
         </div>
