@@ -1,5 +1,8 @@
+"use client";
+
 import CaseStudyCompletionButton from "@/components/eportfolio/case-study-completion-button";
 import { ArrowLeft, Building2, Leaf, ShieldCheck, Sparkles, Users } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 const SURFACE =
@@ -24,29 +27,29 @@ type Props = {
   caseStudy: CaseStudyDetail;
 };
 
-function getAreaMeta(area: string) {
+function getAreaMeta(area: string, t: ReturnType<typeof useTranslations>) {
   switch (area) {
     case "environmental":
       return {
-        label: "Environmental",
+        label: t("area.environmental"),
         icon: <Leaf className="h-4 w-4" />,
         badgeClass: "border-emerald-100 bg-emerald-50 text-emerald-700",
       };
     case "social":
       return {
-        label: "Social",
+        label: t("area.social"),
         icon: <Users className="h-4 w-4" />,
         badgeClass: "border-sky-100 bg-sky-50 text-sky-700",
       };
     case "governance":
       return {
-        label: "Governance",
+        label: t("area.governance"),
         icon: <ShieldCheck className="h-4 w-4" />,
         badgeClass: "border-violet-100 bg-violet-50 text-violet-700",
       };
     default:
       return {
-        label: "Cross-cutting",
+        label: t("area.crossCutting"),
         icon: <Sparkles className="h-4 w-4" />,
         badgeClass: "border-amber-100 bg-amber-50 text-amber-700",
       };
@@ -61,7 +64,8 @@ function splitContent(content: string) {
 }
 
 export default function CaseStudyLaunchShell({ locale, caseStudy }: Props) {
-  const areaMeta = getAreaMeta(caseStudy.area);
+  const t = useTranslations("Protected.CaseStudyLaunchShell");
+  const areaMeta = getAreaMeta(caseStudy.area, t);
   const paragraphs = splitContent(caseStudy.content);
 
   return (
@@ -75,7 +79,7 @@ export default function CaseStudyLaunchShell({ locale, caseStudy }: Props) {
             className="inline-flex items-center gap-2 text-[0.95rem] font-medium text-[#5f6977] transition hover:text-[#31425a]"
           >
             <ArrowLeft className="h-4.5 w-4.5" />
-            Back to ePortfolio
+            {t("back")}
           </Link>
         </div>
 
@@ -92,14 +96,14 @@ export default function CaseStudyLaunchShell({ locale, caseStudy }: Props) {
               {caseStudy.isFeatured && (
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0b9c72] px-3 py-1.5 text-[0.72rem] font-bold uppercase tracking-wider text-white shadow-sm">
                   <Sparkles className="h-3 w-3" />
-                  Featured
+                  {t("featured")}
                 </span>
               )}
 
               {caseStudy.isCompleted && (
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1.5 text-[0.72rem] font-bold uppercase tracking-wider text-emerald-700">
                   <Sparkles className="h-3 w-3" />
-                  Completed
+                  {t("completed")}
                 </span>
               )}
             </div>
@@ -119,7 +123,7 @@ export default function CaseStudyLaunchShell({ locale, caseStudy }: Props) {
                   <div className="flex items-center gap-2 text-[#7b8794]">
                     <Building2 className="h-4 w-4" />
                     <span className="text-[0.72rem] font-semibold uppercase tracking-[0.12em]">
-                      Organization
+                      {t("organization")}
                     </span>
                   </div>
                   <p className="mt-2 font-medium text-[#31425a]">{caseStudy.organization}</p>
@@ -131,7 +135,7 @@ export default function CaseStudyLaunchShell({ locale, caseStudy }: Props) {
                   <div className="flex items-center gap-2 text-[#7b8794]">
                     <ShieldCheck className="h-4 w-4" />
                     <span className="text-[0.72rem] font-semibold uppercase tracking-[0.12em]">
-                      Industry
+                      {t("industry")}
                     </span>
                   </div>
                   <p className="mt-2 font-medium text-[#31425a]">{caseStudy.industry}</p>
@@ -143,7 +147,7 @@ export default function CaseStudyLaunchShell({ locale, caseStudy }: Props) {
 
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px]">
           <section className={`${SURFACE} p-6 md:p-8`}>
-            <h2 className="text-xl font-semibold text-slate-900">Case study content</h2>
+            <h2 className="text-xl font-semibold text-slate-900">{t("contentTitle")}</h2>
             <div className="mt-5 space-y-5 text-[0.98rem] leading-8 text-[#475467]">
               {paragraphs.map((paragraph, index) => (
                 <p key={`${caseStudy.slug}-${index}`}>{paragraph}</p>
@@ -159,7 +163,7 @@ export default function CaseStudyLaunchShell({ locale, caseStudy }: Props) {
             />
 
             <section className={`${SURFACE} p-6`}>
-              <h2 className="text-lg font-semibold text-slate-900">Key takeaways</h2>
+              <h2 className="text-lg font-semibold text-slate-900">{t("takeawaysTitle")}</h2>
               {caseStudy.keyTakeaways.length > 0 ? (
                 <ul className="mt-4 space-y-3 text-sm leading-6 text-[#516071]">
                   {caseStudy.keyTakeaways.map((item) => (
@@ -170,9 +174,7 @@ export default function CaseStudyLaunchShell({ locale, caseStudy }: Props) {
                   ))}
                 </ul>
               ) : (
-                <p className="mt-4 text-sm leading-6 text-[#667180]">
-                  Key takeaways will appear here when they are added to this case study.
-                </p>
+                <p className="mt-4 text-sm leading-6 text-[#667180]">{t("takeawaysEmpty")}</p>
               )}
             </section>
           </aside>

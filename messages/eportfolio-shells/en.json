@@ -1,0 +1,32 @@
+{
+  "Protected": {
+    "CaseStudyCompletionButton": {
+      "eyebrow": "Completion",
+      "completedText": "This case study has already been marked as completed.",
+      "defaultText": "Mark this case study as completed when you finish reviewing it.",
+      "completedOn": "Completed {date}",
+      "completedRecently": "Completed recently",
+      "button": {
+        "completed": "Completed",
+        "saving": "Saving...",
+        "markCompleted": "Mark as completed"
+      }
+    },
+    "CaseStudyLaunchShell": {
+      "back": "Back to ePortfolio",
+      "area": {
+        "environmental": "Environmental",
+        "social": "Social",
+        "governance": "Governance",
+        "crossCutting": "Cross-cutting"
+      },
+      "featured": "Featured",
+      "completed": "Completed",
+      "organization": "Organization",
+      "industry": "Industry",
+      "contentTitle": "Case study content",
+      "takeawaysTitle": "Key takeaways",
+      "takeawaysEmpty": "Key takeaways will appear here when they are added to this case study."
+    }
+  }
+}

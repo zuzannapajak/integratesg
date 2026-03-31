@@ -25,6 +25,7 @@ import {
   Trophy,
   Users,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
 
@@ -39,11 +40,11 @@ type PanelKey = "overview" | "practice" | "prepare" | "related";
 const SURFACE =
   "rounded-[30px] border border-white/70 bg-white/88 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";
 
-function getAreaMeta(area: ScenarioArea) {
+function getAreaMeta(area: ScenarioArea, t: ReturnType<typeof useTranslations>) {
   switch (area) {
     case "environmental":
       return {
-        label: "Environmental",
+        label: t("area.environmental"),
         icon: <Leaf className="h-4 w-4" />,
         badgeClass: "border-emerald-100 bg-emerald-50 text-emerald-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.18),transparent_46%)]",
@@ -52,7 +53,7 @@ function getAreaMeta(area: ScenarioArea) {
       };
     case "social":
       return {
-        label: "Social",
+        label: t("area.social"),
         icon: <Users className="h-4 w-4" />,
         badgeClass: "border-sky-100 bg-sky-50 text-sky-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.15),transparent_46%)]",
@@ -61,7 +62,7 @@ function getAreaMeta(area: ScenarioArea) {
       };
     case "governance":
       return {
-        label: "Governance",
+        label: t("area.governance"),
         icon: <ShieldCheck className="h-4 w-4" />,
         badgeClass: "border-violet-100 bg-violet-50 text-violet-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(139,92,246,0.15),transparent_46%)]",
@@ -70,7 +71,7 @@ function getAreaMeta(area: ScenarioArea) {
       };
     default:
       return {
-        label: "Cross-cutting",
+        label: t("area.crossCutting"),
         icon: <Layers3 className="h-4 w-4" />,
         badgeClass: "border-amber-100 bg-amber-50 text-amber-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(245,158,11,0.18),transparent_46%)]",
@@ -80,23 +81,23 @@ function getAreaMeta(area: ScenarioArea) {
   }
 }
 
-function getStatusMeta(status: ScenarioProgressStatus) {
+function getStatusMeta(status: ScenarioProgressStatus, t: ReturnType<typeof useTranslations>) {
   switch (status) {
     case "completed":
       return {
-        label: "Completed",
+        label: t("status.completed"),
         icon: <CheckCircle2 className="h-4 w-4" />,
         badgeClass: "border-emerald-100 bg-emerald-50 text-emerald-700",
       };
     case "in_progress":
       return {
-        label: "In progress",
+        label: t("status.inProgress"),
         icon: <CircleDashed className="h-4 w-4" />,
         badgeClass: "border-orange-100 bg-orange-50 text-orange-700",
       };
     default:
       return {
-        label: "Ready to start",
+        label: t("status.readyToStart"),
         icon: <PlayCircle className="h-4 w-4" />,
         badgeClass: "border-slate-200 bg-slate-50 text-slate-600",
       };
@@ -105,7 +106,7 @@ function getStatusMeta(status: ScenarioProgressStatus) {
 
 function formatDuration(minutes: number | null) {
   if (!minutes || minutes <= 0) {
-    return "Self-paced";
+    return "self-paced";
   }
 
   return `${minutes} min`;
@@ -123,33 +124,38 @@ function formatDate(date: string | null) {
   }).format(new Date(date));
 }
 
-function getHeroIntro(scenario: ScenarioDetailViewModel) {
+function getHeroIntro(scenario: ScenarioDetailViewModel, t: ReturnType<typeof useTranslations>) {
   switch (scenario.status) {
     case "completed":
-      return "You have already completed this scenario. Start a new run whenever you want to practice the flow again and compare your decisions.";
+      return t("heroIntro.completed");
     case "in_progress":
       return scenario.lessonLocation
-        ? "Your last session can be resumed from the point where you paused."
-        : "You have already started this scenario. Continue with the next decision point.";
+        ? t("heroIntro.resumeFromPause")
+        : t("heroIntro.resumeNextDecision");
     default:
-      return "Explore the context, understand the challenge, and launch the experience when you are ready.";
+      return t("heroIntro.default");
   }
 }
 
-function getProgressSummary(scenario: ScenarioDetailViewModel) {
+function getProgressSummary(
+  scenario: ScenarioDetailViewModel,
+  t: ReturnType<typeof useTranslations>,
+) {
   if (scenario.status === "completed") {
     return scenario.score !== null
-      ? `Finished with a score of ${scenario.score}%`
-      : "Scenario completed successfully";
+      ? t("progress.finishedWithScore", { score: scenario.score })
+      : t("progress.completedNoScore");
   }
 
   if (scenario.status === "in_progress") {
     return scenario.lessonLocation
-      ? `Resume from ${scenario.lessonLocation.replace(/[-_]/g, " ")}`
-      : "Continue from your latest checkpoint";
+      ? t("progress.resumeFrom", {
+          location: scenario.lessonLocation.replace(/[-_]/g, " "),
+        })
+      : t("progress.continueLatest");
   }
 
-  return "Ready for a first attempt";
+  return t("progress.ready");
 }
 
 function getProgressValue(scenario: ScenarioDetailViewModel) {
@@ -160,10 +166,13 @@ function getProgressValue(scenario: ScenarioDetailViewModel) {
   return 8;
 }
 
-function getPrimaryActionLabel(scenario: ScenarioDetailViewModel) {
-  if (scenario.status === "completed") return "Restart scenario";
-  if (scenario.status === "in_progress") return "Resume scenario";
-  return "Launch scenario";
+function getPrimaryActionLabel(
+  scenario: ScenarioDetailViewModel,
+  t: ReturnType<typeof useTranslations>,
+) {
+  if (scenario.status === "completed") return t("nextAction.restart");
+  if (scenario.status === "in_progress") return t("nextAction.resume");
+  return t("nextAction.launch");
 }
 
 function getPrimaryActionIcon(status: ScenarioProgressStatus) {
@@ -174,52 +183,57 @@ function getPrimaryActionIcon(status: ScenarioProgressStatus) {
   return <PlayCircle className="h-4.5 w-4.5" />;
 }
 
-function getNextActionCopy(status: ScenarioProgressStatus) {
+function getNextActionCopy(status: ScenarioProgressStatus, t: ReturnType<typeof useTranslations>) {
   if (status === "completed") {
-    return "Launch a fresh attempt to go through the scenario again and compare how a new run unfolds.";
+    return t("nextAction.completedDescription");
   }
 
   if (status === "in_progress") {
-    return "Continue from your latest checkpoint and keep building momentum.";
+    return t("nextAction.inProgressDescription");
   }
 
-  return "Launch the scenario to begin the guided experience.";
+  return t("nextAction.defaultDescription");
 }
 
-function getPracticePoints(area: ScenarioArea) {
+function getPracticePoints(area: ScenarioArea, t: ReturnType<typeof useTranslations>) {
   switch (area) {
     case "environmental":
       return [
-        "Balance sustainability goals with operational trade-offs.",
-        "Interpret signals related to efficiency, risk, and impact.",
-        "Choose actions that improve long-term environmental outcomes.",
+        t("practice.points.environmental.0"),
+        t("practice.points.environmental.1"),
+        t("practice.points.environmental.2"),
       ];
     case "social":
       return [
-        "Respond to stakeholder tension with empathy and clarity.",
-        "Assess people-focused consequences across competing priorities.",
-        "Practice inclusive decision-making under real-world pressure.",
+        t("practice.points.social.0"),
+        t("practice.points.social.1"),
+        t("practice.points.social.2"),
       ];
     case "governance":
       return [
-        "Evaluate accountability pathways and escalation choices.",
-        "Strengthen judgment around transparency and policy alignment.",
-        "Understand how governance design shapes implementation quality.",
+        t("practice.points.governance.0"),
+        t("practice.points.governance.1"),
+        t("practice.points.governance.2"),
       ];
     default:
       return [
-        "Connect ESG dimensions through one coherent decision flow.",
-        "Recognise interdependencies between people, process, and impact.",
-        "Apply structured thinking in complex practical situations.",
+        t("practice.points.crossCutting.0"),
+        t("practice.points.crossCutting.1"),
+        t("practice.points.crossCutting.2"),
       ];
   }
 }
 
-function getPreparationChecklist(scenario: ScenarioDetailViewModel) {
+function getPreparationChecklist(
+  scenario: ScenarioDetailViewModel,
+  t: ReturnType<typeof useTranslations>,
+) {
   return [
-    `Set aside around ${formatDuration(scenario.estimatedDurationMinutes).toLowerCase()} for a focused run.`,
-    "Expect staged choices, immediate feedback, and practical trade-offs.",
-    "Revisit the scenario later to compare how different decisions may shape the outcome.",
+    t("prepare.checklist.time", {
+      duration: formatDuration(scenario.estimatedDurationMinutes).toLowerCase(),
+    }),
+    t("prepare.checklist.flow"),
+    t("prepare.checklist.revisit"),
   ];
 }
 
@@ -251,15 +265,15 @@ function ToggleButton({
 }
 
 export default function ScenarioDetailShell({ locale, scenario, relatedScenarios }: Props) {
+  const t = useTranslations("Protected.ScenarioDetailShell");
   const [openPanel, setOpenPanel] = useState<PanelKey>("overview");
   const contentSectionRef = useRef<HTMLDivElement | null>(null);
 
-  const areaMeta = getAreaMeta(scenario.area);
-  const statusMeta = getStatusMeta(scenario.status);
+  const areaMeta = getAreaMeta(scenario.area, t);
+  const statusMeta = getStatusMeta(scenario.status, t);
   const progressValue = getProgressValue(scenario);
-
-  const practicePoints = useMemo(() => getPracticePoints(scenario.area), [scenario.area]);
-  const preparationChecklist = useMemo(() => getPreparationChecklist(scenario), [scenario]);
+  const practicePoints = useMemo(() => getPracticePoints(scenario.area, t), [scenario.area, t]);
+  const preparationChecklist = useMemo(() => getPreparationChecklist(scenario, t), [scenario, t]);
 
   const handleScrollToPanel = (panel: PanelKey) => {
     setOpenPanel(panel);
@@ -279,7 +293,7 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
           className="inline-flex items-center gap-2 text-[0.95rem] font-medium text-[#5f6977] transition hover:text-[#31425a]"
         >
           <ArrowLeft className="h-4.5 w-4.5" />
-          Back to scenarios
+          {t("back")}
         </Link>
       </div>
 
@@ -308,14 +322,14 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
                 {scenario.isFeatured && (
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-100 bg-amber-50 px-3 py-1.5 text-[0.72rem] font-bold uppercase tracking-[0.14em] text-amber-700">
                     <Sparkles className="h-3.5 w-3.5" />
-                    Featured
+                    {t("featured")}
                   </span>
                 )}
               </div>
 
               <div className="max-w-4xl">
                 <p className="text-[0.76rem] font-bold uppercase tracking-[0.18em] text-[#8a97a6]">
-                  Scenario launcher
+                  {t("eyebrow")}
                 </p>
 
                 <h1 className="mt-3 max-w-4xl text-3xl font-bold tracking-[-0.035em] text-[#31425a] md:text-4xl xl:text-[3.05rem] xl:leading-[1.03]">
@@ -328,30 +342,30 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
 
                 <div className="mt-6 inline-flex items-start gap-2 rounded-2xl border border-[#e8edf3] bg-white/86 px-4 py-3 text-sm text-[#556274] shadow-[0_8px_24px_rgba(35,45,62,0.04)]">
                   <Sparkles className="mt-0.5 h-4.5 w-4.5 shrink-0 text-[#0b9c72]" />
-                  <span>{getHeroIntro(scenario)}</span>
+                  <span>{getHeroIntro(scenario, t)}</span>
                 </div>
               </div>
 
               <div className="grid gap-3 sm:grid-cols-2 xl:max-w-4xl xl:grid-cols-4">
                 <MetricCard
                   icon={<Clock3 className="h-4 w-4" />}
-                  label="Duration"
+                  label={t("metrics.duration")}
                   value={formatDuration(scenario.estimatedDurationMinutes)}
                 />
                 <MetricCard
                   icon={<Target className="h-4 w-4" />}
-                  label="Focus"
-                  value="Decision-making"
+                  label={t("metrics.focus")}
+                  value={t("metrics.decisionMaking")}
                 />
                 <MetricCard
                   icon={<Trophy className="h-4 w-4" />}
-                  label="Latest score"
+                  label={t("metrics.latestScore")}
                   value={scenario.score !== null ? `${scenario.score}%` : "—"}
                 />
                 <MetricCard
                   icon={<Calendar className="h-4 w-4" />}
-                  label="Last opened"
-                  value={formatDate(scenario.lastOpenedAt) ?? "Not yet"}
+                  label={t("metrics.lastOpened")}
+                  value={formatDate(scenario.lastOpenedAt) ?? t("metrics.notYet")}
                 />
               </div>
             </div>
@@ -366,12 +380,12 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
                   {progressValue}%
                 </div>
                 <div className="text-[0.72rem] font-bold uppercase tracking-[0.16em] text-[#8a97a6]">
-                  Completed
+                  {t("progress.completed")}
                 </div>
               </div>
 
               <p className="mt-2 text-sm leading-6 text-[#667180]">
-                {getProgressSummary(scenario)}
+                {getProgressSummary(scenario, t)}
               </p>
 
               <div className="mt-5 h-2.5 overflow-hidden rounded-full bg-[#edf2f7]">
@@ -386,11 +400,11 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
 
             <div className="rounded-[28px] border border-[#e7edf3] bg-white/84 px-5 py-6 shadow-[0_10px_30px_rgba(35,45,62,0.05)] backdrop-blur-xl">
               <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                Next action
+                {t("nextAction.title")}
               </p>
 
               <p className="mt-3 text-sm leading-6 text-[#667180]">
-                {getNextActionCopy(scenario.status)}
+                {getNextActionCopy(scenario.status, t)}
               </p>
 
               <div className="mt-5 grid gap-3">
@@ -399,7 +413,7 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
                   className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#31425a] px-4 py-4 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347]"
                 >
                   {getPrimaryActionIcon(scenario.status)}
-                  {getPrimaryActionLabel(scenario)}
+                  {getPrimaryActionLabel(scenario, t)}
                 </Link>
 
                 <button
@@ -410,7 +424,7 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
                   className="inline-flex items-center justify-center gap-2 rounded-2xl border border-[#d9e2ec] bg-white px-4 py-4 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc]"
                 >
                   <Layers3 className="h-4.5 w-4.5" />
-                  Explore journey
+                  {t("nextAction.exploreJourney")}
                 </button>
               </div>
             </div>
@@ -427,7 +441,7 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
                 setOpenPanel("overview");
               }}
               icon={<Sparkles className="h-4 w-4" />}
-              label="Overview"
+              label={t("tabs.overview")}
             />
             <ToggleButton
               active={openPanel === "practice"}
@@ -435,7 +449,7 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
                 setOpenPanel("practice");
               }}
               icon={<Target className="h-4 w-4" />}
-              label="What you will practice"
+              label={t("tabs.practice")}
             />
             <ToggleButton
               active={openPanel === "prepare"}
@@ -443,7 +457,7 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
                 setOpenPanel("prepare");
               }}
               icon={<Compass className="h-4 w-4" />}
-              label="Before you start"
+              label={t("tabs.prepare")}
             />
             <ToggleButton
               active={openPanel === "related"}
@@ -451,7 +465,7 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
                 setOpenPanel("related");
               }}
               icon={<ArrowRight className="h-4 w-4" />}
-              label="Related"
+              label={t("tabs.related")}
             />
           </div>
         </div>
@@ -469,7 +483,7 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
               >
                 <div className="rounded-[26px] border border-[#edf2f7] bg-white/85 p-5 shadow-[0_10px_26px_rgba(35,45,62,0.04)]">
                   <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                    Scenario overview
+                    {t("overview.title")}
                   </p>
                   <p className="mt-4 text-[0.98rem] leading-8 text-[#5d6978]">
                     {scenario.description}
@@ -481,13 +495,13 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
 
                 <div className="rounded-[26px] border border-[#edf2f7] bg-[#fbfcfd] p-5 shadow-[0_10px_26px_rgba(35,45,62,0.04)]">
                   <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                    Experience highlights
+                    {t("overview.highlightsTitle")}
                   </p>
                   <div className="mt-4 space-y-3">
                     {[
-                      "A guided flow that unfolds step by step.",
-                      "Feedback after key choices to keep the learning loop active.",
-                      "A clear structure designed for focused practice rather than passive reading.",
+                      t("overview.highlights.0"),
+                      t("overview.highlights.1"),
+                      t("overview.highlights.2"),
                     ].map((item) => (
                       <div
                         key={item}
@@ -519,7 +533,9 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
                     <div className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-[#e5ecf3] bg-[#f8fafc] text-[#31425a]">
                       <span className="text-sm font-bold">0{index + 1}</span>
                     </div>
-                    <h3 className="mt-4 text-base font-bold text-[#31425a]">Applied practice</h3>
+                    <h3 className="mt-4 text-base font-bold text-[#31425a]">
+                      {t("practice.cardTitle")}
+                    </h3>
                     <p className="mt-3 text-sm leading-7 text-[#667180]">{point}</p>
                   </div>
                 ))}
@@ -537,7 +553,7 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
               >
                 <div className="rounded-[26px] border border-[#edf2f7] bg-white/86 p-5 shadow-[0_10px_26px_rgba(35,45,62,0.04)]">
                   <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                    Before you launch
+                    {t("prepare.title")}
                   </p>
 
                   <div className="mt-4 space-y-3">
@@ -555,11 +571,10 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
 
                 <div className="rounded-[26px] border border-[#edf2f7] bg-[#fbfcfd] p-5 shadow-[0_10px_26px_rgba(35,45,62,0.04)]">
                   <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                    Quick tip
+                    {t("prepare.quickTipTitle")}
                   </p>
                   <p className="mt-4 text-sm leading-7 text-[#667180]">
-                    This page is a calm staging point before the interactive experience. Review the
-                    context, then launch when you are ready for a focused run.
+                    {t("prepare.quickTipText")}
                   </p>
                 </div>
               </motion.div>
@@ -577,8 +592,8 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
                 {relatedScenarios.length > 0 ? (
                   <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
                     {relatedScenarios.map((item) => {
-                      const relatedArea = getAreaMeta(item.area);
-                      const relatedStatus = getStatusMeta(item.status);
+                      const relatedArea = getAreaMeta(item.area, t);
+                      const relatedStatus = getStatusMeta(item.status, t);
 
                       return (
                         <Link
@@ -607,7 +622,7 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
                           </p>
 
                           <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#31425a]">
-                            Open launcher
+                            {t("relatedPanel.openLauncher")}
                             <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
                           </div>
                         </Link>
@@ -616,9 +631,11 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
                   </div>
                 ) : (
                   <div className="rounded-[26px] border border-dashed border-[#dbe3eb] bg-[#fbfcfd] px-6 py-8 text-center">
-                    <p className="text-sm font-semibold text-[#31425a]">No related scenarios yet</p>
+                    <p className="text-sm font-semibold text-[#31425a]">
+                      {t("relatedPanel.emptyTitle")}
+                    </p>
                     <p className="mt-2 text-sm leading-6 text-[#667180]">
-                      Additional recommendations will appear here as the scenario library grows.
+                      {t("relatedPanel.emptyDescription")}
                     </p>
                   </div>
                 )}

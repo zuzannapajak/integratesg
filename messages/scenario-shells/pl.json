@@ -1,0 +1,127 @@
+{
+  "Protected": {
+    "ScenarioDetailShell": {
+      "back": "Powrót do scenariuszy",
+      "area": {
+        "environmental": "Environmental",
+        "social": "Social",
+        "governance": "Governance",
+        "crossCutting": "Cross-cutting"
+      },
+      "status": {
+        "completed": "Ukończono",
+        "inProgress": "W trakcie",
+        "readyToStart": "Gotowe do rozpoczęcia"
+      },
+      "featured": "Wyróżnione",
+      "eyebrow": "Launcher scenariusza",
+      "heroIntro": {
+        "completed": "Ten scenariusz został już ukończony. Możesz uruchomić nowy przebieg w dowolnym momencie, aby ponownie przećwiczyć jego przebieg i porównać swoje decyzje.",
+        "resumeFromPause": "Ostatnią sesję można wznowić od miejsca, w którym została przerwana.",
+        "resumeNextDecision": "Ten scenariusz został już rozpoczęty. Kontynuuj od kolejnego punktu decyzyjnego.",
+        "default": "Zapoznaj się z kontekstem, zrozum wyzwanie i uruchom doświadczenie, gdy będziesz gotowy."
+      },
+      "metrics": {
+        "duration": "Czas trwania",
+        "focus": "Cel",
+        "latestScore": "Ostatni wynik",
+        "lastOpened": "Ostatnio otwarto",
+        "decisionMaking": "Podejmowanie decyzji",
+        "notYet": "Jeszcze nie"
+      },
+      "progress": {
+        "completed": "Ukończono",
+        "finishedWithScore": "Zakończono z wynikiem {score}%",
+        "completedNoScore": "Scenariusz ukończony pomyślnie",
+        "resumeFrom": "Wznów od {location}",
+        "continueLatest": "Kontynuuj od ostatniego checkpointu",
+        "ready": "Gotowe do pierwszej próby"
+      },
+      "nextAction": {
+        "title": "Następne działanie",
+        "completedDescription": "Uruchom nową próbę, aby ponownie przejść przez scenariusz i porównać, jak może wyglądać kolejny przebieg.",
+        "inProgressDescription": "Kontynuuj od ostatniego checkpointu i utrzymaj tempo pracy.",
+        "defaultDescription": "Uruchom scenariusz, aby rozpocząć prowadzone doświadczenie.",
+        "restart": "Uruchom scenariusz ponownie",
+        "resume": "Wznów scenariusz",
+        "launch": "Uruchom scenariusz",
+        "exploreJourney": "Poznaj przebieg"
+      },
+      "tabs": {
+        "overview": "Overview",
+        "practice": "Co będziesz ćwiczyć",
+        "prepare": "Przed rozpoczęciem",
+        "related": "Powiązane"
+      },
+      "overview": {
+        "title": "Overview scenariusza",
+        "highlightsTitle": "Najważniejsze cechy doświadczenia",
+        "highlights": [
+          "Prowadzony przebieg, który rozwija się krok po kroku.",
+          "Feedback po kluczowych decyzjach, aby utrzymać aktywną pętlę nauki.",
+          "Jasna struktura zaprojektowana do skupionej praktyki zamiast pasywnego czytania."
+        ]
+      },
+      "practice": {
+        "cardTitle": "Praktyka zastosowana",
+        "points": {
+          "environmental": [
+            "Równoważ cele zrównoważonego rozwoju z kompromisami operacyjnymi.",
+            "Interpretuj sygnały związane z efektywnością, ryzykiem i wpływem.",
+            "Wybieraj działania poprawiające długoterminowe efekty środowiskowe."
+          ],
+          "social": [
+            "Reaguj na napięcia interesariuszy z empatią i klarownością.",
+            "Oceniaj konsekwencje skoncentrowane na ludziach przy konkurujących priorytetach.",
+            "Ćwicz inkluzywne podejmowanie decyzji pod presją realnych sytuacji."
+          ],
+          "governance": [
+            "Oceniaj ścieżki odpowiedzialności i wybory eskalacyjne.",
+            "Wzmacniaj osąd dotyczący transparentności i zgodności z politykami.",
+            "Zrozum, jak projekt governance wpływa na jakość wdrożenia."
+          ],
+          "crossCutting": [
+            "Łącz wymiary ESG w jeden spójny przebieg decyzyjny.",
+            "Rozpoznawaj współzależności między ludźmi, procesem i wpływem.",
+            "Stosuj uporządkowane myślenie w złożonych sytuacjach praktycznych."
+          ]
+        }
+      },
+      "prepare": {
+        "title": "Przed uruchomieniem",
+        "quickTipTitle": "Szybka wskazówka",
+        "quickTipText": "Ta strona jest spokojnym punktem przygotowania przed interaktywnym doświadczeniem. Przejrzyj kontekst, a potem uruchom scenariusz, gdy będziesz gotowy na skupioną sesję.",
+        "checklist": {
+          "time": "Zarezerwuj około {duration} na skupione przejście.",
+          "flow": "Spodziewaj się etapowych wyborów, natychmiastowego feedbacku i praktycznych kompromisów.",
+          "revisit": "Wróć do scenariusza później, aby porównać, jak różne decyzje mogą wpłynąć na wynik."
+        }
+      },
+      "relatedPanel": {
+        "openLauncher": "Otwórz launcher",
+        "emptyTitle": "Brak powiązanych scenariuszy",
+        "emptyDescription": "Dodatkowe rekomendacje pojawią się tutaj wraz z rozwojem biblioteki scenariuszy."
+      }
+    },
+    "ScenarioLaunchShell": {
+      "area": {
+        "environmental": "Environmental",
+        "social": "Social",
+        "governance": "Governance",
+        "crossCutting": "Cross-cutting"
+      }
+    },
+    "ScenarioSwitcher": {
+      "tabs": {
+        "mine": "Moje scenariusze",
+        "all": "Wszystkie scenariusze"
+      },
+      "empty": {
+        "mineTitle": "Brak śledzonych scenariuszy",
+        "mineDescription": "Uruchom scenariusz, aby zbudować swoją osobistą bibliotekę scenariuszy i wrócić do niej później.",
+        "allTitle": "Nie znaleziono scenariuszy",
+        "allDescription": "Spróbuj zmienić filtr obszaru ESG lub frazę wyszukiwania, aby przeglądać metadane scenariuszy."
+      }
+    }
+  }
+}

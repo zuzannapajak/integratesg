@@ -53,14 +53,28 @@ export default getRequestConfig(async ({ requestLocale }) => {
     default: Messages;
   };
 
+  const scenarioShellsModule = (await import(`../messages/scenario-shells/${locale}.json`)) as {
+    default: Messages;
+  };
+
+  const eportfolioShellsModule = (await import(`../messages/eportfolio-shells/${locale}.json`)) as {
+    default: Messages;
+  };
+
   return {
     locale,
     messages: deepMerge(
       deepMerge(
-        deepMerge(baseMessagesModule.default, protectedListShellsModule.default),
-        curriculumShellsModule.default,
+        deepMerge(
+          deepMerge(
+            deepMerge(baseMessagesModule.default, protectedListShellsModule.default),
+            curriculumShellsModule.default,
+          ),
+          modulePlayerShellsModule.default,
+        ),
+        scenarioShellsModule.default,
       ),
-      modulePlayerShellsModule.default,
+      eportfolioShellsModule.default,
     ),
   };
 });

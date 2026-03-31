@@ -1,0 +1,32 @@
+{
+  "Protected": {
+    "CaseStudyCompletionButton": {
+      "eyebrow": "Ukończenie",
+      "completedText": "To studium przypadku zostało już oznaczone jako ukończone.",
+      "defaultText": "Oznacz to studium przypadku jako ukończone, gdy zakończysz jego przegląd.",
+      "completedOn": "Ukończono {date}",
+      "completedRecently": "Ukończono niedawno",
+      "button": {
+        "completed": "Ukończono",
+        "saving": "Zapisywanie...",
+        "markCompleted": "Oznacz jako ukończone"
+      }
+    },
+    "CaseStudyLaunchShell": {
+      "back": "Powrót do ePortfolio",
+      "area": {
+        "environmental": "Environmental",
+        "social": "Social",
+        "governance": "Governance",
+        "crossCutting": "Cross-cutting"
+      },
+      "featured": "Wyróżnione",
+      "completed": "Ukończono",
+      "organization": "Organizacja",
+      "industry": "Branża",
+      "contentTitle": "Treść studium przypadku",
+      "takeawaysTitle": "Kluczowe wnioski",
+      "takeawaysEmpty": "Kluczowe wnioski pojawią się tutaj po ich dodaniu do tego studium przypadku."
+    }
+  }
+}

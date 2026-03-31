@@ -3,6 +3,7 @@
 import ScenarioListShell from "@/components/scenarios/scenario-list-shell";
 import { ScenarioListItemViewModel } from "@/lib/scenarios/types";
 import { PlayCircle, Sparkles } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 type ViewMode = "my-scenarios" | "all-scenarios";
@@ -14,6 +15,7 @@ type Props = {
 };
 
 export default function ScenarioSwitcher({ locale, myScenarios, allScenarios }: Props) {
+  const t = useTranslations("Protected.ScenarioSwitcher");
   const [viewMode, setViewMode] = useState<ViewMode>("my-scenarios");
 
   return (
@@ -32,7 +34,7 @@ export default function ScenarioSwitcher({ locale, myScenarios, allScenarios }: 
             }`}
           >
             <Sparkles className="h-4 w-4" />
-            My scenarios
+            {t("tabs.mine")}
           </button>
 
           <button
@@ -47,7 +49,7 @@ export default function ScenarioSwitcher({ locale, myScenarios, allScenarios }: 
             }`}
           >
             <PlayCircle className="h-4 w-4" />
-            All scenarios
+            {t("tabs.all")}
           </button>
         </div>
       </div>
@@ -57,16 +59,16 @@ export default function ScenarioSwitcher({ locale, myScenarios, allScenarios }: 
           locale={locale}
           items={myScenarios}
           showRefineControls={false}
-          emptyTitle="No tracked scenarios yet"
-          emptyDescription="Start a scenario to build your personal scenario library and return to it later."
+          emptyTitle={t("empty.mineTitle")}
+          emptyDescription={t("empty.mineDescription")}
         />
       ) : (
         <ScenarioListShell
           locale={locale}
           items={allScenarios}
           showRefineControls
-          emptyTitle="No scenarios found"
-          emptyDescription="Try adjusting the ESG area filter or search phrase to explore scenario metadata."
+          emptyTitle={t("empty.allTitle")}
+          emptyDescription={t("empty.allDescription")}
         />
       )}
     </section>

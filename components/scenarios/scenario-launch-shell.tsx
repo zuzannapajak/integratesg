@@ -3,6 +3,7 @@
 import ScenarioPlayerFrame from "@/components/scenarios/scenario-player-frame";
 import { ScenarioArea, ScenarioLaunchViewModel } from "@/lib/scenarios/types";
 import { Leaf, ShieldCheck, Sparkles, Users } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useMemo } from "react";
 
 type Props = {
@@ -10,29 +11,29 @@ type Props = {
   scenario: ScenarioLaunchViewModel;
 };
 
-function getAreaMeta(area: ScenarioArea) {
+function getAreaMeta(area: ScenarioArea, t: ReturnType<typeof useTranslations>) {
   switch (area) {
     case "environmental":
       return {
-        label: "Environmental",
+        label: t("area.environmental"),
         icon: <Leaf className="h-4 w-4" />,
         badgeClass: "border-emerald-100 bg-emerald-50 text-emerald-700",
       };
     case "social":
       return {
-        label: "Social",
+        label: t("area.social"),
         icon: <Users className="h-4 w-4" />,
         badgeClass: "border-sky-100 bg-sky-50 text-sky-700",
       };
     case "governance":
       return {
-        label: "Governance",
+        label: t("area.governance"),
         icon: <ShieldCheck className="h-4 w-4" />,
         badgeClass: "border-violet-100 bg-violet-50 text-violet-700",
       };
     default:
       return {
-        label: "Cross-cutting",
+        label: t("area.crossCutting"),
         icon: <Sparkles className="h-4 w-4" />,
         badgeClass: "border-amber-100 bg-amber-50 text-amber-700",
       };
@@ -40,7 +41,8 @@ function getAreaMeta(area: ScenarioArea) {
 }
 
 export default function ScenarioLaunchShell({ locale, scenario }: Props) {
-  const areaMeta = useMemo(() => getAreaMeta(scenario.area), [scenario.area]);
+  const t = useTranslations("Protected.ScenarioLaunchShell");
+  const areaMeta = useMemo(() => getAreaMeta(scenario.area, t), [scenario.area, t]);
 
   return (
     <div className="mx-auto flex min-h-screen max-w-450 flex-col px-4 py-4 sm:px-6 lg:px-8">
