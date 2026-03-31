@@ -178,7 +178,7 @@ function DashboardHero({
   gamificationStats?: DashboardGamificationStat[];
 }) {
   return (
-    <header className={`${SURFACE} mb-8 overflow-hidden pt-6 px-6 pb-2 md:pt-6 md:px-6 md:pb-5`}>
+    <header className={`${SURFACE} mb-8 overflow-hidden px-6 pb-2 pt-6 md:px-6 md:pb-5 md:pt-6`}>
       <div className="flex flex-col gap-4">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-start">
           <div className="flex items-start gap-5">
@@ -239,10 +239,11 @@ function TopStreakBadge({
 }) {
   const t = useTranslations("Protected.DashboardShell");
 
-  const streakStat =
-    gamificationStats.find((item) => item.label.toLowerCase().includes("streak")) ?? null;
+  const streakStat = gamificationStats[0] ?? null;
 
   if (!streakStat) return null;
+
+  const streakValue = Number.parseInt(streakStat.value, 10) || 0;
 
   const flameVariants: Variants = {
     initial: { scale: 1, opacity: 0.8 },
@@ -307,7 +308,7 @@ function TopStreakBadge({
               className="h-1 w-3 rounded-full"
               style={{
                 backgroundColor:
-                  i <= parseInt(streakStat.value) % 5 || parseInt(streakStat.value) >= 5
+                  i <= streakValue % 5 || streakValue >= 5
                     ? roleConfig.accent
                     : `${roleConfig.accent}20`,
               }}
@@ -349,7 +350,7 @@ function ContinueLearningHeroCard({
       variants={FADE_UP}
       initial="hidden"
       animate="visible"
-      className="relative overflow-hidden rounded-[30px] border border-white/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.97)_0%,rgba(251,251,249,0.94)_100%)] p-6 md:p-7 shadow-[0_18px_50px_rgba(35,45,62,0.08)]"
+      className="relative overflow-hidden rounded-[30px] border border-white/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.97)_0%,rgba(251,251,249,0.94)_100%)] p-6 shadow-[0_18px_50px_rgba(35,45,62,0.08)] md:p-7"
     >
       <div
         className="pointer-events-none absolute inset-0"
@@ -377,6 +378,7 @@ function ContinueLearningHeroCard({
             </p>
           </div>
         </div>
+
         <div className="flex shrink-0 justify-end md:pb-1">
           <Link
             href={continueLearning?.href ?? fallbackHref}
@@ -423,6 +425,7 @@ function LearnerDashboard({
           meta: t("coreArea.educator.primary.meta", { count: publishedCoursesCount }),
           href: `/${locale}/curriculum`,
           accentColor: ESG_colors.BLUE,
+          buttonLabel: t("coreArea.buttons.openModule"),
           backgroundStyle: {
             background:
               "linear-gradient(180deg, rgba(244,248,255,0.98) 0%, rgba(255,255,255,0.96) 100%)",
@@ -445,6 +448,7 @@ function LearnerDashboard({
           meta: t("coreArea.student.primary.meta"),
           href: `/${locale}/scenarios`,
           accentColor: ESG_colors.GREEN,
+          buttonLabel: t("coreArea.buttons.openScenarios"),
           backgroundStyle: {
             background:
               "linear-gradient(180deg, rgba(243,251,247,0.98) 0%, rgba(255,255,255,0.96) 100%)",
@@ -470,6 +474,7 @@ function LearnerDashboard({
           meta: t("coreArea.educator.secondary.meta"),
           href: `/${locale}/eportfolio`,
           accentColor: ESG_colors.ORANGE,
+          buttonLabel: t("coreArea.buttons.openEportfolio"),
           backgroundStyle: {
             background:
               "linear-gradient(180deg, rgba(255,248,243,0.98) 0%, rgba(255,255,255,0.96) 100%)",
@@ -492,6 +497,7 @@ function LearnerDashboard({
           meta: t("coreArea.student.secondary.meta"),
           href: `/${locale}/eportfolio`,
           accentColor: ESG_colors.BLUE,
+          buttonLabel: t("coreArea.buttons.openEportfolio"),
           backgroundStyle: {
             background:
               "linear-gradient(180deg, rgba(244,248,255,0.98) 0%, rgba(255,255,255,0.96) 100%)",
@@ -521,6 +527,7 @@ function LearnerDashboard({
           meta={primaryCard.meta}
           href={primaryCard.href}
           accentColor={primaryCard.accentColor}
+          buttonLabel={primaryCard.buttonLabel}
           backgroundStyle={primaryCard.backgroundStyle}
           iconStyle={primaryCard.iconStyle}
           metaStyle={primaryCard.metaStyle}
@@ -533,6 +540,7 @@ function LearnerDashboard({
           meta={secondaryCard.meta}
           href={secondaryCard.href}
           accentColor={secondaryCard.accentColor}
+          buttonLabel={secondaryCard.buttonLabel}
           backgroundStyle={secondaryCard.backgroundStyle}
           iconStyle={secondaryCard.iconStyle}
           metaStyle={secondaryCard.metaStyle}
@@ -639,6 +647,7 @@ function CoreAreaCard({
   meta,
   href,
   accentColor,
+  buttonLabel,
   backgroundStyle,
   iconStyle,
   metaStyle,
@@ -649,19 +658,11 @@ function CoreAreaCard({
   meta: string;
   href: string;
   accentColor: string;
+  buttonLabel: string;
   backgroundStyle?: React.CSSProperties;
   iconStyle?: React.CSSProperties;
   metaStyle?: React.CSSProperties;
 }) {
-  const t = useTranslations("Protected.DashboardShell");
-
-  const buttonLabel =
-    title === t("coreArea.educator.primary.title")
-      ? t("coreArea.buttons.openModule")
-      : title === t("coreArea.student.primary.title")
-        ? t("coreArea.buttons.openScenarios")
-        : t("coreArea.buttons.openEportfolio");
-
   return (
     <Link
       href={href}
