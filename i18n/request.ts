@@ -3,6 +3,29 @@ import { routing } from "./routing";
 
 type Messages = Record<string, unknown>;
 
+function deepMerge(base: Messages, override: Messages): Messages {
+  const result: Messages = { ...base };
+
+  for (const [key, value] of Object.entries(override)) {
+    const existing = result[key];
+
+    if (
+      value &&
+      typeof value === "object" &&
+      !Array.isArray(value) &&
+      existing &&
+      typeof existing === "object" &&
+      !Array.isArray(existing)
+    ) {
+      result[key] = deepMerge(existing as Messages, value as Messages);
+    } else {
+      result[key] = value;
+    }
+  }
+
+  return result;
+}
+
 export default getRequestConfig(async ({ requestLocale }) => {
   let locale = await requestLocale;
 
@@ -10,12 +33,18 @@ export default getRequestConfig(async ({ requestLocale }) => {
     locale = routing.defaultLocale;
   }
 
-  const messagesModule = (await import(`../messages/${locale}.json`)) as {
+  const baseMessagesModule = (await import(`../messages/${locale}.json`)) as {
+    default: Messages;
+  };
+
+  const protectedListShellsModule = (await import(
+    `../messages/protected-list-shells/${locale}.json`
+  )) as {
     default: Messages;
   };
 
   return {
     locale,
-    messages: messagesModule.default,
+    messages: deepMerge(baseMessagesModule.default, protectedListShellsModule.default),
   };
 });

@@ -17,6 +17,7 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { ChangeEvent, useMemo, useState } from "react";
 
@@ -33,32 +34,32 @@ const SURFACE =
 
 const ITEMS_PER_PAGE = 12;
 
-function getAreaMeta(area: ScenarioArea) {
+function getAreaMeta(area: ScenarioArea, t: ReturnType<typeof useTranslations>) {
   switch (area) {
     case "environmental":
       return {
-        label: "Environmental",
+        label: t("area.environmental"),
         icon: <Leaf className="h-4 w-4" />,
         badgeClass: "border-emerald-100 bg-emerald-50 text-emerald-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.16),transparent_45%)]",
       };
     case "social":
       return {
-        label: "Social",
+        label: t("area.social"),
         icon: <Users className="h-4 w-4" />,
         badgeClass: "border-sky-100 bg-sky-50 text-sky-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.14),transparent_45%)]",
       };
     case "governance":
       return {
-        label: "Governance",
+        label: t("area.governance"),
         icon: <ShieldCheck className="h-4 w-4" />,
         badgeClass: "border-violet-100 bg-violet-50 text-violet-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(139,92,246,0.14),transparent_45%)]",
       };
     default:
       return {
-        label: "Cross-cutting",
+        label: t("area.crossCutting"),
         icon: <Sparkles className="h-4 w-4" />,
         badgeClass: "border-amber-100 bg-amber-50 text-amber-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(245,158,11,0.16),transparent_45%)]",
@@ -66,29 +67,32 @@ function getAreaMeta(area: ScenarioArea) {
   }
 }
 
-function formatDuration(minutes: number | null) {
+function formatDuration(minutes: number | null, t: ReturnType<typeof useTranslations>) {
   if (!minutes || minutes <= 0) {
-    return "Self-paced";
+    return t("duration.selfPaced");
   }
 
-  return `${minutes} min`;
+  return t("duration.minutes", { minutes });
 }
 
-function getTrackingMeta(status?: ScenarioProgressStatus | null) {
+function getTrackingMeta(
+  status: ScenarioProgressStatus | null | undefined,
+  t: ReturnType<typeof useTranslations>,
+) {
   switch (status) {
     case "completed":
       return {
-        label: "Completed",
+        label: t("status.completed"),
         className: "text-emerald-700",
       };
     case "in_progress":
       return {
-        label: "In progress",
+        label: t("status.inProgress"),
         className: "text-amber-700",
       };
     default:
       return {
-        label: "Not started",
+        label: t("status.notStarted"),
         className: "text-[#31425a]",
       };
   }
@@ -97,10 +101,11 @@ function getTrackingMeta(status?: ScenarioProgressStatus | null) {
 export default function ScenarioListShell({
   locale,
   items,
-  emptyTitle = "No scenarios found",
-  emptyDescription = "Try adjusting the ESG area filter or search phrase to explore scenario metadata.",
+  emptyTitle,
+  emptyDescription,
   showRefineControls = true,
 }: Props) {
+  const t = useTranslations("Protected.ScenarioListShell");
   const [search, setSearch] = useState("");
   const [selectedArea, setSelectedArea] = useState<ScenarioArea | "all">("all");
   const [sortBy, setSortBy] = useState<"title" | "duration">("title");
@@ -154,12 +159,11 @@ export default function ScenarioListShell({
           <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
             <div className="flex items-center gap-2 text-[0.82rem] font-semibold uppercase tracking-[0.14em] text-[#7b8794]">
               <SlidersHorizontal className="h-4 w-4" />
-              Refine scenario view
+              {t("refineTitle")}
             </div>
 
             <div className="text-sm text-[#667180]">
-              Showing <span className="font-semibold text-[#31425a]">{filteredItems.length}</span>{" "}
-              scenarios
+              {t("showingCount", { count: filteredItems.length })}
             </div>
           </div>
 
@@ -172,7 +176,7 @@ export default function ScenarioListShell({
                   setSearch(e.target.value);
                   handleFilterChange();
                 }}
-                placeholder="Search scenarios..."
+                placeholder={t("searchPlaceholder")}
                 className="w-full border-none bg-transparent text-[0.95rem] text-[#31425a] outline-none"
               />
             </label>
@@ -185,11 +189,11 @@ export default function ScenarioListShell({
               }}
               className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
             >
-              <option value="all">All ESG areas</option>
-              <option value="environmental">Environmental</option>
-              <option value="social">Social</option>
-              <option value="governance">Governance</option>
-              <option value="cross-cutting">Cross-cutting</option>
+              <option value="all">{t("area.all")}</option>
+              <option value="environmental">{t("area.environmental")}</option>
+              <option value="social">{t("area.social")}</option>
+              <option value="governance">{t("area.governance")}</option>
+              <option value="cross-cutting">{t("area.crossCutting")}</option>
             </select>
 
             <select
@@ -200,8 +204,8 @@ export default function ScenarioListShell({
               }}
               className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
             >
-              <option value="title">Sort: Title</option>
-              <option value="duration">Sort: Duration</option>
+              <option value="title">{t("filters.sort.title")}</option>
+              <option value="duration">{t("filters.sort.duration")}</option>
             </select>
           </div>
 
@@ -220,7 +224,7 @@ export default function ScenarioListShell({
                       : "bg-[#f4f7fa] text-[#516071] hover:bg-[#eaf0f5]"
                   }`}
                 >
-                  {area.replace("-", " ")}
+                  {area === "all" ? t("area.all") : getAreaMeta(area, t).label}
                 </button>
               ),
             )}
@@ -233,8 +237,7 @@ export default function ScenarioListShell({
           {!showRefineControls && (
             <div className="flex justify-end">
               <div className="px-3 py-1.5 text-sm text-[#667180]">
-                Showing <span className="font-semibold text-[#31425a]">{filteredItems.length}</span>{" "}
-                scenarios
+                {t("showingCount", { count: filteredItems.length })}
               </div>
             </div>
           )}
@@ -242,8 +245,8 @@ export default function ScenarioListShell({
           <div className="grid gap-6 xl:grid-cols-3">
             <AnimatePresence mode="popLayout">
               {paginatedItems.map((item, index) => {
-                const areaMeta = getAreaMeta(item.area);
-                const trackingMeta = getTrackingMeta(item.status);
+                const areaMeta = getAreaMeta(item.area, t);
+                const trackingMeta = getTrackingMeta(item.status, t);
 
                 return (
                   <motion.article
@@ -278,13 +281,13 @@ export default function ScenarioListShell({
 
                       <div className="grid gap-3 pt-5 sm:grid-cols-2">
                         <InfoPill
-                          heading="Duration"
+                          heading={t("info.duration")}
                           icon={<PlayCircle />}
-                          label={formatDuration(item.estimatedDurationMinutes)}
+                          label={formatDuration(item.estimatedDurationMinutes, t)}
                         />
 
                         <InfoPill
-                          heading="Progress"
+                          heading={t("info.progress")}
                           icon={<CircleDashed />}
                           label={trackingMeta.label}
                           labelClassName={trackingMeta.className}
@@ -296,7 +299,11 @@ export default function ScenarioListShell({
                           href={`/${locale}/scenarios/${item.slug}`}
                           className="inline-flex items-center gap-2 rounded-full bg-[#31425a] px-4 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#263548]"
                         >
-                          Continue
+                          {item.status === "completed"
+                            ? t("actions.review")
+                            : item.status === "in_progress"
+                              ? t("actions.continue")
+                              : t("actions.start")}
                           <ArrowRight className="h-4 w-4" />
                         </Link>
                       </div>
@@ -310,9 +317,11 @@ export default function ScenarioListShell({
           {totalPages > 1 && (
             <div className="flex items-center justify-between rounded-2xl border border-[#e8edf3] bg-white px-5 py-4 text-sm text-[#5f6c7b]">
               <p>
-                Showing {startIndex + 1}–
-                {Math.min(startIndex + ITEMS_PER_PAGE, filteredItems.length)} of{" "}
-                {filteredItems.length}
+                {t("pagination.showingRange", {
+                  start: startIndex + 1,
+                  end: Math.min(startIndex + ITEMS_PER_PAGE, filteredItems.length),
+                  total: filteredItems.length,
+                })}
               </p>
 
               <div className="flex items-center gap-2">
@@ -323,7 +332,7 @@ export default function ScenarioListShell({
                   disabled={currentPage === 1}
                   className="rounded-full border border-[#d9e1ea] px-4 py-2 font-medium text-[#31425a] transition hover:bg-[#f7fafc] disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  Previous
+                  {t("pagination.previous")}
                 </button>
 
                 <span className="px-2 font-semibold text-[#31425a]">
@@ -337,7 +346,7 @@ export default function ScenarioListShell({
                   disabled={currentPage === totalPages}
                   className="rounded-full border border-[#d9e1ea] px-4 py-2 font-medium text-[#31425a] transition hover:bg-[#f7fafc] disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  Next
+                  {t("pagination.next")}
                 </button>
               </div>
             </div>
@@ -345,8 +354,8 @@ export default function ScenarioListShell({
         </div>
       ) : (
         <div className={`${SURFACE} p-8 text-center`}>
-          <h3 className="text-lg font-semibold text-[#31425a]">{emptyTitle}</h3>
-          <p className="mt-2 text-[#667180]">{emptyDescription}</p>
+          <h3 className="text-lg font-semibold text-[#31425a]">{emptyTitle ?? t("empty.title")}</h3>
+          <p className="mt-2 text-[#667180]">{emptyDescription ?? t("empty.description")}</p>
         </div>
       )}
     </div>

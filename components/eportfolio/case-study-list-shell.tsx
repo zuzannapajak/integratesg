@@ -15,6 +15,7 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { ChangeEvent, useMemo, useState } from "react";
 
@@ -26,22 +27,22 @@ type Props = {
 const SURFACE =
   "rounded-[28px] border border-white/70 bg-white/88 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";
 
-const ITEMS_PER_PAGE = 12;
+const ITEMS_PER_PAGE = 9;
 
-function getAreaMeta(area: CaseStudyArea) {
+function getAreaMeta(area: CaseStudyArea, t: ReturnType<typeof useTranslations>) {
   switch (area) {
     case "environmental":
       return {
-        label: "Environmental",
+        label: t("area.environmental"),
         icon: <Leaf className="h-4 w-4" />,
         badgeClass: "border-emerald-100 bg-emerald-50 text-emerald-700",
-        glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.18),transparent_46%)]",
+        glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.15),transparent_46%)]",
         accentClass: "from-emerald-100/90 via-white to-emerald-50/80",
         orbitClass: "border-emerald-200/70 bg-emerald-100/55 text-emerald-700",
       };
     case "social":
       return {
-        label: "Social",
+        label: t("area.social"),
         icon: <Users className="h-4 w-4" />,
         badgeClass: "border-sky-100 bg-sky-50 text-sky-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.15),transparent_46%)]",
@@ -50,7 +51,7 @@ function getAreaMeta(area: CaseStudyArea) {
       };
     case "governance":
       return {
-        label: "Governance",
+        label: t("area.governance"),
         icon: <ShieldCheck className="h-4 w-4" />,
         badgeClass: "border-violet-100 bg-violet-50 text-violet-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(139,92,246,0.15),transparent_46%)]",
@@ -59,7 +60,7 @@ function getAreaMeta(area: CaseStudyArea) {
       };
     default:
       return {
-        label: "Cross-cutting",
+        label: t("area.crossCutting"),
         icon: <Layers3 className="h-4 w-4" />,
         badgeClass: "border-amber-100 bg-amber-50 text-amber-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(245,158,11,0.18),transparent_46%)]",
@@ -70,6 +71,7 @@ function getAreaMeta(area: CaseStudyArea) {
 }
 
 export default function CaseStudyListShell({ locale, items }: Props) {
+  const t = useTranslations("Protected.CaseStudyListShell");
   const [search, setSearch] = useState("");
   const [selectedArea, setSelectedArea] = useState<CaseStudyArea | "all">("all");
   const [selectedStatus, setSelectedStatus] = useState<"all" | "todo" | "completed">("all");
@@ -129,11 +131,10 @@ export default function CaseStudyListShell({ locale, items }: Props) {
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="flex items-center gap-2 text-[0.82rem] font-semibold uppercase tracking-[0.14em] text-[#7b8794]">
             <SlidersHorizontal className="h-4 w-4" />
-            Refine ePortfolio view
+            {t("refineTitle")}
           </div>
           <div className="text-sm text-[#667180]">
-            Showing <span className="font-semibold text-[#31425a]">{filteredItems.length}</span>{" "}
-            case studies
+            {t("showingCount", { count: filteredItems.length })}
           </div>
         </div>
 
@@ -146,7 +147,7 @@ export default function CaseStudyListShell({ locale, items }: Props) {
                 setSearch(e.target.value);
                 handleFilterChange();
               }}
-              placeholder="Search ePortfolio..."
+              placeholder={t("searchPlaceholder")}
               className="w-full border-none bg-transparent text-[0.95rem] text-[#31425a] outline-none"
             />
           </label>
@@ -159,11 +160,11 @@ export default function CaseStudyListShell({ locale, items }: Props) {
             }}
             className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
           >
-            <option value="all">All ESG areas</option>
-            <option value="environmental">Environmental</option>
-            <option value="social">Social</option>
-            <option value="governance">Governance</option>
-            <option value="cross-cutting">Cross-cutting</option>
+            <option value="all">{t("area.all")}</option>
+            <option value="environmental">{t("area.environmental")}</option>
+            <option value="social">{t("area.social")}</option>
+            <option value="governance">{t("area.governance")}</option>
+            <option value="cross-cutting">{t("area.crossCutting")}</option>
           </select>
 
           <select
@@ -174,9 +175,9 @@ export default function CaseStudyListShell({ locale, items }: Props) {
             }}
             className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
           >
-            <option value="all">Status: All</option>
-            <option value="todo">Status: To do</option>
-            <option value="completed">Status: Completed</option>
+            <option value="all">{t("filters.status.all")}</option>
+            <option value="todo">{t("filters.status.todo")}</option>
+            <option value="completed">{t("filters.status.completed")}</option>
           </select>
 
           <select
@@ -187,8 +188,8 @@ export default function CaseStudyListShell({ locale, items }: Props) {
             }}
             className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
           >
-            <option value="recommended">Sort: Recommended</option>
-            <option value="title">Sort: Title</option>
+            <option value="recommended">{t("filters.sort.recommended")}</option>
+            <option value="title">{t("filters.sort.title")}</option>
           </select>
         </div>
 
@@ -207,7 +208,7 @@ export default function CaseStudyListShell({ locale, items }: Props) {
                     : "bg-[#f4f7fa] text-[#516071] hover:bg-[#eaf0f5]"
                 }`}
               >
-                {area.replace("-", " ")}
+                {area === "all" ? t("area.all") : getAreaMeta(area, t).label}
               </button>
             ),
           )}
@@ -219,7 +220,7 @@ export default function CaseStudyListShell({ locale, items }: Props) {
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             <AnimatePresence mode="popLayout">
               {paginatedItems.map((item) => {
-                const areaMeta = getAreaMeta(item.area);
+                const areaMeta = getAreaMeta(item.area, t);
                 const isFeatured = item.slug === featuredSlug;
 
                 return (
@@ -248,14 +249,14 @@ export default function CaseStudyListShell({ locale, items }: Props) {
                           {isFeatured && (
                             <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0b9c72] px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wider text-white shadow-sm">
                               <Sparkles className="h-3 w-3" />
-                              Featured
+                              {t("featured")}
                             </span>
                           )}
 
                           {item.isCompleted && (
                             <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-100 bg-emerald-50 px-2.5 py-1 text-[0.65rem] font-bold uppercase tracking-wider text-emerald-700">
                               <CheckCircle2 className="h-3 w-3" />
-                              Completed
+                              {t("completed")}
                             </span>
                           )}
                         </div>
@@ -290,7 +291,7 @@ export default function CaseStudyListShell({ locale, items }: Props) {
                           href={`/${locale}/eportfolio/${item.slug}`}
                           className="inline-flex items-center gap-2 rounded-full bg-[#31425a] px-4 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#263548]"
                         >
-                          Open case study <ArrowRight className="h-4 w-4" />
+                          {t("actions.open")} <ArrowRight className="h-4 w-4" />
                         </Link>
                       </div>
                     </div>
@@ -303,9 +304,11 @@ export default function CaseStudyListShell({ locale, items }: Props) {
           {totalPages > 1 && (
             <div className="flex items-center justify-between rounded-2xl border border-[#e8edf3] bg-white px-5 py-4 text-sm text-[#5f6c7b]">
               <p>
-                Showing {startIndex + 1}–
-                {Math.min(startIndex + ITEMS_PER_PAGE, filteredItems.length)} of{" "}
-                {filteredItems.length}
+                {t("pagination.showingRange", {
+                  start: startIndex + 1,
+                  end: Math.min(startIndex + ITEMS_PER_PAGE, filteredItems.length),
+                  total: filteredItems.length,
+                })}
               </p>
 
               <div className="flex items-center gap-2">
@@ -316,7 +319,7 @@ export default function CaseStudyListShell({ locale, items }: Props) {
                   disabled={currentPage === 1}
                   className="rounded-full border border-[#d9e1ea] px-4 py-2 font-medium text-[#31425a] transition hover:bg-[#f7fafc] disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  Previous
+                  {t("pagination.previous")}
                 </button>
                 <span className="px-2 font-semibold text-[#31425a]">
                   {currentPage} / {totalPages}
@@ -328,7 +331,7 @@ export default function CaseStudyListShell({ locale, items }: Props) {
                   disabled={currentPage === totalPages}
                   className="rounded-full border border-[#d9e1ea] px-4 py-2 font-medium text-[#31425a] transition hover:bg-[#f7fafc] disabled:cursor-not-allowed disabled:opacity-50"
                 >
-                  Next
+                  {t("pagination.next")}
                 </button>
               </div>
             </div>
@@ -340,11 +343,8 @@ export default function CaseStudyListShell({ locale, items }: Props) {
             <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#f4f7fa] text-[#607086]">
               <Search className="h-6 w-6" />
             </div>
-            <h2 className="mt-5 text-xl font-semibold text-[#1f2a37]">No case studies found</h2>
-            <p className="mt-3 text-sm leading-6 text-[#5f6c7b]">
-              Try adjusting the ESG area, status filter, or search phrase to explore the available
-              ePortfolio resources.
-            </p>
+            <h2 className="mt-5 text-xl font-semibold text-[#1f2a37]">{t("empty.title")}</h2>
+            <p className="mt-3 text-sm leading-6 text-[#5f6c7b]">{t("empty.description")}</p>
           </div>
         </section>
       )}

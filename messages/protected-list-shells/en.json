@@ -1,0 +1,132 @@
+{
+  "Protected": {
+    "CurriculumListShell": {
+      "refineTitle": "Refine curriculum view",
+      "showingCount": "Showing {count} modules",
+      "searchPlaceholder": "Search curriculum...",
+      "recommended": "Recommended",
+      "area": {
+        "all": "All areas",
+        "environmental": "Environmental",
+        "social": "Social",
+        "governance": "Governance",
+        "crossCutting": "Cross-cutting"
+      },
+      "status": {
+        "notStarted": "Not started",
+        "inProgress": "In progress",
+        "completed": "Completed",
+        "failed": "Needs review"
+      },
+      "filters": {
+        "status": {
+          "all": "All progress states"
+        },
+        "sort": {
+          "recommended": "Sort: Recommended",
+          "progress": "Sort: Progress",
+          "title": "Sort: Title"
+        }
+      },
+      "info": {
+        "duration": "Duration",
+        "lessons": "Lessons"
+      },
+      "actions": {
+        "continue": "Continue",
+        "review": "Review module"
+      },
+      "pagination": {
+        "showingRange": "Showing {start}–{end} of {total}",
+        "previous": "Previous",
+        "next": "Next"
+      },
+      "empty": {
+        "title": "No modules found",
+        "description": "Adjust your filters or search terms to find what you’re looking for."
+      }
+    },
+    "ScenarioListShell": {
+      "refineTitle": "Refine scenario view",
+      "showingCount": "Showing {count} scenarios",
+      "searchPlaceholder": "Search scenarios...",
+      "area": {
+        "all": "All ESG areas",
+        "environmental": "Environmental",
+        "social": "Social",
+        "governance": "Governance",
+        "crossCutting": "Cross-cutting"
+      },
+      "status": {
+        "notStarted": "Not started",
+        "inProgress": "In progress",
+        "completed": "Completed"
+      },
+      "duration": {
+        "selfPaced": "Self-paced",
+        "minutes": "{minutes} min"
+      },
+      "filters": {
+        "sort": {
+          "title": "Sort: Title",
+          "duration": "Sort: Duration"
+        }
+      },
+      "info": {
+        "duration": "Duration",
+        "progress": "Progress"
+      },
+      "actions": {
+        "continue": "Continue scenario",
+        "review": "Review scenario",
+        "start": "Start scenario"
+      },
+      "pagination": {
+        "showingRange": "Showing {start}–{end} of {total}",
+        "previous": "Previous",
+        "next": "Next"
+      },
+      "empty": {
+        "title": "No scenarios found",
+        "description": "Try adjusting the ESG area filter or search phrase to explore scenario metadata."
+      }
+    },
+    "CaseStudyListShell": {
+      "refineTitle": "Refine ePortfolio view",
+      "showingCount": "Showing {count} case studies",
+      "searchPlaceholder": "Search ePortfolio...",
+      "area": {
+        "all": "All ESG areas",
+        "environmental": "Environmental",
+        "social": "Social",
+        "governance": "Governance",
+        "crossCutting": "Cross-cutting"
+      },
+      "filters": {
+        "status": {
+          "all": "Status: All",
+          "todo": "Status: To do",
+          "completed": "Status: Completed"
+        },
+        "sort": {
+          "recommended": "Sort: Recommended",
+          "title": "Sort: Title"
+        }
+      },
+      "featured": "Featured",
+      "completed": "Completed",
+      "actions": {
+        "open": "Open case study"
+      },
+      "pagination": {
+        "showingRange": "Showing {start}–{end} of {total}",
+        "previous": "Previous",
+        "next": "Next"
+      },
+      "empty": {
+        "title": "No case studies found",
+        "description": "Try adjusting the ESG area, status filter, or search phrase to explore the available ePortfolio resources."
+      }
+    }
+  }
+}

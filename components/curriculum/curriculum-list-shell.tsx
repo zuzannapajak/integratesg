@@ -19,6 +19,7 @@ import {
   Users,
   XCircle,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { ChangeEvent, useMemo, useState } from "react";
 
@@ -38,32 +39,32 @@ const SURFACE =
 
 const ITEMS_PER_PAGE = 12;
 
-function getAreaMeta(area: ModuleArea) {
+function getAreaMeta(area: ModuleArea, t: ReturnType<typeof useTranslations>) {
   switch (area) {
     case "environmental":
       return {
-        label: "Environmental",
+        label: t("area.environmental"),
         icon: <Leaf className="h-4 w-4" />,
         badgeClass: "border-emerald-100 bg-emerald-50 text-emerald-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.16),transparent_45%)]",
       };
     case "social":
       return {
-        label: "Social",
+        label: t("area.social"),
         icon: <Users className="h-4 w-4" />,
         badgeClass: "border-sky-100 bg-sky-50 text-sky-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.14),transparent_45%)]",
       };
     case "governance":
       return {
-        label: "Governance",
+        label: t("area.governance"),
         icon: <ShieldCheck className="h-4 w-4" />,
         badgeClass: "border-violet-100 bg-violet-50 text-violet-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(139,92,246,0.14),transparent_45%)]",
       };
     default:
       return {
-        label: "Cross-cutting",
+        label: t("area.crossCutting"),
         icon: <Layers3 className="h-4 w-4" />,
         badgeClass: "border-amber-100 bg-amber-50 text-amber-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(245,158,11,0.16),transparent_45%)]",
@@ -71,32 +72,32 @@ function getAreaMeta(area: ModuleArea) {
   }
 }
 
-function getStatusMeta(status: ModuleStatus) {
+function getStatusMeta(status: ModuleStatus, t: ReturnType<typeof useTranslations>) {
   switch (status) {
     case "completed":
       return {
-        label: "Completed",
+        label: t("status.completed"),
         icon: <CheckCircle2 className="h-4 w-4" />,
         badgeClass: "border-emerald-100 bg-emerald-50 text-emerald-700",
         textClassName: "text-emerald-700",
       };
     case "in_progress":
       return {
-        label: "In progress",
+        label: t("status.inProgress"),
         icon: <CircleDashed className="h-4 w-4" />,
         badgeClass: "border-orange-100 bg-orange-50 text-orange-700",
         textClassName: "text-amber-700",
       };
     case "failed":
       return {
-        label: "Needs review",
+        label: t("status.failed"),
         icon: <XCircle className="h-4 w-4" />,
         badgeClass: "border-red-100 bg-red-50 text-red-700",
         textClassName: "text-red-700",
       };
     default:
       return {
-        label: "Not started",
+        label: t("status.notStarted"),
         icon: <BookOpen className="h-4 w-4" />,
         badgeClass: "border-slate-200 bg-slate-50 text-slate-600",
         textClassName: "text-[#31425a]",
@@ -107,10 +108,11 @@ function getStatusMeta(status: ModuleStatus) {
 export default function CurriculumListShell({
   locale,
   items,
-  emptyTitle = "No modules found",
-  emptyDescription = "Adjust your filters or search terms to find what you’re looking for.",
+  emptyTitle,
+  emptyDescription,
   showRefineControls = true,
 }: Props) {
+  const t = useTranslations("Protected.CurriculumListShell");
   const [search, setSearch] = useState("");
   const [selectedArea, setSelectedArea] = useState<ModuleArea | "all">("all");
   const [selectedStatus, setSelectedStatus] = useState<ModuleStatus | "all">("all");
@@ -184,12 +186,11 @@ export default function CurriculumListShell({
           <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
             <div className="flex items-center gap-2 text-[0.82rem] font-semibold uppercase tracking-[0.14em] text-[#7b8794]">
               <SlidersHorizontal className="h-4 w-4" />
-              Refine curriculum view
+              {t("refineTitle")}
             </div>
 
             <div className="text-sm text-[#667180]">
-              Showing <span className="font-semibold text-[#31425a]">{filteredModules.length}</span>{" "}
-              modules
+              {t("showingCount", { count: filteredModules.length })}
             </div>
           </div>
 
@@ -202,7 +203,7 @@ export default function CurriculumListShell({
                   setSearch(e.target.value);
                   handleFilterChange();
                 }}
-                placeholder="Search curriculum..."
+                placeholder={t("searchPlaceholder")}
                 className="w-full border-none bg-transparent text-[0.95rem] text-[#31425a] outline-none"
               />
             </label>
@@ -215,11 +216,11 @@ export default function CurriculumListShell({
               }}
               className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
             >
-              <option value="all">All progress states</option>
-              <option value="not_started">Not started</option>
-              <option value="in_progress">In progress</option>
-              <option value="completed">Completed</option>
-              <option value="failed">Needs review</option>
+              <option value="all">{t("filters.status.all")}</option>
+              <option value="not_started">{t("status.notStarted")}</option>
+              <option value="in_progress">{t("status.inProgress")}</option>
+              <option value="completed">{t("status.completed")}</option>
+              <option value="failed">{t("status.failed")}</option>
             </select>
 
             <select
@@ -230,9 +231,9 @@ export default function CurriculumListShell({
               }}
               className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
             >
-              <option value="recommended">Sort: Recommended</option>
-              <option value="progress">Sort: Progress</option>
-              <option value="title">Sort: Title</option>
+              <option value="recommended">{t("filters.sort.recommended")}</option>
+              <option value="progress">{t("filters.sort.progress")}</option>
+              <option value="title">{t("filters.sort.title")}</option>
             </select>
           </div>
 
@@ -251,7 +252,7 @@ export default function CurriculumListShell({
                       : "bg-[#f4f7fa] text-[#516071] hover:bg-[#eaf0f5]"
                   }`}
                 >
-                  {area.replace("-", " ")}
+                  {area === "all" ? t("area.all") : getAreaMeta(area, t).label}
                 </button>
               ),
             )}
@@ -264,9 +265,7 @@ export default function CurriculumListShell({
           {!showRefineControls && (
             <div className="flex justify-end">
               <div className="px-3 py-1.5 text-sm text-[#667180]">
-                Showing{" "}
-                <span className="font-semibold text-[#31425a]">{filteredModules.length}</span>{" "}
-                modules
+                {t("showingCount", { count: filteredModules.length })}
               </div>
             </div>
           )}
@@ -274,8 +273,8 @@ export default function CurriculumListShell({
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
             <AnimatePresence mode="popLayout">
               {paginatedModules.map((module, index) => {
-                const areaMeta = getAreaMeta(module.area);
-                const statusMeta = getStatusMeta(module.status);
+                const areaMeta = getAreaMeta(module.area, t);
+                const statusMeta = getStatusMeta(module.status, t);
                 const isRecommended = module.slug === recommendedSlug;
 
                 return (
@@ -304,7 +303,7 @@ export default function CurriculumListShell({
                         {isRecommended && (
                           <span className="inline-flex items-center gap-1.5 rounded-full bg-[#0b9c72] px-3 py-1.5 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-white shadow-sm">
                             <Sparkles className="h-3.5 w-3.5" />
-                            Recommended
+                            {t("recommended")}
                           </span>
                         )}
                       </div>
@@ -326,10 +325,14 @@ export default function CurriculumListShell({
                       </p>
 
                       <div className="grid gap-3 pt-5 sm:grid-cols-2">
-                        <InfoPill heading="Duration" icon={<Clock3 />} label={module.duration} />
+                        <InfoPill
+                          heading={t("info.duration")}
+                          icon={<Clock3 />}
+                          label={module.duration}
+                        />
 
                         <InfoPill
-                          heading="Lessons"
+                          heading={t("info.lessons")}
                           icon={<Library />}
                           label={`${module.lessons}`}
                         />
@@ -355,7 +358,9 @@ export default function CurriculumListShell({
                           href={`/${locale}/curriculum/${module.slug}`}
                           className="inline-flex items-center gap-2 rounded-full bg-[#31425a] px-4 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#263548]"
                         >
-                          {module.status === "completed" ? "Review module" : "Continue"}
+                          {module.status === "completed"
+                            ? t("actions.review")
+                            : t("actions.continue")}
                           <ArrowRight className="h-4 w-4" />
                         </Link>
                       </div>
@@ -369,7 +374,11 @@ export default function CurriculumListShell({
           {totalPages > 1 && (
             <div className="flex items-center justify-between rounded-2xl border border-[#e8edf3] bg-white px-5 py-4 text-sm text-[#5f6c7b]">
               <p>
-                Showing {rangeStart}–{rangeEnd} of {filteredModules.length}
+                {t("pagination.showingRange", {
+                  start: rangeStart,
+                  end: rangeEnd,
+                  total: filteredModules.length,
+                })}
               </p>
 
               <div className="flex items-center gap-2">
@@ -383,7 +392,7 @@ export default function CurriculumListShell({
                 >
                   <span className="inline-flex items-center gap-2">
                     <ArrowLeft className="h-4 w-4" />
-                    Previous
+                    {t("pagination.previous")}
                   </span>
                 </button>
 
@@ -400,7 +409,7 @@ export default function CurriculumListShell({
                   className="rounded-full border border-[#d9e1ea] px-4 py-2 font-medium text-[#31425a] transition hover:bg-[#f7fafc] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <span className="inline-flex items-center gap-2">
-                    Next
+                    {t("pagination.next")}
                     <ArrowRight className="h-4 w-4" />
                   </span>
                 </button>
@@ -410,8 +419,8 @@ export default function CurriculumListShell({
         </div>
       ) : (
         <div className={`${SURFACE} p-8 text-center`}>
-          <h3 className="text-lg font-semibold text-[#31425a]">{emptyTitle}</h3>
-          <p className="mt-2 text-[#667180]">{emptyDescription}</p>
+          <h3 className="text-lg font-semibold text-[#31425a]">{emptyTitle ?? t("empty.title")}</h3>
+          <p className="mt-2 text-[#667180]">{emptyDescription ?? t("empty.description")}</p>
         </div>
       )}
     </div>
