@@ -75,7 +75,10 @@ function pickTranslation(translations: TranslationRecord[], locale: string) {
   return translations.length > 0 ? translations[0] : null;
 }
 
-function buildWeeklyActivityChart(attempts: { startedAt: Date | null }[]): DashboardChartPoint[] {
+function buildWeeklyActivityChart(
+  attempts: { startedAt: Date | null }[],
+  locale: string,
+): DashboardChartPoint[] {
   const today = new Date();
   const points: DashboardChartPoint[] = [];
 
@@ -93,7 +96,7 @@ function buildWeeklyActivityChart(attempts: { startedAt: Date | null }[]): Dashb
     }).length;
 
     points.push({
-      label: day.toLocaleDateString("en", { weekday: "short" }),
+      label: day.toLocaleDateString(locale, { weekday: "short" }),
       value: count,
     });
   }
@@ -196,6 +199,7 @@ function buildLearnerSummaryMetrics(
     status: string;
     score: number | null;
   }[],
+  t: Awaited<ReturnType<typeof getTranslations>>,
 ): DashboardMetric[] {
   if (role === "educator") {
     const attemptsWithPostQuizScore = curriculumAttempts.filter(
@@ -214,11 +218,11 @@ function buildLearnerSummaryMetrics(
 
     return [
       {
-        label: "Average post-quiz",
+        label: t("metrics.averagePostQuiz"),
         value: `${Math.round(averagePostQuiz)}%`,
       },
       {
-        label: "Modules in progress",
+        label: t("metrics.modulesInProgress"),
         value: String(modulesInProgress),
       },
     ];
@@ -243,11 +247,11 @@ function buildLearnerSummaryMetrics(
 
   return [
     {
-      label: "Completion rate",
+      label: t("metrics.completionRate"),
       value: `${completionRate}%`,
     },
     {
-      label: "Average score",
+      label: t("metrics.averageScore"),
       value: `${Math.round(averageScore)}%`,
     },
   ];
@@ -256,6 +260,7 @@ function buildLearnerSummaryMetrics(
 function buildGamificationStats(
   role: DashboardRole,
   learnerAttempts: { startedAt: Date | null; completedAt?: Date | null }[],
+  t: Awaited<ReturnType<typeof getTranslations>>,
 ): DashboardGamificationStat[] {
   if (role !== "student" && role !== "educator") {
     return [];
@@ -295,7 +300,7 @@ function buildGamificationStats(
 
   return [
     {
-      label: "Learning streak",
+      label: t("gamification.learningStreak"),
       value: String(streak),
     },
   ];
@@ -304,6 +309,7 @@ function buildGamificationStats(
 function buildAdminKpis(
   totalUsers: number,
   attempts: ScenarioAttemptWithRelations[],
+  t: Awaited<ReturnType<typeof getTranslations>>,
 ): DashboardKpi[] {
   const completedCount = attempts.filter((attempt) =>
     ["completed", "passed"].includes(attempt.status),
@@ -325,24 +331,24 @@ function buildAdminKpis(
 
   return [
     {
-      label: "Users",
+      label: t("adminKpis.users"),
       value: String(totalUsers),
-      hint: "Registered platform users",
+      hint: t("adminKpis.usersHint"),
     },
     {
-      label: "Attempts",
+      label: t("adminKpis.attempts"),
       value: String(attempts.length),
-      hint: "Tracked scenario attempts",
+      hint: t("adminKpis.attemptsHint"),
     },
     {
-      label: "Completion rate",
+      label: t("adminKpis.completionRate"),
       value: `${completionRate}%`,
-      hint: "Completed or passed attempts",
+      hint: t("adminKpis.completionRateHint"),
     },
     {
-      label: "Average score",
+      label: t("adminKpis.averageScore"),
       value: `${Math.round(averageScore)}%`,
-      hint: `${activeUsers} active users`,
+      hint: t("adminKpis.averageScoreHint", { count: activeUsers }),
     },
   ];
 }
@@ -452,7 +458,7 @@ export default async function DashboardPage({ params }: Props) {
   const learnerCurrentWeekAttempts = buildWeeklyAttempts(learnerAttemptsForActivity, 6, -1);
   const learnerPreviousWeekAttempts = buildWeeklyAttempts(learnerAttemptsForActivity, 13, 6);
 
-  const learnerActivityData = buildWeeklyActivityChart(learnerCurrentWeekAttempts);
+  const learnerActivityData = buildWeeklyActivityChart(learnerCurrentWeekAttempts, locale);
   const learnerTrendLabel = buildTrendLabel(
     learnerActivityData,
     learnerPreviousWeekAttempts.length,
@@ -466,7 +472,7 @@ export default async function DashboardPage({ params }: Props) {
   const adminCurrentWeekAttempts = buildWeeklyAttempts(adminActivitySource, 6, -1);
   const adminPreviousWeekAttempts = buildWeeklyAttempts(adminActivitySource, 13, 6);
 
-  const adminActivityData = buildWeeklyActivityChart(adminCurrentWeekAttempts);
+  const adminActivityData = buildWeeklyActivityChart(adminCurrentWeekAttempts, locale);
   const adminTrendLabel = buildTrendLabel(adminActivityData, adminPreviousWeekAttempts.length, t);
 
   const continueLearning =
@@ -476,6 +482,7 @@ export default async function DashboardPage({ params }: Props) {
     role,
     curriculumAttempts,
     scenarioAttempts,
+    t,
   );
 
   const gamificationStats = buildGamificationStats(
@@ -489,9 +496,10 @@ export default async function DashboardPage({ params }: Props) {
           startedAt: attempt.startedAt,
           completedAt: attempt.completedAt ?? null,
         })),
+    t,
   );
 
-  const adminKpis = buildAdminKpis(totalUsers, adminScenarioAttempts);
+  const adminKpis = buildAdminKpis(totalUsers, adminScenarioAttempts, t);
 
   return (
     <DashboardShell

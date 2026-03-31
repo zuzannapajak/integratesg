@@ -49,9 +49,7 @@
     "privacy": "Privacy Policy",
     "accessibility": "Accessibility statement",
     "terms": "Terms of Use",
-    "legalNotice": "Legal Notice",
-    "facebook": "Facebook",
-    "linkedin": "LinkedIn"
+    "legalNotice": "Legal Notice"
   },
   "Sidebar": {
     "dashboard": "Dashboard",
@@ -649,6 +647,25 @@
         "lastOpened": "Last opened",
         "noChange": "No change vs previous week",
         "vsPreviousWeek": "{value} vs previous week"
+      },
+      "metrics": {
+        "averagePostQuiz": "Average post-quiz",
+        "modulesInProgress": "Modules in progress",
+        "completionRate": "Completion rate",
+        "averageScore": "Average score"
+      },
+      "gamification": {
+        "learningStreak": "Learning streak"
+      },
+      "adminKpis": {
+        "users": "Users",
+        "usersHint": "Registered platform users",
+        "attempts": "Attempts",
+        "attemptsHint": "Tracked scenario attempts",
+        "completionRate": "Completion rate",
+        "completionRateHint": "Completed or passed attempts",
+        "averageScore": "Average score",
+        "averageScoreHint": "{count} active users"
       }
     },
     "CurriculumPage": {
