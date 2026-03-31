@@ -47,11 +47,20 @@ export default getRequestConfig(async ({ requestLocale }) => {
     default: Messages;
   };
 
+  const modulePlayerShellsModule = (await import(
+    `../messages/module-player-shells/${locale}.json`
+  )) as {
+    default: Messages;
+  };
+
   return {
     locale,
     messages: deepMerge(
-      deepMerge(baseMessagesModule.default, protectedListShellsModule.default),
-      curriculumShellsModule.default,
+      deepMerge(
+        deepMerge(baseMessagesModule.default, protectedListShellsModule.default),
+        curriculumShellsModule.default,
+      ),
+      modulePlayerShellsModule.default,
     ),
   };
 });

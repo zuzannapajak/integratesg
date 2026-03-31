@@ -20,6 +20,7 @@ import {
   X,
   XCircle,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useMemo, useState, useTransition } from "react";
 
@@ -45,6 +46,7 @@ const SURFACE =
   "rounded-[28px] border border-white/70 bg-white/88 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";
 
 export default function ModulePlayerShell({ locale, module: initialModule }: Props) {
+  const t = useTranslations("Protected.ModulePlayerShell");
   const [module, setModule] = useState(initialModule);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [flaggedQuestionIds, setFlaggedQuestionIds] = useState<string[]>([]);
@@ -97,34 +99,37 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
   const checkpointMeta = (() => {
     if (!activeQuiz) {
       return {
-        eyebrow: "Learning checkpoint",
-        title: "Knowledge check",
-        intro: "Answer all questions and submit the checkpoint when you are ready.",
-        note: "",
+        eyebrow: t("checkpoint.defaultEyebrow"),
+        title: t("checkpoint.defaultTitle"),
+        intro: t("checkpoint.defaultIntro"),
+        note: t("checkpoint.defaultNote"),
       };
     }
 
     if (activeQuiz.type === "pre") {
       return {
-        eyebrow: "Learning checkpoint",
-        title: "Check your readiness before the lessons",
-        intro:
-          "Start with a short entry checkpoint to unlock the learning flow and set your baseline before moving into the lesson sequence.",
+        eyebrow: t("checkpoint.defaultEyebrow"),
+        title: t("checkpoint.preTitle"),
+        intro: t("checkpoint.preIntro"),
         note:
           totalAttemptsAllowed > 0
-            ? `You have ${totalAttemptsAllowed} attempt${totalAttemptsAllowed === 1 ? "" : "s"} for this checkpoint.`
+            ? t("checkpoint.preNote", {
+                attempts: totalAttemptsAllowed,
+                plural: totalAttemptsAllowed === 1 ? "a" : "",
+              })
             : "",
       };
     }
 
     return {
-      eyebrow: "Final checkpoint",
-      title: "Complete the module with a final knowledge check",
-      intro:
-        "This closing checkpoint verifies understanding after the lessons and determines whether the module can be marked as completed.",
+      eyebrow: t("checkpoint.postEyebrow"),
+      title: t("checkpoint.postTitle"),
+      intro: t("checkpoint.postIntro"),
       note:
         totalAttemptsAllowed > 0
-          ? `You have ${totalAttemptsAllowed} attempts for this checkpoint.`
+          ? t("checkpoint.postNote", {
+              attempts: totalAttemptsAllowed,
+            })
           : "",
     };
   })();
@@ -233,7 +238,7 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
           <div className="flex flex-col gap-6 xl:grid xl:grid-cols-[260px_minmax(0,1fr)] xl:items-start">
             <aside className="rounded-3xl border border-[#e8edf3] bg-white/76 p-4">
               <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                Lesson navigator
+                {t("lessonNavigator")}
               </p>
 
               <div className="mt-4 space-y-2">
@@ -262,7 +267,7 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
 
             <div className="min-w-0">
               <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                Lesson {currentLesson.index}
+                {t("lessonLabel", { index: currentLesson.index })}
               </p>
               <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#31425a]">
                 {currentLesson.title}
@@ -282,12 +287,14 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                 >
                   <PlayCircle className="h-4.5 w-4.5" />
                   {currentLesson.index === module.lessonsData.length
-                    ? "Finish lessons"
-                    : "Complete lesson and continue"}
+                    ? t("lessonActions.finishLessons")
+                    : t("lessonActions.completeAndContinue")}
                 </button>
 
                 <span className="text-sm text-[#667180]">
-                  Estimated time: {currentLesson.estimatedMinutes} min
+                  {t("lessonActions.estimatedTime", {
+                    minutes: currentLesson.estimatedMinutes,
+                  })}
                 </span>
               </div>
             </div>
@@ -312,8 +319,14 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
 
                       <span className="inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1.5 text-[0.72rem] font-bold uppercase tracking-[0.14em] text-emerald-700">
                         <Trophy className="h-3.5 w-3.5" />
-                        Attempt {currentAttemptNumber}
-                        {totalAttemptsAllowed > 0 ? ` of ${totalAttemptsAllowed}` : ""}
+                        {totalAttemptsAllowed > 0
+                          ? t("attempt.labelWithTotal", {
+                              current: currentAttemptNumber,
+                              total: totalAttemptsAllowed,
+                            })
+                          : t("attempt.label", {
+                              current: currentAttemptNumber,
+                            })}
                       </span>
                     </div>
 
@@ -329,8 +342,7 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                       <div className="mt-4 inline-flex items-start gap-2 rounded-2xl border border-[#e8edf3] bg-white/92 px-4 py-3 text-sm text-[#556274] shadow-[0_8px_22px_rgba(35,45,62,0.04)]">
                         <CheckCircle2 className="mt-0.5 h-4.5 w-4.5 shrink-0 text-[#0b9c72]" />
                         <span>
-                          {checkpointMeta.note} Answer every question, then submit when you are
-                          ready.
+                          {checkpointMeta.note} {t("checkpoint.noteSuffix")}
                         </span>
                       </div>
                     ) : null}
@@ -338,12 +350,12 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
 
                   <div className="grid gap-2 sm:grid-cols-3 xl:min-w-90">
                     <StatPill
-                      label="Answered"
+                      label={t("stats.answered")}
                       value={`${answeredCount}/${currentQuiz.questions.length}`}
                     />
-                    <StatPill label="Flagged" value={`${flaggedQuestionIds.length}`} />
+                    <StatPill label={t("stats.flagged")} value={`${flaggedQuestionIds.length}`} />
                     <StatPill
-                      label="Passing score"
+                      label={t("stats.passingScore")}
                       value={
                         currentQuiz.passingScore !== null ? `${currentQuiz.passingScore}%` : "—"
                       }
@@ -368,7 +380,7 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                       <div className="flex items-start justify-between gap-4">
                         <div>
                           <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                            Question {index + 1}
+                            {t("questionLabel", { index: index + 1 })}
                           </p>
                           <h3 className="mt-2 text-lg font-bold tracking-tight text-[#31425a]">
                             {question.prompt}
@@ -392,7 +404,7 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                           }`}
                         >
                           <Flag className="h-4 w-4" />
-                          {isFlagged ? "Flagged" : "Flag"}
+                          {isFlagged ? t("flag.flagged") : t("flag.default")}
                         </button>
                       </div>
 
@@ -438,12 +450,13 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
               <div className="mt-6 flex flex-col gap-3 rounded-3xl border border-[#e8edf3] bg-white/74 p-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="text-sm font-semibold text-[#31425a]">
-                    {answeredCount}/{currentQuiz.questions.length} questions answered
+                    {t("submissionPanel.answeredSummary", {
+                      answered: answeredCount,
+                      total: currentQuiz.questions.length,
+                    })}
                   </p>
                   <p className="mt-1 text-sm text-[#667180]">
-                    {allAnswered
-                      ? "Everything is ready. You can submit this checkpoint now."
-                      : "Answer all questions to unlock submission."}
+                    {allAnswered ? t("submissionPanel.ready") : t("submissionPanel.notReady")}
                   </p>
                 </div>
 
@@ -453,7 +466,7 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                   disabled={!allAnswered}
                   className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347] disabled:cursor-not-allowed disabled:opacity-45"
                 >
-                  Review and submit
+                  {t("submissionPanel.reviewAndSubmit")}
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </div>
@@ -466,24 +479,23 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                 <div className="relative flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                   <div>
                     <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                      Checkpoint result
+                      {t("review.eyebrow")}
                     </p>
                     <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#31425a]">
-                      Your answers have been reviewed
+                      {t("review.title")}
                     </h2>
                     <p className="mt-3 text-sm leading-7 text-[#667180]">
-                      Review the result below. Each question includes clear feedback and the correct
-                      answer is highlighted.
+                      {t("review.description")}
                     </p>
                   </div>
 
                   <div className="grid gap-2 sm:grid-cols-3">
-                    <StatPill label="Score" value={`${reviewState.score}%`} />
+                    <StatPill label={t("stats.score")} value={`${reviewState.score}%`} />
                     <StatPill
-                      label="Correct"
+                      label={t("stats.correct")}
                       value={`${reviewState.correctCount}/${reviewState.totalQuestions}`}
                     />
-                    <StatPill label="Attempt" value={`${reviewState.attemptNumber}`} />
+                    <StatPill label={t("stats.attempt")} value={`${reviewState.attemptNumber}`} />
                   </div>
                 </div>
               </div>
@@ -503,7 +515,7 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                     <div className="flex items-start justify-between gap-4">
                       <div>
                         <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                          Question {index + 1}
+                          {t("questionLabel", { index: index + 1 })}
                         </p>
                         <h3 className="mt-2 text-lg font-bold tracking-tight text-[#31425a]">
                           {question.prompt}
@@ -519,7 +531,7 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                         {wasFlagged ? (
                           <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-amber-700">
                             <Flag className="h-4 w-4" />
-                            Flagged
+                            {t("flag.flagged")}
                           </span>
                         ) : null}
 
@@ -535,7 +547,7 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                           ) : (
                             <XCircle className="h-4 w-4" />
                           )}
-                          {isCorrect ? "Correct" : "Incorrect"}
+                          {isCorrect ? t("review.correct") : t("review.incorrect")}
                         </span>
                       </div>
                     </div>
@@ -573,14 +585,13 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
 
                                 {showCorrect ? (
                                   <p className="mt-1 text-sm leading-6 text-[#556274]">
-                                    {answer.feedbackText ?? "This is the correct answer."}
+                                    {answer.feedbackText ?? t("review.correctFeedback")}
                                   </p>
                                 ) : null}
 
                                 {showWrongSelected ? (
                                   <p className="mt-1 text-sm leading-6 text-[#556274]">
-                                    {answer.feedbackText ??
-                                      "This answer is not correct for this question."}
+                                    {answer.feedbackText ?? t("review.incorrectFeedback")}
                                   </p>
                                 ) : null}
                               </div>
@@ -592,10 +603,10 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
 
                     <div className="mt-4 rounded-2xl border border-[#e8edf3] bg-[#f8fafc] px-4 py-4">
                       <p className="text-sm font-semibold text-[#31425a]">
-                        {isCorrect ? "Why this answer is correct" : "Correction and rationale"}
+                        {isCorrect ? t("review.whyCorrect") : t("review.correction")}
                       </p>
                       <p className="mt-1 text-sm leading-6 text-[#556274]">
-                        The correct answer is:{" "}
+                        {t("review.correctAnswerIs")}{" "}
                         <span className="font-semibold">{correctAnswer?.text ?? "—"}</span>
                       </p>
                     </div>
@@ -610,12 +621,12 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                   className="inline-flex items-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347]"
                 >
                   {reviewState.nextStage === "lessons"
-                    ? "Continue to lessons"
+                    ? t("reviewContinue.lessons")
                     : reviewState.nextStage === "post_quiz"
-                      ? "Continue to final checkpoint"
+                      ? t("reviewContinue.finalCheckpoint")
                       : reviewState.nextStage === "completed"
-                        ? "Finish module"
-                        : "Continue"}
+                        ? t("reviewContinue.completed")
+                        : t("reviewContinue.default")}
                   <ArrowRight className="h-4 w-4" />
                 </button>
               </div>
@@ -633,16 +644,15 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
               <div className="max-w-3xl">
                 <div className="inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1.5 text-[0.72rem] font-bold uppercase tracking-[0.14em] text-emerald-700">
                   <CheckCircle2 className="h-4 w-4" />
-                  Module completed
+                  {t("completed.badge")}
                 </div>
 
                 <h2 className="mt-4 text-3xl font-bold tracking-[-0.03em] text-[#31425a] md:text-[2.35rem]">
-                  You’ve completed this learning module
+                  {t("completed.title")}
                 </h2>
 
                 <p className="mt-4 max-w-2xl text-[0.98rem] leading-8 text-[#667180]">
-                  Your lesson progression and checkpoint history have been saved. You can now return
-                  to the module overview, or continue exploring the rest of the curriculum.
+                  {t("completed.description")}
                 </p>
 
                 <div className="mt-6 flex flex-wrap gap-3">
@@ -655,21 +665,21 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                     className="inline-flex items-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347] disabled:opacity-60"
                   >
                     <RotateCcw className="h-4.5 w-4.5" />
-                    Retake module
+                    {t("completed.retake")}
                   </button>
 
                   <Link
                     href={`/${locale}/curriculum/${module.slug}`}
                     className="inline-flex items-center gap-2 rounded-2xl border border-[#d9e2ec] bg-white px-5 py-3 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc]"
                   >
-                    Review module overview
+                    {t("completed.reviewOverview")}
                   </Link>
 
                   <Link
                     href={`/${locale}/curriculum`}
                     className="inline-flex items-center gap-2 rounded-2xl border border-[#d9e2ec] bg-white px-5 py-3 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc]"
                   >
-                    Explore more modules
+                    {t("completed.exploreMore")}
                   </Link>
                 </div>
               </div>
@@ -677,7 +687,7 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
               <div className="grid gap-3">
                 <div className="rounded-3xl border border-[#e8edf3] bg-white/90 p-5 shadow-[0_10px_28px_rgba(35,45,62,0.05)]">
                   <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                    Final progress
+                    {t("completed.finalProgress")}
                   </p>
                   <div className="mt-2 text-3xl font-bold tracking-tight text-[#31425a]">100%</div>
                   <div className="mt-4 h-2.5 overflow-hidden rounded-full bg-[#edf2f7]">
@@ -686,10 +696,11 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                 </div>
 
                 <div className="rounded-3xl border border-[#e8edf3] bg-white/90 p-5 shadow-[0_10px_28px_rgba(35,45,62,0.05)]">
-                  <p className="text-sm font-semibold text-[#31425a]">What’s next</p>
+                  <p className="text-sm font-semibold text-[#31425a]">
+                    {t("completed.whatsNextTitle")}
+                  </p>
                   <p className="mt-2 text-sm leading-6 text-[#667180]">
-                    Retake the module from the beginning, revisit the overview, or move on to
-                    another related topic.
+                    {t("completed.whatsNextDescription")}
                   </p>
                 </div>
               </div>
@@ -724,14 +735,13 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
 
                       <div>
                         <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                          Ready to submit
+                          {t("confirmSubmit.eyebrow")}
                         </p>
                         <h3 className="mt-1 text-xl font-bold tracking-tight text-[#31425a] md:text-[1.35rem]">
-                          Submit this checkpoint now?
+                          {t("confirmSubmit.title")}
                         </h3>
                         <p className="mt-2 max-w-lg text-sm leading-7 text-[#667180]">
-                          This will save your current answers and open the full feedback review for
-                          this attempt.
+                          {t("confirmSubmit.description")}
                         </p>
                       </div>
                     </div>
@@ -749,17 +759,19 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
 
                   <div className="mt-6 grid gap-3 sm:grid-cols-3">
                     <ConfirmMetric
-                      label="Questions"
+                      label={t("stats.questions")}
                       value={activeQuiz ? `${activeQuiz.questions.length}` : "—"}
                     />
-                    <ConfirmMetric label="Answered" value={`${answeredCount}`} />
-                    <ConfirmMetric label="Flagged" value={`${flaggedQuestionIds.length}`} />
+                    <ConfirmMetric label={t("stats.answered")} value={`${answeredCount}`} />
+                    <ConfirmMetric
+                      label={t("stats.flagged")}
+                      value={`${flaggedQuestionIds.length}`}
+                    />
                   </div>
 
                   <div className="mt-6 rounded-2xl border border-[#e8edf3] bg-[#f8fafc] px-4 py-4">
                     <p className="text-sm leading-6 text-[#556274]">
-                      After submission you’ll see which answers were correct, along with feedback
-                      and explanation for the reviewed questions.
+                      {t("confirmSubmit.afterSubmit")}
                     </p>
                   </div>
 
@@ -771,7 +783,7 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                       }}
                       className="inline-flex items-center gap-2 rounded-2xl border border-[#d9e2ec] bg-white px-4 py-3 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc]"
                     >
-                      Go back
+                      {t("confirmSubmit.back")}
                     </button>
 
                     <button
@@ -780,7 +792,7 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                       disabled={isPending}
                       className="inline-flex items-center gap-2 rounded-2xl bg-[#31425a] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347] disabled:opacity-60"
                     >
-                      Submit checkpoint
+                      {t("confirmSubmit.submit")}
                       <ArrowRight className="h-4 w-4" />
                     </button>
                   </div>
@@ -817,14 +829,13 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
 
                       <div>
                         <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                          Retake module
+                          {t("confirmRetake.eyebrow")}
                         </p>
                         <h3 className="mt-1 text-xl font-bold tracking-tight text-[#31425a] md:text-[1.35rem]">
-                          Start this module again from the beginning?
+                          {t("confirmRetake.title")}
                         </h3>
                         <p className="mt-2 max-w-lg text-sm leading-7 text-[#667180]">
-                          This will reset your current progress, lesson state, and checkpoint
-                          attempts for this module.
+                          {t("confirmRetake.description")}
                         </p>
                       </div>
                     </div>
@@ -841,10 +852,7 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                   </div>
 
                   <div className="mt-6 rounded-2xl border border-[#e8edf3] bg-[#f8fafc] px-4 py-4">
-                    <p className="text-sm leading-6 text-[#556274]">
-                      Your saved history for this current run will be cleared and the module will
-                      reopen at the opening checkpoint.
-                    </p>
+                    <p className="text-sm leading-6 text-[#556274]">{t("confirmRetake.note")}</p>
                   </div>
 
                   <div className="mt-6 flex flex-wrap justify-end gap-3">
@@ -855,7 +863,7 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                       }}
                       className="inline-flex items-center gap-2 rounded-2xl border border-[#d9e2ec] bg-white px-4 py-3 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc]"
                     >
-                      Cancel
+                      {t("confirmRetake.cancel")}
                     </button>
 
                     <button
@@ -865,7 +873,7 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                       className="inline-flex items-center gap-2 rounded-2xl bg-[#31425a] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347] disabled:opacity-60"
                     >
                       <RotateCcw className="h-4 w-4" />
-                      Retake module
+                      {t("confirmRetake.confirm")}
                     </button>
                   </div>
                 </div>

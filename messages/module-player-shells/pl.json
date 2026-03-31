@@ -1,0 +1,96 @@
+{
+  "Protected": {
+    "ModulePlayerShell": {
+      "lessonNavigator": "Nawigator lekcji",
+      "lessonLabel": "Lekcja {index}",
+      "lessonActions": {
+        "finishLessons": "Zakończ lekcje",
+        "completeAndContinue": "Ukończ lekcję i kontynuuj",
+        "estimatedTime": "Szacowany czas: {minutes} min"
+      },
+      "checkpoint": {
+        "defaultEyebrow": "Checkpoint nauki",
+        "defaultTitle": "Sprawdzenie wiedzy",
+        "defaultIntro": "Odpowiedz na wszystkie pytania i wyślij checkpoint, gdy będziesz gotowy.",
+        "defaultNote": "",
+        "preTitle": "Sprawdź swoją gotowość przed lekcjami",
+        "preIntro": "Rozpocznij od krótkiego checkpointu wejściowego, aby odblokować przebieg nauki i ustalić punkt wyjścia przed sekwencją lekcji.",
+        "preNote": "Masz {attempts} prób{plural} na ten checkpoint.",
+        "postEyebrow": "Checkpoint końcowy",
+        "postTitle": "Zakończ moduł końcowym sprawdzeniem wiedzy",
+        "postIntro": "Ten końcowy checkpoint weryfikuje zrozumienie materiału po lekcjach i decyduje o ukończeniu modułu.",
+        "postNote": "Masz {attempts} próby na ten checkpoint.",
+        "noteSuffix": "Odpowiedz na wszystkie pytania, a następnie wyślij checkpoint, gdy będziesz gotowy."
+      },
+      "attempt": {
+        "label": "Próba {current}",
+        "labelWithTotal": "Próba {current} z {total}"
+      },
+      "stats": {
+        "answered": "Odpowiedziano",
+        "flagged": "Oflagowane",
+        "passingScore": "Próg zaliczenia",
+        "score": "Wynik",
+        "correct": "Poprawne",
+        "attempt": "Próba",
+        "questions": "Pytania"
+      },
+      "questionLabel": "Pytanie {index}",
+      "flag": {
+        "default": "Oflaguj",
+        "flagged": "Oflagowane"
+      },
+      "submissionPanel": {
+        "answeredSummary": "Odpowiedziano na {answered}/{total} pytań",
+        "ready": "Wszystko jest gotowe. Możesz teraz wysłać ten checkpoint.",
+        "notReady": "Odpowiedz na wszystkie pytania, aby odblokować wysyłkę.",
+        "reviewAndSubmit": "Przejrzyj i wyślij"
+      },
+      "review": {
+        "eyebrow": "Wynik checkpointu",
+        "title": "Twoje odpowiedzi zostały sprawdzone",
+        "description": "Przejrzyj wynik poniżej. Każde pytanie zawiera jasny feedback, a poprawna odpowiedź jest wyróżniona.",
+        "correct": "Poprawne",
+        "incorrect": "Niepoprawne",
+        "correctFeedback": "To jest poprawna odpowiedź.",
+        "incorrectFeedback": "Ta odpowiedź nie jest poprawna dla tego pytania.",
+        "whyCorrect": "Dlaczego ta odpowiedź jest poprawna",
+        "correction": "Korekta i uzasadnienie",
+        "correctAnswerIs": "Poprawna odpowiedź to:"
+      },
+      "reviewContinue": {
+        "lessons": "Przejdź do lekcji",
+        "finalCheckpoint": "Przejdź do checkpointu końcowego",
+        "completed": "Zakończ moduł",
+        "default": "Kontynuuj"
+      },
+      "completed": {
+        "badge": "Moduł ukończony",
+        "title": "Ten moduł nauki został ukończony",
+        "description": "Postęp lekcji i historia checkpointów zostały zapisane. Możesz teraz wrócić do overview modułu albo kontynuować przeglądanie curriculum.",
+        "retake": "Rozpocznij moduł ponownie",
+        "reviewOverview": "Przejrzyj overview modułu",
+        "exploreMore": "Przeglądaj kolejne moduły",
+        "finalProgress": "Końcowy postęp",
+        "whatsNextTitle": "Co dalej",
+        "whatsNextDescription": "Rozpocznij moduł od nowa, wróć do overview albo przejdź do innego powiązanego tematu."
+      },
+      "confirmSubmit": {
+        "eyebrow": "Gotowe do wysłania",
+        "title": "Wysłać ten checkpoint teraz?",
+        "description": "To zapisze bieżące odpowiedzi i otworzy pełny widok feedbacku dla tej próby.",
+        "afterSubmit": "Po wysłaniu zobaczysz, które odpowiedzi były poprawne, wraz z feedbackiem i wyjaśnieniem dla sprawdzonych pytań.",
+        "back": "Wróć",
+        "submit": "Wyślij checkpoint"
+      },
+      "confirmRetake": {
+        "eyebrow": "Rozpocznij moduł ponownie",
+        "title": "Rozpocząć ten moduł od początku?",
+        "description": "To zresetuje bieżący postęp, stan lekcji i próby checkpointów dla tego modułu.",
+        "note": "Zapisana historia bieżącego przebiegu zostanie wyczyszczona, a moduł otworzy się ponownie na checkpointcie otwierającym.",
+        "cancel": "Anuluj",
+        "confirm": "Rozpocznij moduł ponownie"
+      }
+    }
+  }
+}

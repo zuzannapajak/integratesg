@@ -1,0 +1,96 @@
+{
+  "Protected": {
+    "ModulePlayerShell": {
+      "lessonNavigator": "Lesson navigator",
+      "lessonLabel": "Lesson {index}",
+      "lessonActions": {
+        "finishLessons": "Finish lessons",
+        "completeAndContinue": "Complete lesson and continue",
+        "estimatedTime": "Estimated time: {minutes} min"
+      },
+      "checkpoint": {
+        "defaultEyebrow": "Learning checkpoint",
+        "defaultTitle": "Knowledge check",
+        "defaultIntro": "Answer all questions and submit the checkpoint when you are ready.",
+        "defaultNote": "",
+        "preTitle": "Check your readiness before the lessons",
+        "preIntro": "Start with a short entry checkpoint to unlock the learning flow and set your baseline before moving into the lesson sequence.",
+        "preNote": "You have {attempts} attempt{plural} for this checkpoint.",
+        "postEyebrow": "Final checkpoint",
+        "postTitle": "Complete the module with a final knowledge check",
+        "postIntro": "This closing checkpoint verifies understanding after the lessons and determines whether the module can be marked as completed.",
+        "postNote": "You have {attempts} attempts for this checkpoint.",
+        "noteSuffix": "Answer every question, then submit when you are ready."
+      },
+      "attempt": {
+        "label": "Attempt {current}",
+        "labelWithTotal": "Attempt {current} of {total}"
+      },
+      "stats": {
+        "answered": "Answered",
+        "flagged": "Flagged",
+        "passingScore": "Passing score",
+        "score": "Score",
+        "correct": "Correct",
+        "attempt": "Attempt",
+        "questions": "Questions"
+      },
+      "questionLabel": "Question {index}",
+      "flag": {
+        "default": "Flag",
+        "flagged": "Flagged"
+      },
+      "submissionPanel": {
+        "answeredSummary": "{answered}/{total} questions answered",
+        "ready": "Everything is ready. You can submit this checkpoint now.",
+        "notReady": "Answer all questions to unlock submission.",
+        "reviewAndSubmit": "Review and submit"
+      },
+      "review": {
+        "eyebrow": "Checkpoint result",
+        "title": "Your answers have been reviewed",
+        "description": "Review the result below. Each question includes clear feedback and the correct answer is highlighted.",
+        "correct": "Correct",
+        "incorrect": "Incorrect",
+        "correctFeedback": "This is the correct answer.",
+        "incorrectFeedback": "This answer is not correct for this question.",
+        "whyCorrect": "Why this answer is correct",
+        "correction": "Correction and rationale",
+        "correctAnswerIs": "The correct answer is:"
+      },
+      "reviewContinue": {
+        "lessons": "Continue to lessons",
+        "finalCheckpoint": "Continue to final checkpoint",
+        "completed": "Finish module",
+        "default": "Continue"
+      },
+      "completed": {
+        "badge": "Module completed",
+        "title": "You’ve completed this learning module",
+        "description": "Your lesson progression and checkpoint history have been saved. You can now return to the module overview, or continue exploring the rest of the curriculum.",
+        "retake": "Retake module",
+        "reviewOverview": "Review module overview",
+        "exploreMore": "Explore more modules",
+        "finalProgress": "Final progress",
+        "whatsNextTitle": "What’s next",
+        "whatsNextDescription": "Retake the module from the beginning, revisit the overview, or move on to another related topic."
+      },
+      "confirmSubmit": {
+        "eyebrow": "Ready to submit",
+        "title": "Submit this checkpoint now?",
+        "description": "This will save your current answers and open the full feedback review for this attempt.",
+        "afterSubmit": "After submission you’ll see which answers were correct, along with feedback and explanation for the reviewed questions.",
+        "back": "Go back",
+        "submit": "Submit checkpoint"
+      },
+      "confirmRetake": {
+        "eyebrow": "Retake module",
+        "title": "Start this module again from the beginning?",
+        "description": "This will reset your current progress, lesson state, and checkpoint attempts for this module.",
+        "note": "Your saved history for this current run will be cleared and the module will reopen at the opening checkpoint.",
+        "cancel": "Cancel",
+        "confirm": "Retake module"
+      }
+    }
+  }
+}
