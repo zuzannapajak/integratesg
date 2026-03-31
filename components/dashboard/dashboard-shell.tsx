@@ -9,6 +9,7 @@ import {
   DashboardKpi,
   DashboardMetric,
   DashboardRole,
+  DashboardStat,
   RoleConfig,
 } from "@/lib/dashboard/types";
 import { motion, type Variants } from "framer-motion";
@@ -21,6 +22,7 @@ import {
   PlayCircle,
   UserRound,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import React from "react";
 
@@ -28,6 +30,7 @@ type Props = {
   locale: string;
   role: DashboardRole;
   displayName: string;
+  heroStats: DashboardStat[];
   continueLearning: DashboardContinueItem | null;
   gamificationStats: DashboardGamificationStat[];
   publishedCoursesCount: number;
@@ -90,6 +93,7 @@ export default function DashboardShell({
   locale,
   role,
   displayName,
+  heroStats,
   continueLearning,
   gamificationStats,
   publishedCoursesCount,
@@ -100,7 +104,13 @@ export default function DashboardShell({
   adminTrendLabel,
   adminKpis,
 }: Props) {
-  const roleConfig = roleConfigs[role];
+  const t = useTranslations("Protected.DashboardShell");
+
+  const roleConfig = {
+    ...roleConfigs[role],
+    welcome: t(`roleConfig.${role}.welcome`),
+    intro: t(`roleConfig.${role}.intro`),
+  };
 
   return (
     <main className="relative min-h-screen bg-[#f5f5f3] pb-10 text-[#31425a]">
@@ -112,6 +122,7 @@ export default function DashboardShell({
           role={role}
           roleConfig={roleConfig}
           displayName={displayName}
+          stats={heroStats}
           continueLearning={role === "student" || role === "educator" ? continueLearning : null}
           gamificationStats={role === "student" || role === "educator" ? gamificationStats : []}
         />
@@ -154,15 +165,17 @@ function DashboardHero({
   role,
   roleConfig,
   displayName,
+  stats = [],
   continueLearning,
-  gamificationStats,
+  gamificationStats = [],
 }: {
   locale: string;
   role: DashboardRole;
   roleConfig: RoleConfig;
   displayName: string;
+  stats?: DashboardStat[];
   continueLearning: DashboardContinueItem | null;
-  gamificationStats: DashboardGamificationStat[];
+  gamificationStats?: DashboardGamificationStat[];
 }) {
   return (
     <header className={`${SURFACE} mb-8 overflow-hidden pt-6 px-6 pb-2 md:pt-6 md:px-6 md:pb-5`}>
@@ -188,6 +201,22 @@ function DashboardHero({
           )}
         </div>
 
+        {stats.length > 0 ? (
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            {stats.map((stat) => (
+              <div
+                key={`${stat.label}-${stat.value}`}
+                className={`rounded-2xl bg-white px-4 py-4 ${SOFT_INNER_BORDER}`}
+              >
+                <div className="text-sm font-medium text-slate-500">{stat.label}</div>
+                <div className="mt-1 text-xl font-bold tracking-tight text-slate-900">
+                  {stat.value}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : null}
+
         {(role === "student" || role === "educator") && (
           <ContinueLearningHeroCard
             locale={locale}
@@ -208,6 +237,8 @@ function TopStreakBadge({
   gamificationStats: DashboardGamificationStat[];
   roleConfig: RoleConfig;
 }) {
+  const t = useTranslations("Protected.DashboardShell");
+
   const streakStat =
     gamificationStats.find((item) => item.label.toLowerCase().includes("streak")) ?? null;
 
@@ -266,7 +297,7 @@ function TopStreakBadge({
         </span>
         <div className="flex items-baseline gap-1">
           <span className="text-2xl font-black text-slate-900">{streakStat.value}</span>
-          <span className="text-xs font-medium text-slate-500">dni</span>
+          <span className="text-xs font-medium text-slate-500">{t("streak.days")}</span>
         </div>
 
         <div className="mt-1.5 flex gap-1">
@@ -304,12 +335,14 @@ function ContinueLearningHeroCard({
   roleConfig: RoleConfig;
   continueLearning: DashboardContinueItem | null;
 }) {
+  const t = useTranslations("Protected.DashboardShell");
+
   const fallbackHref = role === "educator" ? `/${locale}/curriculum` : `/${locale}/scenarios`;
-  const fallbackTitle = "Resume your latest activity";
+  const fallbackTitle = t("continueLearning.fallbackTitle");
   const fallbackDescription =
     role === "educator"
-      ? "Quick return to the module you opened most recently."
-      : "Quick return to the learning flow you opened most recently.";
+      ? t("continueLearning.fallbackDescriptionEducator")
+      : t("continueLearning.fallbackDescriptionStudent");
 
   return (
     <motion.div
@@ -330,7 +363,7 @@ function ContinueLearningHeroCard({
           <div className="flex flex-wrap items-center gap-3">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/80 bg-white/80 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-slate-500 shadow-sm">
               <Clock className="h-4 w-4" />
-              Resume
+              {t("continueLearning.badge")}
             </div>
           </div>
 
@@ -353,7 +386,7 @@ function ContinueLearningHeroCard({
               boxShadow: "0 12px 28px rgba(35,45,62,0.12)",
             }}
           >
-            Resume learning
+            {t("continueLearning.resumeCta")}
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
@@ -379,13 +412,15 @@ function LearnerDashboard({
   activityData: DashboardChartPoint[];
   activityTrendLabel: string;
 }) {
+  const t = useTranslations("Protected.DashboardShell");
+
   const primaryCard =
     role === "educator"
       ? {
           icon: <BookOpen className="h-5 w-5" />,
-          title: "Curriculum",
-          description: "Open structured modules, checkpoints, and guided learning flow.",
-          meta: `${publishedCoursesCount} published modules`,
+          title: t("coreArea.educator.primary.title"),
+          description: t("coreArea.educator.primary.description"),
+          meta: t("coreArea.educator.primary.meta", { count: publishedCoursesCount }),
           href: `/${locale}/curriculum`,
           accentColor: ESG_colors.BLUE,
           backgroundStyle: {
@@ -405,10 +440,9 @@ function LearnerDashboard({
         }
       : {
           icon: <PlayCircle className="h-5 w-5" />,
-          title: "Scenario simulator",
-          description:
-            "Launch interactive scenarios and practice decision-making in realistic contexts.",
-          meta: "Interactive scenario flows",
+          title: t("coreArea.student.primary.title"),
+          description: t("coreArea.student.primary.description"),
+          meta: t("coreArea.student.primary.meta"),
           href: `/${locale}/scenarios`,
           accentColor: ESG_colors.GREEN,
           backgroundStyle: {
@@ -431,10 +465,9 @@ function LearnerDashboard({
     role === "educator"
       ? {
           icon: <FolderOpen className="h-5 w-5" />,
-          title: "ePortfolio",
-          description:
-            "Browse case studies and practical ESG examples prepared for applied learning.",
-          meta: "Case studies and examples",
+          title: t("coreArea.educator.secondary.title"),
+          description: t("coreArea.educator.secondary.description"),
+          meta: t("coreArea.educator.secondary.meta"),
           href: `/${locale}/eportfolio`,
           accentColor: ESG_colors.ORANGE,
           backgroundStyle: {
@@ -454,10 +487,9 @@ function LearnerDashboard({
         }
       : {
           icon: <FolderOpen className="h-5 w-5" />,
-          title: "ePortfolio",
-          description:
-            "Browse case studies and practical ESG examples to support your learning journey.",
-          meta: "Case studies and examples",
+          title: t("coreArea.student.secondary.title"),
+          description: t("coreArea.student.secondary.description"),
+          meta: t("coreArea.student.secondary.meta"),
           href: `/${locale}/eportfolio`,
           accentColor: ESG_colors.BLUE,
           backgroundStyle: {
@@ -510,9 +542,11 @@ function LearnerDashboard({
       <motion.div variants={FADE_UP} className={`xl:col-span-7 ${SURFACE} p-8`}>
         <div className="mb-8 flex items-center justify-between gap-4">
           <div>
-            <h3 className="text-xl font-bold tracking-tight text-slate-900">Your activity</h3>
+            <h3 className="text-xl font-bold tracking-tight text-slate-900">
+              {t("learner.activity.title")}
+            </h3>
             <p className="mt-1 text-sm leading-6 text-slate-500">
-              Real events from your curriculum activity over the last 7 days.
+              {t("learner.activity.description")}
             </p>
           </div>
 
@@ -525,15 +559,17 @@ function LearnerDashboard({
           accentColor={roleConfig.accent}
           data={activityData}
           height={240}
-          valueLabel="Events"
+          valueLabel={t("learner.activity.valueLabel")}
         />
       </motion.div>
 
       <motion.div variants={FADE_UP} className={`xl:col-span-5 ${SURFACE} p-8`}>
         <div className="mb-6">
-          <h3 className="text-xl font-bold tracking-tight text-slate-900">Progress summary</h3>
+          <h3 className="text-xl font-bold tracking-tight text-slate-900">
+            {t("learner.summary.title")}
+          </h3>
           <p className="mt-1 text-sm leading-6 text-slate-500">
-            A compact overview built from your real curriculum data.
+            {t("learner.summary.description")}
           </p>
         </div>
 
@@ -559,6 +595,8 @@ function AdminDashboard({
   activityData: DashboardChartPoint[];
   activityTrendLabel: string;
 }) {
+  const t = useTranslations("Protected.DashboardShell");
+
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
@@ -570,9 +608,11 @@ function AdminDashboard({
       <motion.div variants={FADE_UP} className={`${SURFACE} p-8`}>
         <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div>
-            <h3 className="text-xl font-bold tracking-tight text-slate-900">Platform activity</h3>
+            <h3 className="text-xl font-bold tracking-tight text-slate-900">
+              {t("admin.activity.title")}
+            </h3>
             <p className="mt-1 text-sm leading-6 text-slate-500">
-              Distinct active users per day based on real curriculum activity.
+              {t("admin.activity.description")}
             </p>
           </div>
 
@@ -585,7 +625,7 @@ function AdminDashboard({
           accentColor={roleConfig.accent}
           data={activityData}
           height={260}
-          valueLabel="Active users"
+          valueLabel={t("admin.activity.valueLabel")}
         />
       </motion.div>
     </div>
@@ -613,12 +653,14 @@ function CoreAreaCard({
   iconStyle?: React.CSSProperties;
   metaStyle?: React.CSSProperties;
 }) {
+  const t = useTranslations("Protected.DashboardShell");
+
   const buttonLabel =
-    title === "Curriculum"
-      ? "Open module"
-      : title === "Scenario simulator"
-        ? "Open scenarios"
-        : "Open ePortfolio";
+    title === t("coreArea.educator.primary.title")
+      ? t("coreArea.buttons.openModule")
+      : title === t("coreArea.student.primary.title")
+        ? t("coreArea.buttons.openScenarios")
+        : t("coreArea.buttons.openEportfolio");
 
   return (
     <Link

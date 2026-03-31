@@ -668,6 +668,81 @@
         "averageScoreHint": "{count} aktywnych użytkowników"
       }
     },
+    "DashboardShell": {
+      "roleConfig": {
+        "educator": {
+          "welcome": "Witaj ponownie",
+          "intro": "Kontynuuj swoją ścieżkę nauki i korzystaj z zasobów dydaktycznych."
+        },
+        "student": {
+          "welcome": "Witaj ponownie",
+          "intro": "Kontynuuj naukę tam, gdzie skończyłaś, i utrzymuj swoje tempo."
+        },
+        "admin": {
+          "welcome": "Witaj ponownie",
+          "intro": "Monitoruj stan platformy, poziom zaangażowania i ogólne trendy użytkowania."
+        }
+      },
+      "streak": {
+        "days": "dni"
+      },
+      "continueLearning": {
+        "badge": "Wznów",
+        "resumeCta": "Wznów naukę",
+        "fallbackTitle": "Wznów ostatnią aktywność",
+        "fallbackDescriptionEducator": "Szybki powrót do modułu, który został ostatnio otwarty.",
+        "fallbackDescriptionStudent": "Szybki powrót do ścieżki nauki, która została ostatnio otwarta."
+      },
+      "coreArea": {
+        "educator": {
+          "primary": {
+            "title": "Curriculum",
+            "description": "Otwieraj uporządkowane moduły, checkpointy i prowadzony przebieg nauki.",
+            "meta": "{count} opublikowanych modułów"
+          },
+          "secondary": {
+            "title": "ePortfolio",
+            "description": "Przeglądaj studia przypadków i praktyczne przykłady ESG przygotowane do nauki stosowanej.",
+            "meta": "Studia przypadków i przykłady"
+          }
+        },
+        "student": {
+          "primary": {
+            "title": "Symulator scenariuszy",
+            "description": "Uruchamiaj interaktywne scenariusze i ćwicz podejmowanie decyzji w realistycznych kontekstach.",
+            "meta": "Interaktywne ścieżki scenariuszowe"
+          },
+          "secondary": {
+            "title": "ePortfolio",
+            "description": "Przeglądaj studia przypadków i praktyczne przykłady ESG wspierające Twoją ścieżkę nauki.",
+            "meta": "Studia przypadków i przykłady"
+          }
+        },
+        "buttons": {
+          "openModule": "Otwórz moduł",
+          "openScenarios": "Otwórz scenariusze",
+          "openEportfolio": "Otwórz ePortfolio"
+        }
+      },
+      "learner": {
+        "activity": {
+          "title": "Twoja aktywność",
+          "description": "Rzeczywiste zdarzenia z Twojej aktywności curriculum z ostatnich 7 dni.",
+          "valueLabel": "Zdarzenia"
+        },
+        "summary": {
+          "title": "Podsumowanie postępu",
+          "description": "Kompaktowy przegląd zbudowany na podstawie rzeczywistych danych curriculum."
+        }
+      },
+      "admin": {
+        "activity": {
+          "title": "Aktywność platformy",
+          "description": "Liczba unikalnych aktywnych użytkowników dziennie na podstawie rzeczywistej aktywności curriculum.",
+          "valueLabel": "Aktywni użytkownicy"
+        }
+      }
+    },
     "CurriculumPage": {
       "title": "Curriculum",
       "subtitle": "Moduły edukacyjne dla edukatorów z prowadzonym przebiegiem, quizami i widocznością postępu"

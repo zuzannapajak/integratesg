@@ -62,7 +62,7 @@ export default async function PublicFooter({ locale }: Props) {
         <div className="mt-10 flex items-center justify-center gap-4">
           <a
             href="https://www.facebook.com/integratesg"
-            aria-label={t("facebook")}
+            aria-label="Facebook"
             className="footer-social-icon"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current">
@@ -72,7 +72,7 @@ export default async function PublicFooter({ locale }: Props) {
 
           <a
             href="https://www.linkedin.com/company/integrat-esg/"
-            aria-label={t("linkedin")}
+            aria-label="LinkedIn"
             className="footer-social-icon"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current">

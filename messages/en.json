@@ -668,6 +668,82 @@
         "averageScoreHint": "{count} active users"
       }
     },
+    "DashboardShell": {
+      "roleConfig": {
+        "educator": {
+          "welcome": "Welcome back",
+          "intro": "Continue your learning path and access your teaching resources."
+        },
+        "student": {
+          "welcome": "Welcome back",
+          "intro": "Continue learning where you left off and keep your momentum going."
+        },
+        "admin": {
+          "welcome": "Welcome back",
+          "intro": "Monitor platform health, participation, and overall usage trends."
+        }
+      },
+      "streak": {
+        "days": "days"
+      },
+      "continueLearning": {
+        "badge": "Resume",
+        "resumeCta": "Resume learning",
+        "fallbackTitle": "Resume your latest activity",
+        "fallbackDescriptionEducator": "Quick return to the module you opened most recently.",
+        "fallbackDescriptionStudent": "Quick return to the learning flow you opened most recently."
+      },
+      "coreArea": {
+        "educator": {
+          "primary": {
+            "title": "Curriculum",
+            "description": "Open structured modules, checkpoints, and guided learning flow.",
+            "meta": "{count} published modules"
+          },
+          "secondary": {
+            "title": "ePortfolio",
+            "description": "Browse case studies and practical ESG examples prepared for applied learning.",
+            "meta": "Case studies and examples"
+          }
+        },
+        "student": {
+          "primary": {
+            "title": "Scenario simulator",
+            "description": "Launch interactive scenarios and practice decision-making in realistic contexts.",
+            "meta": "Interactive scenario flows"
+          },
+          "secondary": {
+            "title": "ePortfolio",
+            "description": "Browse case studies and practical ESG examples to support your learning journey.",
+            "meta": "Case studies and examples"
+          }
+        },
+        "buttons": {
+          "openModule": "Open module",
+          "openScenarios": "Open scenarios",
+          "openEportfolio": "Open ePortfolio"
+        }
+      },
+      "learner": {
+        "activity": {
+          "title": "Your activity",
+          "description": "Real events from your curriculum activity over the last 7 days.",
+          "valueLabel": "Events"
+        },
+        "summary": {
+          "title": "Progress summary",
+          "description": "A compact overview built from your real curriculum data."
+        }
+      },
+      "admin": {
+        "activity": {
+          "title": "Platform activity",
+          "description": "Distinct active users per day based on real curriculum activity.",
+          "valueLabel": "Active users"
+        }
+      }
+    },
+
     "CurriculumPage": {
       "title": "Curriculum",
       "subtitle": "Educator-only learning modules with guided flow, quizzes, and progress visibility"
@@ -712,6 +788,42 @@
         "passwordUpdated": "Password updated.",
         "minLength": "Min. 8 characters.",
         "mismatch": "Passwords mismatch."
+      }
+    },
+    "CurriculumSwitcher": {
+      "segments": {
+        "my": "My modules",
+        "all": "All modules"
+      },
+      "searchPlaceholder": "Search modules...",
+      "empty": {
+        "my": {
+          "title": "No modules started yet",
+          "description": "Your curriculum activity will appear here once you begin working through modules."
+        },
+        "all": {
+          "title": "No modules available",
+          "description": "There are currently no published curriculum modules available in this view."
+        },
+        "filtered": "No modules match your current search."
+      }
+    },
+    "ScenarioSwitcher": {
+      "segments": {
+        "my": "My scenarios",
+        "all": "All scenarios"
+      },
+      "searchPlaceholder": "Search scenarios...",
+      "empty": {
+        "my": {
+          "title": "No scenarios started yet",
+          "description": "Your scenario activity will appear here once you begin interacting with scenarios."
+        },
+        "all": {
+          "title": "No scenarios available",
+          "description": "There are currently no published scenarios available in this view."
+        },
+        "filtered": "No scenarios match your current search."
       }
     }
   }
