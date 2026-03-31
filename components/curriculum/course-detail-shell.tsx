@@ -17,6 +17,7 @@ import {
   Trophy,
   Users,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRef, useState } from "react";
 
@@ -32,11 +33,11 @@ type Props = {
 const SURFACE =
   "rounded-[30px] border border-white/70 bg-white/88 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";
 
-function getAreaMeta(area: ModuleArea) {
+function getAreaMeta(area: ModuleArea, t: ReturnType<typeof useTranslations>) {
   switch (area) {
     case "environmental":
       return {
-        label: "Environmental",
+        label: t("area.environmental"),
         icon: <Leaf className="h-4 w-4" />,
         badgeClass: "border-emerald-100 bg-emerald-50 text-emerald-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.18),transparent_46%)]",
@@ -45,7 +46,7 @@ function getAreaMeta(area: ModuleArea) {
       };
     case "social":
       return {
-        label: "Social",
+        label: t("area.social"),
         icon: <Users className="h-4 w-4" />,
         badgeClass: "border-sky-100 bg-sky-50 text-sky-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.15),transparent_46%)]",
@@ -54,7 +55,7 @@ function getAreaMeta(area: ModuleArea) {
       };
     case "governance":
       return {
-        label: "Governance",
+        label: t("area.governance"),
         icon: <ShieldCheck className="h-4 w-4" />,
         badgeClass: "border-violet-100 bg-violet-50 text-violet-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(139,92,246,0.15),transparent_46%)]",
@@ -63,7 +64,7 @@ function getAreaMeta(area: ModuleArea) {
       };
     default:
       return {
-        label: "Cross-cutting",
+        label: t("area.crossCutting"),
         icon: <Layers3 className="h-4 w-4" />,
         badgeClass: "border-amber-100 bg-amber-50 text-amber-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(245,158,11,0.18),transparent_46%)]",
@@ -73,93 +74,99 @@ function getAreaMeta(area: ModuleArea) {
   }
 }
 
-function getStatusMeta(status: ModuleStatus) {
+function getStatusMeta(status: ModuleStatus, t: ReturnType<typeof useTranslations>) {
   switch (status) {
     case "completed":
       return {
-        label: "Completed",
+        label: t("status.completed"),
         icon: <CheckCircle2 className="h-4 w-4" />,
         badgeClass: "border-emerald-100 bg-emerald-50 text-emerald-700",
       };
     case "in_progress":
       return {
-        label: "In progress",
+        label: t("status.inProgress"),
         icon: <CircleDashed className="h-4 w-4" />,
         badgeClass: "border-orange-100 bg-orange-50 text-orange-700",
       };
     case "failed":
       return {
-        label: "Needs review",
+        label: t("status.failed"),
         icon: <CircleDashed className="h-4 w-4" />,
         badgeClass: "border-rose-100 bg-rose-50 text-rose-700",
       };
     default:
       return {
-        label: "Ready to start",
+        label: t("status.readyToStart"),
         icon: <BookOpen className="h-4 w-4" />,
         badgeClass: "border-slate-200 bg-slate-50 text-slate-600",
       };
   }
 }
 
-function getOverviewCopy(module: CurriculumModuleViewModel) {
+function getOverviewCopy(module: CurriculumModuleViewModel, t: ReturnType<typeof useTranslations>) {
   if (module.content?.trim()) {
     return module.content;
   }
 
   if (module.area === "environmental") {
-    return "This module introduces environmental thinking in a practical, structured format. It helps the learner connect sustainability topics with decision-making, implementation quality, and measurable business context.";
+    return t("overviewCopy.environmental");
   }
 
   if (module.area === "social") {
-    return "This module is designed to strengthen understanding of people-focused ESG topics, including responsibility, stakeholder awareness, and the human impact of operational choices.";
+    return t("overviewCopy.social");
   }
 
   if (module.area === "governance") {
-    return "This module focuses on governance as a foundation for credible ESG practice. It connects policies, accountability, and decision quality with real implementation behaviour.";
+    return t("overviewCopy.governance");
   }
 
-  return "This module builds a broad ESG foundation and helps the learner understand how environmental, social, and governance themes interact in real-world decision-making.";
+  return t("overviewCopy.crossCutting");
 }
 
-function getHeroIntro(module: CurriculumModuleViewModel) {
+function getHeroIntro(module: CurriculumModuleViewModel, t: ReturnType<typeof useTranslations>) {
   switch (module.progressState.currentStage) {
     case "pre_quiz":
-      return "Begin with the opening checkpoint to unlock the lesson flow and establish your starting point.";
+      return t("heroIntro.preQuiz");
     case "lessons":
-      return "You are currently progressing through the lesson sequence. Continue from where you left off.";
+      return t("heroIntro.lessons");
     case "post_quiz":
-      return "You are at the final checkpoint. Complete the closing assessment to finish this module.";
+      return t("heroIntro.postQuiz");
     case "completed":
-      return "This module has been completed. You can review your progress or continue with another topic.";
+      return t("heroIntro.completed");
     default:
-      return "Explore the module overview, outcomes, and learning flow before starting.";
+      return t("heroIntro.default");
   }
 }
 
-function getProgressSummary(module: CurriculumModuleViewModel) {
+function getProgressSummary(
+  module: CurriculumModuleViewModel,
+  t: ReturnType<typeof useTranslations>,
+) {
   switch (module.progressState.currentStage) {
     case "pre_quiz":
-      return "Opening checkpoint pending";
+      return t("progressSummary.preQuiz");
     case "lessons":
-      return `Lesson ${module.progressState.currentLessonIndex} in progress`;
+      return t("progressSummary.lessonInProgress", {
+        index: module.progressState.currentLessonIndex,
+      });
     case "post_quiz":
-      return "Final checkpoint available";
+      return t("progressSummary.postQuiz");
     case "completed":
-      return "Module successfully completed";
+      return t("progressSummary.completed");
     default:
-      return "Ready to begin";
+      return t("progressSummary.default");
   }
 }
 
 export default function CourseDetailShell({ locale, module, relatedModules }: Props) {
+  const t = useTranslations("Protected.CourseDetailShell");
   const [openPanel, setOpenPanel] = useState<"overview" | "outcomes" | "flow" | "progress">(
     "overview",
   );
   const contentSectionRef = useRef<HTMLDivElement | null>(null);
 
-  const areaMeta = getAreaMeta(module.area);
-  const statusMeta = getStatusMeta(module.status);
+  const areaMeta = getAreaMeta(module.area, t);
+  const statusMeta = getStatusMeta(module.status, t);
 
   const handleScrollToFlow = () => {
     setOpenPanel("flow");
@@ -179,7 +186,7 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
           className="inline-flex items-center gap-2 text-[0.95rem] font-medium text-[#5f6977] transition hover:text-[#31425a]"
         >
           <ArrowLeft className="h-4.5 w-4.5" />
-          Back to curriculum
+          {t("back")}
         </Link>
       </div>
 
@@ -226,7 +233,7 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
 
                 <div className="mt-6 inline-flex items-start gap-2 rounded-2xl border border-[#e8edf3] bg-white/86 px-4 py-3 text-sm text-[#556274] shadow-[0_8px_24px_rgba(35,45,62,0.04)]">
                   <Sparkles className="mt-0.5 h-4.5 w-4.5 shrink-0 text-[#0b9c72]" />
-                  <span>{getHeroIntro(module)}</span>
+                  <span>{getHeroIntro(module, t)}</span>
                 </div>
               </div>
             </div>
@@ -234,22 +241,22 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
             <div className="mt-6 grid gap-3 sm:grid-cols-2 xl:mt-auto xl:max-w-4xl xl:grid-cols-4">
               <MetricCard
                 icon={<Clock3 className="h-4 w-4" />}
-                label="Duration"
+                label={t("metrics.duration")}
                 value={module.duration}
               />
               <MetricCard
                 icon={<Layers3 className="h-4 w-4" />}
-                label="Lessons"
+                label={t("metrics.lessons")}
                 value={`${module.lessons}`}
               />
               <MetricCard
                 icon={<BookOpen className="h-4 w-4" />}
-                label="Checkpoints"
+                label={t("metrics.checkpoints")}
                 value={`${module.quizzes}`}
               />
               <MetricCard
                 icon={<Compass className="h-4 w-4" />}
-                label="Current step"
+                label={t("metrics.currentStep")}
                 value={module.progressState.currentLocationLabel}
               />
             </div>
@@ -264,11 +271,13 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
                   {module.progress}%
                 </div>
                 <div className="text-[0.72rem] font-bold uppercase tracking-[0.16em] text-[#8a97a6]">
-                  Completed
+                  {t("metrics.completed")}
                 </div>
               </div>
 
-              <p className="mt-2 text-sm leading-6 text-[#667180]">{getProgressSummary(module)}</p>
+              <p className="mt-2 text-sm leading-6 text-[#667180]">
+                {getProgressSummary(module, t)}
+              </p>
 
               <div className="mt-5 h-2.5 overflow-hidden rounded-full bg-[#edf2f7]">
                 <motion.div
@@ -282,13 +291,13 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
 
             <div className="rounded-[28px] border border-white/70 bg-white/86 px-5 py-6 shadow-[0_10px_30px_rgba(35,45,62,0.05)] backdrop-blur-xl">
               <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                Next action
+                {t("nextAction.title")}
               </p>
 
               <p className="mt-3 text-sm leading-6 text-[#667180]">
                 {module.progressState.currentStage === "completed"
-                  ? "This module is finished. You can review or retake it."
-                  : "Continue from your current step or explore the full learning flow first."}
+                  ? t("nextAction.completedDescription")
+                  : t("nextAction.defaultDescription")}
               </p>
 
               <div className="mt-5 grid gap-3">
@@ -298,7 +307,7 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
                 >
                   <PlayCircle className="h-4.5 w-4.5" />
                   {module.progressState.currentStage === "completed"
-                    ? "Review learning workspace"
+                    ? t("nextAction.reviewWorkspace")
                     : module.progressState.nextActionLabel}
                 </Link>
 
@@ -308,7 +317,7 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
                   className="inline-flex items-center justify-center gap-2 rounded-2xl border border-[#d9e2ec] bg-white px-4 py-4 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc]"
                 >
                   <Layers3 className="h-4.5 w-4.5" />
-                  View learning flow
+                  {t("nextAction.viewFlow")}
                 </button>
               </div>
             </div>
@@ -316,12 +325,12 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
             {relatedModules.length > 0 && (
               <div className="rounded-[28px] border border-white/70 bg-white/86 p-5 shadow-[0_10px_30px_rgba(35,45,62,0.05)] backdrop-blur-xl">
                 <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                  Related modules
+                  {t("relatedModules")}
                 </p>
 
                 <div className="mt-4 space-y-3">
                   {relatedModules.slice(0, 3).map((item) => {
-                    const relatedArea = getAreaMeta(item.area);
+                    const relatedArea = getAreaMeta(item.area, t);
 
                     return (
                       <Link
@@ -361,7 +370,7 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
                 setOpenPanel("overview");
               }}
               icon={<Sparkles className="h-4 w-4" />}
-              label="Overview"
+              label={t("tabs.overview")}
             />
             <ToggleButton
               active={openPanel === "outcomes"}
@@ -369,7 +378,7 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
                 setOpenPanel("outcomes");
               }}
               icon={<CheckCircle2 className="h-4 w-4" />}
-              label="Outcomes"
+              label={t("tabs.outcomes")}
             />
             <ToggleButton
               active={openPanel === "flow"}
@@ -377,7 +386,7 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
                 setOpenPanel("flow");
               }}
               icon={<Layers3 className="h-4 w-4" />}
-              label="Learning flow"
+              label={t("tabs.flow")}
             />
             <ToggleButton
               active={openPanel === "progress"}
@@ -385,7 +394,7 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
                 setOpenPanel("progress");
               }}
               icon={<CircleDashed className="h-4 w-4" />}
-              label="Progress"
+              label={t("tabs.progress")}
             />
           </div>
 
@@ -403,22 +412,24 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
               className="p-5 md:p-7"
             >
               <SectionTitle
-                eyebrow="Module overview"
-                title="What this module is designed to achieve"
+                eyebrow={t("sections.overviewEyebrow")}
+                title={t("sections.overviewTitle")}
               />
 
               <div className="mt-5 max-w-4xl">
-                <p className="text-[0.98rem] leading-8 text-[#667180]">{getOverviewCopy(module)}</p>
+                <p className="text-[0.98rem] leading-8 text-[#667180]">
+                  {getOverviewCopy(module, t)}
+                </p>
               </div>
 
               <div className="mt-7 grid gap-4 md:grid-cols-2">
                 <InsightCard
-                  title="Practical learning path"
-                  text="The module is structured to translate ESG concepts into understandable, decision-oriented learning steps."
+                  title={t("insights.practicalTitle")}
+                  text={t("insights.practicalText")}
                 />
                 <InsightCard
-                  title="Clear progression"
-                  text="Each stage is designed to feel predictable and low-friction, making it easy to continue and complete the module."
+                  title={t("insights.progressionTitle")}
+                  text={t("insights.progressionText")}
                 />
               </div>
             </motion.div>
@@ -433,7 +444,10 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
               transition={{ duration: 0.18 }}
               className="p-5 md:p-7"
             >
-              <SectionTitle eyebrow="Learning outcomes" title="What the learner should gain" />
+              <SectionTitle
+                eyebrow={t("sections.outcomesEyebrow")}
+                title={t("sections.outcomesTitle")}
+              />
 
               <div className="mt-5 grid gap-3">
                 {module.outcomes.map((outcome, index) => (
@@ -460,7 +474,7 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
               transition={{ duration: 0.18 }}
               className="p-5 md:p-7"
             >
-              <SectionTitle eyebrow="Learning flow" title="How the module unfolds" />
+              <SectionTitle eyebrow={t("sections.flowEyebrow")} title={t("sections.flowTitle")} />
 
               <div className="mt-5 space-y-3">
                 {module.structure.map((step, index) => {
@@ -483,10 +497,13 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
                         <p className="text-sm font-semibold text-[#31425a]">{step}</p>
                         <p className="mt-1 text-sm text-[#667180]">
                           {index === 0
-                            ? "Begin with the opening checkpoint before entering the lesson sequence."
+                            ? t("flowDescriptions.opening")
                             : index === module.structure.length - 1
-                              ? "Finish with the closing checkpoint after completing the lessons."
-                              : `Progress through ${module.progressState.completedLessons}/${module.progressState.totalLessons} lessons in the core learning sequence.`}
+                              ? t("flowDescriptions.closing")
+                              : t("flowDescriptions.lessons", {
+                                  completed: module.progressState.completedLessons,
+                                  total: module.progressState.totalLessons,
+                                })}
                         </p>
                       </div>
                     </div>
@@ -505,19 +522,24 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
               transition={{ duration: 0.18 }}
               className="p-5 md:p-7"
             >
-              <SectionTitle eyebrow="Progress tracking" title="Where the learner currently is" />
+              <SectionTitle
+                eyebrow={t("sections.progressEyebrow")}
+                title={t("sections.progressTitle")}
+              />
 
               <div className="mt-6 grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_minmax(280px,360px)]">
                 <div className="space-y-5">
                   <div className="rounded-2xl border border-[#e8edf3] bg-white/72 p-5">
-                    <p className="text-sm font-semibold text-[#31425a]">Current location</p>
+                    <p className="text-sm font-semibold text-[#31425a]">
+                      {t("progress.currentLocation")}
+                    </p>
                     <p className="mt-2 text-sm leading-6 text-[#667180]">
                       {module.progressState.currentLocationLabel}
                     </p>
 
                     <div className="mt-5">
                       <div className="mb-2 flex items-center justify-between text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                        <span>Lessons completed</span>
+                        <span>{t("progress.lessonsCompleted")}</span>
                         <span>
                           {module.progressState.completedLessons}/
                           {module.progressState.totalLessons}
@@ -541,20 +563,24 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
                   </div>
 
                   <AttemptBlock
-                    title="Opening checkpoint history"
+                    title={t("progress.openingCheckpointHistory")}
                     attempts={module.progressState.preQuizAttempts}
-                    emptyText="No opening checkpoint attempt saved yet."
+                    emptyText={t("progress.openingCheckpointEmpty")}
+                    t={t}
                   />
 
                   <AttemptBlock
-                    title="Final checkpoint history"
+                    title={t("progress.finalCheckpointHistory")}
                     attempts={module.progressState.postQuizAttempts}
-                    emptyText="No final checkpoint attempt saved yet."
+                    emptyText={t("progress.finalCheckpointEmpty")}
+                    t={t}
                   />
                 </div>
 
                 <div className="rounded-2xl border border-[#e8edf3] bg-white/72 p-5">
-                  <p className="text-sm font-semibold text-[#31425a]">Lesson status</p>
+                  <p className="text-sm font-semibold text-[#31425a]">
+                    {t("progress.lessonStatus")}
+                  </p>
 
                   <div className="mt-4 space-y-3">
                     {module.lessonsData.map((lesson) => {
@@ -659,10 +685,12 @@ function AttemptBlock({
   title,
   attempts,
   emptyText,
+  t,
 }: {
   title: string;
   attempts: CurriculumModuleViewModel["progressState"]["preQuizAttempts"];
   emptyText: string;
+  t: ReturnType<typeof useTranslations>;
 }) {
   return (
     <div className="rounded-2xl border border-[#e8edf3] bg-white/72 p-5">
@@ -679,16 +707,22 @@ function AttemptBlock({
             >
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="text-sm font-semibold text-[#31425a]">
-                  Attempt {attempt.attemptNumber}
+                  {t("attempt.attemptLabel", { number: attempt.attemptNumber })}
                 </div>
                 <div className="text-sm font-semibold text-[#31425a]">{attempt.score}%</div>
               </div>
               <p className="mt-1 text-sm text-[#667180]">
-                {attempt.correctCount}/{attempt.totalQuestions} correct · {attempt.submittedAt}
+                {t("attempt.correctSummary", {
+                  correct: attempt.correctCount,
+                  total: attempt.totalQuestions,
+                  submittedAt: attempt.submittedAt,
+                })}
               </p>
               {attempt.flaggedQuestionIds.length > 0 ? (
                 <p className="mt-1 text-sm text-[#8a97a6]">
-                  Flagged questions: {attempt.flaggedQuestionIds.length}
+                  {t("attempt.flaggedQuestions", {
+                    count: attempt.flaggedQuestionIds.length,
+                  })}
                 </p>
               ) : null}
             </div>

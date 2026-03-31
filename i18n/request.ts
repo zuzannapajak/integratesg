@@ -43,8 +43,15 @@ export default getRequestConfig(async ({ requestLocale }) => {
     default: Messages;
   };
 
+  const curriculumShellsModule = (await import(`../messages/curriculum-shells/${locale}.json`)) as {
+    default: Messages;
+  };
+
   return {
     locale,
-    messages: deepMerge(baseMessagesModule.default, protectedListShellsModule.default),
+    messages: deepMerge(
+      deepMerge(baseMessagesModule.default, protectedListShellsModule.default),
+      curriculumShellsModule.default,
+    ),
   };
 });

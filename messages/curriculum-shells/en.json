@@ -1,0 +1,133 @@
+{
+  "Protected": {
+    "CourseDetailShell": {
+      "back": "Back to curriculum",
+      "area": {
+        "environmental": "Environmental",
+        "social": "Social",
+        "governance": "Governance",
+        "crossCutting": "Cross-cutting"
+      },
+      "status": {
+        "completed": "Completed",
+        "inProgress": "In progress",
+        "failed": "Needs review",
+        "readyToStart": "Ready to start"
+      },
+      "overviewCopy": {
+        "environmental": "This module introduces environmental thinking in a practical, structured format. It helps the learner connect sustainability topics with decision-making, implementation quality, and measurable business context.",
+        "social": "This module is designed to strengthen understanding of people-focused ESG topics, including responsibility, stakeholder awareness, and the human impact of operational choices.",
+        "governance": "This module focuses on governance as a foundation for credible ESG practice. It connects policies, accountability, and decision quality with real implementation behaviour.",
+        "crossCutting": "This module builds a broad ESG foundation and helps the learner understand how environmental, social, and governance themes interact in real-world decision-making."
+      },
+      "heroIntro": {
+        "preQuiz": "Begin with the opening checkpoint to unlock the lesson flow and establish your starting point.",
+        "lessons": "You are currently progressing through the lesson sequence. Continue from where you left off.",
+        "postQuiz": "You are at the final checkpoint. Complete the closing assessment to finish this module.",
+        "completed": "This module has been completed. You can review your progress or continue with another topic.",
+        "default": "Explore the module overview, outcomes, and learning flow before starting."
+      },
+      "progressSummary": {
+        "preQuiz": "Opening checkpoint pending",
+        "lessonInProgress": "Lesson {index} in progress",
+        "postQuiz": "Final checkpoint available",
+        "completed": "Module successfully completed",
+        "default": "Ready to begin"
+      },
+      "metrics": {
+        "duration": "Duration",
+        "lessons": "Lessons",
+        "checkpoints": "Checkpoints",
+        "currentStep": "Current step",
+        "completed": "Completed"
+      },
+      "nextAction": {
+        "title": "Next action",
+        "completedDescription": "This module is finished. You can review or retake it.",
+        "defaultDescription": "Continue from your current step or explore the full learning flow first.",
+        "reviewWorkspace": "Review learning workspace",
+        "viewFlow": "View learning flow"
+      },
+      "relatedModules": "Related modules",
+      "tabs": {
+        "overview": "Overview",
+        "outcomes": "Outcomes",
+        "flow": "Learning flow",
+        "progress": "Progress"
+      },
+      "sections": {
+        "overviewEyebrow": "Module overview",
+        "overviewTitle": "What this module is designed to achieve",
+        "outcomesEyebrow": "Learning outcomes",
+        "outcomesTitle": "What the learner should gain",
+        "flowEyebrow": "Learning flow",
+        "flowTitle": "How the module unfolds",
+        "progressEyebrow": "Progress tracking",
+        "progressTitle": "Where the learner currently is"
+      },
+      "insights": {
+        "practicalTitle": "Practical learning path",
+        "practicalText": "The module is structured to translate ESG concepts into understandable, decision-oriented learning steps.",
+        "progressionTitle": "Clear progression",
+        "progressionText": "Each stage is designed to feel predictable and low-friction, making it easy to continue and complete the module."
+      },
+      "flowDescriptions": {
+        "opening": "Begin with the opening checkpoint before entering the lesson sequence.",
+        "closing": "Finish with the closing checkpoint after completing the lessons.",
+        "lessons": "Progress through {completed}/{total} lessons in the core learning sequence."
+      },
+      "progress": {
+        "currentLocation": "Current location",
+        "lessonsCompleted": "Lessons completed",
+        "openingCheckpointHistory": "Opening checkpoint history",
+        "openingCheckpointEmpty": "No opening checkpoint attempt saved yet.",
+        "finalCheckpointHistory": "Final checkpoint history",
+        "finalCheckpointEmpty": "No final checkpoint attempt saved yet.",
+        "lessonStatus": "Lesson status"
+      },
+      "attempt": {
+        "attemptLabel": "Attempt {number}",
+        "correctSummary": "{correct}/{total} correct · {submittedAt}",
+        "flaggedQuestions": "Flagged questions: {count}"
+      }
+    },
+    "CourseQuizPanel": {
+      "empty": {
+        "eyebrow": "Knowledge checkpoint",
+        "title": "Checkpoint content is not available yet",
+        "description": "This curriculum module does not yet include checkpoint content in the current dataset."
+      },
+      "hero": {
+        "eyebrow": "Knowledge checkpoint",
+        "openingCheckpoint": "Opening checkpoint",
+        "finalCheckpoint": "Final checkpoint",
+        "title": "Quiz with instant feedback",
+        "description": "Answer one question at a time and reveal the feedback immediately. This view is designed to keep learning clear, interactive, and easy to follow."
+      },
+      "stats": {
+        "answered": "Answered",
+        "correct": "Correct",
+        "score": "Score"
+      },
+      "reset": "Reset",
+      "questionLabel": "Question {number}",
+      "result": {
+        "correct": "Correct",
+        "incorrect": "Incorrect"
+      },
+      "actions": {
+        "showFeedback": "Show feedback",
+        "chooseOneAnswer": "Choose one answer to continue."
+      },
+      "feedback": {
+        "title": "Feedback",
+        "correctionTitle": "Feedback and correction",
+        "correctDefault": "This is the correct answer.",
+        "incorrectDefault": "This answer is not correct. Review the correction below.",
+        "whyCorrect": "Why this answer is correct",
+        "correctAnswer": "Correct answer",
+        "correctAnswerIs": "The correct answer is: {answer}"
+      }
+    }
+  }
+}

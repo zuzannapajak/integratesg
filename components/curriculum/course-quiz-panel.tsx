@@ -10,6 +10,7 @@ import {
   Trophy,
   XCircle,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 
 export type QuizAnswerViewModel = {
@@ -43,6 +44,7 @@ const SURFACE =
   "rounded-[28px] border border-white/70 bg-white/88 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";
 
 export default function CourseQuizPanel({ quizzes }: Props) {
+  const t = useTranslations("Protected.CourseQuizPanel");
   const [activeQuizId, setActiveQuizId] = useState<string>(quizzes[0]?.id ?? "");
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [submittedQuestions, setSubmittedQuestions] = useState<Record<string, boolean>>({});
@@ -56,14 +58,12 @@ export default function CourseQuizPanel({ quizzes }: Props) {
       <div className={`${SURFACE} p-6 md:p-7`}>
         <div className="max-w-xl">
           <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-            Knowledge checkpoint
+            {t("empty.eyebrow")}
           </p>
           <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#31425a]">
-            Checkpoint content is not available yet
+            {t("empty.title")}
           </h2>
-          <p className="mt-4 text-[0.98rem] leading-8 text-[#667180]">
-            This curriculum module does not yet include checkpoint content in the current dataset.
-          </p>
+          <p className="mt-4 text-[0.98rem] leading-8 text-[#667180]">{t("empty.description")}</p>
         </div>
       </div>
     );
@@ -117,32 +117,33 @@ export default function CourseQuizPanel({ quizzes }: Props) {
               <div className="flex flex-wrap items-center gap-2">
                 <span className="inline-flex items-center gap-2 rounded-full border border-[#dce7f2] bg-white/90 px-3 py-1.5 text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#5f6f82]">
                   <Sparkles className="h-3.5 w-3.5" />
-                  Knowledge checkpoint
+                  {t("hero.eyebrow")}
                 </span>
 
                 <span className="inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1.5 text-[0.72rem] font-bold uppercase tracking-[0.14em] text-emerald-700">
                   <Trophy className="h-3.5 w-3.5" />
-                  {activeQuiz.type === "pre" ? "Opening checkpoint" : "Final checkpoint"}
+                  {activeQuiz.type === "pre"
+                    ? t("hero.openingCheckpoint")
+                    : t("hero.finalCheckpoint")}
                 </span>
               </div>
 
               <h2 className="mt-4 text-2xl font-bold tracking-tight text-[#31425a] md:text-[2rem]">
-                Quiz with instant feedback
+                {t("hero.title")}
               </h2>
 
               <p className="mt-3 max-w-2xl text-sm leading-7 text-[#667180] md:text-[0.98rem]">
-                Answer one question at a time and reveal the feedback immediately. This view is
-                designed to keep learning clear, interactive, and easy to follow.
+                {t("hero.description")}
               </p>
             </div>
 
             <div className="grid gap-2 sm:grid-cols-3 xl:min-w-90">
               <StatPill
-                label="Answered"
+                label={t("stats.answered")}
                 value={`${answeredCount}/${activeQuiz.questions.length}`}
               />
-              <StatPill label="Correct" value={`${correctCount}`} />
-              <StatPill label="Score" value={`${scorePercent}%`} />
+              <StatPill label={t("stats.correct")} value={`${correctCount}`} />
+              <StatPill label={t("stats.score")} value={`${scorePercent}%`} />
             </div>
           </div>
         </div>
@@ -178,7 +179,7 @@ export default function CourseQuizPanel({ quizzes }: Props) {
             className="inline-flex items-center gap-2 rounded-2xl border border-[#d9e2ec] bg-white px-4 py-2.5 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc]"
           >
             <RotateCcw className="h-4 w-4" />
-            Reset
+            {t("reset")}
           </button>
         </div>
       </div>
@@ -202,7 +203,7 @@ export default function CourseQuizPanel({ quizzes }: Props) {
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                    Question {index + 1}
+                    {t("questionLabel", { number: index + 1 })}
                   </p>
                   <h3 className="mt-2 text-lg font-bold tracking-tight text-[#31425a]">
                     {question.prompt}
@@ -223,7 +224,7 @@ export default function CourseQuizPanel({ quizzes }: Props) {
                     ) : (
                       <XCircle className="h-4 w-4" />
                     )}
-                    {isCorrect ? "Correct" : "Incorrect"}
+                    {isCorrect ? t("result.correct") : t("result.incorrect")}
                   </span>
                 ) : null}
               </div>
@@ -274,11 +275,11 @@ export default function CourseQuizPanel({ quizzes }: Props) {
                   disabled={!selectedId || submitted}
                   className="inline-flex items-center gap-2 rounded-2xl bg-[#31425a] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition enabled:hover:bg-[#253347] disabled:cursor-not-allowed disabled:opacity-45"
                 >
-                  Show feedback
+                  {t("actions.showFeedback")}
                 </button>
 
                 {!selectedId && !submitted ? (
-                  <p className="text-sm text-[#8a97a6]">Choose one answer to continue.</p>
+                  <p className="text-sm text-[#8a97a6]">{t("actions.chooseOneAnswer")}</p>
                 ) : null}
               </div>
 
@@ -304,24 +305,27 @@ export default function CourseQuizPanel({ quizzes }: Props) {
 
                     <div className="w-full">
                       <p className="text-sm font-semibold text-[#31425a]">
-                        {selectedAnswer.isCorrect ? "Feedback" : "Feedback and correction"}
+                        {selectedAnswer.isCorrect
+                          ? t("feedback.title")
+                          : t("feedback.correctionTitle")}
                       </p>
                       <p className="mt-1 text-sm leading-6 text-[#556274]">
                         {selectedAnswer.feedbackText ??
                           (selectedAnswer.isCorrect
-                            ? "This is the correct answer."
-                            : "This answer is not correct. Review the correction below.")}
+                            ? t("feedback.correctDefault")
+                            : t("feedback.incorrectDefault"))}
                       </p>
 
                       <div className="mt-4 rounded-2xl border border-[#e8edf3] bg-white/80 px-4 py-4">
                         <p className="text-sm font-semibold text-[#31425a]">
                           {selectedAnswer.isCorrect
-                            ? "Why this answer is correct"
-                            : "Correct answer"}
+                            ? t("feedback.whyCorrect")
+                            : t("feedback.correctAnswer")}
                         </p>
                         <p className="mt-1 text-sm leading-6 text-[#556274]">
-                          The correct answer is:{" "}
-                          <span className="font-semibold">{correctAnswer?.text ?? "—"}</span>
+                          {t("feedback.correctAnswerIs", {
+                            answer: correctAnswer?.text ?? "—",
+                          })}
                         </p>
                       </div>
                     </div>
