@@ -27,6 +27,7 @@
     "@prisma/client": "^7.5.0",
     "@supabase/ssr": "^0.9.0",
     "@supabase/supabase-js": "^2.99.3",
+    "flag-icons": "^7.5.0",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.7.0",
     "next": "16.2.1",

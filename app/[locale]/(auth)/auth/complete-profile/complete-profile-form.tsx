@@ -25,7 +25,7 @@ export default function CompleteProfileForm({ locale, email }: Props) {
 
     startTransition(async () => {
       try {
-        await completeCurrentUserProfile({ role });
+        await completeCurrentUserProfile({ role, preferredLanguage: locale });
         router.replace(getDefaultProtectedRoute(locale, role));
       } catch {
         setError(t("error"));

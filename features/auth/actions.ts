@@ -1,5 +1,6 @@
 "use server";
 
+import { isAppLocale } from "@/lib/i18n/locales";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 
@@ -24,13 +25,17 @@ export async function createProfile({
   email,
   role,
   fullName,
+  preferredLanguage,
 }: {
   userId: string;
   email: string;
   role: PublicRole;
   fullName?: string | null;
+  preferredLanguage?: string;
 }) {
   const finalRole = resolveRole(email, role);
+  const normalizedLanguage =
+    preferredLanguage && isAppLocale(preferredLanguage) ? preferredLanguage : "en";
 
   await prisma.profile.upsert({
     where: { id: userId },
@@ -38,17 +43,25 @@ export async function createProfile({
       email,
       role: finalRole,
       fullName: fullName ?? null,
+      preferredLanguage: normalizedLanguage,
     },
     create: {
       id: userId,
       email,
       role: finalRole,
       fullName: fullName ?? null,
+      preferredLanguage: normalizedLanguage,
     },
   });
 }
 
-export async function completeCurrentUserProfile({ role }: { role: PublicRole }) {
+export async function completeCurrentUserProfile({
+  role,
+  preferredLanguage,
+}: {
+  role: PublicRole;
+  preferredLanguage?: string;
+}) {
   const supabase = await createClient();
   const {
     data: { user },
@@ -73,6 +86,8 @@ export async function completeCurrentUserProfile({ role }: { role: PublicRole })
         : null;
 
   const finalRole = resolveRole(email, role);
+  const normalizedLanguage =
+    preferredLanguage && isAppLocale(preferredLanguage) ? preferredLanguage : "en";
 
   await prisma.profile.upsert({
     where: { id: user.id },
@@ -80,12 +95,14 @@ export async function completeCurrentUserProfile({ role }: { role: PublicRole })
       email,
       role: finalRole,
       fullName,
+      preferredLanguage: normalizedLanguage,
     },
     create: {
       id: user.id,
       email,
       role: finalRole,
       fullName,
+      preferredLanguage: normalizedLanguage,
     },
   });
 }

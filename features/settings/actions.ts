@@ -1,15 +1,9 @@
 "use server";
 
+import { isAppLocale } from "@/lib/i18n/locales";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
-
-const ALLOWED_LANGUAGES = ["en", "pl"] as const;
-type AllowedLanguage = (typeof ALLOWED_LANGUAGES)[number];
-
-function isAllowedLanguage(value: string): value is AllowedLanguage {
-  return ALLOWED_LANGUAGES.includes(value as AllowedLanguage);
-}
 
 export async function updateCurrentUserSettings({
   fullName,
@@ -35,7 +29,7 @@ export async function updateCurrentUserSettings({
     where: { id: user.id },
     data: {
       fullName: normalizedFullName.length > 0 ? normalizedFullName : null,
-      preferredLanguage: isAllowedLanguage(preferredLanguage) ? preferredLanguage : "en",
+      preferredLanguage: isAppLocale(preferredLanguage) ? preferredLanguage : "en",
     },
   });
 

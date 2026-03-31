@@ -1,3 +1,5 @@
+import { getDefaultProtectedRoute } from "@/lib/auth/roles";
+import { isAppLocale } from "@/lib/i18n/locales";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
@@ -5,8 +7,9 @@ import { NextResponse } from "next/server";
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get("code");
-  const locale = requestUrl.pathname.split("/")[1] || "en";
-  const next = requestUrl.searchParams.get("next") ?? `/${locale}/dashboard`;
+  const localeFromPath = requestUrl.pathname.split("/")[1] || "en";
+  const locale = isAppLocale(localeFromPath) ? localeFromPath : "en";
+  const next = requestUrl.searchParams.get("next");
 
   if (!code) {
     return NextResponse.redirect(new URL(`/${locale}/auth/login`, requestUrl.origin));
@@ -35,5 +38,12 @@ export async function GET(request: Request) {
     return NextResponse.redirect(new URL(`/${locale}/auth/complete-profile`, requestUrl.origin));
   }
 
-  return NextResponse.redirect(new URL(next, requestUrl.origin));
+  const preferredLocale =
+    profile.preferredLanguage && isAppLocale(profile.preferredLanguage)
+      ? profile.preferredLanguage
+      : locale;
+
+  const target = next ?? getDefaultProtectedRoute(preferredLocale, profile.role);
+
+  return NextResponse.redirect(new URL(target, requestUrl.origin));
 }

@@ -163,8 +163,11 @@ export default function AccountSettingsForm({
                 className="w-full appearance-none rounded-2xl border border-[#e2e7ee] bg-white/50 px-4 py-3 text-[#31425a] outline-none transition focus:border-[#0d7fc2] focus:ring-4 focus:ring-[#0d7fc2]/5"
               >
                 <option value="en">{t("profile.languageOptions.en")}</option>
+                <option value="it">{t("profile.languageOptions.it")}</option>
+                <option value="de">{t("profile.languageOptions.de")}</option>
+                <option value="el">{t("profile.languageOptions.el")}</option>
                 <option value="pl">{t("profile.languageOptions.pl")}</option>
-                <option value="es">{t("profile.languageOptions.es")}</option>
+                <option value="bg">{t("profile.languageOptions.bg")}</option>
               </select>
             </div>
           </div>

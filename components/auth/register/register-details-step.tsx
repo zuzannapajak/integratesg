@@ -53,6 +53,7 @@ export default function RegisterDetailsStep({
         data: {
           role,
           full_name: fullName,
+          preferred_language: locale,
         },
       },
     });
@@ -70,6 +71,7 @@ export default function RegisterDetailsStep({
           email: data.user.email,
           role,
           fullName: fullName || null,
+          preferredLanguage: locale,
         });
       } catch {
         setMessage(t("profileSaveError"));

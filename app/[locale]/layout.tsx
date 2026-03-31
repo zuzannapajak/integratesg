@@ -1,3 +1,4 @@
+import "flag-icons/css/flag-icons.min.css";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";

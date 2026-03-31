@@ -1,5 +1,6 @@
 "use client";
 
+import LanguageSwitcher from "@/components/layout/language-switcher";
 import Logo from "@/components/layout/logo";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -83,15 +84,19 @@ export default function PublicNavbar({ locale, forceCompact = false, forceSolid 
             </Link>
           </nav>
 
-          <div className="hidden h-10 w-px bg-white/25 lg:block" />
+          <div className="hidden h-8 w-px bg-white/14 lg:block" />
 
-          <div className="hidden items-center gap-3 sm:flex">
-            <Link href={`/${locale}/auth/login`} className="landing-nav-login">
-              {t("signIn")}
-            </Link>
-            <Link href={`/${locale}/auth/register`} className="landing-nav-register">
-              {t("register")}
-            </Link>
+          <div className="flex items-center gap-3">
+            <LanguageSwitcher locale={locale} align="right" />
+
+            <div className="hidden items-center gap-3 sm:flex">
+              <Link href={`/${locale}/auth/login`} className="landing-nav-secondary">
+                {t("signIn")}
+              </Link>
+              <Link href={`/${locale}/auth/register`} className="landing-nav-primary">
+                {t("register")}
+              </Link>
+            </div>
           </div>
         </div>
       </div>

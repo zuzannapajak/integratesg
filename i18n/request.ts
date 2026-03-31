@@ -1,7 +1,22 @@
+import { isAppLocale } from "@/lib/i18n/locales";
 import { getRequestConfig } from "next-intl/server";
 import { routing } from "./routing";
 
 type Messages = Record<string, unknown>;
+
+const messageScopes = [
+  "admin-stats-shells",
+  "auth-shells",
+  "curriculum-shells",
+  "dashboard-shells",
+  "eportfolio-shells",
+  "home-shells",
+  "module-player-shells",
+  "protected-list-shells",
+  "public-content-shells",
+  "scenario-shells",
+  "settings-shells",
+] as const;
 
 function deepMerge(base: Messages, override: Messages): Messages {
   const result: Messages = { ...base };
@@ -26,90 +41,50 @@ function deepMerge(base: Messages, override: Messages): Messages {
   return result;
 }
 
-export default getRequestConfig(async ({ requestLocale }) => {
-  let locale = await requestLocale;
-
-  if (!locale || !routing.locales.includes(locale as "en" | "pl")) {
-    locale = routing.defaultLocale;
+async function loadRootMessages(locale: string): Promise<Messages> {
+  try {
+    const messagesModule = (await import(`../messages/${locale}.json`)) as {
+      default: Messages;
+    };
+    return messagesModule.default;
+  } catch {
+    const fallback = (await import(`../messages/en.json`)) as {
+      default: Messages;
+    };
+    return fallback.default;
   }
+}
 
-  const baseMessagesModule = (await import(`../messages/${locale}.json`)) as {
-    default: Messages;
-  };
+async function loadScopedMessages(scope: string, locale: string): Promise<Messages> {
+  try {
+    const messagesModule = (await import(`../messages/${scope}/${locale}.json`)) as {
+      default: Messages;
+    };
+    return messagesModule.default;
+  } catch {
+    const fallback = (await import(`../messages/${scope}/en.json`)) as {
+      default: Messages;
+    };
+    return fallback.default;
+  }
+}
 
-  const adminStatsModule = (await import(`../messages/admin-stats/${locale}.json`)) as {
-    default: Messages;
-  };
+export default getRequestConfig(async ({ requestLocale }) => {
+  const requested = await requestLocale;
+  const locale = requested && isAppLocale(requested) ? requested : routing.defaultLocale;
 
-  const authModule = (await import(`../messages/auth/${locale}.json`)) as {
-    default: Messages;
-  };
+  const [baseMessages, ...scopedMessages] = await Promise.all([
+    loadRootMessages(locale),
+    ...messageScopes.map((scope) => loadScopedMessages(scope, locale)),
+  ]);
 
-  const curriculumModule = (await import(`../messages/curriculum/${locale}.json`)) as {
-    default: Messages;
-  };
-
-  const dashboardModule = (await import(`../messages/dashboard/${locale}.json`)) as {
-    default: Messages;
-  };
-
-  const eportfolioModule = (await import(`../messages/eportfolio/${locale}.json`)) as {
-    default: Messages;
-  };
-
-  const homeModule = (await import(`../messages/home/${locale}.json`)) as {
-    default: Messages;
-  };
-
-  const modulePlayerModule = (await import(`../messages/module-player/${locale}.json`)) as {
-    default: Messages;
-  };
-
-  const protectedListModule = (await import(`../messages/protected-list/${locale}.json`)) as {
-    default: Messages;
-  };
-
-  const publicContentModule = (await import(`../messages/public-content/${locale}.json`)) as {
-    default: Messages;
-  };
-
-  const scenarioModule = (await import(`../messages/scenario/${locale}.json`)) as {
-    default: Messages;
-  };
-
-  const settingsModule = (await import(`../messages/settings/${locale}.json`)) as {
-    default: Messages;
-  };
+  const messages = scopedMessages.reduce<Messages>(
+    (accumulator, current) => deepMerge(accumulator, current),
+    baseMessages,
+  );
 
   return {
     locale,
-    messages: deepMerge(
-      deepMerge(
-        deepMerge(
-          deepMerge(
-            deepMerge(
-              deepMerge(
-                deepMerge(
-                  deepMerge(
-                    deepMerge(
-                      deepMerge(baseMessagesModule.default, adminStatsModule.default),
-                      authModule.default,
-                    ),
-                    curriculumModule.default,
-                  ),
-                  dashboardModule.default,
-                ),
-                eportfolioModule.default,
-              ),
-              homeModule.default,
-            ),
-            modulePlayerModule.default,
-          ),
-          protectedListModule.default,
-        ),
-        publicContentModule.default,
-      ),
-      deepMerge(scenarioModule.default, settingsModule.default),
-    ),
+    messages,
   };
 });
