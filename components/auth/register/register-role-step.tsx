@@ -2,6 +2,7 @@
 
 import { APP_ROLES, SelfServiceRole } from "@/lib/auth/roles";
 import { BookOpen, GraduationCap } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 type Props = {
   role: SelfServiceRole;
@@ -10,18 +11,20 @@ type Props = {
 };
 
 export default function RegisterRoleStep({ role, onRoleChange, onContinue }: Props) {
+  const t = useTranslations("Register.RoleStep");
+  const roles = useTranslations("Roles");
+  const common = useTranslations("Common");
+
   return (
     <div className="mx-auto w-full max-w-220">
       <div className="mb-6 text-left">
         <p className="text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-[#7a8594]">
-          Create your account
+          {t("eyebrow")}
         </p>
         <h1 className="mt-3 text-[1.9rem] font-semibold tracking-[-0.03em] text-[#31425a]">
-          Choose your role
+          {t("title")}
         </h1>
-        <p className="mt-3 max-w-[42ch] text-[0.98rem] leading-7 text-[#5f6977]">
-          Select how you will use the platform.
-        </p>
+        <p className="mt-3 max-w-[42ch] text-[0.98rem] leading-7 text-[#5f6977]">{t("subtitle")}</p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
@@ -50,15 +53,15 @@ export default function RegisterRoleStep({ role, onRoleChange, onContinue }: Pro
 
             <div className="min-w-0 flex-1 pr-1">
               <div className="flex items-center justify-between gap-3">
-                <p className="text-[1rem] font-semibold text-[#31425a]">Student</p>
+                <p className="text-[1rem] font-semibold text-[#31425a]">{roles("student")}</p>
                 {role === APP_ROLES.student ? (
                   <span className="rounded-full bg-[#31425a] px-2.5 py-1 text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-white">
-                    Selected
+                    {common("selected")}
                   </span>
                 ) : null}
               </div>
               <p className="mt-2 text-[0.92rem] leading-6 text-[#667180]">
-                Case studies, scenarios, and self-assessment.
+                {t("studentDescription")}
               </p>
             </div>
           </div>
@@ -89,15 +92,15 @@ export default function RegisterRoleStep({ role, onRoleChange, onContinue }: Pro
 
             <div className="min-w-0 flex-1 pr-1">
               <div className="flex items-center justify-between gap-3">
-                <p className="text-[1rem] font-semibold text-[#31425a]">Educator</p>
+                <p className="text-[1rem] font-semibold text-[#31425a]">{roles("educator")}</p>
                 {role === APP_ROLES.educator ? (
                   <span className="rounded-full bg-[#31425a] px-2.5 py-1 text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-white">
-                    Selected
+                    {common("selected")}
                   </span>
                 ) : null}
               </div>
               <p className="mt-2 text-[0.92rem] leading-6 text-[#667180]">
-                Curriculum tools and teaching resources.
+                {t("educatorDescription")}
               </p>
             </div>
           </div>
@@ -110,7 +113,7 @@ export default function RegisterRoleStep({ role, onRoleChange, onContinue }: Pro
           onClick={onContinue}
           className="inline-flex min-h-13 items-center justify-center rounded-full bg-[#31425a] px-7 font-semibold text-white transition hover:bg-[#243246]"
         >
-          Continue
+          {t("continue")}
         </button>
       </div>
     </div>
