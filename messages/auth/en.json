@@ -1,0 +1,65 @@
+{
+  "Auth": {
+    "LoginPage": {
+      "title": "Access your account",
+      "subtitle": "Sign in with your email or continue with Google.",
+      "noAccount": "Don't have an account?",
+      "createOne": "Create one"
+    },
+    "LoginForm": {
+      "emailLabel": "Email address",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter your password",
+      "submit": "Login",
+      "submitting": "Signing in..."
+    },
+    "SocialLogin": {
+      "continueWithGoogle": "Continue with Google"
+    },
+    "CompleteProfile": {
+      "title": "Complete your profile",
+      "chooseRole": "Choose your role",
+      "studentDescription": "Access case studies and scenarios",
+      "educatorDescription": "Access curriculum and teaching resources",
+      "error": "Failed to save profile.",
+      "submit": "Continue",
+      "submitting": "Saving..."
+    }
+  },
+  "Register": {
+    "Stepper": {
+      "role": "Role",
+      "accountDetails": "Account details"
+    },
+    "RoleStep": {
+      "eyebrow": "Create your account",
+      "title": "Choose your role",
+      "subtitle": "Select how you will use the platform.",
+      "studentDescription": "Case studies, scenarios, and self-assessment.",
+      "educatorDescription": "Curriculum tools and teaching resources.",
+      "continue": "Continue"
+    },
+    "DetailsStep": {
+      "title": "Account details",
+      "subtitle": "Create your account using Google or email.",
+      "continueWithEmail": "Continue with email",
+      "continueWithEmailDescription": "Fill in your details to create the account manually.",
+      "fullName": "Full name",
+      "fullNamePlaceholder": "Enter your full name",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "password": "Password",
+      "passwordPlaceholder": "Create a password",
+      "submit": "Create account",
+      "submitting": "Creating...",
+      "continueWithGoogle": "Continue with Google",
+      "continueWithGoogleDescription": "Recommended for faster setup.",
+      "googleHint": "Use your Google account to continue with your selected role and finish setup with fewer steps.",
+      "alreadyHaveAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "profileSaveError": "Account created, but the profile could not be saved.",
+      "success": "Account created successfully. Check your email to continue."
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "Protected": {
+    "SettingsPage": {
+      "back": "Back to dashboard",
+      "title": "Settings",
+      "subtitle": "Manage your profile and account preferences"
+    },
+    "SettingsForm": {
+      "profile": {
+        "title": "Personal details",
+        "subtitle": "Update your name and preferred language for the interface.",
+        "fullName": "Full name",
+        "fullNamePlaceholder": "e.g. John Doe",
+        "email": "Email address",
+        "language": "Language",
+        "languageOptions": {
+          "en": "English (US)",
+          "pl": "Polski (PL)",
+          "es": "Español (ES)"
+        },
+        "save": "Save changes",
+        "saved": "Changes saved.",
+        "failed": "Failed to save."
+      },
+      "security": {
+        "title": "Security",
+        "subtitle": "Ensure your account is using a long, random password to stay secure.",
+        "memberSince": "Member since",
+        "newPassword": "New password",
+        "confirmPassword": "Confirm password",
+        "updatePassword": "Update password",
+        "passwordUpdated": "Password updated.",
+        "minLength": "Min. 8 characters.",
+        "mismatch": "Passwords mismatch."
+      }
+    }
+  }
+}

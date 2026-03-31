@@ -1,0 +1,58 @@
+{
+  "Home": {
+    "hero": {
+      "title": "Practical ESG learning for students and educators.",
+      "join": "Join the platform",
+      "readMore": "Read more",
+      "imageAlt": "IntegratESG learning platform illustration"
+    },
+    "overview": {
+      "eyebrow": "Platform overview",
+      "title": "Discover case studies, interactive scenarios, and structured learning resources in a single multilingual environment designed around the WP4 experience.",
+      "description": "The platform combines experiential learning resources, interactive simulation, and structured educational pathways in a form that stays clear, accessible, and easy to navigate.",
+      "createAccount": "Create account",
+      "signIn": "Sign in"
+    },
+    "cards": {
+      "students": {
+        "eyebrow": "For students",
+        "title": "Scenario Simulator",
+        "description": "Explore ESG topics through interactive decision-making scenarios and practical learning paths."
+      },
+      "educators": {
+        "eyebrow": "For educators",
+        "title": "Curriculum and self-assessment",
+        "description": "Access structured learning modules, pre- and post-quizzes, and feedback-driven teaching resources."
+      },
+      "allUsers": {
+        "eyebrow": "For all users",
+        "title": "ePortfolio of case studies",
+        "description": "Review standardized ESG case studies prepared across partner languages and contexts."
+      }
+    },
+    "stats": {
+      "eyebrow": "At a glance",
+      "title": "Key numbers behind the learning experience.",
+      "caseStudies": "Case studies",
+      "scenarioAreas": "Scenario areas",
+      "partnerLanguages": "Partner languages"
+    },
+    "partners": {
+      "title": "Partners"
+    },
+    "cta": {
+      "eyebrow": "Get started",
+      "title": "Access the platform and continue your ESG learning journey.",
+      "description": "Register to explore scenarios, ePortfolio resources, and learning materials designed for students, educators, and project stakeholders.",
+      "register": "Register",
+      "signIn": "Sign in"
+    }
+  },
+  "NotFound": {
+    "badge": "Page not found",
+    "title": "Upsss! This page took a coffee break.",
+    "description": "We looked around and even checked behind the button… but this page is not here.",
+    "errorCodeLabel": "Error code:",
+    "errorCodeDescription": "page wandered off."
+  }
+}

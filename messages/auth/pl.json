@@ -1,0 +1,65 @@
+{
+  "Auth": {
+    "LoginPage": {
+      "title": "Uzyskaj dostęp do swojego konta",
+      "subtitle": "Zaloguj się e-mailem lub kontynuuj przez Google.",
+      "noAccount": "Nie masz jeszcze konta?",
+      "createOne": "Utwórz je"
+    },
+    "LoginForm": {
+      "emailLabel": "Adres e-mail",
+      "emailPlaceholder": "twoj@email.com",
+      "passwordLabel": "Hasło",
+      "passwordPlaceholder": "Wpisz hasło",
+      "submit": "Zaloguj się",
+      "submitting": "Logowanie..."
+    },
+    "SocialLogin": {
+      "continueWithGoogle": "Kontynuuj z Google"
+    },
+    "CompleteProfile": {
+      "title": "Uzupełnij profil",
+      "chooseRole": "Wybierz swoją rolę",
+      "studentDescription": "Dostęp do case studies i scenariuszy",
+      "educatorDescription": "Dostęp do curriculum i materiałów dydaktycznych",
+      "error": "Nie udało się zapisać profilu.",
+      "submit": "Kontynuuj",
+      "submitting": "Zapisywanie..."
+    }
+  },
+  "Register": {
+    "Stepper": {
+      "role": "Rola",
+      "accountDetails": "Dane konta"
+    },
+    "RoleStep": {
+      "eyebrow": "Utwórz konto",
+      "title": "Wybierz swoją rolę",
+      "subtitle": "Wybierz, w jaki sposób będziesz korzystać z platformy.",
+      "studentDescription": "Case studies, scenariusze i samoocena.",
+      "educatorDescription": "Narzędzia curriculum i materiały dydaktyczne.",
+      "continue": "Kontynuuj"
+    },
+    "DetailsStep": {
+      "title": "Dane konta",
+      "subtitle": "Utwórz konto przez Google lub e-mail.",
+      "continueWithEmail": "Kontynuuj przez e-mail",
+      "continueWithEmailDescription": "Wypełnij dane, aby utworzyć konto ręcznie.",
+      "fullName": "Imię i nazwisko",
+      "fullNamePlaceholder": "Wpisz imię i nazwisko",
+      "email": "E-mail",
+      "emailPlaceholder": "Wpisz adres e-mail",
+      "password": "Hasło",
+      "passwordPlaceholder": "Utwórz hasło",
+      "submit": "Utwórz konto",
+      "submitting": "Tworzenie...",
+      "continueWithGoogle": "Kontynuuj z Google",
+      "continueWithGoogleDescription": "Polecane dla szybszej konfiguracji.",
+      "googleHint": "Użyj konta Google, aby kontynuować z wybraną rolą i zakończyć konfigurację w mniejszej liczbie kroków.",
+      "alreadyHaveAccount": "Masz już konto?",
+      "signIn": "Zaloguj się",
+      "profileSaveError": "Konto zostało utworzone, ale nie udało się zapisać profilu.",
+      "success": "Konto zostało utworzone. Sprawdź e-mail, aby kontynuować."
+    }
+  }
+}

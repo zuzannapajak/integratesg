@@ -1,0 +1,378 @@
+{
+  "PublicContent": {
+    "About": {
+      "hero": {
+        "eyebrow": "About the project",
+        "title": "Bridging the gap between vocational education and real-world ESG implementation.",
+        "description": "Our goal is to help VET providers and business managers build the knowledge, skills, and practical tools needed to integrate Environmental, Social, and Governance principles into business strategies and vocational training.",
+        "primaryCta": "Join the platform",
+        "secondaryCta": "Read more"
+      },
+      "heroCards": {
+        "openAccessTitle": "Open access",
+        "openAccessDescription": "Freely available resources designed for adaptation and use.",
+        "practicalPackageBadge": "Practical package",
+        "practicalPackageTitle": "Curriculum, eLearning, ePortfolio, and Scenario Simulator.",
+        "practicalPackageDescription": "A connected learning ecosystem designed to support ESG awareness.",
+        "euRelevanceTitle": "EU relevance",
+        "euRelevanceDescription": "Supports Green Deal priorities and innovation in vocational education."
+      },
+      "project": {
+        "eyebrow": "Project",
+        "title": "Why the project matters",
+        "paragraph1": "The IntegratESG project bridges the gap between vocational education and real-world application by equipping VET providers and business managers with the knowledge and tools to integrate Environmental, Social, and Governance (ESG) principles into business strategies.",
+        "paragraph2": "With ESG regulations becoming increasingly stringent, such as the Corporate Sustainability Reporting Directive (CSRD), businesses must adapt to ensure sustainable and responsible operations.",
+        "paragraph3": "The project develops a comprehensive training package, including a Roadmap for VET providers, an ESG curriculum and eLearning course, a digital ePortfolio of case studies, and a Scenario Simulator.",
+        "paragraph4": "These resources are accessible through an interactive e-learning platform, freely available for adaptation and use."
+      },
+      "strategic": {
+        "eyebrow": "Strategic relevance",
+        "title": "Aligned with EU priorities",
+        "description": "This project aligns with the EU’s Green Deal objectives and contributes to the adaptation and innovation of vocational education by integrating ESG awareness and practical implementation.",
+        "card1Title": "Training package",
+        "card1Description": "Roadmap, curriculum, eLearning course, ePortfolio, and Scenario Simulator.",
+        "card2Title": "Open access",
+        "card2Description": "Freely accessible resources designed for adaptation and practical use."
+      },
+      "goals": {
+        "eyebrow": "Main goals",
+        "title": "Four pillars guiding the project.",
+        "items": {
+          "1": {
+            "title": "Capacity Building for VET Providers",
+            "description": "Support vocational education providers with practical tools, structured guidance, and ESG-focused teaching resources."
+          },
+          "2": {
+            "title": "Business Competence in ESG",
+            "description": "Help business managers and organisations understand ESG requirements and apply them in real decision-making processes."
+          },
+          "3": {
+            "title": "Collaboration and Best Practice Exchange",
+            "description": "Strengthen cooperation among partners and encourage the exchange of effective approaches across countries and sectors."
+          },
+          "4": {
+            "title": "Raising Public Awareness",
+            "description": "Promote broader understanding of ESG principles and their importance for education, business, and society."
+          }
+        }
+      },
+      "results": {
+        "eyebrow": "Expected results",
+        "title": "From knowledge improvement to wider systemic change.",
+        "items": {
+          "1": {
+            "title": "Educational Impact",
+            "description": "VET educators and business professionals improve their ESG knowledge, ensuring alignment with modern labour market needs."
+          },
+          "2": {
+            "title": "Behavioural Change",
+            "description": "Businesses increasingly adopt ESG principles in decision-making, leading to improved stakeholder engagement and corporate responsibility."
+          },
+          "3": {
+            "title": "Systemic Impact",
+            "description": "Cooperation among participating EU countries strengthens, aligning VET training with sustainability goals and market demands."
+          }
+        }
+      },
+      "groups": {
+        "eyebrow": "Target groups",
+        "title": "Designed for diverse educational and professional audiences.",
+        "items": {
+          "1": "VET Educators",
+          "2": "Business Managers",
+          "3": "SMEs and Large Enterprises",
+          "4": "Environmental Experts / Policy Makers / NGOs",
+          "5": "VET Learners",
+          "6": "Relevant key actors"
+        }
+      },
+      "cta": {
+        "eyebrow": "Explore the platform",
+        "title": "Learn how IntegratESG supports practical ESG education.",
+        "description": "Access the multilingual learning environment and explore the resources created to support project outcomes and wider educational use.",
+        "primaryCta": "Join the platform",
+        "secondaryCta": "Read more"
+      }
+    },
+    "Educators": {
+      "hero": {
+        "eyebrow": "For educators",
+        "title": "Structured ESG learning tools designed to support teaching, guidance, and classroom practice.",
+        "description": "Educators can use the platform to access curriculum-aligned resources, track learning progress, and integrate ESG topics into structured educational pathways.",
+        "primaryCta": "Register",
+        "secondaryCta": "Learn more"
+      },
+      "highlights": {
+        "eyebrow": "Main benefits",
+        "title": "What educators can do on the platform",
+        "items": {
+          "1": {
+            "title": "Access structured curriculum resources",
+            "description": "Use organised ESG learning modules, quizzes, and educational pathways designed for vocational and applied learning."
+          },
+          "2": {
+            "title": "Support guided learning",
+            "description": "Use the platform as a support environment for introducing ESG topics in a clearer and more practical format."
+          },
+          "3": {
+            "title": "Work with case studies and scenarios",
+            "description": "Integrate practical cases and scenario-based activities into educational processes and discussions."
+          }
+        }
+      },
+      "sections": {
+        "1": {
+          "title": "Curriculum-focused learning",
+          "description": "The platform gives educators access to curriculum-oriented modules and learning checkpoints that can support structured teaching and self-paced study."
+        },
+        "2": {
+          "title": "Teaching support through scenarios",
+          "description": "Scenario-based materials allow educators to connect ESG knowledge with practical decision-making contexts and classroom reflection."
+        },
+        "3": {
+          "title": "Flexible educational use",
+          "description": "The environment is designed to be accessible, multilingual, and adaptable for different teaching needs, learning groups, and project contexts."
+        }
+      },
+      "cta": {
+        "eyebrow": "Join the platform",
+        "title": "Access ESG learning resources prepared for educators.",
+        "description": "Register to explore curriculum materials, case studies, and scenario-based learning opportunities.",
+        "primaryCta": "Register",
+        "secondaryCta": "Sign in"
+      }
+    },
+    "Students": {
+      "hero": {
+        "eyebrow": "For students",
+        "title": "Explore ESG topics through interactive scenarios, case studies, and guided learning materials.",
+        "description": "Students can use the platform to build practical understanding of ESG issues through self-paced exploration, structured resources, and applied learning experiences.",
+        "primaryCta": "Register",
+        "secondaryCta": "Learn more"
+      },
+      "highlights": {
+        "eyebrow": "Learning experience",
+        "title": "What students can explore",
+        "items": {
+          "1": {
+            "title": "Interactive decision-making scenarios",
+            "description": "Engage with realistic ESG situations and explore how different decisions influence outcomes and stakeholder perspectives."
+          },
+          "2": {
+            "title": "Case studies in multiple contexts",
+            "description": "Review structured ESG case studies prepared across languages, sectors, and educational settings."
+          },
+          "3": {
+            "title": "Clear and accessible learning flow",
+            "description": "Navigate materials designed to support understanding, reflection, and gradual knowledge development."
+          }
+        }
+      },
+      "sections": {
+        "1": {
+          "title": "Scenario-based learning",
+          "description": "The platform allows students to approach ESG through practical tasks and simulated decision-making situations."
+        },
+        "2": {
+          "title": "Learning through examples",
+          "description": "Case studies help connect theory with practice and show how ESG principles appear in real professional and organisational contexts."
+        },
+        "3": {
+          "title": "Independent learning support",
+          "description": "Students can use the platform at their own pace and return to resources as part of broader coursework or project-based activity."
+        }
+      },
+      "cta": {
+        "eyebrow": "Start learning",
+        "title": "Create your account and access practical ESG resources.",
+        "description": "Register to explore scenarios, case studies, and guided learning content prepared for student users.",
+        "primaryCta": "Register",
+        "secondaryCta": "Sign in"
+      }
+    },
+    "Privacy": {
+      "hero": {
+        "eyebrow": "Privacy information",
+        "title": "How privacy and personal data may be handled on the IntegratESG platform.",
+        "description": "This page provides a structured overview of privacy-related principles and can later be extended into a full privacy policy depending on the final platform governance and operational setup.",
+        "secondaryCta": "Back to homepage",
+        "primaryCta": "Accessibility"
+      },
+      "overview": {
+        "eyebrow": "Quick overview",
+        "title": "Main privacy principles",
+        "items": {
+          "1": "Only necessary user data should be collected",
+          "2": "Data should be processed transparently and responsibly",
+          "3": "Security and access controls should be maintained",
+          "4": "Users should be informed about how the platform works",
+          "5": "Additional details may be added in the final legal documentation"
+        }
+      },
+      "sections": {
+        "1": {
+          "title": "1. Purpose of this page",
+          "description": "This privacy page currently serves as an informational placeholder presenting the expected direction of personal data handling on the platform. It is designed to provide clarity while leaving room for more formal legal content to be introduced later if needed."
+        },
+        "2": {
+          "title": "2. Types of information",
+          "description": "Depending on how the platform is configured and used, it may process basic account-related data such as name, email address, language preferences, learning progress, or usage-related information necessary for the educational experience."
+        },
+        "3": {
+          "title": "3. Platform use and educational context",
+          "description": "Any personal data processed through the platform should be limited to what is necessary to provide account access, support learning pathways, track educational progress, and ensure the proper technical functioning of the service."
+        },
+        "4": {
+          "title": "4. Security and access",
+          "description": "Reasonable technical and organisational safeguards should be applied to protect user information and restrict access to authorised persons involved in project delivery, platform administration, or educational support."
+        },
+        "5": {
+          "title": "5. Future expansion of this notice",
+          "description": "At later stages, this page can be extended with more specific information regarding data controllers, legal bases, storage periods, user rights, contact points, and jurisdiction-specific requirements."
+        },
+        "6": {
+          "title": "6. Final note",
+          "description": "This page is intentionally written as a structured and user-friendly placeholder that supports transparency in the current stage of platform development."
+        }
+      }
+    },
+    "Accessibility": {
+      "hero": {
+        "eyebrow": "Accessibility",
+        "title": "A platform experience designed to remain clear, inclusive, and easy to use.",
+        "description": "This page outlines the accessibility-oriented intentions behind the platform and can later be expanded into a more formal accessibility statement if required.",
+        "secondaryCta": "Back to homepage",
+        "primaryCta": "Legal notice"
+      },
+      "overview": {
+        "eyebrow": "Quick overview",
+        "title": "Core accessibility intentions",
+        "items": {
+          "1": "Readable structure and clear navigation",
+          "2": "Support for multilingual content",
+          "3": "Consistent interface patterns",
+          "4": "Focus on understandable user journeys",
+          "5": "Potential for future formal compliance statements"
+        }
+      },
+      "sections": {
+        "1": {
+          "title": "1. Accessibility approach",
+          "description": "The platform is being designed to support clear visual structure, understandable interactions, and a user experience that remains accessible across different user groups and educational contexts."
+        },
+        "2": {
+          "title": "2. Interface clarity",
+          "description": "Special attention is given to hierarchy, spacing, typography, and navigational consistency so that content remains easier to perceive and use."
+        },
+        "3": {
+          "title": "3. Multilingual environment",
+          "description": "Because the platform supports multiple partner languages, clarity and consistency in translated content are also treated as part of the broader accessibility objective."
+        },
+        "4": {
+          "title": "4. Ongoing improvement",
+          "description": "Accessibility is treated as an evolving quality goal. Future platform iterations may introduce additional refinements, testing, and more formal statements depending on project needs and final publication arrangements."
+        },
+        "5": {
+          "title": "5. Future statement",
+          "description": "If required, this page may later be replaced or supplemented with a formal accessibility declaration that reflects the final technical and organisational setup of the platform."
+        },
+        "6": {
+          "title": "6. Final note",
+          "description": "This page currently acts as a structured accessibility placeholder intended to support a more inclusive and trustworthy public experience."
+        }
+      }
+    },
+    "LegalNotice": {
+      "hero": {
+        "eyebrow": "Legal notice",
+        "title": "General legal and organisational information related to the platform.",
+        "description": "This page provides a structured placeholder for legal and institutional information and can later be expanded with formal ownership, responsibility, and contact details.",
+        "secondaryCta": "Back to homepage",
+        "primaryCta": "Terms of use"
+      },
+      "overview": {
+        "eyebrow": "Quick overview",
+        "title": "Main legal-information areas",
+        "items": {
+          "1": "Project and institutional context may be described here",
+          "2": "Platform responsibility may be clarified here",
+          "3": "Contact details may be added later",
+          "4": "Ownership and licensing can be specified in future versions",
+          "5": "This page currently has an informational placeholder role"
+        }
+      },
+      "sections": {
+        "1": {
+          "title": "1. Platform context",
+          "description": "The IntegratESG platform forms part of a broader educational and project-related initiative focused on ESG awareness, vocational learning, and practical implementation support. Further institutional and project ownership details may be added here in future versions."
+        },
+        "2": {
+          "title": "2. Operational responsibility",
+          "description": "Depending on the final operational setup, the platform may be administered or maintained by a project partner, coordinating institution, or another designated entity responsible for technical operation and project delivery."
+        },
+        "3": {
+          "title": "3. Contact and communication",
+          "description": "Project-related, technical, or institutional contact details may be published here once the final communication model is confirmed. This section can later include email addresses, institutional references, or other formal contact points."
+        },
+        "4": {
+          "title": "4. Intellectual property",
+          "description": "Platform content, design elements, and educational resources may be subject to specific ownership, licensing, or attribution requirements. The exact rules for reuse and adaptation should be interpreted in line with the licensing model applicable to each resource or project output."
+        },
+        "5": {
+          "title": "5. Informational nature of this page",
+          "description": "This Legal Notice is currently presented as a structured informational page for the current stage of the platform. It can later be expanded into a more formal legal disclosure area with complete institutional and jurisdiction-specific details."
+        },
+        "6": {
+          "title": "6. Final note",
+          "description": "This page is intended to create a clear legal-information placeholder within the public part of the platform and support a more complete and trustworthy user experience."
+        }
+      }
+    },
+    "Terms": {
+      "hero": {
+        "eyebrow": "Terms of use",
+        "title": "Rules for using the IntegratESG platform and its learning resources.",
+        "description": "This page outlines the general terms governing access to the platform, the use of its educational materials, and the expected standards of responsible use.",
+        "secondaryCta": "Back to homepage",
+        "primaryCta": "Legal notice"
+      },
+      "overview": {
+        "eyebrow": "Quick overview",
+        "title": "Main use principles",
+        "items": {
+          "1": "Access is limited to intended educational or project-related purposes",
+          "2": "Users should protect their login credentials",
+          "3": "Content should be used responsibly and lawfully",
+          "4": "Platform availability may evolve over time",
+          "5": "Specific institutional rules may also apply"
+        }
+      },
+      "sections": {
+        "1": {
+          "title": "1. Scope of use",
+          "description": "The IntegratESG platform is intended to support educational, training, and project-related activities connected with ESG awareness, vocational learning, and practical competence development. Use of the platform should remain consistent with its educational purpose."
+        },
+        "2": {
+          "title": "2. User responsibilities",
+          "description": "Users are expected to use the platform responsibly, keep their credentials secure, and avoid actions that could disrupt the service, compromise security, or interfere with the learning experience of other users."
+        },
+        "3": {
+          "title": "3. Educational resources",
+          "description": "The platform may provide access to learning modules, case studies, scenarios, and supporting educational materials. These resources are provided for structured learning and project-related dissemination. Their reuse, adaptation, or further distribution may depend on the licensing terms applicable to each resource."
+        },
+        "4": {
+          "title": "4. Availability and changes",
+          "description": "The platform may be updated, improved, reorganised, or temporarily unavailable due to maintenance, development work, or technical reasons. The project team may adjust features, content, or access arrangements as the platform evolves."
+        },
+        "5": {
+          "title": "5. Misuse and restrictions",
+          "description": "Users must not attempt unauthorised access, interfere with the technical operation of the platform, misuse learning resources, or use the service in ways contrary to applicable law, institutional rules, or project purposes."
+        },
+        "6": {
+          "title": "6. Final note",
+          "description": "This Terms of Use page provides a structured informational baseline for the current project stage. It can later be expanded into a more detailed legal or operational terms document once the final hosting, governance, and administrative arrangements are fully defined."
+        }
+      }
+    }
+  }
+}

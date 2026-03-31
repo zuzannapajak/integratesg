@@ -1,0 +1,38 @@
+{
+  "Protected": {
+    "SettingsPage": {
+      "back": "Powrót do dashboardu",
+      "title": "Ustawienia",
+      "subtitle": "Zarządzaj profilem i preferencjami konta"
+    },
+    "SettingsForm": {
+      "profile": {
+        "title": "Dane osobowe",
+        "subtitle": "Zaktualizuj swoje imię i nazwisko oraz preferowany język interfejsu.",
+        "fullName": "Imię i nazwisko",
+        "fullNamePlaceholder": "np. Jan Kowalski",
+        "email": "Adres e-mail",
+        "language": "Język",
+        "languageOptions": {
+          "en": "English (US)",
+          "pl": "Polski (PL)",
+          "es": "Español (ES)"
+        },
+        "save": "Zapisz zmiany",
+        "saved": "Zmiany zostały zapisane.",
+        "failed": "Nie udało się zapisać zmian."
+      },
+      "security": {
+        "title": "Bezpieczeństwo",
+        "subtitle": "Zadbaj o bezpieczeństwo konta, używając długiego i losowego hasła.",
+        "memberSince": "Członek od",
+        "newPassword": "Nowe hasło",
+        "confirmPassword": "Potwierdź hasło",
+        "updatePassword": "Zaktualizuj hasło",
+        "passwordUpdated": "Hasło zostało zaktualizowane.",
+        "minLength": "Minimum 8 znaków.",
+        "mismatch": "Hasła nie są takie same."
+      }
+    }
+  }
+}

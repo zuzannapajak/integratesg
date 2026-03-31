@@ -37,33 +37,47 @@ export default getRequestConfig(async ({ requestLocale }) => {
     default: Messages;
   };
 
-  const protectedListShellsModule = (await import(
-    `../messages/protected-list-shells/${locale}.json`
-  )) as {
+  const adminStatsModule = (await import(`../messages/admin-stats/${locale}.json`)) as {
     default: Messages;
   };
 
-  const curriculumShellsModule = (await import(`../messages/curriculum-shells/${locale}.json`)) as {
+  const authModule = (await import(`../messages/auth/${locale}.json`)) as {
     default: Messages;
   };
 
-  const modulePlayerShellsModule = (await import(
-    `../messages/module-player-shells/${locale}.json`
-  )) as {
+  const curriculumModule = (await import(`../messages/curriculum/${locale}.json`)) as {
     default: Messages;
   };
 
-  const scenarioShellsModule = (await import(`../messages/scenario-shells/${locale}.json`)) as {
+  const dashboardModule = (await import(`../messages/dashboard/${locale}.json`)) as {
     default: Messages;
   };
 
-  const eportfolioShellsModule = (await import(`../messages/eportfolio-shells/${locale}.json`)) as {
+  const eportfolioModule = (await import(`../messages/eportfolio/${locale}.json`)) as {
     default: Messages;
   };
 
-  const adminStatsShellsModule = (await import(
-    `../messages/admin-stats-shells/${locale}.json`
-  )) as {
+  const homeModule = (await import(`../messages/home/${locale}.json`)) as {
+    default: Messages;
+  };
+
+  const modulePlayerModule = (await import(`../messages/module-player/${locale}.json`)) as {
+    default: Messages;
+  };
+
+  const protectedListModule = (await import(`../messages/protected-list/${locale}.json`)) as {
+    default: Messages;
+  };
+
+  const publicContentModule = (await import(`../messages/public-content/${locale}.json`)) as {
+    default: Messages;
+  };
+
+  const scenarioModule = (await import(`../messages/scenario/${locale}.json`)) as {
+    default: Messages;
+  };
+
+  const settingsModule = (await import(`../messages/settings/${locale}.json`)) as {
     default: Messages;
   };
 
@@ -74,16 +88,28 @@ export default getRequestConfig(async ({ requestLocale }) => {
         deepMerge(
           deepMerge(
             deepMerge(
-              deepMerge(baseMessagesModule.default, protectedListShellsModule.default),
-              curriculumShellsModule.default,
+              deepMerge(
+                deepMerge(
+                  deepMerge(
+                    deepMerge(
+                      deepMerge(baseMessagesModule.default, adminStatsModule.default),
+                      authModule.default,
+                    ),
+                    curriculumModule.default,
+                  ),
+                  dashboardModule.default,
+                ),
+                eportfolioModule.default,
+              ),
+              homeModule.default,
             ),
-            modulePlayerShellsModule.default,
+            modulePlayerModule.default,
           ),
-          scenarioShellsModule.default,
+          protectedListModule.default,
         ),
-        eportfolioShellsModule.default,
+        publicContentModule.default,
       ),
-      adminStatsShellsModule.default,
+      deepMerge(scenarioModule.default, settingsModule.default),
     ),
   };
 });

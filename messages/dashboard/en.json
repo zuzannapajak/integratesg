@@ -1,0 +1,115 @@
+{
+  "Protected": {
+    "DashboardPage": {
+      "fallback": {
+        "noActivity": "No activity yet",
+        "today": "Today",
+        "yesterday": "Yesterday",
+        "daysAgo": "{count} days ago",
+        "untitledModule": "Untitled module",
+        "continueDescription": "Continue your latest learning module and pick up from your current progress.",
+        "curriculumBadge": "Curriculum",
+        "reviewModule": "Review module",
+        "continueModule": "Continue module",
+        "lastCompleted": "Last completed",
+        "lastOpened": "Last opened",
+        "noChange": "No change vs previous week",
+        "vsPreviousWeek": "{value} vs previous week"
+      },
+      "metrics": {
+        "averagePostQuiz": "Average post-quiz",
+        "modulesInProgress": "Modules in progress",
+        "completionRate": "Completion rate",
+        "averageScore": "Average score"
+      },
+      "gamification": {
+        "learningStreak": "Learning streak"
+      },
+      "adminKpis": {
+        "users": "Users",
+        "usersHint": "Registered platform users",
+        "attempts": "Attempts",
+        "attemptsHint": "Tracked scenario attempts",
+        "completionRate": "Completion rate",
+        "completionRateHint": "Completed or passed attempts",
+        "averageScore": "Average score",
+        "averageScoreHint": "{count} active users"
+      }
+    },
+    "DashboardShell": {
+      "roleConfig": {
+        "educator": {
+          "welcome": "Welcome back",
+          "intro": "Continue your learning path and access your teaching resources."
+        },
+        "student": {
+          "welcome": "Welcome back",
+          "intro": "Continue learning where you left off and keep your momentum going."
+        },
+        "admin": {
+          "welcome": "Welcome back",
+          "intro": "Monitor platform health, participation, and overall usage trends."
+        }
+      },
+      "streak": {
+        "days": "days"
+      },
+      "continueLearning": {
+        "badge": "Resume",
+        "resumeCta": "Resume learning",
+        "fallbackTitle": "Resume your latest activity",
+        "fallbackDescriptionEducator": "Quick return to the module you opened most recently.",
+        "fallbackDescriptionStudent": "Quick return to the learning flow you opened most recently."
+      },
+      "coreArea": {
+        "educator": {
+          "primary": {
+            "title": "Curriculum",
+            "description": "Open structured modules, checkpoints, and guided learning flow.",
+            "meta": "{count} published modules"
+          },
+          "secondary": {
+            "title": "ePortfolio",
+            "description": "Browse case studies and practical ESG examples prepared for applied learning.",
+            "meta": "Case studies and examples"
+          }
+        },
+        "student": {
+          "primary": {
+            "title": "Scenario simulator",
+            "description": "Launch interactive scenarios and practice decision-making in realistic contexts.",
+            "meta": "Interactive scenario flows"
+          },
+          "secondary": {
+            "title": "ePortfolio",
+            "description": "Browse case studies and practical ESG examples to support your learning journey.",
+            "meta": "Case studies and examples"
+          }
+        },
+        "buttons": {
+          "openModule": "Open module",
+          "openScenarios": "Open scenarios",
+          "openEportfolio": "Open ePortfolio"
+        }
+      },
+      "learner": {
+        "activity": {
+          "title": "Your activity",
+          "description": "Real events from your curriculum activity over the last 7 days.",
+          "valueLabel": "Events"
+        },
+        "summary": {
+          "title": "Progress summary",
+          "description": "A compact overview built from your real curriculum data."
+        }
+      },
+      "admin": {
+        "activity": {
+          "title": "Platform activity",
+          "description": "Distinct active users per day based on real curriculum activity.",
+          "valueLabel": "Active users"
+        }
+      }
+    }
+  }
+}

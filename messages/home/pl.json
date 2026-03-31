@@ -1,0 +1,58 @@
+{
+  "Home": {
+    "hero": {
+      "title": "Praktyczna nauka ESG dla studentów i edukatorów.",
+      "join": "Dołącz do platformy",
+      "readMore": "Czytaj więcej",
+      "imageAlt": "Ilustracja platformy edukacyjnej IntegratESG"
+    },
+    "overview": {
+      "eyebrow": "Przegląd platformy",
+      "title": "Odkrywaj case studies, interaktywne scenariusze i uporządkowane zasoby edukacyjne w jednym wielojęzycznym środowisku zaprojektowanym wokół doświadczenia WP4.",
+      "description": "Platforma łączy zasoby do nauki przez doświadczenie, interaktywną symulację i uporządkowane ścieżki edukacyjne w formie, która pozostaje czytelna, dostępna i łatwa w nawigacji.",
+      "createAccount": "Utwórz konto",
+      "signIn": "Zaloguj się"
+    },
+    "cards": {
+      "students": {
+        "eyebrow": "Dla studentów",
+        "title": "Symulator scenariuszy",
+        "description": "Poznawaj zagadnienia ESG poprzez interaktywne scenariusze decyzyjne i praktyczne ścieżki uczenia się."
+      },
+      "educators": {
+        "eyebrow": "Dla edukatorów",
+        "title": "Curriculum i samoocena",
+        "description": "Korzystaj z uporządkowanych modułów edukacyjnych, quizów pre- i post-test oraz materiałów dydaktycznych opartych na informacji zwrotnej."
+      },
+      "allUsers": {
+        "eyebrow": "Dla wszystkich użytkowników",
+        "title": "ePortfolio studiów przypadków",
+        "description": "Przeglądaj ustandaryzowane case studies ESG przygotowane w językach partnerów i różnych kontekstach."
+      }
+    },
+    "stats": {
+      "eyebrow": "Najważniejsze liczby",
+      "title": "Kluczowe wskaźniki doświadczenia edukacyjnego.",
+      "caseStudies": "Studia przypadków",
+      "scenarioAreas": "Obszary scenariuszy",
+      "partnerLanguages": "Języki partnerów"
+    },
+    "partners": {
+      "title": "Partnerzy"
+    },
+    "cta": {
+      "eyebrow": "Zacznij teraz",
+      "title": "Uzyskaj dostęp do platformy i kontynuuj swoją ścieżkę nauki ESG.",
+      "description": "Zarejestruj się, aby odkrywać scenariusze, zasoby ePortfolio i materiały edukacyjne przygotowane dla studentów, edukatorów i interesariuszy projektu.",
+      "register": "Zarejestruj się",
+      "signIn": "Zaloguj się"
+    }
+  },
+  "NotFound": {
+    "badge": "Nie znaleziono strony",
+    "title": "Upsss! Ta strona zrobiła sobie przerwę na kawę.",
+    "description": "Rozejrzeliśmy się i sprawdziliśmy nawet za przyciskiem… ale tej strony tu nie ma.",
+    "errorCodeLabel": "Kod błędu:",
+    "errorCodeDescription": "strona gdzieś się zawieruszyła."
+  }
+}

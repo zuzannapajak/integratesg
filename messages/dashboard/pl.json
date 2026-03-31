@@ -1,0 +1,115 @@
+{
+  "Protected": {
+    "DashboardPage": {
+      "fallback": {
+        "noActivity": "Brak aktywności",
+        "today": "Dzisiaj",
+        "yesterday": "Wczoraj",
+        "daysAgo": "{count} dni temu",
+        "untitledModule": "Moduł bez tytułu",
+        "continueDescription": "Kontynuuj ostatni moduł i wróć do bieżącego postępu.",
+        "curriculumBadge": "Curriculum",
+        "reviewModule": "Przejrzyj moduł",
+        "continueModule": "Kontynuuj moduł",
+        "lastCompleted": "Ostatnio ukończone",
+        "lastOpened": "Ostatnio otwarte",
+        "noChange": "Bez zmian względem poprzedniego tygodnia",
+        "vsPreviousWeek": "{value} względem poprzedniego tygodnia"
+      },
+      "metrics": {
+        "averagePostQuiz": "Średni wynik post-quizu",
+        "modulesInProgress": "Moduły w trakcie",
+        "completionRate": "Wskaźnik ukończenia",
+        "averageScore": "Średni wynik"
+      },
+      "gamification": {
+        "learningStreak": "Seria dni nauki"
+      },
+      "adminKpis": {
+        "users": "Użytkownicy",
+        "usersHint": "Zarejestrowani użytkownicy platformy",
+        "attempts": "Próby",
+        "attemptsHint": "Śledzone próby scenariuszy",
+        "completionRate": "Wskaźnik ukończenia",
+        "completionRateHint": "Próby ukończone lub zaliczone",
+        "averageScore": "Średni wynik",
+        "averageScoreHint": "{count} aktywnych użytkowników"
+      }
+    },
+    "DashboardShell": {
+      "roleConfig": {
+        "educator": {
+          "welcome": "Witaj ponownie",
+          "intro": "Kontynuuj swoją ścieżkę nauki i korzystaj z zasobów dydaktycznych."
+        },
+        "student": {
+          "welcome": "Witaj ponownie",
+          "intro": "Kontynuuj naukę tam, gdzie skończyłaś, i utrzymuj swoje tempo."
+        },
+        "admin": {
+          "welcome": "Witaj ponownie",
+          "intro": "Monitoruj stan platformy, poziom zaangażowania i ogólne trendy użytkowania."
+        }
+      },
+      "streak": {
+        "days": "dni"
+      },
+      "continueLearning": {
+        "badge": "Wznów",
+        "resumeCta": "Wznów naukę",
+        "fallbackTitle": "Wznów ostatnią aktywność",
+        "fallbackDescriptionEducator": "Szybki powrót do modułu, który został ostatnio otwarty.",
+        "fallbackDescriptionStudent": "Szybki powrót do ścieżki nauki, która została ostatnio otwarta."
+      },
+      "coreArea": {
+        "educator": {
+          "primary": {
+            "title": "Curriculum",
+            "description": "Otwieraj uporządkowane moduły, checkpointy i prowadzony przebieg nauki.",
+            "meta": "{count} opublikowanych modułów"
+          },
+          "secondary": {
+            "title": "ePortfolio",
+            "description": "Przeglądaj studia przypadków i praktyczne przykłady ESG przygotowane do nauki stosowanej.",
+            "meta": "Studia przypadków i przykłady"
+          }
+        },
+        "student": {
+          "primary": {
+            "title": "Symulator scenariuszy",
+            "description": "Uruchamiaj interaktywne scenariusze i ćwicz podejmowanie decyzji w realistycznych kontekstach.",
+            "meta": "Interaktywne ścieżki scenariuszowe"
+          },
+          "secondary": {
+            "title": "ePortfolio",
+            "description": "Przeglądaj studia przypadków i praktyczne przykłady ESG wspierające Twoją ścieżkę nauki.",
+            "meta": "Studia przypadków i przykłady"
+          }
+        },
+        "buttons": {
+          "openModule": "Otwórz moduł",
+          "openScenarios": "Otwórz scenariusze",
+          "openEportfolio": "Otwórz ePortfolio"
+        }
+      },
+      "learner": {
+        "activity": {
+          "title": "Twoja aktywność",
+          "description": "Rzeczywiste zdarzenia z Twojej aktywności curriculum z ostatnich 7 dni.",
+          "valueLabel": "Zdarzenia"
+        },
+        "summary": {
+          "title": "Podsumowanie postępu",
+          "description": "Kompaktowy przegląd zbudowany na podstawie rzeczywistych danych curriculum."
+        }
+      },
+      "admin": {
+        "activity": {
+          "title": "Aktywność platformy",
+          "description": "Liczba unikalnych aktywnych użytkowników dziennie na podstawie rzeczywistej aktywności curriculum.",
+          "valueLabel": "Aktywni użytkownicy"
+        }
+      }
+    }
+  }
+}
