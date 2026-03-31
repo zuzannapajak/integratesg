@@ -158,7 +158,7 @@ export default function ProtectedNavbar({ locale, role, email, forceSolid = fals
               className={`group inline-flex h-12 items-center gap-2 rounded-full border px-2.5 pl-2 pr-3 text-white transition-all duration-200 ${
                 isMenuOpen
                   ? "border-white/20 bg-white/10"
-                  : "border-white/14 bg-white/[0.03] hover:border-white/20 hover:bg-white/[0.06]"
+                  : "border-white/14 bg-white/3 hover:border-white/20 hover:bg-white/6"
               }`}
               aria-haspopup="menu"
               aria-expanded={isMenuOpen}
@@ -188,7 +188,7 @@ export default function ProtectedNavbar({ locale, role, email, forceSolid = fals
               style={{ top: "calc(100% + 0.85rem)" }}
             >
               <div className={`rounded-3xl border p-3 ${panelClasses}`}>
-                <div className="rounded-2xl border border-white/8 bg-white/[0.04] px-4 py-3">
+                <div className="rounded-2xl border border-white/8 bg-white/4 px-4 py-3">
                   <p className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white/45">
                     {common("signedIn")}
                   </p>
@@ -208,7 +208,7 @@ export default function ProtectedNavbar({ locale, role, email, forceSolid = fals
                         onClick={closeMenu}
                         className={`flex items-center gap-3 rounded-2xl px-3.5 py-3 text-[15px] text-white/90 transition hover:bg-white/[0.07] hover:text-white ${visibilityClass}`}
                       >
-                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/[0.06] ring-1 ring-white/8">
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/6 ring-1 ring-white/8">
                           <Icon className="h-4.5 w-4.5" />
                         </span>
                         <span>{link.label}</span>

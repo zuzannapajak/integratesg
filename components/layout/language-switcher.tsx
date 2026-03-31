@@ -85,14 +85,16 @@ export default function LanguageSwitcher({ locale, align = "right" }: Props) {
     <div ref={wrapperRef} className="relative shrink-0">
       <button
         type="button"
-        onClick={() => { setIsOpen((prev) => !prev); }}
+        onClick={() => {
+          setIsOpen((prev) => !prev);
+        }}
         aria-haspopup="menu"
         aria-expanded={isOpen}
         aria-label="Open language switcher"
         className={`group inline-flex h-12 items-center gap-2 rounded-full border px-4 text-sm text-white/92 backdrop-blur-md transition-all duration-200 ${
           isOpen
             ? "border-white/20 bg-white/10"
-            : "border-white/14 bg-white/[0.03] hover:border-white/20 hover:bg-white/[0.06]"
+            : "border-white/14 bg-white/3 hover:border-white/20 hover:bg-white/6"
         }`}
       >
         <span
@@ -116,14 +118,16 @@ export default function LanguageSwitcher({ locale, align = "right" }: Props) {
             : "pointer-events-none -translate-y-1.5 opacity-0"
         }`}
       >
-        <div className="grid w-[10.5rem] grid-cols-3 gap-2 rounded-3xl border border-white/12 bg-[rgba(58,58,58,0.92)] p-2 shadow-[0_18px_40px_rgba(0,0,0,0.20)] backdrop-blur-xl">
+        <div className="grid w-42 grid-cols-3 gap-2 rounded-3xl border border-white/12 bg-[rgba(58,58,58,0.92)] p-2 shadow-[0_18px_40px_rgba(0,0,0,0.20)] backdrop-blur-xl">
           {items.map((item) => (
             <Link
               key={item.locale}
               href={item.href}
               aria-label={item.switchLabel}
               title={item.switchLabel}
-              onClick={() => { setIsOpen(false); }}
+              onClick={() => {
+                setIsOpen(false);
+              }}
               className={`relative flex h-12 w-12 items-center justify-center overflow-visible rounded-2xl transition-colors duration-200 ${
                 item.isActive ? "bg-white/14 ring-1 ring-white/20" : "hover:bg-white/10"
               }`}
