@@ -239,9 +239,8 @@ function TopStreakBadge({
 }) {
   const t = useTranslations("Protected.DashboardShell");
 
-  const streakStat = gamificationStats[0] ?? null;
-
-  if (!streakStat) return null;
+  if (gamificationStats.length === 0) return null;
+  const streakStat = gamificationStats[0];
 
   const streakValue = Number.parseInt(streakStat.value, 10) || 0;
 

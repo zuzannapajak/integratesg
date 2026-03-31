@@ -1,77 +1,14 @@
 import {
+  CourseMappedInput,
+  CourseSectionRecord,
   CurriculumLessonViewModel,
   CurriculumModuleViewModel,
   CurriculumProgressViewModel,
   CurriculumQuizAttemptViewModel,
+  StoredQuizAttempt,
+  TranslationRecord,
 } from "@/lib/curriculum/types";
 import { prisma } from "@/lib/prisma";
-
-type TranslationRecord = {
-  language: string;
-  title: string;
-  subtitle: string | null;
-  description: string | null;
-  content: string | null;
-};
-
-type StoredQuizAttempt = {
-  attemptNumber: number;
-  score: number;
-  correctCount: number;
-  totalQuestions: number;
-  submittedAt: string;
-  flaggedQuestionIds?: string[];
-  selectedAnswers?: Array<{
-    questionId: string;
-    answerId: string;
-    isCorrect: boolean;
-  }>;
-};
-
-type CourseAttemptRecord = {
-  status: string;
-  progressPercent: number;
-  lastOpenedAt: Date | null;
-  currentStage: string;
-  currentLessonIndex: number;
-  completedLessons: number;
-  preQuizAttempts: unknown;
-  postQuizAttempts: unknown;
-};
-
-type QuizRecord = {
-  id: string;
-  type: string;
-  title: string | null;
-  description: string | null;
-  passingScore: number | null;
-  sortOrder: number;
-  questions: Array<{
-    id: string;
-    prompt: string;
-    explanation: string | null;
-    sortOrder: number;
-    answers: Array<{
-      id: string;
-      text: string;
-      isCorrect: boolean;
-      feedbackText: string | null;
-      sortOrder: number;
-    }>;
-  }>;
-};
-
-type CourseMappedInput = {
-  slug: string;
-  area: string;
-  difficulty: string;
-  estimatedDurationMinutes: number | null;
-  lessonsCount: number;
-  translations: TranslationRecord[];
-  _count: { quizzes: number };
-  userCourseAttempts: CourseAttemptRecord[];
-  quizzes?: QuizRecord[];
-};
 
 function pickTranslation(
   translations: TranslationRecord[],
@@ -87,7 +24,24 @@ function pickTranslation(
     return englishTranslation;
   }
 
-  return translations.length > 0 ? translations[0] : null;
+  return translations[0] ?? null;
+}
+
+function pickLocalizedRecord<T extends { language: string }>(
+  records: T[],
+  locale: string,
+): T | null {
+  const localeRecord = records.find((record) => record.language === locale);
+  if (localeRecord) {
+    return localeRecord;
+  }
+
+  const englishRecord = records.find((record) => record.language === "en");
+  if (englishRecord) {
+    return englishRecord;
+  }
+
+  return records[0] ?? null;
 }
 
 function mapArea(area: string): CurriculumModuleViewModel["area"] {
@@ -205,30 +159,28 @@ function buildGeneratedStructure(quizzesCount: number): string[] {
   return steps;
 }
 
-function buildVirtualLessons(params: {
-  title: string;
-  content?: string;
-  area: CurriculumModuleViewModel["area"];
-  lessonsCount: number;
-}): CurriculumLessonViewModel[] {
-  return Array.from({ length: Math.max(params.lessonsCount, 1) }, (_, index) => {
-    const trimmedContent = params.content?.trim();
+function mapSectionsToLessons(
+  sections: CourseSectionRecord[] | undefined,
+  locale: string,
+): CurriculumLessonViewModel[] {
+  if (!sections || sections.length === 0) {
+    return [];
+  }
 
-    return {
-      index: index + 1,
-      slug: `lesson-${index + 1}`,
-      title: `Lesson ${index + 1}`,
-      summary:
-        index === 0
-          ? `Introduction to ${params.title}`
-          : `Applied learning block ${index + 1} for ${params.title}`,
-      content:
-        trimmedContent && trimmedContent.length > 0
-          ? trimmedContent
-          : `${params.title} — lesson ${index + 1}. This lesson extends the curriculum module through guided content, practice-oriented framing, and structured progression in the ${params.area} context.`,
-      estimatedMinutes: 8,
-    };
-  });
+  return [...sections]
+    .sort((a, b) => a.sortOrder - b.sortOrder)
+    .map((section, index) => {
+      const translation = pickLocalizedRecord(section.translations, locale);
+
+      return {
+        index: index + 1,
+        slug: section.slug,
+        title: translation?.title ?? `Lesson ${index + 1}`,
+        summary: translation?.summary ?? "",
+        content: translation?.content ?? "",
+        estimatedMinutes: section.estimatedMinutes ?? 8,
+      };
+    });
 }
 
 function parseAttempts(raw: unknown): CurriculumQuizAttemptViewModel[] {
@@ -277,6 +229,7 @@ function buildProgressState(params: {
   const currentStage = attempt ? mapStage(attempt.currentStage) : "overview";
   const completedLessons = attempt ? attempt.completedLessons : 0;
   const currentLessonIndex = attempt ? attempt.currentLessonIndex : 0;
+  const totalLessons = Math.max(params.lessonsCount, 1);
 
   const preQuizRemainingAttempts = Math.max(0, 1 - preQuizAttempts.length);
   const postQuizRemainingAttempts = Math.max(0, 2 - postQuizAttempts.length);
@@ -290,9 +243,7 @@ function buildProgressState(params: {
   } else if (currentStage === "lessons") {
     nextActionLabel = "Continue module";
     currentLocationLabel =
-      currentLessonIndex > 0
-        ? `Lesson ${currentLessonIndex} of ${Math.max(params.lessonsCount, 1)}`
-        : "Lessons";
+      currentLessonIndex > 0 ? `Lesson ${currentLessonIndex} of ${totalLessons}` : "Lessons";
   } else if (currentStage === "post_quiz") {
     nextActionLabel = "Continue module";
     currentLocationLabel = `Post-test${
@@ -307,7 +258,7 @@ function buildProgressState(params: {
     currentStage,
     currentLessonIndex,
     completedLessons,
-    totalLessons: Math.max(params.lessonsCount, 1),
+    totalLessons,
     preQuizAttempts,
     postQuizAttempts,
     preQuizRemainingAttempts,
@@ -331,16 +282,13 @@ function mapCourseToViewModel(
   const description = translation?.description ?? "No description available yet.";
   const content = translation?.content ?? undefined;
 
-  const lessonsData = buildVirtualLessons({
-    title,
-    content,
-    area,
-    lessonsCount: course.lessonsCount,
-  });
+  const lessonsData = mapSectionsToLessons(course.sections, locale);
+  const lessonsCount =
+    lessonsData.length > 0 ? lessonsData.length : Math.max(course.lessonsCount, 0);
 
   const progressState = buildProgressState({
     attempt,
-    lessonsCount: lessonsData.length,
+    lessonsCount,
   });
 
   return {
@@ -354,35 +302,50 @@ function mapCourseToViewModel(
     progress: attempt?.progressPercent ?? 0,
     duration: formatDuration(course.estimatedDurationMinutes),
     durationMinutes: course.estimatedDurationMinutes,
-    lessons: lessonsData.length,
+    lessons: lessonsCount,
     quizzes: quizzesCount,
     lastOpened: formatLastOpened(attempt?.lastOpenedAt),
     difficulty: mapDifficulty(course.difficulty),
     outcomes: buildGeneratedOutcomes(area),
     structure: buildGeneratedStructure(quizzesCount),
     quizItems:
-      course.quizzes?.map((quiz) => ({
-        id: quiz.id,
-        type: mapQuizType(quiz.type),
-        title: quiz.title ?? (quiz.type === "post" ? "Post-test" : "Pre-test"),
-        description: quiz.description,
-        passingScore: quiz.passingScore,
-        questions: quiz.questions
-          .sort((a, b) => a.sortOrder - b.sortOrder)
-          .map((question) => ({
-            id: question.id,
-            prompt: question.prompt,
-            explanation: question.explanation,
-            answers: question.answers
-              .sort((a, b) => a.sortOrder - b.sortOrder)
-              .map((answer) => ({
-                id: answer.id,
-                text: answer.text,
-                isCorrect: answer.isCorrect,
-                feedbackText: answer.feedbackText,
-              })),
-          })),
-      })) ?? [],
+      course.quizzes?.map((quiz) => {
+        const quizTranslation = pickLocalizedRecord(quiz.translations, locale);
+
+        return {
+          id: quiz.id,
+          type: mapQuizType(quiz.type),
+          title:
+            quizTranslation?.title ??
+            quiz.title ??
+            (quiz.type === "post" ? "Post-test" : "Pre-test"),
+          description: quizTranslation?.description ?? quiz.description,
+          passingScore: quiz.passingScore,
+          questions: [...quiz.questions]
+            .sort((a, b) => a.sortOrder - b.sortOrder)
+            .map((question) => {
+              const questionTranslation = pickLocalizedRecord(question.translations, locale);
+
+              return {
+                id: question.id,
+                prompt: questionTranslation?.prompt ?? question.prompt,
+                explanation: questionTranslation?.explanation ?? question.explanation,
+                answers: [...question.answers]
+                  .sort((a, b) => a.sortOrder - b.sortOrder)
+                  .map((answer) => {
+                    const answerTranslation = pickLocalizedRecord(answer.translations, locale);
+
+                    return {
+                      id: answer.id,
+                      text: answerTranslation?.text ?? answer.text,
+                      isCorrect: answer.isCorrect,
+                      feedbackText: answerTranslation?.feedbackText ?? answer.feedbackText,
+                    };
+                  }),
+              };
+            }),
+        };
+      }) ?? [],
     lessonsData,
     progressState,
   };
@@ -408,6 +371,26 @@ export async function getAllCurriculumModules(params: { userId: string; locale: 
           subtitle: true,
           description: true,
           content: true,
+        },
+      },
+      sections: {
+        orderBy: {
+          sortOrder: "asc",
+        },
+        include: {
+          translations: {
+            where: {
+              language: {
+                in: supportedLanguages,
+              },
+            },
+            select: {
+              language: true,
+              title: true,
+              summary: true,
+              content: true,
+            },
+          },
         },
       },
       _count: {
@@ -466,6 +449,26 @@ export async function getMyCurriculumModules(params: { userId: string; locale: s
           content: true,
         },
       },
+      sections: {
+        orderBy: {
+          sortOrder: "asc",
+        },
+        include: {
+          translations: {
+            where: {
+              language: {
+                in: supportedLanguages,
+              },
+            },
+            select: {
+              language: true,
+              title: true,
+              summary: true,
+              content: true,
+            },
+          },
+        },
+      },
       _count: {
         select: {
           quizzes: true,
@@ -514,6 +517,26 @@ export async function getCourseDetail(params: { userId: string; locale: string; 
           content: true,
         },
       },
+      sections: {
+        orderBy: {
+          sortOrder: "asc",
+        },
+        include: {
+          translations: {
+            where: {
+              language: {
+                in: [params.locale, "en"],
+              },
+            },
+            select: {
+              language: true,
+              title: true,
+              summary: true,
+              content: true,
+            },
+          },
+        },
+      },
       _count: {
         select: {
           quizzes: true,
@@ -540,14 +563,52 @@ export async function getCourseDetail(params: { userId: string; locale: string; 
           sortOrder: "asc",
         },
         include: {
+          translations: {
+            where: {
+              language: {
+                in: [params.locale, "en"],
+              },
+            },
+            select: {
+              language: true,
+              title: true,
+              description: true,
+            },
+          },
           questions: {
             orderBy: {
               sortOrder: "asc",
             },
             include: {
+              translations: {
+                where: {
+                  language: {
+                    in: [params.locale, "en"],
+                  },
+                },
+                select: {
+                  language: true,
+                  prompt: true,
+                  explanation: true,
+                },
+              },
               answers: {
                 orderBy: {
                   sortOrder: "asc",
+                },
+                include: {
+                  translations: {
+                    where: {
+                      language: {
+                        in: [params.locale, "en"],
+                      },
+                    },
+                    select: {
+                      language: true,
+                      text: true,
+                      feedbackText: true,
+                    },
+                  },
                 },
               },
             },
@@ -584,6 +645,26 @@ export async function getCourseDetail(params: { userId: string; locale: string; 
           subtitle: true,
           description: true,
           content: true,
+        },
+      },
+      sections: {
+        orderBy: {
+          sortOrder: "asc",
+        },
+        include: {
+          translations: {
+            where: {
+              language: {
+                in: [params.locale, "en"],
+              },
+            },
+            select: {
+              language: true,
+              title: true,
+              summary: true,
+              content: true,
+            },
+          },
         },
       },
       _count: {
@@ -630,12 +711,19 @@ export async function getCourseLearningWorkspace(params: {
     select: {
       id: true,
       status: true,
+      sections: {
+        select: {
+          id: true,
+        },
+      },
     },
   });
 
   if (course?.status !== "published") {
     return null;
   }
+
+  const lessonCount = course.sections.length;
 
   const existing = await prisma.userCourseAttempt.findUnique({
     where: {
@@ -690,5 +778,13 @@ export async function getCourseLearningWorkspace(params: {
   }
 
   const detail = await getCourseDetail(params);
-  return detail?.module ?? null;
+
+  if (!detail) {
+    return null;
+  }
+
+  return {
+    ...detail.module,
+    lessons: lessonCount > 0 ? lessonCount : detail.module.lessons,
+  };
 }
