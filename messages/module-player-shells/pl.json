@@ -15,11 +15,11 @@
         "defaultNote": "",
         "preTitle": "Sprawdź swoją gotowość przed lekcjami",
         "preIntro": "Rozpocznij od krótkiego checkpointu wejściowego, aby odblokować przebieg nauki i ustalić punkt wyjścia przed sekwencją lekcji.",
-        "preNote": "Masz {attempts} prób{plural} na ten checkpoint.",
+        "preNote": "Masz {attempts, plural, one {# próbę} few {# próby} many {# prób} other {# próby}} na ten checkpoint.",
         "postEyebrow": "Checkpoint końcowy",
         "postTitle": "Zakończ moduł końcowym sprawdzeniem wiedzy",
         "postIntro": "Ten końcowy checkpoint weryfikuje zrozumienie materiału po lekcjach i decyduje o ukończeniu modułu.",
-        "postNote": "Masz {attempts} próby na ten checkpoint.",
+        "postNote": "Masz {attempts, plural, one {# próbę} few {# próby} many {# prób} other {# próby}} na ten checkpoint.",
         "noteSuffix": "Odpowiedz na wszystkie pytania, a następnie wyślij checkpoint, gdy będziesz gotowy."
       },
       "attempt": {

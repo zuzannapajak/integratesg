@@ -115,7 +115,6 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
           totalAttemptsAllowed > 0
             ? t("checkpoint.preNote", {
                 attempts: totalAttemptsAllowed,
-                plural: totalAttemptsAllowed === 1 ? "a" : "",
               })
             : "",
       };

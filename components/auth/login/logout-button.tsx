@@ -1,6 +1,7 @@
 "use client";
 
 import { createClient } from "@/lib/supabase/client";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 type Props = {
@@ -9,17 +10,14 @@ type Props = {
   children?: React.ReactNode;
 };
 
-export default function LogoutButton({
-  className,
-  redirectTo = "/en/auth/login",
-  children = "Logout",
-}: Props) {
+export default function LogoutButton({ className, redirectTo, children }: Props) {
+  const t = useTranslations("Common");
   const supabase = createClient();
   const router = useRouter();
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    router.push(redirectTo);
+    router.push(redirectTo ?? "/");
     router.refresh();
   };
 
@@ -29,7 +27,7 @@ export default function LogoutButton({
       onClick={handleLogout}
       className={className ?? "rounded bg-red-600 px-4 py-2 text-white"}
     >
-      {children}
+      {children ?? t("logOut")}
     </button>
   );
 }

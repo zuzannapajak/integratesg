@@ -15,11 +15,11 @@
         "defaultNote": "",
         "preTitle": "Check your readiness before the lessons",
         "preIntro": "Start with a short entry checkpoint to unlock the learning flow and set your baseline before moving into the lesson sequence.",
-        "preNote": "You have {attempts} attempt{plural} for this checkpoint.",
+        "preNote": "You have {attempts, plural, one {# attempt} other {# attempts}} for this checkpoint.",
         "postEyebrow": "Final checkpoint",
         "postTitle": "Complete the module with a final knowledge check",
         "postIntro": "This closing checkpoint verifies understanding after the lessons and determines whether the module can be marked as completed.",
-        "postNote": "You have {attempts} attempts for this checkpoint.",
+        "postNote": "You have {attempts, plural, one {# attempt} other {# attempts}} for this checkpoint.",
         "noteSuffix": "Answer every question, then submit when you are ready."
       },
       "attempt": {

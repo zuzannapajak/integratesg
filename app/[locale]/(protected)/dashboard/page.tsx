@@ -506,6 +506,7 @@ export default async function DashboardPage({ params }: Props) {
       locale={locale}
       role={role}
       displayName={profile.fullName ?? profile.email.split("@")[0]}
+      heroStats={role === "admin" ? adminKpis : learnerSummaryMetrics}
       continueLearning={role === "student" || role === "educator" ? continueLearning : null}
       gamificationStats={role === "student" || role === "educator" ? gamificationStats : []}
       publishedCoursesCount={role === "educator" ? publishedCoursesCount : 0}
