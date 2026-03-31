@@ -1,0 +1,263 @@
+{
+  "Protected": {
+    "AdminStatsShell": {
+      "area": {
+        "environmental": "Environmental",
+        "social": "Social",
+        "governance": "Governance",
+        "crossCutting": "Cross-cutting"
+      },
+      "window": {
+        "24h": "Last 24 hours",
+        "7d": "Last 7 days",
+        "30d": "Last 30 days"
+      },
+      "header": {
+        "title": "Statistics",
+        "subtitle": "A clear overview of platform adoption, learning progress, and content performance"
+      },
+      "segments": {
+        "summary": "Summary",
+        "languages": "Languages",
+        "scenarios": "Scenarios",
+        "courses": "Courses",
+        "eportfolio": "ePortfolio"
+      },
+      "glance": {
+        "title": "At a glance",
+        "subtitle": "Your core platform indicators at a glance, designed for fast executive review.",
+        "allUsers": {
+          "label": "All users",
+          "hint": "Registered accounts across students, educators, and administrators."
+        },
+        "activeUsers": {
+          "label": "Active users",
+          "hint": "Users with tracked activity in the last 7 days."
+        },
+        "scenarioCompletion": {
+          "label": "Scenario completion",
+          "hint": "Share of scenario attempts that reached a successful completed state."
+        },
+        "curriculumCompletion": {
+          "label": "Curriculum completion",
+          "hint": "Share of curriculum attempts completed by learners."
+        }
+      },
+      "platformStructure": {
+        "title": "Platform structure",
+        "subtitle": "A compact view of role distribution and published learning resources.",
+        "roleDistribution": "Role distribution",
+        "publishedResources": "Published resources",
+        "educators": "Educators",
+        "students": "Students",
+        "admins": "Admins",
+        "courses": "Courses",
+        "caseStudies": "Case studies",
+        "scenarios": "Scenarios"
+      },
+      "highlights": {
+        "title": "Highlights",
+        "subtitle": "Key signals that help identify the strongest areas of learner activity and adoption.",
+        "mostActiveScenario": "Most active scenario",
+        "bestCompletionResult": "Best completion result",
+        "largestLanguageCohort": "Largest language cohort",
+        "attemptsCompletion": "{attempts} attempts · {completion} completion",
+        "completionPostQuiz": "{completion} completion · {score} average post-quiz score",
+        "usersVariants": "{users} users · {variants} scenario variants"
+      },
+      "learningQuality": {
+        "title": "Learning quality",
+        "subtitle": "Completion and assessment quality grouped by experience type.",
+        "scenarioSimulator": {
+          "title": "Scenario simulator",
+          "subtitle": "High-level outcome and completion quality across all attempts."
+        },
+        "curriculum": {
+          "title": "Curriculum",
+          "subtitle": "Progression and assessment quality across all curriculum modules."
+        },
+        "eportfolio": {
+          "title": "ePortfolio",
+          "subtitle": "Case-study completion and participation signals."
+        },
+        "completionRate": "Completion rate",
+        "averageScore": "Average score",
+        "passed": "Passed",
+        "failed": "Failed",
+        "avgPreQuiz": "Avg pre-quiz",
+        "avgPostQuiz": "Avg post-quiz",
+        "inProgress": "In progress",
+        "published": "Published",
+        "active7d": "Active / 7 days"
+      },
+      "languages": {
+        "title": "Language coverage",
+        "subtitle": "Review adoption and content availability across supported language groups.",
+        "users": "Users",
+        "publishedCourses": "Published courses",
+        "caseStudies": "Case studies",
+        "scenarioVariants": "Scenario variants"
+      },
+      "scenarioActivity": {
+        "title": "Scenario simulator activity",
+        "subtitle": "Track simulation usage, completion quality, and outcome patterns in one view.",
+        "valueLabel": "Scenario events",
+        "events": "Events",
+        "completionRate": "Completion rate",
+        "averageScore": "Average score",
+        "passedCompleted": "Passed / completed",
+        "failed": "Failed"
+      },
+      "curriculumActivity": {
+        "title": "Curriculum activity",
+        "subtitle": "Monitor module engagement, completion progression, and learning assessment trends.",
+        "valueLabel": "Curriculum events",
+        "events": "Events",
+        "completionRate": "Completion rate",
+        "averagePreQuiz": "Average pre-quiz",
+        "averagePostQuiz": "Average post-quiz",
+        "inProgress": "In progress"
+      },
+      "eportfolioActivity": {
+        "title": "ePortfolio activity",
+        "subtitle": "See case-study engagement, completions, and participation across the portfolio experience.",
+        "valueLabel": "ePortfolio events",
+        "events": "Events",
+        "completionRate": "Completion rate",
+        "published": "Published",
+        "activeUsers": "Active users"
+      },
+      "scenarioPerformance": {
+        "title": "Scenario performance",
+        "subtitle": "Search, compare, and sort scenarios by adoption, completion, and score.",
+        "results": "{count} results",
+        "searchPlaceholder": "Search by scenario title, slug, language, or ESG area...",
+        "sort": {
+          "attempts": "Sort by attempts",
+          "completion": "Sort by completion rate",
+          "score": "Sort by average score"
+        },
+        "summary": {
+          "results": "Results",
+          "attempts": "Attempts",
+          "averageCompletion": "Average completion",
+          "averageScore": "Average score"
+        },
+        "empty": {
+          "title": "No scenarios matched your search",
+          "subtitle": "Try a different title, slug, language, or ESG area."
+        },
+        "row": {
+          "attempts": "Attempts",
+          "completionRate": "Completion rate",
+          "averageScore": "Average score",
+          "variants": "Variants"
+        }
+      },
+      "coursePerformance": {
+        "title": "Course performance",
+        "subtitle": "Search, compare, and sort curriculum modules by engagement and learning outcomes.",
+        "results": "{count} results",
+        "searchPlaceholder": "Search by course title, slug, or ESG area...",
+        "sort": {
+          "attempts": "Sort by attempts",
+          "completion": "Sort by completion rate",
+          "postQuiz": "Sort by post-quiz score"
+        },
+        "summary": {
+          "results": "Results",
+          "attempts": "Attempts",
+          "averageCompletion": "Average completion",
+          "averagePostQuiz": "Average post-quiz"
+        },
+        "empty": {
+          "title": "No courses matched your search",
+          "subtitle": "Try a different title, slug, or ESG area."
+        },
+        "row": {
+          "attempts": "Attempts",
+          "completionRate": "Completion rate",
+          "preQuiz": "Pre-quiz",
+          "postQuiz": "Post-quiz",
+          "inProgress": "In progress"
+        }
+      },
+      "scenarioAttempts": {
+        "title": "User scenario attempts",
+        "subtitle": "Latest learner activity across the scenario simulator, including status, score, and timing.",
+        "records": "{count} records"
+      },
+      "curriculumAttempts": {
+        "title": "User curriculum attempts",
+        "subtitle": "Latest learner activity across curriculum modules, including progress, assessment, and timing.",
+        "records": "{count} records"
+      },
+      "eportfolioProgress": {
+        "title": "User ePortfolio progress",
+        "subtitle": "Latest learner progress across case studies, including completion and timing.",
+        "records": "{count} records"
+      },
+      "tableScenario": {
+        "emptyTitle": "No scenario activity yet",
+        "emptyDescription": "Scenario attempts will appear here once learners start interacting with the simulator.",
+        "headers": {
+          "learner": "Learner",
+          "scenario": "Scenario",
+          "area": "Area",
+          "language": "Language",
+          "attempt": "Attempt",
+          "status": "Status",
+          "score": "Score",
+          "started": "Started",
+          "lastOpened": "Last opened",
+          "completed": "Completed"
+        },
+        "status": {
+          "completed": "Completed",
+          "passed": "Passed",
+          "failed": "Failed",
+          "browsed": "Browsed",
+          "incomplete": "Incomplete"
+        }
+      },
+      "tableCurriculum": {
+        "emptyTitle": "No curriculum activity yet",
+        "emptyDescription": "Curriculum attempts will appear here once learners start progressing through modules.",
+        "headers": {
+          "learner": "Learner",
+          "course": "Course",
+          "area": "Area",
+          "status": "Status",
+          "progress": "Progress",
+          "preQuiz": "Pre-quiz",
+          "postQuiz": "Post-quiz",
+          "started": "Started",
+          "lastOpened": "Last opened",
+          "completed": "Completed"
+        },
+        "status": {
+          "completed": "Completed",
+          "failed": "Failed",
+          "inProgress": "In progress"
+        }
+      },
+      "tableEportfolio": {
+        "emptyTitle": "No ePortfolio activity yet",
+        "emptyDescription": "Case study progress will appear here once learners start working through ePortfolio content.",
+        "headers": {
+          "learner": "Learner",
+          "caseStudy": "Case study",
+          "language": "Language",
+          "status": "Status",
+          "started": "Started",
+          "lastOpened": "Last opened",
+          "completed": "Completed"
+        },
+        "status": {
+          "completed": "Completed",
+          "inProgress": "In progress"
+        }
+      }
+    }
+  }
+}

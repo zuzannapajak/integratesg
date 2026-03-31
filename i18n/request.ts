@@ -61,20 +61,29 @@ export default getRequestConfig(async ({ requestLocale }) => {
     default: Messages;
   };
 
+  const adminStatsShellsModule = (await import(
+    `../messages/admin-stats-shells/${locale}.json`
+  )) as {
+    default: Messages;
+  };
+
   return {
     locale,
     messages: deepMerge(
       deepMerge(
         deepMerge(
           deepMerge(
-            deepMerge(baseMessagesModule.default, protectedListShellsModule.default),
-            curriculumShellsModule.default,
+            deepMerge(
+              deepMerge(baseMessagesModule.default, protectedListShellsModule.default),
+              curriculumShellsModule.default,
+            ),
+            modulePlayerShellsModule.default,
           ),
-          modulePlayerShellsModule.default,
+          scenarioShellsModule.default,
         ),
-        scenarioShellsModule.default,
+        eportfolioShellsModule.default,
       ),
-      eportfolioShellsModule.default,
+      adminStatsShellsModule.default,
     ),
   };
 });

@@ -27,6 +27,7 @@ import {
   TrendingUp,
   Users,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 
 type Props = {
@@ -69,16 +70,16 @@ function formatScore(value: number | null) {
   return `${rounded}%`;
 }
 
-function formatArea(area: string) {
+function formatArea(area: string, t: ReturnType<typeof useTranslations>) {
   switch (area) {
     case "environmental":
-      return "Environmental";
+      return t("area.environmental");
     case "social":
-      return "Social";
+      return t("area.social");
     case "governance":
-      return "Governance";
+      return t("area.governance");
     default:
-      return "Cross-cutting";
+      return t("area.crossCutting");
   }
 }
 
@@ -154,7 +155,7 @@ function getEportfolioWindowStats(stats: BasicAdminStats, window: ActivityWindow
   return stats.activity.eportfolioStats7d;
 }
 
-function deriveInsights(stats: BasicAdminStats) {
+function deriveInsights(stats: BasicAdminStats, t: ReturnType<typeof useTranslations>) {
   const scenarioLeader = [...stats.scenarioBreakdown].sort(
     (a, b) => b.totalAttempts - a.totalAttempts,
   )[0];
@@ -167,25 +168,30 @@ function deriveInsights(stats: BasicAdminStats) {
 
   return [
     {
-      title: "Most active scenario",
+      title: t("highlights.mostActiveScenario"),
       value: scenarioLeader.title,
-      detail: `${scenarioLeader.totalAttempts} attempts · ${formatPercent(
-        scenarioLeader.completionRate,
-      )} completion`,
+      detail: t("highlights.attemptsCompletion", {
+        attempts: scenarioLeader.totalAttempts,
+        completion: formatPercent(scenarioLeader.completionRate),
+      }),
       tone: "green" as const,
     },
     {
-      title: "Best completion result",
+      title: t("highlights.bestCompletionResult"),
       value: courseLeader.title,
-      detail: `${formatPercent(courseLeader.completionRate)} completion · ${formatScore(
-        courseLeader.averagePostQuizScore,
-      )} average post-quiz score`,
+      detail: t("highlights.completionPostQuiz", {
+        completion: formatPercent(courseLeader.completionRate),
+        score: formatScore(courseLeader.averagePostQuizScore),
+      }),
       tone: "orange" as const,
     },
     {
-      title: "Largest language cohort",
+      title: t("highlights.largestLanguageCohort"),
       value: languageLeader.label,
-      detail: `${languageLeader.users} users · ${languageLeader.availableScenarioVariants} scenario variants`,
+      detail: t("highlights.usersVariants", {
+        users: languageLeader.users,
+        variants: languageLeader.availableScenarioVariants,
+      }),
       tone: "blue" as const,
     },
   ];
@@ -272,16 +278,17 @@ function WindowSelect({
   value: ActivityWindow;
   onChange: (value: ActivityWindow) => void;
 }) {
+  const t = useTranslations("Protected.AdminStatsShell");
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const options: Array<{ value: ActivityWindow; label: string }> = [
-    { value: "24h", label: "Last 24 hours" },
-    { value: "7d", label: "Last 7 days" },
-    { value: "30d", label: "Last 30 days" },
+    { value: "24h", label: t("window.24h") },
+    { value: "7d", label: t("window.7d") },
+    { value: "30d", label: t("window.30d") },
   ];
 
-  const activeLabel = options.find((option) => option.value === value)?.label ?? "Last 7 days";
+  const activeLabel = options.find((option) => option.value === value)?.label ?? t("window.7d");
 
   useEffect(() => {
     function handleOutsideClick(event: MouseEvent) {
@@ -571,6 +578,8 @@ function InsightCard({
 }
 
 function LanguageCard({ item }: { item: AdminLanguageStat }) {
+  const t = useTranslations("Protected.AdminStatsShell");
+
   return (
     <div className="rounded-3xl border border-slate-100 bg-white/80 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-slate-200 hover:shadow-[0_14px_34px_rgba(35,45,62,0.06)]">
       <div className="mb-4 flex items-start gap-3">
@@ -585,11 +594,19 @@ function LanguageCard({ item }: { item: AdminLanguageStat }) {
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        <MiniKpi label="Users" value={String(item.users)} />
-        <MiniKpi label="Published courses" value={String(item.publishedCourses)} tone="orange" />
-        <MiniKpi label="Case studies" value={String(item.publishedCaseStudies)} tone="blue" />
+        <MiniKpi label={t("languages.users")} value={String(item.users)} />
         <MiniKpi
-          label="Scenario variants"
+          label={t("languages.publishedCourses")}
+          value={String(item.publishedCourses)}
+          tone="orange"
+        />
+        <MiniKpi
+          label={t("languages.caseStudies")}
+          value={String(item.publishedCaseStudies)}
+          tone="blue"
+        />
+        <MiniKpi
+          label={t("languages.scenarioVariants")}
           value={String(item.availableScenarioVariants)}
           tone="green"
         />
@@ -599,13 +616,15 @@ function LanguageCard({ item }: { item: AdminLanguageStat }) {
 }
 
 function ScenarioRow({ item }: { item: AdminScenarioStat }) {
+  const t = useTranslations("Protected.AdminStatsShell");
+
   return (
     <div className="relative rounded-3xl border border-slate-100 bg-white/80 p-4 pt-12 transition-all duration-300 hover:border-slate-200 hover:shadow-[0_14px_34px_rgba(35,45,62,0.06)]">
       <div className="absolute left-4 top-4">
         <span
           className={`inline-flex rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] ${getAreaBadgeClass(item.area)}`}
         >
-          {formatArea(item.area)}
+          {formatArea(item.area, t)}
         </span>
       </div>
 
@@ -628,10 +647,22 @@ function ScenarioRow({ item }: { item: AdminScenarioStat }) {
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2 xl:min-w-105 xl:grid-cols-4">
-          <MiniKpi label="Attempts" value={String(item.totalAttempts)} />
-          <MiniKpi label="Completion rate" value={formatPercent(item.completionRate)} />
-          <MiniKpi label="Average score" value={formatScore(item.averageScore)} />
-          <MiniKpi label="Variants" value={String(item.availableVariants)} />
+          <MiniKpi
+            label={t("scenarioPerformance.row.attempts")}
+            value={String(item.totalAttempts)}
+          />
+          <MiniKpi
+            label={t("scenarioPerformance.row.completionRate")}
+            value={formatPercent(item.completionRate)}
+          />
+          <MiniKpi
+            label={t("scenarioPerformance.row.averageScore")}
+            value={formatScore(item.averageScore)}
+          />
+          <MiniKpi
+            label={t("scenarioPerformance.row.variants")}
+            value={String(item.availableVariants)}
+          />
         </div>
       </div>
     </div>
@@ -639,13 +670,15 @@ function ScenarioRow({ item }: { item: AdminScenarioStat }) {
 }
 
 function CourseRow({ item }: { item: AdminCourseStat }) {
+  const t = useTranslations("Protected.AdminStatsShell");
+
   return (
     <div className="relative rounded-3xl border border-slate-100 bg-white/80 p-4 pt-12 transition-all duration-300 hover:border-slate-200 hover:shadow-[0_14px_34px_rgba(35,45,62,0.06)]">
       <div className="absolute left-4 top-4">
         <span
           className={`inline-flex rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] ${getAreaBadgeClass(item.area)}`}
         >
-          {formatArea(item.area)}
+          {formatArea(item.area, t)}
         </span>
       </div>
 
@@ -658,19 +691,34 @@ function CourseRow({ item }: { item: AdminCourseStat }) {
 
         <div className="grid grid-cols-2 gap-3 xl:contents">
           <div className="xl:min-w-30">
-            <MiniKpi label="Attempts" value={String(item.totalAttempts)} />
+            <MiniKpi
+              label={t("coursePerformance.row.attempts")}
+              value={String(item.totalAttempts)}
+            />
           </div>
           <div className="xl:min-w-35">
-            <MiniKpi label="Completion rate" value={formatPercent(item.completionRate)} />
+            <MiniKpi
+              label={t("coursePerformance.row.completionRate")}
+              value={formatPercent(item.completionRate)}
+            />
           </div>
           <div className="xl:min-w-35">
-            <MiniKpi label="Pre-quiz" value={formatScore(item.averagePreQuizScore)} />
+            <MiniKpi
+              label={t("coursePerformance.row.preQuiz")}
+              value={formatScore(item.averagePreQuizScore)}
+            />
           </div>
           <div className="xl:min-w-35">
-            <MiniKpi label="Post-quiz" value={formatScore(item.averagePostQuizScore)} />
+            <MiniKpi
+              label={t("coursePerformance.row.postQuiz")}
+              value={formatScore(item.averagePostQuizScore)}
+            />
           </div>
           <div className="xl:min-w-30">
-            <MiniKpi label="In progress" value={String(item.inProgress)} />
+            <MiniKpi
+              label={t("coursePerformance.row.inProgress")}
+              value={String(item.inProgress)}
+            />
           </div>
         </div>
       </div>
@@ -726,13 +774,14 @@ function ActivityChartSection({
 }
 
 export default function AdminStatsShell({ stats }: Props) {
+  const t = useTranslations("Protected.AdminStatsShell");
   const [segment, setSegment] = useState<Segment>("summary");
   const [activityWindow, setActivityWindow] = useState<ActivityWindow>("7d");
   const [query, setQuery] = useState("");
   const [scenarioSort, setScenarioSort] = useState<"attempts" | "completion" | "score">("attempts");
   const [courseSort, setCourseSort] = useState<"attempts" | "completion" | "postQuiz">("attempts");
 
-  const insights = useMemo(() => deriveInsights(stats), [stats]);
+  const insights = useMemo(() => deriveInsights(stats, t), [stats, t]);
 
   const filteredLanguages = useMemo(() => {
     const normalized = query.trim().toLowerCase();
@@ -843,115 +892,113 @@ export default function AdminStatsShell({ stats }: Props) {
     const windowStats = getScenarioWindowStats(stats, activityWindow);
 
     return {
-      title: "Scenario simulator activity",
-      subtitle: "Track simulation usage, completion quality, and outcome patterns in one view.",
+      title: t("scenarioActivity.title"),
+      subtitle: t("scenarioActivity.subtitle"),
       accent: ESG_colors.GREEN,
-      valueLabel: "Scenario events",
+      valueLabel: t("scenarioActivity.valueLabel"),
       data: getScenarioSeries(stats, activityWindow),
       chips: [
         {
-          label: "Events",
+          label: t("scenarioActivity.events"),
           value: String(getScenarioEvents(stats, activityWindow)),
           tone: "green" as const,
         },
         {
-          label: "Completion rate",
+          label: t("scenarioActivity.completionRate"),
           value: formatPercent(windowStats.completionRate),
           tone: "green" as const,
         },
         {
-          label: "Average score",
+          label: t("scenarioActivity.averageScore"),
           value: formatScore(windowStats.averageScore),
           tone: "green" as const,
         },
         {
-          label: "Passed / completed",
+          label: t("scenarioActivity.passedCompleted"),
           value: String(windowStats.completedLikeTotal),
           tone: "green" as const,
         },
         {
-          label: "Failed",
+          label: t("scenarioActivity.failed"),
           value: String(windowStats.failed),
           tone: "green" as const,
         },
       ],
     };
-  }, [activityWindow, stats]);
+  }, [activityWindow, stats, t]);
 
   const courseChart = useMemo(() => {
     const windowStats = getCurriculumWindowStats(stats, activityWindow);
 
     return {
-      title: "Curriculum activity",
-      subtitle:
-        "Monitor module engagement, completion progression, and learning assessment trends.",
+      title: t("curriculumActivity.title"),
+      subtitle: t("curriculumActivity.subtitle"),
       accent: ESG_colors.ORANGE,
-      valueLabel: "Curriculum events",
+      valueLabel: t("curriculumActivity.valueLabel"),
       data: getCurriculumSeries(stats, activityWindow),
       chips: [
         {
-          label: "Events",
+          label: t("curriculumActivity.events"),
           value: String(getCurriculumEvents(stats, activityWindow)),
           tone: "orange" as const,
         },
         {
-          label: "Completion rate",
+          label: t("curriculumActivity.completionRate"),
           value: formatPercent(windowStats.completionRate),
           tone: "orange" as const,
         },
         {
-          label: "Average pre-quiz",
+          label: t("curriculumActivity.averagePreQuiz"),
           value: formatScore(windowStats.averagePreQuizScore),
           tone: "orange" as const,
         },
         {
-          label: "Average post-quiz",
+          label: t("curriculumActivity.averagePostQuiz"),
           value: formatScore(windowStats.averagePostQuizScore),
           tone: "orange" as const,
         },
         {
-          label: "In progress",
+          label: t("curriculumActivity.inProgress"),
           value: String(windowStats.inProgress),
           tone: "orange" as const,
         },
       ],
     };
-  }, [activityWindow, stats]);
+  }, [activityWindow, stats, t]);
 
   const eportfolioChart = useMemo(() => {
     const windowStats = getEportfolioWindowStats(stats, activityWindow);
 
     return {
-      title: "ePortfolio activity",
-      subtitle:
-        "See case-study engagement, completions, and participation across the portfolio experience.",
+      title: t("eportfolioActivity.title"),
+      subtitle: t("eportfolioActivity.subtitle"),
       accent: ESG_colors.BLUE,
-      valueLabel: "ePortfolio events",
+      valueLabel: t("eportfolioActivity.valueLabel"),
       data: getEportfolioSeries(stats, activityWindow),
       chips: [
         {
-          label: "Events",
+          label: t("eportfolioActivity.events"),
           value: String(getEportfolioEvents(stats, activityWindow)),
           tone: "blue" as const,
         },
         {
-          label: "Completion rate",
+          label: t("eportfolioActivity.completionRate"),
           value: formatPercent(windowStats.completionRate),
           tone: "blue" as const,
         },
         {
-          label: "Published",
+          label: t("eportfolioActivity.published"),
           value: String(windowStats.published),
           tone: "blue" as const,
         },
         {
-          label: "Active users",
+          label: t("eportfolioActivity.activeUsers"),
           value: String(windowStats.activeUsers),
           tone: "blue" as const,
         },
       ],
     };
-  }, [activityWindow, stats]);
+  }, [activityWindow, stats, t]);
 
   return (
     <main className="relative min-h-screen bg-[#f5f5f3] pb-20 transition-all duration-300">
@@ -973,10 +1020,10 @@ export default function AdminStatsShell({ stats }: Props) {
             </div>
 
             <div>
-              <h1 className="text-3xl font-bold tracking-tight text-[#31425a]">Statistics</h1>
-              <p className="text-[#667180]">
-                A clear overview of platform adoption, learning progress, and content performance
-              </p>
+              <h1 className="text-3xl font-bold tracking-tight text-[#31425a]">
+                {t("header.title")}
+              </h1>
+              <p className="text-[#667180]">{t("header.subtitle")}</p>
             </div>
           </div>
         </motion.header>
@@ -985,7 +1032,7 @@ export default function AdminStatsShell({ stats }: Props) {
           <SegmentButton
             active={segment === "summary"}
             icon={<TrendingUp className="h-4 w-4" />}
-            label="Summary"
+            label={t("segments.summary")}
             onClick={() => {
               setSegment("summary");
             }}
@@ -993,7 +1040,7 @@ export default function AdminStatsShell({ stats }: Props) {
           <SegmentButton
             active={segment === "languages"}
             icon={<Languages className="h-4 w-4" />}
-            label="Languages"
+            label={t("segments.languages")}
             onClick={() => {
               setSegment("languages");
             }}
@@ -1001,7 +1048,7 @@ export default function AdminStatsShell({ stats }: Props) {
           <SegmentButton
             active={segment === "scenarios"}
             icon={<PlayCircle className="h-4 w-4" />}
-            label="Scenarios"
+            label={t("segments.scenarios")}
             onClick={() => {
               setSegment("scenarios");
             }}
@@ -1009,7 +1056,7 @@ export default function AdminStatsShell({ stats }: Props) {
           <SegmentButton
             active={segment === "courses"}
             icon={<BookOpen className="h-4 w-4" />}
-            label="Courses"
+            label={t("segments.courses")}
             onClick={() => {
               setSegment("courses");
             }}
@@ -1017,7 +1064,7 @@ export default function AdminStatsShell({ stats }: Props) {
           <SegmentButton
             active={segment === "eportfolio"}
             icon={<FolderOpen className="h-4 w-4" />}
-            label="ePortfolio"
+            label={t("segments.eportfolio")}
             onClick={() => {
               setSegment("eportfolio");
             }}
@@ -1027,37 +1074,34 @@ export default function AdminStatsShell({ stats }: Props) {
         {segment === "summary" && (
           <>
             <Surface className="mt-8 p-6">
-              <SectionHeader
-                title="At a glance"
-                subtitle="Your core platform indicators at a glance, designed for fast executive review."
-              />
+              <SectionHeader title={t("glance.title")} subtitle={t("glance.subtitle")} />
 
               <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                 <CompactHeroStat
-                  label="All users"
+                  label={t("glance.allUsers.label")}
                   value={stats.users.total}
-                  hint="Registered accounts across students, educators, and administrators."
+                  hint={t("glance.allUsers.hint")}
                   icon={<Users className="h-5 w-5" />}
                   accent="#31425a"
                 />
                 <CompactHeroStat
-                  label="Active users"
+                  label={t("glance.activeUsers.label")}
                   value={stats.activity.activeUsersLast7Days}
-                  hint="Users with tracked activity in the last 7 days."
+                  hint={t("glance.activeUsers.hint")}
                   icon={<Activity className="h-5 w-5" />}
                   accent={ESG_colors.BLUE}
                 />
                 <CompactHeroStat
-                  label="Scenario completion"
+                  label={t("glance.scenarioCompletion.label")}
                   value={formatPercent(stats.scenarioAttempts.completionRate)}
-                  hint="Share of scenario attempts that reached a successful completed state."
+                  hint={t("glance.scenarioCompletion.hint")}
                   icon={<PlayCircle className="h-5 w-5" />}
                   accent={ESG_colors.GREEN}
                 />
                 <CompactHeroStat
-                  label="Curriculum completion"
+                  label={t("glance.curriculumCompletion.label")}
                   value={formatPercent(stats.curriculum.completionRate)}
-                  hint="Share of curriculum attempts completed by learners."
+                  hint={t("glance.curriculumCompletion.hint")}
                   icon={<GraduationCap className="h-5 w-5" />}
                   accent={ESG_colors.ORANGE}
                 />
@@ -1067,39 +1111,55 @@ export default function AdminStatsShell({ stats }: Props) {
             <section className="mt-8 grid gap-4 xl:grid-cols-12">
               <Surface className="xl:col-span-6 p-6">
                 <SectionHeader
-                  title="Platform structure"
-                  subtitle="A compact view of role distribution and published learning resources."
+                  title={t("platformStructure.title")}
+                  subtitle={t("platformStructure.subtitle")}
                 />
 
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="rounded-3xl border border-slate-100 bg-white/80 p-4">
-                    <p className="text-sm font-semibold text-slate-900">Role distribution</p>
+                    <p className="text-sm font-semibold text-slate-900">
+                      {t("platformStructure.roleDistribution")}
+                    </p>
                     <div className="mt-4 grid gap-3">
-                      <MiniKpi label="Educators" value={String(stats.users.educators)} />
-                      <MiniKpi label="Students" value={String(stats.users.students)} />
-                      <MiniKpi label="Admins" value={String(stats.users.admins)} />
+                      <MiniKpi
+                        label={t("platformStructure.educators")}
+                        value={String(stats.users.educators)}
+                      />
+                      <MiniKpi
+                        label={t("platformStructure.students")}
+                        value={String(stats.users.students)}
+                      />
+                      <MiniKpi
+                        label={t("platformStructure.admins")}
+                        value={String(stats.users.admins)}
+                      />
                     </div>
                   </div>
 
                   <div className="rounded-3xl border border-slate-100 bg-white/80 p-4">
-                    <p className="text-sm font-semibold text-slate-900">Published resources</p>
+                    <p className="text-sm font-semibold text-slate-900">
+                      {t("platformStructure.publishedResources")}
+                    </p>
                     <div className="mt-4 grid gap-3">
-                      <MiniKpi label="Courses" value={String(stats.content.publishedCourses)} />
                       <MiniKpi
-                        label="Case studies"
+                        label={t("platformStructure.courses")}
+                        value={String(stats.content.publishedCourses)}
+                      />
+                      <MiniKpi
+                        label={t("platformStructure.caseStudies")}
                         value={String(stats.content.publishedCaseStudies)}
                       />
-                      <MiniKpi label="Scenarios" value={String(stats.content.publishedScenarios)} />
+                      <MiniKpi
+                        label={t("platformStructure.scenarios")}
+                        value={String(stats.content.publishedScenarios)}
+                      />
                     </div>
                   </div>
                 </div>
               </Surface>
 
               <Surface className="xl:col-span-6 p-6">
-                <SectionHeader
-                  title="Highlights"
-                  subtitle="Key signals that help identify the strongest areas of learner activity and adoption."
-                />
+                <SectionHeader title={t("highlights.title")} subtitle={t("highlights.subtitle")} />
 
                 <div className="space-y-3">
                   {insights.map((item) => (
@@ -1118,77 +1178,77 @@ export default function AdminStatsShell({ stats }: Props) {
             <section className="mt-8">
               <Surface className="p-6">
                 <SectionHeader
-                  title="Learning quality"
-                  subtitle="Completion and assessment quality grouped by experience type."
+                  title={t("learningQuality.title")}
+                  subtitle={t("learningQuality.subtitle")}
                 />
 
                 <div className="grid gap-4 xl:grid-cols-3">
                   <MetricPanel
-                    title="Scenario simulator"
-                    subtitle="High-level outcome and completion quality across all attempts."
+                    title={t("learningQuality.scenarioSimulator.title")}
+                    subtitle={t("learningQuality.scenarioSimulator.subtitle")}
                     accent={ESG_colors.GREEN}
                     icon={<PlayCircle className="h-5 w-5" />}
                     metrics={[
                       {
-                        label: "Completion rate",
+                        label: t("learningQuality.completionRate"),
                         value: formatPercent(stats.scenarioAttempts.completionRate),
                       },
                       {
-                        label: "Average score",
+                        label: t("learningQuality.averageScore"),
                         value: formatScore(stats.scenarioAttempts.averageScore),
                       },
                       {
-                        label: "Passed",
+                        label: t("learningQuality.passed"),
                         value: String(stats.scenarioAttempts.passed),
                       },
                       {
-                        label: "Failed",
+                        label: t("learningQuality.failed"),
                         value: String(stats.scenarioAttempts.failed),
                       },
                     ]}
                   />
 
                   <MetricPanel
-                    title="Curriculum"
-                    subtitle="Progression and assessment quality across all curriculum modules."
+                    title={t("learningQuality.curriculum.title")}
+                    subtitle={t("learningQuality.curriculum.subtitle")}
                     accent={ESG_colors.ORANGE}
                     icon={<GraduationCap className="h-5 w-5" />}
                     metrics={[
                       {
-                        label: "Completion rate",
+                        label: t("learningQuality.completionRate"),
                         value: formatPercent(stats.curriculum.completionRate),
                       },
                       {
-                        label: "Avg pre-quiz",
+                        label: t("learningQuality.avgPreQuiz"),
                         value: formatScore(stats.curriculum.averagePreQuizScore),
                       },
                       {
-                        label: "Avg post-quiz",
+                        label: t("learningQuality.avgPostQuiz"),
                         value: formatScore(stats.curriculum.averagePostQuizScore),
                       },
                       {
-                        label: "In progress",
+                        label: t("learningQuality.inProgress"),
                         value: String(stats.curriculum.inProgress),
                       },
                     ]}
                   />
 
                   <MetricPanel
-                    title="ePortfolio"
-                    subtitle="Case-study completion and participation signals."
+                    title={t("learningQuality.eportfolio.title")}
+                    subtitle={t("learningQuality.eportfolio.subtitle")}
                     accent={ESG_colors.BLUE}
                     icon={<FolderOpen className="h-5 w-5" />}
                     metrics={[
                       {
-                        label: "Completion rate",
+                        label: t("learningQuality.completionRate"),
                         value: formatPercent(stats.eportfolio.completionRate),
                       },
                       {
-                        label: "Published",
+                        label: t("learningQuality.published"),
                         value: String(stats.content.publishedCaseStudies),
                       },
                       {
-                        label: "Active / 7 days",
+                        label: t("learningQuality.active7d"),
                         value: String(stats.activity.activeUsersLast7Days),
                       },
                     ]}
@@ -1201,10 +1261,7 @@ export default function AdminStatsShell({ stats }: Props) {
 
         {segment === "languages" && (
           <Surface className="mt-8 p-6">
-            <SectionHeader
-              title="Language coverage"
-              subtitle="Review adoption and content availability across supported language groups."
-            />
+            <SectionHeader title={t("languages.title")} subtitle={t("languages.subtitle")} />
             <div className="grid gap-4 xl:grid-cols-3">
               {filteredLanguages.map((item) => (
                 <LanguageCard key={item.code} item={item} />
@@ -1230,11 +1287,11 @@ export default function AdminStatsShell({ stats }: Props) {
 
             <Surface className="mt-8 p-6">
               <SectionHeader
-                title="Scenario performance"
-                subtitle="Search, compare, and sort scenarios by adoption, completion, and score."
+                title={t("scenarioPerformance.title")}
+                subtitle={t("scenarioPerformance.subtitle")}
                 right={
                   <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm">
-                    {filteredScenarios.length} results
+                    {t("scenarioPerformance.results", { count: filteredScenarios.length })}
                   </div>
                 }
               />
@@ -1247,7 +1304,7 @@ export default function AdminStatsShell({ stats }: Props) {
                     onChange={(event) => {
                       setQuery(event.target.value);
                     }}
-                    placeholder="Search by scenario title, slug, language, or ESG area..."
+                    placeholder={t("scenarioPerformance.searchPlaceholder")}
                     className="h-12 w-full rounded-2xl border border-slate-200 bg-white pl-11 pr-4 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-slate-300 focus:ring-2 focus:ring-slate-200"
                   />
                 </div>
@@ -1258,31 +1315,40 @@ export default function AdminStatsShell({ stats }: Props) {
                     setScenarioSort(value as "attempts" | "completion" | "score");
                   }}
                   options={[
-                    { value: "attempts", label: "Sort by attempts" },
-                    { value: "completion", label: "Sort by completion rate" },
-                    { value: "score", label: "Sort by average score" },
+                    { value: "attempts", label: t("scenarioPerformance.sort.attempts") },
+                    { value: "completion", label: t("scenarioPerformance.sort.completion") },
+                    { value: "score", label: t("scenarioPerformance.sort.score") },
                   ]}
                 />
               </div>
 
               <div className="mb-6 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-                <MiniKpi label="Results" value={String(filteredScenarios.length)} />
-                <MiniKpi label="Attempts" value={String(scenarioSummary.attempts)} />
                 <MiniKpi
-                  label="Average completion"
+                  label={t("scenarioPerformance.summary.results")}
+                  value={String(filteredScenarios.length)}
+                />
+                <MiniKpi
+                  label={t("scenarioPerformance.summary.attempts")}
+                  value={String(scenarioSummary.attempts)}
+                />
+                <MiniKpi
+                  label={t("scenarioPerformance.summary.averageCompletion")}
                   value={
                     scenarioSummary.avgCompletion === null
                       ? "—"
                       : formatPercent(scenarioSummary.avgCompletion)
                   }
                 />
-                <MiniKpi label="Average score" value={formatScore(scenarioSummary.avgScore)} />
+                <MiniKpi
+                  label={t("scenarioPerformance.summary.averageScore")}
+                  value={formatScore(scenarioSummary.avgScore)}
+                />
               </div>
 
               {filteredScenarios.length === 0 ? (
                 <EmptyState
-                  title="No scenarios matched your search"
-                  subtitle="Try a different title, slug, language, or ESG area."
+                  title={t("scenarioPerformance.empty.title")}
+                  subtitle={t("scenarioPerformance.empty.subtitle")}
                 />
               ) : (
                 <div className="space-y-3">
@@ -1292,13 +1358,14 @@ export default function AdminStatsShell({ stats }: Props) {
                 </div>
               )}
             </Surface>
+
             <Surface className="mt-8 p-6">
               <SectionHeader
-                title="User scenario attempts"
-                subtitle="Latest learner activity across the scenario simulator, including status, score, and timing."
+                title={t("scenarioAttempts.title")}
+                subtitle={t("scenarioAttempts.subtitle")}
                 right={
                   <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm">
-                    {stats.scenarioAttemptRows.length} records
+                    {t("scenarioAttempts.records", { count: stats.scenarioAttemptRows.length })}
                   </div>
                 }
               />
@@ -1325,11 +1392,11 @@ export default function AdminStatsShell({ stats }: Props) {
 
             <Surface className="mt-8 p-6">
               <SectionHeader
-                title="Course performance"
-                subtitle="Search, compare, and sort curriculum modules by engagement and learning outcomes."
+                title={t("coursePerformance.title")}
+                subtitle={t("coursePerformance.subtitle")}
                 right={
                   <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm">
-                    {filteredCourses.length} results
+                    {t("coursePerformance.results", { count: filteredCourses.length })}
                   </div>
                 }
               />
@@ -1342,7 +1409,7 @@ export default function AdminStatsShell({ stats }: Props) {
                     onChange={(event) => {
                       setQuery(event.target.value);
                     }}
-                    placeholder="Search by course title, slug, or ESG area..."
+                    placeholder={t("coursePerformance.searchPlaceholder")}
                     className="h-12 w-full rounded-2xl border border-slate-200 bg-white pl-11 pr-4 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-slate-300 focus:ring-2 focus:ring-slate-200"
                   />
                 </div>
@@ -1353,31 +1420,40 @@ export default function AdminStatsShell({ stats }: Props) {
                     setCourseSort(value as "attempts" | "completion" | "postQuiz");
                   }}
                   options={[
-                    { value: "attempts", label: "Sort by attempts" },
-                    { value: "completion", label: "Sort by completion rate" },
-                    { value: "postQuiz", label: "Sort by post-quiz score" },
+                    { value: "attempts", label: t("coursePerformance.sort.attempts") },
+                    { value: "completion", label: t("coursePerformance.sort.completion") },
+                    { value: "postQuiz", label: t("coursePerformance.sort.postQuiz") },
                   ]}
                 />
               </div>
 
               <div className="mb-6 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-                <MiniKpi label="Results" value={String(filteredCourses.length)} />
-                <MiniKpi label="Attempts" value={String(courseSummary.attempts)} />
                 <MiniKpi
-                  label="Average completion"
+                  label={t("coursePerformance.summary.results")}
+                  value={String(filteredCourses.length)}
+                />
+                <MiniKpi
+                  label={t("coursePerformance.summary.attempts")}
+                  value={String(courseSummary.attempts)}
+                />
+                <MiniKpi
+                  label={t("coursePerformance.summary.averageCompletion")}
                   value={
                     courseSummary.avgCompletion === null
                       ? "—"
                       : formatPercent(courseSummary.avgCompletion)
                   }
                 />
-                <MiniKpi label="Average post-quiz" value={formatScore(courseSummary.avgPostQuiz)} />
+                <MiniKpi
+                  label={t("coursePerformance.summary.averagePostQuiz")}
+                  value={formatScore(courseSummary.avgPostQuiz)}
+                />
               </div>
 
               {filteredCourses.length === 0 ? (
                 <EmptyState
-                  title="No courses matched your search"
-                  subtitle="Try a different title, slug, or ESG area."
+                  title={t("coursePerformance.empty.title")}
+                  subtitle={t("coursePerformance.empty.subtitle")}
                 />
               ) : (
                 <div className="space-y-3">
@@ -1387,13 +1463,14 @@ export default function AdminStatsShell({ stats }: Props) {
                 </div>
               )}
             </Surface>
+
             <Surface className="mt-8 p-6">
               <SectionHeader
-                title="User curriculum attempts"
-                subtitle="Latest learner activity across curriculum modules, including progress, assessment, and timing."
+                title={t("curriculumAttempts.title")}
+                subtitle={t("curriculumAttempts.subtitle")}
                 right={
                   <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm">
-                    {stats.curriculumAttemptRows.length} records
+                    {t("curriculumAttempts.records", { count: stats.curriculumAttemptRows.length })}
                   </div>
                 }
               />
@@ -1417,13 +1494,16 @@ export default function AdminStatsShell({ stats }: Props) {
                 onWindowChange={setActivityWindow}
               />
             </section>
+
             <Surface className="mt-8 p-6">
               <SectionHeader
-                title="User ePortfolio progress"
-                subtitle="Latest learner progress across case studies, including completion and timing."
+                title={t("eportfolioProgress.title")}
+                subtitle={t("eportfolioProgress.subtitle")}
                 right={
                   <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm">
-                    {stats.eportfolioProgressRows.length} records
+                    {t("eportfolioProgress.records", {
+                      count: stats.eportfolioProgressRows.length,
+                    })}
                   </div>
                 }
               />
