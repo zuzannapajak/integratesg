@@ -28,7 +28,7 @@
         "subtitle": "Kluczowe wskaźniki platformy w jednym miejscu, przygotowane do szybkiego przeglądu.",
         "allUsers": {
           "label": "Wszyscy użytkownicy",
-          "hint": "Zarejestrowane konta studentów, edukatorów i administratorów."
+          "hint": "Zarejestrowane konta studentów i dydaktyków"
         },
         "activeUsers": {
           "label": "Aktywni użytkownicy",
@@ -48,7 +48,7 @@
         "subtitle": "Zwięzły widok rozkładu ról i opublikowanych zasobów edukacyjnych.",
         "roleDistribution": "Rozkład ról",
         "publishedResources": "Opublikowane zasoby",
-        "educators": "Edukatorzy",
+        "educators": "Dydaktycy",
         "students": "Studenci",
         "admins": "Administratorzy",
         "courses": "Kursy",

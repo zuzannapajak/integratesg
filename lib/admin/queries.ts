@@ -9,13 +9,17 @@ import type {
   DashboardScenarioAttemptRow,
   LocalizedTitleItem,
 } from "@/lib/admin/types";
+import { DEFAULT_LOCALE, LOCALE_META, isAppLocale } from "@/lib/i18n/locales";
 import { prisma } from "@/lib/prisma";
 
-const LANGUAGE_LABELS: Partial<Record<string, string>> = {
-  en: "English",
-  pl: "Polish",
-  es: "Spanish",
-};
+function toIntlLocale(locale: string) {
+  if (locale === "pl") return "pl-PL";
+  if (locale === "it") return "it-IT";
+  if (locale === "de") return "de-DE";
+  if (locale === "el") return "el-GR";
+  if (locale === "bg") return "bg-BG";
+  return "en-GB";
+}
 
 function toPercent(part: number, total: number) {
   if (total <= 0) return 0;
@@ -204,7 +208,7 @@ function buildEportfolioWindowStats(params: {
 function formatDateTimeLabel(date: Date | null, locale: string) {
   if (date === null) return "—";
 
-  return new Intl.DateTimeFormat(locale === "pl" ? "pl-PL" : "en-GB", {
+  return new Intl.DateTimeFormat(toIntlLocale(locale), {
     day: "2-digit",
     month: "short",
     year: "numeric",
@@ -220,7 +224,7 @@ function normalizeArea(area: string): "environmental" | "social" | "governance" 
   return "cross-cutting";
 }
 
-export async function getBasicAdminStats(locale = "en"): Promise<BasicAdminStats> {
+export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<BasicAdminStats> {
   const now = new Date();
   const today = startOfDay(now);
 
@@ -228,9 +232,14 @@ export async function getBasicAdminStats(locale = "en"): Promise<BasicAdminStats
   const last7dStart = addDays(today, -6);
   const last30dStart = addDays(today, -29);
 
-  const hourFormatter24h = new Intl.DateTimeFormat("en", { hour: "numeric" });
-  const dayFormatter7d = new Intl.DateTimeFormat("en", { weekday: "short" });
-  const dayFormatter30d = new Intl.DateTimeFormat("en", { day: "numeric", month: "short" });
+  const intlLocale = toIntlLocale(locale);
+
+  const hourFormatter24h = new Intl.DateTimeFormat(intlLocale, { hour: "numeric" });
+  const dayFormatter7d = new Intl.DateTimeFormat(intlLocale, { weekday: "short" });
+  const dayFormatter30d = new Intl.DateTimeFormat(intlLocale, {
+    day: "numeric",
+    month: "short",
+  });
 
   const [
     profiles,
@@ -612,7 +621,7 @@ export async function getBasicAdminStats(locale = "en"): Promise<BasicAdminStats
     .sort((a, b) => a.localeCompare(b))
     .map((code) => ({
       code,
-      label: LANGUAGE_LABELS[code] ?? code.toUpperCase(),
+      label: isAppLocale(code) ? LOCALE_META[code].label : code.toUpperCase(),
       users: profiles.filter((profile) => profile.preferredLanguage === code).length,
       publishedCourses: publishedCoursesWithTranslations.filter((course) =>
         course.translations.some((translation) => translation.language === code),

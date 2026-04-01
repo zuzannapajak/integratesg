@@ -10,7 +10,7 @@
     "dashboard": "Dashboard",
     "settings": "Ustawienia",
     "about": "O projekcie",
-    "educators": "Dla edukatorów",
+    "educators": "Dla dydaktyków",
     "students": "Dla studentów",
     "logOut": "Wyloguj się",
     "signedIn": "Zalogowano jako",
@@ -21,7 +21,7 @@
   },
   "Roles": {
     "student": "Student",
-    "educator": "Edukator",
+    "educator": "Dydaktyk",
     "admin": "Administrator"
   },
   "Logo": {
@@ -29,7 +29,7 @@
   },
   "PublicNavbar": {
     "about": "O projekcie",
-    "educators": "Dla edukatorów",
+    "educators": "Dla dydaktyków",
     "students": "Dla studentów",
     "signIn": "Zaloguj się",
     "register": "Zarejestruj się"
@@ -64,12 +64,12 @@
   "Topbar": {
     "badge": {
       "student": "student",
-      "educator": "edukator",
+      "educator": "dydaktyk",
       "admin": "admin"
     },
     "title": {
       "student": "Panel studenta",
-      "educator": "Panel edukatora",
+      "educator": "Panel dydaktyka",
       "admin": "Panel administratora"
     },
     "subtitle": {
@@ -82,7 +82,7 @@
   "Protected": {
     "CurriculumPage": {
       "title": "Curriculum",
-      "subtitle": "Moduły edukacyjne dla edukatorów z prowadzonym przebiegiem, quizami i widocznością postępu"
+      "subtitle": "Moduły edukacyjne dla dydaktyków z prowadzonym przebiegiem, quizami i widocznością postępu"
     },
     "ScenariosPage": {
       "title": "Symulator scenariuszy",

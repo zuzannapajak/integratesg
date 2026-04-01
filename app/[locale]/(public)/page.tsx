@@ -93,15 +93,6 @@ export default async function HomePage({ params }: Props) {
               </p>
             </div>
 
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href={`/${locale}/auth/register`} className="landing-primary-cta">
-                {t("overview.createAccount")}
-              </Link>
-              <Link href={`/${locale}/auth/login`} className="landing-secondary-cta">
-                {t("overview.signIn")}
-              </Link>
-            </div>
-
             <div className="mt-8 grid gap-5 lg:grid-cols-3">
               {focusCards.map((card) => (
                 <article key={card.title} className="landing-focus-card">

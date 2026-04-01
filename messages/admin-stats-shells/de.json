@@ -28,7 +28,7 @@
         "subtitle": "Ihre zentralen Plattformkennzahlen auf einen Blick, für eine schnelle Management-Übersicht konzipiert.",
         "allUsers": {
           "label": "Alle Benutzer",
-          "hint": "Registrierte Konten von Lernenden, Lehrenden und Administratoren."
+          "hint": "Registrierte Konten von Lernenden und Lehrenden."
         },
         "activeUsers": {
           "label": "Aktive Benutzer",

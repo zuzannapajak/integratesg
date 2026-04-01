@@ -1,28 +1,10 @@
 import { APP_ROLES } from "@/lib/auth/roles";
+import { APP_LOCALES } from "@/lib/i18n/locales";
 
 export const APP_NAME = "IntegratESG Platform";
 
 // Public
-export const FOCUS_CARD = [
-  {
-    eyebrow: "For students",
-    title: "Scenario Simulator",
-    description:
-      "Explore ESG topics through interactive decision-making scenarios and practical learning paths.",
-  },
-  {
-    eyebrow: "For educators",
-    title: "Curriculum and self-assessment",
-    description:
-      "Access structured learning modules, pre- and post-quizzes, and feedback-driven teaching resources.",
-  },
-  {
-    eyebrow: "For all users",
-    title: "ePortfolio of case studies",
-    description:
-      "Review standardized ESG case studies prepared across partner languages and contexts.",
-  },
-];
+export const supportedLanguages: string[] = [...APP_LOCALES];
 
 export const PARTNERS = [
   { name: "Lodz University of Technology", src: "/images/partners/lodz_logo.png" },

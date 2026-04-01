@@ -14,9 +14,12 @@
         "email": "Email address",
         "language": "Language",
         "languageOptions": {
-          "en": "English (US)",
+          "en": "English (EN)",
           "pl": "Polski (PL)",
-          "es": "Español (ES)"
+          "it": "Italiano (IT)",
+          "de": "Deutsch (DE)",
+          "bg": "Български (BG)",
+          "el": "Ελληνικά (EL)"
         },
         "save": "Save changes",
         "saved": "Changes saved.",

@@ -28,7 +28,7 @@
         "subtitle": "I principali indicatori della piattaforma a colpo d’occhio, pensati per una rapida revisione esecutiva.",
         "allUsers": {
           "label": "Tutti gli utenti",
-          "hint": "Account registrati tra studenti, docenti e amministratori."
+          "hint": "Account registrati tra studenti e docenti."
         },
         "activeUsers": {
           "label": "Utenti attivi",

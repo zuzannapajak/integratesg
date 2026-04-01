@@ -1,3 +1,4 @@
+import { supportedLanguages } from "@/lib/constants";
 import {
   CaseStudyArea,
   CaseStudyDetailViewModel,
@@ -31,8 +32,6 @@ type CaseStudyRecord = {
   translations: CaseStudyTranslationRecord[];
   userProgress: CaseStudyProgressRecord[];
 };
-
-const supportedLanguages: string[] = ["en", "pl", "es"];
 
 function pickTranslation(
   translations: CaseStudyTranslationRecord[],

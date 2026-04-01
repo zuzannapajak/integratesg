@@ -28,7 +28,7 @@
         "subtitle": "Your core platform indicators at a glance, designed for fast executive review.",
         "allUsers": {
           "label": "All users",
-          "hint": "Registered accounts across students, educators, and administrators."
+          "hint": "Registered accounts across studentsa and educators."
         },
         "activeUsers": {
           "label": "Active users",

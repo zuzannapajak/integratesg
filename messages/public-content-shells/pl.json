@@ -62,7 +62,7 @@
         "items": {
           "1": {
             "title": "Wpływ edukacyjny",
-            "description": "Edukatorzy VET i przedstawiciele biznesu rozwijają wiedzę o ESG, lepiej odpowiadając na współczesne potrzeby rynku pracy."
+            "description": "Dydaktycy VET i przedstawiciele biznesu rozwijają wiedzę o ESG, lepiej odpowiadając na współczesne potrzeby rynku pracy."
           },
           "2": {
             "title": "Zmiana zachowań",
@@ -78,7 +78,7 @@
         "eyebrow": "Grupy docelowe",
         "title": "Zaprojektowane dla zróżnicowanych odbiorców edukacyjnych i zawodowych.",
         "items": {
-          "1": "Edukatorzy VET",
+          "1": "Dydaktycy VET",
           "2": "Menedżerowie biznesowi",
           "3": "MŚP i duże przedsiębiorstwa",
           "4": "Eksperci środowiskowi / decydenci / NGO",
@@ -96,11 +96,11 @@
     },
     "Educators": {
       "hero": {
-        "eyebrow": "Dla edukatorów",
+        "eyebrow": "Dla dydaktyków",
         "title": "Praktyczna przestrzeń do nauczania ESG zaprojektowana dla edukacji zawodowej.",
-        "description": "Platforma pomaga edukatorom wyjaśniać zagadnienia ESG poprzez uporządkowane zasoby edukacyjne, interaktywne scenariusze i treści oparte na studiach przypadków, które wspierają praktyczne nauczanie.",
+        "description": "Platforma pomaga dydaktykom wyjaśniać zagadnienia ESG poprzez uporządkowane zasoby edukacyjne, interaktywne scenariusze i treści oparte na studiach przypadków, które wspierają praktyczne nauczanie.",
         "secondaryCta": "Czytaj więcej",
-        "primaryCta": "Utwórz konto edukatora"
+        "primaryCta": "Utwórz konto dydaktyka"
       },
       "heroCards": {
         "card1Title": "Zastosowanie praktyczne",
@@ -112,9 +112,9 @@
         "card3Description": "Struktura oparta na czytelnej nawigacji, zaangażowaniu i klarowności dydaktycznej."
       },
       "benefits": {
-        "eyebrow": "Co zyskują edukatorzy",
+        "eyebrow": "Co zyskują dydaktycy",
         "title": "Zasoby, które pomagają przejść od teorii do praktycznego nauczania ESG.",
-        "description": "Od wsparcia curriculum po naukę opartą na studiach przypadków — platforma została zaprojektowana tak, aby pomagać edukatorom przedstawiać ESG w bardziej zrozumiały i praktyczny sposób.",
+        "description": "Od wsparcia curriculum po naukę opartą na studiach przypadków — platforma została zaprojektowana tak, aby pomagać dydaktykom przedstawiać ESG w bardziej zrozumiały i praktyczny sposób.",
         "items": {
           "1": {
             "title": "Uporządkowany dostęp do curriculum",
@@ -140,7 +140,7 @@
         "items": {
           "1": {
             "title": "Wsparcie dydaktyczne",
-            "description": "Edukatorzy mogą integrować zasoby platformy z wykładami, warsztatami i projektami prowadzonymi w sposób kierowany."
+            "description": "Dydaktycy mogą integrować zasoby platformy z wykładami, warsztatami i projektami prowadzonymi w sposób kierowany."
           },
           "2": {
             "title": "Samoocena i refleksja",
@@ -154,7 +154,7 @@
       },
       "highlights": {
         "eyebrow": "Najważniejsze elementy",
-        "title": "Co sprawia, że doświadczenie edukatora jest wartościowe",
+        "title": "Co sprawia, że doświadczenie dydaktyka jest wartościowe",
         "items": {
           "1": "Wsparcie nauki oparte na roadmapie",
           "2": "Zasoby dydaktyczne oparte na scenariuszach",
@@ -165,7 +165,7 @@
         }
       },
       "cta": {
-        "eyebrow": "Zacznij jako edukator",
+        "eyebrow": "Zacznij jako dydaktyk",
         "title": "Utwórz konto i uzyskaj dostęp do praktycznych zasobów do nauczania ESG.",
         "description": "Korzystaj z modułów curriculum, studiów przypadków i scenariuszy, aby wspierać bardziej praktyczne i angażujące uczenie się ESG.",
         "primary": "Zarejestruj się teraz",

@@ -1,3 +1,4 @@
+import { supportedLanguages } from "@/lib/constants";
 import {
   CourseMappedInput,
   CourseSectionRecord,
@@ -350,8 +351,6 @@ function mapCourseToViewModel(
     progressState,
   };
 }
-
-const supportedLanguages: string[] = ["en", "pl", "es"];
 
 export async function getAllCurriculumModules(params: { userId: string; locale: string }) {
   const courses = await prisma.course.findMany({

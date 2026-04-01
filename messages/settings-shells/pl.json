@@ -14,9 +14,12 @@
         "email": "Adres e-mail",
         "language": "Język",
         "languageOptions": {
-          "en": "English (US)",
+          "en": "English (EN)",
           "pl": "Polski (PL)",
-          "es": "Español (ES)"
+          "it": "Italiano (IT)",
+          "de": "Deutsch (DE)",
+          "bg": "Български (BG)",
+          "el": "Ελληνικά (EL)"
         },
         "save": "Zapisz zmiany",
         "saved": "Zmiany zostały zapisane.",
