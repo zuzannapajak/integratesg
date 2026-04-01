@@ -1,0 +1,378 @@
+{
+  "PublicContent": {
+    "About": {
+      "hero": {
+        "eyebrow": "Über das Projekt",
+        "title": "Die Lücke zwischen Berufsbildung und realer ESG-Implementierung schließen.",
+        "description": "Unser Ziel ist es, VET-Anbietern und Managern dabei zu helfen, das Wissen, die Fähigkeiten und die praktischen Werkzeuge aufzubauen, die erforderlich sind, um ESG-Prinzipien (Umwelt, Soziales und Governance) in Geschäftsstrategien und die Berufsbildung zu integrieren.",
+        "primaryCta": "Plattform beitreten",
+        "secondaryCta": "Mehr lesen"
+      },
+      "heroCards": {
+        "openAccessTitle": "Open Access",
+        "openAccessDescription": "Frei verfügbare Ressourcen, konzipiert für Anpassung und Nutzung.",
+        "practicalPackageBadge": "Praxispaket",
+        "practicalPackageTitle": "Curriculum, eLearning, ePortfolio und Szenario-Simulator.",
+        "practicalPackageDescription": "Ein vernetztes Lern-Ökosystem zur Förderung des ESG-Bewusstseins.",
+        "euRelevanceTitle": "EU-Relevanz",
+        "euRelevanceDescription": "Unterstützt Green-Deal-Prioritäten und Innovation in der Berufsbildung."
+      },
+      "project": {
+        "eyebrow": "Projekt",
+        "title": "Warum das Projekt wichtig ist",
+        "paragraph1": "Das IntegratESG-Projekt schließt die Lücke zwischen Berufsbildung und praktischer Anwendung, indem es Berufsbildungsanbieter und Unternehmensleiter mit dem Wissen und den Werkzeugen ausstattet, um ESG-Prinzipien in Geschäftsstrategien zu integrieren.",
+        "paragraph2": "Da ESG-Vorschriften wie die Corporate Sustainability Reporting Directive (CSRD) immer strenger werden, müssen Unternehmen sich anpassen, um nachhaltige und verantwortungsvolle Abläufe zu gewährleisten.",
+        "paragraph3": "Das Projekt entwickelt ein umfassendes Schulungspaket, bestehend aus einer Roadmap für VET-Anbieter, einem ESG-Lehrplan und eLearning-Kurs, einem digitalen ePortfolio mit Fallstudien und einem Szenario-Simulator.",
+        "paragraph4": "Diese Ressourcen sind über eine interaktive E-Learning-Plattform zugänglich, die zur Anpassung und Nutzung frei verfügbar ist."
+      },
+      "strategic": {
+        "eyebrow": "Strategische Relevanz",
+        "title": "Ausgerichtet auf EU-Prioritäten",
+        "description": "Dieses Projekt steht im Einklang mit den Zielen des EU Green Deal und trägt zur Anpassung und Innovation der Berufsbildung bei, indem es ESG-Bewusstsein und praktische Umsetzung integriert.",
+        "card1Title": "Schulungspaket",
+        "card1Description": "Roadmap, Curriculum, eLearning-Kurs, ePortfolio und Szenario-Simulator.",
+        "card2Title": "Open Access",
+        "card2Description": "Frei zugängliche Ressourcen, konzipiert für Anpassung und praktischen Einsatz."
+      },
+      "goals": {
+        "eyebrow": "Hauptziele",
+        "title": "Vier Säulen, die das Projekt leiten.",
+        "items": {
+          "1": {
+            "title": "Kapazitätsaufbau für VET-Anbieter",
+            "description": "Unterstützung von Berufsbildungsanbietern mit praktischen Werkzeugen, strukturierter Anleitung und ESG-fokussierten Lehrressourcen."
+          },
+          "2": {
+            "title": "ESG-Kompetenz in der Wirtschaft",
+            "description": "Unterstützung von Managern und Organisationen beim Verständnis von ESG-Anforderungen und deren Anwendung in realen Entscheidungsprozessen."
+          },
+          "3": {
+            "title": "Zusammenarbeit und Austausch bewährter Verfahren",
+            "description": "Stärkung der Zusammenarbeit zwischen Partnern und Förderung des Austauschs effektiver Ansätze über Länder und Sektoren hinweg."
+          },
+          "4": {
+            "title": "Sensibilisierung der Öffentlichkeit",
+            "description": "Förderung eines breiteren Verständnisses der ESG-Prinzipien und ihrer Bedeutung für Bildung, Wirtschaft und Gesellschaft."
+          }
+        }
+      },
+      "results": {
+        "eyebrow": "Erwartete Ergebnisse",
+        "title": "Von der Wissensverbesserung bis zum systemischen Wandel.",
+        "items": {
+          "1": {
+            "title": "Bildungswirkung",
+            "description": "Lehrkräfte in der Berufsbildung und Fachkräfte in Unternehmen verbessern ihr ESG-Wissen und sichern so die Ausrichtung an modernen Arbeitsmarktanforderungen."
+          },
+          "2": {
+            "title": "Verhaltensänderung",
+            "description": "Unternehmen integrieren ESG-Prinzipien verstärkt in ihre Entscheidungsfindung, was zu einer besseren Einbindung von Stakeholdern und mehr unternehmerischer Verantwortung führt."
+          },
+          "3": {
+            "title": "Systemische Wirkung",
+            "description": "Die Zusammenarbeit zwischen den teilnehmenden EU-Ländern wird gestärkt, wodurch die Berufsbildung an Nachhaltigkeitszielen und Marktanforderungen ausgerichtet wird."
+          }
+        }
+      },
+      "groups": {
+        "eyebrow": "Zielgruppen",
+        "title": "Konzipiert für verschiedene Bildungs- und Berufsgruppen.",
+        "items": {
+          "1": "Lehrkräfte in der Berufsbildung (VET)",
+          "2": "Unternehmensleiter",
+          "3": "KMU und Großunternehmen",
+          "4": "Umweltexperten / Entscheidungsträger / NGOs",
+          "5": "Lernende in der Berufsbildung",
+          "6": "Relevante Akteure"
+        }
+      },
+      "cta": {
+        "eyebrow": "Plattform erkunden",
+        "title": "Erfahren Sie, wie IntegratESG die praktische ESG-Bildung unterstützt.",
+        "description": "Greifen Sie auf die mehrsprachige Lernumgebung zu und erkunden Sie die Ressourcen, die zur Unterstützung der Projektergebnisse und zur breiteren pädagogischen Nutzung erstellt wurden.",
+        "primaryCta": "Plattform beitreten",
+        "secondaryCta": "Mehr lesen"
+      }
+    },
+    "Educators": {
+      "hero": {
+        "eyebrow": "Für Lehrende",
+        "title": "Strukturierte ESG-Lernwerkzeuge zur Unterstützung von Unterricht, Beratung und Unterrichtspraxis.",
+        "description": "Lehrende können die Plattform nutzen, um auf lehrplanreforme Ressourcen zuzugreifen, Lernfortschritte zu verfolgen und ESG-Themen in strukturierte Bildungswege zu integrieren.",
+        "primaryCta": "Registrieren",
+        "secondaryCta": "Mehr erfahren"
+      },
+      "highlights": {
+        "eyebrow": "Hauptvorteile",
+        "title": "Was Lehrende auf der Plattform tun können",
+        "items": {
+          "1": {
+            "title": "Zugriff auf strukturierte Lehrplanressourcen",
+            "description": "Nutzen Sie organisierte ESG-Lernmodule, Quizze und Bildungswege, die für berufliches und angewandtes Lernen entwickelt wurden."
+          },
+          "2": {
+            "title": "Unterstützung des geführten Lernens",
+            "description": "Nutzen Sie die Plattform als unterstützende Umgebung, um ESG-Themen in einem klareren und praktischeren Format einzuführen."
+          },
+          "3": {
+            "title": "Arbeit mit Fallstudien und Szenarien",
+            "description": "Integrieren Sie praktische Fälle und szenariobasierte Aktivitäten in Bildungsprozesse und Diskussionen."
+          }
+        }
+      },
+      "sections": {
+        "1": {
+          "title": "Lehrplanorientiertes Lernen",
+          "description": "Die Plattform bietet Lehrenden Zugang zu lehrplanorientierten Modulen und Lern-Checkpoints, die den strukturierten Unterricht und das Selbststudium unterstützen können."
+        },
+        "2": {
+          "title": "Unterrichtsunterstützung durch Szenarien",
+          "description": "Szenariobasierte Materialien ermöglichen es Lehrenden, ESG-Wissen mit praktischen Entscheidungskontexten und Reflexionen im Unterricht zu verknüpfen."
+        },
+        "3": {
+          "title": "Flexible pädagogische Nutzung",
+          "description": "Die Umgebung ist so konzipiert, dass sie zugänglich, mehrsprachig und an verschiedene Unterrichtsbedürfnisse, Lerngruppen und Projektkontexte anpassbar ist."
+        }
+      },
+      "cta": {
+        "eyebrow": "Plattform beitreten",
+        "title": "Greifen Sie auf ESG-Lernressourcen für Lehrende zu.",
+        "description": "Registrieren Sie sich, um Lehrplanmaterialien, Fallstudien und szenariobasierte Lernmöglichkeiten zu erkunden.",
+        "primaryCta": "Registrieren",
+        "secondaryCta": "Anmelden"
+      }
+    },
+    "Students": {
+      "hero": {
+        "eyebrow": "Für Studierende",
+        "title": "Erkunden Sie ESG-Themen durch interaktive Szenarien, Fallstudien und geführte Lernmaterialien.",
+        "description": "Studierende können die Plattform nutzen, um ein praktisches Verständnis von ESG-Themen durch exploratives Lernen, strukturierte Ressourcen und angewandte Lernerfahrungen aufzubauen.",
+        "primaryCta": "Registrieren",
+        "secondaryCta": "Mehr erfahren"
+      },
+      "highlights": {
+        "eyebrow": "Lernerfahrung",
+        "title": "Was Studierende erkunden können",
+        "items": {
+          "1": {
+            "title": "Interaktive Entscheidungsszenarien",
+            "description": "Setzen Sie sich mit realistischen ESG-Situationen auseinander und erkunden Sie, wie verschiedene Entscheidungen Ergebnisse und Stakeholder-Perspektiven beeinflussen."
+          },
+          "2": {
+            "title": "Fallstudien in verschiedenen Kontexten",
+            "description": "Überprüfen Sie strukturierte ESG-Fallstudien, die in verschiedenen Sprachen, Sektoren und Bildungseinrichtungen erstellt wurden."
+          },
+          "3": {
+            "title": "Klarer und zugänglicher Lernfluss",
+            "description": "Navigieren Sie durch Materialien, die Verständnis, Reflexion und schrittweise Wissensentwicklung unterstützen."
+          }
+        }
+      },
+      "sections": {
+        "1": {
+          "title": "Szenariobasiertes Lernen",
+          "description": "Die Plattform ermöglicht es Studierenden, sich ESG durch praktische Aufgaben und simulierte Entscheidungssituationen zu nähern."
+        },
+        "2": {
+          "title": "Lernen durch Beispiele",
+          "description": "Fallstudien helfen dabei, Theorie und Praxis zu verbinden und zeigen, wie ESG-Prinzipien in realen Berufs- und Organisationskontexten auftreten."
+        },
+        "3": {
+          "title": "Unterstützung des unabhängigen Lernens",
+          "description": "Studierende können die Plattform in ihrem eigenen Tempo nutzen und im Rahmen umfangreicherer Kursarbeiten oder projektbasierter Aktivitäten auf Ressourcen zurückgreifen."
+        }
+      },
+      "cta": {
+        "eyebrow": "Lernen starten",
+        "title": "Erstellen Sie Ihr Konto und greifen Sie auf praktische ESG-Ressourcen zu.",
+        "description": "Registrieren Sie sich, um Szenarien, Fallstudien und geführte Lerninhalte für Studierende zu erkunden.",
+        "primaryCta": "Registrieren",
+        "secondaryCta": "Anmelden"
+      }
+    },
+    "Privacy": {
+      "hero": {
+        "eyebrow": "Datenschutzinformationen",
+        "title": "Wie Datenschutz und personenbezogene Daten auf der IntegratESG-Plattform gehandhabt werden.",
+        "description": "Diese Seite bietet einen strukturierten Überblick über datenschutzbezogene Grundsätze und kann später in eine vollständige Datenschutzrichtlinie erweitert werden, abhängig von der endgültigen Governance und dem Betrieb der Plattform.",
+        "secondaryCta": "Zurück zur Startseite",
+        "primaryCta": "Barrierefreiheit"
+      },
+      "overview": {
+        "eyebrow": "Kurzübersicht",
+        "title": "Wichtigste Datenschutzprinzipien",
+        "items": {
+          "1": "Nur notwendige Nutzerdaten sollten erhoben werden",
+          "2": "Daten sollten transparent und verantwortungsbewusst verarbeitet werden",
+          "3": "Sicherheits- und Zugriffskontrollen sollten aufrechterhalten werden",
+          "4": "Nutzer sollten über die Funktionsweise der Plattform informiert werden",
+          "5": "Zusätzliche Details können in der endgültigen rechtlichen Dokumentation hinzugefügt werden"
+        }
+      },
+      "sections": {
+        "1": {
+          "title": "1. Zweck dieser Seite",
+          "description": "Diese Datenschutzseite dient derzeit als Informationsplatzhalter, der die erwartete Richtung des Umgangs mit personenbezogenen Daten auf der Plattform darstellt. Sie soll Klarheit schaffen und gleichzeitig Raum für formellere rechtliche Inhalte lassen, die später bei Bedarf eingeführt werden."
+        },
+        "2": {
+          "title": "2. Arten von Informationen",
+          "description": "Je nachdem, wie die Plattform konfiguriert und genutzt wird, kann sie grundlegende kontobezogene Daten wie Name, E-Mail-Adresse, Spracheinstellungen, Lernfortschritte oder nutzungsbezogene Informationen verarbeiten, die für die Bildungserfahrung notwendig sind."
+        },
+        "3": {
+          "title": "3. Plattformnutzung und Bildungskontext",
+          "description": "Alle über die Plattform verarbeiteten personenbezogenen Daten sollten auf das Maß beschränkt sein, das für den Kontozugriff, die Unterstützung von Lernpfaden, die Verfolgung des Bildungsfortschritts und das ordnungsgemäße technische Funktionieren des Dienstes erforderlich ist."
+        },
+        "4": {
+          "title": "4. Sicherheit und Zugriff",
+          "description": "Es sollten angemessene technische und organisatorische Schutzmaßnahmen angewendet werden, um Nutzerinformationen zu schützen und den Zugriff auf autorisierte Personen zu beschränken, die an der Projektabwicklung, der Plattformverwaltung oder der pädagogischen Unterstützung beteiligt sind."
+        },
+        "5": {
+          "title": "5. Zukünftige Erweiterung dieses Hinweises",
+          "description": "In späteren Phasen kann diese Seite durch spezifischere Informationen zu Verantwortlichen, Rechtsgrundlagen, Aufbewahrungsfristen, Nutzerrechten, Kontaktstellen und rechtsspezifischen Anforderungen ergänzt werden."
+        },
+        "6": {
+          "title": "6. Abschließender Hinweis",
+          "description": "Diese Seite ist absichtlich als strukturierter und nutzerfreundlicher Platzhalter verfasst, der die Transparenz in der aktuellen Phase der Plattformentwicklung unterstützt."
+        }
+      }
+    },
+    "Accessibility": {
+      "hero": {
+        "eyebrow": "Barrierefreiheit",
+        "title": "Ein Plattformerlebnis, das klar, inklusiv und einfach zu bedienen ist.",
+        "description": "Diese Seite skizziert die Absichten zur Barrierefreiheit hinter der Plattform und kann später bei Bedarf in eine formellere Erklärung zur Barrierefreiheit erweitert werden.",
+        "secondaryCta": "Zurück zur Startseite",
+        "primaryCta": "Impressum"
+      },
+      "overview": {
+        "eyebrow": "Kurzübersicht",
+        "title": "Kernziele der Barrierefreiheit",
+        "items": {
+          "1": "Lesbare Struktur und klare Navigation",
+          "2": "Unterstützung für mehrsprachige Inhalte",
+          "3": "Konsistente Interfacemuster",
+          "4": "Fokus auf verständliche User Journeys",
+          "5": "Potenzial für zukünftige formale Konformitätserklärungen"
+        }
+      },
+      "sections": {
+        "1": {
+          "title": "1. Ansatz zur Barrierefreiheit",
+          "description": "Die Plattform wird so konzipiert, dass sie eine klare visuelle Struktur, verständliche Interaktionen und ein Nutzererlebnis bietet, das für verschiedene Nutzergruppen und Bildungskontexte zugänglich bleibt."
+        },
+        "2": {
+          "title": "2. Klarheit der Benutzeroberfläche",
+          "description": "Besonderes Augenmerk wird auf Hierarchie, Abstände, Typografie und Navigationskonsistenz gelegt, damit Inhalte leichter wahrnehmbar und nutzbar bleiben."
+        },
+        "3": {
+          "title": "3. Mehrsprachige Umgebung",
+          "description": "Da die Plattform mehrere Partnersprachen unterstützt, wird auch die Klarheit und Konsistenz übersetzter Inhalte als Teil des übergeordneten Ziels der Barrierefreiheit behandelt."
+        },
+        "4": {
+          "title": "4. Kontinuierliche Verbesserung",
+          "description": "Barrierefreiheit wird als ein sich entwickelndes Qualitätsziel behandelt. Zukünftige Iterationen der Plattform können zusätzliche Verfeinerungen, Tests und formellere Erklärungen einführen, abhängig von Projektanforderungen und Veröffentlichungsmodalitäten."
+        },
+        "5": {
+          "title": "5. Zukünftige Erklärung",
+          "description": "Bei Bedarf kann diese Seite später durch eine formale Erklärung zur Barrierefreiheit ersetzt oder ergänzt werden, die das endgültige technische und organisatorische Setup der Plattform widerspiegelt."
+        },
+        "6": {
+          "title": "6. Abschließender Hinweis",
+          "description": "Diese Seite dient derzeit als strukturierter Platzhalter für Barrierefreiheit, um eine inklusivere und vertrauenswürdigere öffentliche Erfahrung zu unterstützen."
+        }
+      }
+    },
+    "LegalNotice": {
+      "hero": {
+        "eyebrow": "Impressum",
+        "title": "Allgemeine rechtliche und organisatorische Informationen zur Plattform.",
+        "description": "Diese Seite bietet einen strukturierten Platzhalter für rechtliche und institutionelle Informationen und kann später durch formale Angaben zu Eigentümerschaft, Verantwortung und Kontakt erweitert werden.",
+        "secondaryCta": "Zurück zur Startseite",
+        "primaryCta": "Nutzungsbedingungen"
+      },
+      "overview": {
+        "eyebrow": "Kurzübersicht",
+        "title": "Wichtigste rechtliche Informationsbereiche",
+        "items": {
+          "1": "Projekt- und institutioneller Kontext können hier beschrieben werden",
+          "2": "Plattformverantwortung kann hier geklärt werden",
+          "3": "Kontaktdaten können später hinzugefügt werden",
+          "4": "Eigentumsverhältnisse und Lizenzen können in zukünftigen Versionen spezifiziert werden",
+          "5": "Diese Seite hat derzeit eine informative Platzhalterrolle"
+        }
+      },
+      "sections": {
+        "1": {
+          "title": "1. Plattformkontext",
+          "description": "Die IntegratESG-Plattform ist Teil einer breiteren Bildungs- und Projektinitiative, die sich auf ESG-Bewusstsein, Berufsbildung und praktische Implementierungshilfe konzentriert. Weitere Angaben zur institutionellen und Projekt-Eigentümerschaft können hier in zukünftigen Versionen hinzugefügt werden."
+        },
+        "2": {
+          "title": "2. Operative Verantwortung",
+          "description": "Je nach endgültigem operativem Setup kann die Plattform von einem Projektpartner, einer koordinierenden Institution oder einer anderen benannten Einheit verwaltet oder gewartet werden, die für den technischen Betrieb und die Projektdurchführung verantwortlich ist."
+        },
+        "3": {
+          "title": "3. Kontakt und Kommunikation",
+          "description": "Projektbezogene, technische oder institutionelle Kontaktdaten können hier veröffentlicht werden, sobald das endgültige Kommunikationsmodell bestätigt ist. Dieser Abschnitt kann später E-Mail-Adressen, institutionelle Referenzen oder andere formale Kontaktstellen enthalten."
+        },
+        "4": {
+          "title": "4. Geistiges Eigentum",
+          "description": "Plattforminhalte, Designelemente und Bildungsressourcen können spezifischen Eigentums-, Lizenz- oder Attribuierungsanforderungen unterliegen. Die genauen Regeln für Wiederverwendung und Anpassung sollten im Einklang mit dem Lizenzmodell interpretiert werden, das für die jeweilige Ressource oder das Projektergebnis gilt."
+        },
+        "5": {
+          "title": "5. Informativer Charakter dieser Seite",
+          "description": "Dieses Impressum wird derzeit als strukturierte Informationsseite für den aktuellen Stand der Plattform präsentiert. Sie kann später in einen formelleren Offenlegungsbereich mit vollständigen institutionellen und rechtlichen Details erweitert werden."
+        },
+        "6": {
+          "title": "6. Abschließender Hinweis",
+          "description": "Diese Seite soll einen klaren Platzhalter für rechtliche Informationen im öffentlichen Teil der Plattform schaffen und ein vollständigeres und vertrauenswürdigeres Nutzererlebnis unterstützen."
+        }
+      }
+    },
+    "Terms": {
+      "hero": {
+        "eyebrow": "Nutzungsbedingungen",
+        "title": "Regeln für die Nutzung der IntegratESG-Plattform und ihrer Lernressourcen.",
+        "description": "Diese Seite skizziert die allgemeinen Bedingungen für den Zugriff auf die Plattform, die Nutzung ihrer Bildungsmaterialien und die erwarteten Standards für eine verantwortungsvolle Nutzung.",
+        "secondaryCta": "Zurück zur Startseite",
+        "primaryCta": "Impressum"
+      },
+      "overview": {
+        "eyebrow": "Kurzübersicht",
+        "title": "Wichtigste Nutzungsprinzipien",
+        "items": {
+          "1": "Der Zugriff ist auf Bildungs- oder projektbezogene Zwecke beschränkt",
+          "2": "Nutzer sollten ihre Zugangsdaten schützen",
+          "3": "Inhalte sollten verantwortungsbewusst und rechtmäßig verwendet werden",
+          "4": "Die Verfügbarkeit der Plattform kann sich im Laufe der Zeit ändern",
+          "5": "Es können auch spezifische institutionelle Regeln gelten"
+        }
+      },
+      "sections": {
+        "1": {
+          "title": "1. Umfang der Nutzung",
+          "description": "Die IntegratESG-Plattform soll Bildungs-, Schulungs- und Projektaktivitäten unterstützen, die mit ESG-Bewusstsein, Berufsbildung und praktischer Kompetenzentwicklung verbunden sind. Die Nutzung der Plattform sollte mit ihrem Bildungszweck im Einklang stehen."
+        },
+        "2": {
+          "title": "2. Nutzerpflichten",
+          "description": "Von den Nutzern wird erwartet, dass sie die Plattform verantwortungsbewusst nutzen, ihre Zugangsdaten sicher aufbewahren und Handlungen vermeiden, die den Dienst unterbrechen, die Sicherheit gefährden oder das Lernerlebnis anderer Nutzer beeinträchtigen könnten."
+        },
+        "3": {
+          "title": "3. Bildungsressourcen",
+          "description": "Die Plattform kann Zugang zu Lernmodulen, Fallstudien, Szenarien und unterstützenden Bildungsmaterialien bieten. Diese Ressourcen werden für strukturiertes Lernen und projektbezogene Verbreitung bereitgestellt. Ihre Wiederverwendung, Anpassung oder Weiterverbreitung kann von den für die jeweilige Ressource geltenden Lizenzbedingungen abhängen."
+        },
+        "4": {
+          "title": "4. Verfügbarkeit und Änderungen",
+          "description": "Die Plattform kann aktualisiert, verbessert, umorganisiert oder aufgrund von Wartungsarbeiten, Entwicklungsarbeiten oder technischen Gründen vorübergehend nicht verfügbar sein. Das Projektteam kann Funktionen, Inhalte oder Zugangsberechtigungen anpassen, während sich die Plattform weiterentwickelt."
+        },
+        "5": {
+          "title": "5. Missbrauch und Einschränkungen",
+          "description": "Nutzer dürfen keine unbefugten Zugriffe versuchen, den technischen Betrieb der Plattform stören, Lernressourcen missbrauchen oder den Dienst in einer Weise nutzen, die gegen geltendes Recht, institutionelle Regeln oder Projektzwecke verstößt."
+        },
+        "6": {
+          "title": "6. Abschließender Hinweis",
+          "description": "Diese Nutzungsbedingungen bieten eine strukturierte Informationsgrundlage für die aktuelle Projektphase. Sie können später in ein detaillierteres rechtliches Dokument erweitert werden, sobald das endgültige Hosting, die Governance und die administrativen Vereinbarungen vollständig definiert sind."
+        }
+      }
+    }
+  }
+}

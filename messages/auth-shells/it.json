@@ -1,0 +1,65 @@
+{
+  "Auth": {
+    "LoginPage": {
+      "title": "Accedi al tuo account",
+      "subtitle": "Accedi con la tua email oppure continua con Google.",
+      "noAccount": "Non hai un account?",
+      "createOne": "Creane uno"
+    },
+    "LoginForm": {
+      "emailLabel": "Indirizzo email",
+      "emailPlaceholder": "tuo@esempio.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Inserisci la tua password",
+      "submit": "Accedi",
+      "submitting": "Accesso in corso..."
+    },
+    "SocialLogin": {
+      "continueWithGoogle": "Continua con Google"
+    },
+    "CompleteProfile": {
+      "title": "Completa il tuo profilo",
+      "chooseRole": "Scegli il tuo ruolo",
+      "studentDescription": "Accedi a casi di studio e scenari",
+      "educatorDescription": "Accedi al curriculum e alle risorse didattiche",
+      "error": "Impossibile salvare il profilo.",
+      "submit": "Continua",
+      "submitting": "Salvataggio in corso..."
+    }
+  },
+  "Register": {
+    "Stepper": {
+      "role": "Ruolo",
+      "accountDetails": "Dettagli dell’account"
+    },
+    "RoleStep": {
+      "eyebrow": "Crea il tuo account",
+      "title": "Scegli il tuo ruolo",
+      "subtitle": "Seleziona come utilizzerai la piattaforma.",
+      "studentDescription": "Casi di studio, scenari e autovalutazione.",
+      "educatorDescription": "Strumenti per il curriculum e risorse didattiche.",
+      "continue": "Continua"
+    },
+    "DetailsStep": {
+      "title": "Dettagli dell’account",
+      "subtitle": "Crea il tuo account usando Google o l’email.",
+      "continueWithEmail": "Continua con email",
+      "continueWithEmailDescription": "Compila i tuoi dati per creare manualmente l’account.",
+      "fullName": "Nome completo",
+      "fullNamePlaceholder": "Inserisci il tuo nome completo",
+      "email": "Email",
+      "emailPlaceholder": "Inserisci la tua email",
+      "password": "Password",
+      "passwordPlaceholder": "Crea una password",
+      "submit": "Crea account",
+      "submitting": "Creazione in corso...",
+      "continueWithGoogle": "Continua con Google",
+      "continueWithGoogleDescription": "Consigliato per una configurazione più rapida.",
+      "googleHint": "Usa il tuo account Google per continuare con il ruolo selezionato e completare la configurazione in meno passaggi.",
+      "alreadyHaveAccount": "Hai già un account?",
+      "signIn": "Accedi",
+      "profileSaveError": "Account creato, ma non è stato possibile salvare il profilo.",
+      "success": "Account creato con successo. Controlla la tua email per continuare."
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "Protected": {
+    "SettingsPage": {
+      "back": "Torna alla dashboard",
+      "title": "Impostazioni",
+      "subtitle": "Gestisci il tuo profilo e le preferenze dell'account"
+    },
+    "SettingsForm": {
+      "profile": {
+        "title": "Dati personali",
+        "subtitle": "Aggiorna il tuo nome e la lingua preferita per l'interfaccia.",
+        "fullName": "Nome completo",
+        "fullNamePlaceholder": "es. Mario Rossi",
+        "email": "Indirizzo email",
+        "language": "Lingua",
+        "languageOptions": {
+          "en": "English (US)",
+          "pl": "Polski (PL)",
+          "es": "Español (ES)"
+        },
+        "save": "Salva modifiche",
+        "saved": "Modifiche salvate.",
+        "failed": "Salvataggio fallito."
+      },
+      "security": {
+        "title": "Sicurezza",
+        "subtitle": "Assicurati che il tuo account utilizzi una password lunga e casuale per rimanere al sicuro.",
+        "memberSince": "Membro dal",
+        "newPassword": "Nuova password",
+        "confirmPassword": "Conferma password",
+        "updatePassword": "Aggiorna password",
+        "passwordUpdated": "Password aggiornata.",
+        "minLength": "Min. 8 caratteri.",
+        "mismatch": "Le password non corrispondono."
+      }
+    }
+  }
+}

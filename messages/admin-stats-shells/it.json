@@ -1,0 +1,263 @@
+{
+  "Protected": {
+    "AdminStatsShell": {
+      "area": {
+        "environmental": "Ambientale",
+        "social": "Sociale",
+        "governance": "Governance",
+        "crossCutting": "Trasversale"
+      },
+      "window": {
+        "24h": "Ultime 24 ore",
+        "7d": "Ultimi 7 giorni",
+        "30d": "Ultimi 30 giorni"
+      },
+      "header": {
+        "title": "Statistiche",
+        "subtitle": "Una panoramica chiara dell’adozione della piattaforma, dei progressi di apprendimento e delle prestazioni dei contenuti"
+      },
+      "segments": {
+        "summary": "Riepilogo",
+        "languages": "Lingue",
+        "scenarios": "Scenari",
+        "courses": "Corsi",
+        "eportfolio": "ePortfolio"
+      },
+      "glance": {
+        "title": "In sintesi",
+        "subtitle": "I principali indicatori della piattaforma a colpo d’occhio, pensati per una rapida revisione esecutiva.",
+        "allUsers": {
+          "label": "Tutti gli utenti",
+          "hint": "Account registrati tra studenti, docenti e amministratori."
+        },
+        "activeUsers": {
+          "label": "Utenti attivi",
+          "hint": "Utenti con attività tracciata negli ultimi 7 giorni."
+        },
+        "scenarioCompletion": {
+          "label": "Completamento scenari",
+          "hint": "Percentuale di tentativi di scenario che hanno raggiunto uno stato completato con successo."
+        },
+        "curriculumCompletion": {
+          "label": "Completamento curriculum",
+          "hint": "Percentuale di tentativi del curriculum completati dagli studenti."
+        }
+      },
+      "platformStructure": {
+        "title": "Struttura della piattaforma",
+        "subtitle": "Una vista compatta della distribuzione dei ruoli e delle risorse di apprendimento pubblicate.",
+        "roleDistribution": "Distribuzione dei ruoli",
+        "publishedResources": "Risorse pubblicate",
+        "educators": "Docenti",
+        "students": "Studenti",
+        "admins": "Amministratori",
+        "courses": "Corsi",
+        "caseStudies": "Casi di studio",
+        "scenarios": "Scenari"
+      },
+      "highlights": {
+        "title": "In evidenza",
+        "subtitle": "Segnali chiave che aiutano a identificare le aree più forti di attività e adozione da parte degli studenti.",
+        "mostActiveScenario": "Scenario più attivo",
+        "bestCompletionResult": "Miglior risultato di completamento",
+        "largestLanguageCohort": "Gruppo linguistico più numeroso",
+        "attemptsCompletion": "{attempts} tentativi · {completion} completamento",
+        "completionPostQuiz": "{completion} completamento · {score} punteggio medio post-quiz",
+        "usersVariants": "{users} utenti · {variants} varianti di scenario"
+      },
+      "learningQuality": {
+        "title": "Qualità dell’apprendimento",
+        "subtitle": "Completamento e qualità della valutazione raggruppati per tipologia di esperienza.",
+        "scenarioSimulator": {
+          "title": "Simulatore di scenari",
+          "subtitle": "Risultati di alto livello e qualità del completamento in tutti i tentativi."
+        },
+        "curriculum": {
+          "title": "Curriculum",
+          "subtitle": "Progressione e qualità della valutazione in tutti i moduli del curriculum."
+        },
+        "eportfolio": {
+          "title": "ePortfolio",
+          "subtitle": "Segnali di completamento dei casi di studio e di partecipazione."
+        },
+        "completionRate": "Tasso di completamento",
+        "averageScore": "Punteggio medio",
+        "passed": "Superato",
+        "failed": "Non superato",
+        "avgPreQuiz": "Media pre-quiz",
+        "avgPostQuiz": "Media post-quiz",
+        "inProgress": "In corso",
+        "published": "Pubblicato",
+        "active7d": "Attivi / 7 giorni"
+      },
+      "languages": {
+        "title": "Copertura linguistica",
+        "subtitle": "Esamina l’adozione e la disponibilità dei contenuti nei gruppi linguistici supportati.",
+        "users": "Utenti",
+        "publishedCourses": "Corsi pubblicati",
+        "caseStudies": "Casi di studio",
+        "scenarioVariants": "Varianti di scenario"
+      },
+      "scenarioActivity": {
+        "title": "Attività del simulatore di scenari",
+        "subtitle": "Monitora in un’unica vista l’uso delle simulazioni, la qualità del completamento e i modelli di risultato.",
+        "valueLabel": "Eventi scenario",
+        "events": "Eventi",
+        "completionRate": "Tasso di completamento",
+        "averageScore": "Punteggio medio",
+        "passedCompleted": "Superati / completati",
+        "failed": "Non superati"
+      },
+      "curriculumActivity": {
+        "title": "Attività del curriculum",
+        "subtitle": "Monitora il coinvolgimento nei moduli, la progressione del completamento e le tendenze delle valutazioni di apprendimento.",
+        "valueLabel": "Eventi curriculum",
+        "events": "Eventi",
+        "completionRate": "Tasso di completamento",
+        "averagePreQuiz": "Media pre-quiz",
+        "averagePostQuiz": "Media post-quiz",
+        "inProgress": "In corso"
+      },
+      "eportfolioActivity": {
+        "title": "Attività dell’ePortfolio",
+        "subtitle": "Visualizza il coinvolgimento nei casi di studio, i completamenti e la partecipazione nell’esperienza del portfolio.",
+        "valueLabel": "Eventi ePortfolio",
+        "events": "Eventi",
+        "completionRate": "Tasso di completamento",
+        "published": "Pubblicato",
+        "activeUsers": "Utenti attivi"
+      },
+      "scenarioPerformance": {
+        "title": "Prestazioni degli scenari",
+        "subtitle": "Cerca, confronta e ordina gli scenari per adozione, completamento e punteggio.",
+        "results": "{count} risultati",
+        "searchPlaceholder": "Cerca per titolo dello scenario, slug, lingua o area ESG...",
+        "sort": {
+          "attempts": "Ordina per tentativi",
+          "completion": "Ordina per tasso di completamento",
+          "score": "Ordina per punteggio medio"
+        },
+        "summary": {
+          "results": "Risultati",
+          "attempts": "Tentativi",
+          "averageCompletion": "Completamento medio",
+          "averageScore": "Punteggio medio"
+        },
+        "empty": {
+          "title": "Nessuno scenario corrisponde alla tua ricerca",
+          "subtitle": "Prova con un titolo, uno slug, una lingua o un’area ESG diversi."
+        },
+        "row": {
+          "attempts": "Tentativi",
+          "completionRate": "Tasso di completamento",
+          "averageScore": "Punteggio medio",
+          "variants": "Varianti"
+        }
+      },
+      "coursePerformance": {
+        "title": "Prestazioni dei corsi",
+        "subtitle": "Cerca, confronta e ordina i moduli del curriculum in base al coinvolgimento e ai risultati di apprendimento.",
+        "results": "{count} risultati",
+        "searchPlaceholder": "Cerca per titolo del corso, slug o area ESG...",
+        "sort": {
+          "attempts": "Ordina per tentativi",
+          "completion": "Ordina per tasso di completamento",
+          "postQuiz": "Ordina per punteggio post-quiz"
+        },
+        "summary": {
+          "results": "Risultati",
+          "attempts": "Tentativi",
+          "averageCompletion": "Completamento medio",
+          "averagePostQuiz": "Media post-quiz"
+        },
+        "empty": {
+          "title": "Nessun corso corrisponde alla tua ricerca",
+          "subtitle": "Prova con un titolo, uno slug o un’area ESG diversi."
+        },
+        "row": {
+          "attempts": "Tentativi",
+          "completionRate": "Tasso di completamento",
+          "preQuiz": "Pre-quiz",
+          "postQuiz": "Post-quiz",
+          "inProgress": "In corso"
+        }
+      },
+      "scenarioAttempts": {
+        "title": "Tentativi utente negli scenari",
+        "subtitle": "Ultima attività degli studenti nel simulatore di scenari, inclusi stato, punteggio e tempi.",
+        "records": "{count} record"
+      },
+      "curriculumAttempts": {
+        "title": "Tentativi utente nel curriculum",
+        "subtitle": "Ultima attività degli studenti nei moduli del curriculum, inclusi progresso, valutazione e tempi.",
+        "records": "{count} record"
+      },
+      "eportfolioProgress": {
+        "title": "Progressi utente nell’ePortfolio",
+        "subtitle": "Ultimi progressi degli studenti nei casi di studio, inclusi completamento e tempi.",
+        "records": "{count} record"
+      },
+      "tableScenario": {
+        "emptyTitle": "Nessuna attività negli scenari",
+        "emptyDescription": "I tentativi di scenario appariranno qui quando gli studenti inizieranno a interagire con il simulatore.",
+        "headers": {
+          "learner": "Studente",
+          "scenario": "Scenario",
+          "area": "Area",
+          "language": "Lingua",
+          "attempt": "Tentativo",
+          "status": "Stato",
+          "score": "Punteggio",
+          "started": "Iniziato",
+          "lastOpened": "Ultima apertura",
+          "completed": "Completato"
+        },
+        "status": {
+          "completed": "Completato",
+          "passed": "Superato",
+          "failed": "Non superato",
+          "browsed": "Consultato",
+          "incomplete": "Incompleto"
+        }
+      },
+      "tableCurriculum": {
+        "emptyTitle": "Nessuna attività nel curriculum",
+        "emptyDescription": "I tentativi del curriculum appariranno qui quando gli studenti inizieranno a progredire nei moduli.",
+        "headers": {
+          "learner": "Studente",
+          "course": "Corso",
+          "area": "Area",
+          "status": "Stato",
+          "progress": "Progresso",
+          "preQuiz": "Pre-quiz",
+          "postQuiz": "Post-quiz",
+          "started": "Iniziato",
+          "lastOpened": "Ultima apertura",
+          "completed": "Completato"
+        },
+        "status": {
+          "completed": "Completato",
+          "failed": "Non superato",
+          "inProgress": "In corso"
+        }
+      },
+      "tableEportfolio": {
+        "emptyTitle": "Nessuna attività nell’ePortfolio",
+        "emptyDescription": "I progressi nei casi di studio appariranno qui quando gli studenti inizieranno a lavorare sui contenuti dell’ePortfolio.",
+        "headers": {
+          "learner": "Studente",
+          "caseStudy": "Caso di studio",
+          "language": "Lingua",
+          "status": "Stato",
+          "started": "Iniziato",
+          "lastOpened": "Ultima apertura",
+          "completed": "Completato"
+        },
+        "status": {
+          "completed": "Completato",
+          "inProgress": "In corso"
+        }
+      }
+    }
+  }
+}

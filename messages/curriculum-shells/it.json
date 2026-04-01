@@ -1,0 +1,133 @@
+{
+  "Protected": {
+    "CourseDetailShell": {
+      "back": "Torna al curriculum",
+      "area": {
+        "environmental": "Ambientale",
+        "social": "Sociale",
+        "governance": "Governance",
+        "crossCutting": "Trasversale"
+      },
+      "status": {
+        "completed": "Completato",
+        "inProgress": "In corso",
+        "failed": "Da rivedere",
+        "readyToStart": "Pronto per iniziare"
+      },
+      "overviewCopy": {
+        "environmental": "Questo modulo introduce il pensiero ambientale in un formato pratico e strutturato. Aiuta il discente a collegare i temi della sostenibilità con il processo decisionale, la qualità dell’implementazione e un contesto aziendale misurabile.",
+        "social": "Questo modulo è progettato per rafforzare la comprensione dei temi ESG incentrati sulle persone, inclusi responsabilità, consapevolezza degli stakeholder e impatto umano delle scelte operative.",
+        "governance": "Questo modulo si concentra sulla governance come base per una pratica ESG credibile. Collega politiche, responsabilità e qualità decisionale con il comportamento reale nell’implementazione.",
+        "crossCutting": "Questo modulo costruisce una base ESG ampia e aiuta il discente a comprendere come i temi ambientali, sociali e di governance interagiscono nel processo decisionale reale."
+      },
+      "heroIntro": {
+        "preQuiz": "Inizia con il checkpoint iniziale per sbloccare il flusso delle lezioni e definire il tuo punto di partenza.",
+        "lessons": "Stai procedendo attraverso la sequenza delle lezioni. Continua da dove hai interrotto.",
+        "postQuiz": "Sei al checkpoint finale. Completa la valutazione conclusiva per terminare questo modulo.",
+        "completed": "Questo modulo è stato completato. Puoi rivedere i tuoi progressi o continuare con un altro argomento.",
+        "default": "Esplora la panoramica del modulo, gli obiettivi e il flusso di apprendimento prima di iniziare."
+      },
+      "progressSummary": {
+        "preQuiz": "Checkpoint iniziale in attesa",
+        "lessonInProgress": "Lezione {index} in corso",
+        "postQuiz": "Checkpoint finale disponibile",
+        "completed": "Modulo completato con successo",
+        "default": "Pronto per iniziare"
+      },
+      "metrics": {
+        "duration": "Durata",
+        "lessons": "Lezioni",
+        "checkpoints": "Checkpoint",
+        "currentStep": "Passaggio attuale",
+        "completed": "Completato"
+      },
+      "nextAction": {
+        "title": "Prossima azione",
+        "completedDescription": "Questo modulo è terminato. Puoi rivederlo o ripeterlo.",
+        "defaultDescription": "Continua dal tuo passaggio attuale oppure esplora prima l’intero flusso di apprendimento.",
+        "reviewWorkspace": "Rivedi lo spazio di apprendimento",
+        "viewFlow": "Visualizza il flusso di apprendimento"
+      },
+      "relatedModules": "Moduli correlati",
+      "tabs": {
+        "overview": "Panoramica",
+        "outcomes": "Obiettivi",
+        "flow": "Flusso di apprendimento",
+        "progress": "Progresso"
+      },
+      "sections": {
+        "overviewEyebrow": "Panoramica del modulo",
+        "overviewTitle": "Che cosa questo modulo è progettato per raggiungere",
+        "outcomesEyebrow": "Obiettivi di apprendimento",
+        "outcomesTitle": "Che cosa il discente dovrebbe acquisire",
+        "flowEyebrow": "Flusso di apprendimento",
+        "flowTitle": "Come si sviluppa il modulo",
+        "progressEyebrow": "Monitoraggio dei progressi",
+        "progressTitle": "Dove si trova attualmente il discente"
+      },
+      "insights": {
+        "practicalTitle": "Percorso di apprendimento pratico",
+        "practicalText": "Il modulo è strutturato per tradurre i concetti ESG in passaggi di apprendimento comprensibili e orientati alle decisioni.",
+        "progressionTitle": "Progressione chiara",
+        "progressionText": "Ogni fase è progettata per risultare prevedibile e scorrevole, rendendo facile continuare e completare il modulo."
+      },
+      "flowDescriptions": {
+        "opening": "Inizia con il checkpoint iniziale prima di entrare nella sequenza delle lezioni.",
+        "closing": "Concludi con il checkpoint finale dopo aver completato le lezioni.",
+        "lessons": "Avanza attraverso {completed}/{total} lezioni nella sequenza centrale di apprendimento."
+      },
+      "progress": {
+        "currentLocation": "Posizione attuale",
+        "lessonsCompleted": "Lezioni completate",
+        "openingCheckpointHistory": "Cronologia del checkpoint iniziale",
+        "openingCheckpointEmpty": "Nessun tentativo del checkpoint iniziale è stato ancora salvato.",
+        "finalCheckpointHistory": "Cronologia del checkpoint finale",
+        "finalCheckpointEmpty": "Nessun tentativo del checkpoint finale è stato ancora salvato.",
+        "lessonStatus": "Stato della lezione"
+      },
+      "attempt": {
+        "attemptLabel": "Tentativo {number}",
+        "correctSummary": "{correct}/{total} corrette · {submittedAt}",
+        "flaggedQuestions": "Domande contrassegnate: {count}"
+      }
+    },
+    "CourseQuizPanel": {
+      "empty": {
+        "eyebrow": "Checkpoint di conoscenza",
+        "title": "Il contenuto del checkpoint non è ancora disponibile",
+        "description": "Questo modulo del curriculum non include ancora contenuti del checkpoint nel dataset attuale."
+      },
+      "hero": {
+        "eyebrow": "Checkpoint di conoscenza",
+        "openingCheckpoint": "Checkpoint iniziale",
+        "finalCheckpoint": "Checkpoint finale",
+        "title": "Quiz con feedback immediato",
+        "description": "Rispondi a una domanda alla volta e visualizza subito il feedback. Questa vista è progettata per rendere l’apprendimento chiaro, interattivo e facile da seguire."
+      },
+      "stats": {
+        "answered": "Risposte date",
+        "correct": "Corrette",
+        "score": "Punteggio"
+      },
+      "reset": "Reimposta",
+      "questionLabel": "Domanda {number}",
+      "result": {
+        "correct": "Corretto",
+        "incorrect": "Errato"
+      },
+      "actions": {
+        "showFeedback": "Mostra feedback",
+        "chooseOneAnswer": "Scegli una risposta per continuare."
+      },
+      "feedback": {
+        "title": "Feedback",
+        "correctionTitle": "Feedback e correzione",
+        "correctDefault": "Questa è la risposta corretta.",
+        "incorrectDefault": "Questa risposta non è corretta. Controlla la correzione qui sotto.",
+        "whyCorrect": "Perché questa risposta è corretta",
+        "correctAnswer": "Risposta corretta",
+        "correctAnswerIs": "La risposta corretta è: {answer}"
+      }
+    }
+  }
+}

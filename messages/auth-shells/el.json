@@ -1,0 +1,65 @@
+{
+  "Auth": {
+    "LoginPage": {
+      "title": "Πρόσβαση στον λογαριασμό σας",
+      "subtitle": "Συνδεθείτε με το email σας ή συνεχίστε με το Google.",
+      "noAccount": "Δεν έχετε λογαριασμό;",
+      "createOne": "Δημιουργήστε έναν"
+    },
+    "LoginForm": {
+      "emailLabel": "Διεύθυνση email",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Κωδικός πρόσβασης",
+      "passwordPlaceholder": "Εισαγάγετε τον κωδικό πρόσβασής σας",
+      "submit": "Σύνδεση",
+      "submitting": "Γίνεται σύνδεση..."
+    },
+    "SocialLogin": {
+      "continueWithGoogle": "Συνέχεια με Google"
+    },
+    "CompleteProfile": {
+      "title": "Ολοκληρώστε το προφίλ σας",
+      "chooseRole": "Επιλέξτε τον ρόλο σας",
+      "studentDescription": "Πρόσβαση σε μελέτες περίπτωσης και σενάρια",
+      "educatorDescription": "Πρόσβαση στο πρόγραμμα σπουδών και σε διδακτικούς πόρους",
+      "error": "Αποτυχία αποθήκευσης προφίλ.",
+      "submit": "Συνέχεια",
+      "submitting": "Αποθήκευση..."
+    }
+  },
+  "Register": {
+    "Stepper": {
+      "role": "Ρόλος",
+      "accountDetails": "Στοιχεία λογαριασμού"
+    },
+    "RoleStep": {
+      "eyebrow": "Δημιουργήστε τον λογαριασμό σας",
+      "title": "Επιλέξτε τον ρόλο σας",
+      "subtitle": "Επιλέξτε πώς θα χρησιμοποιείτε την πλατφόρμα.",
+      "studentDescription": "Μελέτες περίπτωσης, σενάρια και αυτοαξιολόγηση.",
+      "educatorDescription": "Εργαλεία προγράμματος σπουδών και διδακτικοί πόροι.",
+      "continue": "Συνέχεια"
+    },
+    "DetailsStep": {
+      "title": "Στοιχεία λογαριασμού",
+      "subtitle": "Δημιουργήστε τον λογαριασμό σας με Google ή email.",
+      "continueWithEmail": "Συνέχεια με email",
+      "continueWithEmailDescription": "Συμπληρώστε τα στοιχεία σας για να δημιουργήσετε τον λογαριασμό χειροκίνητα.",
+      "fullName": "Ονοματεπώνυμο",
+      "fullNamePlaceholder": "Εισαγάγετε το ονοματεπώνυμό σας",
+      "email": "Email",
+      "emailPlaceholder": "Εισαγάγετε το email σας",
+      "password": "Κωδικός πρόσβασης",
+      "passwordPlaceholder": "Δημιουργήστε έναν κωδικό πρόσβασης",
+      "submit": "Δημιουργία λογαριασμού",
+      "submitting": "Δημιουργία...",
+      "continueWithGoogle": "Συνέχεια με Google",
+      "continueWithGoogleDescription": "Συνιστάται για ταχύτερη ρύθμιση.",
+      "googleHint": "Χρησιμοποιήστε τον λογαριασμό σας Google για να συνεχίσετε με τον επιλεγμένο ρόλο σας και να ολοκληρώσετε τη ρύθμιση με λιγότερα βήματα.",
+      "alreadyHaveAccount": "Έχετε ήδη λογαριασμό;",
+      "signIn": "Σύνδεση",
+      "profileSaveError": "Ο λογαριασμός δημιουργήθηκε, αλλά το προφίλ δεν μπόρεσε να αποθηκευτεί.",
+      "success": "Ο λογαριασμός δημιουργήθηκε με επιτυχία. Ελέγξτε το email σας για να συνεχίσετε."
+    }
+  }
+}

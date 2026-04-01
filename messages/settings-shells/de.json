@@ -1,0 +1,38 @@
+{
+  "Protected": {
+    "SettingsPage": {
+      "back": "Zurück zum Dashboard",
+      "title": "Einstellungen",
+      "subtitle": "Verwalten Sie Ihr Profil und Ihre Kontoeinstellungen"
+    },
+    "SettingsForm": {
+      "profile": {
+        "title": "Persönliche Daten",
+        "subtitle": "Aktualisieren Sie Ihren Namen und Ihre bevorzugte Sprache für die Benutzeroberfläche.",
+        "fullName": "Vollständiger Name",
+        "fullNamePlaceholder": "z.B. Max Mustermann",
+        "email": "E-Mail-Adresse",
+        "language": "Sprache",
+        "languageOptions": {
+          "en": "English (US)",
+          "pl": "Polski (PL)",
+          "es": "Español (ES)"
+        },
+        "save": "Änderungen speichern",
+        "saved": "Änderungen gespeichert.",
+        "failed": "Speichern fehlgeschlagen."
+      },
+      "security": {
+        "title": "Sicherheit",
+        "subtitle": "Stellen Sie sicher, dass Ihr Konto ein langes, zufälliges Passwort verwendet, um sicher zu bleiben.",
+        "memberSince": "Mitglied seit",
+        "newPassword": "Neues Passwort",
+        "confirmPassword": "Passwort bestätigen",
+        "updatePassword": "Passwort aktualisieren",
+        "passwordUpdated": "Passwort aktualisiert.",
+        "minLength": "Mind. 8 Zeichen.",
+        "mismatch": "Passwörter stimmen nicht überein."
+      }
+    }
+  }
+}

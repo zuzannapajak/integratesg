@@ -1,0 +1,132 @@
+{
+  "Protected": {
+    "CurriculumListShell": {
+      "refineTitle": "Прецизиране на учебния план",
+      "showingCount": "Показване на {count} модула",
+      "searchPlaceholder": "Търсене в учебния план...",
+      "recommended": "Препоръчани",
+      "area": {
+        "all": "Всички области",
+        "environmental": "Екологична",
+        "social": "Социална",
+        "governance": "Управленска",
+        "crossCutting": "Междусекторна"
+      },
+      "status": {
+        "notStarted": "Не е стартиран",
+        "inProgress": "В процес",
+        "completed": "Завършен",
+        "failed": "Нуждае се от преглед"
+      },
+      "filters": {
+        "status": {
+          "all": "Всички състояния на напредък"
+        },
+        "sort": {
+          "recommended": "Сортиране: Препоръчани",
+          "progress": "Сортиране: Напредък",
+          "title": "Сортиране: Заглавие"
+        }
+      },
+      "info": {
+        "duration": "Продължителност",
+        "lessons": "Уроци"
+      },
+      "actions": {
+        "continue": "Продължи",
+        "review": "Преглед на модула"
+      },
+      "pagination": {
+        "showingRange": "Показване на {start}–{end} от {total}",
+        "previous": "Предишна",
+        "next": "Следваща"
+      },
+      "empty": {
+        "title": "Няма намерени модули",
+        "description": "Регулирайте филтрите или термините за търсене, за да намерите това, което търсите."
+      }
+    },
+    "ScenarioListShell": {
+      "refineTitle": "Прецизиране на прегледа на сценариите",
+      "showingCount": "Показване на {count} сценария",
+      "searchPlaceholder": "Търсене на сценарии...",
+      "area": {
+        "all": "Всички ESG области",
+        "environmental": "Екологична",
+        "social": "Социална",
+        "governance": "Управленска",
+        "crossCutting": "Междусекторна"
+      },
+      "status": {
+        "notStarted": "Не е стартиран",
+        "inProgress": "В процес",
+        "completed": "Завършен"
+      },
+      "duration": {
+        "selfPaced": "Индивидуално темпо",
+        "minutes": "{minutes} мин"
+      },
+      "filters": {
+        "sort": {
+          "title": "Сортиране: Заглавие",
+          "duration": "Сортиране: Продължителност"
+        }
+      },
+      "info": {
+        "duration": "Продължителност",
+        "progress": "Напредък"
+      },
+      "actions": {
+        "continue": "Продължи сценария",
+        "review": "Преглед на сценария",
+        "start": "Стартирай сценария"
+      },
+      "pagination": {
+        "showingRange": "Показване на {start}–{end} от {total}",
+        "previous": "Предишна",
+        "next": "Следваща"
+      },
+      "empty": {
+        "title": "Няма намерени сценарии",
+        "description": "Опитайте да регулирате филтъра за ESG област или фразата за търсене, за да разгледате метаданните на сценариите."
+      }
+    },
+    "CaseStudyListShell": {
+      "refineTitle": "Прецизиране на прегледа на ePortfolio",
+      "showingCount": "Показване на {count} казуса",
+      "searchPlaceholder": "Търсене в ePortfolio...",
+      "area": {
+        "all": "Всички ESG области",
+        "environmental": "Екологична",
+        "social": "Социална",
+        "governance": "Управленска",
+        "crossCutting": "Междусекторна"
+      },
+      "filters": {
+        "status": {
+          "all": "Статус: Всички",
+          "todo": "Статус: За изпълнение",
+          "completed": "Статус: Завършени"
+        },
+        "sort": {
+          "recommended": "Сортиране: Препоръчани",
+          "title": "Сортиране: Заглавие"
+        }
+      },
+      "featured": "Акцентирано",
+      "completed": "Завършено",
+      "actions": {
+        "open": "Отвори казус"
+      },
+      "pagination": {
+        "showingRange": "Показване на {start}–{end} от {total}",
+        "previous": "Предишна",
+        "next": "Следваща"
+      },
+      "empty": {
+        "title": "Няма намерени казуси",
+        "description": "Опитайте да регулирате ESG областта, филтъра за статус или фразата за търсене, за да разгледате наличните ресурси в ePortfolio."
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "Protected": {
+    "CaseStudyCompletionButton": {
+      "eyebrow": "Завършване",
+      "completedText": "Този казус вече е отбелязан като завършен.",
+      "defaultText": "Отбележете този казус като завършен, когато приключите с прегледа му.",
+      "completedOn": "Завършен на {date}",
+      "completedRecently": "Завършен наскоро",
+      "button": {
+        "completed": "Завършен",
+        "saving": "Запазване...",
+        "markCompleted": "Маркирай като завършен"
+      }
+    },
+    "CaseStudyLaunchShell": {
+      "back": "Обратно към ePortfolio",
+      "area": {
+        "environmental": "Екологично",
+        "social": "Социално",
+        "governance": "Управление",
+        "crossCutting": "Междусекторно"
+      },
+      "featured": "Акцентирано",
+      "completed": "Завършено",
+      "organization": "Организация",
+      "industry": "Индустрия",
+      "contentTitle": "Съдържание на казуса",
+      "takeawaysTitle": "Ключови изводи",
+      "takeawaysEmpty": "Ключовите изводи ще се появят тук, когато бъдат добавени към този казус."
+    }
+  }
+}

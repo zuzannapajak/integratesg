@@ -1,0 +1,132 @@
+{
+  "Common": {
+    "or": "O",
+    "selected": "Selezionato",
+    "continue": "Continua",
+    "saving": "Salvataggio...",
+    "createAccount": "Crea un account",
+    "signIn": "Accedi",
+    "register": "Registrati",
+    "dashboard": "Dashboard",
+    "settings": "Impostazioni",
+    "about": "Informazioni",
+    "educators": "Educatori",
+    "students": "Studenti",
+    "logOut": "Disconnetti",
+    "signedIn": "Accesso effettuato",
+    "openAccountMenu": "Apri menu account",
+    "backToHomepage": "Torna alla homepage",
+    "readMore": "Leggi di più",
+    "joinPlatform": "Unisciti alla piattaforma"
+  },
+  "Roles": {
+    "student": "Studente",
+    "educator": "Educatore",
+    "admin": "Amministratore"
+  },
+  "Logo": {
+    "alt": "IntegratESG"
+  },
+  "PublicNavbar": {
+    "about": "Informazioni",
+    "educators": "Educatori",
+    "students": "Studenti",
+    "signIn": "Accedi",
+    "register": "Registrati"
+  },
+  "ProtectedNavbar": {
+    "about": "Informazioni",
+    "dashboard": "Dashboard",
+    "settings": "Impostazioni",
+    "logOut": "Disconnetti",
+    "openAccountMenu": "Apri menu account"
+  },
+  "Footer": {
+    "euAlt": "Cofinanziato dall'Unione Europea",
+    "disclaimer": "Cofinanziato dall'Unione Europea. Le opinioni espresse sono tuttavia solo quelle degli autori e non riflettono necessariamente quelle dell'Unione Europea o della Fondazione per lo Sviluppo del Sistema Educativo (FRSE). Né l'Unione Europea né la FRSE possono essere ritenute responsabili per esse.",
+    "agreementNumber": "Numero di accordo: 2024-1-PL01-KA220-VET-000253738.",
+    "copyright": "© 2026 PROGETTO INTEGRAT-ESG – Tutti i diritti riservati",
+    "privacy": "Informativa sulla privacy",
+    "accessibility": "Dichiarazione di accessibilità",
+    "terms": "Termini di utilizzo",
+    "legalNotice": "Note legali"
+  },
+  "Sidebar": {
+    "dashboard": "Dashboard",
+    "curriculum": "Curriculum",
+    "eportfolio": "ePortfolio",
+    "scenario": "Scenario",
+    "statistics": "Statistiche",
+    "settings": "Impostazioni",
+    "collapse": "Comprimi barra",
+    "expand": "Espandi barra"
+  },
+  "Topbar": {
+    "badge": {
+      "student": "studente",
+      "educator": "educatore",
+      "admin": "admin"
+    },
+    "title": {
+      "student": "Dashboard studente",
+      "educator": "Dashboard educatore",
+      "admin": "Dashboard amministratore"
+    },
+    "subtitle": {
+      "student": "Continua a imparare, rivedi i tuoi corsi e accedi alle aree del tuo profilo.",
+      "educator": "Accedi alle risorse didattiche, ai corsi e alle aree dei pacchetti di lavoro.",
+      "admin": "Controlla le statistiche, lo stato della piattaforma e le impostazioni amministrative."
+    },
+    "signedIn": "Accesso effettuato"
+  },
+  "Protected": {
+    "CurriculumPage": {
+      "title": "Curriculum",
+      "subtitle": "Moduli di apprendimento riservati agli educatori con percorsi guidati, quiz e visibilità dei progressi"
+    },
+    "ScenariosPage": {
+      "title": "Simulatore di scenari",
+      "subtitle": "Pratica il processo decisionale in contesti realistici con progressi tracciabili"
+    },
+    "EportfolioPage": {
+      "title": "ePortfolio",
+      "subtitle": "Casi studio orientati alla pratica con un contesto reale."
+    },
+    "CurriculumSwitcher": {
+      "segments": {
+        "my": "I miei moduli",
+        "all": "Tutti i moduli"
+      },
+      "searchPlaceholder": "Cerca moduli...",
+      "empty": {
+        "my": {
+          "title": "Nessun modulo iniziato",
+          "description": "Le tue attività del curriculum appariranno qui una volta iniziati i moduli."
+        },
+        "all": {
+          "title": "Nessun modulo disponibile",
+          "description": "Al momento non ci sono moduli pubblicati disponibili in questa vista."
+        },
+        "filtered": "Nessun modulo corrisponde alla ricerca."
+      }
+    },
+    "ScenarioSwitcher": {
+      "segments": {
+        "my": "I miei scenari",
+        "all": "Tutti gli scenari"
+      },
+      "searchPlaceholder": "Cerca scenari...",
+      "empty": {
+        "my": {
+          "title": "Nessun scenario iniziato",
+          "description": "Le tue attività appariranno qui una volta che inizierai a interagire con gli scenari."
+        },
+        "all": {
+          "title": "Nessun scenario disponibile",
+          "description": "Al momento non ci sono scenari pubblicati disponibili in questa vista."
+        },
+        "filtered": "Nessun scenario corrisponde alla ricerca."
+      }
+    }
+  }
+}

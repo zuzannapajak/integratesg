@@ -1,0 +1,32 @@
+{
+  "Protected": {
+    "CaseStudyCompletionButton": {
+      "eyebrow": "Ολοκλήρωση",
+      "completedText": "Αυτή η μελέτη περίπτωσης έχει ήδη επισημανθεί ως ολοκληρωμένη.",
+      "defaultText": "Επισημάνετε αυτή τη μελέτη περίπτωσης ως ολοκληρωμένη όταν τελειώσετε την ανασκόπησή της.",
+      "completedOn": "Ολοκληρώθηκε στις {date}",
+      "completedRecently": "Ολοκληρώθηκε πρόσφατα",
+      "button": {
+        "completed": "Ολοκληρώθηκε",
+        "saving": "Αποθήκευση...",
+        "markCompleted": "Επισήμανση ως ολοκληρωμένη"
+      }
+    },
+    "CaseStudyLaunchShell": {
+      "back": "Επιστροφή στο ePortfolio",
+      "area": {
+        "environmental": "Περιβαλλοντικό",
+        "social": "Κοινωνικό",
+        "governance": "Διακυβέρνηση",
+        "crossCutting": "Οριζόντιο"
+      },
+      "featured": "Προτεινόμενο",
+      "completed": "Ολοκληρώθηκε",
+      "organization": "Οργανισμός",
+      "industry": "Κλάδος",
+      "contentTitle": "Περιεχόμενο μελέτης περίπτωσης",
+      "takeawaysTitle": "Βασικά συμπεράσματα",
+      "takeawaysEmpty": "Τα βασικά συμπεράσματα θα εμφανιστούν εδώ όταν προστεθούν σε αυτή τη μελέτη περίπτωσης."
+    }
+  }
+}

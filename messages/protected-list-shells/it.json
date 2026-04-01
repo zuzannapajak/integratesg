@@ -1,0 +1,132 @@
+{
+  "Protected": {
+    "CurriculumListShell": {
+      "refineTitle": "Affina la visualizzazione",
+      "showingCount": "Visualizzazione di {count} moduli",
+      "searchPlaceholder": "Cerca nel curriculum...",
+      "recommended": "Consigliati",
+      "area": {
+        "all": "Tutte le aree",
+        "environmental": "Ambientale",
+        "social": "Sociale",
+        "governance": "Governance",
+        "crossCutting": "Trasversale"
+      },
+      "status": {
+        "notStarted": "Non iniziato",
+        "inProgress": "In corso",
+        "completed": "Completato",
+        "failed": "Richiede revisione"
+      },
+      "filters": {
+        "status": {
+          "all": "Tutti gli stati di avanzamento"
+        },
+        "sort": {
+          "recommended": "Ordina: Consigliati",
+          "progress": "Ordina: Progresso",
+          "title": "Ordina: Titolo"
+        }
+      },
+      "info": {
+        "duration": "Durata",
+        "lessons": "Lezioni"
+      },
+      "actions": {
+        "continue": "Continua",
+        "review": "Rivedi modulo"
+      },
+      "pagination": {
+        "showingRange": "Visualizzazione {start}–{end} di {total}",
+        "previous": "Precedente",
+        "next": "Successivo"
+      },
+      "empty": {
+        "title": "Nessun modulo trovato",
+        "description": "Modifica i filtri o i termini di ricerca per trovare quello che stai cercando."
+      }
+    },
+    "ScenarioListShell": {
+      "refineTitle": "Affina la visualizzazione scenari",
+      "showingCount": "Visualizzazione di {count} scenari",
+      "searchPlaceholder": "Cerca scenari...",
+      "area": {
+        "all": "Tutte le aree ESG",
+        "environmental": "Ambientale",
+        "social": "Sociale",
+        "governance": "Governance",
+        "crossCutting": "Trasversale"
+      },
+      "status": {
+        "notStarted": "Non iniziato",
+        "inProgress": "In corso",
+        "completed": "Completato"
+      },
+      "duration": {
+        "selfPaced": "Ritmo individuale",
+        "minutes": "{minutes} min"
+      },
+      "filters": {
+        "sort": {
+          "title": "Ordina: Titolo",
+          "duration": "Ordina: Durata"
+        }
+      },
+      "info": {
+        "duration": "Durata",
+        "progress": "Progresso"
+      },
+      "actions": {
+        "continue": "Continua scenario",
+        "review": "Rivedi scenario",
+        "start": "Inizia scenario"
+      },
+      "pagination": {
+        "showingRange": "Visualizzazione {start}–{end} di {total}",
+        "previous": "Precedente",
+        "next": "Successivo"
+      },
+      "empty": {
+        "title": "Nessun scenario trovato",
+        "description": "Prova a modificare il filtro dell'area ESG o la frase di ricerca per esplorare i metadati degli scenari."
+      }
+    },
+    "CaseStudyListShell": {
+      "refineTitle": "Affina la visualizzazione ePortfolio",
+      "showingCount": "Visualizzazione di {count} casi di studio",
+      "searchPlaceholder": "Cerca nell'ePortfolio...",
+      "area": {
+        "all": "Tutte le aree ESG",
+        "environmental": "Ambientale",
+        "social": "Sociale",
+        "governance": "Governance",
+        "crossCutting": "Trasversale"
+      },
+      "filters": {
+        "status": {
+          "all": "Stato: Tutti",
+          "todo": "Stato: Da fare",
+          "completed": "Stato: Completato"
+        },
+        "sort": {
+          "recommended": "Ordina: Consigliati",
+          "title": "Ordina: Titolo"
+        }
+      },
+      "featured": "In primo piano",
+      "completed": "Completato",
+      "actions": {
+        "open": "Apri caso di studio"
+      },
+      "pagination": {
+        "showingRange": "Visualizzazione {start}–{end} di {total}",
+        "previous": "Precedente",
+        "next": "Successivo"
+      },
+      "empty": {
+        "title": "Nessun caso di studio trovato",
+        "description": "Prova a modificare l'area ESG, il filtro di stato o la frase di ricerca per esplorare le risorse dell'ePortfolio."
+      }
+    }
+  }
+}

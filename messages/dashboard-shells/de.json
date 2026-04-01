@@ -1,0 +1,115 @@
+{
+  "Protected": {
+    "DashboardPage": {
+      "fallback": {
+        "noActivity": "Noch keine Aktivität",
+        "today": "Heute",
+        "yesterday": "Gestern",
+        "daysAgo": "vor {count} Tagen",
+        "untitledModule": "Unbenanntes Modul",
+        "continueDescription": "Setzen Sie Ihr letztes Lernmodul fort und knüpfen Sie an Ihren aktuellen Fortschritt an.",
+        "curriculumBadge": "Lehrplan",
+        "reviewModule": "Modul überprüfen",
+        "continueModule": "Modul fortsetzen",
+        "lastCompleted": "Zuletzt abgeschlossen",
+        "lastOpened": "Zuletzt geöffnet",
+        "noChange": "Keine Änderung gegenüber der Vorwoche",
+        "vsPreviousWeek": "{value} im Vergleich zur Vorwoche"
+      },
+      "metrics": {
+        "averagePostQuiz": "Durchschnitt nach dem Quiz",
+        "modulesInProgress": "Module in Bearbeitung",
+        "completionRate": "Abschlussrate",
+        "averageScore": "Durchschnittliche Punktzahl"
+      },
+      "gamification": {
+        "learningStreak": "Lernserie"
+      },
+      "adminKpis": {
+        "users": "Benutzer",
+        "usersHint": "Registrierte Plattformbenutzer",
+        "attempts": "Versuche",
+        "attemptsHint": "Nachverfolgte Szenarioversuche",
+        "completionRate": "Abschlussrate",
+        "completionRateHint": "Abgeschlossene oder bestandene Versuche",
+        "averageScore": "Durchschnittliche Punktzahl",
+        "averageScoreHint": "{count} aktive Benutzer"
+      }
+    },
+    "DashboardShell": {
+      "roleConfig": {
+        "educator": {
+          "welcome": "Willkommen zurück",
+          "intro": "Setzen Sie Ihren Lernpfad fort und greifen Sie auf Ihre Unterrichtsmaterialien zu."
+        },
+        "student": {
+          "welcome": "Willkommen zurück",
+          "intro": "Lerne dort weiter, wo du aufgehört hast, und bleib am Ball."
+        },
+        "admin": {
+          "welcome": "Willkommen zurück",
+          "intro": "Überwachen Sie den Plattformzustand, die Beteiligung und allgemeine Nutzungstrends."
+        }
+      },
+      "streak": {
+        "days": "Tage"
+      },
+      "continueLearning": {
+        "badge": "Fortsetzen",
+        "resumeCta": "Lernen fortsetzen",
+        "fallbackTitle": "Letzte Aktivität fortsetzen",
+        "fallbackDescriptionEducator": "Schnelle Rückkehr zum zuletzt geöffneten Modul.",
+        "fallbackDescriptionStudent": "Schnelle Rückkehr zum zuletzt geöffneten Lernfluss."
+      },
+      "coreArea": {
+        "educator": {
+          "primary": {
+            "title": "Lehrplan",
+            "description": "Öffnen Sie strukturierte Module, Checkpoints und geführte Lernabläufe.",
+            "meta": "{count} veröffentlichte Module"
+          },
+          "secondary": {
+            "title": "ePortfolio",
+            "description": "Durchsuchen Sie Fallstudien und praktische ESG-Beispiele für angewandtes Lernen.",
+            "meta": "Fallstudien und Beispiele"
+          }
+        },
+        "student": {
+          "primary": {
+            "title": "Szenario-Simulator",
+            "description": "Starten Sie interaktive Szenarien und üben Sie die Entscheidungsfindung in realistischen Kontexten.",
+            "meta": "Interaktive Szenarioabläufe"
+          },
+          "secondary": {
+            "title": "ePortfolio",
+            "description": "Durchsuchen Sie Fallstudien und praktische ESG-Beispiele, um Ihre Lernreise zu unterstützen.",
+            "meta": "Fallstudien und Beispiele"
+          }
+        },
+        "buttons": {
+          "openModule": "Modul öffnen",
+          "openScenarios": "Szenarien öffnen",
+          "openEportfolio": "ePortfolio öffnen"
+        }
+      },
+      "learner": {
+        "activity": {
+          "title": "Ihre Aktivität",
+          "description": "Echte Ereignisse aus Ihrer Lehrplanaktivität der letzten 7 Tage.",
+          "valueLabel": "Ereignisse"
+        },
+        "summary": {
+          "title": "Fortschrittszusammenfassung",
+          "description": "Eine kompakte Übersicht, basierend auf Ihren realen Lehrplandaten."
+        }
+      },
+      "admin": {
+        "activity": {
+          "title": "Plattformaktivität",
+          "description": "Eindeutige aktive Benutzer pro Tag basierend auf der realen Lehrplanaktivität.",
+          "valueLabel": "Aktive Benutzer"
+        }
+      }
+    }
+  }
+}

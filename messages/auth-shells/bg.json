@@ -1,0 +1,65 @@
+{
+  "Auth": {
+    "LoginPage": {
+      "title": "Достъп до вашия акаунт",
+      "subtitle": "Влезте с вашия имейл или продължете с Google.",
+      "noAccount": "Нямате акаунт?",
+      "createOne": "Създайте такъв"
+    },
+    "LoginForm": {
+      "emailLabel": "Имейл адрес",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Парола",
+      "passwordPlaceholder": "Въведете вашата парола",
+      "submit": "Вход",
+      "submitting": "Влизане..."
+    },
+    "SocialLogin": {
+      "continueWithGoogle": "Продължете с Google"
+    },
+    "CompleteProfile": {
+      "title": "Завършете профила си",
+      "chooseRole": "Изберете вашата роля",
+      "studentDescription": "Достъп до казуси и сценарии",
+      "educatorDescription": "Достъп до учебна програма и преподавателски ресурси",
+      "error": "Неуспешно запазване на профила.",
+      "submit": "Продължи",
+      "submitting": "Запазване..."
+    }
+  },
+  "Register": {
+    "Stepper": {
+      "role": "Роля",
+      "accountDetails": "Данни за акаунта"
+    },
+    "RoleStep": {
+      "eyebrow": "Създайте своя акаунт",
+      "title": "Изберете вашата роля",
+      "subtitle": "Изберете как ще използвате платформата.",
+      "studentDescription": "Казуси, сценарии и самооценка.",
+      "educatorDescription": "Инструменти за учебна програма и преподавателски ресурси.",
+      "continue": "Продължи"
+    },
+    "DetailsStep": {
+      "title": "Данни за акаунта",
+      "subtitle": "Създайте своя акаунт с Google или имейл.",
+      "continueWithEmail": "Продължи с имейл",
+      "continueWithEmailDescription": "Попълнете данните си, за да създадете акаунта ръчно.",
+      "fullName": "Пълно име",
+      "fullNamePlaceholder": "Въведете пълното си име",
+      "email": "Имейл",
+      "emailPlaceholder": "Въведете своя имейл",
+      "password": "Парола",
+      "passwordPlaceholder": "Създайте парола",
+      "submit": "Създай акаунт",
+      "submitting": "Създаване...",
+      "continueWithGoogle": "Продължи с Google",
+      "continueWithGoogleDescription": "Препоръчва се за по-бърза настройка.",
+      "googleHint": "Използвайте своя Google акаунт, за да продължите с избраната роля и да завършите настройката с по-малко стъпки.",
+      "alreadyHaveAccount": "Вече имате акаунт?",
+      "signIn": "Вход",
+      "profileSaveError": "Акаунтът е създаден, но профилът не можа да бъде запазен.",
+      "success": "Акаунтът е създаден успешно. Проверете имейла си, за да продължите."
+    }
+  }
+}

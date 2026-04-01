@@ -1,0 +1,32 @@
+{
+  "Protected": {
+    "CaseStudyCompletionButton": {
+      "eyebrow": "Abschluss",
+      "completedText": "Diese Fallstudie wurde bereits als abgeschlossen markiert.",
+      "defaultText": "Markieren Sie diese Fallstudie als abgeschlossen, wenn Sie mit der Durchsicht fertig sind.",
+      "completedOn": "Abgeschlossen am {date}",
+      "completedRecently": "Vor kurzem abgeschlossen",
+      "button": {
+        "completed": "Abgeschlossen",
+        "saving": "Speichern...",
+        "markCompleted": "Als abgeschlossen markieren"
+      }
+    },
+    "CaseStudyLaunchShell": {
+      "back": "Zurück zum ePortfolio",
+      "area": {
+        "environmental": "Umwelt",
+        "social": "Soziales",
+        "governance": "Unternehmensführung",
+        "crossCutting": "Übergreifend"
+      },
+      "featured": "Hervorgehoben",
+      "completed": "Abgeschlossen",
+      "organization": "Organisation",
+      "industry": "Branche",
+      "contentTitle": "Inhalt der Fallstudie",
+      "takeawaysTitle": "Wichtigste Erkenntnisse",
+      "takeawaysEmpty": "Wichtige Erkenntnisse erscheinen hier, sobald sie dieser Fallstudie hinzugefügt werden."
+    }
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "Protected": {
+    "DashboardPage": {
+      "fallback": {
+        "noActivity": "Ancora nessuna attività",
+        "today": "Oggi",
+        "yesterday": "Ieri",
+        "daysAgo": "{count} giorni fa",
+        "untitledModule": "Modulo senza titolo",
+        "continueDescription": "Continua il tuo ultimo modulo di apprendimento e riprendi dai tuoi progressi attuali.",
+        "curriculumBadge": "Curriculum",
+        "reviewModule": "Rivedi il modulo",
+        "continueModule": "Continua il modulo",
+        "lastCompleted": "Ultimo completato",
+        "lastOpened": "Ultimo aperto",
+        "noChange": "Nessuna variazione rispetto alla settimana precedente",
+        "vsPreviousWeek": "{value} rispetto alla settimana precedente"
+      },
+      "metrics": {
+        "averagePostQuiz": "Media post-quiz",
+        "modulesInProgress": "Moduli in corso",
+        "completionRate": "Tasso di completamento",
+        "averageScore": "Punteggio medio"
+      },
+      "gamification": {
+        "learningStreak": "Serie di apprendimento"
+      },
+      "adminKpis": {
+        "users": "Utenti",
+        "usersHint": "Utenti registrati sulla piattaforma",
+        "attempts": "Tentativi",
+        "attemptsHint": "Tentativi di scenario tracciati",
+        "completionRate": "Tasso di completamento",
+        "completionRateHint": "Tentativi completati o superati",
+        "averageScore": "Punteggio medio",
+        "averageScoreHint": "{count} utenti attivi"
+      }
+    },
+    "DashboardShell": {
+      "roleConfig": {
+        "educator": {
+          "welcome": "Bentornato",
+          "intro": "Continua il tuo percorso di apprendimento e accedi alle tue risorse didattiche."
+        },
+        "student": {
+          "welcome": "Bentornato",
+          "intro": "Continua ad imparare da dove avevi interrotto e mantieni il ritmo."
+        },
+        "admin": {
+          "welcome": "Bentornato",
+          "intro": "Monitora lo stato della piattaforma, la partecipazione e le tendenze d'uso generali."
+        }
+      },
+      "streak": {
+        "days": "giorni"
+      },
+      "continueLearning": {
+        "badge": "Riprendi",
+        "resumeCta": "Riprendi l'apprendimento",
+        "fallbackTitle": "Riprendi la tua ultima attività",
+        "fallbackDescriptionEducator": "Ritorno rapido all'ultimo modulo aperto.",
+        "fallbackDescriptionStudent": "Ritorno rapido all'ultimo flusso di apprendimento aperto."
+      },
+      "coreArea": {
+        "educator": {
+          "primary": {
+            "title": "Curriculum",
+            "description": "Apri moduli strutturati, checkpoint e flussi di apprendimento guidati.",
+            "meta": "{count} moduli pubblicati"
+          },
+          "secondary": {
+            "title": "ePortfolio",
+            "description": "Sfoglia casi di studio ed esempi pratici ESG preparati per l'apprendimento applicato.",
+            "meta": "Casi di studio ed esempi"
+          }
+        },
+        "student": {
+          "primary": {
+            "title": "Simulatore di scenari",
+            "description": "Avvia scenari interattivi e pratica il processo decisionale in contesti realistici.",
+            "meta": "Flussi di scenari interattivi"
+          },
+          "secondary": {
+            "title": "ePortfolio",
+            "description": "Sfoglia casi di studio ed esempi pratici ESG per supportare il tuo percorso di apprendimento.",
+            "meta": "Casi di studio ed esempi"
+          }
+        },
+        "buttons": {
+          "openModule": "Apri modulo",
+          "openScenarios": "Apri scenari",
+          "openEportfolio": "Apri ePortfolio"
+        }
+      },
+      "learner": {
+        "activity": {
+          "title": "La tua attività",
+          "description": "Eventi reali dalle tue attività del curriculum negli ultimi 7 giorni.",
+          "valueLabel": "Eventi"
+        },
+        "summary": {
+          "title": "Riepilogo progressi",
+          "description": "Una panoramica compatta basata sui tuoi dati reali del curriculum."
+        }
+      },
+      "admin": {
+        "activity": {
+          "title": "Attività della piattaforma",
+          "description": "Utenti attivi distinti al giorno basati sull'attività reale del curriculum.",
+          "valueLabel": "Utenti attivi"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "Protected": {
+    "CurriculumListShell": {
+      "refineTitle": "Lehrplanansicht verfeinern",
+      "showingCount": "{count} Module werden angezeigt",
+      "searchPlaceholder": "Lehrplan durchsuchen...",
+      "recommended": "Empfohlen",
+      "area": {
+        "all": "Alle Bereiche",
+        "environmental": "Umwelt",
+        "social": "Soziales",
+        "governance": "Unternehmensführung",
+        "crossCutting": "Übergreifend"
+      },
+      "status": {
+        "notStarted": "Nicht gestartet",
+        "inProgress": "In Bearbeitung",
+        "completed": "Abgeschlossen",
+        "failed": "Überprüfung erforderlich"
+      },
+      "filters": {
+        "status": {
+          "all": "Alle Statuszustände"
+        },
+        "sort": {
+          "recommended": "Sortierung: Empfohlen",
+          "progress": "Sortierung: Fortschritt",
+          "title": "Sortierung: Titel"
+        }
+      },
+      "info": {
+        "duration": "Dauer",
+        "lessons": "Lektionen"
+      },
+      "actions": {
+        "continue": "Fortsetzen",
+        "review": "Modul überprüfen"
+      },
+      "pagination": {
+        "showingRange": "Anzeige {start}–{end} von {total}",
+        "previous": "Zurück",
+        "next": "Weiter"
+      },
+      "empty": {
+        "title": "Keine Module gefunden",
+        "description": "Passen Sie Ihre Filter oder Suchbegriffe an, um das Gesuchte zu finden."
+      }
+    },
+    "ScenarioListShell": {
+      "refineTitle": "Szenarioansicht verfeinern",
+      "showingCount": "{count} Szenarien werden angezeigt",
+      "searchPlaceholder": "Szenarien durchsuchen...",
+      "area": {
+        "all": "Alle ESG-Bereiche",
+        "environmental": "Umwelt",
+        "social": "Soziales",
+        "governance": "Unternehmensführung",
+        "crossCutting": "Übergreifend"
+      },
+      "status": {
+        "notStarted": "Nicht gestartet",
+        "inProgress": "In Bearbeitung",
+        "completed": "Abgeschlossen"
+      },
+      "duration": {
+        "selfPaced": "Selbstgesteuert",
+        "minutes": "{minutes} Min."
+      },
+      "filters": {
+        "sort": {
+          "title": "Sortierung: Titel",
+          "duration": "Sortierung: Dauer"
+        }
+      },
+      "info": {
+        "duration": "Dauer",
+        "progress": "Fortschritt"
+      },
+      "actions": {
+        "continue": "Szenario fortsetzen",
+        "review": "Szenario überprüfen",
+        "start": "Szenario starten"
+      },
+      "pagination": {
+        "showingRange": "Anzeige {start}–{end} von {total}",
+        "previous": "Zurück",
+        "next": "Weiter"
+      },
+      "empty": {
+        "title": "Keine Szenarien gefunden",
+        "description": "Versuchen Sie, den ESG-Bereichsfilter oder den Suchbegriff anzupassen, um Szenario-Metadaten zu erkunden."
+      }
+    },
+    "CaseStudyListShell": {
+      "refineTitle": "ePortfolio-Ansicht verfeinern",
+      "showingCount": "{count} Fallstudien werden angezeigt",
+      "searchPlaceholder": "ePortfolio durchsuchen...",
+      "area": {
+        "all": "Alle ESG-Bereiche",
+        "environmental": "Umwelt",
+        "social": "Soziales",
+        "governance": "Unternehmensführung",
+        "crossCutting": "Übergreifend"
+      },
+      "filters": {
+        "status": {
+          "all": "Status: Alle",
+          "todo": "Status: Offen",
+          "completed": "Status: Abgeschlossen"
+        },
+        "sort": {
+          "recommended": "Sortierung: Empfohlen",
+          "title": "Sortierung: Titel"
+        }
+      },
+      "featured": "Hervorgehoben",
+      "completed": "Abgeschlossen",
+      "actions": {
+        "open": "Fallstudie öffnen"
+      },
+      "pagination": {
+        "showingRange": "Anzeige {start}–{end} von {total}",
+        "previous": "Zurück",
+        "next": "Weiter"
+      },
+      "empty": {
+        "title": "Keine Fallstudien gefunden",
+        "description": "Versuchen Sie, den ESG-Bereich, den Statusfilter oder den Suchbegriff anzupassen, um die verfügbaren ePortfolio-Ressourcen zu erkunden."
+      }
+    }
+  }
+}

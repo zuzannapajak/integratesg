@@ -1,0 +1,132 @@
+{
+  "Protected": {
+    "CurriculumListShell": {
+      "refineTitle": "Φιλτράρισμα προγράμματος σπουδών",
+      "showingCount": "Εμφάνιση {count} ενοτήτων",
+      "searchPlaceholder": "Αναζήτηση στο πρόγραμμα σπουδών...",
+      "recommended": "Προτεινόμενα",
+      "area": {
+        "all": "Όλοι οι τομείς",
+        "environmental": "Περιβαλλοντικό",
+        "social": "Κοινωνικό",
+        "governance": "Διακυβέρνηση",
+        "crossCutting": "Οριζόντιο"
+      },
+      "status": {
+        "notStarted": "Δεν ξεκίνησε",
+        "inProgress": "Σε εξέλιξη",
+        "completed": "Ολοκληρώθηκε",
+        "failed": "Χρειάζεται ανασκόπηση"
+      },
+      "filters": {
+        "status": {
+          "all": "Όλες οι καταστάσεις προόδου"
+        },
+        "sort": {
+          "recommended": "Ταξινόμηση: Προτεινόμενα",
+          "progress": "Ταξινόμηση: Πρόοδος",
+          "title": "Ταξινόμηση: Τίτλος"
+        }
+      },
+      "info": {
+        "duration": "Διάρκεια",
+        "lessons": "Μαθήματα"
+      },
+      "actions": {
+        "continue": "Συνέχεια",
+        "review": "Ανασκόπηση ενότητας"
+      },
+      "pagination": {
+        "showingRange": "Εμφάνιση {start}–{end} από {total}",
+        "previous": "Προηγούμενο",
+        "next": "Επόμενο"
+      },
+      "empty": {
+        "title": "Δεν βρέθηκαν ενότητες",
+        "description": "Προσαρμόστε τα φίλτρα ή τους όρους αναζήτησης για να βρείτε αυτό που ψάχνετε."
+      }
+    },
+    "ScenarioListShell": {
+      "refineTitle": "Φιλτράρισμα προβολής σεναρίων",
+      "showingCount": "Εμφάνιση {count} σεναρίων",
+      "searchPlaceholder": "Αναζήτηση σεναρίων...",
+      "area": {
+        "all": "Όλοι οι τομείς ESG",
+        "environmental": "Περιβαλλοντικό",
+        "social": "Κοινωνικό",
+        "governance": "Διακυβέρνηση",
+        "crossCutting": "Οριζόντιο"
+      },
+      "status": {
+        "notStarted": "Δεν ξεκίνησε",
+        "inProgress": "Σε εξέλιξη",
+        "completed": "Ολοκληρώθηκε"
+      },
+      "duration": {
+        "selfPaced": "Ελεύθερος ρυθμός",
+        "minutes": "{minutes} λεπτά"
+      },
+      "filters": {
+        "sort": {
+          "title": "Ταξινόμηση: Τίτλος",
+          "duration": "Ταξινόμηση: Διάρκεια"
+        }
+      },
+      "info": {
+        "duration": "Διάρκεια",
+        "progress": "Πρόοδος"
+      },
+      "actions": {
+        "continue": "Συνέχεια σεναρίου",
+        "review": "Ανασκόπηση σεναρίου",
+        "start": "Έναρξη σεναρίου"
+      },
+      "pagination": {
+        "showingRange": "Εμφάνιση {start}–{end} από {total}",
+        "previous": "Προηγούμενο",
+        "next": "Επόμενο"
+      },
+      "empty": {
+        "title": "Δεν βρέθηκαν σενάρια",
+        "description": "Δοκιμάστε να προσαρμόσετε το φίλτρο τομέα ESG ή τη φράση αναζήτησης για να εξερευνήσετε τα δεδομένα των σεναρίων."
+      }
+    },
+    "CaseStudyListShell": {
+      "refineTitle": "Φιλτράρισμα προβολής ePortfolio",
+      "showingCount": "Εμφάνιση {count} μελετών περίπτωσης",
+      "searchPlaceholder": "Αναζήτηση στο ePortfolio...",
+      "area": {
+        "all": "Όλοι οι τομείς ESG",
+        "environmental": "Περιβαλλοντικό",
+        "social": "Κοινωνικό",
+        "governance": "Διακυβέρνηση",
+        "crossCutting": "Οριζόνtio"
+      },
+      "filters": {
+        "status": {
+          "all": "Κατάσταση: Όλα",
+          "todo": "Κατάσταση: Προς υλοποίηση",
+          "completed": "Κατάσταση: Ολοκληρωμένα"
+        },
+        "sort": {
+          "recommended": "Ταξινόμηση: Προτεινόμενα",
+          "title": "Ταξινόμηση: Τίτλος"
+        }
+      },
+      "featured": "Προτεινόμενο",
+      "completed": "Ολοκληρωμένο",
+      "actions": {
+        "open": "Άνοιγμα μελέτης περίπτωσης"
+      },
+      "pagination": {
+        "showingRange": "Εμφάνιση {start}–{end} από {total}",
+        "previous": "Προηγούμενο",
+        "next": "Επόμενο"
+      },
+      "empty": {
+        "title": "Δεν βρέθηκαν μελέτες περίπτωσης",
+        "description": "Δοκιμάστε να προσαρμόσετε τον τομέα ESG, το φίλτρο κατάστασης ή τη φράση αναζήτησης για να εξερευνήσετε τους διαθέσιμους πόρους του ePortfolio."
+      }
+    }
+  }
+}

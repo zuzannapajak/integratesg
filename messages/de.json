@@ -1,0 +1,132 @@
+{
+  "Common": {
+    "or": "Oder",
+    "selected": "Ausgewählt",
+    "continue": "Weiter",
+    "saving": "Speichern...",
+    "createAccount": "Konto erstellen",
+    "signIn": "Anmelden",
+    "register": "Registrieren",
+    "dashboard": "Dashboard",
+    "settings": "Einstellungen",
+    "about": "Über uns",
+    "educators": "Lehrkräfte",
+    "students": "Studierende",
+    "logOut": "Abmelden",
+    "signedIn": "Angemeldet",
+    "openAccountMenu": "Kontomenü öffnen",
+    "backToHomepage": "Zurück zur Startseite",
+    "readMore": "Mehr lesen",
+    "joinPlatform": "Plattform beitreten"
+  },
+  "Roles": {
+    "student": "Student",
+    "educator": "Lehrkraft",
+    "admin": "Admin"
+  },
+  "Logo": {
+    "alt": "IntegratESG"
+  },
+  "PublicNavbar": {
+    "about": "Über uns",
+    "educators": "Lehrkräfte",
+    "students": "Studierende",
+    "signIn": "Anmelden",
+    "register": "Registrieren"
+  },
+  "ProtectedNavbar": {
+    "about": "Über uns",
+    "dashboard": "Dashboard",
+    "settings": "Einstellungen",
+    "logOut": "Abmelden",
+    "openAccountMenu": "Kontomenü öffnen"
+  },
+  "Footer": {
+    "euAlt": "Kofinanziert von der Europäischen Union",
+    "disclaimer": "Kofinanziert von der Europäischen Union. Die geäußerten Ansichten und Meinungen sind jedoch ausschließlich die der Autoren und spiegeln non zwangsläufig die der Europäischen Union oder der FRSE wider. Weder die Europäische Union noch die FRSE können dafür verantwortlich gemacht werden.",
+    "agreementNumber": "Vertragsnummer: 2024-1-PL01-KA220-VET-000253738.",
+    "copyright": "© 2026 INTEGRAT-ESG PROJEKT – Alle Rechte vorbehalten",
+    "privacy": "Datenschutzrichtlinie",
+    "accessibility": "Erklärung zur Barrierefreiheit",
+    "terms": "Nutzungsbedingungen",
+    "legalNotice": "Impressum"
+  },
+  "Sidebar": {
+    "dashboard": "Dashboard",
+    "curriculum": "Lehrplan",
+    "eportfolio": "ePortfolio",
+    "scenario": "Szenario",
+    "statistics": "Statistiken",
+    "settings": "Einstellungen",
+    "collapse": "Menü einklappen",
+    "expand": "Menü ausklappen"
+  },
+  "Topbar": {
+    "badge": {
+      "student": "student",
+      "educator": "lehrkraft",
+      "admin": "admin"
+    },
+    "title": {
+      "student": "Studenten-Dashboard",
+      "educator": "Lehrkräfte-Dashboard",
+      "admin": "Admin-Dashboard"
+    },
+    "subtitle": {
+      "student": "Lernen Sie weiter, überprüfen Sie Ihre Kurse und greifen Sie auf Ihre Profilbereiche zu.",
+      "educator": "Greifen Sie auf Lehrplanressourcen, Kurse und Arbeitspakete zu.",
+      "admin": "Überprüfen Sie Statistiken, Plattformstatus und administrative Einstellungen."
+    },
+    "signedIn": "Angemeldet"
+  },
+  "Protected": {
+    "CurriculumPage": {
+      "title": "Lehrplan",
+      "subtitle": "Lernmodule nur für Lehrkräfte mit geführtem Ablauf, Quizzen und Fortschrittsübersicht"
+    },
+    "ScenariosPage": {
+      "title": "Szenario-Simulator",
+      "subtitle": "Entscheidungsfindung in realistischen Kontexten mit verfolgbarem Fortschritt üben"
+    },
+    "EportfolioPage": {
+      "title": "ePortfolio",
+      "subtitle": "Praxisorientierte Fallstudien mit realem Kontext."
+    },
+    "CurriculumSwitcher": {
+      "segments": {
+        "my": "Meine Module",
+        "all": "Alle Module"
+      },
+      "searchPlaceholder": "Module suchen...",
+      "empty": {
+        "my": {
+          "title": "Noch keine Module gestartet",
+          "description": "Ihre Lehrplanaktivitäten erscheinen hier, sobald Sie mit den Modulen beginnen."
+        },
+        "all": {
+          "title": "Keine Module verfügbar",
+          "description": "Momentan sind keine veröffentlichten Module in dieser Ansicht verfügbar."
+        },
+        "filtered": "Keine Module entsprechen Ihrer Suche."
+      }
+    },
+    "ScenarioSwitcher": {
+      "segments": {
+        "my": "Meine Szenarien",
+        "all": "Alle Szenarien"
+      },
+      "searchPlaceholder": "Szenarien suchen...",
+      "empty": {
+        "my": {
+          "title": "Noch keine Szenarien gestartet",
+          "description": "Ihre Szenario-Aktivitäten erscheinen hier, sobald Sie damit beginnen."
+        },
+        "all": {
+          "title": "Keine Szenarien verfügbar",
+          "description": "Momentan sind keine veröffentlichten Szenarien verfügbar."
+        },
+        "filtered": "Keine Szenarien entsprechen Ihrer Suche."
+      }
+    }
+  }
+}

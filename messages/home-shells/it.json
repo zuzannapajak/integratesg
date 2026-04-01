@@ -1,0 +1,58 @@
+{
+  "Home": {
+    "hero": {
+      "title": "Apprendimento pratico ESG per studenti ed educatori.",
+      "join": "Unisciti alla piattaforma",
+      "readMore": "Leggi di più",
+      "imageAlt": "Illustrazione della piattaforma di apprendimento IntegratESG"
+    },
+    "overview": {
+      "eyebrow": "Panoramica della piattaforma",
+      "title": "Scopri casi di studio, scenari interattivi e risorse di apprendimento strutturate in un unico ambiente multilingue progettato attorno all'esperienza WP4.",
+      "description": "La piattaforma combina risorse di apprendimento esperienziale, simulazione interattiva e percorsi educativi strutturati in una forma chiara, accessibile e facile da navigare.",
+      "createAccount": "Crea un account",
+      "signIn": "Accedi"
+    },
+    "cards": {
+      "students": {
+        "eyebrow": "Per gli studenti",
+        "title": "Simulatore di Scenari",
+        "description": "Esplora i temi ESG attraverso scenari decisionali interattivi e percorsi di apprendimento pratici."
+      },
+      "educators": {
+        "eyebrow": "Per gli educatori",
+        "title": "Curriculum e autovalutazione",
+        "description": "Accedi a moduli di apprendimento strutturati, pre e post-quiz e risorse didattiche basate sul feedback."
+      },
+      "allUsers": {
+        "eyebrow": "Per tutti gli utenti",
+        "title": "ePortfolio di casi di studio",
+        "description": "Esamina casi di studio ESG standardizzati preparati nelle lingue e nei contesti dei partner."
+      }
+    },
+    "stats": {
+      "eyebrow": "In breve",
+      "title": "I numeri chiave dietro l'esperienza di apprendimento.",
+      "caseStudies": "Casi di studio",
+      "scenarioAreas": "Aree di scenario",
+      "partnerLanguages": "Lingue dei partner"
+    },
+    "partners": {
+      "title": "Partner"
+    },
+    "cta": {
+      "eyebrow": "Inizia ora",
+      "title": "Accedi alla piattaforma e continua il tuo percorso di apprendimento ESG.",
+      "description": "Registrati per esplorare scenari, risorse ePortfolio e materiali didattici progettati per studenti, educatori e stakeholder del progetto.",
+      "register": "Registrati",
+      "signIn": "Accedi"
+    }
+  },
+  "NotFound": {
+    "badge": "Pagina non trovata",
+    "title": "Ops! Questa pagina si è presa una pausa caffè.",
+    "description": "Abbiamo guardato ovunque, anche dietro il pulsante... ma questa pagina non è qui.",
+    "errorCodeLabel": "Codice errore:",
+    "errorCodeDescription": "la pagina si è smarrita."
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "Protected": {
+    "ScenarioDetailShell": {
+      "back": "Torna ai scenari",
+      "area": {
+        "environmental": "Ambientale",
+        "social": "Sociale",
+        "governance": "Governance",
+        "crossCutting": "Trasversale"
+      },
+      "status": {
+        "completed": "Completato",
+        "inProgress": "In corso",
+        "readyToStart": "Pronto per iniziare"
+      },
+      "featured": "In primo piano",
+      "eyebrow": "Avvio scenario",
+      "heroIntro": {
+        "completed": "Hai già completato questo scenario. Inizia una nuova sessione ogni volta che vuoi fare pratica e confrontare le tue decisioni.",
+        "resumeFromPause": "La tua ultima sessione può essere ripresa dal punto in cui l'hai interrotta.",
+        "resumeNextDecision": "Hai già iniziato questo scenario. Continua dal prossimo punto decisionale.",
+        "default": "Esplora il contesto, comprendi la sfida e avvia l'esperienza quando sei pronto."
+      },
+      "metrics": {
+        "duration": "Durata",
+        "focus": "Focus",
+        "latestScore": "Ultimo punteggio",
+        "lastOpened": "Ultima apertura",
+        "decisionMaking": "Processo decisionale",
+        "notYet": "Non ancora"
+      },
+      "progress": {
+        "completed": "Completato",
+        "finishedWithScore": "Finito con un punteggio di {score}%",
+        "completedNoScore": "Scenario completato con successo",
+        "resumeFrom": "Riprendi da {location}",
+        "continueLatest": "Continua dall'ultimo checkpoint",
+        "ready": "Pronto per il primo tentativo"
+      },
+      "nextAction": {
+        "title": "Prossima azione",
+        "completedDescription": "Avvia un nuovo tentativo per rivivere lo scenario e vedere come si evolve una nuova sessione.",
+        "inProgressDescription": "Continua dal tuo ultimo checkpoint e mantieni lo slancio.",
+        "defaultDescription": "Avvia lo scenario per iniziare l'esperienza guidata.",
+        "restart": "Riavvia scenario",
+        "resume": "Riprendi scenario",
+        "launch": "Avvia scenario",
+        "exploreJourney": "Esplora il percorso"
+      },
+      "tabs": {
+        "overview": "Panoramica",
+        "practice": "Cosa imparerai",
+        "prepare": "Prima di iniziare",
+        "related": "Correlati"
+      },
+      "overview": {
+        "title": "Panoramica dello scenario",
+        "highlightsTitle": "Punti salienti dell'esperienza",
+        "highlights": [
+          "Un percorso guidato che si sviluppa passo dopo passo.",
+          "Feedback dopo le scelte chiave per mantenere attivo l'apprendimento.",
+          "Una struttura chiara progettata per la pratica focalizzata piuttosto che per la lettura passiva."
+        ]
+      },
+      "practice": {
+        "cardTitle": "Pratica applicata",
+        "points": {
+          "environmental": [
+            "Bilancia gli obiettivi di sostenibilità con i compromessi operativi.",
+            "Interpreta i segnali relativi a efficienza, rischio e impatto.",
+            "Scegli azioni che migliorino i risultati ambientali a lungo termine."
+          ],
+          "social": [
+            "Rispondi alle tensioni degli stakeholder con empatia e chiarezza.",
+            "Valuta le conseguenze sulle persone tra priorità contrastanti.",
+            "Esercita il processo decisionale inclusivo sotto pressione reale."
+          ],
+          "governance": [
+            "Valuta i percorsi di responsabilità e le opzioni di escalation.",
+            "Rafforza il giudizio sulla trasparenza e l'allineamento alle policy.",
+            "Comprendi come il design della governance influenzi la qualità dell'implementazione."
+          ],
+          "crossCutting": [
+            "Connetti le dimensioni ESG attraverso un unico flusso decisionale coerente.",
+            "Riconosci le interdipendenze tra persone, processi e impatto.",
+            "Applica il pensiero strutturato in situazioni pratiche complesse."
+          ]
+        }
+      },
+      "prepare": {
+        "title": "Prima del lancio",
+        "quickTipTitle": "Suggerimento rapido",
+        "quickTipText": "Questa pagina è un punto di preparazione prima dell'esperienza interattiva. Esamina il contesto, poi avvia quando sei pronto per una sessione focalizzata.",
+        "checklist": {
+          "time": "Metti da parte circa {duration} per una sessione focalizzata.",
+          "flow": "Aspettati scelte a tappe, feedback immediato e compromessi pratici.",
+          "revisit": "Torna allo scenario più tardi per confrontare come decisioni diverse possano plasmare l'esito."
+        }
+      },
+      "relatedPanel": {
+        "openLauncher": "Apri launcher",
+        "emptyTitle": "Nessuno scenario correlato",
+        "emptyDescription": "Ulteriori raccomandazioni appariranno qui man mano che la libreria crescerà."
+      }
+    },
+    "ScenarioLaunchShell": {
+      "area": {
+        "environmental": "Ambientale",
+        "social": "Sociale",
+        "governance": "Governance",
+        "crossCutting": "Trasversale"
+      }
+    },
+    "ScenarioSwitcher": {
+      "tabs": {
+        "mine": "I miei scenari",
+        "all": "Tutti gli scenari"
+      },
+      "empty": {
+        "mineTitle": "Ancora nessun scenario tracciato",
+        "mineDescription": "Avvia uno scenario per costruire la tua libreria personale e tornarci più tardi.",
+        "allTitle": "Nessun scenario trovato",
+        "allDescription": "Prova a modificare il filtro dell'area ESG o la frase di ricerca."
+      }
+    }
+  }
+}

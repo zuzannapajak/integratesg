@@ -1,0 +1,65 @@
+{
+  "Auth": {
+    "LoginPage": {
+      "title": "Greifen Sie auf Ihr Konto zu",
+      "subtitle": "Melden Sie sich mit Ihrer E-Mail an oder fahren Sie mit Google fort.",
+      "noAccount": "Sie haben noch kein Konto?",
+      "createOne": "Erstellen Sie eins"
+    },
+    "LoginForm": {
+      "emailLabel": "E-Mail-Adresse",
+      "emailPlaceholder": "sie@beispiel.com",
+      "passwordLabel": "Passwort",
+      "passwordPlaceholder": "Geben Sie Ihr Passwort ein",
+      "submit": "Anmelden",
+      "submitting": "Anmeldung läuft..."
+    },
+    "SocialLogin": {
+      "continueWithGoogle": "Mit Google fortfahren"
+    },
+    "CompleteProfile": {
+      "title": "Vervollständigen Sie Ihr Profil",
+      "chooseRole": "Wählen Sie Ihre Rolle",
+      "studentDescription": "Zugriff auf Fallstudien und Szenarien",
+      "educatorDescription": "Zugriff auf Curriculum und Lehrressourcen",
+      "error": "Profil konnte nicht gespeichert werden.",
+      "submit": "Weiter",
+      "submitting": "Wird gespeichert..."
+    }
+  },
+  "Register": {
+    "Stepper": {
+      "role": "Rolle",
+      "accountDetails": "Kontodetails"
+    },
+    "RoleStep": {
+      "eyebrow": "Erstellen Sie Ihr Konto",
+      "title": "Wählen Sie Ihre Rolle",
+      "subtitle": "Wählen Sie aus, wie Sie die Plattform nutzen werden.",
+      "studentDescription": "Fallstudien, Szenarien und Selbstbewertung.",
+      "educatorDescription": "Curriculum-Tools und Lehrressourcen.",
+      "continue": "Weiter"
+    },
+    "DetailsStep": {
+      "title": "Kontodetails",
+      "subtitle": "Erstellen Sie Ihr Konto mit Google oder E-Mail.",
+      "continueWithEmail": "Mit E-Mail fortfahren",
+      "continueWithEmailDescription": "Füllen Sie Ihre Daten aus, um das Konto manuell zu erstellen.",
+      "fullName": "Vollständiger Name",
+      "fullNamePlaceholder": "Geben Sie Ihren vollständigen Namen ein",
+      "email": "E-Mail",
+      "emailPlaceholder": "Geben Sie Ihre E-Mail ein",
+      "password": "Passwort",
+      "passwordPlaceholder": "Erstellen Sie ein Passwort",
+      "submit": "Konto erstellen",
+      "submitting": "Wird erstellt...",
+      "continueWithGoogle": "Mit Google fortfahren",
+      "continueWithGoogleDescription": "Empfohlen für eine schnellere Einrichtung.",
+      "googleHint": "Verwenden Sie Ihr Google-Konto, um mit Ihrer ausgewählten Rolle fortzufahren und die Einrichtung mit weniger Schritten abzuschließen.",
+      "alreadyHaveAccount": "Haben Sie bereits ein Konto?",
+      "signIn": "Anmelden",
+      "profileSaveError": "Konto wurde erstellt, aber das Profil konnte nicht gespeichert werden.",
+      "success": "Konto erfolgreich erstellt. Prüfen Sie Ihre E-Mails, um fortzufahren."
+    }
+  }
+}

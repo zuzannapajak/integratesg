@@ -1,0 +1,58 @@
+{
+  "Home": {
+    "hero": {
+      "title": "Praktisches ESG-Lernen für Studierende und Lehrende.",
+      "join": "Plattform beitreten",
+      "readMore": "Mehr lesen",
+      "imageAlt": "Illustration der IntegratESG-Lernplattform"
+    },
+    "overview": {
+      "eyebrow": "Plattform-Übersicht",
+      "title": "Entdecken Sie Fallstudien, interaktive Szenarien und strukturierte Lernressourcen in einer einzigen mehrsprachigen Umgebung, die auf der WP4-Erfahrung basiert.",
+      "description": "Die Plattform kombiniert erfahrungsorientierte Lernressourcen, interaktive Simulationen und strukturierte Bildungswege in einer klaren, zugänglichen und leicht navigierbaren Form.",
+      "createAccount": "Konto erstellen",
+      "signIn": "Anmelden"
+    },
+    "cards": {
+      "students": {
+        "eyebrow": "Für Studierende",
+        "title": "Szenario-Simulator",
+        "description": "Erkunden Sie ESG-Themen durch interaktive Entscheidungsszenarien und praktische Lernpfade."
+      },
+      "educators": {
+        "eyebrow": "Für Lehrende",
+        "title": "Lehrplan und Selbsteinschätzung",
+        "description": "Greifen Sie auf strukturierte Lernmodule, Pre- und Post-Quizzes sowie feedbackgesteuerte Unterrichtsressourcen zu."
+      },
+      "allUsers": {
+        "eyebrow": "Für alle Benutzer",
+        "title": "ePortfolio der Fallstudien",
+        "description": "Überprüfen Sie standardisierte ESG-Fallstudien, die in den Sprachen und Kontexten der Partner erstellt wurden."
+      }
+    },
+    "stats": {
+      "eyebrow": "Auf einen Blick",
+      "title": "Wichtige Zahlen hinter der Lernerfahrung.",
+      "caseStudies": "Fallstudien",
+      "scenarioAreas": "Szenariobereiche",
+      "partnerLanguages": "Partner-Sprachen"
+    },
+    "partners": {
+      "title": "Partner"
+    },
+    "cta": {
+      "eyebrow": "Loslegen",
+      "title": "Greifen Sie auf die Plattform zu und setzen Sie Ihre ESG-Lernreise fort.",
+      "description": "Registrieren Sie sich, um Szenarien, ePortfolio-Ressourcen und Lernmaterialien zu erkunden, die für Studierende, Lehrende und Projektbeteiligte entwickelt wurden.",
+      "register": "Registrieren",
+      "signIn": "Anmelden"
+    }
+  },
+  "NotFound": {
+    "badge": "Seite nicht gefunden",
+    "title": "Ups! Diese Seite macht gerade Kaffeepause.",
+    "description": "Wir haben uns umgesehen und sogar hinter dem Button nachgeschaut… aber diese Seite ist nicht hier.",
+    "errorCodeLabel": "Fehlercode:",
+    "errorCodeDescription": "Seite ist weggegangen."
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "Protected": {
+    "CaseStudyCompletionButton": {
+      "eyebrow": "Completamento",
+      "completedText": "Questo caso di studio è già stato contrassegnato come completato.",
+      "defaultText": "Contrassegna questo caso di studio come completato quando hai finito di esaminarlo.",
+      "completedOn": "Completato il {date}",
+      "completedRecently": "Completato di recente",
+      "button": {
+        "completed": "Completato",
+        "saving": "Salvataggio...",
+        "markCompleted": "Contrassegna come completato"
+      }
+    },
+    "CaseStudyLaunchShell": {
+      "back": "Torna all'ePortfolio",
+      "area": {
+        "environmental": "Ambientale",
+        "social": "Sociale",
+        "governance": "Governance",
+        "crossCutting": "Trasversale"
+      },
+      "featured": "In primo piano",
+      "completed": "Completato",
+      "organization": "Organizzazione",
+      "industry": "Settore",
+      "contentTitle": "Contenuto del caso di studio",
+      "takeawaysTitle": "Punti chiave",
+      "takeawaysEmpty": "I punti chiave appariranno qui quando verranno aggiunti a questo caso di studio."
+    }
+  }
+}

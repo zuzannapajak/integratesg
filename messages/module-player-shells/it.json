@@ -1,0 +1,96 @@
+{
+  "Protected": {
+    "ModulePlayerShell": {
+      "lessonNavigator": "Navigatore lezioni",
+      "lessonLabel": "Lezione {index}",
+      "lessonActions": {
+        "finishLessons": "Termina lezioni",
+        "completeAndContinue": "Completa la lezione e continua",
+        "estimatedTime": "Tempo stimato: {minutes} min"
+      },
+      "checkpoint": {
+        "defaultEyebrow": "Checkpoint di apprendimento",
+        "defaultTitle": "Verifica delle conoscenze",
+        "defaultIntro": "Rispondi a tutte le domande e invia il checkpoint quando sei pronto.",
+        "defaultNote": "",
+        "preTitle": "Verifica la tua preparazione prima delle lezioni",
+        "preIntro": "Inizia con un breve checkpoint iniziale per sbloccare il percorso di apprendimento e stabilire la tua base di partenza prima di passare alla sequenza delle lezioni.",
+        "preNote": "Hai {attempts, plural, one {# tentativo} other {# tentativi}} per questo checkpoint.",
+        "postEyebrow": "Checkpoint finale",
+        "postTitle": "Completa il modulo con una verifica finale delle conoscenze",
+        "postIntro": "Questo checkpoint conclusivo verifica la comprensione dopo le lezioni e determina se il modulo può essere contrassegnato come completato.",
+        "postNote": "Hai {attempts, plural, one {# tentativo} other {# tentativi}} per questo checkpoint.",
+        "noteSuffix": "Rispondi a ogni domanda, quindi invia quando sei pronto."
+      },
+      "attempt": {
+        "label": "Tentativo {current}",
+        "labelWithTotal": "Tentativo {current} di {total}"
+      },
+      "stats": {
+        "answered": "Risposte date",
+        "flagged": "Contrassegnate",
+        "passingScore": "Punteggio minimo",
+        "score": "Punteggio",
+        "correct": "Corrette",
+        "attempt": "Tentativo",
+        "questions": "Domande"
+      },
+      "questionLabel": "Domanda {index}",
+      "flag": {
+        "default": "Contrassegna",
+        "flagged": "Contrassegnata"
+      },
+      "submissionPanel": {
+        "answeredSummary": "{answered}/{total} domande con risposta",
+        "ready": "Tutto è pronto. Puoi inviare questo checkpoint ora.",
+        "notReady": "Rispondi a tutte le domande per sbloccare l'invio.",
+        "reviewAndSubmit": "Rivedi e invia"
+      },
+      "review": {
+        "eyebrow": "Risultato del checkpoint",
+        "title": "Le tue risposte sono state revisionate",
+        "description": "Controlla il risultato qui sotto. Ogni domanda include un feedback chiaro e la risposta corretta è evidenziata.",
+        "correct": "Corretto",
+        "incorrect": "Errato",
+        "correctFeedback": "Questa è la risposta corretta.",
+        "incorrectFeedback": "Questa risposta non è corretta per questa domanda.",
+        "whyCorrect": "Perché questa risposta è corretta",
+        "correction": "Correzione e logica",
+        "correctAnswerIs": "La risposta corretta è:"
+      },
+      "reviewContinue": {
+        "lessons": "Continua alle lezioni",
+        "finalCheckpoint": "Continua al checkpoint finale",
+        "completed": "Termina modulo",
+        "default": "Continua"
+      },
+      "completed": {
+        "badge": "Modulo completato",
+        "title": "Hai completato questo modulo di apprendimento",
+        "description": "La tua progressione nelle lezioni e la cronologia dei checkpoint sono state salvate. Ora puoi tornare alla panoramica del modulo o continuare a esplorare il resto del curriculum.",
+        "retake": "Rifai il modulo",
+        "reviewOverview": "Rivedi la panoramica del modulo",
+        "exploreMore": "Esplora altri moduli",
+        "finalProgress": "Progresso finale",
+        "whatsNextTitle": "Cosa fare ora",
+        "whatsNextDescription": "Ricomincia il modulo dall'inizio, rivedi la panoramica o passa a un altro argomento correlato."
+      },
+      "confirmSubmit": {
+        "eyebrow": "Pronto per l'invio",
+        "title": "Inviare questo checkpoint ora?",
+        "description": "Questo salverà le tue risposte attuali e aprirà la revisione completa dei feedback per questo tentativo.",
+        "afterSubmit": "Dopo l'invio vedrai quali risposte erano corrette, insieme al feedback e alla spiegazione per le domande revisionate.",
+        "back": "Torna indietro",
+        "submit": "Invia checkpoint"
+      },
+      "confirmRetake": {
+        "eyebrow": "Rifai modulo",
+        "title": "Ricominciare questo modulo dall'inizio?",
+        "description": "Questo resetterà i tuoi progressi attuali, lo stato delle lezioni e i tentativi del checkpoint per questo modulo.",
+        "note": "La cronologia salvata per questa sessione verrà cancellata e il modulo si riaprirà al checkpoint iniziale.",
+        "cancel": "Annulla",
+        "confirm": "Rifai modulo"
+      }
+    }
+  }
+}

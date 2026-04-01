@@ -1,0 +1,127 @@
+{
+  "Protected": {
+    "ScenarioDetailShell": {
+      "back": "Zurück zu den Szenarien",
+      "area": {
+        "environmental": "Umwelt",
+        "social": "Soziales",
+        "governance": "Unternehmensführung",
+        "crossCutting": "Übergreifend"
+      },
+      "status": {
+        "completed": "Abgeschlossen",
+        "inProgress": "In Bearbeitung",
+        "readyToStart": "Bereit zum Start"
+      },
+      "featured": "Hervorgehoben",
+      "eyebrow": "Szenario-Launcher",
+      "heroIntro": {
+        "completed": "Sie haben dieses Szenario bereits abgeschlossen. Starten Sie jederzeit einen neuen Durchlauf, um den Ablauf erneut zu üben und Ihre Entscheidungen zu vergleichen.",
+        "resumeFromPause": "Ihre letzte Sitzung kann an dem Punkt fortgesetzt werden, an dem Sie pausiert haben.",
+        "resumeNextDecision": "Sie haben dieses Szenario bereits gestartet. Fahren Sie mit dem nächsten Entscheidungspunkt fort.",
+        "default": "Erkunden Sie den Kontext, verstehen Sie die Herausforderung und starten Sie die Erfahrung, wenn Sie bereit sind."
+      },
+      "metrics": {
+        "duration": "Dauer",
+        "focus": "Fokus",
+        "latestScore": "Letzte Punktzahl",
+        "lastOpened": "Zuletzt geöffnet",
+        "decisionMaking": "Entscheidungsfindung",
+        "notYet": "Noch nicht"
+      },
+      "progress": {
+        "completed": "Abgeschlossen",
+        "finishedWithScore": "Abgeschlossen mit {score}%",
+        "completedNoScore": "Szenario erfolgreich abgeschlossen",
+        "resumeFrom": "Fortsetzen bei {location}",
+        "continueLatest": "Vom letzten Checkpoint fortfahren",
+        "ready": "Bereit für den ersten Versuch"
+      },
+      "nextAction": {
+        "title": "Nächste Aktion",
+        "completedDescription": "Starten Sie einen neuen Versuch, um das Szenario erneut zu durchlaufen und zu sehen, wie sich ein neuer Durchgang entwickelt.",
+        "inProgressDescription": "Fahren Sie an Ihrem letzten Checkpoint fort und bleiben Sie am Ball.",
+        "defaultDescription": "Starten Sie das Szenario, um die geführte Erfahrung zu beginnen.",
+        "restart": "Szenario neu starten",
+        "resume": "Szenario fortsetzen",
+        "launch": "Szenario starten",
+        "exploreJourney": "Reise erkunden"
+      },
+      "tabs": {
+        "overview": "Übersicht",
+        "practice": "Was Sie üben werden",
+        "prepare": "Bevor Sie starten",
+        "related": "Ähnliche"
+      },
+      "overview": {
+        "title": "Szenario-Übersicht",
+        "highlightsTitle": "Highlights der Erfahrung",
+        "highlights": [
+          "Ein geführter Ablauf, der sich Schritt für Schritt entfaltet.",
+          "Feedback nach Schlüsselentscheidungen, um den Lernprozess aktiv zu halten.",
+          "Eine klare Struktur, die auf gezielte Praxis statt auf passives Lesen ausgelegt ist."
+        ]
+      },
+      "practice": {
+        "cardTitle": "Angewandte Praxis",
+        "points": {
+          "environmental": [
+            "Nachhaltigkeitsziele mit betrieblichen Kompromissen abwägen.",
+            "Signale in Bezug auf Effizienz, Risiko und Auswirkungen interpretieren.",
+            "Maßnahmen wählen, die langfristige Umweltergebnisse verbessern."
+          ],
+          "social": [
+            "Auf Spannungen zwischen Stakeholdern mit Empathie und Klarheit reagieren.",
+            "Personenbezogene Konsequenzen bei konkurrierenden Prioritäten abwägen.",
+            "Inklusive Entscheidungsfindung unter realem Druck üben."
+          ],
+          "governance": [
+            "Verantwortlichkeitswege und Eskalationsmöglichkeiten bewerten.",
+            "Urteilsvermögen in Bezug auf Transparenz und Richtlinienkonformität stärken.",
+            "Verstehen, wie Governance-Design die Qualität der Umsetzung beeinflusst."
+          ],
+          "crossCutting": [
+            "ESG-Dimensionen in einem kohärenten Entscheidungsfluss verbinden.",
+            "Interdependenzen zwischen Menschen, Prozessen und Auswirkungen erkennen.",
+            "Strukturiertes Denken in komplexen praktischen Situationen anwenden."
+          ]
+        }
+      },
+      "prepare": {
+        "title": "Vor dem Start",
+        "quickTipTitle": "Kurzer Tipp",
+        "quickTipText": "Diese Seite ist ein Ruhepunkt vor dem interaktiven Erlebnis. Überprüfen Sie den Kontext und starten Sie, wenn Sie bereit sind.",
+        "checklist": {
+          "time": "Planen Sie etwa {duration} für einen konzentrierten Durchlauf ein.",
+          "flow": "Erwarten Sie gestufte Entscheidungen, sofortiges Feedback und praktische Kompromisse.",
+          "revisit": "Kehren Sie später zum Szenario zurück, um zu vergleichen, wie verschiedene Entscheidungen das Ergebnis beeinflussen."
+        }
+      },
+      "relatedPanel": {
+        "openLauncher": "Launcher öffnen",
+        "emptyTitle": "Noch keine ähnlichen Szenarien",
+        "emptyDescription": "Weitere Empfehlungen erscheinen hier, sobald die Bibliothek wächst."
+      }
+    },
+    "ScenarioLaunchShell": {
+      "area": {
+        "environmental": "Umwelt",
+        "social": "Soziales",
+        "governance": "Unternehmensführung",
+        "crossCutting": "Übergreifend"
+      }
+    },
+    "ScenarioSwitcher": {
+      "tabs": {
+        "mine": "Meine Szenarien",
+        "all": "Alle Szenarien"
+      },
+      "empty": {
+        "mineTitle": "Noch keine verfolgten Szenarien",
+        "mineDescription": "Starten Sie ein Szenario, um Ihre persönliche Bibliothek aufzubauen.",
+        "allTitle": "Keine Szenarien gefunden",
+        "allDescription": "Versuchen Sie, den ESG-Filter oder den Suchbegriff anzupassen."
+      }
+    }
+  }
+}
