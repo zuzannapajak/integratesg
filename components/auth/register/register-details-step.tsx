@@ -193,22 +193,18 @@ export default function RegisterDetailsStep({
         </div>
 
         <div className="order-1 min-w-0 lg:order-2">
-          <div className="flex h-full min-h-90 flex-col rounded-3xl border border-[#e7edf3] bg-[linear-gradient(180deg,rgba(247,249,252,0.92)_0%,rgba(255,255,255,0.88)_100%)] px-6 py-6">
+          <div className="flex h-full min-h-90 flex-col rounded-3xl border border-[#e7edf3] bg-[linear-gradient(180deg,rgba(247,249,252,0.92)_0%,rgba(255,255,255,0.88)_100%)] px-6 py-8">
             <div className="mx-auto flex h-full w-full max-w-[320px] flex-col justify-center text-center">
-              <div>
+              <div className="space-y-2">
                 <p className="text-[1rem] font-semibold text-[#31425a]">
-                  {t("continueWithGoogle")}
-                </p>
-                <p className="mt-2 text-[0.92rem] leading-6 text-[#667180]">
                   {t("continueWithGoogleDescription")}
                 </p>
+                <p className="text-[0.92rem] leading-6 text-[#667180]">{t("googleHint")}</p>
               </div>
 
-              <div className="mt-6">
+              <div className="mt-8">
                 <SocialLoginButtons locale={locale} nextPath={`/${locale}/auth/complete-profile`} />
               </div>
-
-              <p className="mt-6 text-[0.88rem] leading-6 text-[#7a8594]">{t("googleHint")}</p>
             </div>
           </div>
         </div>

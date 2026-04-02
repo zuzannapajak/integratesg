@@ -9,13 +9,13 @@
         "secondaryCta": "Read more"
       },
       "heroCards": {
-        "openAccessTitle": "Open access",
-        "openAccessDescription": "Freely available resources designed for adaptation and use.",
-        "practicalPackageBadge": "Practical package",
-        "practicalPackageTitle": "Curriculum, eLearning, ePortfolio, and Scenario Simulator.",
-        "practicalPackageDescription": "A connected learning ecosystem designed to support ESG awareness.",
-        "euRelevanceTitle": "EU relevance",
-        "euRelevanceDescription": "Supports Green Deal priorities and innovation in vocational education."
+        "card1Title": "Open access",
+        "card1Description": "Freely available resources designed for adaptation and use.",
+        "card2Badge": "Learning package",
+        "card2Title": "Curriculum, eLearning, ePortfolio, and Scenario Simulator.",
+        "card2Description": "A connected learning ecosystem designed to support ESG awareness.",
+        "card3Title": "EU relevance",
+        "card3Description": "Supports Green Deal priorities and innovation in vocational education."
       },
       "project": {
         "eyebrow": "Project",
@@ -102,9 +102,19 @@
         "primaryCta": "Register",
         "secondaryCta": "Learn more"
       },
+      "heroCards": {
+        "card1Title": "Structured learning",
+        "card1Description": "Access organised ESG modules and educational pathways prepared for guided teaching.",
+        "card2Badge": "Real-World Ready",
+        "card2Title": "Practical teaching support",
+        "card2Description": "Use case studies and scenario-based materials to connect theory with applied learning.",
+        "card3Title": "Flexible classroom use",
+        "card3Description": "Integrate platform resources into different learning groups, contexts, and teaching formats."
+      },
       "highlights": {
         "eyebrow": "Main benefits",
         "title": "What educators can do on the platform",
+        "description": "The platform helps educators introduce ESG topics in a more structured, practical, and accessible way.",
         "items": {
           "1": {
             "title": "Access structured curriculum resources",
@@ -117,10 +127,16 @@
           "3": {
             "title": "Work with case studies and scenarios",
             "description": "Integrate practical cases and scenario-based activities into educational processes and discussions."
+          },
+          "4": {
+            "title": "Connect theory with practical learning",
+            "description": "Use platform resources to make ESG topics more understandable through practical examples, structured activities, and applied contexts."
           }
         }
       },
       "sections": {
+        "eyebrow": "Practical use",
+        "title": "How educators can use the platform",
         "1": {
           "title": "Curriculum-focused learning",
           "description": "The platform gives educators access to curriculum-oriented modules and learning checkpoints that can support structured teaching and self-paced study."
@@ -150,9 +166,19 @@
         "primaryCta": "Register",
         "secondaryCta": "Learn more"
       },
+      "heroCards": {
+        "card1Title": "Interactive scenarios",
+        "card1Description": "Explore ESG topics through realistic decision-making activities and guided practice.",
+        "card2Badge": "Self-paced learning",
+        "card2Title": "Case studies and examples",
+        "card2Description": "Use structured examples to understand how ESG appears in practical educational and professional contexts.",
+        "card3Title": "Accessible learning flow",
+        "card3Description": "Move through multilingual content designed to support reflection, clarity, and gradual progress."
+      },
       "highlights": {
         "eyebrow": "Learning experience",
         "title": "What students can explore",
+        "description": "Students can explore ESG topics through practical scenarios, structured examples, and accessible learning materials.",
         "items": {
           "1": {
             "title": "Interactive decision-making scenarios",
@@ -165,10 +191,16 @@
           "3": {
             "title": "Clear and accessible learning flow",
             "description": "Navigate materials designed to support understanding, reflection, and gradual knowledge development."
+          },
+          "4": {
+            "title": "Independent and flexible exploration",
+            "description": "Use the platform at your own pace, return to materials when needed, and build understanding through repeated practice and reflection."
           }
         }
       },
       "sections": {
+        "eyebrow": "Practical use",
+        "title": "How students can use the platform",
         "1": {
           "title": "Scenario-based learning",
           "description": "The platform allows students to approach ESG through practical tasks and simulated decision-making situations."
@@ -262,7 +294,12 @@
         },
         "2": {
           "title": "2. Interface clarity",
-          "description": "Special attention is given to hierarchy, spacing, typography, and navigational consistency so that content remains easier to perceive and use."
+          "items": {
+            "1": "Readable hierarchy and consistent spacing",
+            "2": "Clear typography and content structure",
+            "3": "Predictable navigation and interface patterns",
+            "4": "Design choices that support ease of use"
+          }
         },
         "3": {
           "title": "3. Multilingual environment",

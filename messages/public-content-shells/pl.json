@@ -3,74 +3,74 @@
     "About": {
       "hero": {
         "eyebrow": "O projekcie",
-        "title": "Łączenie kształcenia zawodowego z rzeczywistym wdrażaniem ESG.",
-        "description": "Naszym celem jest wspieranie dostawców VET i menedżerów biznesowych w budowaniu wiedzy, kompetencji i praktycznych narzędzi potrzebnych do integrowania zasad Environmental, Social and Governance z strategiami biznesowymi i kształceniem zawodowym.",
+        "title": "Niwelowanie luki między kształceniem zawodowym a rzeczywistym wdrażaniem ESG.",
+        "description": "Naszym celem jest pomoc dostawcom kształcenia zawodowego (VET) i menedżerom biznesowym w budowaniu wiedzy, umiejętności i praktycznych narzędzi niezbędnych do integracji zasad środowiskowych, społecznych i ładu korporacyjnego (ESG) ze strategiami biznesowymi i szkoleniami zawodowymi.",
         "primaryCta": "Dołącz do platformy",
         "secondaryCta": "Czytaj więcej"
       },
       "heroCards": {
-        "openAccessTitle": "Otwarty dostęp",
-        "openAccessDescription": "Ogólnodostępne zasoby przygotowane z myślą o adaptacji i praktycznym wykorzystaniu.",
-        "practicalPackageBadge": "Pakiet praktyczny",
-        "practicalPackageTitle": "Curriculum, eLearning, ePortfolio i Symulator Scenariuszy.",
-        "practicalPackageDescription": "Spójny ekosystem nauki zaprojektowany z myślą o rozwijaniu świadomości ESG.",
-        "euRelevanceTitle": "Znaczenie dla UE",
-        "euRelevanceDescription": "Wspiera priorytety Zielonego Ładu i innowacje w edukacji zawodowej."
+        "card1Title": "Otwarty dostęp",
+        "card1Description": "Swobodnie dostępne zasoby zaprojektowane do adaptacji i użytku.",
+        "card2Badge": "Pakiet edukacyjny",
+        "card2Title": "Program nauczania, eLearning, ePortfolio i Symulator Scenariuszy.",
+        "card2Description": "Połączony ekosystem edukacyjny zaprojektowany, aby wspierać świadomość ESG.",
+        "card3Title": "Znaczenie dla UE",
+        "card3Description": "Wspiera priorytety Zielonego Ładu i innowacje w kształceniu zawodowym."
       },
       "project": {
         "eyebrow": "Projekt",
-        "title": "Dlaczego ten projekt ma znaczenie",
-        "paragraph1": "Projekt IntegratESG łączy kształcenie zawodowe z praktyką, wyposażając dostawców VET i menedżerów biznesowych w wiedzę oraz narzędzia potrzebne do integrowania zasad Environmental, Social and Governance z strategiami biznesowymi.",
-        "paragraph2": "Wraz z rosnącymi wymaganiami regulacyjnymi w obszarze ESG, takimi jak Corporate Sustainability Reporting Directive (CSRD), organizacje muszą dostosowywać się, aby działać w sposób zrównoważony i odpowiedzialny.",
-        "paragraph3": "Projekt rozwija kompleksowy pakiet edukacyjny obejmujący Roadmap dla dostawców VET, curriculum ESG i kurs eLearningowy, cyfrowe ePortfolio studiów przypadków oraz Symulator Scenariuszy.",
-        "paragraph4": "Zasoby te są dostępne poprzez interaktywną platformę e-learningową i mogą być swobodnie adaptowane oraz wykorzystywane."
+        "title": "Dlaczego ten projekt jest ważny",
+        "paragraph1": "Projekt IntegratESG niweluje lukę między kształceniem zawodowym a praktycznym zastosowaniem, wyposażając dostawców VET i menedżerów biznesowych w wiedzę i narzędzia do integracji zasad ochrony środowiska, odpowiedzialności społecznej i ładu korporacyjnego (ESG) ze strategiami biznesowymi.",
+        "paragraph2": "W obliczu coraz bardziej rygorystycznych regulacji ESG, takich jak dyrektywa CSRD dotycząca raportowania zrównoważonego rozwoju przedsiębiorstw, firmy muszą się dostosować, aby zapewnić zrównoważone i odpowiedzialne działania.",
+        "paragraph3": "W ramach projektu powstaje kompleksowy pakiet szkoleniowy, obejmujący mapę drogową (Roadmap) dla dostawców VET, program nauczania i kurs eLearningowy ESG, cyfrowe ePortfolio studiów przypadków oraz Symulator Scenariuszy.",
+        "paragraph4": "Zasoby te są dostępne za pośrednictwem interaktywnej platformy e-learningowej, udostępnionej bezpłatnie do adaptacji i użytku."
       },
       "strategic": {
         "eyebrow": "Znaczenie strategiczne",
-        "title": "Spójność z priorytetami UE",
-        "description": "Projekt jest zgodny z celami Europejskiego Zielonego Ładu i wspiera adaptację oraz innowacyjność kształcenia zawodowego poprzez integrację świadomości ESG i praktycznego wdrażania tych zagadnień.",
-        "card1Title": "Pakiet edukacyjny",
-        "card1Description": "Roadmap, curriculum, kurs eLearningowy, ePortfolio i Symulator Scenariuszy.",
+        "title": "Zgodność z priorytetami UE",
+        "description": "Projekt ten jest zgodny z celami Europejskiego Zielonego Ładu i przyczynia się do adaptacji oraz innowacji w kształceniu zawodowym poprzez integrację świadomości ESG i praktycznego wdrażania.",
+        "card1Title": "Pakiet szkoleniowy",
+        "card1Description": "Mapa drogowa, program nauczania, kurs eLearning, ePortfolio i Symulator Scenariuszy.",
         "card2Title": "Otwarty dostęp",
-        "card2Description": "Publicznie dostępne zasoby przygotowane do adaptacji i praktycznego użycia."
+        "card2Description": "Bezpłatnie dostępne zasoby zaprojektowane do adaptacji i praktycznego wykorzystania."
       },
       "goals": {
         "eyebrow": "Główne cele",
         "title": "Cztery filary prowadzące projekt.",
         "items": {
           "1": {
-            "title": "Wzmacnianie potencjału dostawców VET",
-            "description": "Wspieranie dostawców edukacji zawodowej poprzez praktyczne narzędzia, uporządkowane wytyczne i zasoby dydaktyczne skoncentrowane na ESG."
+            "title": "Budowanie potencjału dostawców VET",
+            "description": "Wspieranie dostawców kształcenia zawodowego za pomocą praktycznych narzędzi, ustrukturyzowanych wytycznych i zasobów dydaktycznych skoncentrowanych na ESG."
           },
           "2": {
             "title": "Kompetencje biznesowe w zakresie ESG",
-            "description": "Pomoc menedżerom i organizacjom w zrozumieniu wymagań ESG oraz stosowaniu ich w realnych procesach decyzyjnych."
+            "description": "Pomoc menedżerom biznesowym i organizacjom w zrozumieniu wymogów ESG i stosowaniu ich w rzeczywistych procesach decyzyjnych."
           },
           "3": {
             "title": "Współpraca i wymiana dobrych praktyk",
-            "description": "Wzmacnianie współpracy między partnerami i wspieranie wymiany skutecznych podejść pomiędzy krajami i sektorami."
+            "description": "Wzmocnienie współpracy między partnerami i zachęcanie do wymiany skutecznych podejść między krajami i sektorami."
           },
           "4": {
-            "title": "Budowanie świadomości publicznej",
-            "description": "Promowanie szerszego rozumienia zasad ESG i ich znaczenia dla edukacji, biznesu oraz społeczeństwa."
+            "title": "Podnoszenie świadomości społecznej",
+            "description": "Promowanie szerszego zrozumienia zasad ESG i ich znaczenia dla edukacji, biznesu i społeczeństwa."
           }
         }
       },
       "results": {
         "eyebrow": "Oczekiwane rezultaty",
-        "title": "Od wzrostu wiedzy do szerszej zmiany systemowej.",
+        "title": "Od poprawy wiedzy po szerszą zmianę systemową.",
         "items": {
           "1": {
             "title": "Wpływ edukacyjny",
-            "description": "Dydaktycy VET i przedstawiciele biznesu rozwijają wiedzę o ESG, lepiej odpowiadając na współczesne potrzeby rynku pracy."
+            "description": "Edukatorzy VET i profesjonaliści biznesowi poprawiają swoją wiedzę na temat ESG, zapewniając dostosowanie do nowoczesnych potrzeb rynku pracy."
           },
           "2": {
             "title": "Zmiana zachowań",
-            "description": "Firmy coraz częściej uwzględniają zasady ESG w procesach decyzyjnych, co wspiera odpowiedzialność organizacyjną i relacje z interesariuszami."
+            "description": "Firmy coraz częściej przyjmują zasady ESG w podejmowaniu decyzji, co prowadzi do lepszego zaangażowania interesariuszy i odpowiedzialności korporacyjnej."
           },
           "3": {
             "title": "Wpływ systemowy",
-            "description": "Współpraca między uczestniczącymi krajami UE ulega wzmocnieniu, a szkolenia VET są lepiej powiązane z celami zrównoważonego rozwoju i potrzebami rynku."
+            "description": "Współpraca między uczestniczącymi krajami UE umacnia się, dostosowując szkolenia VET do celów zrównoważonego rozwoju i wymagań rynkowych."
           }
         }
       },
@@ -78,356 +78,336 @@
         "eyebrow": "Grupy docelowe",
         "title": "Zaprojektowane dla zróżnicowanych odbiorców edukacyjnych i zawodowych.",
         "items": {
-          "1": "Dydaktycy VET",
+          "1": "Edukatorzy VET",
           "2": "Menedżerowie biznesowi",
           "3": "MŚP i duże przedsiębiorstwa",
-          "4": "Eksperci środowiskowi / decydenci / NGO",
-          "5": "Uczestnicy VET",
-          "6": "Istotni interesariusze"
+          "4": "Eksperci środowiskowi / Decydenci / Organizacje pozarządowe",
+          "5": "Uczniowie/Studenci VET",
+          "6": "Inni kluczowi aktorzy"
         }
       },
       "cta": {
         "eyebrow": "Poznaj platformę",
-        "title": "Zobacz, jak IntegratESG przekłada strategię na praktyczne uczenie się.",
-        "description": "Utwórz konto, aby uzyskać dostęp do interaktywnych scenariuszy, studiów przypadków i uporządkowanych zasobów edukacyjnych ESG.",
-        "primary": "Utwórz konto",
-        "secondary": "Zaloguj się"
+        "title": "Dowiedz się, jak IntegratESG wspiera praktyczną edukację ESG.",
+        "description": "Uzyskaj dostęp do wielojęzycznego środowiska edukacyjnego i zapoznaj się z zasobami stworzonymi w celu wspierania wyników projektu i szerszego zastosowania edukacyjnego.",
+        "primaryCta": "Dołącz do platformy",
+        "secondaryCta": "Czytaj więcej"
       }
     },
     "Educators": {
       "hero": {
-        "eyebrow": "Dla dydaktyków",
-        "title": "Praktyczna przestrzeń do nauczania ESG zaprojektowana dla edukacji zawodowej.",
-        "description": "Platforma pomaga dydaktykom wyjaśniać zagadnienia ESG poprzez uporządkowane zasoby edukacyjne, interaktywne scenariusze i treści oparte na studiach przypadków, które wspierają praktyczne nauczanie.",
-        "secondaryCta": "Czytaj więcej",
-        "primaryCta": "Utwórz konto dydaktyka"
+        "eyebrow": "Dla edukatorów",
+        "title": "Ustrukturyzowane narzędzia do nauki ESG zaprojektowane, aby wspierać nauczanie, doradztwo i praktykę w klasie.",
+        "description": "Edukatorzy mogą korzystać z platformy, aby uzyskać dostęp do zasobów zgodnych z programem nauczania, śledzić postępy w nauce i integrować tematy ESG ze ścieżkami edukacyjnymi.",
+        "primaryCta": "Zarejestruj się",
+        "secondaryCta": "Dowiedz się więcej"
       },
       "heroCards": {
-        "card1Title": "Zastosowanie praktyczne",
-        "card1Description": "Zasoby, które mogą wspierać warsztaty, zajęcia i blended learning.",
-        "card2Badge": "Zestaw dydaktyczny",
-        "card2Title": "Curriculum, scenariusze i studia przypadków w jednym środowisku.",
-        "card2Description": "Zaprojektowane z myślą o wyjaśnianiu, dyskusji i praktycznym nauczaniu ESG.",
-        "card3Title": "Projekt uczenia się",
-        "card3Description": "Struktura oparta na czytelnej nawigacji, zaangażowaniu i klarowności dydaktycznej."
-      },
-      "benefits": {
-        "eyebrow": "Co zyskują dydaktycy",
-        "title": "Zasoby, które pomagają przejść od teorii do praktycznego nauczania ESG.",
-        "description": "Od wsparcia curriculum po naukę opartą na studiach przypadków — platforma została zaprojektowana tak, aby pomagać dydaktykom przedstawiać ESG w bardziej zrozumiały i praktyczny sposób.",
-        "items": {
-          "1": {
-            "title": "Uporządkowany dostęp do curriculum",
-            "description": "Korzystaj z uporządkowanych modułów ESG wspierających nauczanie, prowadzenie procesu uczenia się i rozwój zawodowy."
-          },
-          "2": {
-            "title": "Nauka oparta na scenariuszach",
-            "description": "Wprowadzaj praktykę do zajęć dzięki interaktywnym scenariuszom, które pomagają uczestnikom stosować ESG w konkretnym kontekście."
-          },
-          "3": {
-            "title": "ePortfolio studiów przypadków",
-            "description": "Pracuj z praktycznymi przykładami przedstawionymi w spójnej strukturze, co ułatwia porównywanie i dyskusję."
-          },
-          "4": {
-            "title": "Wielojęzyczne środowisko edukacyjne",
-            "description": "Korzystaj z zasobów w językach partnerów i wspieraj bardziej inkluzywne wykorzystanie treści w różnych kontekstach."
-          }
-        }
-      },
-      "usage": {
-        "eyebrow": "Jak można z niej korzystać",
-        "title": "Platforma wspierająca wyjaśnianie, zaangażowanie i uporządkowaną naukę.",
-        "items": {
-          "1": {
-            "title": "Wsparcie dydaktyczne",
-            "description": "Dydaktycy mogą integrować zasoby platformy z wykładami, warsztatami i projektami prowadzonymi w sposób kierowany."
-          },
-          "2": {
-            "title": "Samoocena i refleksja",
-            "description": "Platforma wspiera refleksję przed i po nauce, pomagając użytkownikom monitorować postępy i poziom zrozumienia."
-          },
-          "3": {
-            "title": "Wyjaśnianie przez praktykę",
-            "description": "Abstrakcyjne pojęcia ESG mogą być tłumaczone za pomocą scenariuszy oraz rzeczywistych lub modelowych przykładów."
-          }
-        }
+        "card1Title": "Ustrukturyzowana nauka",
+        "card1Description": "Dostęp do uporządkowanych modułów ESG i ścieżek edukacyjnych przygotowanych do nauczania pod kierunkiem.",
+        "card2Badge": "Gotowość do praktyki",
+        "card2Title": "Praktyczne wsparcie nauczania",
+        "card2Description": "Wykorzystaj studia przypadków i materiały oparte na scenariuszach, aby połączyć teorię z nauką stosowaną.",
+        "card3Title": "Elastyczne zastosowanie w klasie",
+        "card3Description": "Integruj zasoby platformy z różnymi grupami edukacyjnymi, kontekstami i formatami nauczania."
       },
       "highlights": {
-        "eyebrow": "Najważniejsze elementy",
-        "title": "Co sprawia, że doświadczenie dydaktyka jest wartościowe",
+        "eyebrow": "Główne korzyści",
+        "title": "Co edukatorzy mogą robić na platformie",
+        "description": "Platforma pomaga edukatorom wprowadzać tematy ESG w sposób bardziej ustrukturyzowany, praktyczny i przystępny.",
         "items": {
-          "1": "Wsparcie nauki oparte na roadmapie",
-          "2": "Zasoby dydaktyczne oparte na scenariuszach",
-          "3": "Uporządkowane studia przypadków ESG",
-          "4": "Treści odpowiednie do praktycznej pracy w klasie",
-          "5": "Czytelny, nowoczesny interfejs do prowadzonego uczenia się",
-          "6": "Projektowane dla edukacji zawodowej i stosowanej"
+          "1": {
+            "title": "Dostęp do ustrukturyzowanych zasobów programowych",
+            "description": "Korzystaj z uporządkowanych modułów edukacyjnych ESG, quizów i ścieżek edukacyjnych zaprojektowanych dla kształcenia zawodowego i stosowanego."
+          },
+          "2": {
+            "title": "Wspieranie nauki z przewodnikiem",
+            "description": "Używaj platformy jako środowiska wspierającego wprowadzanie tematów ESG w jaśniejszym i bardziej praktycznym formacie."
+          },
+          "3": {
+            "title": "Praca ze studiami przypadków i scenariuszami",
+            "description": "Integruj praktyczne przypadki i działania oparte na scenariuszach z procesami edukacyjnymi i dyskusjami."
+          },
+          "4": {
+            "title": "Łączenie teorii z nauką praktyczną",
+            "description": "Wykorzystaj zasoby platformy, aby uczynić tematy ESG bardziej zrozumiałymi poprzez praktyczne przykłady, ustrukturyzowane działania i konteksty stosowane."
+          }
+        }
+      },
+      "sections": {
+        "eyebrow": "Praktyczne zastosowanie",
+        "title": "Jak edukatorzy mogą korzystać z platformy",
+        "1": {
+          "title": "Nauka skoncentrowana na programie",
+          "description": "Platforma daje edukatorom dostęp do modułów zorientowanych na program nauczania i punktów kontrolnych, które wspierają ustrukturyzowane nauczanie i samodzielną naukę."
+        },
+        "2": {
+          "title": "Wsparcie nauczania poprzez scenariusze",
+          "description": "Materiały oparte na scenariuszach pozwalają edukatorom łączyć wiedzę ESG z praktycznymi kontekstami podejmowania decyzji i refleksją w klasie."
+        },
+        "3": {
+          "title": "Elastyczne wykorzystanie edukacyjne",
+          "description": "Środowisko zostało zaprojektowane tak, aby było dostępne, wielojęzyczne i możliwe do dostosowania do różnych potrzeb dydaktycznych, grup edukacyjnych i kontekstów projektowych."
         }
       },
       "cta": {
-        "eyebrow": "Zacznij jako dydaktyk",
-        "title": "Utwórz konto i uzyskaj dostęp do praktycznych zasobów do nauczania ESG.",
-        "description": "Korzystaj z modułów curriculum, studiów przypadków i scenariuszy, aby wspierać bardziej praktyczne i angażujące uczenie się ESG.",
-        "primary": "Zarejestruj się teraz",
-        "secondary": "Zaloguj się"
+        "eyebrow": "Dołącz do platformy",
+        "title": "Uzyskaj dostęp do zasobów edukacyjnych ESG przygotowanych dla edukatorów.",
+        "description": "Zarejestruj się, aby poznać materiały programowe, studia przypadków i możliwości nauki opartej na scenariuszach.",
+        "primaryCta": "Zarejestruj się",
+        "secondaryCta": "Zaloguj się"
       }
     },
     "Students": {
       "hero": {
-        "eyebrow": "Dla studentów",
-        "title": "Bardziej angażujący sposób poznawania ESG przez praktykę i uczenie się w działaniu.",
-        "description": "Platforma pomaga studentom rozumieć ESG poprzez interaktywne scenariusze, uporządkowane studia przypadków i doświadczenie edukacyjne łączące teorię z realnymi przykładami.",
-        "secondaryCta": "Czytaj więcej",
-        "primaryCta": "Utwórz konto studenta"
+        "eyebrow": "Dla uczniów i studentów",
+        "title": "Poznawaj tematy ESG poprzez interaktywne scenariusze, studia przypadków i materiały szkoleniowe z przewodnikiem.",
+        "description": "Uczniowie mogą korzystać z platformy, aby budować praktyczne zrozumienie kwestii ESG poprzez samodzielną eksplorację, ustrukturyzowane zasoby i doświadczenia z zakresu uczenia się stosowanego.",
+        "primaryCta": "Zarejestruj się",
+        "secondaryCta": "Dowiedz się więcej"
       },
       "heroCards": {
-        "card1Title": "Aktywna nauka",
-        "card1Description": "Poznawaj ESG poprzez zadania, decyzje i interaktywny postęp.",
-        "card2Badge": "Praktyka scenariuszowa",
-        "card2Title": "Studia przypadków, scenariusze i prowadzone uczenie się w jednym środowisku.",
-        "card2Description": "Zaprojektowane tak, aby łączyć teorię z praktycznymi i łatwiejszymi do zrozumienia przykładami.",
-        "card3Title": "Elastyczny dostęp",
-        "card3Description": "Możliwość korzystania na desktopie i urządzeniach mobilnych w wielojęzycznym środowisku edukacyjnym."
-      },
-      "benefits": {
-        "eyebrow": "Co zyskują studenci",
-        "title": "Jaśniejszy i bardziej aktywny sposób uczenia się ESG.",
-        "description": "Zamiast opierać się wyłącznie na teorii, studenci mogą pracować z przykładami, decyzjami i interaktywnymi zasobami, które ułatwiają zrozumienie i zapamiętanie zagadnień ESG.",
-        "items": {
-          "1": {
-            "title": "Interaktywne scenariusze",
-            "description": "Poznawaj koncepcje ESG poprzez podejmowanie decyzji, wykonywanie zadań i przechodzenie przez praktyczne sytuacje edukacyjne."
-          },
-          "2": {
-            "title": "Odkrywanie studiów przypadków",
-            "description": "Przeglądaj uporządkowane ePortfolio przykładów, które pomagają lepiej rozumieć idee ESG w konkretnym kontekście."
-          },
-          "3": {
-            "title": "Czytelna ścieżka nauki",
-            "description": "Poruszaj się po treściach w sposób bardziej uporządkowany, czytelny i łatwiejszy do śledzenia niż w przypadku rozproszonych materiałów."
-          },
-          "4": {
-            "title": "Dostępna wielojęzyczna platforma",
-            "description": "Korzystaj z platformy na różnych urządzeniach i uzyskuj dostęp do treści przygotowanych dla różnych kontekstów językowych partnerów."
-          }
-        }
-      },
-      "usage": {
-        "eyebrow": "Jak studenci mogą z niej korzystać",
-        "title": "Środowisko uczenia się zbudowane wokół zrozumienia przez interakcję.",
-        "items": {
-          "1": {
-            "title": "Uczenie się przez działanie",
-            "description": "Studenci mogą pracować z ESG poprzez scenariusze symulujące decyzje i praktyczne sytuacje."
-          },
-          "2": {
-            "title": "Łączenie teorii z przykładami",
-            "description": "Studia przypadków pomagają przełożyć abstrakcyjne pojęcia na coś bardziej konkretnego i zrozumiałego."
-          },
-          "3": {
-            "title": "Prowadzony rozwój własny",
-            "description": "Platforma wspiera eksplorację, refleksję i bardziej aktywny sposób uczenia się niż samo statyczne czytanie."
-          }
-        }
+        "card1Title": "Interaktywne scenariusze",
+        "card1Description": "Poznawaj tematy ESG poprzez realistyczne działania decyzyjne i praktykę z przewodnikiem.",
+        "card2Badge": "Nauka we własnym tempie",
+        "card2Title": "Studia przypadków i przykłady",
+        "card2Description": "Korzystaj ze strukturalnych przykładów, aby zrozumieć, jak ESG przejawia się w praktycznych kontekstach edukacyjnych i zawodowych.",
+        "card3Title": "Przystępny przebieg nauki",
+        "card3Description": "Przechodź przez wielojęzyczne treści zaprojektowane tak, aby wspierać refleksję, jasność i stopniowe postępy."
       },
       "highlights": {
-        "eyebrow": "Najważniejsze elementy",
-        "title": "Co sprawia, że doświadczenie studenta jest angażujące",
+        "eyebrow": "Doświadczenie edukacyjne",
+        "title": "Co uczniowie mogą odkryć",
+        "description": "Uczniowie mogą zgłębiać tematykę ESG poprzez praktyczne scenariusze, ustrukturyzowane przykłady i przystępne materiały edukacyjne.",
         "items": {
-          "1": "Interaktywne doświadczenie scenariuszowe",
-          "2": "Praktyczne przykłady ESG",
-          "3": "Uporządkowany format studiów przypadków",
-          "4": "Czytelny interfejs i nawigacja",
-          "5": "Projektowane z myślą o aktywnym zaangażowaniu",
-          "6": "Możliwość korzystania na desktopie i urządzeniach mobilnych"
+          "1": {
+            "title": "Interaktywne scenariusze podejmowania decyzji",
+            "description": "Angażuj się w realistyczne sytuacje ESG i sprawdzaj, jak różne decyzje wpływają na wyniki i perspektywy interesariuszy."
+          },
+          "2": {
+            "title": "Studia przypadków w wielu kontekstach",
+            "description": "Przeglądaj ustrukturyzowane studia przypadków ESG przygotowane w różnych językach, sektorach i środowiskach edukacyjnych."
+          },
+          "3": {
+            "title": "Jasny i przystępny przebieg nauki",
+            "description": "Nawiguj po materiałach zaprojektowanych tak, aby wspierać zrozumienie, refleksję i stopniowy rozwój wiedzy."
+          },
+          "4": {
+            "title": "Niezależna i elastyczna eksploracja",
+            "description": "Korzystaj z platformy we własnym tempie, wracaj do materiałów w razie potrzeby i buduj zrozumienie poprzez powtarzalną praktykę oraz refleksję."
+          }
+        }
+      },
+      "sections": {
+        "eyebrow": "Praktyczne zastosowanie",
+        "title": "Jak uczniowie mogą korzystać z platformy",
+        "1": {
+          "title": "Uczenie się oparte na scenariuszach",
+          "description": "Platforma pozwala uczniom podejść do ESG poprzez praktyczne zadania i symulowane sytuacje decyzyjne."
+        },
+        "2": {
+          "title": "Nauka poprzez przykłady",
+          "description": "Studia przypadków pomagają łączyć teorię z praktyką i pokazują, jak zasady ESG pojawiają się w rzeczywistych kontekstach zawodowych i organizacyjnych."
+        },
+        "3": {
+          "title": "Wsparcie niezależnej nauki",
+          "description": "Uczniowie mogą korzystać z platformy we własnym tempie i wracać do zasobów w ramach szerszych zajęć lub projektów."
         }
       },
       "cta": {
-        "eyebrow": "Zacznij jako student",
-        "title": "Utwórz konto i odkrywaj platformę.",
-        "description": "Uzyskaj dostęp do interaktywnych scenariuszy, praktycznych przykładów ESG i uporządkowanych zasobów edukacyjnych zaprojektowanych tak, aby ułatwiać rozumienie zagadnień w kontekście.",
-        "primary": "Zarejestruj się teraz",
-        "secondary": "Zaloguj się"
+        "eyebrow": "Zacznij naukę",
+        "title": "Utwórz konto i uzyskaj dostęp do praktycznych zasobów ESG.",
+        "description": "Zarejestruj się, aby odkrywać scenariusze, studia przypadków i treści edukacyjne przygotowane dla uczniów.",
+        "primaryCta": "Zarejestruj się",
+        "secondaryCta": "Zaloguj się"
       }
     },
     "Privacy": {
       "hero": {
-        "eyebrow": "Polityka prywatności",
+        "eyebrow": "Informacje o prywatności",
         "title": "Jak prywatność i dane osobowe mogą być przetwarzane na platformie IntegratESG.",
-        "description": "Ta strona przedstawia uporządkowany przegląd rodzajów informacji, które mogą być przetwarzane podczas korzystania z platformy, oraz wyjaśnia zasady prywatności, które powinny kierować jej działaniem.",
+        "description": "Ta strona zawiera ustrukturyzowany przegląd zasad dotyczących prywatności i może zostać później rozszerzona o pełną politykę prywatności, w zależności od ostatecznego zarządzania platformą i konfiguracji operacyjnej.",
         "secondaryCta": "Powrót do strony głównej",
-        "primaryCta": "Warunki korzystania"
+        "primaryCta": "Dostępność"
       },
       "overview": {
         "eyebrow": "Szybki przegląd",
-        "title": "Co obejmuje ta strona",
+        "title": "Główne zasady prywatności",
         "items": {
-          "1": "Ogólne zasady przetwarzania danych osobowych",
-          "2": "Dane związane z dostępem do platformy i kontem użytkownika",
-          "3": "Informacje o postępie i korzystaniu z platformy",
-          "4": "Bezpieczeństwo i odpowiedzialne zarządzanie danymi",
-          "5": "Przyszłe aktualizacje wraz z rozwojem platformy"
+          "1": "Należy zbierać tylko niezbędne dane użytkowników",
+          "2": "Dane powinny być przetwarzane w sposób przejrzysty i odpowiedzialny",
+          "3": "Należy utrzymać bezpieczeństwo i kontrolę dostępu",
+          "4": "Użytkownicy powinni być poinformowani o sposobie działania platformy",
+          "5": "Dodatkowe szczegóły mogą zostać dodane w końcowej dokumentacji prawnej"
         }
       },
       "sections": {
         "1": {
-          "title": "1. Ogólne podejście do prywatności",
-          "description": "Platforma IntegratESG służy wspieraniu działań edukacyjnych i projektowych. Jeżeli dane osobowe są przetwarzane poprzez konta użytkowników, uwierzytelnianie lub śledzenie postępów, takie przetwarzanie powinno odbywać się zgodnie z właściwymi wymogami prawnymi i organizacyjnymi dotyczącymi prywatności."
+          "title": "1. Cel tej strony",
+          "description": "Ta strona dotycząca prywatności obecnie służy jako informacyjny symbol zastępczy, przedstawiający oczekiwany kierunek postępowania z danymi osobowymi na platformie. Została zaprojektowana w celu zapewnienia jasności, pozostawiając miejsce na wprowadzenie bardziej formalnych treści prawnych w późniejszym terminie."
         },
         "2": {
-          "title": "2. Rodzaje informacji, które mogą być przetwarzane",
-          "description": "W zależności od finalnej implementacji i przebiegu korzystania z platformy mogą być przetwarzane dane związane z kontem, takie jak imię i nazwisko, adres e-mail, rola, preferowany język lub dane o postępach powiązane z modułami curriculum, studiami przypadków i scenariuszami."
+          "title": "2. Rodzaje informacji",
+          "description": "W zależności od konfiguracji i sposobu użytkowania platformy, może ona przetwarzać podstawowe dane związane z kontem, takie jak imię i nazwisko, adres e-mail, preferencje językowe, postępy w nauce lub informacje związane z użytkowaniem, niezbędne dla doświadczenia edukacyjnego."
         },
         "3": {
-          "title": "3. Cel przetwarzania",
-          "description": "Dane mogą być przetwarzane w celu umożliwienia bezpiecznego dostępu, personalizacji doświadczenia edukacyjnego, zapisywania postępów, wspierania raportowania edukacyjnego, ulepszania platformy oraz zapewnienia właściwej administracji usługi."
+          "title": "3. Korzystanie z platformy i kontekst edukacyjny",
+          "description": "Wszelkie dane osobowe przetwarzane za pośrednictwem platformy powinny być ograniczone do tego, co jest niezbędne do zapewnienia dostępu do konta, wspierania ścieżek edukacyjnych, śledzenia postępów w nauce i zapewnienia właściwego technicznego funkcjonowania usługi."
         },
         "4": {
-          "title": "4. Dostęp do danych i bezpieczeństwo",
-          "description": "Dostęp do danych platformy powinien być ograniczony do autoryzowanych funkcji i ról. Należy stosować odpowiednie środki techniczne i organizacyjne, aby ograniczać ryzyko nieuprawnionego dostępu, nadużyć, utraty danych lub ich przypadkowego ujawnienia."
+          "title": "4. Bezpieczeństwo i dostęp",
+          "description": "Należy stosować rozsądne techniczne i organizacyjne środki bezpieczeństwa w celu ochrony informacji o użytkownikach i ograniczenia dostępu do osób upoważnionych zaangażowanych w realizację projektu, administrację platformą lub wsparcie edukacyjne."
         },
         "5": {
-          "title": "5. Dalsze doprecyzowanie",
-          "description": "Ta strona Polityki prywatności stanowi obecnie uporządkowany placeholder odpowiedni dla etapu MVP i prezentacji projektu. W przyszłości może zostać rozszerzona do pełnej informacji prawnej po ostatecznym ustaleniu hostingu, odpowiedzialności administracyjnej, podstawy prawnej i procedur operacyjnych."
+          "title": "5. Przyszłe rozszerzenie niniejszego powiadomienia",
+          "description": "Na późniejszych etapach strona ta może zostać rozszerzona o bardziej szczegółowe informacje dotyczące administratorów danych, podstaw prawnych, okresów przechowywania, praw użytkowników, punktów kontaktowych i wymogów specyficznych dla danej jurysdykcji."
+        },
+        "6": {
+          "title": "6. Uwaga końcowa",
+          "description": "Strona ta została celowo napisana jako ustrukturyzowany i przyjazny dla użytkownika symbol zastępczy, który wspiera przejrzystość na obecnym etapie rozwoju platformy."
         }
       }
     },
     "Accessibility": {
       "hero": {
-        "eyebrow": "Deklaracja dostępności",
-        "title": "Zaangażowanie w bardziej dostępne i inkluzywne doświadczenie edukacyjne.",
-        "description": "Ta strona przedstawia założenia związane z dostępnością przyjęte w projekcie platformy oraz obszary wspierające użyteczną, zrozumiałą i responsywną interakcję.",
+        "eyebrow": "Dostępność",
+        "title": "Doświadczenie platformy zaprojektowane tak, aby pozostało jasne, inkluzywne i łatwe w użyciu.",
+        "description": "Ta strona przedstawia intencje zorientowane na dostępność, które przyświecają platformie, i może zostać później rozszerzona o bardziej formalne oświadczenie o dostępności, jeśli będzie to wymagane.",
         "secondaryCta": "Powrót do strony głównej",
-        "primaryCta": "Polityka prywatności"
+        "primaryCta": "Nota prawna"
       },
       "overview": {
         "eyebrow": "Szybki przegląd",
-        "title": "Uwzględnione obszary dostępności",
+        "title": "Główne intencje dotyczące dostępności",
         "items": {
-          "1": "Czytelna struktura i hierarchia",
-          "2": "Responsywne układy na różnych urządzeniach",
-          "3": "Jasne wzorce interakcji",
-          "4": "Dbałość o kontrast i przejrzystość",
-          "5": "Ciągłe doskonalenie w czasie"
+          "1": "Czytelna struktura i jasna nawigacja",
+          "2": "Wsparcie dla treści wielojęzycznych",
+          "3": "Spójne wzorce interfejsu",
+          "4": "Skupienie na zrozumiałych ścieżkach użytkownika",
+          "5": "Potencjał dla przyszłych formalnych oświadczeń o zgodności"
         }
       },
       "sections": {
         "1": {
-          "title": "1. Podejście ogólne",
-          "description": "Platforma została zaprojektowana z myślą o wspieraniu inkluzywnego doświadczenia edukacyjnego. Obejmuje to dbałość o czytelność układu, zrozumiałą strukturę treści, responsywność oraz podstawowe zasady dostępności istotne dla internetowych narzędzi edukacyjnych."
+          "title": "1. Podejście do dostępności",
+          "description": "Platforma jest projektowana tak, aby wspierać przejrzystą strukturę wizualną, zrozumiałe interakcje oraz doświadczenie użytkownika, które pozostaje dostępne dla różnych grup użytkowników i kontekstów edukacyjnych."
         },
         "2": {
-          "title": "2. Rozwiązania wspierające dostępność",
+          "title": "2. Przejrzystość interfejsu",
           "items": {
-            "1": "Spójna struktura stron i czytelne nagłówki sekcji",
-            "2": "Czytelna typografia i odpowiednie odstępy",
-            "3": "Responsywne układy dostosowujące się do mniejszych ekranów",
-            "4": "Elementy interaktywne zaprojektowane tak, aby pozostały zrozumiałe i widoczne"
+            "1": "Czytelna hierarchia i spójne odstępy",
+            "2": "Jasna typografia i struktura treści",
+            "3": "Przewidywalna nawigacja i wzorce interfejsu",
+            "4": "Wybory projektowe wspierające łatwość użytkowania"
           }
         },
         "3": {
-          "title": "3. Obszary do dalszego rozwijania",
-          "description": "Dostępność jest procesem ciągłym, a nie jednorazowym zadaniem. Dalsze usprawnienia mogą obejmować szersze testowanie, dopracowywanie szczegółów interakcji oraz zmiany wynikające z feedbacku użytkowników lub formalnego audytu dostępności."
+          "title": "3. Środowisko wielojęzyczne",
+          "description": "Ponieważ platforma obsługuje wiele języków partnerskich, jasność i spójność przetłumaczonych treści są również traktowane jako część szerszego celu związanego z dostępnością."
         },
         "4": {
-          "title": "4. Feedback i wsparcie",
-          "description": "Jeżeli użytkownik napotka bariery podczas korzystania z platformy, problem powinien zostać udokumentowany i przeanalizowany, aby kolejne iteracje usługi mogły poprawiać dostępność i użyteczność doświadczenia."
+          "title": "4. Ciągłe doskonalenie",
+          "description": "Dostępność jest traktowana jako ewoluujący cel jakościowy. Przyszłe iteracje platformy mogą wprowadzić dodatkowe udoskonalenia, testy i bardziej formalne oświadczenia w zależności od potrzeb projektu i końcowych ustaleń dotyczących publikacji."
         },
         "5": {
-          "title": "5. Uwaga końcowa",
-          "description": "Ta deklaracja przedstawia uporządkowany przegląd dostępności dla obecnego etapu rozwoju platformy. W przyszłości może zostać rozszerzona do bardziej formalnej deklaracji dostępności, jeśli będzie to wymagane przez obowiązki instytucjonalne lub prawne."
+          "title": "5. Przyszłe oświadczenie",
+          "description": "W razie potrzeby strona ta może zostać w przyszłości zastąpiona lub uzupełniona formalną deklaracją dostępności, odzwierciedlającą ostateczną konfigurację techniczną i organizacyjną platformy."
+        },
+        "6": {
+          "title": "6. Uwaga końcowa",
+          "description": "Ta strona obecnie pełni rolę ustrukturyzowanego symbolu zastępczego dla dostępności, mającego na celu wspieranie bardziej inkluzywnego i godnego zaufania doświadczenia publicznego."
         }
       }
     },
     "LegalNotice": {
       "hero": {
         "eyebrow": "Nota prawna",
-        "title": "Podstawowe informacje prawne i organizacyjne o platformie.",
-        "description": "Ta strona udostępnia uporządkowany obszar informacji prawnych, który w przyszłości może zostać rozszerzony o szczegółowe dane instytucjonalne, administracyjne i compliance.",
+        "title": "Ogólne informacje prawne i organizacyjne związane z platformą.",
+        "description": "Ta strona stanowi ustrukturyzowany symbol zastępczy dla informacji prawnych i instytucjonalnych i może zostać później rozszerzona o formalne dane dotyczące własności, odpowiedzialności i danych kontaktowych.",
         "secondaryCta": "Powrót do strony głównej",
-        "primaryCta": "Warunki korzystania"
+        "primaryCta": "Warunki użytkowania"
       },
       "overview": {
-        "eyebrow": "Struktura noty",
-        "title": "Typowe obszary informacji",
+        "eyebrow": "Szybki przegląd",
+        "title": "Główne obszary informacji prawnych",
         "items": {
-          "1": "Tożsamość projektu i platformy",
-          "2": "Instytucjonalny lub organizacyjny operator",
-          "3": "Ogólne dane kontaktowe i komunikacyjne",
-          "4": "Informacje o własności intelektualnej i prawach",
-          "5": "Odniesienia prawne i compliance"
+          "1": "W tym miejscu można opisać kontekst projektowy i instytucjonalny",
+          "2": "W tym miejscu można wyjaśnić odpowiedzialność za platformę",
+          "3": "Dane kontaktowe mogą zostać dodane później",
+          "4": "Własność i licencjonowanie mogą zostać określone w przyszłych wersjach",
+          "5": "Ta strona obecnie pełni rolę symbolu zastępczego o charakterze informacyjnym"
         }
       },
       "sections": {
         "1": {
-          "title": "1. Tożsamość platformy",
-          "description": "Platforma IntegratESG jest rozwijana w ramach projektu IntegratESG jako cyfrowe środowisko edukacyjne wspierające działania dydaktyczne i praktyczne związane z ESG."
+          "title": "1. Kontekst platformy",
+          "description": "Platforma IntegratESG stanowi część szerszej inicjatywy edukacyjnej i projektowej skupionej na świadomości ESG, kształceniu zawodowym i wsparciu praktycznego wdrażania. Dalsze szczegóły dotyczące własności instytucjonalnej i projektowej mogą zostać dodane tutaj w przyszłych wersjach."
         },
         "2": {
-          "title": "2. Odpowiedzialność organizacyjna",
-          "description": "W zależności od ostatecznego modelu operacyjnego platforma może być administrowana lub utrzymywana przez partnera projektu, instytucję koordynującą lub inny wyznaczony podmiot odpowiedzialny za działanie techniczne i realizację projektu."
+          "title": "2. Odpowiedzialność operacyjna",
+          "description": "W zależności od ostatecznej konfiguracji operacyjnej, platforma może być administrowana lub utrzymywana przez partnera projektu, instytucję koordynującą lub inny wyznaczony podmiot odpowiedzialny za obsługę techniczną i realizację projektu."
         },
         "3": {
           "title": "3. Kontakt i komunikacja",
-          "description": "Szczegóły kontaktowe związane z projektem, aspektami technicznymi lub instytucjonalnymi mogą zostać opublikowane tutaj po potwierdzeniu końcowego modelu komunikacji. Sekcja ta może w przyszłości obejmować adresy e-mail, odniesienia instytucjonalne lub inne formalne punkty kontaktu."
+          "description": "Dane kontaktowe związane z projektem, techniczne lub instytucjonalne mogą zostać opublikowane tutaj po potwierdzeniu ostatecznego modelu komunikacji. Sekcja ta może później zawierać adresy e-mail, odniesienia instytucjonalne lub inne formalne punkty kontaktowe."
         },
         "4": {
           "title": "4. Własność intelektualna",
-          "description": "Treści platformy, elementy projektowe i zasoby edukacyjne mogą podlegać określonym zasadom własności, licencjonowania lub oznaczania autorstwa. Dokładne reguły ponownego wykorzystania i adaptacji powinny być interpretowane zgodnie z modelem licencyjnym właściwym dla danego zasobu lub rezultatu projektu."
+          "description": "Zawartość platformy, elementy projektu i zasoby edukacyjne mogą podlegać określonym wymogom dotyczącym własności, licencjonowania lub przypisania autorstwa. Dokładne zasady ponownego wykorzystania i adaptacji powinny być interpretowane zgodnie z modelem licencjonowania mającym zastosowanie do każdego zasobu lub wyniku projektu."
         },
         "5": {
-          "title": "5. Informacyjny charakter tej strony",
-          "description": "Niniejsza Nota prawna jest obecnie prezentowana jako uporządkowana strona informacyjna odpowiednia dla obecnego etapu platformy. W przyszłości może zostać rozszerzona do bardziej formalnego obszaru ujawnień prawnych z kompletnymi danymi instytucjonalnymi i jurysdykcyjnymi."
+          "title": "5. Informacyjny charakter niniejszej strony",
+          "description": "Niniejsza Nota Prawna jest obecnie prezentowana jako ustrukturyzowana strona informacyjna na obecnym etapie działania platformy. Może ona zostać później rozszerzona o formalny obszar ujawniania informacji prawnych z pełnymi danymi instytucjonalnymi i specyficznymi dla danej jurysdykcji."
         },
         "6": {
           "title": "6. Uwaga końcowa",
-          "description": "Ta strona ma tworzyć czytelny placeholder informacji prawnych w publicznej części platformy i wspierać bardziej kompletne oraz wiarygodne doświadczenie użytkownika."
+          "description": "Ta strona ma na celu stworzenie jasnego symbolu zastępczego informacji prawnej w publicznej części platformy i wsparcie bardziej kompletnego i godnego zaufania doświadczenia użytkownika."
         }
       }
     },
     "Terms": {
       "hero": {
-        "eyebrow": "Warunki korzystania",
+        "eyebrow": "Warunki użytkowania",
         "title": "Zasady korzystania z platformy IntegratESG i jej zasobów edukacyjnych.",
-        "description": "Ta strona przedstawia ogólne warunki regulujące dostęp do platformy, korzystanie z materiałów edukacyjnych oraz oczekiwane standardy odpowiedzialnego użycia.",
+        "description": "Ta strona określa ogólne warunki regulujące dostęp do platformy, korzystanie z jej materiałów edukacyjnych oraz oczekiwane standardy odpowiedzialnego użytkowania.",
         "secondaryCta": "Powrót do strony głównej",
         "primaryCta": "Nota prawna"
       },
       "overview": {
         "eyebrow": "Szybki przegląd",
-        "title": "Główne zasady korzystania",
+        "title": "Główne zasady użytkowania",
         "items": {
           "1": "Dostęp jest ograniczony do zamierzonych celów edukacyjnych lub projektowych",
           "2": "Użytkownicy powinni chronić swoje dane logowania",
           "3": "Treści powinny być wykorzystywane odpowiedzialnie i zgodnie z prawem",
           "4": "Dostępność platformy może zmieniać się w czasie",
-          "5": "Mogą obowiązywać także szczegółowe zasady instytucjonalne"
+          "5": "Mogą obowiązywać również specyficzne zasady instytucjonalne"
         }
       },
       "sections": {
         "1": {
-          "title": "1. Zakres korzystania",
-          "description": "Platforma IntegratESG ma wspierać działania edukacyjne, szkoleniowe i projektowe związane ze świadomością ESG, uczeniem się zawodowym i rozwojem praktycznych kompetencji. Korzystanie z platformy powinno pozostawać zgodne z jej edukacyjnym przeznaczeniem."
+          "title": "1. Zakres użytkowania",
+          "description": "Platforma IntegratESG jest przeznaczona do wspierania działań edukacyjnych, szkoleniowych i projektowych związanych ze świadomością ESG, kształceniem zawodowym i praktycznym rozwojem kompetencji. Korzystanie z platformy powinno pozostać spójne z jej celem edukacyjnym."
         },
         "2": {
-          "title": "2. Odpowiedzialność użytkownika",
-          "description": "Od użytkowników oczekuje się odpowiedzialnego korzystania z platformy, dbania o bezpieczeństwo danych logowania oraz unikania działań, które mogłyby zakłócać działanie usługi, naruszać bezpieczeństwo lub negatywnie wpływać na doświadczenie edukacyjne innych użytkowników."
+          "title": "2. Obowiązki użytkownika",
+          "description": "Oczekuje się, że użytkownicy będą korzystać z platformy w sposób odpowiedzialny, dbać o bezpieczeństwo swoich danych uwierzytelniających i unikać działań, które mogłyby zakłócić działanie usługi, narazić bezpieczeństwo lub utrudnić naukę innym użytkownikom."
         },
         "3": {
           "title": "3. Zasoby edukacyjne",
-          "description": "Platforma może zapewniać dostęp do modułów edukacyjnych, studiów przypadków, scenariuszy i materiałów wspierających. Zasoby te są udostępniane na potrzeby uporządkowanego uczenia się i upowszechniania rezultatów projektu. Ich dalsze wykorzystanie, adaptacja lub dystrybucja mogą zależeć od warunków licencyjnych właściwych dla danego zasobu."
+          "description": "Platforma może zapewniać dostęp do modułów edukacyjnych, studiów przypadków, scenariuszy i wspierających materiałów dydaktycznych. Zasoby te są dostarczane w celu ustrukturyzowanego uczenia się i upowszechniania efektów projektu. Ich ponowne wykorzystanie, adaptacja lub dalsza dystrybucja może zależeć od warunków licencjonowania mających zastosowanie do każdego zasobu."
         },
         "4": {
           "title": "4. Dostępność i zmiany",
-          "description": "Platforma może być aktualizowana, rozwijana, reorganizowana lub czasowo niedostępna z powodów technicznych, konserwacyjnych lub rozwojowych. Zespół projektu może dostosowywać funkcje, treści i zasady dostępu wraz z rozwojem platformy."
+          "description": "Platforma może być aktualizowana, ulepszana, reorganizowana lub czasowo niedostępna z powodu konserwacji, prac rozwojowych lub przyczyn technicznych. Zespół projektowy może dostosowywać funkcje, zawartość lub zasady dostępu w miarę ewolucji platformy."
         },
         "5": {
-          "title": "5. Nadużycia i ograniczenia",
-          "description": "Użytkownicy nie mogą podejmować prób nieautoryzowanego dostępu, zakłócać technicznego działania platformy, nadużywać zasobów edukacyjnych ani korzystać z usługi w sposób sprzeczny z obowiązującym prawem, zasadami instytucjonalnymi lub celami projektu."
+          "title": "5. Niewłaściwe użytkowanie i ograniczenia",
+          "description": "Użytkownikom nie wolno podejmować prób nieautoryzowanego dostępu, ingerować w techniczne działanie platformy, nadużywać zasobów edukacyjnych ani korzystać z usługi w sposób sprzeczny z obowiązującym prawem, zasadami instytucjonalnymi lub celami projektu."
         },
         "6": {
           "title": "6. Uwaga końcowa",
-          "description": "Ta strona Warunków korzystania stanowi uporządkowaną bazę informacyjną odpowiednią dla obecnego etapu projektu. W przyszłości może zostać rozszerzona do bardziej szczegółowego dokumentu prawnego lub operacyjnego po pełnym zdefiniowaniu hostingu, governance i zasad administracyjnych."
+          "description": "Niniejsza strona Warunki Użytkowania stanowi ustrukturyzowaną podstawę informacyjną na obecnym etapie projektu. Może zostać później rozszerzona o bardziej szczegółowy dokument prawny lub operacyjny po pełnym zdefiniowaniu końcowego hostingu, zarządzania i ustaleń administracyjnych."
         }
       }
     }

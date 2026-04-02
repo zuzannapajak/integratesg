@@ -54,31 +54,31 @@ export default async function AboutPage({ params }: Props) {
             <div className="relative mx-auto h-125 w-full max-w-145">
               <div className="absolute right-10 top-0 z-30 w-60 rounded-[28px] border border-white/80 bg-white/90 p-5 shadow-[0_20px_50px_rgba(35,45,62,0.1)] backdrop-blur-xl">
                 <p className="text-[0.74rem] font-bold uppercase tracking-[0.16em] text-[#ef6c23]">
-                  {t("heroCards.openAccessTitle")}
+                  {t("heroCards.card1Title")}
                 </p>
                 <p className="mt-3 text-[0.92rem] leading-7 text-[#5e6776]">
-                  {t("heroCards.openAccessDescription")}
+                  {t("heroCards.card1Description")}
                 </p>
               </div>
 
               <div className="absolute left-10 top-25 z-20 w-85 rounded-[30px] border border-white/70 bg-white/86 p-6 shadow-[0_18px_48px_rgba(35,45,62,0.08)] backdrop-blur-xl">
                 <p className="inline-flex rounded-full bg-[#0d7fc2]/8 px-3 py-1 text-[0.72rem] font-bold uppercase tracking-[0.16em] text-[#0d7fc2]">
-                  {t("heroCards.practicalPackageBadge")}
+                  {t("heroCards.card2Badge")}
                 </p>
                 <h2 className="mt-4 text-[1.2rem] font-semibold tracking-[-0.03em] text-[#31425a] lg:max-w-55">
-                  {t("heroCards.practicalPackageTitle")}
+                  {t("heroCards.card2Title")}
                 </h2>
                 <p className="mt-4 text-[0.92rem] leading-6 text-[#5e6776] lg:max-w-60">
-                  {t("heroCards.practicalPackageDescription")}
+                  {t("heroCards.card2Description")}
                 </p>
               </div>
 
               <div className="absolute right-10 top-72.5 z-30 w-62.5 rounded-[28px] border border-white/70 bg-white/90 p-5 shadow-[0_20px_50px_rgba(35,45,62,0.1)] backdrop-blur-xl">
                 <p className="text-[0.74rem] font-bold uppercase tracking-[0.16em] text-[#0b9c72]">
-                  {t("heroCards.euRelevanceTitle")}
+                  {t("heroCards.card3Title")}
                 </p>
                 <p className="mt-3 text-[0.92rem] leading-7 text-[#5e6776]">
-                  {t("heroCards.euRelevanceDescription")}
+                  {t("heroCards.card3Description")}
                 </p>
               </div>
 
@@ -233,10 +233,10 @@ export default async function AboutPage({ params }: Props) {
 
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link href={`/${locale}/auth/register`} className="landing-primary-cta">
-              {t("cta.primary")}
+              {t("cta.primaryCta")}
             </Link>
             <Link href={`/${locale}/auth/login`} className="landing-secondary-cta">
-              {t("cta.secondary")}
+              {t("cta.secondaryCta")}
             </Link>
           </div>
         </div>

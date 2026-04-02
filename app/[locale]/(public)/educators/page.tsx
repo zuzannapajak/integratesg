@@ -11,16 +11,19 @@ export default async function EducatorsPage({ params }: Props) {
   const t = await getTranslations({ locale, namespace: "PublicContent.Educators" });
 
   const educatorBenefits = [1, 2, 3, 4].map((index) => ({
-    title: t(`benefits.items.${index}.title`),
-    description: t(`benefits.items.${index}.description`),
+    title: t(`highlights.items.${index}.title`),
+    description: t(`highlights.items.${index}.description`),
   }));
 
   const educatorUseCases = [1, 2, 3].map((index) => ({
-    title: t(`usage.items.${index}.title`),
-    description: t(`usage.items.${index}.description`),
+    title: t(`sections.${index}.title`),
+    description: t(`sections.${index}.description`),
   }));
 
-  const educatorHighlights = [1, 2, 3, 4, 5, 6].map((index) => t(`highlights.items.${index}`));
+  const educatorHighlights = [1, 2, 3, 4].map((index) => ({
+    title: t(`highlights.items.${index}.title`),
+    description: t(`highlights.items.${index}.description`),
+  }));
 
   return (
     <main className="bg-[#ececec]">
@@ -95,12 +98,12 @@ export default async function EducatorsPage({ params }: Props) {
         <div className="mx-auto max-w-340 space-y-8">
           <div className="rounded-4xl border border-white/60 bg-white/90 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.07)] backdrop-blur md:p-8 lg:p-10">
             <div className="max-w-210">
-              <p className="landing-section-eyebrow">{t("benefits.eyebrow")}</p>
+              <p className="landing-section-eyebrow">{t("highlights.eyebrow")}</p>
               <h2 className="mt-3 text-[1.9rem] font-semibold tracking-[-0.03em] text-[#31425a] sm:text-[2.2rem]">
-                {t("benefits.title")}
+                {t("highlights.title")}
               </h2>
               <p className="mt-4 max-w-[64ch] text-[1rem] leading-7 text-[#596170]">
-                {t("benefits.description")}
+                {t("highlights.description")}
               </p>
             </div>
 
@@ -121,10 +124,10 @@ export default async function EducatorsPage({ params }: Props) {
           </div>
 
           <div className="grid gap-8 xl:grid-cols-[1.08fr_0.92fr]">
-            <article className="rounded-4xl border border-white/60 bg-white/88 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.06)] backdrop-blur md:p-8 lg:p-10">
-              <p className="landing-section-eyebrow">{t("usage.eyebrow")}</p>
+            <article className="rounded-4xl border border-white/60 bg-white/80 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.06)] backdrop-blur md:p-8 lg:p-10">
+              <p className="landing-section-eyebrow">{t("sections.eyebrow")}</p>
               <h2 className="mt-3 text-[1.75rem] font-semibold tracking-[-0.03em] text-[#31425a] sm:text-[2rem]">
-                {t("usage.title")}
+                {t("sections.title")}
               </h2>
 
               <div className="mt-8 space-y-5">
@@ -158,14 +161,27 @@ export default async function EducatorsPage({ params }: Props) {
                 {t("highlights.title")}
               </h2>
 
-              <div className="mt-8 flex flex-wrap gap-3">
-                {educatorHighlights.map((item) => (
-                  <div
-                    key={item}
-                    className="rounded-full border border-[#31425a]/10 bg-white px-5 py-3 text-[0.95rem] font-medium text-[#31425a] shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-[#0d7fc2]/30 hover:text-[#0d7fc2]"
+              <div className="mt-8 space-y-4">
+                {educatorHighlights.map((item, index) => (
+                  <article
+                    key={item.title}
+                    className="rounded-3xl border border-white/70 bg-white/88 px-5 py-4 shadow-[0_10px_26px_rgba(35,45,62,0.04)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(35,45,62,0.07)]"
                   >
-                    {item}
-                  </div>
+                    <div className="flex items-start gap-3">
+                      <div className="mt-0.5 flex h-7 min-w-7 items-center justify-center rounded-full bg-[#0d7fc2]/10 text-[0.8rem] font-semibold text-[#0d7fc2]">
+                        0{index + 1}
+                      </div>
+
+                      <div>
+                        <h3 className="text-[1rem] font-semibold tracking-[-0.02em] text-[#31425a]">
+                          {item.title}
+                        </h3>
+                        <p className="mt-1.5 text-[0.94rem] leading-6 text-[#5e6776]">
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+                  </article>
                 ))}
               </div>
             </aside>
@@ -187,10 +203,10 @@ export default async function EducatorsPage({ params }: Props) {
 
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link href={`/${locale}/auth/register`} className="landing-primary-cta">
-              {t("cta.primary")}
+              {t("cta.primaryCta")}
             </Link>
             <Link href={`/${locale}/auth/login`} className="landing-secondary-cta">
-              {t("cta.secondary")}
+              {t("cta.secondaryCta")}
             </Link>
           </div>
         </div>
