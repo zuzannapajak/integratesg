@@ -33,13 +33,19 @@ export default function ProtectedNavbar({ locale, role, email, forceSolid = fals
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const scrollContainer = document.querySelector<HTMLElement>(
+      "[data-protected-scroll-container]",
+    );
+
+    if (!scrollContainer) return;
+
     const onScroll = () => {
       if (tickingRef.current) return;
 
       tickingRef.current = true;
 
       window.requestAnimationFrame(() => {
-        const y = window.scrollY;
+        const y = scrollContainer.scrollTop;
 
         if (!scrolledRef.current && y > 120) {
           scrolledRef.current = true;
@@ -54,37 +60,62 @@ export default function ProtectedNavbar({ locale, role, email, forceSolid = fals
     };
 
     onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
+    scrollContainer.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
-      window.removeEventListener("scroll", onScroll);
+      scrollContainer.removeEventListener("scroll", onScroll);
     };
   }, []);
 
   useEffect(() => {
-    const onPointerDown = (event: MouseEvent | TouchEvent) => {
-      if (!menuRef.current) return;
+    let cleanup: (() => void) | undefined;
+    let rafId = 0;
 
-      const target = event.target as Node;
-      if (!menuRef.current.contains(target)) {
-        setIsMenuOpen(false);
+    const attachScrollListener = () => {
+      const scrollContainer = document.querySelector<HTMLElement>(
+        "[data-protected-scroll-container]",
+      );
+
+      if (!scrollContainer) {
+        rafId = window.requestAnimationFrame(attachScrollListener);
+        return;
       }
+
+      const onScroll = () => {
+        if (tickingRef.current) return;
+
+        tickingRef.current = true;
+
+        window.requestAnimationFrame(() => {
+          const y = scrollContainer.scrollTop;
+
+          if (!scrolledRef.current && y > 120) {
+            scrolledRef.current = true;
+            setIsScrolled(true);
+          } else if (scrolledRef.current && y < 28) {
+            scrolledRef.current = false;
+            setIsScrolled(false);
+          }
+
+          tickingRef.current = false;
+        });
+      };
+
+      onScroll();
+      scrollContainer.addEventListener("scroll", onScroll, { passive: true });
+
+      cleanup = () => {
+        scrollContainer.removeEventListener("scroll", onScroll);
+      };
     };
 
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setIsMenuOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", onPointerDown);
-    document.addEventListener("touchstart", onPointerDown, { passive: true });
-    document.addEventListener("keydown", onKeyDown);
+    attachScrollListener();
 
     return () => {
-      document.removeEventListener("mousedown", onPointerDown);
-      document.removeEventListener("touchstart", onPointerDown);
-      document.removeEventListener("keydown", onKeyDown);
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+      }
+      cleanup?.();
     };
   }, []);
 

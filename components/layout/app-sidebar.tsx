@@ -55,13 +55,13 @@ export default function AppSidebar({ locale, role }: Props) {
   }, [storageKey, collapsed]);
 
   const handleMouseEnter = () => {
-    if (window.innerWidth >= 768) {
+    if (window.innerWidth >= 1024) {
       setCollapsed(false);
     }
   };
 
   const handleMouseLeave = () => {
-    if (window.innerWidth >= 768) {
+    if (window.innerWidth >= 1024) {
       setCollapsed(true);
     }
   };
@@ -186,20 +186,19 @@ export default function AppSidebar({ locale, role }: Props) {
     <aside
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative z-40 h-full shrink-0 border-r border-[#e6ebf1] bg-[rgba(255,255,255,0.78)] backdrop-blur-2xl transition-[width] duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)] ${
+      className={`relative z-40 hidden h-full shrink-0 border-r border-[#e6ebf1] bg-[rgba(255,255,255,0.78)] backdrop-blur-2xl transition-[width] duration-300 ease-[cubic-bezier(0.2,0.8,0.2,1)] lg:block ${
         collapsed ? "w-23" : "w-67"
       }`}
       aria-label={collapsed ? t("expand") : t("collapse")}
     >
       <div
-        className={`absolute -right-4 top-1/2 z-60 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-[#e6ebf1] bg-white text-[#31425a] shadow-md transition-all duration-300 md:flex ${
+        className={`absolute -right-4 top-1/2 z-60 hidden h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-[#e6ebf1] bg-white text-[#31425a] shadow-md transition-all duration-300 lg:flex ${
           collapsed ? "" : "rotate-180"
         }`}
       >
         <ChevronRight className="h-4 w-4" />
       </div>
-
-      <div className="sticky top-24 flex h-[calc(100vh-7rem)] flex-col overflow-hidden px-4 py-5">
+      <div className="sticky top-24 flex h-[calc(100dvh-7rem)] flex-col overflow-hidden px-4 py-5">
         <nav className="mt-2 flex-1 space-y-2">
           {links.map((link) => {
             const isActive = isActiveLink(link);
@@ -217,6 +216,7 @@ export default function AppSidebar({ locale, role }: Props) {
                       ? `${theme.active} shadow-md`
                       : `border-transparent text-[#31425a] hover:bg-[#f4f7fa] ${theme.hoverGlow}`
                   }`}
+                  title={collapsed ? label : undefined}
                 >
                   <span
                     className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border transition-all duration-200 ${
@@ -231,29 +231,17 @@ export default function AppSidebar({ locale, role }: Props) {
                   <span
                     className={`truncate text-[0.96rem] font-medium transition-all duration-200 ease-in-out ${
                       collapsed
-                        ? "invisible ml-0 max-w-0 overflow-hidden opacity-0"
-                        : "visible ml-0 max-w-50 opacity-100"
+                        ? "invisible max-w-0 overflow-hidden opacity-0"
+                        : "visible max-w-44 opacity-100"
                     }`}
                   >
                     {label}
                   </span>
                 </Link>
-
-                {collapsed && (
-                  <div className="pointer-events-none absolute left-full top-1/2 z-30 ml-3 -translate-y-1/2 whitespace-nowrap rounded-xl border border-[#e6ebf1] bg-white px-3 py-2 text-sm font-medium opacity-0 transition-opacity group-hover:opacity-100">
-                    {label}
-                  </div>
-                )}
               </div>
             );
           })}
         </nav>
-
-        <div
-          className={`mt-auto rounded-3xl border border-[#e9eef4] bg-white p-3 transition-all duration-300 ${
-            collapsed ? "invisible opacity-0" : "visible opacity-100"
-          }`}
-        />
       </div>
     </aside>
   );

@@ -259,7 +259,7 @@ function SegmentButton({
     <button
       type="button"
       onClick={onClick}
-      className={`inline-flex items-center gap-2 rounded-2xl px-4 py-2.5 text-sm font-semibold transition ${
+      className={`inline-flex shrink-0 items-center gap-2 rounded-2xl px-4 py-2.5 text-sm font-semibold transition ${
         active
           ? "border border-slate-200 bg-white text-slate-900 shadow-sm"
           : "text-slate-500 hover:bg-white/70 hover:text-slate-700"
@@ -314,13 +314,13 @@ function WindowSelect({
   }, []);
 
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef} className="relative w-full sm:w-auto">
       <button
         type="button"
         onClick={() => {
           setOpen((current) => !current);
         }}
-        className="inline-flex h-12 min-w-55 items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+        className="inline-flex h-12 w-full min-w-0 items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-700 shadow-sm transition hover:border-slate-300 hover:bg-slate-50 sm:w-auto sm:min-w-55"
       >
         <span className="flex items-center gap-3">
           <TrendingUp className="h-4 w-4 text-slate-400" />
@@ -373,14 +373,14 @@ function SortControl({
   options: Array<{ value: string; label: string }>;
 }) {
   return (
-    <div className="relative inline-flex h-12 items-center rounded-2xl border border-slate-200 bg-white px-3 pr-10 text-sm shadow-sm transition hover:border-slate-300">
+    <div className="relative inline-flex h-12 w-full min-w-0 items-center rounded-2xl border border-slate-200 bg-white px-3 pr-10 text-sm shadow-sm transition hover:border-slate-300 sm:w-auto">
       <Filter className="mr-2 h-4 w-4 text-slate-400" />
       <select
         value={value}
         onChange={(event) => {
           onChange(event.target.value);
         }}
-        className="appearance-none bg-transparent pr-6 font-medium text-slate-700 outline-none"
+        className="w-full appearance-none bg-transparent pr-6 font-medium text-slate-700 outline-none"
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -409,7 +409,7 @@ function CompactHeroStat({
   return (
     <motion.div
       variants={FADE_UP}
-      className="group relative overflow-hidden rounded-3xl border border-white/80 bg-white/92 p-4 shadow-[0_14px_34px_rgba(35,45,62,0.07)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(35,45,62,0.09)]"
+      className="group relative overflow-hidden rounded-3xl border border-white/80 bg-white/92 p-4 shadow-[0_14px_34px_rgba(35,45,62,0.07)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(35,45,62,0.09)] sm:p-5"
     >
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-1"
@@ -516,7 +516,7 @@ function MetricPanel({
   const secondaryMetric = metrics.length > 4 ? metrics[4] : undefined;
 
   return (
-    <div className="rounded-[26px] border border-slate-100 bg-white/85 p-6">
+    <div className="rounded-[26px] border border-slate-100 bg-white/85 p-5 sm:p-6">
       <div className="flex items-start gap-4">
         <div
           className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[22px]"
@@ -581,7 +581,7 @@ function LanguageCard({ item }: { item: AdminLanguageStat }) {
   const t = useTranslations("Protected.AdminStatsShell");
 
   return (
-    <div className="rounded-3xl border border-slate-100 bg-white/80 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-slate-200 hover:shadow-[0_14px_34px_rgba(35,45,62,0.06)]">
+    <div className="rounded-3xl border border-slate-100 bg-white/80 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-slate-200 hover:shadow-[0_14px_34px_rgba(35,45,62,0.06)] sm:p-5">
       <div className="mb-4 flex items-start gap-3">
         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-slate-100 text-slate-600">
           <Globe2 className="h-5 w-5" />
@@ -619,7 +619,7 @@ function ScenarioRow({ item }: { item: AdminScenarioStat }) {
   const t = useTranslations("Protected.AdminStatsShell");
 
   return (
-    <div className="relative rounded-3xl border border-slate-100 bg-white/80 p-4 pt-12 transition-all duration-300 hover:border-slate-200 hover:shadow-[0_14px_34px_rgba(35,45,62,0.06)]">
+    <div className="relative rounded-3xl border border-slate-100 bg-white/80 p-4 pt-12 transition-all duration-300 hover:border-slate-200 hover:shadow-[0_14px_34px_rgba(35,45,62,0.06)] sm:p-5 sm:pt-12">
       <div className="absolute left-4 top-4">
         <span
           className={`inline-flex rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] ${getAreaBadgeClass(item.area)}`}
@@ -628,7 +628,7 @@ function ScenarioRow({ item }: { item: AdminScenarioStat }) {
         </span>
       </div>
 
-      <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="min-w-0">
           <p className="truncate text-base font-semibold tracking-tight text-slate-900">
             {item.title}
@@ -646,7 +646,7 @@ function ScenarioRow({ item }: { item: AdminScenarioStat }) {
           </div>
         </div>
 
-        <div className="grid gap-3 sm:grid-cols-2 xl:min-w-105 xl:grid-cols-4">
+        <div className="grid gap-3 sm:grid-cols-2 xl:min-w-0 xl:grid-cols-4">
           <MiniKpi
             label={t("scenarioPerformance.row.attempts")}
             value={String(item.totalAttempts)}
@@ -673,7 +673,7 @@ function CourseRow({ item }: { item: AdminCourseStat }) {
   const t = useTranslations("Protected.AdminStatsShell");
 
   return (
-    <div className="relative rounded-3xl border border-slate-100 bg-white/80 p-4 pt-12 transition-all duration-300 hover:border-slate-200 hover:shadow-[0_14px_34px_rgba(35,45,62,0.06)]">
+    <div className="relative rounded-3xl border border-slate-100 bg-white/80 p-4 pt-12 transition-all duration-300 hover:border-slate-200 hover:shadow-[0_14px_34px_rgba(35,45,62,0.06)] sm:p-5 sm:pt-12">
       <div className="absolute left-4 top-4">
         <span
           className={`inline-flex rounded-full border px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] ${getAreaBadgeClass(item.area)}`}
@@ -682,39 +682,39 @@ function CourseRow({ item }: { item: AdminCourseStat }) {
         </span>
       </div>
 
-      <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_120px_140px_140px_140px_120px] xl:items-center">
+      <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_120px_140px_140px_140px_120px] lg:items-center">
         <div className="min-w-0">
           <p className="truncate text-base font-semibold tracking-tight text-slate-900">
             {item.title}
           </p>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 xl:contents">
-          <div className="xl:min-w-30">
+        <div className="grid gap-3 sm:grid-cols-2 lg:contents">
+          <div className="lg:min-w-30">
             <MiniKpi
               label={t("coursePerformance.row.attempts")}
               value={String(item.totalAttempts)}
             />
           </div>
-          <div className="xl:min-w-35">
+          <div className="lg:min-w-35">
             <MiniKpi
               label={t("coursePerformance.row.completionRate")}
               value={formatPercent(item.completionRate)}
             />
           </div>
-          <div className="xl:min-w-35">
+          <div className="lg:min-w-35">
             <MiniKpi
               label={t("coursePerformance.row.preQuiz")}
               value={formatScore(item.averagePreQuizScore)}
             />
           </div>
-          <div className="xl:min-w-35">
+          <div className="lg:min-w-35">
             <MiniKpi
               label={t("coursePerformance.row.postQuiz")}
               value={formatScore(item.averagePostQuizScore)}
             />
           </div>
-          <div className="xl:min-w-30">
+          <div className="lg:min-w-30">
             <MiniKpi
               label={t("coursePerformance.row.inProgress")}
               value={String(item.inProgress)}
@@ -746,7 +746,7 @@ function ActivityChartSection({
   onWindowChange: (window: ActivityWindow) => void;
 }) {
   return (
-    <Surface className="p-6">
+    <Surface className="p-4 sm:p-6">
       <SectionHeader
         title={title}
         subtitle={subtitle}
@@ -755,7 +755,7 @@ function ActivityChartSection({
 
       <div className="grid gap-4 xl:grid-cols-12">
         <div className="xl:col-span-8 rounded-[26px] border border-slate-100 bg-white/85 p-4">
-          <StatsChart accentColor={accent} data={data} height={420} valueLabel={valueLabel} />
+          <StatsChart accentColor={accent} data={data} height={360} valueLabel={valueLabel} />
         </div>
 
         <div className="xl:col-span-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-1 xl:grid-rows-5">
@@ -1008,11 +1008,11 @@ export default function AdminStatsShell({ stats }: Props) {
         initial="hidden"
         animate="visible"
         variants={STAGGER}
-        className="relative mx-auto max-w-360 px-4 pt-10 sm:px-6 lg:px-8 transition-all duration-300"
+        className="relative mx-auto max-w-360 px-4 pt-6 sm:px-6 sm:pt-8 lg:px-8 lg:pt-10 transition-all duration-300"
       >
         <motion.header
           variants={FADE_UP}
-          className="mb-8 flex flex-col gap-4 px-1 md:flex-row md:items-center md:justify-between"
+          className="mb-6 flex flex-col gap-4 px-1 md:mb-8 md:flex-row md:items-center md:justify-between"
         >
           <div className="flex items-center gap-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/60 bg-white text-[#31425a] shadow-sm">
@@ -1020,7 +1020,7 @@ export default function AdminStatsShell({ stats }: Props) {
             </div>
 
             <div>
-              <h1 className="text-3xl font-bold tracking-tight text-[#31425a]">
+              <h1 className="text-2xl font-bold tracking-tight text-[#31425a] sm:text-3xl">
                 {t("header.title")}
               </h1>
               <p className="text-[#667180]">{t("header.subtitle")}</p>
@@ -1028,7 +1028,7 @@ export default function AdminStatsShell({ stats }: Props) {
           </div>
         </motion.header>
 
-        <div className="flex flex-wrap items-center gap-2 rounded-3xl border border-white/70 bg-[#f8fafc]/80 p-2 shadow-sm">
+        <div className="flex gap-2 overflow-x-auto rounded-3xl border border-white/70 bg-[#f8fafc]/80 p-2 shadow-sm [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
           <SegmentButton
             active={segment === "summary"}
             icon={<TrendingUp className="h-4 w-4" />}
@@ -1073,7 +1073,7 @@ export default function AdminStatsShell({ stats }: Props) {
 
         {segment === "summary" && (
           <>
-            <Surface className="mt-8 p-6">
+            <Surface className="mt-8 p-4 sm:p-6">
               <SectionHeader title={t("glance.title")} subtitle={t("glance.subtitle")} />
 
               <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -1260,7 +1260,7 @@ export default function AdminStatsShell({ stats }: Props) {
         )}
 
         {segment === "languages" && (
-          <Surface className="mt-8 p-6">
+          <Surface className="mt-8 p-4 sm:p-6">
             <SectionHeader title={t("languages.title")} subtitle={t("languages.subtitle")} />
             <div className="grid gap-4 xl:grid-cols-3">
               {filteredLanguages.map((item) => (
@@ -1285,7 +1285,7 @@ export default function AdminStatsShell({ stats }: Props) {
               />
             </section>
 
-            <Surface className="mt-8 p-6">
+            <Surface className="mt-8 p-4 sm:p-6">
               <SectionHeader
                 title={t("scenarioPerformance.title")}
                 subtitle={t("scenarioPerformance.subtitle")}
@@ -1296,7 +1296,7 @@ export default function AdminStatsShell({ stats }: Props) {
                 }
               />
 
-              <div className="mb-6 grid gap-4 xl:grid-cols-[minmax(0,1fr)_260px]">
+              <div className="mb-6 grid gap-4 md:grid-cols-[minmax(0,1fr)_240px]">
                 <div className="relative">
                   <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                   <input
@@ -1359,7 +1359,7 @@ export default function AdminStatsShell({ stats }: Props) {
               )}
             </Surface>
 
-            <Surface className="mt-8 p-6">
+            <Surface className="mt-8 p-4 sm:p-6">
               <SectionHeader
                 title={t("scenarioAttempts.title")}
                 subtitle={t("scenarioAttempts.subtitle")}
@@ -1390,7 +1390,7 @@ export default function AdminStatsShell({ stats }: Props) {
               />
             </section>
 
-            <Surface className="mt-8 p-6">
+            <Surface className="mt-8 p-4 sm:p-6">
               <SectionHeader
                 title={t("coursePerformance.title")}
                 subtitle={t("coursePerformance.subtitle")}
@@ -1401,7 +1401,7 @@ export default function AdminStatsShell({ stats }: Props) {
                 }
               />
 
-              <div className="mb-6 grid gap-4 xl:grid-cols-[minmax(0,1fr)_260px]">
+              <div className="mb-6 grid gap-4 md:grid-cols-[minmax(0,1fr)_240px]">
                 <div className="relative">
                   <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                   <input
@@ -1464,7 +1464,7 @@ export default function AdminStatsShell({ stats }: Props) {
               )}
             </Surface>
 
-            <Surface className="mt-8 p-6">
+            <Surface className="mt-8 p-4 sm:p-6">
               <SectionHeader
                 title={t("curriculumAttempts.title")}
                 subtitle={t("curriculumAttempts.subtitle")}
@@ -1495,7 +1495,7 @@ export default function AdminStatsShell({ stats }: Props) {
               />
             </section>
 
-            <Surface className="mt-8 p-6">
+            <Surface className="mt-8 p-4 sm:p-6">
               <SectionHeader
                 title={t("eportfolioProgress.title")}
                 subtitle={t("eportfolioProgress.subtitle")}
