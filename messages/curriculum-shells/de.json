@@ -50,6 +50,18 @@
         "subtitle": "Lehrmodul"
       }
     },
+    "CurriculumSwitcher": {
+      "tabs": {
+        "myCourses": "Meine Module",
+        "allCourses": "Alle Module"
+      },
+      "empty": {
+        "noModulesTitle": "Noch keine Module gestartet",
+        "noModulesDescription": "Ihre Aktivitäten erscheinen hier, sobald Sie mit der Bearbeitung von Modulen beginnen.",
+        "noResultsTitle": "Keine Module gefunden",
+        "noResultsDescription": "Versuchen Sie, den Suchbegriff oder die Filter anzupassen, um verfügbare Module zu finden."
+      }
+    },
     "CourseDetailShell": {
       "back": "Zurück zum Lehrplan",
       "tabs": {

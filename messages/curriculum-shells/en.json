@@ -50,6 +50,18 @@
         "subtitle": "Curriculum module"
       }
     },
+    "CurriculumSwitcher": {
+      "tabs": {
+        "myCourses": "My modules",
+        "allCourses": "All modules"
+      },
+      "empty": {
+        "noModulesTitle": "No modules started yet",
+        "noModulesDescription": "Your curriculum activity will appear here once you begin working through modules.",
+        "noResultsTitle": "No modules found",
+        "noResultsDescription": "Try adjusting the search phrase or filters to explore available modules."
+      }
+    },
     "CourseDetailShell": {
       "back": "Back to curriculum",
       "tabs": {

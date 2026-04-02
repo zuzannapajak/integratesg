@@ -50,6 +50,18 @@
         "subtitle": "Moduł programu"
       }
     },
+    "CurriculumSwitcher": {
+      "tabs": {
+        "myCourses": "Moje moduły",
+        "allCourses": "Wszystkie moduły"
+      },
+      "empty": {
+        "noModulesTitle": "Brak rozpoczętych modułów",
+        "noModulesDescription": "Twoja aktywność pojawi się tutaj, gdy zaczniesz pracę nad modułami.",
+        "noResultsTitle": "Nie znaleziono modułów",
+        "noResultsDescription": "Spróbuj zmienić frazę wyszukiwania lub filtry, aby przeglądać dostępne moduły."
+      }
+    },
     "CourseDetailShell": {
       "back": "Powrót do programu",
       "tabs": {

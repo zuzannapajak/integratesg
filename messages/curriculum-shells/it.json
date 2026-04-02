@@ -50,6 +50,18 @@
         "subtitle": "Modulo didattico"
       }
     },
+    "CurriculumSwitcher": {
+      "tabs": {
+        "myCourses": "I miei moduli",
+        "allCourses": "Tutti i moduli"
+      },
+      "empty": {
+        "noModulesTitle": "Nessun modulo iniziato",
+        "noModulesDescription": "Le attività del tuo curriculum appariranno qui non appena inizierai a lavorare sui moduli.",
+        "noResultsTitle": "Nessun modulo trovato",
+        "noResultsDescription": "Prova a modificare la frase di ricerca o i filtri per esplorare i moduli disponibili."
+      }
+    },
     "CourseDetailShell": {
       "back": "Torna al curriculum",
       "tabs": {
