@@ -1,94 +1,86 @@
 {
   "Protected": {
-    "CourseDetailShell": {
-      "back": "Zurück zum Curriculum",
-      "area": {
+    "CurriculumListShell": {
+      "header": {
+        "eyebrow": "Lehrplan",
+        "title": "Lernmodule",
+        "description": "Entdecken Sie strukturierte ESG-Lernmodule und setzen Sie Ihre Fortschritte auf der Plattform fort."
+      },
+      "search": {
+        "placeholder": "Module suchen"
+      },
+      "filters": {
+        "allAreas": "Alle Bereiche",
+        "allStatuses": "Alle Status",
         "environmental": "Umwelt",
         "social": "Soziales",
-        "governance": "Governance",
-        "crossCutting": "Übergreifend"
-      },
-      "status": {
-        "completed": "Abgeschlossen",
+        "governance": "Unternehmensführung",
+        "crossCutting": "Übergreifend",
+        "notStarted": "Nicht gestartet",
         "inProgress": "In Bearbeitung",
-        "failed": "Überprüfung erforderlich",
-        "readyToStart": "Bereit zum Start"
+        "completed": "Abgeschlossen",
+        "failed": "Wiederholung erforderlich"
       },
-      "overviewCopy": {
-        "environmental": "Dieses Modul führt in umweltbezogenes Denken in einem praktischen, strukturierten Format ein. Es hilft den Lernenden, Nachhaltigkeitsthemen mit Entscheidungsfindung, Umsetzungsqualität und messbarem Geschäftskontext zu verknüpfen.",
-        "social": "Dieses Modul soll das Verständnis für menschenbezogene ESG-Themen stärken, einschließlich Verantwortung, Stakeholder-Bewusstsein und der menschlichen Auswirkungen operativer Entscheidungen.",
-        "governance": "Dieses Modul konzentriert sich auf Governance als Grundlage glaubwürdiger ESG-Praxis. Es verbindet Richtlinien, Verantwortlichkeit und Entscheidungsqualität mit realem Umsetzungsverhalten.",
-        "crossCutting": "Dieses Modul schafft eine breite ESG-Grundlage und hilft den Lernenden zu verstehen, wie Umwelt-, Sozial- und Governance-Themen in realen Entscheidungsprozessen zusammenwirken."
+      "meta": {
+        "lessons": "{count} Lektionen",
+        "quizzes": "{count} Quizze",
+        "progress": "{count}% abgeschlossen"
       },
-      "heroIntro": {
-        "preQuiz": "Beginnen Sie mit dem Einstiegs-Checkpoint, um den Lernfluss freizuschalten und Ihren Ausgangspunkt festzulegen.",
-        "lessons": "Sie befinden sich aktuell im Lernpfad der Lektionen. Fahren Sie dort fort, wo Sie aufgehört haben.",
-        "postQuiz": "Sie befinden sich am abschließenden Checkpoint. Schließen Sie die Abschlussbewertung ab, um dieses Modul zu beenden.",
-        "completed": "Dieses Modul wurde abgeschlossen. Sie können Ihren Fortschritt überprüfen oder mit einem anderen Thema fortfahren.",
-        "default": "Erkunden Sie die Modulübersicht, die Lernergebnisse und den Lernfluss, bevor Sie beginnen."
+      "difficulty": {
+        "foundation": "Grundlagen",
+        "intermediate": "Mittelstufe"
       },
-      "progressSummary": {
-        "preQuiz": "Einstiegs-Checkpoint ausstehend",
-        "lessonInProgress": "Lektion {index} in Bearbeitung",
-        "postQuiz": "Abschließender Checkpoint verfügbar",
-        "completed": "Modul erfolgreich abgeschlossen",
-        "default": "Bereit zum Start"
+      "generated": {
+        "duration": {
+          "selfPaced": "Selbstgesteuert",
+          "minutes": "{minutes} Min."
+        }
       },
-      "metrics": {
-        "duration": "Dauer",
-        "lessons": "Lektionen",
-        "checkpoints": "Checkpoints",
-        "currentStep": "Aktueller Schritt",
-        "completed": "Abgeschlossen"
+      "cta": {
+        "open": "Modul öffnen",
+        "continue": "Fortsetzen",
+        "review": "Wiederholen"
       },
-      "nextAction": {
-        "title": "Nächste Aktion",
-        "completedDescription": "Dieses Modul ist abgeschlossen. Sie können es überprüfen oder erneut absolvieren.",
-        "defaultDescription": "Fahren Sie mit Ihrem aktuellen Schritt fort oder sehen Sie sich zuerst den vollständigen Lernfluss an.",
-        "reviewWorkspace": "Lernbereich überprüfen",
-        "viewFlow": "Lernfluss anzeigen"
+      "empty": {
+        "title": "Keine Module gefunden",
+        "description": "Versuchen Sie, den Suchbegriff oder die Filter anzupassen, um verfügbare Module zu finden."
       },
-      "relatedModules": "Verwandte Module",
+      "fallbacks": {
+        "description": "Noch keine Beschreibung verfügbar.",
+        "subtitle": "Lehrmodul"
+      }
+    },
+    "CourseDetailShell": {
+      "back": "Zurück zum Lehrplan",
       "tabs": {
-        "overview": "Überblick",
-        "outcomes": "Lernergebnisse",
-        "flow": "Lernfluss",
+        "overview": "Übersicht",
+        "content": "Inhalt",
+        "quiz": "Quiz",
         "progress": "Fortschritt"
       },
       "sections": {
-        "overviewEyebrow": "Modulübersicht",
-        "overviewTitle": "Was dieses Modul erreichen soll",
-        "outcomesEyebrow": "Lernergebnisse",
-        "outcomesTitle": "Was die Lernenden gewinnen sollen",
-        "flowEyebrow": "Lernfluss",
-        "flowTitle": "Wie sich das Modul entfaltet",
-        "progressEyebrow": "Fortschrittsverfolgung",
-        "progressTitle": "Wo sich die Lernenden aktuell befinden"
+        "outcomes": "Lernergebnisse",
+        "structure": "Modulstruktur",
+        "content": "Modulinhalt",
+        "lesson": "Lektion {index}",
+        "quiz": "Wissensprüfung",
+        "progress": "Ihr Fortschritt"
       },
-      "insights": {
-        "practicalTitle": "Praktischer Lernpfad",
-        "practicalText": "Das Modul ist so aufgebaut, dass ESG-Konzepte in verständliche, entscheidungsorientierte Lernschritte übersetzt werden.",
-        "progressionTitle": "Klare Progression",
-        "progressionText": "Jede Phase ist so gestaltet, dass sie vorhersehbar und reibungsarm wirkt und es leicht macht, das Modul fortzusetzen und abzuschließen."
-      },
-      "flowDescriptions": {
-        "opening": "Beginnen Sie mit dem Einstiegs-Checkpoint, bevor Sie in die Lektionen einsteigen.",
-        "closing": "Beenden Sie das Modul mit dem abschließenden Checkpoint nach Abschluss der Lektionen.",
-        "lessons": "Arbeiten Sie sich durch {completed}/{total} Lektionen in der zentralen Lernsequenz."
-      },
-      "progress": {
+      "labels": {
+        "area": "Bereich",
+        "difficulty": "Schwierigkeit",
+        "duration": "Dauer",
+        "lessons": "Lektionen",
+        "quizzes": "Quizze",
+        "status": "Status",
         "currentLocation": "Aktueller Standort",
-        "lessonsCompleted": "Abgeschlossene Lektionen",
-        "openingCheckpointHistory": "Verlauf des Einstiegs-Checkpoints",
-        "openingCheckpointEmpty": "Noch kein Versuch des Einstiegs-Checkpoints gespeichert.",
-        "finalCheckpointHistory": "Verlauf des Abschluss-Checkpoints",
-        "finalCheckpointEmpty": "Noch kein Versuch des Abschluss-Checkpoints gespeichert.",
-        "lessonStatus": "Status der Lektion"
+        "nextAction": "Nächste Aktion"
       },
-      "attempt": {
-        "attemptLabel": "Versuch {number}",
-        "correctSummary": "{correct}/{total} korrekt · {submittedAt}",
-        "flaggedQuestions": "Markierte Fragen: {count}"
+      "status": {
+        "not_started": "Nicht gestartet",
+        "in_progress": "In Bearbeitung",
+        "completed": "Abgeschlossen",
+        "failed": "Wiederholung erforderlich"
       },
       "difficulty": {
         "foundation": "Grundlagen",
@@ -151,49 +143,45 @@
       }
     },
     "CourseQuizPanel": {
-      "empty": {
-        "eyebrow": "Wissens-Checkpoint",
-        "title": "Checkpoint-Inhalt ist noch nicht verfügbar",
-        "description": "Dieses Curriculum-Modul enthält im aktuellen Datensatz noch keine Checkpoint-Inhalte."
-      },
-      "hero": {
-        "eyebrow": "Wissens-Checkpoint",
-        "openingCheckpoint": "Einstiegs-Checkpoint",
-        "finalCheckpoint": "Abschluss-Checkpoint",
-        "title": "Quiz mit sofortigem Feedback",
-        "description": "Beantworten Sie jeweils eine Frage und sehen Sie das Feedback sofort. Diese Ansicht ist darauf ausgelegt, das Lernen klar, interaktiv und leicht nachvollziehbar zu machen."
-      },
-      "stats": {
-        "answered": "Beantwortet",
-        "correct": "Korrekt",
-        "score": "Punktzahl"
-      },
-      "reset": "Zurücksetzen",
-      "questionLabel": "Frage {number}",
-      "result": {
-        "correct": "Korrekt",
-        "incorrect": "Falsch"
+      "quizLabels": {
+        "pre": "Pre-Test",
+        "post": "Post-Test"
       },
       "actions": {
-        "showFeedback": "Feedback anzeigen",
-        "chooseOneAnswer": "Wählen Sie eine Antwort, um fortzufahren."
+        "start": "Quiz starten",
+        "submit": "Antworten absenden",
+        "retry": "Wiederholen",
+        "continue": "Fortsetzen"
       },
-      "feedback": {
-        "title": "Feedback",
-        "correctionTitle": "Feedback und Korrektur",
-        "correctDefault": "Dies ist die richtige Antwort.",
-        "incorrectDefault": "Diese Antwort ist nicht korrekt. Sehen Sie sich unten die Korrektur an.",
-        "whyCorrect": "Warum diese Antwort richtig ist",
-        "correctAnswer": "Richtige Antwort",
-        "correctAnswerIs": "Die richtige Antwort ist: {answer}"
+      "status": {
+        "passed": "Bestanden",
+        "failed": "Wiederholung erforderlich"
+      },
+      "results": {
+        "title": "Quiz-Ergebnis",
+        "score": "Ergebnis: {score}%",
+        "correctAnswers": "{correct} von {total} richtig"
       }
     },
-    "CurriculumSwitcher": {
-      "empty": {
-        "noModulesTitle": "Noch keine Lernmodule",
-        "noModulesDescription": "Starten Sie ein Modul, um Ihre persönliche Lernbibliothek aufzubauen und später darauf zuzugreifen.",
-        "noResultsTitle": "Keine Lernmodule gefunden",
-        "noResultsDescription": "Versuchen Sie, den Suchbegriff oder die Filter anzupassen, um verfügbare Module zu finden."
+    "ModulePlayerShell": {
+      "navigation": {
+        "backToCurriculum": "Zurück zum Lehrplan",
+        "previous": "Zurück",
+        "next": "Weiter"
+      },
+      "sections": {
+        "lesson": "Lektion {index}",
+        "quiz": "Quiz",
+        "overview": "Übersicht"
+      },
+      "actions": {
+        "startModule": "Modul starten",
+        "continueModule": "Modul fortsetzen",
+        "completeModule": "Modul abschließen"
+      },
+      "fallbacks": {
+        "lessonContent": "Dieser Lektionsinhalt wurde noch nicht hinzugefügt.",
+        "lessonSummary": "Noch keine Zusammenfassung der Lektion verfügbar."
       }
     }
   }

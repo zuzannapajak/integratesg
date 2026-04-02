@@ -1,94 +1,86 @@
 {
   "Protected": {
-    "CourseDetailShell": {
-      "back": "Back to curriculum",
-      "area": {
+    "CurriculumListShell": {
+      "header": {
+        "eyebrow": "Curriculum",
+        "title": "Learning modules",
+        "description": "Explore structured ESG learning modules and continue your progress across the platform."
+      },
+      "search": {
+        "placeholder": "Search modules"
+      },
+      "filters": {
+        "allAreas": "All areas",
+        "allStatuses": "All statuses",
         "environmental": "Environmental",
         "social": "Social",
         "governance": "Governance",
-        "crossCutting": "Cross-cutting"
-      },
-      "status": {
-        "completed": "Completed",
+        "crossCutting": "Cross-cutting",
+        "notStarted": "Not started",
         "inProgress": "In progress",
-        "failed": "Needs review",
-        "readyToStart": "Ready to start"
+        "completed": "Completed",
+        "failed": "Needs review"
       },
-      "overviewCopy": {
-        "environmental": "This module introduces environmental thinking in a practical, structured format. It helps the learner connect sustainability topics with decision-making, implementation quality, and measurable business context.",
-        "social": "This module is designed to strengthen understanding of people-focused ESG topics, including responsibility, stakeholder awareness, and the human impact of operational choices.",
-        "governance": "This module focuses on governance as a foundation for credible ESG practice. It connects policies, accountability, and decision quality with real implementation behaviour.",
-        "crossCutting": "This module builds a broad ESG foundation and helps the learner understand how environmental, social, and governance themes interact in real-world decision-making."
+      "meta": {
+        "lessons": "{count} lessons",
+        "quizzes": "{count} quizzes",
+        "progress": "{count}% complete"
       },
-      "heroIntro": {
-        "preQuiz": "Begin with the opening checkpoint to unlock the lesson flow and establish your starting point.",
-        "lessons": "You are currently progressing through the lesson sequence. Continue from where you left off.",
-        "postQuiz": "You are at the final checkpoint. Complete the closing assessment to finish this module.",
-        "completed": "This module has been completed. You can review your progress or continue with another topic.",
-        "default": "Explore the module overview, outcomes, and learning flow before starting."
+      "difficulty": {
+        "foundation": "Foundation",
+        "intermediate": "Intermediate"
       },
-      "progressSummary": {
-        "preQuiz": "Opening checkpoint pending",
-        "lessonInProgress": "Lesson {index} in progress",
-        "postQuiz": "Final checkpoint available",
-        "completed": "Module successfully completed",
-        "default": "Ready to begin"
+      "generated": {
+        "duration": {
+          "selfPaced": "Self-paced",
+          "minutes": "{minutes} min"
+        }
       },
-      "metrics": {
-        "duration": "Duration",
-        "lessons": "Lessons",
-        "checkpoints": "Checkpoints",
-        "currentStep": "Current step",
-        "completed": "Completed"
+      "cta": {
+        "open": "Open module",
+        "continue": "Continue",
+        "review": "Review"
       },
-      "nextAction": {
-        "title": "Next action",
-        "completedDescription": "This module is finished. You can review or retake it.",
-        "defaultDescription": "Continue from your current step or explore the full learning flow first.",
-        "reviewWorkspace": "Review learning workspace",
-        "viewFlow": "View learning flow"
+      "empty": {
+        "title": "No modules found",
+        "description": "Try adjusting the search phrase or filters to explore available modules."
       },
-      "relatedModules": "Related modules",
+      "fallbacks": {
+        "description": "No description available yet.",
+        "subtitle": "Curriculum module"
+      }
+    },
+    "CourseDetailShell": {
+      "back": "Back to curriculum",
       "tabs": {
         "overview": "Overview",
-        "outcomes": "Outcomes",
-        "flow": "Learning flow",
+        "content": "Content",
+        "quiz": "Quiz",
         "progress": "Progress"
       },
       "sections": {
-        "overviewEyebrow": "Module overview",
-        "overviewTitle": "What this module is designed to achieve",
-        "outcomesEyebrow": "Learning outcomes",
-        "outcomesTitle": "What the learner should gain",
-        "flowEyebrow": "Learning flow",
-        "flowTitle": "How the module unfolds",
-        "progressEyebrow": "Progress tracking",
-        "progressTitle": "Where the learner currently is"
+        "outcomes": "Learning outcomes",
+        "structure": "Module structure",
+        "content": "Module content",
+        "lesson": "Lesson {index}",
+        "quiz": "Knowledge check",
+        "progress": "Your progress"
       },
-      "insights": {
-        "practicalTitle": "Practical learning path",
-        "practicalText": "The module is structured to translate ESG concepts into understandable, decision-oriented learning steps.",
-        "progressionTitle": "Clear progression",
-        "progressionText": "Each stage is designed to feel predictable and low-friction, making it easy to continue and complete the module."
-      },
-      "flowDescriptions": {
-        "opening": "Begin with the opening checkpoint before entering the lesson sequence.",
-        "closing": "Finish with the closing checkpoint after completing the lessons.",
-        "lessons": "Progress through {completed}/{total} lessons in the core learning sequence."
-      },
-      "progress": {
+      "labels": {
+        "area": "Area",
+        "difficulty": "Difficulty",
+        "duration": "Duration",
+        "lessons": "Lessons",
+        "quizzes": "Quizzes",
+        "status": "Status",
         "currentLocation": "Current location",
-        "lessonsCompleted": "Lessons completed",
-        "openingCheckpointHistory": "Opening checkpoint history",
-        "openingCheckpointEmpty": "No opening checkpoint attempt saved yet.",
-        "finalCheckpointHistory": "Final checkpoint history",
-        "finalCheckpointEmpty": "No final checkpoint attempt saved yet.",
-        "lessonStatus": "Lesson status"
+        "nextAction": "Next action"
       },
-      "attempt": {
-        "attemptLabel": "Attempt {number}",
-        "correctSummary": "{correct}/{total} correct · {submittedAt}",
-        "flaggedQuestions": "Flagged questions: {count}"
+      "status": {
+        "not_started": "Not started",
+        "in_progress": "In progress",
+        "completed": "Completed",
+        "failed": "Needs review"
       },
       "difficulty": {
         "foundation": "Foundation",
@@ -151,49 +143,45 @@
       }
     },
     "CourseQuizPanel": {
-      "empty": {
-        "eyebrow": "Knowledge checkpoint",
-        "title": "Checkpoint content is not available yet",
-        "description": "This curriculum module does not yet include checkpoint content in the current dataset."
-      },
-      "hero": {
-        "eyebrow": "Knowledge checkpoint",
-        "openingCheckpoint": "Opening checkpoint",
-        "finalCheckpoint": "Final checkpoint",
-        "title": "Quiz with instant feedback",
-        "description": "Answer one question at a time and reveal the feedback immediately. This view is designed to keep learning clear, interactive, and easy to follow."
-      },
-      "stats": {
-        "answered": "Answered",
-        "correct": "Correct",
-        "score": "Score"
-      },
-      "reset": "Reset",
-      "questionLabel": "Question {number}",
-      "result": {
-        "correct": "Correct",
-        "incorrect": "Incorrect"
+      "quizLabels": {
+        "pre": "Pre-test",
+        "post": "Post-test"
       },
       "actions": {
-        "showFeedback": "Show feedback",
-        "chooseOneAnswer": "Choose one answer to continue."
+        "start": "Start quiz",
+        "submit": "Submit answers",
+        "retry": "Try again",
+        "continue": "Continue"
       },
-      "feedback": {
-        "title": "Feedback",
-        "correctionTitle": "Feedback and correction",
-        "correctDefault": "This is the correct answer.",
-        "incorrectDefault": "This answer is not correct. Review the correction below.",
-        "whyCorrect": "Why this answer is correct",
-        "correctAnswer": "Correct answer",
-        "correctAnswerIs": "The correct answer is: {answer}"
+      "status": {
+        "passed": "Passed",
+        "failed": "Needs review"
+      },
+      "results": {
+        "title": "Quiz result",
+        "score": "Score: {score}%",
+        "correctAnswers": "{correct} of {total} correct"
       }
     },
-    "CurriculumSwitcher": {
-      "empty": {
-        "noModulesTitle": "No learning modules yet",
-        "noModulesDescription": "Start a module to build your personal learning library and return to it later.",
-        "noResultsTitle": "No learning modules found",
-        "noResultsDescription": "Try adjusting the search phrase or filters to explore available modules."
+    "ModulePlayerShell": {
+      "navigation": {
+        "backToCurriculum": "Back to curriculum",
+        "previous": "Previous",
+        "next": "Next"
+      },
+      "sections": {
+        "lesson": "Lesson {index}",
+        "quiz": "Quiz",
+        "overview": "Overview"
+      },
+      "actions": {
+        "startModule": "Start module",
+        "continueModule": "Continue module",
+        "completeModule": "Complete module"
+      },
+      "fallbacks": {
+        "lessonContent": "This lesson content has not been added yet.",
+        "lessonSummary": "No lesson summary available yet."
       }
     }
   }
