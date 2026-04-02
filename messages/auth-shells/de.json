@@ -19,6 +19,7 @@
     },
     "CompleteProfile": {
       "title": "Vervollständigen Sie Ihr Profil",
+      "eyebrow": "Profil-Setup",
       "chooseRole": "Wählen Sie Ihre Rolle",
       "studentDescription": "Zugriff auf Fallstudien und Szenarien",
       "educatorDescription": "Zugriff auf Curriculum und Lehrressourcen",

@@ -19,6 +19,7 @@
     },
     "CompleteProfile": {
       "title": "Uzupełnij profil",
+      "eyebrow": "Konfiguracja profilu",
       "chooseRole": "Wybierz swoją rolę",
       "studentDescription": "Dostęp do case studies i scenariuszy",
       "educatorDescription": "Dostęp do curriculum i materiałów dydaktycznych",

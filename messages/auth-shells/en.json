@@ -19,6 +19,7 @@
     },
     "CompleteProfile": {
       "title": "Complete your profile",
+      "eyebrow": "Profile setup",
       "chooseRole": "Choose your role",
       "studentDescription": "Access case studies and scenarios",
       "educatorDescription": "Access curriculum and teaching resources",
