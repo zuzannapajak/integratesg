@@ -166,11 +166,14 @@ function buildWeeklyAttempts(
 }
 
 function buildContinueLearningItem(
-  attempts: AttemptWithCourse[],
-  locale: string,
+  params: {
+    curriculumAttempts: AttemptWithCourse[];
+    scenarioAttempts: ScenarioAttemptForContinueLearning[];
+    locale: string;
+  },
   t: Awaited<ReturnType<typeof getTranslations>>,
 ) {
-  const latest = [...attempts]
+  const latestCurriculum = [...params.curriculumAttempts]
     .sort((a, b) => {
       const left =
         a.lastOpenedAt !== null
@@ -190,29 +193,7 @@ function buildContinueLearningItem(
     })
     .at(0);
 
-  if (!latest) return null;
-
-  const translation = pickTranslation(latest.course.translations, locale);
-  const isCompleted = latest.status === "completed";
-
-  return {
-    title: translation?.title ?? t("fallback.untitledModule"),
-    description: translation?.description ?? t("fallback.continueDescription"),
-    href: isCompleted
-      ? `/${locale}/curriculum/${latest.course.slug}`
-      : `/${locale}/curriculum/${latest.course.slug}/learn`,
-    badge: t("fallback.curriculumBadge"),
-    ctaLabel: isCompleted ? t("fallback.reviewModule") : t("fallback.continueModule"),
-    kindLabel: isCompleted ? t("fallback.lastCompleted") : t("fallback.lastOpened"),
-  };
-}
-
-function buildStudentContinueLearningItem(
-  attempts: ScenarioAttemptForContinueLearning[],
-  locale: string,
-  t: Awaited<ReturnType<typeof getTranslations>>,
-) {
-  const latest = [...attempts]
+  const latestScenario = [...params.scenarioAttempts]
     .sort((a, b) => {
       const left =
         a.lastOpenedAt !== null
@@ -232,22 +213,52 @@ function buildStudentContinueLearningItem(
     })
     .at(0);
 
-  if (!latest) return null;
+  const latestCurriculumTimestamp = latestCurriculum
+    ? (latestCurriculum.lastOpenedAt?.getTime() ?? latestCurriculum.startedAt?.getTime() ?? 0)
+    : 0;
 
-  const isCompleted = ["completed", "passed"].includes(latest.status);
+  const latestScenarioTimestamp = latestScenario
+    ? (latestScenario.lastOpenedAt?.getTime() ?? latestScenario.startedAt?.getTime() ?? 0)
+    : 0;
 
-  return {
-    title: latest.scenarioVariant?.title ?? t("fallback.untitledModule"),
-    description: isCompleted
-      ? t("fallback.reviewScenarioDescription")
-      : t("fallback.continueScenarioDescription"),
-    href: isCompleted
-      ? `/${locale}/scenarios/${latest.scenario.slug}`
-      : `/${locale}/scenarios/${latest.scenario.slug}/launch`,
-    badge: t("fallback.scenarioBadge"),
-    ctaLabel: isCompleted ? t("fallback.reviewScenario") : t("fallback.continueScenario"),
-    kindLabel: isCompleted ? t("fallback.lastCompleted") : t("fallback.lastOpened"),
-  };
+  if (!latestCurriculum && !latestScenario) {
+    return null;
+  }
+
+  if (latestCurriculum && latestCurriculumTimestamp >= latestScenarioTimestamp) {
+    const translation = pickTranslation(latestCurriculum.course.translations, params.locale);
+    const isCompleted = latestCurriculum.status === "completed";
+
+    return {
+      title: translation?.title ?? t("fallback.untitledModule"),
+      description: translation?.description ?? t("fallback.continueDescription"),
+      href: isCompleted
+        ? `/${params.locale}/curriculum/${latestCurriculum.course.slug}`
+        : `/${params.locale}/curriculum/${latestCurriculum.course.slug}/learn`,
+      badge: t("fallback.curriculumBadge"),
+      ctaLabel: isCompleted ? t("fallback.reviewModule") : t("fallback.continueModule"),
+      kindLabel: isCompleted ? t("fallback.lastCompleted") : t("fallback.lastOpened"),
+    };
+  }
+
+  if (latestScenario) {
+    const isCompleted = ["completed", "passed"].includes(latestScenario.status);
+
+    return {
+      title: latestScenario.scenarioVariant?.title ?? t("fallback.untitledModule"),
+      description: isCompleted
+        ? t("fallback.reviewScenarioDescription")
+        : t("fallback.continueScenarioDescription"),
+      href: isCompleted
+        ? `/${params.locale}/scenarios/${latestScenario.scenario.slug}`
+        : `/${params.locale}/scenarios/${latestScenario.scenario.slug}/launch`,
+      badge: t("fallback.scenarioBadge"),
+      ctaLabel: isCompleted ? t("fallback.reviewScenario") : t("fallback.continueScenario"),
+      kindLabel: isCompleted ? t("fallback.lastCompleted") : t("fallback.lastOpened"),
+    };
+  }
+
+  return null;
 }
 
 function buildLearnerSummaryMetrics(
@@ -547,11 +558,16 @@ export default async function DashboardPage({ params }: Props) {
   const adminTrendLabel = buildTrendLabel(adminActivityData, adminPreviousWeekAttempts.length, t);
 
   const continueLearning =
-    role === "educator"
-      ? buildContinueLearningItem(curriculumAttempts, locale, t)
-      : role === "student"
-        ? buildStudentContinueLearningItem(scenarioAttempts, locale, t)
-        : null;
+    role === "student" || role === "educator"
+      ? buildContinueLearningItem(
+          {
+            curriculumAttempts,
+            scenarioAttempts,
+            locale,
+          },
+          t,
+        )
+      : null;
 
   const learnerSummaryMetrics = buildLearnerSummaryMetrics(
     role,

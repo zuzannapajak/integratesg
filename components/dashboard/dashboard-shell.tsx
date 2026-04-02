@@ -154,7 +154,6 @@ export default function DashboardShell({
 }
 
 function DashboardHero({
-  locale,
   role,
   roleConfig,
   displayName,
@@ -193,13 +192,8 @@ function DashboardHero({
           )}
         </div>
 
-        {(role === "student" || role === "educator") && (
-          <ContinueLearningHeroCard
-            locale={locale}
-            role={role}
-            roleConfig={roleConfig}
-            continueLearning={continueLearning}
-          />
+        {(role === "student" || role === "educator") && continueLearning && (
+          <ContinueLearningHeroCard roleConfig={roleConfig} continueLearning={continueLearning} />
         )}
       </div>
     </header>
@@ -301,24 +295,13 @@ function TopStreakBadge({
 }
 
 function ContinueLearningHeroCard({
-  locale,
-  role,
   roleConfig,
   continueLearning,
 }: {
-  locale: string;
-  role: DashboardRole;
   roleConfig: RoleConfig;
-  continueLearning: DashboardContinueItem | null;
+  continueLearning: DashboardContinueItem;
 }) {
   const t = useTranslations("Protected.DashboardShell");
-
-  const fallbackHref = role === "educator" ? `/${locale}/curriculum` : `/${locale}/scenarios`;
-  const fallbackTitle = t("continueLearning.fallbackTitle");
-  const fallbackDescription =
-    role === "educator"
-      ? t("continueLearning.fallbackDescriptionEducator")
-      : t("continueLearning.fallbackDescriptionStudent");
 
   return (
     <motion.div
@@ -345,18 +328,18 @@ function ContinueLearningHeroCard({
 
           <div className="mt-4">
             <h2 className="max-w-xl text-xl font-bold tracking-tight text-slate-900 md:text-2xl">
-              {continueLearning?.title ?? fallbackTitle}
+              {continueLearning.title}
             </h2>
 
             <p className="mt-2 max-w-xl text-sm leading-6 text-slate-500">
-              {continueLearning?.description ?? fallbackDescription}
+              {continueLearning.description}
             </p>
           </div>
         </div>
 
         <div className="flex shrink-0 justify-end md:pb-1">
           <Link
-            href={continueLearning?.href ?? fallbackHref}
+            href={continueLearning.href}
             className="inline-flex items-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5"
             style={{
               backgroundColor: roleConfig.accent,
