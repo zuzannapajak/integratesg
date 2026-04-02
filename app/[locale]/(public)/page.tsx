@@ -1,6 +1,7 @@
 import PublicFooter from "@/components/layout/public-footer";
 import AnimatedStat from "@/components/public/animated-stat";
 import { PARTNERS } from "@/lib/constants";
+import { getPlatformStats } from "@/lib/platform/get-platform-stats";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,7 +13,7 @@ type Props = {
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Home" });
-  const languageCount = 6;
+  const stats = await getPlatformStats();
 
   const focusCards = [
     {
@@ -115,9 +116,9 @@ export default async function HomePage({ params }: Props) {
             </div>
 
             <div className="mt-6 grid gap-3 sm:grid-cols-3">
-              <AnimatedStat value={6} label={t("stats.caseStudies")} />
-              <AnimatedStat value={3} label={t("stats.scenarioAreas")} />
-              <AnimatedStat value={languageCount} label={t("stats.partnerLanguages")} />
+              <AnimatedStat value={stats.caseStudies} label={t("stats.caseStudies")} />
+              <AnimatedStat value={stats.scenarioAreas} label={t("stats.scenarioAreas")} />
+              <AnimatedStat value={stats.partnerLanguages} label={t("stats.partnerLanguages")} />
             </div>
           </div>
         </div>
