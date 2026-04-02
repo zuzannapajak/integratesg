@@ -9,7 +9,7 @@ import type {
   DashboardScenarioAttemptRow,
   LocalizedTitleItem,
 } from "@/lib/admin/types";
-import { DEFAULT_LOCALE, LOCALE_META, isAppLocale } from "@/lib/i18n/locales";
+import { APP_LOCALES, DEFAULT_LOCALE, LOCALE_META } from "@/lib/i18n/locales";
 import { prisma } from "@/lib/prisma";
 
 function toIntlLocale(locale: string) {
@@ -617,27 +617,25 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
     }
   }
 
-  const languageBreakdown: AdminLanguageStat[] = [...languageCodes]
-    .sort((a, b) => a.localeCompare(b))
-    .map((code) => ({
-      code,
-      label: isAppLocale(code) ? LOCALE_META[code].label : code.toUpperCase(),
-      users: profiles.filter((profile) => profile.preferredLanguage === code).length,
-      publishedCourses: publishedCoursesWithTranslations.filter((course) =>
-        course.translations.some((translation) => translation.language === code),
-      ).length,
-      publishedCaseStudies: publishedCaseStudiesWithTranslations.filter((caseStudy) =>
-        caseStudy.translations.some((translation) => translation.language === code),
-      ).length,
-      availableScenarioVariants: publishedScenariosWithVariants.reduce((sum, scenario) => {
-        return (
-          sum +
-          scenario.variants.filter(
-            (variant) => variant.language === code && variant.availabilityStatus === "available",
-          ).length
-        );
-      }, 0),
-    }));
+  const languageBreakdown: AdminLanguageStat[] = APP_LOCALES.map((code) => ({
+    code,
+    label: LOCALE_META[code].label,
+    users: profiles.filter((profile) => profile.preferredLanguage === code).length,
+    publishedCourses: publishedCoursesWithTranslations.filter((course) =>
+      course.translations.some((translation) => translation.language === code),
+    ).length,
+    publishedCaseStudies: publishedCaseStudiesWithTranslations.filter((caseStudy) =>
+      caseStudy.translations.some((translation) => translation.language === code),
+    ).length,
+    availableScenarioVariants: publishedScenariosWithVariants.reduce((sum, scenario) => {
+      return (
+        sum +
+        scenario.variants.filter(
+          (variant) => variant.language === code && variant.availabilityStatus === "available",
+        ).length
+      );
+    }, 0),
+  }));
 
   const scenarioBreakdown: AdminScenarioStat[] = publishedScenariosWithVariants.map((scenario) => {
     const attempts = scenario.variants.flatMap((variant) => variant.userAttempts);
