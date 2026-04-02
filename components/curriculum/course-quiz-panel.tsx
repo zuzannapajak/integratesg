@@ -30,7 +30,7 @@ export type QuizQuestionViewModel = {
 export type QuizViewModel = {
   id: string;
   type: "pre" | "post";
-  title: string;
+  title: string | null;
   description: string | null;
   passingScore: number | null;
   questions: QuizQuestionViewModel[];
@@ -168,7 +168,7 @@ export default function CourseQuizPanel({ quizzes }: Props) {
                 }`}
               >
                 <CircleDashed className="h-4 w-4" />
-                {quiz.title}
+                {quiz.title ?? (quiz.type === "post" ? t("quizLabels.post") : t("quizLabels.pre"))}
               </button>
             );
           })}

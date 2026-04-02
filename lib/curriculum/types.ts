@@ -1,7 +1,12 @@
 export type CurriculumArea = "environmental" | "social" | "governance" | "cross-cutting";
 export type CurriculumStatus = "not_started" | "in_progress" | "completed" | "failed";
-export type CurriculumDifficulty = "Foundation" | "Intermediate";
+export type CurriculumDifficulty = "foundation" | "intermediate";
 export type CurriculumStage = "overview" | "pre_quiz" | "lessons" | "post_quiz" | "completed";
+
+export type CurriculumTextToken = {
+  key: string;
+  values?: Record<string, string | number>;
+};
 
 export type CurriculumQuizAnswerViewModel = {
   id: string;
@@ -20,7 +25,7 @@ export type CurriculumQuizQuestionViewModel = {
 export type CurriculumQuizViewModel = {
   id: string;
   type: "pre" | "post";
-  title: string;
+  title: string | null;
   description: string | null;
   passingScore: number | null;
   questions: CurriculumQuizQuestionViewModel[];
@@ -30,8 +35,8 @@ export type CurriculumLessonViewModel = {
   index: number;
   slug: string;
   title: string;
-  summary: string;
-  content: string;
+  summary: string | null;
+  content: string | null;
   estimatedMinutes: number;
 };
 
@@ -53,27 +58,26 @@ export type CurriculumProgressViewModel = {
   postQuizAttempts: CurriculumQuizAttemptViewModel[];
   preQuizRemainingAttempts: number;
   postQuizRemainingAttempts: number;
-  nextActionLabel: string;
-  currentLocationLabel: string;
+  nextAction: CurriculumTextToken;
+  currentLocation: CurriculumTextToken;
 };
 
 export type CurriculumModuleViewModel = {
   slug: string;
   title: string;
-  subtitle: string;
-  description: string;
-  content?: string;
+  subtitle: string | null;
+  description: string | null;
+  content?: string | null;
   area: CurriculumArea;
   status: CurriculumStatus;
   progress: number;
-  duration: string;
   durationMinutes: number | null;
   lessons: number;
   quizzes: number;
-  lastOpened: string;
+  lastOpenedAt: string | null;
   difficulty: CurriculumDifficulty;
-  outcomes: string[];
-  structure: string[];
+  outcomes: CurriculumTextToken[];
+  structure: CurriculumTextToken[];
   quizItems: CurriculumQuizViewModel[];
   lessonsData: CurriculumLessonViewModel[];
   progressState: CurriculumProgressViewModel;

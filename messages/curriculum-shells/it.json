@@ -89,6 +89,65 @@
         "attemptLabel": "Tentativo {number}",
         "correctSummary": "{correct}/{total} corrette · {submittedAt}",
         "flaggedQuestions": "Domande contrassegnate: {count}"
+      },
+      "difficulty": {
+        "foundation": "Base",
+        "intermediate": "Intermedio"
+      },
+      "generated": {
+        "duration": {
+          "selfPaced": "Ritmo individuale",
+          "minutes": "{minutes} min"
+        }
+      },
+      "progressState": {
+        "nextAction": {
+          "startModule": "Inizia il modulo",
+          "continueModule": "Continua il modulo",
+          "reviewModule": "Rivedi il modulo"
+        },
+        "currentLocation": {
+          "preTestNotStarted": "Pre-test non iniziato",
+          "preTest": "Pre-test",
+          "lessons": "Lezioni",
+          "lessonProgress": "Lezione {current} di {total}",
+          "postTest": "Post-test",
+          "postTestAttempt": "Post-test · tentativo {current} di {total}",
+          "moduleCompleted": "Modulo completato"
+        }
+      },
+      "generatedOutcomes": {
+        "environmental": [
+          "Identificare i punti decisionali ambientali nella pratica",
+          "Interpretare le conseguenze delle scelte legate alla sostenibilità",
+          "Rafforzare la fiducia prima dell'apprendimento basato su scenari"
+        ],
+        "social": [
+          "Riconoscere i rischi e le opportunità ESG legati alle persone",
+          "Applicare un pensiero attento agli stakeholder nel processo decisionale",
+          "Comprendere la responsabilità sociale nella qualità dell'implementazione"
+        ],
+        "governance": [
+          "Comprendere come la governance modelli la credibilità ESG",
+          "Relazionare la responsabilità e le policy all'implementazione",
+          "Tradurre i concetti di governance nella pratica quotidiana"
+        ],
+        "crossCutting": [
+          "Costruire una comprensione condivisa dell'integrazione ESG",
+          "Riconoscere l'interazione tra temi ambientali, sociali e di governance",
+          "Prepararsi all'apprendimento pratico basato su casi e scenari"
+        ]
+      },
+      "generatedStructure": {
+        "preTest": "Pre-test",
+        "lessons": "Lezioni",
+        "postTest": "Post-test"
+      },
+      "fallbacks": {
+        "subtitle": "Modulo didattico",
+        "description": "Descrizione non ancora disponibile.",
+        "lessonSummary": "Riepilogo della lezione non ancora disponibile.",
+        "lessonContent": "Il contenuto di questa lezione non è stato ancora aggiunto."
       }
     },
     "CourseQuizPanel": {

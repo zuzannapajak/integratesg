@@ -33,6 +33,21 @@ type Props = {
 const SURFACE =
   "rounded-[30px] border border-white/70 bg-white/88 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";
 
+function formatDurationLabel(minutes: number | null, t: ReturnType<typeof useTranslations>) {
+  if (!minutes || minutes <= 0) {
+    return t("generated.duration.selfPaced");
+  }
+
+  return t("generated.duration.minutes", { minutes });
+}
+
+function renderToken(
+  token: { key: string; values?: Record<string, string | number> },
+  t: ReturnType<typeof useTranslations>,
+) {
+  return t(token.key, token.values ?? {});
+}
+
 function getAreaMeta(area: ModuleArea, t: ReturnType<typeof useTranslations>) {
   switch (area) {
     case "environmental":
@@ -214,13 +229,13 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
 
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-[#e8edf3] bg-white/70 px-3 py-1.5 text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#5f6f82]">
                   <Trophy className="h-3.5 w-3.5" />
-                  {module.difficulty}
+                  {t(`difficulty.${module.difficulty}`)}
                 </span>
               </div>
 
               <div className="max-w-4xl">
                 <p className="text-[0.76rem] font-bold uppercase tracking-[0.18em] text-[#8a97a6]">
-                  {module.subtitle}
+                  {module.subtitle ?? t("fallbacks.subtitle")}
                 </p>
 
                 <h1 className="mt-3 max-w-4xl text-3xl font-bold tracking-[-0.035em] text-[#31425a] md:text-4xl xl:text-[3.05rem] xl:leading-[1.03]">
@@ -228,7 +243,7 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
                 </h1>
 
                 <p className="mt-5 max-w-3xl text-[1rem] leading-8 text-[#667180] md:text-[1.04rem]">
-                  {module.description}
+                  {module.description ?? t("fallbacks.description")}
                 </p>
 
                 <div className="mt-6 inline-flex items-start gap-2 rounded-2xl border border-[#e8edf3] bg-white/86 px-4 py-3 text-sm text-[#556274] shadow-[0_8px_24px_rgba(35,45,62,0.04)]">
@@ -242,7 +257,7 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
               <MetricCard
                 icon={<Clock3 className="h-4 w-4" />}
                 label={t("metrics.duration")}
-                value={module.duration}
+                value={formatDurationLabel(module.durationMinutes, t)}
               />
               <MetricCard
                 icon={<Layers3 className="h-4 w-4" />}
@@ -257,7 +272,7 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
               <MetricCard
                 icon={<Compass className="h-4 w-4" />}
                 label={t("metrics.currentStep")}
-                value={module.progressState.currentLocationLabel}
+                value={renderToken(module.progressState.currentLocation, t)}
               />
             </div>
           </div>
@@ -308,7 +323,7 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
                   <PlayCircle className="h-4.5 w-4.5" />
                   {module.progressState.currentStage === "completed"
                     ? t("nextAction.reviewWorkspace")
-                    : module.progressState.nextActionLabel}
+                    : renderToken(module.progressState.nextAction, t)}
                 </Link>
 
                 <button
@@ -452,13 +467,15 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
               <div className="mt-5 grid gap-3">
                 {module.outcomes.map((outcome, index) => (
                   <div
-                    key={outcome}
+                    key={`${module.slug}-outcome-${index}`}
                     className="flex items-start gap-3 rounded-2xl border border-[#e8edf3] bg-white/72 px-4 py-4"
                   >
                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0b9c72] text-sm font-bold text-white">
                       {index + 1}
                     </span>
-                    <p className="pt-1 text-sm leading-6 text-[#556274]">{outcome}</p>
+                    <p className="pt-1 text-sm leading-6 text-[#556274]">
+                      {renderToken(outcome, t)}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -482,7 +499,7 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
 
                   return (
                     <div
-                      key={step}
+                      key={renderToken(step, t)}
                       className={`flex items-center gap-4 rounded-2xl border px-4 py-4 ${
                         isActiveOrPast
                           ? "border-emerald-200 bg-emerald-50/60"
@@ -494,7 +511,9 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
                       </span>
 
                       <div className="min-w-0 flex-1">
-                        <p className="text-sm font-semibold text-[#31425a]">{step}</p>
+                        <p className="text-sm font-semibold text-[#31425a]">
+                          {renderToken(step, t)}
+                        </p>
                         <p className="mt-1 text-sm text-[#667180]">
                           {index === 0
                             ? t("flowDescriptions.opening")
@@ -534,7 +553,7 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
                       {t("progress.currentLocation")}
                     </p>
                     <p className="mt-2 text-sm leading-6 text-[#667180]">
-                      {module.progressState.currentLocationLabel}
+                      renderToken(module.progressState.currentLocation, t)
                     </p>
 
                     <div className="mt-5">

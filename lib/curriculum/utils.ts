@@ -2,6 +2,7 @@ import {
   CurriculumArea,
   CurriculumDifficulty,
   CurriculumModuleViewModel,
+  CurriculumTextToken,
 } from "@/lib/curriculum/types";
 
 export function mapArea(area: string): CurriculumArea {
@@ -18,78 +19,56 @@ export function mapArea(area: string): CurriculumArea {
 }
 
 export function mapDifficulty(difficulty: string): CurriculumDifficulty {
-  return difficulty === "intermediate" ? "Intermediate" : "Foundation";
+  return difficulty === "intermediate" ? "intermediate" : "foundation";
 }
 
 export function mapAttemptStatus(status?: string | null): CurriculumModuleViewModel["status"] {
   if (status === "completed") return "completed";
+  if (status === "failed") return "failed";
   if (status === "in_progress") return "in_progress";
   return "not_started";
 }
 
-export function formatDuration(minutes?: number | null): string {
-  if (!minutes || minutes <= 0) return "Self-paced";
-  return `${minutes} min`;
-}
-
-export function formatLastOpened(date?: Date | null): string {
-  if (!date) return "Not started yet";
-
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-  if (diffDays <= 0) return "Today";
-  if (diffDays === 1) return "Yesterday";
-  if (diffDays < 7) return `${diffDays} days ago`;
-
-  return new Intl.DateTimeFormat("en", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  }).format(date);
-}
-
-export function buildGeneratedOutcomes(area: CurriculumArea): string[] {
+export function buildGeneratedOutcomes(area: CurriculumArea): CurriculumTextToken[] {
   switch (area) {
     case "environmental":
       return [
-        "Identify environmental decision points in practice",
-        "Interpret sustainability-related consequences of choices",
-        "Strengthen confidence before scenario-based learning",
+        { key: "generatedOutcomes.environmental.0" },
+        { key: "generatedOutcomes.environmental.1" },
+        { key: "generatedOutcomes.environmental.2" },
       ];
     case "social":
       return [
-        "Recognise people-related ESG risks and opportunities",
-        "Apply stakeholder-sensitive thinking in decision-making",
-        "Understand social responsibility in implementation quality",
+        { key: "generatedOutcomes.social.0" },
+        { key: "generatedOutcomes.social.1" },
+        { key: "generatedOutcomes.social.2" },
       ];
     case "governance":
       return [
-        "Understand how governance shapes ESG credibility",
-        "Relate accountability and policies to implementation",
-        "Translate governance concepts into everyday practice",
+        { key: "generatedOutcomes.governance.0" },
+        { key: "generatedOutcomes.governance.1" },
+        { key: "generatedOutcomes.governance.2" },
       ];
     default:
       return [
-        "Build a shared understanding of ESG integration",
-        "Recognise how environmental, social, and governance topics interact",
-        "Prepare for practical case-based and scenario-based learning",
+        { key: "generatedOutcomes.crossCutting.0" },
+        { key: "generatedOutcomes.crossCutting.1" },
+        { key: "generatedOutcomes.crossCutting.2" },
       ];
   }
 }
 
-export function buildGeneratedStructure(quizzesCount: number): string[] {
-  const steps = ["Introduction"];
+export function buildGeneratedStructure(quizzesCount: number): CurriculumTextToken[] {
+  const steps: CurriculumTextToken[] = [{ key: "generatedStructure.introduction" }];
 
   if (quizzesCount >= 1) {
-    steps.push("Pre-test");
+    steps.push({ key: "generatedStructure.preTest" });
   }
 
-  steps.push("Core content");
+  steps.push({ key: "generatedStructure.coreContent" });
 
   if (quizzesCount >= 2) {
-    steps.push("Post-test");
+    steps.push({ key: "generatedStructure.postTest" });
   }
 
   return steps;

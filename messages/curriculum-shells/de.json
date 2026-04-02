@@ -89,6 +89,65 @@
         "attemptLabel": "Versuch {number}",
         "correctSummary": "{correct}/{total} korrekt · {submittedAt}",
         "flaggedQuestions": "Markierte Fragen: {count}"
+      },
+      "difficulty": {
+        "foundation": "Grundlagen",
+        "intermediate": "Mittelstufe"
+      },
+      "generated": {
+        "duration": {
+          "selfPaced": "Selbstgesteuert",
+          "minutes": "{minutes} Min."
+        }
+      },
+      "progressState": {
+        "nextAction": {
+          "startModule": "Modul starten",
+          "continueModule": "Modul fortsetzen",
+          "reviewModule": "Modul wiederholen"
+        },
+        "currentLocation": {
+          "preTestNotStarted": "Pre-Test nicht gestartet",
+          "preTest": "Pre-Test",
+          "lessons": "Lektionen",
+          "lessonProgress": "Lektion {current} von {total}",
+          "postTest": "Post-Test",
+          "postTestAttempt": "Post-Test · Versuch {current} von {total}",
+          "moduleCompleted": "Modul abgeschlossen"
+        }
+      },
+      "generatedOutcomes": {
+        "environmental": [
+          "Umweltrelevante Entscheidungspunkte in der Praxis identifizieren",
+          "Nachhaltigkeitsbezogene Folgen von Entscheidungen interpretieren",
+          "Vertrauen vor dem szenariobasierten Lernen stärken"
+        ],
+        "social": [
+          "Personenbezogene ESG-Risiken und -Chancen erkennen",
+          "Stakeholder-orientiertes Denken bei der Entscheidungsfindung anwenden",
+          "Soziale Verantwortung bei der Umsetzungsqualität verstehen"
+        ],
+        "governance": [
+          "Verstehen, wie Governance die ESG-Glaubwürdigkeit prägt",
+          "Rechenschaftspflicht und Richtlinien mit der Umsetzung in Beziehung setzen",
+          "Governance-Konzepte in die tägliche Praxis übertragen"
+        ],
+        "crossCutting": [
+          "Ein gemeinsames Verständnis der ESG-Integration aufbauen",
+          "Zusammenwirken von Umwelt-, Sozial- und Governance-Themen erkennen",
+          "Vorbereitung auf praktisches fallbasiertes und szenariobasiertes Lernen"
+        ]
+      },
+      "generatedStructure": {
+        "preTest": "Pre-Test",
+        "lessons": "Lektionen",
+        "postTest": "Post-Test"
+      },
+      "fallbacks": {
+        "subtitle": "Lehrmodul",
+        "description": "Noch keine Beschreibung verfügbar.",
+        "lessonSummary": "Noch keine Zusammenfassung der Lektion verfügbar.",
+        "lessonContent": "Dieser Lektionsinhalt wurde noch nicht hinzugefügt."
       }
     },
     "CourseQuizPanel": {

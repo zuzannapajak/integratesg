@@ -39,6 +39,14 @@ const SURFACE =
 
 const ITEMS_PER_PAGE = 12;
 
+function formatDurationLabel(minutes: number | null, t: ReturnType<typeof useTranslations>) {
+  if (!minutes || minutes <= 0) {
+    return t("generated.duration.selfPaced");
+  }
+
+  return t("generated.duration.minutes", { minutes });
+}
+
 function getAreaMeta(area: ModuleArea, t: ReturnType<typeof useTranslations>) {
   switch (area) {
     case "environmental":
@@ -131,8 +139,8 @@ export default function CurriculumListShell({
         !showRefineControls ||
         normalized.length === 0 ||
         module.title.toLowerCase().includes(normalized) ||
-        module.description.toLowerCase().includes(normalized) ||
-        module.subtitle.toLowerCase().includes(normalized);
+        (module.description?.toLowerCase().includes(normalized) ?? false) ||
+        (module.subtitle?.toLowerCase().includes(normalized) ?? false);
 
       const matchesArea =
         !showRefineControls || selectedArea === "all" || module.area === selectedArea;
@@ -321,14 +329,14 @@ export default function CurriculumListShell({
                       </div>
 
                       <p className="mt-4 flex-1 text-sm leading-6 text-[#5f6c7b] line-clamp-3">
-                        {module.description}
+                        {module.description ?? t("fallbacks.description")}
                       </p>
 
                       <div className="grid gap-3 pt-5 sm:grid-cols-2">
                         <InfoPill
                           heading={t("info.duration")}
                           icon={<Clock3 />}
-                          label={module.duration}
+                          label={formatDurationLabel(module.durationMinutes, t)}
                         />
 
                         <InfoPill

@@ -89,6 +89,65 @@
         "attemptLabel": "Attempt {number}",
         "correctSummary": "{correct}/{total} correct · {submittedAt}",
         "flaggedQuestions": "Flagged questions: {count}"
+      },
+      "difficulty": {
+        "foundation": "Foundation",
+        "intermediate": "Intermediate"
+      },
+      "generated": {
+        "duration": {
+          "selfPaced": "Self-paced",
+          "minutes": "{minutes} min"
+        }
+      },
+      "progressState": {
+        "nextAction": {
+          "startModule": "Start the module",
+          "continueModule": "Continue module",
+          "reviewModule": "Review module"
+        },
+        "currentLocation": {
+          "preTestNotStarted": "Pre-test not started",
+          "preTest": "Pre-test",
+          "lessons": "Lessons",
+          "lessonProgress": "Lesson {current} of {total}",
+          "postTest": "Post-test",
+          "postTestAttempt": "Post-test · attempt {current} of {total}",
+          "moduleCompleted": "Module completed"
+        }
+      },
+      "generatedOutcomes": {
+        "environmental": [
+          "Identify environmental decision points in practice",
+          "Interpret sustainability-related consequences of choices",
+          "Strengthen confidence before scenario-based learning"
+        ],
+        "social": [
+          "Recognise people-related ESG risks and opportunities",
+          "Apply stakeholder-sensitive thinking in decision-making",
+          "Understand social responsibility in implementation quality"
+        ],
+        "governance": [
+          "Understand how governance shapes ESG credibility",
+          "Relate accountability and policies to implementation",
+          "Translate governance concepts into everyday practice"
+        ],
+        "crossCutting": [
+          "Build a shared understanding of ESG integration",
+          "Recognise how environmental, social, and governance topics interact",
+          "Prepare for practical case-based and scenario-based learning"
+        ]
+      },
+      "generatedStructure": {
+        "preTest": "Pre-test",
+        "lessons": "Lessons",
+        "postTest": "Post-test"
+      },
+      "fallbacks": {
+        "subtitle": "Curriculum module",
+        "description": "No description available yet.",
+        "lessonSummary": "No lesson summary available yet.",
+        "lessonContent": "This lesson content has not been added yet."
       }
     },
     "CourseQuizPanel": {

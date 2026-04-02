@@ -6,6 +6,7 @@ import {
   CurriculumModuleViewModel,
   CurriculumProgressViewModel,
   CurriculumQuizAttemptViewModel,
+  CurriculumTextToken,
   StoredQuizAttempt,
   TranslationRecord,
 } from "@/lib/curriculum/types";
@@ -58,10 +59,6 @@ function mapArea(area: string): CurriculumModuleViewModel["area"] {
   }
 }
 
-function mapDifficulty(difficulty: string): CurriculumModuleViewModel["difficulty"] {
-  return difficulty === "intermediate" ? "Intermediate" : "Foundation";
-}
-
 function mapStatus(status?: string | null): CurriculumModuleViewModel["status"] {
   if (status === "completed") return "completed";
   if (status === "failed") return "failed";
@@ -88,73 +85,57 @@ function mapQuizType(type: string): "pre" | "post" {
   return type === "post" ? "post" : "pre";
 }
 
-function formatDuration(minutes?: number | null): string {
-  if (!minutes || minutes <= 0) return "Self-paced";
-  return `${minutes} min`;
+function normalizeOptionalText(value: string | null | undefined) {
+  const trimmed = value?.trim();
+  return trimmed && trimmed.length > 0 ? trimmed : null;
 }
 
-function formatLastOpened(date?: Date | null): string {
-  if (!date) return "Not started yet";
-
-  const now = new Date();
-  const diffMs = now.getTime() - date.getTime();
-  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-  if (diffDays <= 0) return "Today";
-  if (diffDays === 1) return "Yesterday";
-  if (diffDays < 7) return `${diffDays} days ago`;
-
-  return new Intl.DateTimeFormat("en", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  }).format(date);
+function mapDifficulty(difficulty: string): CurriculumModuleViewModel["difficulty"] {
+  return difficulty === "intermediate" ? "intermediate" : "foundation";
 }
 
 function formatAttemptDate(value: string): string {
   const date = new Date(value);
-  return new Intl.DateTimeFormat("en", {
-    day: "numeric",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(date);
+  return date.toISOString();
 }
 
-function buildGeneratedOutcomes(area: CurriculumModuleViewModel["area"]): string[] {
+function buildGeneratedOutcomes(area: CurriculumModuleViewModel["area"]): CurriculumTextToken[] {
   switch (area) {
     case "environmental":
       return [
-        "Identify environmental decision points in practice",
-        "Interpret sustainability-related consequences of choices",
-        "Strengthen confidence before scenario-based learning",
+        { key: "generatedOutcomes.environmental.0" },
+        { key: "generatedOutcomes.environmental.1" },
+        { key: "generatedOutcomes.environmental.2" },
       ];
     case "social":
       return [
-        "Recognise people-related ESG risks and opportunities",
-        "Apply stakeholder-sensitive thinking in decision-making",
-        "Understand social responsibility in implementation quality",
+        { key: "generatedOutcomes.social.0" },
+        { key: "generatedOutcomes.social.1" },
+        { key: "generatedOutcomes.social.2" },
       ];
     case "governance":
       return [
-        "Understand how governance shapes ESG credibility",
-        "Relate accountability and policies to implementation",
-        "Translate governance concepts into everyday practice",
+        { key: "generatedOutcomes.governance.0" },
+        { key: "generatedOutcomes.governance.1" },
+        { key: "generatedOutcomes.governance.2" },
       ];
     default:
       return [
-        "Build a shared understanding of ESG integration",
-        "Recognise how environmental, social, and governance topics interact",
-        "Prepare for practical case-based and scenario-based learning",
+        { key: "generatedOutcomes.crossCutting.0" },
+        { key: "generatedOutcomes.crossCutting.1" },
+        { key: "generatedOutcomes.crossCutting.2" },
       ];
   }
 }
 
-function buildGeneratedStructure(quizzesCount: number): string[] {
-  const steps = ["Pre-test", "Lessons"];
+function buildGeneratedStructure(quizzesCount: number): CurriculumTextToken[] {
+  const steps: CurriculumTextToken[] = [
+    { key: "generatedStructure.preTest" },
+    { key: "generatedStructure.lessons" },
+  ];
 
   if (quizzesCount > 1) {
-    steps.push("Post-test");
+    steps.push({ key: "generatedStructure.postTest" });
   }
 
   return steps;
@@ -176,9 +157,9 @@ function mapSectionsToLessons(
       return {
         index: index + 1,
         slug: section.slug,
-        title: translation?.title ?? `Lesson ${index + 1}`,
-        summary: translation?.summary ?? "",
-        content: translation?.content ?? "",
+        title: translation?.title ?? section.slug,
+        summary: normalizeOptionalText(translation?.summary),
+        content: normalizeOptionalText(translation?.content),
         estimatedMinutes: section.estimatedMinutes ?? 8,
       };
     });
@@ -235,24 +216,39 @@ function buildProgressState(params: {
   const preQuizRemainingAttempts = Math.max(0, 1 - preQuizAttempts.length);
   const postQuizRemainingAttempts = Math.max(0, 2 - postQuizAttempts.length);
 
-  let nextActionLabel = "Start the module";
-  let currentLocationLabel = "Pre-test not started";
+  let nextAction: CurriculumTextToken = { key: "progressState.nextAction.startModule" };
+  let currentLocation: CurriculumTextToken = {
+    key: "progressState.currentLocation.preTestNotStarted",
+  };
 
   if (currentStage === "pre_quiz") {
-    nextActionLabel = preQuizAttempts.length === 0 ? "Start the module" : "Continue module";
-    currentLocationLabel = "Pre-test";
+    nextAction =
+      preQuizAttempts.length === 0
+        ? { key: "progressState.nextAction.startModule" }
+        : { key: "progressState.nextAction.continueModule" };
+
+    currentLocation = { key: "progressState.currentLocation.preTest" };
   } else if (currentStage === "lessons") {
-    nextActionLabel = "Continue module";
-    currentLocationLabel =
-      currentLessonIndex > 0 ? `Lesson ${currentLessonIndex} of ${totalLessons}` : "Lessons";
+    nextAction = { key: "progressState.nextAction.continueModule" };
+    currentLocation =
+      currentLessonIndex > 0
+        ? {
+            key: "progressState.currentLocation.lessonProgress",
+            values: { current: currentLessonIndex, total: totalLessons },
+          }
+        : { key: "progressState.currentLocation.lessons" };
   } else if (currentStage === "post_quiz") {
-    nextActionLabel = "Continue module";
-    currentLocationLabel = `Post-test${
-      postQuizAttempts.length > 0 ? ` · attempt ${postQuizAttempts.length + 1} of 2` : ""
-    }`;
+    nextAction = { key: "progressState.nextAction.continueModule" };
+    currentLocation =
+      postQuizAttempts.length > 0
+        ? {
+            key: "progressState.currentLocation.postTestAttempt",
+            values: { current: postQuizAttempts.length + 1, total: 2 },
+          }
+        : { key: "progressState.currentLocation.postTest" };
   } else if (currentStage === "completed") {
-    nextActionLabel = "Review module";
-    currentLocationLabel = "Module completed";
+    nextAction = { key: "progressState.nextAction.reviewModule" };
+    currentLocation = { key: "progressState.currentLocation.moduleCompleted" };
   }
 
   return {
@@ -264,8 +260,8 @@ function buildProgressState(params: {
     postQuizAttempts,
     preQuizRemainingAttempts,
     postQuizRemainingAttempts,
-    nextActionLabel,
-    currentLocationLabel,
+    nextAction,
+    currentLocation,
   };
 }
 
@@ -278,10 +274,10 @@ function mapCourseToViewModel(
   const area = mapArea(course.area);
   const quizzesCount = course._count.quizzes;
 
-  const title = translation?.title ?? "Untitled course";
-  const subtitle = translation?.subtitle ?? "Curriculum module";
-  const description = translation?.description ?? "No description available yet.";
-  const content = translation?.content ?? undefined;
+  const title = translation?.title ?? course.slug;
+  const subtitle = normalizeOptionalText(translation?.subtitle);
+  const description = normalizeOptionalText(translation?.description);
+  const content = normalizeOptionalText(translation?.content);
 
   const lessonsData = mapSectionsToLessons(course.sections, locale);
   const lessonsCount =
@@ -301,11 +297,10 @@ function mapCourseToViewModel(
     area,
     status: mapStatus(attempt?.status),
     progress: attempt?.progressPercent ?? 0,
-    duration: formatDuration(course.estimatedDurationMinutes),
     durationMinutes: course.estimatedDurationMinutes,
     lessons: lessonsCount,
     quizzes: quizzesCount,
-    lastOpened: formatLastOpened(attempt?.lastOpenedAt),
+    lastOpenedAt: attempt?.lastOpenedAt?.toISOString() ?? null,
     difficulty: mapDifficulty(course.difficulty),
     outcomes: buildGeneratedOutcomes(area),
     structure: buildGeneratedStructure(quizzesCount),
@@ -316,11 +311,8 @@ function mapCourseToViewModel(
         return {
           id: quiz.id,
           type: mapQuizType(quiz.type),
-          title:
-            quizTranslation?.title ??
-            quiz.title ??
-            (quiz.type === "post" ? "Post-test" : "Pre-test"),
-          description: quizTranslation?.description ?? quiz.description,
+          title: quizTranslation?.title ?? quiz.title ?? null,
+          description: normalizeOptionalText(quizTranslation?.description ?? quiz.description),
           passingScore: quiz.passingScore,
           questions: [...quiz.questions]
             .sort((a, b) => a.sortOrder - b.sortOrder)
@@ -330,7 +322,9 @@ function mapCourseToViewModel(
               return {
                 id: question.id,
                 prompt: questionTranslation?.prompt ?? question.prompt,
-                explanation: questionTranslation?.explanation ?? question.explanation,
+                explanation: normalizeOptionalText(
+                  questionTranslation?.explanation ?? question.explanation,
+                ),
                 answers: [...question.answers]
                   .sort((a, b) => a.sortOrder - b.sortOrder)
                   .map((answer) => {
@@ -340,7 +334,9 @@ function mapCourseToViewModel(
                       id: answer.id,
                       text: answerTranslation?.text ?? answer.text,
                       isCorrect: answer.isCorrect,
-                      feedbackText: answerTranslation?.feedbackText ?? answer.feedbackText,
+                      feedbackText: normalizeOptionalText(
+                        answerTranslation?.feedbackText ?? answer.feedbackText,
+                      ),
                     };
                   }),
               };
