@@ -38,6 +38,21 @@ type AttemptWithCourse = {
   };
 };
 
+type ScenarioAttemptForContinueLearning = {
+  id: string;
+  status: string;
+  startedAt: Date | null;
+  lastOpenedAt: Date | null;
+  completedAt: Date | null;
+  scenario: {
+    slug: string;
+  };
+  scenarioVariant: {
+    title: string;
+    language: string;
+  } | null;
+};
+
 const scenarioAttemptWithRelations = Prisma.validator<Prisma.UserScenarioAttemptDefaultArgs>()({
   include: {
     user: {
@@ -188,6 +203,49 @@ function buildContinueLearningItem(
       : `/${locale}/curriculum/${latest.course.slug}/learn`,
     badge: t("fallback.curriculumBadge"),
     ctaLabel: isCompleted ? t("fallback.reviewModule") : t("fallback.continueModule"),
+    kindLabel: isCompleted ? t("fallback.lastCompleted") : t("fallback.lastOpened"),
+  };
+}
+
+function buildStudentContinueLearningItem(
+  attempts: ScenarioAttemptForContinueLearning[],
+  locale: string,
+  t: Awaited<ReturnType<typeof getTranslations>>,
+) {
+  const latest = [...attempts]
+    .sort((a, b) => {
+      const left =
+        a.lastOpenedAt !== null
+          ? a.lastOpenedAt.getTime()
+          : a.startedAt !== null
+            ? a.startedAt.getTime()
+            : 0;
+
+      const right =
+        b.lastOpenedAt !== null
+          ? b.lastOpenedAt.getTime()
+          : b.startedAt !== null
+            ? b.startedAt.getTime()
+            : 0;
+
+      return right - left;
+    })
+    .at(0);
+
+  if (!latest) return null;
+
+  const isCompleted = ["completed", "passed"].includes(latest.status);
+
+  return {
+    title: latest.scenarioVariant?.title ?? t("fallback.untitledModule"),
+    description: isCompleted
+      ? t("fallback.reviewScenarioDescription")
+      : t("fallback.continueScenarioDescription"),
+    href: isCompleted
+      ? `/${locale}/scenarios/${latest.scenario.slug}`
+      : `/${locale}/scenarios/${latest.scenario.slug}/launch`,
+    badge: t("fallback.scenarioBadge"),
+    ctaLabel: isCompleted ? t("fallback.reviewScenario") : t("fallback.continueScenario"),
     kindLabel: isCompleted ? t("fallback.lastCompleted") : t("fallback.lastOpened"),
   };
 }
@@ -409,6 +467,19 @@ export default async function DashboardPage({ params }: Props) {
       ? prisma.userScenarioAttempt.findMany({
           where: { userId: profile.id },
           orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }],
+          include: {
+            scenario: {
+              select: {
+                slug: true,
+              },
+            },
+            scenarioVariant: {
+              select: {
+                title: true,
+                language: true,
+              },
+            },
+          },
         })
       : Promise.resolve([]);
 
@@ -476,7 +547,11 @@ export default async function DashboardPage({ params }: Props) {
   const adminTrendLabel = buildTrendLabel(adminActivityData, adminPreviousWeekAttempts.length, t);
 
   const continueLearning =
-    role === "educator" ? buildContinueLearningItem(curriculumAttempts, locale, t) : null;
+    role === "educator"
+      ? buildContinueLearningItem(curriculumAttempts, locale, t)
+      : role === "student"
+        ? buildStudentContinueLearningItem(scenarioAttempts, locale, t)
+        : null;
 
   const learnerSummaryMetrics = buildLearnerSummaryMetrics(
     role,

@@ -5,16 +5,21 @@
         "noActivity": "Noch keine Aktivität",
         "today": "Heute",
         "yesterday": "Gestern",
-        "daysAgo": "vor {count} Tagen",
+        "daysAgo": "Vor {count} Tagen",
         "untitledModule": "Unbenanntes Modul",
         "continueDescription": "Setzen Sie Ihr letztes Lernmodul fort und knüpfen Sie an Ihren aktuellen Fortschritt an.",
+        "continueScenarioDescription": "Setzen Sie dort fort, wo Sie in Ihrem zuletzt geöffneten Szenario aufgehört haben.",
+        "reviewScenarioDescription": "Überprüfen Sie das Szenario, das Sie zuletzt abgeschlossen haben.",
         "curriculumBadge": "Lehrplan",
+        "scenarioBadge": "Szenario",
         "reviewModule": "Modul überprüfen",
         "continueModule": "Modul fortsetzen",
+        "continueScenario": "Szenario fortsetzen",
+        "reviewScenario": "Szenario überprüfen",
         "lastCompleted": "Zuletzt abgeschlossen",
         "lastOpened": "Zuletzt geöffnet",
         "noChange": "Keine Änderung gegenüber der Vorwoche",
-        "vsPreviousWeek": "{value} im Vergleich zur Vorwoche"
+        "vsPreviousWeek": "{value} gegenüber der Vorwoche"
       },
       "metrics": {
         "averagePostQuiz": "Durchschnitt nach dem Quiz",

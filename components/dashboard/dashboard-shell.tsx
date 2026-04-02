@@ -158,7 +158,6 @@ function DashboardHero({
   role,
   roleConfig,
   displayName,
-  stats = [],
   continueLearning,
   gamificationStats = [],
 }: {
@@ -193,22 +192,6 @@ function DashboardHero({
             <TopStreakBadge gamificationStats={gamificationStats} roleConfig={roleConfig} />
           )}
         </div>
-
-        {stats.length > 0 ? (
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            {stats.map((stat) => (
-              <div
-                key={`${stat.label}-${stat.value}`}
-                className={`rounded-2xl bg-white px-4 py-4 ${SOFT_INNER_BORDER}`}
-              >
-                <div className="text-sm font-medium text-slate-500">{stat.label}</div>
-                <div className="mt-1 text-xl font-bold tracking-tight text-slate-900">
-                  {stat.value}
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : null}
 
         {(role === "student" || role === "educator") && (
           <ContinueLearningHeroCard

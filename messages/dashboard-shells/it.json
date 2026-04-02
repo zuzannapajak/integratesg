@@ -2,15 +2,20 @@
   "Protected": {
     "DashboardPage": {
       "fallback": {
-        "noActivity": "Ancora nessuna attività",
+        "noActivity": "Nessuna attività",
         "today": "Oggi",
         "yesterday": "Ieri",
         "daysAgo": "{count} giorni fa",
         "untitledModule": "Modulo senza titolo",
         "continueDescription": "Continua il tuo ultimo modulo di apprendimento e riprendi dai tuoi progressi attuali.",
+        "continueScenarioDescription": "Continua da dove avevi interrotto nel tuo scenario aperto più di recente.",
+        "reviewScenarioDescription": "Rivedi lo scenario che hai completato più di recente.",
         "curriculumBadge": "Curriculum",
-        "reviewModule": "Rivedi il modulo",
-        "continueModule": "Continua il modulo",
+        "scenarioBadge": "Scenario",
+        "reviewModule": "Rivedi modulo",
+        "continueModule": "Continua modulo",
+        "continueScenario": "Continua scenario",
+        "reviewScenario": "Rivedi scenario",
         "lastCompleted": "Ultimo completato",
         "lastOpened": "Ultimo aperto",
         "noChange": "Nessuna variazione rispetto alla settimana precedente",
