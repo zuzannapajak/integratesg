@@ -126,6 +126,15 @@
       "empty": {
         "title": "Nessun caso di studio trovato",
         "description": "Prova a modificare l'area ESG, il filtro di stato o la frase di ricerca per esplorare le risorse dell'ePortfolio."
+      },
+      "fallbacks": {
+        "summary": "Riepilogo non ancora disponibile."
+      }
+    },
+    "ScenarioDetailShell": {
+      "fallbacks": {
+        "description": "La descrizione dello scenario nie è stata ancora aggiunta.",
+        "instruction": "Procedi nell'esperienza passo dopo passo, prendi le tue decisioni e rifletti sul risultato."
       }
     }
   }

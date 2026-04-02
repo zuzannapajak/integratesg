@@ -3,6 +3,7 @@
 import CurriculumListShell from "@/components/curriculum/curriculum-list-shell";
 import { CurriculumModuleViewModel } from "@/lib/curriculum/types";
 import { BookOpen, Sparkles } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 type ViewMode = "my-courses" | "all-courses";
@@ -14,6 +15,7 @@ type Props = {
 };
 
 export default function CurriculumSwitcher({ locale, myCourses, allCourses }: Props) {
+  const t = useTranslations("Protected.CurriculumSwitcher");
   const [viewMode, setViewMode] = useState<ViewMode>("my-courses");
 
   return (
@@ -32,7 +34,7 @@ export default function CurriculumSwitcher({ locale, myCourses, allCourses }: Pr
             }`}
           >
             <Sparkles className="h-4 w-4" />
-            My courses
+            {t("tabs.myCourses")}
           </button>
 
           <button
@@ -47,7 +49,7 @@ export default function CurriculumSwitcher({ locale, myCourses, allCourses }: Pr
             }`}
           >
             <BookOpen className="h-4 w-4" />
-            All courses
+            {t("tabs.allCourses")}
           </button>
         </div>
       </div>
@@ -57,16 +59,16 @@ export default function CurriculumSwitcher({ locale, myCourses, allCourses }: Pr
           locale={locale}
           items={myCourses}
           showRefineControls={false}
-          emptyTitle="No learning modules yet"
-          emptyDescription="Start a module to build your personal learning library and return to it later."
+          emptyTitle={t("empty.noModulesTitle")}
+          emptyDescription={t("empty.noModulesDescription")}
         />
       ) : (
         <CurriculumListShell
           locale={locale}
           items={allCourses}
           showRefineControls
-          emptyTitle="No learning modules found"
-          emptyDescription="Try adjusting the search phrase or filters to explore available modules."
+          emptyTitle={t("empty.noResultsTitle")}
+          emptyDescription={t("empty.noResultsDescription")}
         />
       )}
     </section>

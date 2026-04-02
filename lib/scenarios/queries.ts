@@ -1,85 +1,18 @@
 import { prisma } from "@/lib/prisma";
 import {
+  JsonObject,
+  RuntimeTrackingInput,
+  ScenarioDetailRecord,
   ScenarioDetailViewModel,
+  ScenarioLaunchRecord,
   ScenarioLaunchViewModel,
   ScenarioListItemViewModel,
   ScenarioProgressStatus,
+  ScenarioRecord,
+  ScenarioVariantRecord,
+  UserScenarioAttemptRecord,
 } from "@/lib/scenarios/types";
-import { Prisma } from "@prisma/client";
-
-type ScenarioVariantRecord = {
-  id: string;
-  language: string;
-  title: string;
-  description: string | null;
-  instruction: string | null;
-  launchUrl: string;
-  packagePath: string;
-  entryPoint: string;
-  thumbnailUrl: string | null;
-  estimatedDurationMinutes: number | null;
-  availabilityStatus: string;
-};
-
-type UserScenarioAttemptRecord = {
-  status: string;
-  startedAt: Date;
-  lastOpenedAt: Date | null;
-  completedAt: Date | null;
-  createdAt: Date;
-};
-
-type ScenarioRecord = {
-  slug: string;
-  area: string;
-  variants: ScenarioVariantRecord[];
-  userAttempts: UserScenarioAttemptRecord[];
-};
-
-type ScenarioAttemptDetailRecord = {
-  status: string;
-  score: number | null;
-  startedAt: Date;
-  lastOpenedAt: Date | null;
-  completedAt: Date | null;
-  lessonLocation: string | null;
-  suspendData: string | null;
-  sessionTime: string | null;
-  totalTime: string | null;
-  rawTrackingData: Prisma.JsonValue | null;
-  createdAt: Date;
-};
-
-type ScenarioDetailRecord = {
-  slug: string;
-  area: string;
-  isFeatured: boolean;
-  variants: ScenarioVariantRecord[];
-  userAttempts: ScenarioAttemptDetailRecord[];
-};
-
-type ScenarioLaunchRecord = {
-  slug: string;
-  area: string;
-  variants: ScenarioVariantRecord[];
-  userAttempts: ScenarioAttemptDetailRecord[];
-};
-
-type RuntimeTrackingInput = {
-  locale: string;
-  userId: string;
-  slug: string;
-  lessonStatus?: string | null;
-  scoreRaw?: string | null;
-  sessionTime?: string | null;
-  suspendData?: string | null;
-  lessonLocation?: string | null;
-  rawTrackingData?: Record<string, string> | null;
-};
-
-type JsonPrimitive = string | number | boolean | null;
-type JsonValue = JsonPrimitive | JsonObject | JsonValue[];
-type JsonObject = { [key: string]: JsonValue };
+import { Prisma, ScenarioAttemptStatus } from "@prisma/client";
 
 const RUNTIME_LAST_SESSION_SNAPSHOT_KEY = "__runtime.lastSessionTimeSnapshot";
 const RUNTIME_TOTAL_TIME_CENTIS_KEY = "__runtime.totalTimeCentis";
@@ -137,20 +70,20 @@ function mapScenarioStatus(attempts: UserScenarioAttemptRecord[]): ScenarioProgr
   return "in_progress";
 }
 
-function normalizeRuntimeStatus(status: string | null | undefined) {
+function normalizeRuntimeStatus(status: string | null | undefined): ScenarioAttemptStatus | null {
   const normalized = status?.trim().toLowerCase();
 
   switch (normalized) {
     case "passed":
-      return "passed";
+      return ScenarioAttemptStatus.passed;
     case "completed":
-      return "completed";
+      return ScenarioAttemptStatus.completed;
     case "failed":
-      return "failed";
+      return ScenarioAttemptStatus.failed;
     case "incomplete":
-      return "incomplete";
+      return ScenarioAttemptStatus.incomplete;
     case "browsed":
-      return "browsed";
+      return ScenarioAttemptStatus.browsed;
     case "not attempted":
     case "not_attempted":
     case "unknown":
@@ -315,7 +248,7 @@ function mapScenarioToViewModel(
     slug: scenario.slug,
     language: variant.language,
     title: variant.title,
-    description: variant.description?.trim() ?? "Scenario description has not been added yet.",
+    description: normalizeOptionalText(variant.description),
     area: mapArea(scenario.area),
     packagePath: variant.launchUrl,
     estimatedDurationMinutes: variant.estimatedDurationMinutes,
@@ -413,10 +346,8 @@ function mapScenarioToDetailViewModel(
     slug: scenario.slug,
     language: variant.language,
     title: variant.title,
-    description: variant.description?.trim() ?? "Scenario description has not been added yet.",
-    instruction:
-      variant.instruction?.trim() ??
-      "Move through the experience step by step, make your decisions, and reflect on the outcome.",
+    description: normalizeOptionalText(variant.description),
+    instruction: normalizeOptionalText(variant.instruction),
     area: mapArea(scenario.area),
     estimatedDurationMinutes: variant.estimatedDurationMinutes,
     status: mapScenarioStatus(scenario.userAttempts),
@@ -449,7 +380,7 @@ function mapScenarioToLaunchViewModel(
     slug: scenario.slug,
     language: variant.language,
     title: variant.title,
-    description: variant.description?.trim() ?? "Scenario description has not been added yet.",
+    description: normalizeOptionalText(variant.description),
     area: mapArea(scenario.area),
     launchUrl: trimmedLaunchUrl.length > 0 ? trimmedLaunchUrl : null,
     status: mapScenarioStatus(scenario.userAttempts),
@@ -476,6 +407,9 @@ export async function getScenarioDetail(params: { locale: string; userId: string
       isFeatured: true,
       variants: {
         where: {
+          language: {
+            in: [params.locale, "en"],
+          },
           availabilityStatus: "available",
         },
         select: {
@@ -631,12 +565,12 @@ export async function logScenarioLaunch(params: { locale: string; userId: string
       attemptNumber: true,
       status: true,
       completedAt: true,
+      lastOpenedAt: true,
     },
   });
 
   const shouldResumeExistingAttempt =
     latestAttempt !== null &&
-    latestAttempt.completedAt === null &&
     latestAttempt.status !== "completed" &&
     latestAttempt.status !== "passed" &&
     latestAttempt.status !== "failed";
@@ -825,80 +759,75 @@ export async function updateScenarioRuntimeProgress(input: RuntimeTrackingInput)
       attemptNumber: true,
       status: true,
       completedAt: true,
+      startedAt: true,
+      lastOpenedAt: true,
+      lessonLocation: true,
+      suspendData: true,
+      sessionTime: true,
       totalTime: true,
+      score: true,
       rawTrackingData: true,
     },
   });
 
-  const nextStatus =
-    normalizedStatus ??
-    (latestAttempt?.status === "browsed" ? "incomplete" : (latestAttempt?.status ?? "incomplete"));
-
-  const nextCompletedAt =
-    nextStatus === "completed" || nextStatus === "passed" || nextStatus === "failed" ? now : null;
-
   const previousRawTrackingData = readRuntimeTrackingObject(latestAttempt?.rawTrackingData);
-
-  const { nextTotalTime, nextTotalCentis, nextSnapshotCentis } = calculateNextTotalTime({
+  const nextTotalTimeState = calculateNextTotalTime({
     previousRawTrackingData,
     incomingSessionTime: input.sessionTime,
     previousTotalTimeString: latestAttempt?.totalTime ?? null,
   });
 
-  const mergedTrackingData: JsonObject = {
+  const nextRawTrackingData: JsonObject = {
     ...previousRawTrackingData,
     ...(input.rawTrackingData ?? {}),
-    [RUNTIME_LAST_SESSION_SNAPSHOT_KEY]: nextSnapshotCentis,
-    [RUNTIME_TOTAL_TIME_CENTIS_KEY]: nextTotalCentis,
+    [RUNTIME_LAST_SESSION_SNAPSHOT_KEY]: nextTotalTimeState.nextSnapshotCentis,
+    [RUNTIME_TOTAL_TIME_CENTIS_KEY]: nextTotalTimeState.nextTotalCentis,
   };
 
-  if (!latestAttempt) {
-    await prisma.userScenarioAttempt.create({
-      data: {
-        userId: input.userId,
-        scenarioId: scenario.id,
-        scenarioVariantId: variant.id,
-        attemptNumber: 1,
-        status: nextStatus,
-        score: normalizedScore,
-        startedAt: now,
-        lastOpenedAt: now,
-        completedAt: nextCompletedAt,
-        sessionTime: normalizeOptionalText(input.sessionTime),
-        totalTime: nextTotalTime,
-        suspendData: normalizeOptionalText(input.suspendData),
-        lessonLocation: normalizeOptionalText(input.lessonLocation),
-        rawTrackingData: toPrismaJsonObject(mergedTrackingData),
-      },
+  const updateData = {
+    status:
+      normalizedStatus ??
+      (latestAttempt?.status === "completed" || latestAttempt?.status === "passed"
+        ? latestAttempt.status
+        : "incomplete"),
+    score: normalizedScore ?? latestAttempt?.score ?? null,
+    lessonLocation:
+      normalizeOptionalText(input.lessonLocation) ?? latestAttempt?.lessonLocation ?? null,
+    suspendData: normalizeOptionalText(input.suspendData) ?? latestAttempt?.suspendData ?? null,
+    sessionTime: normalizeOptionalText(input.sessionTime) ?? latestAttempt?.sessionTime ?? null,
+    totalTime: nextTotalTimeState.nextTotalTime,
+    rawTrackingData: toPrismaJsonObject(nextRawTrackingData),
+    lastOpenedAt: now,
+    completedAt:
+      normalizedStatus === "completed" || normalizedStatus === "passed"
+        ? now
+        : (latestAttempt?.completedAt ?? null),
+  };
+
+  if (latestAttempt) {
+    await prisma.userScenarioAttempt.update({
+      where: { id: latestAttempt.id },
+      data: updateData,
     });
 
-    return getScenarioLaunch({
-      locale: input.locale,
-      userId: input.userId,
-      slug: input.slug,
-    });
+    return latestAttempt.id;
   }
 
-  await prisma.userScenarioAttempt.update({
-    where: { id: latestAttempt.id },
+  const createdAttempt = await prisma.userScenarioAttempt.create({
     data: {
-      status: nextStatus,
-      score: normalizedScore ?? undefined,
-      lastOpenedAt: now,
-      completedAt: nextCompletedAt ?? latestAttempt.completedAt ?? undefined,
-      sessionTime: normalizeOptionalText(input.sessionTime) ?? undefined,
-      totalTime: nextTotalTime ?? undefined,
-      suspendData: normalizeOptionalText(input.suspendData) ?? undefined,
-      lessonLocation: normalizeOptionalText(input.lessonLocation) ?? undefined,
-      rawTrackingData: toPrismaJsonObject(mergedTrackingData),
+      userId: input.userId,
+      scenarioId: scenario.id,
+      scenarioVariantId: variant.id,
+      attemptNumber: 1,
+      startedAt: now,
+      ...updateData,
+    },
+    select: {
+      id: true,
     },
   });
 
-  return getScenarioLaunch({
-    locale: input.locale,
-    userId: input.userId,
-    slug: input.slug,
-  });
+  return createdAttempt.id;
 }
 
 export async function getScenarioLaunch(params: { locale: string; userId: string; slug: string }) {
@@ -912,6 +841,9 @@ export async function getScenarioLaunch(params: { locale: string; userId: string
       area: true,
       variants: {
         where: {
+          language: {
+            in: [params.locale, "en"],
+          },
           availabilityStatus: "available",
         },
         select: {

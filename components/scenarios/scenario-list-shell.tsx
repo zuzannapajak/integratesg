@@ -123,7 +123,7 @@ export default function ScenarioListShell({
         !showRefineControls ||
         normalized.length === 0 ||
         item.title.toLowerCase().includes(normalized) ||
-        item.description.toLowerCase().includes(normalized);
+        (item.description?.toLowerCase().includes(normalized) ?? false);
       const matchesArea =
         !showRefineControls || selectedArea === "all" || item.area === selectedArea;
 

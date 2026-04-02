@@ -92,5 +92,17 @@
       "title": "ePortfolio",
       "subtitle": "Studia przypadków o praktycznym charakterze osadzone w realnym kontekście."
     }
+  },
+  "Layout": {
+    "LanguageSwitcher": {
+      "open": "Otwórz wybór języka",
+      "switchTo": "Zmień na {language}"
+    },
+    "PublicFooter": {
+      "social": {
+        "facebook": "Facebook",
+        "linkedin": "LinkedIn"
+      }
+    }
   }
 }

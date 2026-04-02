@@ -26,7 +26,16 @@
       "industry": "Settore",
       "contentTitle": "Contenuto del caso di studio",
       "takeawaysTitle": "Punti chiave",
-      "takeawaysEmpty": "I punti chiave appariranno qui quando verranno aggiunti a questo caso di studio."
+      "takeawaysEmpty": "I punti chiave appariranno qui quando verranno aggiunti a questo caso di studio.",
+      "fallbacks": {
+        "summary": "Il riepilogo non è stato ancora aggiunto.",
+        "content": "Il contenuto di questo caso di studio non è stato ancora aggiunto."
+      },
+      "CaseStudyListShell": {
+        "fallbacks": {
+          "summary": "Il riepilogo non è stato ancora aggiunto."
+        }
+      }
     }
   }
 }

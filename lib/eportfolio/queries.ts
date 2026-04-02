@@ -3,35 +3,17 @@ import {
   CaseStudyArea,
   CaseStudyDetailViewModel,
   CaseStudyListItemViewModel,
+  CaseStudyProgressRecord,
   CaseStudyProgressStatus,
+  CaseStudyRecord,
+  CaseStudyTranslationRecord,
 } from "@/lib/eportfolio/types";
 import { prisma } from "@/lib/prisma";
 
-type CaseStudyTranslationRecord = {
-  language: string;
-  title: string;
-  summary: string | null;
-  content: string;
-  keyTakeaways: unknown;
-  organization: string | null;
-  industry: string | null;
-};
-
-type CaseStudyProgressRecord = {
-  status: string;
-  startedAt: Date | null;
-  lastOpenedAt: Date | null;
-  completedAt: Date | null;
-};
-
-type CaseStudyRecord = {
-  id: string;
-  slug: string;
-  area: string;
-  isFeatured: boolean;
-  translations: CaseStudyTranslationRecord[];
-  userProgress: CaseStudyProgressRecord[];
-};
+function normalizeOptionalText(value: string | null | undefined) {
+  const trimmed = value?.trim();
+  return trimmed && trimmed.length > 0 ? trimmed : null;
+}
 
 function pickTranslation(
   translations: CaseStudyTranslationRecord[],
@@ -71,16 +53,18 @@ function parseKeyTakeaways(value: unknown): string[] {
   return value.filter((item): item is string => typeof item === "string" && item.trim().length > 0);
 }
 
-function buildSummary(translation: CaseStudyTranslationRecord | null): string {
-  if (translation?.summary?.trim()) {
-    return translation.summary.trim();
+function buildSummary(translation: CaseStudyTranslationRecord | null): string | null {
+  const summary = normalizeOptionalText(translation?.summary);
+  if (summary) {
+    return summary;
   }
 
-  if (translation?.content.trim()) {
-    return translation.content.trim().slice(0, 180);
+  const content = normalizeOptionalText(translation?.content);
+  if (content) {
+    return content.slice(0, 180);
   }
 
-  return "No summary available yet.";
+  return null;
 }
 
 function mapProgressStatus(status?: string | null): CaseStudyProgressStatus {
@@ -117,7 +101,7 @@ function mapCaseStudyToListItem(
 
   return {
     slug: caseStudy.slug,
-    title: translation?.title ?? "Untitled case study",
+    title: translation?.title ?? caseStudy.slug,
     summary: buildSummary(translation),
     area: mapArea(caseStudy.area),
     organization: translation?.organization ?? null,
@@ -140,11 +124,9 @@ function mapCaseStudyToDetail(
 
   return {
     slug: caseStudy.slug,
-    title: translation?.title ?? "Untitled case study",
+    title: translation?.title ?? caseStudy.slug,
     summary: buildSummary(translation),
-    content: translation
-      ? translation.content.trim() || "This case study content has not been added yet."
-      : "This case study content has not been added yet.",
+    content: normalizeOptionalText(translation?.content),
     area: mapArea(caseStudy.area),
     organization: translation?.organization ?? null,
     industry: translation?.industry ?? null,

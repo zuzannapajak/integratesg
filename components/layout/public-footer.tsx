@@ -9,6 +9,7 @@ type Props = {
 
 export default async function PublicFooter({ locale }: Props) {
   const t = await getTranslations({ locale, namespace: "Footer" });
+  const tFooter = await getTranslations({ locale, namespace: "Layout.PublicFooter" });
 
   return (
     <footer className="landing-footer px-6 py-12 md:px-10 lg:px-14">
@@ -62,7 +63,7 @@ export default async function PublicFooter({ locale }: Props) {
         <div className="mt-10 flex items-center justify-center gap-4">
           <a
             href="https://www.facebook.com/integratesg"
-            aria-label="Facebook"
+            aria-label={tFooter("social.facebook")}
             className="footer-social-icon"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current">
@@ -72,7 +73,7 @@ export default async function PublicFooter({ locale }: Props) {
 
           <a
             href="https://www.linkedin.com/company/integrat-esg/"
-            aria-label="LinkedIn"
+            aria-label={tFooter("social.linkedin")}
             className="footer-social-icon"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current">

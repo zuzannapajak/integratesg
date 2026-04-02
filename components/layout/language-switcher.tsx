@@ -2,6 +2,7 @@
 
 import { APP_LOCALES, AppLocale, LOCALE_META, isAppLocale } from "@/lib/i18n/locales";
 import { Check, ChevronDown } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { ReadonlyURLSearchParams, usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -32,6 +33,7 @@ function buildLocaleHref(
 }
 
 export default function LanguageSwitcher({ locale, align = "right" }: Props) {
+  const t = useTranslations("Layout.LanguageSwitcher");
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -90,7 +92,7 @@ export default function LanguageSwitcher({ locale, align = "right" }: Props) {
         }}
         aria-haspopup="menu"
         aria-expanded={isOpen}
-        aria-label="Open language switcher"
+        aria-label={t("open")}
         className={`group inline-flex h-12 items-center gap-2 rounded-full border px-4 text-sm text-white/92 backdrop-blur-md transition-all duration-200 ${
           isOpen
             ? "border-white/20 bg-white/10"
@@ -123,8 +125,8 @@ export default function LanguageSwitcher({ locale, align = "right" }: Props) {
             <Link
               key={item.locale}
               href={item.href}
-              aria-label={item.switchLabel}
-              title={item.switchLabel}
+              aria-label={t("switchTo", { language: item.label })}
+              title={t("switchTo", { language: item.label })}
               onClick={() => {
                 setIsOpen(false);
               }}

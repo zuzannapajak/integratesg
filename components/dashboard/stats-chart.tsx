@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useId } from "react";
 import {
   Area,
@@ -23,13 +24,10 @@ type Props = {
   valueLabel?: string;
 };
 
-export default function StatsChart({
-  accentColor,
-  data,
-  height = 240,
-  valueLabel = "Activity",
-}: Props) {
+export default function StatsChart({ accentColor, data, height = 240, valueLabel }: Props) {
+  const t = useTranslations("Protected.DashboardShell.StatsChart");
   const gradientId = useId();
+  const resolvedValueLabel = valueLabel ?? t("activity");
 
   return (
     <div className="w-full" style={{ height }}>
@@ -64,7 +62,7 @@ export default function StatsChart({
               backdropFilter: "blur(10px)",
             }}
             labelStyle={{ color: "#667180", fontWeight: 600 }}
-            formatter={(value) => [value ?? 0, valueLabel]}
+            formatter={(value) => [value ?? 0, resolvedValueLabel]}
           />
 
           <Area

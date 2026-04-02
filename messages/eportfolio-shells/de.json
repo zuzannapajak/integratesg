@@ -26,7 +26,16 @@
       "industry": "Branche",
       "contentTitle": "Inhalt der Fallstudie",
       "takeawaysTitle": "Wichtigste Erkenntnisse",
-      "takeawaysEmpty": "Wichtige Erkenntnisse erscheinen hier, sobald sie dieser Fallstudie hinzugefügt werden."
+      "takeawaysEmpty": "Wichtige Erkenntnisse erscheinen hier, sobald sie dieser Fallstudie hinzugefügt werden.",
+      "fallbacks": {
+        "summary": "Zusammenfassung wurde noch nicht hinzugefügt.",
+        "content": "Der Inhalt dieser Fallstudie wurde noch nicht hinzugefügt."
+      },
+      "CaseStudyListShell": {
+        "fallbacks": {
+          "summary": "Zusammenfassung wurde noch nicht hinzugefügt."
+        }
+      }
     }
   }
 }

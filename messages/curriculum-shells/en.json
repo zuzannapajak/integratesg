@@ -128,6 +128,14 @@
         "correctAnswer": "Correct answer",
         "correctAnswerIs": "The correct answer is: {answer}"
       }
+    },
+    "CurriculumSwitcher": {
+      "empty": {
+        "noModulesTitle": "No learning modules yet",
+        "noModulesDescription": "Start a module to build your personal learning library and return to it later.",
+        "noResultsTitle": "No learning modules found",
+        "noResultsDescription": "Try adjusting the search phrase or filters to explore available modules."
+      }
     }
   }
 }

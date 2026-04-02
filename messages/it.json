@@ -128,5 +128,17 @@
         "filtered": "Nessun scenario corrisponde alla ricerca."
       }
     }
+  },
+  "Layout": {
+    "LanguageSwitcher": {
+      "open": "Apri selettore lingua",
+      "switchTo": "Passa a {language}"
+    },
+    "PublicFooter": {
+      "social": {
+        "facebook": "Facebook",
+        "linkedin": "LinkedIn"
+      }
+    }
   }
 }

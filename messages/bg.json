@@ -128,5 +128,17 @@
         "filtered": "Няма сценарии, отговарящи на търсенето."
       }
     }
+  },
+  "Layout": {
+    "LanguageSwitcher": {
+      "open": "Отвори избор на език",
+      "switchTo": "Превключи на {language}"
+    },
+    "PublicFooter": {
+      "social": {
+        "facebook": "Facebook",
+        "linkedin": "LinkedIn"
+      }
+    }
   }
 }

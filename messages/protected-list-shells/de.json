@@ -126,6 +126,15 @@
       "empty": {
         "title": "Keine Fallstudien gefunden",
         "description": "Versuchen Sie, den ESG-Bereich, den Statusfilter oder den Suchbegriff anzupassen, um die verfügbaren ePortfolio-Ressourcen zu erkunden."
+      },
+      "fallbacks": {
+        "summary": "Noch keine Zusammenfassung verfügbar."
+      }
+    },
+    "ScenarioDetailShell": {
+      "fallbacks": {
+        "description": "Die Szenariobeschreibung wurde noch nicht hinzugefügt.",
+        "instruction": "Gehen Sie Schritt für Schritt durch das Erlebnis, treffen Sie Ihre Entscheidungen und reflektieren Sie über das Ergebnis."
       }
     }
   }

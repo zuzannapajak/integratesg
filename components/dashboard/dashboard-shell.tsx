@@ -42,24 +42,18 @@ type Props = {
   adminKpis: DashboardKpi[];
 };
 
-const roleConfigs: Record<DashboardRole, RoleConfig> = {
+const roleConfigs: Record<DashboardRole, Omit<RoleConfig, "welcome" | "intro">> = {
   educator: {
     accent: "#0b9c72",
     avatar: "bg-emerald-600",
-    welcome: "Welcome back",
-    intro: "Continue your learning path and access your teaching resources.",
   },
   student: {
     accent: "#ef6c23",
     avatar: "bg-orange-600",
-    welcome: "Welcome back",
-    intro: "Continue learning where you left off and keep your momentum going.",
   },
   admin: {
     accent: "#31425a",
     avatar: "bg-slate-700",
-    welcome: "Welcome back",
-    intro: "Monitor platform health, participation, and overall usage trends.",
   },
 };
 
@@ -106,7 +100,7 @@ export default function DashboardShell({
 }: Props) {
   const t = useTranslations("Protected.DashboardShell");
 
-  const roleConfig = {
+  const roleConfig: RoleConfig = {
     ...roleConfigs[role],
     welcome: t(`roleConfig.${role}.welcome`),
     intro: t(`roleConfig.${role}.intro`),
@@ -147,7 +141,6 @@ export default function DashboardShell({
 
           {role === "admin" && (
             <AdminDashboard
-              locale={locale}
               roleConfig={roleConfig}
               kpis={adminKpis}
               activityData={adminActivityData}
@@ -596,7 +589,6 @@ function AdminDashboard({
   activityData,
   activityTrendLabel,
 }: {
-  locale: string;
   roleConfig: RoleConfig;
   kpis: DashboardKpi[];
   activityData: DashboardChartPoint[];

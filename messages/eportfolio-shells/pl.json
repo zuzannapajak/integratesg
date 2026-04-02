@@ -26,7 +26,16 @@
       "industry": "Branża",
       "contentTitle": "Treść studium przypadku",
       "takeawaysTitle": "Kluczowe wnioski",
-      "takeawaysEmpty": "Kluczowe wnioski pojawią się tutaj po ich dodaniu do tego studium przypadku."
+      "takeawaysEmpty": "Kluczowe wnioski pojawią się tutaj po ich dodaniu do tego studium przypadku.",
+      "fallbacks": {
+        "summary": "Podsumowanie nie zostało jeszcze dodane.",
+        "content": "Treść tego studium przypadku nie została jeszcze dodana."
+      }
+    },
+    "CaseStudyListShell": {
+      "fallbacks": {
+        "summary": "Podsumowanie nie zostało jeszcze dodane."
+      }
     }
   }
 }

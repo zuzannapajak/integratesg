@@ -128,5 +128,17 @@
         "filtered": "Δεν βρέθηκαν σενάρια που να ταιριάζουν στην αναζήτηση."
       }
     }
+  },
+  "Layout": {
+    "LanguageSwitcher": {
+      "open": "Άνοιγμα επιλογής γλώσσας",
+      "switchTo": "Αλλαγή σε {language}"
+    },
+    "PublicFooter": {
+      "social": {
+        "facebook": "Facebook",
+        "linkedin": "LinkedIn"
+      }
+    }
   }
 }

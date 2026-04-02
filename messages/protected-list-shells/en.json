@@ -126,6 +126,15 @@
       "empty": {
         "title": "No case studies found",
         "description": "Try adjusting the ESG area, status filter, or search phrase to explore the available ePortfolio resources."
+      },
+      "fallbacks": {
+        "summary": "No summary available yet."
+      }
+    },
+    "ScenarioDetailShell": {
+      "fallbacks": {
+        "description": "Scenario description has not been added yet.",
+        "instruction": "Move through the experience step by step, make your decisions, and reflect on the outcome."
       }
     }
   }

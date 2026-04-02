@@ -337,7 +337,7 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
                 </h1>
 
                 <p className="mt-5 max-w-3xl text-[1rem] leading-8 text-[#667180] md:text-[1.04rem]">
-                  {scenario.description}
+                  {scenario.description ?? t("fallbacks.description")}
                 </p>
 
                 <div className="mt-6 inline-flex items-start gap-2 rounded-2xl border border-[#e8edf3] bg-white/86 px-4 py-3 text-sm text-[#556274] shadow-[0_8px_24px_rgba(35,45,62,0.04)]">
@@ -486,10 +486,10 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
                     {t("overview.title")}
                   </p>
                   <p className="mt-4 text-[0.98rem] leading-8 text-[#5d6978]">
-                    {scenario.description}
+                    {scenario.instruction ?? t("fallbacks.instruction")}
                   </p>
                   <p className="mt-4 text-[0.98rem] leading-8 text-[#5d6978]">
-                    {scenario.instruction}
+                    {scenario.instruction ?? t("fallbacks.instruction")}
                   </p>
                 </div>
 

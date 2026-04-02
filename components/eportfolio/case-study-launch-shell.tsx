@@ -11,8 +11,8 @@ const SURFACE =
 type CaseStudyDetail = {
   slug: string;
   title: string;
-  summary: string;
-  content: string;
+  summary: string | null;
+  content: string | null;
   area: string;
   organization: string | null;
   industry: string | null;
@@ -66,7 +66,7 @@ function splitContent(content: string) {
 export default function CaseStudyLaunchShell({ locale, caseStudy }: Props) {
   const t = useTranslations("Protected.CaseStudyLaunchShell");
   const areaMeta = getAreaMeta(caseStudy.area, t);
-  const paragraphs = splitContent(caseStudy.content);
+  const paragraphs = splitContent(caseStudy.content ?? "");
 
   return (
     <main className="relative min-h-screen bg-[#f5f5f3] px-4 pb-20 pt-8 text-[#31425a] sm:px-6 lg:px-8">
@@ -113,7 +113,7 @@ export default function CaseStudyLaunchShell({ locale, caseStudy }: Props) {
                 {caseStudy.title}
               </h1>
               <p className="mt-4 max-w-3xl text-sm leading-7 text-[#5f6c7b] md:text-[0.98rem]">
-                {caseStudy.summary}
+                {caseStudy.summary ?? t("fallbacks.summary")}
               </p>
             </div>
 
@@ -149,9 +149,13 @@ export default function CaseStudyLaunchShell({ locale, caseStudy }: Props) {
           <section className={`${SURFACE} p-6 md:p-8`}>
             <h2 className="text-xl font-semibold text-slate-900">{t("contentTitle")}</h2>
             <div className="mt-5 space-y-5 text-[0.98rem] leading-8 text-[#475467]">
-              {paragraphs.map((paragraph, index) => (
-                <p key={`${caseStudy.slug}-${index}`}>{paragraph}</p>
-              ))}
+              {paragraphs.length > 0 ? (
+                paragraphs.map((paragraph, index) => (
+                  <p key={`${caseStudy.slug}-${index}`}>{paragraph}</p>
+                ))
+              ) : (
+                <p>{t("fallbacks.content")}</p>
+              )}
             </div>
           </section>
 

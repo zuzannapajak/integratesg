@@ -26,7 +26,16 @@
       "industry": "Industry",
       "contentTitle": "Case study content",
       "takeawaysTitle": "Key takeaways",
-      "takeawaysEmpty": "Key takeaways will appear here when they are added to this case study."
+      "takeawaysEmpty": "Key takeaways will appear here when they are added to this case study.",
+      "fallbacks": {
+        "summary": "No summary available yet.",
+        "content": "This case study content has not been added yet."
+      }
+    },
+    "CaseStudyListShell": {
+      "fallbacks": {
+        "summary": "No summary available yet."
+      }
     }
   }
 }

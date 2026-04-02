@@ -110,6 +110,9 @@
           "valueLabel": "Aktive Benutzer"
         }
       }
+    },
+    "StatsChart": {
+      "activity": "Aktivität"
     }
   }
 }

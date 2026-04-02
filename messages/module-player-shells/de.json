@@ -91,6 +91,22 @@
         "cancel": "Abbrechen",
         "confirm": "Modul wiederholen"
       }
+    },
+    "ScenarioPlayerFrame": {
+      "loadingTitle": "Szenario wird vorbereitet",
+      "loadingDescription": "Das interaktive Erlebnis wird geladen.",
+      "errorTitle": "Szenario konnte nicht geöffnet werden",
+      "errorDescription": "Der interaktive Inhalt ist derzeit nicht verfügbar oder die Antwortzeit war zu lang. Bitte versuchen Sie es erneut.",
+      "notReadyDescription": "Dieses Szenario ist noch nicht startbereit. Bitte kommen Sie später wieder oder wählen Sie ein anderes Szenario.",
+      "retry": "Wiederholen",
+      "backToScenarios": "Zurück zu den Szenarien",
+      "scormErrors": {
+        "noError": "Kein Fehler",
+        "notInitialized": "Nicht initialisiert",
+        "generalError": "Allgemeiner Fehler",
+        "runtimeNotInitialized": "Die SCORM-Runtime wurde nicht initialisiert.",
+        "noDiagnostics": "Keine zusätzlichen Diagnoseinformationen verfügbar."
+      }
     }
   }
 }

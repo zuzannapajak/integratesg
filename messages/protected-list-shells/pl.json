@@ -126,6 +126,15 @@
       "empty": {
         "title": "Nie znaleziono studiów przypadków",
         "description": "Spróbuj zmienić obszar ESG, filtr statusu lub frazę wyszukiwania, aby przeglądać dostępne zasoby ePortfolio."
+      },
+      "fallbacks": {
+        "summary": "Podsumowanie nie jest jeszcze dostępne."
+      }
+    },
+    "ScenarioDetailShell": {
+      "fallbacks": {
+        "description": "Opis scenariusza nie został jeszcze dodany.",
+        "instruction": "Przechodź przez doświadczenie krok po kroku, podejmuj decyzje i wyciągaj wnioski z ich rezultatów."
       }
     }
   }

@@ -1,6 +1,7 @@
 "use client";
 
 import { CircleAlert, CircleDashed, RefreshCcw } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -65,6 +66,7 @@ export default function ScenarioPlayerFrame({
   initialScoreRaw = null,
   initialSessionTime = null,
 }: Props) {
+  const t = useTranslations("Protected.ScenarioPlayerFrame");
   const [frameKey, setFrameKey] = useState(0);
   const [readyToken, setReadyToken] = useState<string | null>(null);
   const [timedOutToken, setTimedOutToken] = useState<string | null>(null);
@@ -193,22 +195,22 @@ export default function ScenarioPlayerFrame({
       LMSGetErrorString: (code) => {
         switch (code) {
           case "0":
-            return "No error";
+            return t("scormErrors.noError");
           case "301":
-            return "Not initialized";
+            return t("scormErrors.notInitialized");
           default:
-            return "General error";
+            return t("scormErrors.generalError");
         }
       },
 
       LMSGetDiagnostic: (code) => {
         switch (code) {
           case "0":
-            return "No error";
+            return t("scormErrors.noError");
           case "301":
-            return "The SCORM runtime has not been initialized.";
+            return t("scormErrors.runtimeNotInitialized");
           default:
-            return "No additional diagnostic information is available.";
+            return t("scormErrors.noDiagnostics");
         }
       },
     };
@@ -220,7 +222,7 @@ export default function ScenarioPlayerFrame({
         delete window.API;
       }
     };
-  }, []);
+  }, [t]);
 
   const handleRetry = () => {
     if (!hasValidSrc) {
@@ -242,8 +244,8 @@ export default function ScenarioPlayerFrame({
             </div>
 
             <div>
-              <p className="text-sm font-semibold text-[#31425a]">Preparing your scenario</p>
-              <p className="mt-1 text-sm text-[#667180]">The interactive experience is loading.</p>
+              <p className="text-sm font-semibold text-[#31425a]">{t("loadingTitle")}</p>
+              <p className="mt-1 text-sm text-[#667180]">{t("loadingDescription")}</p>
             </div>
           </div>
         </div>
@@ -257,13 +259,11 @@ export default function ScenarioPlayerFrame({
             </div>
 
             <h2 className="mt-5 text-xl font-bold tracking-tight text-[#31425a]">
-              The scenario could not be opened
+              {t("errorTitle")}
             </h2>
 
             <p className="mt-3 text-sm leading-7 text-[#667180]">
-              {hasValidSrc
-                ? "The interactive content is currently unavailable or took too long to respond. Please try again."
-                : "This scenario is not ready to launch yet. Please return later or choose another scenario."}
+              {hasValidSrc ? t("errorDescription") : t("notReadyDescription")}
             </p>
 
             <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
@@ -274,7 +274,7 @@ export default function ScenarioPlayerFrame({
                   className="inline-flex items-center gap-2 rounded-2xl bg-[#31425a] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347]"
                 >
                   <RefreshCcw className="h-4 w-4" />
-                  Try again
+                  {t("retry")}
                 </button>
               )}
 
@@ -282,7 +282,7 @@ export default function ScenarioPlayerFrame({
                 href={backHref}
                 className="inline-flex items-center gap-2 rounded-2xl border border-[#d9e2ec] bg-white px-4 py-3 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc]"
               >
-                Back to scenarios
+                {t("backToScenarios")}
               </Link>
             </div>
           </div>

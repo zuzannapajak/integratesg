@@ -91,6 +91,22 @@
         "cancel": "Annulla",
         "confirm": "Rifai modulo"
       }
+    },
+    "ScenarioPlayerFrame": {
+      "loadingTitle": "Preparazione dello scenario",
+      "loadingDescription": "L'esperienza interattiva è in fase di caricamento.",
+      "errorTitle": "Impossibile aprire lo scenario",
+      "errorDescription": "Il contenuto interattivo non è al momento disponibile o la risposta ha richiesto troppo tempo. Riprova.",
+      "notReadyDescription": "Questo scenario non è ancora pronto per l'avvio. Torna più tardi o scegli un altro scenario.",
+      "retry": "Riprova",
+      "backToScenarios": "Torna agli scenari",
+      "scormErrors": {
+        "noError": "Nessun errore",
+        "notInitialized": "Non inizializzato",
+        "generalError": "Errore generale",
+        "runtimeNotInitialized": "Il runtime SCORM non è stato inizializzato.",
+        "noDiagnostics": "Non sono disponibili ulteriori informazioni diagnostiche."
+      }
     }
   }
 }

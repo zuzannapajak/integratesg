@@ -91,6 +91,22 @@
         "cancel": "Anuluj",
         "confirm": "Rozpocznij moduł ponownie"
       }
+    },
+    "ScenarioPlayerFrame": {
+      "loadingTitle": "Przygotowywanie scenariusza",
+      "loadingDescription": "Interaktywne doświadczenie jest ładowane.",
+      "errorTitle": "Nie udało się otworzyć scenariusza",
+      "errorDescription": "Interaktywna zawartość jest obecnie niedostępna lub czas odpowiedzi był zbyt długi. Spróbuj ponownie.",
+      "notReadyDescription": "Ten scenariusz nie jest jeszcze gotowy do uruchomienia. Wróć później lub wybierz inny scenariusz.",
+      "retry": "Spróbuj ponownie",
+      "backToScenarios": "Powrót do scenariuszy",
+      "scormErrors": {
+        "noError": "Brak błędu",
+        "notInitialized": "Nie zainicjowano",
+        "generalError": "Błąd ogólny",
+        "runtimeNotInitialized": "Środowisko uruchomieniowe SCORM nie zostało zainicjowane.",
+        "noDiagnostics": "Brak dodatkowych informacji diagnostycznych."
+      }
     }
   }
 }

@@ -89,7 +89,7 @@ export default function CaseStudyListShell({ locale, items }: Props) {
       const matchesSearch =
         normalized.length === 0 ||
         item.title.toLowerCase().includes(normalized) ||
-        item.summary.toLowerCase().includes(normalized) ||
+        (item.summary?.toLowerCase().includes(normalized) ?? false) ||
         (item.organization?.toLowerCase().includes(normalized) ?? false) ||
         (item.industry?.toLowerCase().includes(normalized) ?? false);
 
@@ -266,7 +266,9 @@ export default function CaseStudyListShell({ locale, items }: Props) {
                           <h2 className="text-xl font-semibold tracking-tight text-[#1f2a37]">
                             {item.title}
                           </h2>
-                          <p className="mt-3 text-sm leading-6 text-[#5f6c7b]">{item.summary}</p>
+                          <p className="mt-3 text-sm leading-6 text-[#5f6c7b]">
+                            {item.summary ?? t("fallbacks.summary")}
+                          </p>{" "}
                         </div>
 
                         <div className="space-y-2 text-sm text-[#516071]">

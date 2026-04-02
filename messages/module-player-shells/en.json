@@ -91,6 +91,22 @@
         "cancel": "Cancel",
         "confirm": "Retake module"
       }
+    },
+    "ScenarioPlayerFrame": {
+      "loadingTitle": "Preparing your scenario",
+      "loadingDescription": "The interactive experience is loading.",
+      "errorTitle": "The scenario could not be opened",
+      "errorDescription": "The interactive content is currently unavailable or took too long to respond. Please try again.",
+      "notReadyDescription": "This scenario is not ready to launch yet. Please return later or choose another scenario.",
+      "retry": "Try again",
+      "backToScenarios": "Back to scenarios",
+      "scormErrors": {
+        "noError": "No error",
+        "notInitialized": "Not initialized",
+        "generalError": "General error",
+        "runtimeNotInitialized": "The SCORM runtime has not been initialized.",
+        "noDiagnostics": "No additional diagnostic information is available."
+      }
     }
   }
 }
