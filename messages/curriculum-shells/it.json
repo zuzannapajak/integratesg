@@ -68,15 +68,19 @@
         "overview": "Panoramica",
         "content": "Contenuto",
         "quiz": "Quiz",
-        "progress": "Progressi"
+        "progress": "Progresso",
+        "outcomes": "Risultati",
+        "flow": "Flusso"
       },
       "sections": {
         "outcomes": "Risultati di apprendimento",
         "structure": "Struttura del modulo",
         "content": "Contenuto del modulo",
         "lesson": "Lezione {index}",
-        "quiz": "Verifica conoscenze",
-        "progress": "I tuoi progressi"
+        "quiz": "Verifica delle conoscenze",
+        "progress": "Il tuo progresso",
+        "overviewEyebrow": "Panoramica del modulo",
+        "overviewTitle": "Cosa include questo modulo"
       },
       "labels": {
         "area": "Area",
@@ -88,11 +92,29 @@
         "currentLocation": "Posizione attuale",
         "nextAction": "Prossima azione"
       },
+      "metrics": {
+        "duration": "Durata",
+        "lessons": "Lezioni",
+        "checkpoints": "Punti di controllo",
+        "currentStep": "Passaggio attuale",
+        "completed": "Completato"
+      },
+      "area": {
+        "environmental": "Ambientale",
+        "social": "Sociale",
+        "governance": "Governance",
+        "crossCutting": "Trasversale"
+      },
+      "heroIntro": {
+        "preQuiz": "Inizia con il pre-quiz per valutare il tuo punto di partenza e capire su cosa concentrarti durante il modulo."
+      },
       "status": {
         "not_started": "Non iniziato",
         "in_progress": "In corso",
         "completed": "Completato",
-        "failed": "Da rivedere"
+        "failed": "Richiede revisione",
+        "notStarted": "Non iniziato",
+        "inProgress": "In corso"
       },
       "difficulty": {
         "foundation": "Base",
@@ -104,11 +126,19 @@
           "minutes": "{minutes} min"
         }
       },
+      "progressSummary": {
+        "preQuiz": "Pre-quiz"
+      },
+      "nextAction": {
+        "title": "Prossima azione",
+        "defaultDescription": "Esamina la struttura del modulo e continua con il prossimo passaggio consigliato.",
+        "viewFlow": "Visualizza flusso"
+      },
       "progressState": {
         "nextAction": {
           "startModule": "Inizia il modulo",
-          "continueModule": "Continua il modulo",
-          "reviewModule": "Rivedi il modulo"
+          "continueModule": "Continua modulo",
+          "reviewModule": "Rivedi modulo"
         },
         "currentLocation": {
           "preTestNotStarted": "Pre-test non iniziato",
@@ -120,6 +150,12 @@
           "moduleCompleted": "Modulo completato"
         }
       },
+      "insights": {
+        "practicalTitle": "Focus pratico",
+        "practicalText": "Questo modulo collega i concetti ESG con l'apprendimento applicato, contenuti strutturati e un contesto di implementazione reale.",
+        "progressionTitle": "Progressione dell'apprendimento",
+        "progressionText": "Lavora attraverso il modulo passo dopo passo, completa i punti di controllo e costruisci la comprensione progressivamente."
+      },
       "generatedOutcomes": {
         "environmental": [
           "Identificare i punti decisionali ambientali nella pratica",
@@ -127,19 +163,19 @@
           "Rafforzare la fiducia prima dell'apprendimento basato su scenari"
         ],
         "social": [
-          "Riconoscere i rischi e le opportunità ESG legati alle persone",
+          "Riconoscere rischi e opportunità ESG legati alle persone",
           "Applicare un pensiero attento agli stakeholder nel processo decisionale",
           "Comprendere la responsabilità sociale nella qualità dell'implementazione"
         ],
         "governance": [
-          "Comprendere come la governance modelli la credibilità ESG",
-          "Relazionare la responsabilità e le policy all'implementazione",
+          "Comprendere come la governance modella la credibilità ESG",
+          "Relazionare responsabilità e politiche all'implementazione",
           "Tradurre i concetti di governance nella pratica quotidiana"
         ],
         "crossCutting": [
           "Costruire una comprensione condivisa dell'integrazione ESG",
-          "Riconoscere l'interazione tra temi ambientali, sociali e di governance",
-          "Prepararsi all'apprendimento pratico basato su casi e scenari"
+          "Riconoscere come interagiscono i temi ambientali, sociali e di governance",
+          "Prepararsi per l'apprendimento pratico basato su casi e scenari"
         ]
       },
       "generatedStructure": {
@@ -148,10 +184,10 @@
         "postTest": "Post-test"
       },
       "fallbacks": {
-        "subtitle": "Modulo didattico",
+        "subtitle": "Modulo del curriculum",
         "description": "Descrizione non ancora disponibile.",
-        "lessonSummary": "Riepilogo della lezione non ancora disponibile.",
-        "lessonContent": "Il contenuto di questa lezione non è stato ancora aggiunto."
+        "lessonSummary": "Sintesi della lezione non ancora disponibile.",
+        "lessonContent": "Il contenuto di questa lezione non è ancora stato aggiunto."
       }
     },
     "CourseQuizPanel": {

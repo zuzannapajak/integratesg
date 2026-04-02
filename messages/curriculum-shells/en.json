@@ -68,7 +68,9 @@
         "overview": "Overview",
         "content": "Content",
         "quiz": "Quiz",
-        "progress": "Progress"
+        "progress": "Progress",
+        "outcomes": "Outcomes",
+        "flow": "Flow"
       },
       "sections": {
         "outcomes": "Learning outcomes",
@@ -76,7 +78,9 @@
         "content": "Module content",
         "lesson": "Lesson {index}",
         "quiz": "Knowledge check",
-        "progress": "Your progress"
+        "progress": "Your progress",
+        "overviewEyebrow": "Module overview",
+        "overviewTitle": "What this module includes"
       },
       "labels": {
         "area": "Area",
@@ -88,11 +92,29 @@
         "currentLocation": "Current location",
         "nextAction": "Next action"
       },
+      "metrics": {
+        "duration": "Duration",
+        "lessons": "Lessons",
+        "checkpoints": "Checkpoints",
+        "currentStep": "Current step",
+        "completed": "Completed"
+      },
+      "area": {
+        "environmental": "Environmental",
+        "social": "Social",
+        "governance": "Governance",
+        "crossCutting": "Cross-cutting"
+      },
+      "heroIntro": {
+        "preQuiz": "Begin with the pre-quiz to assess your starting point and understand what to focus on during the module."
+      },
       "status": {
         "not_started": "Not started",
         "in_progress": "In progress",
         "completed": "Completed",
-        "failed": "Needs review"
+        "failed": "Needs review",
+        "notStarted": "Not started",
+        "inProgress": "In progress"
       },
       "difficulty": {
         "foundation": "Foundation",
@@ -103,6 +125,14 @@
           "selfPaced": "Self-paced",
           "minutes": "{minutes} min"
         }
+      },
+      "progressSummary": {
+        "preQuiz": "Pre-quiz"
+      },
+      "nextAction": {
+        "title": "Next action",
+        "defaultDescription": "Review the module structure and continue with the next recommended step.",
+        "viewFlow": "View flow"
       },
       "progressState": {
         "nextAction": {
@@ -119,6 +149,12 @@
           "postTestAttempt": "Post-test · attempt {current} of {total}",
           "moduleCompleted": "Module completed"
         }
+      },
+      "insights": {
+        "practicalTitle": "Practical focus",
+        "practicalText": "This module connects ESG concepts with applied learning, structured content, and real implementation context.",
+        "progressionTitle": "Learning progression",
+        "progressionText": "Work through the module step by step, complete checkpoints, and build understanding progressively."
       },
       "generatedOutcomes": {
         "environmental": [

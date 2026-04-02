@@ -68,15 +68,19 @@
         "overview": "Przegląd",
         "content": "Treść",
         "quiz": "Quiz",
-        "progress": "Postępy"
+        "progress": "Postęp",
+        "outcomes": "Efekty",
+        "flow": "Przebieg"
       },
       "sections": {
-        "outcomes": "Efekty kształcenia",
+        "outcomes": "Efekty uczenia się",
         "structure": "Struktura modułu",
         "content": "Treść modułu",
         "lesson": "Lekcja {index}",
         "quiz": "Sprawdzenie wiedzy",
-        "progress": "Twoje postępy"
+        "progress": "Twój postęp",
+        "overviewEyebrow": "Przegląd modułu",
+        "overviewTitle": "Co zawiera ten moduł"
       },
       "labels": {
         "area": "Obszar",
@@ -85,14 +89,32 @@
         "lessons": "Lekcje",
         "quizzes": "Quizy",
         "status": "Status",
-        "currentLocation": "Aktualna lokalizacja",
+        "currentLocation": "Obecne miejsce",
         "nextAction": "Następny krok"
       },
+      "metrics": {
+        "duration": "Czas trwania",
+        "lessons": "Lekcje",
+        "checkpoints": "Punkty kontrolne",
+        "currentStep": "Bieżący krok",
+        "completed": "Ukończono"
+      },
+      "area": {
+        "environmental": "Środowiskowe",
+        "social": "Społeczne",
+        "governance": "Ład korporacyjny",
+        "crossCutting": "Przekrojowe"
+      },
+      "heroIntro": {
+        "preQuiz": "Zacznij od testu wstępnego, aby ocenić swój poziom startowy i dowiedzieć się, na czym skupić się podczas modułu."
+      },
       "status": {
-        "not_started": "Nierozpoczęte",
+        "not_started": "Nie rozpoczęto",
         "in_progress": "W toku",
-        "completed": "Ukończone",
-        "failed": "Wymaga powtórzenia"
+        "completed": "Ukończono",
+        "failed": "Wymaga przeglądu",
+        "notStarted": "Nie rozpoczęto",
+        "inProgress": "W toku"
       },
       "difficulty": {
         "foundation": "Podstawowy",
@@ -104,6 +126,14 @@
           "minutes": "{minutes} min"
         }
       },
+      "progressSummary": {
+        "preQuiz": "Pre-quiz"
+      },
+      "nextAction": {
+        "title": "Następny krok",
+        "defaultDescription": "Zapoznaj się ze strukturą modułu i kontynuuj od zalecanego kroku.",
+        "viewFlow": "Zobacz przebieg"
+      },
       "progressState": {
         "nextAction": {
           "startModule": "Rozpocznij moduł",
@@ -111,41 +141,47 @@
           "reviewModule": "Przejrzyj moduł"
         },
         "currentLocation": {
-          "preTestNotStarted": "Pre-test nierozpoczęty",
-          "preTest": "Pre-test",
+          "preTestNotStarted": "Test wstępny nierozpoczęty",
+          "preTest": "Test wstępny",
           "lessons": "Lekcje",
           "lessonProgress": "Lekcja {current} z {total}",
-          "postTest": "Post-test",
-          "postTestAttempt": "Post-test · podejście {current} z {total}",
+          "postTest": "Test końcowy",
+          "postTestAttempt": "Test końcowy · podejście {current} z {total}",
           "moduleCompleted": "Moduł ukończony"
         }
       },
+      "insights": {
+        "practicalTitle": "Nacisk na praktykę",
+        "practicalText": "Ten moduł łączy koncepcje ESG z nauką stosowaną, ustrukturyzowaną treścią i realnym kontekstem wdrożeniowym.",
+        "progressionTitle": "Postęp nauki",
+        "progressionText": "Przechodź przez moduł krok po kroku, zaliczaj punkty kontrolne i stopniowo buduj zrozumienie tematu."
+      },
       "generatedOutcomes": {
         "environmental": [
-          "Zidentyfikuj punkty decyzyjne dotyczące środowiska w praktyce",
-          "Zinterpretuj konsekwencje wyborów związane ze zrównoważonym rozwojem",
-          "Wzmocnij pewność siebie przed nauką opartą na scenariuszach"
+          "Identyfikacja środowiskowych punktów decyzyjnych w praktyce",
+          "Interpretacja skutków wyborów związanych ze zrównoważonym rozwojem",
+          "Wzmocnienie pewności siebie przed nauką opartą na scenariuszach"
         ],
         "social": [
-          "Rozpoznaj ryzyka i szanse ESG związane z ludźmi",
-          "Stosuj myślenie uwzględniające interesariuszy w podejmowaniu decyzji",
-          "Zrozum odpowiedzialność społeczną w jakości wdrożenia"
+          "Rozpoznawanie ryzyk i szans ESG związanych z ludźmi",
+          "Stosowanie myślenia uwzględniającego interesariuszy w podejmowaniu decyzji",
+          "Zrozumienie odpowiedzialności społecznej w jakości wdrożenia"
         ],
         "governance": [
-          "Zrozum, jak ład korporacyjny kształtuje wiarygodność ESG",
-          "Powiąż odpowiedzialność i polityki z wdrażaniem",
-          "Przełóż koncepcje ładu korporacyjnego na codzienną praktykę"
+          "Zrozumienie, jak ład korporacyjny kształtuje wiarygodność ESG",
+          "Powiązanie odpowiedzialności i polityk z wdrożeniem",
+          "Przekładanie koncepcji ładu na codzienną praktykę"
         ],
         "crossCutting": [
-          "Zbuduj wspólne zrozumienie integracji ESG",
-          "Rozpoznaj wzajemne oddziaływanie tematów środowiskowych, społecznych i ładu korporacyjnego",
-          "Przygotuj się do praktycznej nauki opartej na przypadkach i scenariuszach"
+          "Budowanie wspólnego zrozumienia integracji ESG",
+          "Rozpoznawanie interakcji między tematami środowiskowymi, społecznymi i zarządczymi",
+          "Przygotowanie do praktycznej nauki opartej na przypadkach i scenariuszach"
         ]
       },
       "generatedStructure": {
-        "preTest": "Pre-test",
+        "preTest": "Test wstępny",
         "lessons": "Lekcje",
-        "postTest": "Post-test"
+        "postTest": "Test końcowy"
       },
       "fallbacks": {
         "subtitle": "Moduł programu",

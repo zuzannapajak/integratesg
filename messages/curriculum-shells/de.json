@@ -68,31 +68,53 @@
         "overview": "Übersicht",
         "content": "Inhalt",
         "quiz": "Quiz",
-        "progress": "Fortschritt"
+        "progress": "Fortschritt",
+        "outcomes": "Ergebnisse",
+        "flow": "Ablauf"
       },
       "sections": {
         "outcomes": "Lernergebnisse",
         "structure": "Modulstruktur",
         "content": "Modulinhalt",
         "lesson": "Lektion {index}",
-        "quiz": "Wissensprüfung",
-        "progress": "Ihr Fortschritt"
+        "quiz": "Wissenscheck",
+        "progress": "Ihr Fortschritt",
+        "overviewEyebrow": "Modulübersicht",
+        "overviewTitle": "Was dieses Modul beinhaltet"
       },
       "labels": {
         "area": "Bereich",
         "difficulty": "Schwierigkeit",
         "duration": "Dauer",
         "lessons": "Lektionen",
-        "quizzes": "Quizze",
+        "quizzes": "Quizzes",
         "status": "Status",
         "currentLocation": "Aktueller Standort",
         "nextAction": "Nächste Aktion"
+      },
+      "metrics": {
+        "duration": "Dauer",
+        "lessons": "Lektionen",
+        "checkpoints": "Checkpoints",
+        "currentStep": "Aktueller Schritt",
+        "completed": "Abgeschlossen"
+      },
+      "area": {
+        "environmental": "Umwelt",
+        "social": "Soziales",
+        "governance": "Unternehmensführung",
+        "crossCutting": "Übergreifend"
+      },
+      "heroIntro": {
+        "preQuiz": "Beginnen Sie mit dem Pre-Quiz, um Ihren Ausgangspunkt zu bewerten und zu verstehen, worauf Sie sich während des Moduls konzentrieren sollten."
       },
       "status": {
         "not_started": "Nicht gestartet",
         "in_progress": "In Bearbeitung",
         "completed": "Abgeschlossen",
-        "failed": "Wiederholung erforderlich"
+        "failed": "Überprüfung erforderlich",
+        "notStarted": "Nicht gestartet",
+        "inProgress": "In Bearbeitung"
       },
       "difficulty": {
         "foundation": "Grundlagen",
@@ -100,15 +122,23 @@
       },
       "generated": {
         "duration": {
-          "selfPaced": "Selbstgesteuert",
+          "selfPaced": "Eigenes Tempo",
           "minutes": "{minutes} Min."
         }
+      },
+      "progressSummary": {
+        "preQuiz": "Pre-Quiz"
+      },
+      "nextAction": {
+        "title": "Nächste Aktion",
+        "defaultDescription": "Überprüfen Sie die Modulstruktur und fahren Sie mit dem nächsten empfohlenen Schritt fort.",
+        "viewFlow": "Ablauf anzeigen"
       },
       "progressState": {
         "nextAction": {
           "startModule": "Modul starten",
           "continueModule": "Modul fortsetzen",
-          "reviewModule": "Modul wiederholen"
+          "reviewModule": "Modul überprüfen"
         },
         "currentLocation": {
           "preTestNotStarted": "Pre-Test nicht gestartet",
@@ -120,26 +150,32 @@
           "moduleCompleted": "Modul abgeschlossen"
         }
       },
+      "insights": {
+        "practicalTitle": "Praxisnähe",
+        "practicalText": "Dieses Modul verbindet ESG-Konzepte mit angewandtem Lernen, strukturierten Inhalten und realem Umsetzungskontext.",
+        "progressionTitle": "Lernfortschritt",
+        "progressionText": "Arbeiten Sie das Modul Schritt für Schritt durch, absolvieren Sie Kontrollpunkte und bauen Sie Ihr Verständnis schrittweise auf."
+      },
       "generatedOutcomes": {
         "environmental": [
           "Umweltrelevante Entscheidungspunkte in der Praxis identifizieren",
           "Nachhaltigkeitsbezogene Folgen von Entscheidungen interpretieren",
-          "Vertrauen vor dem szenariobasierten Lernen stärken"
+          "Sicherheit vor dem szenariobasierten Lernen stärken"
         ],
         "social": [
           "Personenbezogene ESG-Risiken und -Chancen erkennen",
-          "Stakeholder-orientiertes Denken bei der Entscheidungsfindung anwenden",
+          "Stakeholder-sensibles Denken bei der Entscheidungsfindung anwenden",
           "Soziale Verantwortung bei der Umsetzungsqualität verstehen"
         ],
         "governance": [
           "Verstehen, wie Governance die ESG-Glaubwürdigkeit prägt",
-          "Rechenschaftspflicht und Richtlinien mit der Umsetzung in Beziehung setzen",
+          "Rechenschaftspflicht und Richtlinien auf die Umsetzung beziehen",
           "Governance-Konzepte in die tägliche Praxis übertragen"
         ],
         "crossCutting": [
           "Ein gemeinsames Verständnis der ESG-Integration aufbauen",
           "Zusammenwirken von Umwelt-, Sozial- und Governance-Themen erkennen",
-          "Vorbereitung auf praktisches fallbasiertes und szenariobasiertes Lernen"
+          "Vorbereitung auf praktisches fall- und szenariobasiertes Lernen"
         ]
       },
       "generatedStructure": {
@@ -148,9 +184,9 @@
         "postTest": "Post-Test"
       },
       "fallbacks": {
-        "subtitle": "Lehrmodul",
+        "subtitle": "Lehrplanmodul",
         "description": "Noch keine Beschreibung verfügbar.",
-        "lessonSummary": "Noch keine Zusammenfassung der Lektion verfügbar.",
+        "lessonSummary": "Noch keine Lektionszusammenfassung verfügbar.",
         "lessonContent": "Dieser Lektionsinhalt wurde noch nicht hinzugefügt."
       }
     },
