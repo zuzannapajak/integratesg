@@ -5,7 +5,9 @@ import { createClient } from "@/lib/supabase/client";
 import {
   AlertCircle,
   Calendar,
+  Check,
   CheckCircle2,
+  ChevronDown,
   Languages,
   Loader2,
   Lock,
@@ -14,8 +16,8 @@ import {
   User,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { useMemo, useState, useTransition } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { type SyntheticEvent, useEffect, useMemo, useRef, useState, useTransition } from "react";
 
 type Props = {
   locale: string;
@@ -24,6 +26,18 @@ type Props = {
   preferredLanguage: string;
   createdAt: string;
 };
+
+function replaceLocaleInPath(pathname: string, nextLocale: string) {
+  const segments = pathname.split("/");
+
+  if (segments[1]) {
+    segments[1] = nextLocale;
+  } else {
+    segments.push(nextLocale);
+  }
+
+  return segments.join("/") || `/${nextLocale}`;
+}
 
 export default function AccountSettingsForm({
   locale,
@@ -34,6 +48,8 @@ export default function AccountSettingsForm({
 }: Props) {
   const t = useTranslations("Protected.SettingsForm");
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const supabase = useMemo(() => createClient(), []);
 
   const [nameValue, setNameValue] = useState(fullName ?? "");
@@ -49,7 +65,49 @@ export default function AccountSettingsForm({
   const [isProfilePending, startProfileTransition] = useTransition();
   const [isPasswordPending, startPasswordTransition] = useTransition();
 
-  const handleProfileSubmit = (e: React.SyntheticEvent) => {
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const languageDropdownRef = useRef<HTMLDivElement | null>(null);
+
+  const languageOptions = [
+    { value: "en", label: t("profile.languageOptions.en"), flagCode: "gb" },
+    { value: "it", label: t("profile.languageOptions.it"), flagCode: "it" },
+    { value: "de", label: t("profile.languageOptions.de"), flagCode: "de" },
+    { value: "el", label: t("profile.languageOptions.el"), flagCode: "gr" },
+    { value: "pl", label: t("profile.languageOptions.pl"), flagCode: "pl" },
+    { value: "bg", label: t("profile.languageOptions.bg"), flagCode: "bg" },
+  ] as const;
+
+  const selectedLanguage =
+    languageOptions.find((option) => option.value === languageValue) ?? languageOptions[0];
+
+  useEffect(() => {
+    const onPointerDown = (event: MouseEvent | TouchEvent) => {
+      if (!languageDropdownRef.current) return;
+      const target = event.target as Node;
+
+      if (!languageDropdownRef.current.contains(target)) {
+        setIsLanguageOpen(false);
+      }
+    };
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsLanguageOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("touchstart", onPointerDown, { passive: true });
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("touchstart", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, []);
+
+  const handleProfileSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     setProfileError(null);
     setProfileSuccess(null);
@@ -62,10 +120,13 @@ export default function AccountSettingsForm({
           locale,
         });
 
+        const nextPath = replaceLocaleInPath(pathname || `/${locale}/settings`, languageValue);
+        const query = searchParams.toString();
+        const nextHref = query ? `${nextPath}?${query}` : nextPath;
+
         setProfileSuccess(t("profile.saved"));
-        setTimeout(() => {
-          setProfileSuccess(null);
-        }, 3000);
+
+        router.replace(nextHref);
         router.refresh();
       } catch {
         setProfileError(t("profile.failed"));
@@ -73,7 +134,7 @@ export default function AccountSettingsForm({
     });
   };
 
-  const handlePasswordSubmit = (e: React.SyntheticEvent) => {
+  const handlePasswordSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     setPasswordError(null);
     setPasswordSuccess(null);
@@ -116,7 +177,7 @@ export default function AccountSettingsForm({
 
         <form
           onSubmit={handleProfileSubmit}
-          className="space-y-6 rounded-4xl border border-white/70 bg-white/80 p-6 shadow-[0_8px_30px_rgba(35,45,62,0.04)] backdrop-blur-md md:p-10 lg:col-span-2"
+          className="relative z-20 space-y-6 rounded-4xl border border-white/70 bg-white/80 p-6 shadow-[0_8px_30px_rgba(35,45,62,0.04)] backdrop-blur-md md:p-10 lg:col-span-2"
         >
           <div className="grid gap-6 sm:grid-cols-2">
             <div className="space-y-2 sm:col-span-2">
@@ -155,20 +216,84 @@ export default function AccountSettingsForm({
               <label className="flex items-center gap-2 text-sm font-semibold text-[#31425a]">
                 <Languages className="h-4 w-4 text-[#8793a2]" /> {t("profile.language")}
               </label>
-              <select
-                value={languageValue}
-                onChange={(e) => {
-                  setLanguageValue(e.target.value);
-                }}
-                className="w-full appearance-none rounded-2xl border border-[#e2e7ee] bg-white/50 px-4 py-3 text-[#31425a] outline-none transition focus:border-[#0d7fc2] focus:ring-4 focus:ring-[#0d7fc2]/5"
-              >
-                <option value="en">{t("profile.languageOptions.en")}</option>
-                <option value="it">{t("profile.languageOptions.it")}</option>
-                <option value="de">{t("profile.languageOptions.de")}</option>
-                <option value="el">{t("profile.languageOptions.el")}</option>
-                <option value="pl">{t("profile.languageOptions.pl")}</option>
-                <option value="bg">{t("profile.languageOptions.bg")}</option>
-              </select>
+
+              <div ref={languageDropdownRef} className="relative">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsLanguageOpen((prev) => !prev);
+                  }}
+                  aria-haspopup="listbox"
+                  aria-expanded={isLanguageOpen}
+                  className={`flex h-12 w-full items-center justify-between rounded-2xl border bg-[linear-gradient(180deg,rgba(255,255,255,0.98)_0%,rgba(246,248,251,0.98)_100%)] px-4 text-left shadow-[0_8px_24px_rgba(49,66,90,0.05)] outline-none transition ${
+                    isLanguageOpen
+                      ? "border-[#0d7fc2] ring-4 ring-[#0d7fc2]/10"
+                      : "border-[#dbe3ec] hover:border-[#c8d3df]"
+                  }`}
+                >
+                  <span className="flex min-w-0 items-center gap-3">
+                    <span
+                      className={`fi fi-${selectedLanguage.flagCode} block rounded-[0.16rem] shadow-sm`}
+                      style={{ width: "1.35rem", height: "1rem" }}
+                      aria-hidden="true"
+                    />
+                    <span className="truncate text-[0.95rem] font-medium text-[#31425a]">
+                      {selectedLanguage.label}
+                    </span>
+                  </span>
+
+                  <ChevronDown
+                    className={`h-4 w-4 shrink-0 text-[#8793a2] transition-transform duration-200 ${
+                      isLanguageOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                <div
+                  className={`absolute left-0 right-0 top-[calc(100%+0.5rem)] z-50 origin-top transition-all duration-200 ${
+                    isLanguageOpen
+                      ? "pointer-events-auto translate-y-0 opacity-100"
+                      : "pointer-events-none -translate-y-1.5 opacity-0"
+                  }`}
+                >
+                  <div className="overflow-hidden rounded-2xl border border-[#dbe3ec] bg-white p-2 shadow-[0_18px_50px_rgba(49,66,90,0.14)]">
+                    <div role="listbox" aria-label={t("profile.language")} className="space-y-1">
+                      {languageOptions.map((option) => {
+                        const isActive = option.value === languageValue;
+
+                        return (
+                          <button
+                            key={option.value}
+                            type="button"
+                            onClick={() => {
+                              setLanguageValue(option.value);
+                              setIsLanguageOpen(false);
+                            }}
+                            className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left transition ${
+                              isActive
+                                ? "bg-[#eef6fd] text-[#0d7fc2]"
+                                : "text-[#31425a] hover:bg-[#f6f9fc]"
+                            }`}
+                          >
+                            <span className="flex min-w-0 items-center gap-3">
+                              <span
+                                className={`fi fi-${option.flagCode} block rounded-[0.16rem] shadow-sm`}
+                                style={{ width: "1.35rem", height: "1rem" }}
+                                aria-hidden="true"
+                              />
+                              <span className="truncate text-[0.95rem] font-medium">
+                                {option.label}
+                              </span>
+                            </span>
+
+                            {isActive ? <Check className="h-4 w-4 shrink-0" /> : null}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
