@@ -42,7 +42,7 @@ export default function CompleteProfileForm({ locale, email }: Props) {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(236,103,37,0.12),transparent_24%),radial-gradient(circle_at_86%_22%,rgba(13,127,194,0.14),transparent_28%),linear-gradient(180deg,rgba(255,255,255,1)_0%,rgba(249,250,251,0.98)_58%,rgba(255,255,255,0.96)_100%)]" />
 
         <div className="relative z-20 mx-auto w-full max-w-xl">
-          <div className="overflow-hidden rounded-[2rem] border border-white/70 bg-white/88 shadow-[0_20px_55px_rgba(35,45,62,0.10)] backdrop-blur-xl">
+          <div className="overflow-hidden rounded-4xl border border-white/70 bg-white/88 shadow-[0_20px_55px_rgba(35,45,62,0.10)] backdrop-blur-xl">
             <div className="px-5 pb-5 pt-6 text-left sm:px-6 md:px-7">
               <p className="text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-[#7a8594]">
                 {t("eyebrow")}
@@ -62,7 +62,7 @@ export default function CompleteProfileForm({ locale, email }: Props) {
                   type="button"
                   onClick={() => { setRole(APP_ROLES.student); }}
                   aria-pressed={role === APP_ROLES.student}
-                  className={`w-full rounded-[1.5rem] border p-4 text-left transition-all duration-200 ${
+                  className={`w-full rounded-3xl border p-4 text-left transition-all duration-200 ${
                     role === APP_ROLES.student
                       ? "border-[#31425a] bg-[#f4f8fc] shadow-[0_10px_24px_rgba(49,66,90,0.08)]"
                       : "border-[#d9e1ea] bg-white hover:border-[#bcc9d7] hover:bg-[#fbfcfd]"
@@ -70,7 +70,7 @@ export default function CompleteProfileForm({ locale, email }: Props) {
                 >
                   <div className="flex items-center gap-3">
                     <div
-                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[1rem] ${
+                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl
                         role === APP_ROLES.student
                           ? "bg-[#31425a] text-white"
                           : "bg-[#eef3f8] text-[#31425a]"
@@ -101,7 +101,7 @@ export default function CompleteProfileForm({ locale, email }: Props) {
                   type="button"
                   onClick={() => { setRole(APP_ROLES.educator); }}
                   aria-pressed={role === APP_ROLES.educator}
-                  className={`w-full rounded-[1.5rem] border p-4 text-left transition-all duration-200 ${
+                  className={`w-full rounded-3xl border p-4 text-left transition-all duration-200 ${
                     role === APP_ROLES.educator
                       ? "border-[#31425a] bg-[#f4f8fc] shadow-[0_10px_24px_rgba(49,66,90,0.08)]"
                       : "border-[#d9e1ea] bg-white hover:border-[#bcc9d7] hover:bg-[#fbfcfd]"
@@ -109,7 +109,7 @@ export default function CompleteProfileForm({ locale, email }: Props) {
                 >
                   <div className="flex items-center gap-3">
                     <div
-                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[1rem] ${
+                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl ${
                         role === APP_ROLES.educator
                           ? "bg-[#31425a] text-white"
                           : "bg-[#eef3f8] text-[#31425a]"
