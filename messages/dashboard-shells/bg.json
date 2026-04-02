@@ -69,7 +69,7 @@
             "meta": "{count} публикувани модула"
           },
           "secondary": {
-            "title": "ePortfolio",
+            "title": "еПортфолио",
             "description": "Разгледайте казуси и практически ESG примери, подготвени за приложно обучение.",
             "meta": "Казуси и примери"
           }
@@ -81,7 +81,7 @@
             "meta": "Интерактивни потоци от сценарии"
           },
           "secondary": {
-            "title": "ePortfolio",
+            "title": "еПортфолио",
             "description": "Разгледайте казуси и практически ESG примери в подкрепа на вашето обучение.",
             "meta": "Казуси и примери"
           }
@@ -89,7 +89,7 @@
         "buttons": {
           "openModule": "Отвори модул",
           "openScenarios": "Отвори сценарии",
-          "openEportfolio": "Отвори ePortfolio"
+          "openEportfolio": "Отвори еПортфолио"
         }
       },
       "learner": {

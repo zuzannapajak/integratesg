@@ -54,7 +54,7 @@
   "Sidebar": {
     "dashboard": "Табло",
     "curriculum": "Учебна програма",
-    "eportfolio": "ePortfolio",
+    "eportfolio": "еПортфолио",
     "scenario": "Сценарий",
     "statistics": "Статистика",
     "settings": "Настройки",
@@ -89,7 +89,7 @@
       "subtitle": "Практикувайте вземане на решения в реалистичен контекст с проследим напредък"
     },
     "EportfolioPage": {
-      "title": "ePortfolio",
+      "title": "еПортфолио",
       "subtitle": "Практически ориентирани казуси с реален контекст."
     },
     "CurriculumSwitcher": {

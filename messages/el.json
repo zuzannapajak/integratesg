@@ -54,7 +54,7 @@
   "Sidebar": {
     "dashboard": "Ταμπλό",
     "curriculum": "Πρόγραμμα Σπουδών",
-    "eportfolio": "ePortfolio",
+    "eportfolio": "eΧαρτοφυλάκιο",
     "scenario": "Σενάριο",
     "statistics": "Στατιστικά",
     "settings": "Ρυθμίσεις",
@@ -89,7 +89,7 @@
       "subtitle": "Εξασκηθείτε στη λήψη αποφάσεων σε ρεαλιστικά πλαίσια με καταγραφή προόδου"
     },
     "EportfolioPage": {
-      "title": "ePortfolio",
+      "title": "eΧαρτοφυλάκιο",
       "subtitle": "Μελέτες περιπτώσεων προσανατολισμένες στην πράξη με πραγματικό περιεχόμενο."
     },
     "CurriculumSwitcher": {
