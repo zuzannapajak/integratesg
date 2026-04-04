@@ -1,10 +1,17 @@
 {
   "Home": {
     "hero": {
-      "title": "Practical ESG learning for students and educators.",
+      "eyebrow": "For students and educators",
+      "title": "Practical ESG learning",
+      "description": "Case studies, guided modules and interactive scenarios in one multilingual platform.",
       "join": "Join the platform",
-      "readMore": "Read more",
-      "imageAlt": "IntegratESG learning platform illustration"
+      "readMore": "See how it works",
+      "imageAlt": "Illustration representing guided digital learning",
+      "proof": {
+        "caseStudies": "case studies",
+        "scenarioAreas": "ESG tracks",
+        "languages": "languages"
+      }
     },
     "overview": {
       "eyebrow": "Platform overview",

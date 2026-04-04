@@ -1,10 +1,17 @@
 {
   "Home": {
     "hero": {
-      "title": "Praktyczna nauka ESG dla studentów i dydaktykó.",
+      "eyebrow": "Dla studentów i edukatorów",
+      "title": "Praktyczna nauka ESG",
+      "description": "Studia przypadków, prowadzone moduły i interaktywne scenariusze na jednej wielojęzycznej platformie.",
       "join": "Dołącz do platformy",
-      "readMore": "Czytaj więcej",
-      "imageAlt": "Ilustracja platformy edukacyjnej IntegratESG"
+      "readMore": "Zobacz, jak to działa",
+      "imageAlt": "Ilustracja przedstawiająca cyfrowe uczenie się z przewodnikiem",
+      "proof": {
+        "caseStudies": "studia przypadków",
+        "scenarioAreas": "ścieżki ESG",
+        "languages": "języki"
+      }
     },
     "overview": {
       "eyebrow": "Przegląd platformy",

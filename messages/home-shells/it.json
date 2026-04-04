@@ -1,10 +1,17 @@
 {
   "Home": {
     "hero": {
-      "title": "Apprendimento pratico ESG per studenti ed educatori.",
+      "eyebrow": "Per studenti ed educatori",
+      "title": "Apprendimento pratico ESG",
+      "description": "Casi di studio, moduli guidati e scenari interattivi in un'unica piattaforma multilingue.",
       "join": "Unisciti alla piattaforma",
-      "readMore": "Leggi di più",
-      "imageAlt": "Illustrazione della piattaforma di apprendimento IntegratESG"
+      "readMore": "Scopri come funziona",
+      "imageAlt": "Illustrazione che rappresenta l'apprendimento digitale guidato",
+      "proof": {
+        "caseStudies": "casi di studio",
+        "scenarioAreas": "percorsi ESG",
+        "languages": "lingue"
+      }
     },
     "overview": {
       "eyebrow": "Panoramica della piattaforma",

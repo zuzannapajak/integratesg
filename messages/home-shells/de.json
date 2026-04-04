@@ -1,10 +1,17 @@
 {
   "Home": {
     "hero": {
-      "title": "Praktisches ESG-Lernen für Studierende und Lehrende.",
+      "eyebrow": "Für Lernende und Lehrende",
+      "title": "Praktisches ESG-Lernen",
+      "description": "Fallstudien, geführte Module und interaktive Szenarien auf einer mehrsprachigen Plattform.",
       "join": "Plattform beitreten",
-      "readMore": "Mehr lesen",
-      "imageAlt": "Illustration der IntegratESG-Lernplattform"
+      "readMore": "So funktioniert es",
+      "imageAlt": "Illustration, die geführtes digitales Lernen darstellt",
+      "proof": {
+        "caseStudies": "Fallstudien",
+        "scenarioAreas": "ESG-Tracks",
+        "languages": "Sprachen"
+      }
     },
     "overview": {
       "eyebrow": "Plattform-Übersicht",

@@ -36,41 +36,88 @@ export default async function HomePage({ params }: Props) {
   return (
     <main className="bg-[#ececec]">
       <section className="mock-hero-bg">
-        <div className="mock-hero-orange" />
-        <div className="mock-hero-blue" />
-        <div className="mock-hero-blue-softener" />
-        <div className="landing-hero-orange-glow" />
-        <div className="landing-hero-blue-glow" />
-        <div className="hero-blue-bottom-haze" />
-        <div className="hero-bottom-fade" />
+        <div className="mock-hero-orange" aria-hidden="true" />
+        <div className="mock-hero-blue" aria-hidden="true" />
+        <div className="landing-hero-orange-glow" aria-hidden="true" />
+        <div className="landing-hero-blue-glow" aria-hidden="true" />
+        <div className="hero-bottom-fade" aria-hidden="true" />
 
-        <div className="relative z-30 mx-auto grid max-w-7xl w-full grid-cols-1 items-center gap-4 px-8 md:grid-cols-2">
-          <div className="flex items-center justify-center md:justify-end">
-            <div className="image-blob-container">
-              <Image
-                src="/images/writer_flat_composition.jpg"
-                alt={t("hero.imageAlt")}
-                fill
-                className="object-cover"
-                priority
-                sizes="(max-width: 768px) 280px, 400px"
-              />
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-5 sm:px-6 md:px-8 lg:px-10">
+          <div className="home-hero-mobile">
+            <div className="home-hero-mobile__content">
+              <p className="home-hero-mobile__eyebrow">{t("hero.eyebrow")}</p>
+
+              <h1 className="home-hero-mobile__title">{t("hero.title")}</h1>
+
+              <p className="home-hero-mobile__description">{t("hero.description")}</p>
+
+              <div className="home-hero-mobile__actions">
+                <Link
+                  href={`/${locale}/auth/register`}
+                  className="landing-primary-cta home-hero-mobile__primary"
+                >
+                  {t("hero.join")}
+                </Link>
+
+                <a href="#platform-overview" className="home-hero-mobile__text-link">
+                  {t("hero.readMore")}
+                </a>
+              </div>
+            </div>
+
+            <div className="home-hero-mobile__art" aria-hidden="true">
+              <div className="home-hero-mobile__orb home-hero-mobile__orb--orange" />
+              <div className="home-hero-mobile__orb home-hero-mobile__orb--blue" />
+
+              <div className="home-hero-mobile__blob">
+                <div className="home-hero-mobile__blob-inner">
+                  <Image
+                    src="/images/writer_flat_composition.jpg"
+                    alt=""
+                    fill
+                    className="home-hero-mobile__blob-image object-cover"
+                    priority
+                    sizes="(max-width: 1023px) 72vw, 420px"
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="z-40 text-center md:-ml-20 md:-mt-52 md:pl-12 md:text-left">
-            <h1 className="hero-title text-[2.2rem] font-black leading-[0.95] tracking-[-0.05em] text-[#31425a] sm:text-[3rem] lg:text-[3.65rem]">
-              {t("hero.title")}
-            </h1>
+          <div className="home-hero-desktop">
+            <div className="home-hero-desktop__grid">
+              <div className="home-hero-desktop__media">
+                <div className="home-hero-desktop__blob-motion">
+                  <div className="image-blob-container">
+                    <div className="home-hero-desktop__image-motion">
+                      <Image
+                        src="/images/writer_flat_composition.jpg"
+                        alt={t("hero.imageAlt")}
+                        fill
+                        className="object-cover"
+                        priority
+                        sizes="420px"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row md:justify-start">
-              <Link href={`/${locale}/auth/register`} className="landing-primary-cta">
-                {t("hero.join")}
-              </Link>
+              <div className="home-hero-desktop__copy">
+                <p className="home-hero-desktop__eyebrow">{t("hero.eyebrow")}</p>
 
-              <a href="#platform-overview" className="landing-secondary-cta">
-                {t("hero.readMore")}
-              </a>
+                <h1 className="hero-title home-hero-desktop__title">{t("hero.title")}</h1>
+
+                <div className="home-hero-desktop__actions">
+                  <Link href={`/${locale}/auth/register`} className="landing-primary-cta">
+                    {t("hero.join")}
+                  </Link>
+
+                  <a href="#platform-overview" className="landing-secondary-cta">
+                    {t("hero.readMore")}
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -149,7 +196,8 @@ export default async function HomePage({ params }: Props) {
       </section>
 
       <section className="landing-cta-band px-6 py-12 md:px-10 lg:px-14">
-        <div className="mx-auto flex max-w-340 flex-col gap-6 rounded-[28px] border border-white/50 bg-white/85 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.08)] backdrop-blur md:flex-row md:items-center md:justify-between md:p-8">
+        <div className="mx-auto flex max-w-340 flex-col gap-6 rounded-[28px] border border-white/50 bg-white/85 p-6 shadow-[0_16px_44px_rgba(35,45,62,0.08)] backdrop-blur md:p-8 lg:flex-row lg:items-center lg:justify-between">
+          {" "}
           <div className="max-w-190">
             <p className="landing-section-eyebrow">{t("cta.eyebrow")}</p>
             <h2 className="mt-3 text-[1.8rem] font-semibold tracking-[-0.03em] text-[#31425a] sm:text-[2.1rem]">
@@ -159,8 +207,7 @@ export default async function HomePage({ params }: Props) {
               {t("cta.description")}
             </p>
           </div>
-
-          <div className="flex flex-col gap-3 sm:flex-row">
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Link href={`/${locale}/auth/register`} className="landing-primary-cta">
               {t("cta.register")}
             </Link>
