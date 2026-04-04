@@ -21,36 +21,38 @@ export default function CurriculumSwitcher({ locale, myCourses, allCourses }: Pr
   return (
     <section className="space-y-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="inline-flex rounded-2xl border border-[#e3e9ef] bg-white p-1 shadow-sm">
-          <button
-            type="button"
-            onClick={() => {
-              setViewMode("my-courses");
-            }}
-            className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition ${
-              viewMode === "my-courses"
-                ? "bg-[#31425a] text-white shadow-sm"
-                : "text-[#5f6f82] hover:bg-[#f4f7fa]"
-            }`}
-          >
-            <Sparkles className="h-4 w-4" />
-            {t("tabs.myCourses")}
-          </button>
+        <div className="overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="inline-flex w-fit min-w-max rounded-2xl border border-[#e3e9ef] bg-white p-1 shadow-sm">
+            <button
+              type="button"
+              onClick={() => {
+                setViewMode("my-courses");
+              }}
+              className={`inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-xl px-3 py-2.5 text-sm font-semibold transition sm:px-4 ${
+                viewMode === "my-courses"
+                  ? "bg-[#31425a] text-white shadow-sm"
+                  : "text-[#5f6f82] hover:bg-[#f4f7fa]"
+              }`}
+            >
+              <Sparkles className="h-4 w-4" />
+              {t("tabs.myCourses")}
+            </button>
 
-          <button
-            type="button"
-            onClick={() => {
-              setViewMode("all-courses");
-            }}
-            className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition ${
-              viewMode === "all-courses"
-                ? "bg-[#31425a] text-white shadow-sm"
-                : "text-[#5f6f82] hover:bg-[#f4f7fa]"
-            }`}
-          >
-            <BookOpen className="h-4 w-4" />
-            {t("tabs.allCourses")}
-          </button>
+            <button
+              type="button"
+              onClick={() => {
+                setViewMode("all-courses");
+              }}
+              className={`inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-xl px-3 py-2.5 text-sm font-semibold transition sm:px-4 ${
+                viewMode === "all-courses"
+                  ? "bg-[#31425a] text-white shadow-sm"
+                  : "text-[#5f6f82] hover:bg-[#f4f7fa]"
+              }`}
+            >
+              <BookOpen className="h-4 w-4" />
+              {t("tabs.allCourses")}
+            </button>
+          </div>
         </div>
       </div>
 
