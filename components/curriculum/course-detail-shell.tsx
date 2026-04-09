@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type ModuleArea = "environmental" | "social" | "governance" | "cross-cutting";
 type ModuleStatus = "not_started" | "in_progress" | "completed" | "failed";
@@ -27,7 +27,6 @@ type ModuleStatus = "not_started" | "in_progress" | "completed" | "failed";
 type Props = {
   locale: string;
   module: CurriculumModuleViewModel;
-  relatedModules: CurriculumModuleViewModel[];
 };
 
 const SURFACE =
@@ -173,12 +172,61 @@ function getProgressSummary(
   }
 }
 
-export default function CourseDetailShell({ locale, module, relatedModules }: Props) {
+export default function CourseDetailShell({ locale, module }: Props) {
   const t = useTranslations("Protected.CourseDetailShell");
   const [openPanel, setOpenPanel] = useState<"overview" | "outcomes" | "flow" | "progress">(
     "overview",
   );
+  const [relatedModules, setRelatedModules] = useState<CurriculumModuleViewModel[]>([]);
+  const [relatedModulesLoading, setRelatedModulesLoading] = useState(true);
   const contentSectionRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    let isActive = true;
+
+    async function loadRelatedModules() {
+      try {
+        setRelatedModulesLoading(true);
+
+        const response = await fetch(
+          `/api/curriculum/${module.slug}/related?locale=${encodeURIComponent(locale)}`,
+          {
+            method: "GET",
+            cache: "no-store",
+          },
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to load related modules.");
+        }
+
+        const payload = (await response.json()) as {
+          ok: boolean;
+          relatedModules?: CurriculumModuleViewModel[];
+        };
+
+        if (isActive) {
+          setRelatedModules(payload.relatedModules ?? []);
+        }
+      } catch (error) {
+        console.error(error);
+
+        if (isActive) {
+          setRelatedModules([]);
+        }
+      } finally {
+        if (isActive) {
+          setRelatedModulesLoading(false);
+        }
+      }
+    }
+
+    void loadRelatedModules();
+
+    return () => {
+      isActive = false;
+    };
+  }, [locale, module.slug]);
 
   const areaMeta = getAreaMeta(module.area, t);
   const statusMeta = getStatusMeta(module.status, t);
@@ -337,7 +385,7 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
               </div>
             </div>
 
-            {relatedModules.length > 0 && (
+            {!relatedModulesLoading && relatedModules.length > 0 && (
               <div className="rounded-[28px] border border-white/70 bg-white/86 p-5 shadow-[0_10px_30px_rgba(35,45,62,0.05)] backdrop-blur-xl">
                 <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
                   {t("relatedModules")}
