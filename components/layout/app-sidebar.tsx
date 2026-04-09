@@ -12,7 +12,7 @@ import {
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type Role = "educator" | "student" | "admin";
 
@@ -41,7 +41,7 @@ export default function AppSidebar({ locale, role }: Props) {
   const pathname = usePathname();
   const storageKey = `integratESG:sidebar:${role}:collapsed`;
 
-  const [collapsed, setCollapsed] = useState(() => {
+  const [collapsed, setCollapsed] = useState<boolean>(() => {
     if (typeof window === "undefined") {
       return true;
     }
@@ -50,7 +50,14 @@ export default function AppSidebar({ locale, role }: Props) {
     return saved !== null ? saved === "true" : true;
   });
 
+  const hasMountedRef = useRef(false);
+
   useEffect(() => {
+    if (!hasMountedRef.current) {
+      hasMountedRef.current = true;
+      return;
+    }
+
     window.localStorage.setItem(storageKey, String(collapsed));
   }, [storageKey, collapsed]);
 
