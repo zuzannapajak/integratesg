@@ -1,3 +1,4 @@
+import { logMeasuredOperation, measureAsyncOperation } from "@/lib/observability/performance";
 import { prisma } from "@/lib/prisma";
 import {
   JsonObject,
@@ -315,18 +316,28 @@ async function getScenarioLibraryBase(params: { locale: string; userId: string; 
 }
 
 export async function getAllScenarioLibrary(params: { locale: string; userId: string }) {
-  return getScenarioLibraryBase({
-    locale: params.locale,
-    userId: params.userId,
-    onlyMy: false,
+  return measureAsyncOperation({
+    operation: "scenarios.getAllScenarioLibrary",
+    getRecords: (scenarios) => scenarios.length,
+    execute: async () =>
+      getScenarioLibraryBase({
+        locale: params.locale,
+        userId: params.userId,
+        onlyMy: false,
+      }),
   });
 }
 
 export async function getMyScenarioLibrary(params: { locale: string; userId: string }) {
-  return getScenarioLibraryBase({
-    locale: params.locale,
-    userId: params.userId,
-    onlyMy: true,
+  return measureAsyncOperation({
+    operation: "scenarios.getMyScenarioLibrary",
+    getRecords: (scenarios) => scenarios.length,
+    execute: async () =>
+      getScenarioLibraryBase({
+        locale: params.locale,
+        userId: params.userId,
+        onlyMy: true,
+      }),
   });
 }
 
@@ -396,210 +407,222 @@ function mapScenarioToLaunchViewModel(
 }
 
 export async function getScenarioDetail(params: { locale: string; userId: string; slug: string }) {
-  const scenario = await prisma.scenario.findFirst({
-    where: {
-      slug: params.slug,
-      status: "published",
-    },
-    select: {
-      slug: true,
-      area: true,
-      isFeatured: true,
-      variants: {
+  return measureAsyncOperation({
+    operation: "scenarios.getScenarioDetail",
+    getRecords: (result) => (result ? 1 + result.relatedScenarios.length : 0),
+    execute: async () => {
+      const scenario = await prisma.scenario.findFirst({
         where: {
-          language: {
-            in: [params.locale, "en"],
+          slug: params.slug,
+          status: "published",
+        },
+        select: {
+          slug: true,
+          area: true,
+          isFeatured: true,
+          variants: {
+            where: {
+              language: {
+                in: [params.locale, "en"],
+              },
+              availabilityStatus: "available",
+            },
+            select: {
+              id: true,
+              language: true,
+              title: true,
+              description: true,
+              instruction: true,
+              launchUrl: true,
+              packagePath: true,
+              entryPoint: true,
+              thumbnailUrl: true,
+              estimatedDurationMinutes: true,
+              availabilityStatus: true,
+            },
           },
-          availabilityStatus: "available",
+          userAttempts: {
+            where: {
+              userId: params.userId,
+            },
+            select: {
+              status: true,
+              score: true,
+              startedAt: true,
+              lastOpenedAt: true,
+              completedAt: true,
+              lessonLocation: true,
+              suspendData: true,
+              sessionTime: true,
+              totalTime: true,
+              rawTrackingData: true,
+              createdAt: true,
+            },
+            orderBy: [{ createdAt: "desc" }],
+          },
         },
-        select: {
-          id: true,
-          language: true,
-          title: true,
-          description: true,
-          instruction: true,
-          launchUrl: true,
-          packagePath: true,
-          entryPoint: true,
-          thumbnailUrl: true,
-          estimatedDurationMinutes: true,
-          availabilityStatus: true,
-        },
-      },
-      userAttempts: {
+      });
+
+      if (!scenario) {
+        return null;
+      }
+
+      const mappedScenario = mapScenarioToDetailViewModel(scenario, params.locale);
+
+      if (!mappedScenario) {
+        return null;
+      }
+
+      const relatedScenarios = await prisma.scenario.findMany({
         where: {
-          userId: params.userId,
+          status: "published",
+          slug: {
+            not: params.slug,
+          },
+          area: scenario.area,
         },
         select: {
-          status: true,
-          score: true,
-          startedAt: true,
-          lastOpenedAt: true,
-          completedAt: true,
-          lessonLocation: true,
-          suspendData: true,
-          sessionTime: true,
-          totalTime: true,
-          rawTrackingData: true,
-          createdAt: true,
+          slug: true,
+          area: true,
+          variants: {
+            where: {
+              availabilityStatus: "available",
+            },
+            select: {
+              id: true,
+              language: true,
+              title: true,
+              description: true,
+              instruction: true,
+              launchUrl: true,
+              packagePath: true,
+              entryPoint: true,
+              thumbnailUrl: true,
+              estimatedDurationMinutes: true,
+              availabilityStatus: true,
+            },
+          },
+          userAttempts: {
+            where: {
+              userId: params.userId,
+            },
+            select: {
+              status: true,
+              startedAt: true,
+              lastOpenedAt: true,
+              completedAt: true,
+              createdAt: true,
+            },
+            orderBy: [{ createdAt: "desc" }],
+          },
         },
-        orderBy: [{ createdAt: "desc" }],
-      },
+        orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+        take: 3,
+      });
+
+      return {
+        scenario: mappedScenario,
+        relatedScenarios: relatedScenarios
+          .map((item) => mapScenarioToViewModel(item, params.locale))
+          .filter((item): item is ScenarioListItemViewModel => item !== null),
+      };
     },
   });
-
-  if (!scenario) {
-    return null;
-  }
-
-  const mappedScenario = mapScenarioToDetailViewModel(scenario, params.locale);
-
-  if (!mappedScenario) {
-    return null;
-  }
-
-  const relatedScenarios = await prisma.scenario.findMany({
-    where: {
-      status: "published",
-      slug: {
-        not: params.slug,
-      },
-      area: scenario.area,
-    },
-    select: {
-      slug: true,
-      area: true,
-      variants: {
-        where: {
-          availabilityStatus: "available",
-        },
-        select: {
-          id: true,
-          language: true,
-          title: true,
-          description: true,
-          instruction: true,
-          launchUrl: true,
-          packagePath: true,
-          entryPoint: true,
-          thumbnailUrl: true,
-          estimatedDurationMinutes: true,
-          availabilityStatus: true,
-        },
-      },
-      userAttempts: {
-        where: {
-          userId: params.userId,
-        },
-        select: {
-          status: true,
-          startedAt: true,
-          lastOpenedAt: true,
-          completedAt: true,
-          createdAt: true,
-        },
-        orderBy: [{ createdAt: "desc" }],
-      },
-    },
-    orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
-    take: 3,
-  });
-
-  return {
-    scenario: mappedScenario,
-    relatedScenarios: relatedScenarios
-      .map((item) => mapScenarioToViewModel(item, params.locale))
-      .filter((item): item is ScenarioListItemViewModel => item !== null),
-  };
 }
 
 export async function logScenarioLaunch(params: { locale: string; userId: string; slug: string }) {
-  const scenario = await prisma.scenario.findFirst({
-    where: {
-      slug: params.slug,
-      status: "published",
-    },
-    select: {
-      id: true,
-      variants: {
+  return measureAsyncOperation({
+    operation: "scenarios.logScenarioLaunch",
+    getRecords: (attemptId) => (attemptId ? 1 : 0),
+    execute: async () => {
+      const scenario = await prisma.scenario.findFirst({
         where: {
-          availabilityStatus: "available",
+          slug: params.slug,
+          status: "published",
         },
         select: {
           id: true,
-          language: true,
-          title: true,
-          description: true,
-          instruction: true,
-          launchUrl: true,
-          packagePath: true,
-          entryPoint: true,
-          thumbnailUrl: true,
-          estimatedDurationMinutes: true,
-          availabilityStatus: true,
+          variants: {
+            where: {
+              availabilityStatus: "available",
+            },
+            select: {
+              id: true,
+              language: true,
+              title: true,
+              description: true,
+              instruction: true,
+              launchUrl: true,
+              packagePath: true,
+              entryPoint: true,
+              thumbnailUrl: true,
+              estimatedDurationMinutes: true,
+              availabilityStatus: true,
+            },
+          },
         },
-      },
+      });
+
+      if (!scenario) {
+        return null;
+      }
+
+      const variant = pickVariant(scenario.variants, params.locale);
+
+      if (!variant || variant.launchUrl.trim().length === 0) {
+        return null;
+      }
+
+      const now = new Date();
+      const latestAttempt = await prisma.userScenarioAttempt.findFirst({
+        where: {
+          userId: params.userId,
+          scenarioId: scenario.id,
+          scenarioVariantId: variant.id,
+        },
+        orderBy: [{ attemptNumber: "desc" }, { createdAt: "desc" }],
+        select: {
+          id: true,
+          attemptNumber: true,
+          status: true,
+          completedAt: true,
+          lastOpenedAt: true,
+        },
+      });
+
+      const shouldResumeExistingAttempt =
+        latestAttempt !== null &&
+        latestAttempt.status !== "completed" &&
+        latestAttempt.status !== "passed" &&
+        latestAttempt.status !== "failed";
+
+      if (shouldResumeExistingAttempt) {
+        await prisma.userScenarioAttempt.update({
+          where: { id: latestAttempt.id },
+          data: { lastOpenedAt: now },
+        });
+
+        return latestAttempt.id;
+      }
+
+      const nextAttemptNumber = (latestAttempt?.attemptNumber ?? 0) + 1;
+
+      const createdAttempt = await prisma.userScenarioAttempt.create({
+        data: {
+          userId: params.userId,
+          scenarioId: scenario.id,
+          scenarioVariantId: variant.id,
+          attemptNumber: nextAttemptNumber,
+          status: "incomplete",
+          startedAt: now,
+          lastOpenedAt: now,
+        },
+        select: { id: true },
+      });
+
+      return createdAttempt.id;
     },
   });
-
-  if (!scenario) {
-    return null;
-  }
-
-  const variant = pickVariant(scenario.variants, params.locale);
-
-  if (!variant || variant.launchUrl.trim().length === 0) {
-    return null;
-  }
-
-  const now = new Date();
-  const latestAttempt = await prisma.userScenarioAttempt.findFirst({
-    where: {
-      userId: params.userId,
-      scenarioId: scenario.id,
-      scenarioVariantId: variant.id,
-    },
-    orderBy: [{ attemptNumber: "desc" }, { createdAt: "desc" }],
-    select: {
-      id: true,
-      attemptNumber: true,
-      status: true,
-      completedAt: true,
-      lastOpenedAt: true,
-    },
-  });
-
-  const shouldResumeExistingAttempt =
-    latestAttempt !== null &&
-    latestAttempt.status !== "completed" &&
-    latestAttempt.status !== "passed" &&
-    latestAttempt.status !== "failed";
-
-  if (shouldResumeExistingAttempt) {
-    await prisma.userScenarioAttempt.update({
-      where: { id: latestAttempt.id },
-      data: { lastOpenedAt: now },
-    });
-
-    return latestAttempt.id;
-  }
-
-  const nextAttemptNumber = (latestAttempt?.attemptNumber ?? 0) + 1;
-
-  const createdAttempt = await prisma.userScenarioAttempt.create({
-    data: {
-      userId: params.userId,
-      scenarioId: scenario.id,
-      scenarioVariantId: variant.id,
-      attemptNumber: nextAttemptNumber,
-      status: "incomplete",
-      startedAt: now,
-      lastOpenedAt: now,
-    },
-    select: { id: true },
-  });
-
-  return createdAttempt.id;
 }
 
 export async function completeScenarioAttempt(params: {
@@ -607,284 +630,309 @@ export async function completeScenarioAttempt(params: {
   userId: string;
   slug: string;
 }) {
-  const scenario = await prisma.scenario.findFirst({
-    where: {
-      slug: params.slug,
-      status: "published",
-    },
-    select: {
-      id: true,
-      variants: {
+  return measureAsyncOperation({
+    operation: "scenarios.completeScenarioAttempt",
+    getRecords: (attemptId) => (attemptId ? 1 : 0),
+    execute: async () => {
+      const scenario = await prisma.scenario.findFirst({
         where: {
-          availabilityStatus: "available",
+          slug: params.slug,
+          status: "published",
         },
         select: {
           id: true,
-          language: true,
-          title: true,
-          description: true,
-          instruction: true,
-          launchUrl: true,
-          packagePath: true,
-          entryPoint: true,
-          thumbnailUrl: true,
-          estimatedDurationMinutes: true,
-          availabilityStatus: true,
+          variants: {
+            where: {
+              availabilityStatus: "available",
+            },
+            select: {
+              id: true,
+              language: true,
+              title: true,
+              description: true,
+              instruction: true,
+              launchUrl: true,
+              packagePath: true,
+              entryPoint: true,
+              thumbnailUrl: true,
+              estimatedDurationMinutes: true,
+              availabilityStatus: true,
+            },
+          },
         },
-      },
+      });
+
+      if (!scenario) {
+        return null;
+      }
+
+      const variant = pickVariant(scenario.variants, params.locale);
+
+      if (!variant) {
+        return null;
+      }
+
+      const now = new Date();
+      const latestAttempt = await prisma.userScenarioAttempt.findFirst({
+        where: {
+          userId: params.userId,
+          scenarioId: scenario.id,
+          scenarioVariantId: variant.id,
+        },
+        orderBy: [{ attemptNumber: "desc" }, { createdAt: "desc" }],
+        select: {
+          id: true,
+          attemptNumber: true,
+          status: true,
+          completedAt: true,
+        },
+      });
+
+      if (!latestAttempt) {
+        const createdAttempt = await prisma.userScenarioAttempt.create({
+          data: {
+            userId: params.userId,
+            scenarioId: scenario.id,
+            scenarioVariantId: variant.id,
+            attemptNumber: 1,
+            status: "completed",
+            startedAt: now,
+            lastOpenedAt: now,
+            completedAt: now,
+          },
+          select: { id: true },
+        });
+
+        return createdAttempt.id;
+      }
+
+      if (
+        latestAttempt.status === "completed" ||
+        latestAttempt.status === "passed" ||
+        latestAttempt.completedAt !== null
+      ) {
+        await prisma.userScenarioAttempt.update({
+          where: { id: latestAttempt.id },
+          data: { lastOpenedAt: now },
+        });
+
+        return latestAttempt.id;
+      }
+
+      await prisma.userScenarioAttempt.update({
+        where: { id: latestAttempt.id },
+        data: {
+          status: "completed",
+          completedAt: now,
+          lastOpenedAt: now,
+        },
+      });
+
+      return latestAttempt.id;
     },
   });
-
-  if (!scenario) {
-    return null;
-  }
-
-  const variant = pickVariant(scenario.variants, params.locale);
-
-  if (!variant) {
-    return null;
-  }
-
-  const now = new Date();
-  const latestAttempt = await prisma.userScenarioAttempt.findFirst({
-    where: {
-      userId: params.userId,
-      scenarioId: scenario.id,
-      scenarioVariantId: variant.id,
-    },
-    orderBy: [{ attemptNumber: "desc" }, { createdAt: "desc" }],
-    select: {
-      id: true,
-      attemptNumber: true,
-      status: true,
-      completedAt: true,
-    },
-  });
-
-  if (!latestAttempt) {
-    const createdAttempt = await prisma.userScenarioAttempt.create({
-      data: {
-        userId: params.userId,
-        scenarioId: scenario.id,
-        scenarioVariantId: variant.id,
-        attemptNumber: 1,
-        status: "completed",
-        startedAt: now,
-        lastOpenedAt: now,
-        completedAt: now,
-      },
-      select: { id: true },
-    });
-
-    return createdAttempt.id;
-  }
-
-  if (
-    latestAttempt.status === "completed" ||
-    latestAttempt.status === "passed" ||
-    latestAttempt.completedAt !== null
-  ) {
-    await prisma.userScenarioAttempt.update({
-      where: { id: latestAttempt.id },
-      data: { lastOpenedAt: now },
-    });
-
-    return latestAttempt.id;
-  }
-
-  await prisma.userScenarioAttempt.update({
-    where: { id: latestAttempt.id },
-    data: {
-      status: "completed",
-      completedAt: now,
-      lastOpenedAt: now,
-    },
-  });
-
-  return latestAttempt.id;
 }
 
 export async function updateScenarioRuntimeProgress(input: RuntimeTrackingInput) {
-  const scenario = await prisma.scenario.findFirst({
-    where: {
-      slug: input.slug,
-      status: "published",
-    },
-    select: {
-      id: true,
-      variants: {
+  return measureAsyncOperation({
+    operation: "scenarios.updateScenarioRuntimeProgress",
+    getRecords: (attemptId) => (attemptId ? 1 : 0),
+    execute: async () => {
+      const queryStartedAt = Date.now();
+      const scenario = await prisma.scenario.findFirst({
         where: {
-          availabilityStatus: "available",
+          slug: input.slug,
+          status: "published",
         },
         select: {
           id: true,
-          language: true,
-          title: true,
-          description: true,
-          instruction: true,
-          launchUrl: true,
-          packagePath: true,
-          entryPoint: true,
-          thumbnailUrl: true,
-          estimatedDurationMinutes: true,
-          availabilityStatus: true,
-        },
-      },
-    },
-  });
-
-  if (!scenario) {
-    return null;
-  }
-
-  const variant = pickVariant(scenario.variants, input.locale);
-
-  if (!variant) {
-    return null;
-  }
-
-  const now = new Date();
-  const normalizedStatus = normalizeRuntimeStatus(input.lessonStatus);
-  const normalizedScore = normalizeScore(input.scoreRaw);
-
-  const latestAttempt = await prisma.userScenarioAttempt.findFirst({
-    where: {
-      userId: input.userId,
-      scenarioId: scenario.id,
-      scenarioVariantId: variant.id,
-    },
-    orderBy: [{ attemptNumber: "desc" }, { createdAt: "desc" }],
-    select: {
-      id: true,
-      attemptNumber: true,
-      status: true,
-      completedAt: true,
-      startedAt: true,
-      lastOpenedAt: true,
-      lessonLocation: true,
-      suspendData: true,
-      sessionTime: true,
-      totalTime: true,
-      score: true,
-      rawTrackingData: true,
-    },
-  });
-
-  const previousRawTrackingData = readRuntimeTrackingObject(latestAttempt?.rawTrackingData);
-  const nextTotalTimeState = calculateNextTotalTime({
-    previousRawTrackingData,
-    incomingSessionTime: input.sessionTime,
-    previousTotalTimeString: latestAttempt?.totalTime ?? null,
-  });
-
-  const nextRawTrackingData: JsonObject = {
-    ...previousRawTrackingData,
-    ...(input.rawTrackingData ?? {}),
-    [RUNTIME_LAST_SESSION_SNAPSHOT_KEY]: nextTotalTimeState.nextSnapshotCentis,
-    [RUNTIME_TOTAL_TIME_CENTIS_KEY]: nextTotalTimeState.nextTotalCentis,
-  };
-
-  const updateData = {
-    status:
-      normalizedStatus ??
-      (latestAttempt?.status === "completed" || latestAttempt?.status === "passed"
-        ? latestAttempt.status
-        : "incomplete"),
-    score: normalizedScore ?? latestAttempt?.score ?? null,
-    lessonLocation:
-      normalizeOptionalText(input.lessonLocation) ?? latestAttempt?.lessonLocation ?? null,
-    suspendData: normalizeOptionalText(input.suspendData) ?? latestAttempt?.suspendData ?? null,
-    sessionTime: normalizeOptionalText(input.sessionTime) ?? latestAttempt?.sessionTime ?? null,
-    totalTime: nextTotalTimeState.nextTotalTime,
-    rawTrackingData: toPrismaJsonObject(nextRawTrackingData),
-    lastOpenedAt: now,
-    completedAt:
-      normalizedStatus === "completed" || normalizedStatus === "passed"
-        ? now
-        : (latestAttempt?.completedAt ?? null),
-  };
-
-  if (latestAttempt) {
-    await prisma.userScenarioAttempt.update({
-      where: { id: latestAttempt.id },
-      data: updateData,
-    });
-
-    return latestAttempt.id;
-  }
-
-  const createdAttempt = await prisma.userScenarioAttempt.create({
-    data: {
-      userId: input.userId,
-      scenarioId: scenario.id,
-      scenarioVariantId: variant.id,
-      attemptNumber: 1,
-      startedAt: now,
-      ...updateData,
-    },
-    select: {
-      id: true,
-    },
-  });
-
-  return createdAttempt.id;
-}
-
-export async function getScenarioLaunch(params: { locale: string; userId: string; slug: string }) {
-  const scenario = await prisma.scenario.findFirst({
-    where: {
-      slug: params.slug,
-      status: "published",
-    },
-    select: {
-      slug: true,
-      area: true,
-      variants: {
-        where: {
-          language: {
-            in: [params.locale, "en"],
+          variants: {
+            where: {
+              availabilityStatus: "available",
+            },
+            select: {
+              id: true,
+              language: true,
+              title: true,
+              description: true,
+              instruction: true,
+              launchUrl: true,
+              packagePath: true,
+              entryPoint: true,
+              thumbnailUrl: true,
+              estimatedDurationMinutes: true,
+              availabilityStatus: true,
+            },
           },
-          availabilityStatus: "available",
         },
+      });
+
+      logMeasuredOperation({
+        operation: "scenarios.updateScenarioRuntimeProgress.fetchScenario",
+        durationMs: Date.now() - queryStartedAt,
+        records: scenario ? 1 : 0,
+      });
+
+      if (!scenario) {
+        return null;
+      }
+
+      const variant = pickVariant(scenario.variants, input.locale);
+
+      if (!variant) {
+        return null;
+      }
+
+      const now = new Date();
+      const normalizedStatus = normalizeRuntimeStatus(input.lessonStatus);
+      const normalizedScore = normalizeScore(input.scoreRaw);
+
+      const latestAttempt = await prisma.userScenarioAttempt.findFirst({
+        where: {
+          userId: input.userId,
+          scenarioId: scenario.id,
+          scenarioVariantId: variant.id,
+        },
+        orderBy: [{ attemptNumber: "desc" }, { createdAt: "desc" }],
         select: {
           id: true,
-          language: true,
-          title: true,
-          description: true,
-          instruction: true,
-          launchUrl: true,
-          packagePath: true,
-          entryPoint: true,
-          thumbnailUrl: true,
-          estimatedDurationMinutes: true,
-          availabilityStatus: true,
-        },
-      },
-      userAttempts: {
-        where: {
-          userId: params.userId,
-        },
-        select: {
+          attemptNumber: true,
           status: true,
-          score: true,
+          completedAt: true,
           startedAt: true,
           lastOpenedAt: true,
-          completedAt: true,
           lessonLocation: true,
           suspendData: true,
           sessionTime: true,
           totalTime: true,
+          score: true,
           rawTrackingData: true,
-          createdAt: true,
         },
-        orderBy: [{ createdAt: "desc" }],
-      },
+      });
+
+      const previousRawTrackingData = readRuntimeTrackingObject(latestAttempt?.rawTrackingData);
+      const nextTotalTimeState = calculateNextTotalTime({
+        previousRawTrackingData,
+        incomingSessionTime: input.sessionTime,
+        previousTotalTimeString: latestAttempt?.totalTime ?? null,
+      });
+
+      const nextRawTrackingData: JsonObject = {
+        ...previousRawTrackingData,
+        ...(input.rawTrackingData ?? {}),
+        [RUNTIME_LAST_SESSION_SNAPSHOT_KEY]: nextTotalTimeState.nextSnapshotCentis,
+        [RUNTIME_TOTAL_TIME_CENTIS_KEY]: nextTotalTimeState.nextTotalCentis,
+      };
+
+      const updateData = {
+        status:
+          normalizedStatus ??
+          (latestAttempt?.status === "completed" || latestAttempt?.status === "passed"
+            ? latestAttempt.status
+            : "incomplete"),
+        score: normalizedScore ?? latestAttempt?.score ?? null,
+        lessonLocation:
+          normalizeOptionalText(input.lessonLocation) ?? latestAttempt?.lessonLocation ?? null,
+        suspendData: normalizeOptionalText(input.suspendData) ?? latestAttempt?.suspendData ?? null,
+        sessionTime: normalizeOptionalText(input.sessionTime) ?? latestAttempt?.sessionTime ?? null,
+        totalTime: nextTotalTimeState.nextTotalTime,
+        rawTrackingData: toPrismaJsonObject(nextRawTrackingData),
+        lastOpenedAt: now,
+        completedAt:
+          normalizedStatus === "completed" || normalizedStatus === "passed"
+            ? now
+            : (latestAttempt?.completedAt ?? null),
+      };
+
+      if (latestAttempt) {
+        await prisma.userScenarioAttempt.update({
+          where: { id: latestAttempt.id },
+          data: updateData,
+        });
+
+        return latestAttempt.id;
+      }
+
+      const createdAttempt = await prisma.userScenarioAttempt.create({
+        data: {
+          userId: input.userId,
+          scenarioId: scenario.id,
+          scenarioVariantId: variant.id,
+          attemptNumber: 1,
+          startedAt: now,
+          ...updateData,
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      return createdAttempt.id;
     },
   });
+}
 
-  if (!scenario) {
-    return null;
-  }
+export async function getScenarioLaunch(params: { locale: string; userId: string; slug: string }) {
+  return measureAsyncOperation({
+    operation: "scenarios.getScenarioLaunch",
+    getRecords: (scenario) => (scenario ? 1 : 0),
+    execute: async () => {
+      const scenario = await prisma.scenario.findFirst({
+        where: {
+          slug: params.slug,
+          status: "published",
+        },
+        select: {
+          slug: true,
+          area: true,
+          variants: {
+            where: {
+              language: {
+                in: [params.locale, "en"],
+              },
+              availabilityStatus: "available",
+            },
+            select: {
+              id: true,
+              language: true,
+              title: true,
+              description: true,
+              instruction: true,
+              launchUrl: true,
+              packagePath: true,
+              entryPoint: true,
+              thumbnailUrl: true,
+              estimatedDurationMinutes: true,
+              availabilityStatus: true,
+            },
+          },
+          userAttempts: {
+            where: {
+              userId: params.userId,
+            },
+            select: {
+              status: true,
+              score: true,
+              startedAt: true,
+              lastOpenedAt: true,
+              completedAt: true,
+              lessonLocation: true,
+              suspendData: true,
+              sessionTime: true,
+              totalTime: true,
+              rawTrackingData: true,
+              createdAt: true,
+            },
+            orderBy: [{ createdAt: "desc" }],
+          },
+        },
+      });
 
-  return mapScenarioToLaunchViewModel(scenario, params.locale);
+      if (!scenario) {
+        return null;
+      }
+
+      return mapScenarioToLaunchViewModel(scenario, params.locale);
+    },
+  });
 }

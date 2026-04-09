@@ -10,6 +10,7 @@ import {
   StoredQuizAttempt,
   TranslationRecord,
 } from "@/lib/curriculum/types";
+import { measureAsyncOperation } from "@/lib/observability/performance";
 import { prisma } from "@/lib/prisma";
 
 function pickTranslation(
@@ -349,28 +350,13 @@ function mapCourseToViewModel(
 }
 
 export async function getAllCurriculumModules(params: { userId: string; locale: string }) {
-  const courses = await prisma.course.findMany({
-    where: {
-      status: "published",
-    },
-    include: {
-      translations: {
+  return measureAsyncOperation({
+    operation: "curriculum.getAllCurriculumModules",
+    getRecords: (modules) => modules.length,
+    execute: async () => {
+      const courses = await prisma.course.findMany({
         where: {
-          language: {
-            in: supportedLanguages,
-          },
-        },
-        select: {
-          language: true,
-          title: true,
-          subtitle: true,
-          description: true,
-          content: true,
-        },
-      },
-      sections: {
-        orderBy: {
-          sortOrder: "asc",
+          status: "published",
         },
         include: {
           translations: {
@@ -382,71 +368,77 @@ export async function getAllCurriculumModules(params: { userId: string; locale: 
             select: {
               language: true,
               title: true,
-              summary: true,
+              subtitle: true,
+              description: true,
               content: true,
             },
           },
+          sections: {
+            orderBy: {
+              sortOrder: "asc",
+            },
+            include: {
+              translations: {
+                where: {
+                  language: {
+                    in: supportedLanguages,
+                  },
+                },
+                select: {
+                  language: true,
+                  title: true,
+                  summary: true,
+                  content: true,
+                },
+              },
+            },
+          },
+          _count: {
+            select: {
+              quizzes: true,
+            },
+          },
+          userCourseAttempts: {
+            where: {
+              userId: params.userId,
+            },
+            select: {
+              status: true,
+              progressPercent: true,
+              lastOpenedAt: true,
+              currentStage: true,
+              currentLessonIndex: true,
+              completedLessons: true,
+              preQuizAttempts: true,
+              postQuizAttempts: true,
+            },
+            take: 1,
+          },
         },
-      },
-      _count: {
-        select: {
-          quizzes: true,
-        },
-      },
-      userCourseAttempts: {
-        where: {
-          userId: params.userId,
-        },
-        select: {
-          status: true,
-          progressPercent: true,
-          lastOpenedAt: true,
-          currentStage: true,
-          currentLessonIndex: true,
-          completedLessons: true,
-          preQuizAttempts: true,
-          postQuizAttempts: true,
-        },
-        take: 1,
-      },
-    },
-    orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
-  });
+        orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+      });
 
-  return courses.map((course) => mapCourseToViewModel(course, params.locale));
+      return courses.map((course) => mapCourseToViewModel(course, params.locale));
+    },
+  });
 }
 
 export async function getMyCurriculumModules(params: { userId: string; locale: string }) {
-  const courses = await prisma.course.findMany({
-    where: {
-      status: "published",
-      userCourseAttempts: {
-        some: {
-          userId: params.userId,
-          status: {
-            in: ["in_progress", "completed"],
-          },
-        },
-      },
-    },
-    include: {
-      translations: {
+  return measureAsyncOperation({
+    operation: "curriculum.getMyCurriculumModules",
+    getRecords: (modules) => modules.length,
+    execute: async () => {
+      const courses = await prisma.course.findMany({
         where: {
-          language: {
-            in: supportedLanguages,
+          status: "published",
+          userCourseAttempts: {
+            some: {
+              userId: params.userId,
+              status: {
+                in: ["in_progress", "completed"],
+              },
+            },
           },
-        },
-        select: {
-          language: true,
-          title: true,
-          subtitle: true,
-          description: true,
-          content: true,
-        },
-      },
-      sections: {
-        orderBy: {
-          sortOrder: "asc",
         },
         include: {
           translations: {
@@ -458,63 +450,69 @@ export async function getMyCurriculumModules(params: { userId: string; locale: s
             select: {
               language: true,
               title: true,
-              summary: true,
+              subtitle: true,
+              description: true,
               content: true,
             },
           },
+          sections: {
+            orderBy: {
+              sortOrder: "asc",
+            },
+            include: {
+              translations: {
+                where: {
+                  language: {
+                    in: supportedLanguages,
+                  },
+                },
+                select: {
+                  language: true,
+                  title: true,
+                  summary: true,
+                  content: true,
+                },
+              },
+            },
+          },
+          _count: {
+            select: {
+              quizzes: true,
+            },
+          },
+          userCourseAttempts: {
+            where: {
+              userId: params.userId,
+            },
+            select: {
+              status: true,
+              progressPercent: true,
+              lastOpenedAt: true,
+              currentStage: true,
+              currentLessonIndex: true,
+              completedLessons: true,
+              preQuizAttempts: true,
+              postQuizAttempts: true,
+            },
+            take: 1,
+          },
         },
-      },
-      _count: {
-        select: {
-          quizzes: true,
-        },
-      },
-      userCourseAttempts: {
-        where: {
-          userId: params.userId,
-        },
-        select: {
-          status: true,
-          progressPercent: true,
-          lastOpenedAt: true,
-          currentStage: true,
-          currentLessonIndex: true,
-          completedLessons: true,
-          preQuizAttempts: true,
-          postQuizAttempts: true,
-        },
-        take: 1,
-      },
-    },
-    orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
-  });
+        orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+      });
 
-  return courses.map((course) => mapCourseToViewModel(course, params.locale));
+      return courses.map((course) => mapCourseToViewModel(course, params.locale));
+    },
+  });
 }
 
 export async function getCourseDetail(params: { userId: string; locale: string; slug: string }) {
-  const course = await prisma.course.findUnique({
-    where: {
-      slug: params.slug,
-    },
-    include: {
-      translations: {
+  return measureAsyncOperation({
+    operation: "curriculum.getCourseDetail",
+    getRecords: (course) => (course ? 1 : 0),
+    execute: async () => {
+      const course = await prisma.course.findUnique({
         where: {
-          language: {
-            in: [params.locale, "en"],
-          },
-        },
-        select: {
-          language: true,
-          title: true,
-          subtitle: true,
-          description: true,
-          content: true,
-        },
-      },
-      sections: {
-        orderBy: {
-          sortOrder: "asc",
+          slug: params.slug,
         },
         include: {
           translations: {
@@ -526,51 +524,12 @@ export async function getCourseDetail(params: { userId: string; locale: string; 
             select: {
               language: true,
               title: true,
-              summary: true,
+              subtitle: true,
+              description: true,
               content: true,
             },
           },
-        },
-      },
-      _count: {
-        select: {
-          quizzes: true,
-        },
-      },
-      userCourseAttempts: {
-        where: {
-          userId: params.userId,
-        },
-        select: {
-          status: true,
-          progressPercent: true,
-          lastOpenedAt: true,
-          currentStage: true,
-          currentLessonIndex: true,
-          completedLessons: true,
-          preQuizAttempts: true,
-          postQuizAttempts: true,
-        },
-        take: 1,
-      },
-      quizzes: {
-        orderBy: {
-          sortOrder: "asc",
-        },
-        include: {
-          translations: {
-            where: {
-              language: {
-                in: [params.locale, "en"],
-              },
-            },
-            select: {
-              language: true,
-              title: true,
-              description: true,
-            },
-          },
-          questions: {
+          sections: {
             orderBy: {
               sortOrder: "asc",
             },
@@ -583,11 +542,52 @@ export async function getCourseDetail(params: { userId: string; locale: string; 
                 },
                 select: {
                   language: true,
-                  prompt: true,
-                  explanation: true,
+                  title: true,
+                  summary: true,
+                  content: true,
                 },
               },
-              answers: {
+            },
+          },
+          _count: {
+            select: {
+              quizzes: true,
+            },
+          },
+          userCourseAttempts: {
+            where: {
+              userId: params.userId,
+            },
+            select: {
+              status: true,
+              progressPercent: true,
+              lastOpenedAt: true,
+              currentStage: true,
+              currentLessonIndex: true,
+              completedLessons: true,
+              preQuizAttempts: true,
+              postQuizAttempts: true,
+            },
+            take: 1,
+          },
+          quizzes: {
+            orderBy: {
+              sortOrder: "asc",
+            },
+            include: {
+              translations: {
+                where: {
+                  language: {
+                    in: [params.locale, "en"],
+                  },
+                },
+                select: {
+                  language: true,
+                  title: true,
+                  description: true,
+                },
+              },
+              questions: {
                 orderBy: {
                   sortOrder: "asc",
                 },
@@ -600,8 +600,27 @@ export async function getCourseDetail(params: { userId: string; locale: string; 
                     },
                     select: {
                       language: true,
-                      text: true,
-                      feedbackText: true,
+                      prompt: true,
+                      explanation: true,
+                    },
+                  },
+                  answers: {
+                    orderBy: {
+                      sortOrder: "asc",
+                    },
+                    include: {
+                      translations: {
+                        where: {
+                          language: {
+                            in: [params.locale, "en"],
+                          },
+                        },
+                        select: {
+                          language: true,
+                          text: true,
+                          feedbackText: true,
+                        },
+                      },
                     },
                   },
                 },
@@ -609,42 +628,21 @@ export async function getCourseDetail(params: { userId: string; locale: string; 
             },
           },
         },
-      },
-    },
-  });
+      });
 
-  if (course?.status !== "published") {
-    return null;
-  }
+      if (course?.status !== "published") {
+        return null;
+      }
 
-  const courseModule = mapCourseToViewModel(course, params.locale);
+      const courseModule = mapCourseToViewModel(course, params.locale);
 
-  const relatedCourses = await prisma.course.findMany({
-    where: {
-      status: "published",
-      slug: {
-        not: params.slug,
-      },
-      area: course.area,
-    },
-    include: {
-      translations: {
+      const relatedCourses = await prisma.course.findMany({
         where: {
-          language: {
-            in: [params.locale, "en"],
+          status: "published",
+          slug: {
+            not: params.slug,
           },
-        },
-        select: {
-          language: true,
-          title: true,
-          subtitle: true,
-          description: true,
-          content: true,
-        },
-      },
-      sections: {
-        orderBy: {
-          sortOrder: "asc",
+          area: course.area,
         },
         include: {
           translations: {
@@ -656,44 +654,67 @@ export async function getCourseDetail(params: { userId: string; locale: string; 
             select: {
               language: true,
               title: true,
-              summary: true,
+              subtitle: true,
+              description: true,
               content: true,
             },
           },
+          sections: {
+            orderBy: {
+              sortOrder: "asc",
+            },
+            include: {
+              translations: {
+                where: {
+                  language: {
+                    in: [params.locale, "en"],
+                  },
+                },
+                select: {
+                  language: true,
+                  title: true,
+                  summary: true,
+                  content: true,
+                },
+              },
+            },
+          },
+          _count: {
+            select: {
+              quizzes: true,
+            },
+          },
+          userCourseAttempts: {
+            where: {
+              userId: params.userId,
+            },
+            select: {
+              status: true,
+              progressPercent: true,
+              lastOpenedAt: true,
+              currentStage: true,
+              currentLessonIndex: true,
+              completedLessons: true,
+              preQuizAttempts: true,
+              postQuizAttempts: true,
+            },
+            take: 1,
+          },
         },
-      },
-      _count: {
-        select: {
-          quizzes: true,
-        },
-      },
-      userCourseAttempts: {
-        where: {
-          userId: params.userId,
-        },
-        select: {
-          status: true,
-          progressPercent: true,
-          lastOpenedAt: true,
-          currentStage: true,
-          currentLessonIndex: true,
-          completedLessons: true,
-          preQuizAttempts: true,
-          postQuizAttempts: true,
-        },
-        take: 1,
-      },
+        orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+        take: 3,
+      });
+
+      const relatedModules = relatedCourses.map((item) =>
+        mapCourseToViewModel(item, params.locale),
+      );
+
+      return {
+        module: courseModule,
+        relatedModules,
+      };
     },
-    orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
-    take: 3,
   });
-
-  const relatedModules = relatedCourses.map((item) => mapCourseToViewModel(item, params.locale));
-
-  return {
-    module: courseModule,
-    relatedModules,
-  };
 }
 
 export async function getCourseLearningWorkspace(params: {
@@ -701,85 +722,91 @@ export async function getCourseLearningWorkspace(params: {
   locale: string;
   slug: string;
 }) {
-  const course = await prisma.course.findUnique({
-    where: { slug: params.slug },
-    select: {
-      id: true,
-      status: true,
-      sections: {
+  return measureAsyncOperation({
+    operation: "curriculum.getCourseLearningWorkspace",
+    getRecords: (workspace) => (workspace ? 1 : 0),
+    execute: async () => {
+      const course = await prisma.course.findUnique({
+        where: { slug: params.slug },
         select: {
           id: true,
+          status: true,
+          sections: {
+            select: {
+              id: true,
+            },
+          },
         },
-      },
+      });
+
+      if (course?.status !== "published") {
+        return null;
+      }
+
+      const lessonCount = course.sections.length;
+
+      const existing = await prisma.userCourseAttempt.findUnique({
+        where: {
+          userId_courseId: {
+            userId: params.userId,
+            courseId: course.id,
+          },
+        },
+      });
+
+      if (!existing) {
+        await prisma.userCourseAttempt.create({
+          data: {
+            userId: params.userId,
+            courseId: course.id,
+            status: "in_progress",
+            currentStage: "pre_quiz",
+            currentLessonIndex: 0,
+            completedLessons: 0,
+            progressPercent: 0,
+            startedAt: new Date(),
+            lastOpenedAt: new Date(),
+          },
+        });
+      } else if (existing.status === "not_started" || existing.currentStage === "overview") {
+        await prisma.userCourseAttempt.update({
+          where: {
+            userId_courseId: {
+              userId: params.userId,
+              courseId: course.id,
+            },
+          },
+          data: {
+            status: "in_progress",
+            currentStage: "pre_quiz",
+            startedAt: existing.startedAt ?? new Date(),
+            lastOpenedAt: new Date(),
+          },
+        });
+      } else {
+        await prisma.userCourseAttempt.update({
+          where: {
+            userId_courseId: {
+              userId: params.userId,
+              courseId: course.id,
+            },
+          },
+          data: {
+            lastOpenedAt: new Date(),
+          },
+        });
+      }
+
+      const detail = await getCourseDetail(params);
+
+      if (!detail) {
+        return null;
+      }
+
+      return {
+        ...detail.module,
+        lessons: lessonCount > 0 ? lessonCount : detail.module.lessons,
+      };
     },
   });
-
-  if (course?.status !== "published") {
-    return null;
-  }
-
-  const lessonCount = course.sections.length;
-
-  const existing = await prisma.userCourseAttempt.findUnique({
-    where: {
-      userId_courseId: {
-        userId: params.userId,
-        courseId: course.id,
-      },
-    },
-  });
-
-  if (!existing) {
-    await prisma.userCourseAttempt.create({
-      data: {
-        userId: params.userId,
-        courseId: course.id,
-        status: "in_progress",
-        currentStage: "pre_quiz",
-        currentLessonIndex: 0,
-        completedLessons: 0,
-        progressPercent: 0,
-        startedAt: new Date(),
-        lastOpenedAt: new Date(),
-      },
-    });
-  } else if (existing.status === "not_started" || existing.currentStage === "overview") {
-    await prisma.userCourseAttempt.update({
-      where: {
-        userId_courseId: {
-          userId: params.userId,
-          courseId: course.id,
-        },
-      },
-      data: {
-        status: "in_progress",
-        currentStage: "pre_quiz",
-        startedAt: existing.startedAt ?? new Date(),
-        lastOpenedAt: new Date(),
-      },
-    });
-  } else {
-    await prisma.userCourseAttempt.update({
-      where: {
-        userId_courseId: {
-          userId: params.userId,
-          courseId: course.id,
-        },
-      },
-      data: {
-        lastOpenedAt: new Date(),
-      },
-    });
-  }
-
-  const detail = await getCourseDetail(params);
-
-  if (!detail) {
-    return null;
-  }
-
-  return {
-    ...detail.module,
-    lessons: lessonCount > 0 ? lessonCount : detail.module.lessons,
-  };
 }

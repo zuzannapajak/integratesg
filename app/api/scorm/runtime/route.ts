@@ -1,3 +1,4 @@
+import { logMeasuredOperation } from "@/lib/observability/performance";
 import { updateScenarioRuntimeProgress } from "@/lib/scenarios/queries";
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
@@ -22,6 +23,10 @@ function isRuntimeRequestBody(value: unknown): value is RuntimeRequestBody {
 }
 
 export async function POST(request: Request) {
+  const startedAt = Date.now();
+  let records = 0;
+  let status: "ok" | "error" = "ok";
+
   try {
     const supabase = await createClient();
     const {
@@ -29,12 +34,14 @@ export async function POST(request: Request) {
     } = await supabase.auth.getUser();
 
     if (!user) {
+      status = "error";
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const json: unknown = await request.json();
 
     if (!isRuntimeRequestBody(json)) {
+      status = "error";
       return NextResponse.json({ error: "Invalid runtime payload" }, { status: 400 });
     }
 
@@ -46,6 +53,7 @@ export async function POST(request: Request) {
       typeof body.scenarioSlug !== "string" ||
       body.scenarioSlug.trim().length === 0
     ) {
+      status = "error";
       return NextResponse.json({ error: "Invalid runtime payload" }, { status: 400 });
     }
 
@@ -62,12 +70,23 @@ export async function POST(request: Request) {
     });
 
     if (!scenario) {
+      status = "error";
       return NextResponse.json({ error: "Scenario not found" }, { status: 404 });
     }
 
+    records = 1;
+
     return NextResponse.json({ ok: true, scenario });
   } catch (error) {
+    status = "error";
     console.error(error);
     return NextResponse.json({ error: "Unexpected server error" }, { status: 500 });
+  } finally {
+    logMeasuredOperation({
+      operation: "api.scorm.runtime.POST",
+      durationMs: Date.now() - startedAt,
+      records,
+      status,
+    });
   }
 }
