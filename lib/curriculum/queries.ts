@@ -10,7 +10,7 @@ import {
   StoredQuizAttempt,
   TranslationRecord,
 } from "@/lib/curriculum/types";
-import { measureAsyncOperation } from "@/lib/observability/performance";
+import { logMeasuredOperation, measureAsyncOperation } from "@/lib/observability/performance";
 import { prisma } from "@/lib/prisma";
 
 function pickTranslation(
@@ -349,16 +349,88 @@ function mapCourseToViewModel(
   };
 }
 
+function countCourseTranslations(
+  courses: Array<{
+    translations: Array<{ language: string }>;
+    sections?: Array<{ translations: Array<{ language: string }> }>;
+  }>,
+) {
+  return courses.reduce((sum, course) => {
+    const sectionTranslations = (course.sections ?? []).reduce(
+      (sectionSum, section) => sectionSum + section.translations.length,
+      0,
+    );
+
+    return sum + course.translations.length + sectionTranslations;
+  }, 0);
+}
+
+function countCourseRelations(
+  courses: Array<{
+    sections?: Array<unknown>;
+    userCourseAttempts: Array<unknown>;
+  }>,
+) {
+  return courses.reduce(
+    (sum, course) => sum + (course.sections?.length ?? 0) + course.userCourseAttempts.length,
+    0,
+  );
+}
+
+function countQuizQuestionRelations(course: {
+  quizzes?: Array<{ questions: Array<{ answers: unknown[] }> }>;
+}) {
+  return (course.quizzes ?? []).reduce((sum, quiz) => {
+    const answersCount = quiz.questions.reduce(
+      (answersSum, question) => answersSum + question.answers.length,
+      0,
+    );
+
+    return sum + quiz.questions.length + answersCount;
+  }, 0);
+}
+
+function countQuizTranslations(course: {
+  quizzes?: Array<{
+    translations: Array<{ language: string }>;
+    questions: Array<{
+      translations: Array<{ language: string }>;
+      answers: Array<{
+        translations: Array<{ language: string }>;
+      }>;
+    }>;
+  }>;
+}) {
+  return (course.quizzes ?? []).reduce((sum, quiz) => {
+    const questionTranslations = quiz.questions.reduce((questionSum, question) => {
+      const answerTranslations = question.answers.reduce(
+        (answerSum, answer) => answerSum + answer.translations.length,
+        0,
+      );
+
+      return questionSum + question.translations.length + answerTranslations;
+    }, 0);
+
+    return sum + quiz.translations.length + questionTranslations;
+  }, 0);
+}
+
 export async function getAllCurriculumModules(params: { userId: string; locale: string }) {
   return measureAsyncOperation({
     operation: "curriculum.getAllCurriculumModules",
     getRecords: (modules) => modules.length,
     execute: async () => {
+      const prismaStartedAt = Date.now();
       const courses = await prisma.course.findMany({
         where: {
           status: "published",
         },
-        include: {
+        select: {
+          slug: true,
+          area: true,
+          difficulty: true,
+          estimatedDurationMinutes: true,
+          lessonsCount: true,
           translations: {
             where: {
               language: {
@@ -370,27 +442,6 @@ export async function getAllCurriculumModules(params: { userId: string; locale: 
               title: true,
               subtitle: true,
               description: true,
-              content: true,
-            },
-          },
-          sections: {
-            orderBy: {
-              sortOrder: "asc",
-            },
-            include: {
-              translations: {
-                where: {
-                  language: {
-                    in: supportedLanguages,
-                  },
-                },
-                select: {
-                  language: true,
-                  title: true,
-                  summary: true,
-                  content: true,
-                },
-              },
             },
           },
           _count: {
@@ -414,11 +465,84 @@ export async function getAllCurriculumModules(params: { userId: string; locale: 
             },
             take: 1,
           },
+          quizzes: {
+            orderBy: {
+              sortOrder: "asc",
+            },
+            include: {
+              translations: {
+                where: {
+                  language: {
+                    in: [params.locale, "en"],
+                  },
+                },
+                select: {
+                  language: true,
+                  title: true,
+                  description: true,
+                },
+              },
+              questions: {
+                orderBy: {
+                  sortOrder: "asc",
+                },
+                include: {
+                  translations: {
+                    where: {
+                      language: {
+                        in: [params.locale, "en"],
+                      },
+                    },
+                    select: {
+                      language: true,
+                      prompt: true,
+                      explanation: true,
+                    },
+                  },
+                  answers: {
+                    orderBy: {
+                      sortOrder: "asc",
+                    },
+                    include: {
+                      translations: {
+                        where: {
+                          language: {
+                            in: [params.locale, "en"],
+                          },
+                        },
+                        select: {
+                          language: true,
+                          text: true,
+                          feedbackText: true,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
         },
         orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
       });
 
-      return courses.map((course) => mapCourseToViewModel(course, params.locale));
+      logMeasuredOperation({
+        operation: "curriculum.getAllCurriculumModules.prisma",
+        durationMs: Date.now() - prismaStartedAt,
+        records: courses.length,
+        meta: {
+          translations: countCourseTranslations(courses),
+          relations: countCourseRelations(courses),
+          quizzes: courses.reduce(
+            (sum: number, course: { _count: { quizzes: number } }) => sum + course._count.quizzes,
+            0,
+          ),
+        },
+      });
+
+      return courses.map((course: CourseMappedInput) =>
+        mapCourseToViewModel(course, params.locale),
+      );
     },
   });
 }
@@ -428,6 +552,7 @@ export async function getMyCurriculumModules(params: { userId: string; locale: s
     operation: "curriculum.getMyCurriculumModules",
     getRecords: (modules) => modules.length,
     execute: async () => {
+      const prismaStartedAt = Date.now();
       const courses = await prisma.course.findMany({
         where: {
           status: "published",
@@ -440,7 +565,12 @@ export async function getMyCurriculumModules(params: { userId: string; locale: s
             },
           },
         },
-        include: {
+        select: {
+          slug: true,
+          area: true,
+          difficulty: true,
+          estimatedDurationMinutes: true,
+          lessonsCount: true,
           translations: {
             where: {
               language: {
@@ -452,27 +582,6 @@ export async function getMyCurriculumModules(params: { userId: string; locale: s
               title: true,
               subtitle: true,
               description: true,
-              content: true,
-            },
-          },
-          sections: {
-            orderBy: {
-              sortOrder: "asc",
-            },
-            include: {
-              translations: {
-                where: {
-                  language: {
-                    in: supportedLanguages,
-                  },
-                },
-                select: {
-                  language: true,
-                  title: true,
-                  summary: true,
-                  content: true,
-                },
-              },
             },
           },
           _count: {
@@ -500,7 +609,23 @@ export async function getMyCurriculumModules(params: { userId: string; locale: s
         orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
       });
 
-      return courses.map((course) => mapCourseToViewModel(course, params.locale));
+      logMeasuredOperation({
+        operation: "curriculum.getMyCurriculumModules.prisma",
+        durationMs: Date.now() - prismaStartedAt,
+        records: courses.length,
+        meta: {
+          translations: countCourseTranslations(courses),
+          relations: countCourseRelations(courses),
+          quizzes: courses.reduce(
+            (sum: number, course: { _count: { quizzes: number } }) => sum + course._count.quizzes,
+            0,
+          ),
+        },
+      });
+
+      return courses.map((course: CourseMappedInput) =>
+        mapCourseToViewModel(course, params.locale),
+      );
     },
   });
 }
@@ -510,6 +635,7 @@ export async function getCourseDetail(params: { userId: string; locale: string; 
     operation: "curriculum.getCourseDetail",
     getRecords: (course) => (course ? 1 : 0),
     execute: async () => {
+      const coursePrismaStartedAt = Date.now();
       const course = await prisma.course.findUnique({
         where: {
           slug: params.slug,
@@ -630,12 +756,26 @@ export async function getCourseDetail(params: { userId: string; locale: string; 
         },
       });
 
+      logMeasuredOperation({
+        operation: "curriculum.getCourseDetail.prisma",
+        durationMs: Date.now() - coursePrismaStartedAt,
+        records: course ? 1 : 0,
+        meta: {
+          translations: course ? countCourseTranslations([course]) : 0,
+          relations: course ? countCourseRelations([course]) : 0,
+          quizzes: course?._count.quizzes ?? 0,
+          quizQuestionRelations: course ? countQuizQuestionRelations(course) : 0,
+          quizTranslations: course ? countQuizTranslations(course) : 0,
+        },
+      });
+
       if (course?.status !== "published") {
         return null;
       }
 
       const courseModule = mapCourseToViewModel(course, params.locale);
 
+      const relatedPrismaStartedAt = Date.now();
       const relatedCourses = await prisma.course.findMany({
         where: {
           status: "published",
@@ -644,7 +784,12 @@ export async function getCourseDetail(params: { userId: string; locale: string; 
           },
           area: course.area,
         },
-        include: {
+        select: {
+          slug: true,
+          area: true,
+          difficulty: true,
+          estimatedDurationMinutes: true,
+          lessonsCount: true,
           translations: {
             where: {
               language: {
@@ -656,27 +801,6 @@ export async function getCourseDetail(params: { userId: string; locale: string; 
               title: true,
               subtitle: true,
               description: true,
-              content: true,
-            },
-          },
-          sections: {
-            orderBy: {
-              sortOrder: "asc",
-            },
-            include: {
-              translations: {
-                where: {
-                  language: {
-                    in: [params.locale, "en"],
-                  },
-                },
-                select: {
-                  language: true,
-                  title: true,
-                  summary: true,
-                  content: true,
-                },
-              },
             },
           },
           _count: {
@@ -705,7 +829,21 @@ export async function getCourseDetail(params: { userId: string; locale: string; 
         take: 3,
       });
 
-      const relatedModules = relatedCourses.map((item) =>
+      logMeasuredOperation({
+        operation: "curriculum.getCourseDetail.related.prisma",
+        durationMs: Date.now() - relatedPrismaStartedAt,
+        records: relatedCourses.length,
+        meta: {
+          translations: countCourseTranslations(relatedCourses),
+          relations: countCourseRelations(relatedCourses),
+          quizzes: relatedCourses.reduce(
+            (sum: number, item: { _count: { quizzes: number } }) => sum + item._count.quizzes,
+            0,
+          ),
+        },
+      });
+
+      const relatedModules = relatedCourses.map((item: CourseMappedInput) =>
         mapCourseToViewModel(item, params.locale),
       );
 

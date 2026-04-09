@@ -36,7 +36,7 @@ export type CurriculumLessonViewModel = {
   slug: string;
   title: string;
   summary: string | null;
-  content: string | null;
+  content?: string | null;
   estimatedMinutes: number;
 };
 
@@ -88,7 +88,7 @@ export type TranslationRecord = {
   title: string;
   subtitle: string | null;
   description: string | null;
-  content: string | null;
+  content?: string | null;
 };
 
 type CourseSectionTranslationRecord = {

@@ -27,12 +27,11 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type Props = {
   locale: string;
   scenario: ScenarioDetailViewModel;
-  relatedScenarios: ScenarioListItemViewModel[];
 };
 
 type PanelKey = "overview" | "practice" | "prepare" | "related";
@@ -264,10 +263,69 @@ function ToggleButton({
   );
 }
 
-export default function ScenarioDetailShell({ locale, scenario, relatedScenarios }: Props) {
+export default function ScenarioDetailShell({ locale, scenario }: Props) {
   const t = useTranslations("Protected.ScenarioDetailShell");
   const [openPanel, setOpenPanel] = useState<PanelKey>("overview");
+  const [relatedScenarios, setRelatedScenarios] = useState<ScenarioListItemViewModel[]>([]);
+  const [isRelatedLoading, setIsRelatedLoading] = useState(false);
+  const [hasLoadedRelated, setHasLoadedRelated] = useState(false);
   const contentSectionRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (openPanel !== "related" || hasLoadedRelated || isRelatedLoading) {
+      return;
+    }
+
+    let isCancelled = false;
+
+    const loadRelatedScenarios = async () => {
+      setIsRelatedLoading(true);
+
+      try {
+        const response = await fetch(
+          `/api/scenarios/${encodeURIComponent(scenario.slug)}/related?locale=${encodeURIComponent(locale)}`,
+          {
+            method: "GET",
+            credentials: "same-origin",
+            cache: "no-store",
+          },
+        );
+
+        if (!response.ok) {
+          throw new Error(`Unable to load related scenarios (${response.status})`);
+        }
+
+        const payload: unknown = await response.json();
+        const items =
+          payload &&
+          typeof payload === "object" &&
+          "items" in payload &&
+          Array.isArray((payload as { items?: unknown }).items)
+            ? ((payload as { items: ScenarioListItemViewModel[] }).items ?? [])
+            : [];
+
+        if (!isCancelled) {
+          setRelatedScenarios(items);
+          setHasLoadedRelated(true);
+        }
+      } catch {
+        if (!isCancelled) {
+          setRelatedScenarios([]);
+          setHasLoadedRelated(true);
+        }
+      } finally {
+        if (!isCancelled) {
+          setIsRelatedLoading(false);
+        }
+      }
+    };
+
+    void loadRelatedScenarios();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [hasLoadedRelated, isRelatedLoading, locale, openPanel, scenario.slug]);
 
   const areaMeta = getAreaMeta(scenario.area, t);
   const statusMeta = getStatusMeta(scenario.status, t);
@@ -589,7 +647,25 @@ export default function ScenarioDetailShell({ locale, scenario, relatedScenarios
                 transition={{ duration: 0.18, ease: "easeOut" }}
                 className="space-y-4"
               >
-                {relatedScenarios.length > 0 ? (
+                {isRelatedLoading ? (
+                  <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
+                    {Array.from({ length: 3 }, (_, index) => (
+                      <div
+                        key={`related-skeleton-${index}`}
+                        className="rounded-[26px] border border-[#edf2f7] bg-white/86 p-5 shadow-[0_10px_26px_rgba(35,45,62,0.04)]"
+                      >
+                        <div className="flex gap-2">
+                          <div className="h-7 w-24 animate-pulse rounded-full bg-[#edf2f7]" />
+                          <div className="h-7 w-28 animate-pulse rounded-full bg-[#edf2f7]" />
+                        </div>
+                        <div className="mt-4 h-5 w-3/4 animate-pulse rounded bg-[#edf2f7]" />
+                        <div className="mt-3 h-4 w-full animate-pulse rounded bg-[#f1f5f9]" />
+                        <div className="mt-2 h-4 w-5/6 animate-pulse rounded bg-[#f1f5f9]" />
+                        <div className="mt-5 h-4 w-32 animate-pulse rounded bg-[#edf2f7]" />
+                      </div>
+                    ))}
+                  </div>
+                ) : relatedScenarios.length > 0 ? (
                   <div className="grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
                     {relatedScenarios.map((item) => {
                       const relatedArea = getAreaMeta(item.area, t);

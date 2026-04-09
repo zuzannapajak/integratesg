@@ -258,7 +258,16 @@ function mapScenarioToViewModel(
   };
 }
 
+function countScenarioVariants(scenarios: Array<{ variants: unknown[] }>) {
+  return scenarios.reduce((sum, scenario) => sum + scenario.variants.length, 0);
+}
+
+function countScenarioAttempts(scenarios: Array<{ userAttempts: unknown[] }>) {
+  return scenarios.reduce((sum, scenario) => sum + scenario.userAttempts.length, 0);
+}
+
 async function getScenarioLibraryBase(params: { locale: string; userId: string; onlyMy: boolean }) {
+  const prismaStartedAt = Date.now();
   const scenarios = await prisma.scenario.findMany({
     where: {
       status: "published",
@@ -277,6 +286,9 @@ async function getScenarioLibraryBase(params: { locale: string; userId: string; 
       area: true,
       variants: {
         where: {
+          language: {
+            in: [params.locale, "en"],
+          },
           availabilityStatus: "available",
         },
         select: {
@@ -305,13 +317,26 @@ async function getScenarioLibraryBase(params: { locale: string; userId: string; 
           createdAt: true,
         },
         orderBy: [{ createdAt: "desc" }],
+        take: 1,
       },
     },
     orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
   });
 
+  logMeasuredOperation({
+    operation: params.onlyMy
+      ? "scenarios.getMyScenarioLibrary.prisma"
+      : "scenarios.getAllScenarioLibrary.prisma",
+    durationMs: Date.now() - prismaStartedAt,
+    records: scenarios.length,
+    meta: {
+      variants: countScenarioVariants(scenarios),
+      attempts: countScenarioAttempts(scenarios),
+    },
+  });
+
   return scenarios
-    .map((scenario) => mapScenarioToViewModel(scenario, params.locale))
+    .map((scenario: ScenarioRecord) => mapScenarioToViewModel(scenario, params.locale))
     .filter((scenario): scenario is ScenarioListItemViewModel => scenario !== null);
 }
 
@@ -409,8 +434,9 @@ function mapScenarioToLaunchViewModel(
 export async function getScenarioDetail(params: { locale: string; userId: string; slug: string }) {
   return measureAsyncOperation({
     operation: "scenarios.getScenarioDetail",
-    getRecords: (result) => (result ? 1 + result.relatedScenarios.length : 0),
+    getRecords: (result) => (result ? 1 : 0),
     execute: async () => {
+      const prismaStartedAt = Date.now();
       const scenario = await prisma.scenario.findFirst({
         where: {
           slug: params.slug,
@@ -459,7 +485,18 @@ export async function getScenarioDetail(params: { locale: string; userId: string
               createdAt: true,
             },
             orderBy: [{ createdAt: "desc" }],
+            take: 1,
           },
+        },
+      });
+
+      logMeasuredOperation({
+        operation: "scenarios.getScenarioDetail.prisma",
+        durationMs: Date.now() - prismaStartedAt,
+        records: scenario ? 1 : 0,
+        meta: {
+          variants: scenario ? scenario.variants.length : 0,
+          attempts: scenario ? scenario.userAttempts.length : 0,
         },
       });
 
@@ -473,6 +510,44 @@ export async function getScenarioDetail(params: { locale: string; userId: string
         return null;
       }
 
+      return {
+        scenario: mappedScenario,
+      };
+    },
+  });
+}
+
+export async function getRelatedScenarios(params: {
+  locale: string;
+  userId: string;
+  slug: string;
+}) {
+  return measureAsyncOperation({
+    operation: "scenarios.getRelatedScenarios",
+    getRecords: (scenarios) => scenarios.length,
+    execute: async () => {
+      const areaLookupStartedAt = Date.now();
+      const scenario = await prisma.scenario.findFirst({
+        where: {
+          slug: params.slug,
+          status: "published",
+        },
+        select: {
+          area: true,
+        },
+      });
+
+      logMeasuredOperation({
+        operation: "scenarios.getRelatedScenarios.lookupArea.prisma",
+        durationMs: Date.now() - areaLookupStartedAt,
+        records: scenario ? 1 : 0,
+      });
+
+      if (!scenario) {
+        return [];
+      }
+
+      const prismaStartedAt = Date.now();
       const relatedScenarios = await prisma.scenario.findMany({
         where: {
           status: "published",
@@ -486,6 +561,9 @@ export async function getScenarioDetail(params: { locale: string; userId: string
           area: true,
           variants: {
             where: {
+              language: {
+                in: [params.locale, "en"],
+              },
               availabilityStatus: "available",
             },
             select: {
@@ -514,18 +592,26 @@ export async function getScenarioDetail(params: { locale: string; userId: string
               createdAt: true,
             },
             orderBy: [{ createdAt: "desc" }],
+            take: 1,
           },
         },
         orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
         take: 3,
       });
 
-      return {
-        scenario: mappedScenario,
-        relatedScenarios: relatedScenarios
-          .map((item) => mapScenarioToViewModel(item, params.locale))
-          .filter((item): item is ScenarioListItemViewModel => item !== null),
-      };
+      logMeasuredOperation({
+        operation: "scenarios.getRelatedScenarios.prisma",
+        durationMs: Date.now() - prismaStartedAt,
+        records: relatedScenarios.length,
+        meta: {
+          variants: countScenarioVariants(relatedScenarios),
+          attempts: countScenarioAttempts(relatedScenarios),
+        },
+      });
+
+      return relatedScenarios
+        .map((item: ScenarioRecord) => mapScenarioToViewModel(item, params.locale))
+        .filter((item): item is ScenarioListItemViewModel => item !== null);
     },
   });
 }
