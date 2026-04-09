@@ -10,7 +10,11 @@ import type {
   LocalizedTitleItem,
 } from "@/lib/admin/types";
 import { APP_LOCALES, DEFAULT_LOCALE, LOCALE_META } from "@/lib/i18n/locales";
-import { logMeasuredOperation, measureAsyncOperation } from "@/lib/observability/performance";
+import {
+  logMeasuredOperation,
+  measureAsyncOperation,
+  measureSyncOperation,
+} from "@/lib/observability/performance";
 import { prisma } from "@/lib/prisma";
 
 function toIntlLocale(locale: string) {
@@ -223,6 +227,36 @@ function normalizeArea(area: string): "environmental" | "social" | "governance" 
   if (area === "social") return "social";
   if (area === "governance") return "governance";
   return "cross-cutting";
+}
+
+function countCourseTranslations(courses: Array<{ translations: Array<{ language: string }> }>) {
+  return courses.reduce((sum, course) => sum + course.translations.length, 0);
+}
+
+function countCaseStudyTranslations(
+  caseStudies: Array<{ translations: Array<{ language: string }> }>,
+) {
+  return caseStudies.reduce((sum, caseStudy) => sum + caseStudy.translations.length, 0);
+}
+
+function countScenarioVariants(
+  scenarios: Array<{ variants: Array<{ userAttempts?: Array<unknown> }> }>,
+) {
+  return scenarios.reduce((sum, scenario) => sum + scenario.variants.length, 0);
+}
+
+function countScenarioVariantAttempts(
+  scenarios: Array<{ variants: Array<{ userAttempts?: Array<unknown> }> }>,
+) {
+  return scenarios.reduce(
+    (sum, scenario) =>
+      sum +
+      scenario.variants.reduce(
+        (variantSum, variant) => variantSum + (variant.userAttempts?.length ?? 0),
+        0,
+      ),
+    0,
+  );
 }
 
 export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<BasicAdminStats> {
@@ -477,7 +511,23 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
           scenarioAttemptRowsRaw.length +
           curriculumAttemptRowsRaw.length +
           eportfolioProgressRowsRaw.length,
+        meta: {
+          courseTranslations: countCourseTranslations(publishedCoursesWithTranslations),
+          caseStudyTranslations: countCaseStudyTranslations(publishedCaseStudiesWithTranslations),
+          scenarioVariants: countScenarioVariants(publishedScenariosWithVariants),
+          scenarioVariantAttempts: countScenarioVariantAttempts(publishedScenariosWithVariants),
+          nodeElements:
+            profiles.length +
+            scenarioAttempts.length +
+            courseAttempts.length +
+            caseStudyProgressRecords.length +
+            scenarioAttemptRowsRaw.length +
+            curriculumAttemptRowsRaw.length +
+            eportfolioProgressRowsRaw.length,
+        },
       });
+
+      const mappingStartedAt = Date.now();
 
       const totalUsers = profiles.length;
       const totalStudents = profiles.filter((profile) => profile.role === "student").length;
@@ -795,108 +845,142 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
           completedAtLabel: formatDateTimeLabel(progress.completedAt, locale),
         }));
 
-      return {
-        generatedAt: new Date().toISOString(),
-        users: {
-          total: totalUsers,
-          students: totalStudents,
-          educators: totalEducators,
-          admins: totalAdmins,
+      logMeasuredOperation({
+        operation: "admin.getBasicAdminStats.map",
+        durationMs: Date.now() - mappingStartedAt,
+        records:
+          scenarioAttemptRowsRaw.length +
+          curriculumAttemptRowsRaw.length +
+          eportfolioProgressRowsRaw.length,
+        meta: {
+          nodeElements:
+            profiles.length +
+            publishedCoursesWithTranslations.length +
+            publishedCaseStudiesWithTranslations.length +
+            publishedScenariosWithVariants.length +
+            scenarioAttempts.length +
+            courseAttempts.length +
+            caseStudyProgressRecords.length +
+            scenarioAttemptRowsRaw.length +
+            curriculumAttemptRowsRaw.length +
+            eportfolioProgressRowsRaw.length,
+          scenarioRows: scenarioAttemptRowsRaw.length,
+          curriculumRows: curriculumAttemptRowsRaw.length,
+          eportfolioRows: eportfolioProgressRowsRaw.length,
         },
-        content: {
-          publishedCourses,
-          publishedCaseStudies,
-          publishedScenarios,
-          availableScenarioVariants,
+      });
+
+      return measureSyncOperation({
+        operation: "admin.getBasicAdminStats.responseShape",
+        records:
+          scenarioAttemptRows.length + curriculumAttemptRows.length + eportfolioProgressRows.length,
+        meta: {
+          nodeElements:
+            scenarioBreakdown.length + courseBreakdown.length + languageBreakdown.length,
         },
-        scenarioAttempts: {
-          total: scenarioAttempts.length,
-          passed: passedScenarioAttempts,
-          completed: completedScenarioAttempts,
-          failed: failedScenarioAttempts,
-          incomplete: incompleteScenarioAttempts,
-          browsed: browsedScenarioAttempts,
-          completedLikeTotal: scenarioCompletedLike,
-          completionRate: toPercent(scenarioCompletedLike, scenarioAttempts.length),
-          averageScore:
-            scenarioScores.length > 0
-              ? roundNullable(
-                  scenarioScores.reduce((sum, value) => sum + value, 0) / scenarioScores.length,
-                )
-              : null,
-        },
-        curriculum: {
-          totalAttempts: courseAttempts.length,
-          completed: completedCourseAttempts,
-          inProgress: inProgressCourseAttempts,
-          failed: failedCourseAttempts,
-          completionRate: toPercent(completedCourseAttempts, courseAttempts.length),
-          averagePreQuizScore:
-            preQuizScores.length > 0
-              ? roundNullable(
-                  preQuizScores.reduce((sum, value) => sum + value, 0) / preQuizScores.length,
-                )
-              : null,
-          averagePostQuizScore:
-            postQuizScores.length > 0
-              ? roundNullable(
-                  postQuizScores.reduce((sum, value) => sum + value, 0) / postQuizScores.length,
-                )
-              : null,
-        },
-        eportfolio: {
-          totalProgressRecords: caseStudyProgressRecords.length,
-          completedCaseStudies,
-          completionRate: toPercent(completedCaseStudies, caseStudyProgressRecords.length),
-        },
-        activity: {
-          activeUsersLast24h,
-          activeUsersLast7Days,
-          activeUsersLast30Days,
+        execute: () => ({
+          generatedAt: new Date().toISOString(),
+          users: {
+            total: totalUsers,
+            students: totalStudents,
+            educators: totalEducators,
+            admins: totalAdmins,
+          },
+          content: {
+            publishedCourses,
+            publishedCaseStudies,
+            publishedScenarios,
+            availableScenarioVariants,
+          },
+          scenarioAttempts: {
+            total: scenarioAttempts.length,
+            passed: passedScenarioAttempts,
+            completed: completedScenarioAttempts,
+            failed: failedScenarioAttempts,
+            incomplete: incompleteScenarioAttempts,
+            browsed: browsedScenarioAttempts,
+            completedLikeTotal: scenarioCompletedLike,
+            completionRate: toPercent(scenarioCompletedLike, scenarioAttempts.length),
+            averageScore:
+              scenarioScores.length > 0
+                ? roundNullable(
+                    scenarioScores.reduce((sum, value) => sum + value, 0) / scenarioScores.length,
+                  )
+                : null,
+          },
+          curriculum: {
+            totalAttempts: courseAttempts.length,
+            completed: completedCourseAttempts,
+            inProgress: inProgressCourseAttempts,
+            failed: failedCourseAttempts,
+            completionRate: toPercent(completedCourseAttempts, courseAttempts.length),
+            averagePreQuizScore:
+              preQuizScores.length > 0
+                ? roundNullable(
+                    preQuizScores.reduce((sum, value) => sum + value, 0) / preQuizScores.length,
+                  )
+                : null,
+            averagePostQuizScore:
+              postQuizScores.length > 0
+                ? roundNullable(
+                    postQuizScores.reduce((sum, value) => sum + value, 0) / postQuizScores.length,
+                  )
+                : null,
+          },
+          eportfolio: {
+            totalProgressRecords: caseStudyProgressRecords.length,
+            completedCaseStudies,
+            completionRate: toPercent(completedCaseStudies, caseStudyProgressRecords.length),
+          },
+          activity: {
+            activeUsersLast24h,
+            activeUsersLast7Days,
+            activeUsersLast30Days,
 
-          recentScenarioAttempts24h: recentScenarioAttempts24h.length,
-          recentScenarioAttempts: recentScenarioAttempts7d.length,
-          recentScenarioAttempts30d: recentScenarioAttempts30d.length,
+            recentScenarioAttempts24h: recentScenarioAttempts24h.length,
+            recentScenarioAttempts: recentScenarioAttempts7d.length,
+            recentScenarioAttempts30d: recentScenarioAttempts30d.length,
 
-          recentCourseAttempts24h: recentCourseAttempts24h.length,
-          recentCourseAttempts: recentCourseAttempts7d.length,
-          recentCourseAttempts30d: recentCourseAttempts30d.length,
+            recentCourseAttempts24h: recentCourseAttempts24h.length,
+            recentCourseAttempts: recentCourseAttempts7d.length,
+            recentCourseAttempts30d: recentCourseAttempts30d.length,
 
-          recentEportfolioEvents24h: recentEportfolioRecords24h.length,
-          recentEportfolioEvents: recentEportfolioRecords7d.length,
-          recentEportfolioEvents30d: recentEportfolioRecords30d.length,
+            recentEportfolioEvents24h: recentEportfolioRecords24h.length,
+            recentEportfolioEvents: recentEportfolioRecords7d.length,
+            recentEportfolioEvents30d: recentEportfolioRecords30d.length,
 
-          scenarioSeries24h: buildLast24HoursSeries(scenarioDates24h, hourFormatter24h),
-          scenarioSeries: buildLastDaysSeries(scenarioDates7d, 7, dayFormatter7d),
-          scenarioSeries30d: buildLastDaysSeries(scenarioDates30d, 30, dayFormatter30d),
+            scenarioSeries24h: buildLast24HoursSeries(scenarioDates24h, hourFormatter24h),
+            scenarioSeries: buildLastDaysSeries(scenarioDates7d, 7, dayFormatter7d),
+            scenarioSeries30d: buildLastDaysSeries(scenarioDates30d, 30, dayFormatter30d),
 
-          curriculumSeries24h: buildLast24HoursSeries(curriculumDates24h, hourFormatter24h),
-          curriculumSeries: buildLastDaysSeries(curriculumDates7d, 7, dayFormatter7d),
-          curriculumSeries30d: buildLastDaysSeries(curriculumDates30d, 30, dayFormatter30d),
+            curriculumSeries24h: buildLast24HoursSeries(curriculumDates24h, hourFormatter24h),
+            curriculumSeries: buildLastDaysSeries(curriculumDates7d, 7, dayFormatter7d),
+            curriculumSeries30d: buildLastDaysSeries(curriculumDates30d, 30, dayFormatter30d),
 
-          eportfolioSeries24h: buildLast24HoursSeries(eportfolioDates24h, hourFormatter24h),
-          eportfolioSeries: buildLastDaysSeries(eportfolioDates7d, 7, dayFormatter7d),
-          eportfolioSeries30d: buildLastDaysSeries(eportfolioDates30d, 30, dayFormatter30d),
+            eportfolioSeries24h: buildLast24HoursSeries(eportfolioDates24h, hourFormatter24h),
+            eportfolioSeries: buildLastDaysSeries(eportfolioDates7d, 7, dayFormatter7d),
+            eportfolioSeries30d: buildLastDaysSeries(eportfolioDates30d, 30, dayFormatter30d),
 
-          scenarioStats24h,
-          scenarioStats7d,
-          scenarioStats30d,
+            scenarioStats24h,
+            scenarioStats7d,
+            scenarioStats30d,
 
-          curriculumStats24h,
-          curriculumStats7d,
-          curriculumStats30d,
+            curriculumStats24h,
+            curriculumStats7d,
+            curriculumStats30d,
 
-          eportfolioStats24h,
-          eportfolioStats7d,
-          eportfolioStats30d,
-        },
-        languageBreakdown,
-        scenarioBreakdown,
-        courseBreakdown,
-        scenarioAttemptRows,
-        curriculumAttemptRows,
-        eportfolioProgressRows,
-      };
+            eportfolioStats24h,
+            eportfolioStats7d,
+            eportfolioStats30d,
+          },
+          languageBreakdown,
+          scenarioBreakdown,
+          courseBreakdown,
+          scenarioAttemptRows,
+          curriculumAttemptRows,
+          eportfolioProgressRows,
+        }),
+      });
     },
   });
 }

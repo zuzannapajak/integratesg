@@ -1,7 +1,7 @@
 import { requireRole } from "@/features/auth/requireRole";
 import { getBasicAdminStats } from "@/lib/admin/queries";
 import { APP_ROLES } from "@/lib/auth/roles";
-import { logMeasuredOperation } from "@/lib/observability/performance";
+import { logMeasuredOperation, measureSyncOperation } from "@/lib/observability/performance";
 import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -17,9 +17,14 @@ export async function GET() {
     const stats = await getBasicAdminStats("en");
     records = 1;
 
-    return NextResponse.json({
-      ok: true,
-      stats,
+    return measureSyncOperation({
+      operation: "api.admin.stats.GET.response",
+      records: 1,
+      execute: () =>
+        NextResponse.json({
+          ok: true,
+          stats,
+        }),
     });
   } catch (error) {
     status = "error";

@@ -1,4 +1,8 @@
-import { logMeasuredOperation, measureAsyncOperation } from "@/lib/observability/performance";
+import {
+  logMeasuredOperation,
+  measureAsyncOperation,
+  measureSyncOperation,
+} from "@/lib/observability/performance";
 import { prisma } from "@/lib/prisma";
 import {
   JsonObject,
@@ -335,9 +339,21 @@ async function getScenarioLibraryBase(params: { locale: string; userId: string; 
     },
   });
 
-  return scenarios
-    .map((scenario: ScenarioRecord) => mapScenarioToViewModel(scenario, params.locale))
-    .filter((scenario): scenario is ScenarioListItemViewModel => scenario !== null);
+  return measureSyncOperation({
+    operation: params.onlyMy
+      ? "scenarios.getMyScenarioLibrary.map"
+      : "scenarios.getAllScenarioLibrary.map",
+    records: scenarios.length,
+    meta: {
+      nodeElements: scenarios.length,
+      variants: countScenarioVariants(scenarios),
+      attempts: countScenarioAttempts(scenarios),
+    },
+    execute: () =>
+      scenarios
+        .map((scenario: ScenarioRecord) => mapScenarioToViewModel(scenario, params.locale))
+        .filter((scenario): scenario is ScenarioListItemViewModel => scenario !== null),
+  });
 }
 
 export async function getAllScenarioLibrary(params: { locale: string; userId: string }) {
@@ -504,15 +520,26 @@ export async function getScenarioDetail(params: { locale: string; userId: string
         return null;
       }
 
-      const mappedScenario = mapScenarioToDetailViewModel(scenario, params.locale);
+      return measureSyncOperation({
+        operation: "scenarios.getScenarioDetail.map",
+        records: 1,
+        meta: {
+          nodeElements: 1,
+          variants: scenario.variants.length,
+          attempts: scenario.userAttempts.length,
+        },
+        execute: () => {
+          const mappedScenario = mapScenarioToDetailViewModel(scenario, params.locale);
 
-      if (!mappedScenario) {
-        return null;
-      }
+          if (!mappedScenario) {
+            return null;
+          }
 
-      return {
-        scenario: mappedScenario,
-      };
+          return {
+            scenario: mappedScenario,
+          };
+        },
+      });
     },
   });
 }
@@ -609,9 +636,19 @@ export async function getRelatedScenarios(params: {
         },
       });
 
-      return relatedScenarios
-        .map((item: ScenarioRecord) => mapScenarioToViewModel(item, params.locale))
-        .filter((item): item is ScenarioListItemViewModel => item !== null);
+      return measureSyncOperation({
+        operation: "scenarios.getRelatedScenarios.map",
+        records: relatedScenarios.length,
+        meta: {
+          nodeElements: relatedScenarios.length,
+          variants: countScenarioVariants(relatedScenarios),
+          attempts: countScenarioAttempts(relatedScenarios),
+        },
+        execute: () =>
+          relatedScenarios
+            .map((item: ScenarioRecord) => mapScenarioToViewModel(item, params.locale))
+            .filter((item): item is ScenarioListItemViewModel => item !== null),
+      });
     },
   });
 }
@@ -963,6 +1000,7 @@ export async function getScenarioLaunch(params: { locale: string; userId: string
     operation: "scenarios.getScenarioLaunch",
     getRecords: (scenario) => (scenario ? 1 : 0),
     execute: async () => {
+      const prismaStartedAt = Date.now();
       const scenario = await prisma.scenario.findFirst({
         where: {
           slug: params.slug,
@@ -1014,11 +1052,30 @@ export async function getScenarioLaunch(params: { locale: string; userId: string
         },
       });
 
+      logMeasuredOperation({
+        operation: "scenarios.getScenarioLaunch.prisma",
+        durationMs: Date.now() - prismaStartedAt,
+        records: scenario ? 1 : 0,
+        meta: {
+          variants: scenario ? scenario.variants.length : 0,
+          attempts: scenario ? scenario.userAttempts.length : 0,
+        },
+      });
+
       if (!scenario) {
         return null;
       }
 
-      return mapScenarioToLaunchViewModel(scenario, params.locale);
+      return measureSyncOperation({
+        operation: "scenarios.getScenarioLaunch.map",
+        records: 1,
+        meta: {
+          nodeElements: 1,
+          variants: scenario.variants.length,
+          attempts: scenario.userAttempts.length,
+        },
+        execute: () => mapScenarioToLaunchViewModel(scenario, params.locale),
+      });
     },
   });
 }

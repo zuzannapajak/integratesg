@@ -111,12 +111,14 @@ function formatDuration(minutes: number | null) {
   return `${minutes} min`;
 }
 
-function formatDate(date: string | null) {
+function formatDate(date: string | null, locale: string) {
   if (!date) {
     return null;
   }
 
-  return new Intl.DateTimeFormat(undefined, {
+  const intlLocale = locale === "en" ? "en-GB" : locale;
+
+  return new Intl.DateTimeFormat(intlLocale, {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -301,7 +303,7 @@ export default function ScenarioDetailShell({ locale, scenario }: Props) {
           typeof payload === "object" &&
           "items" in payload &&
           Array.isArray((payload as { items?: unknown }).items)
-            ? ((payload as { items: ScenarioListItemViewModel[] }).items ?? [])
+            ? (payload as { items: ScenarioListItemViewModel[] }).items
             : [];
 
         if (!isCancelled) {
@@ -423,7 +425,7 @@ export default function ScenarioDetailShell({ locale, scenario }: Props) {
                 <MetricCard
                   icon={<Calendar className="h-4 w-4" />}
                   label={t("metrics.lastOpened")}
-                  value={formatDate(scenario.lastOpenedAt) ?? t("metrics.notYet")}
+                  value={formatDate(scenario.lastOpenedAt, locale) ?? t("metrics.notYet")}
                 />
               </div>
             </div>

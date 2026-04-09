@@ -1,4 +1,4 @@
-import { logMeasuredOperation } from "@/lib/observability/performance";
+import { logMeasuredOperation, measureSyncOperation } from "@/lib/observability/performance";
 import { updateScenarioRuntimeProgress } from "@/lib/scenarios/queries";
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
@@ -76,7 +76,11 @@ export async function POST(request: Request) {
 
     records = 1;
 
-    return NextResponse.json({ ok: true, scenario });
+    return measureSyncOperation({
+      operation: "api.scorm.runtime.POST.response",
+      records: 1,
+      execute: () => NextResponse.json({ ok: true, scenario }),
+    });
   } catch (error) {
     status = "error";
     console.error(error);

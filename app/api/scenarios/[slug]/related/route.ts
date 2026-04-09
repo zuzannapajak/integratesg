@@ -1,5 +1,5 @@
 import { APP_ROLES } from "@/lib/auth/roles";
-import { logMeasuredOperation } from "@/lib/observability/performance";
+import { logMeasuredOperation, measureSyncOperation } from "@/lib/observability/performance";
 import { prisma } from "@/lib/prisma";
 import { getRelatedScenarios } from "@/lib/scenarios/queries";
 import { createClient } from "@/lib/supabase/server";
@@ -55,7 +55,11 @@ export async function GET(request: Request, { params }: RouteContext) {
 
     records = items.length;
 
-    return NextResponse.json({ ok: true, items });
+    return measureSyncOperation({
+      operation: "api.scenarios.related.GET.response",
+      records: items.length,
+      execute: () => NextResponse.json({ ok: true, items }),
+    });
   } catch (error) {
     status = "error";
     console.error(error);

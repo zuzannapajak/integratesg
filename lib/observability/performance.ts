@@ -17,7 +17,7 @@ function formatMeta(meta: Record<string, MeasuredOperationMetaValue> | undefined
 
   return Object.entries(meta)
     .filter(([, value]) => value !== undefined)
-    .map(([key, value]) => `${key}=${value ?? "null"}`)
+    .map(([key, value]) => `${key}=${String(value ?? "null")}`)
     .join(" ");
 }
 
@@ -31,7 +31,40 @@ function formatMeasuredOperationLog(input: LogMeasuredOperationInput) {
 }
 
 export function logMeasuredOperation(input: LogMeasuredOperationInput) {
-  console.info(formatMeasuredOperationLog(input));
+  console.warn(formatMeasuredOperationLog(input));
+}
+
+export function measureSyncOperation<T>(params: {
+  operation: string;
+  records?: number | null;
+  meta?: Record<string, MeasuredOperationMetaValue>;
+  execute: () => T;
+}) {
+  const startedAt = Date.now();
+
+  try {
+    const result = params.execute();
+
+    logMeasuredOperation({
+      operation: params.operation,
+      durationMs: Date.now() - startedAt,
+      records: params.records ?? null,
+      status: "ok",
+      meta: params.meta,
+    });
+
+    return result;
+  } catch (error) {
+    logMeasuredOperation({
+      operation: params.operation,
+      durationMs: Date.now() - startedAt,
+      records: params.records ?? null,
+      status: "error",
+      meta: params.meta,
+    });
+
+    throw error;
+  }
 }
 
 export async function measureAsyncOperation<T>(params: {
