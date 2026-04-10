@@ -1,7 +1,7 @@
 import CurriculumSwitcher from "@/components/curriculum/curriculum-switcher";
 import { requireRole } from "@/features/auth/requireRole";
 import { APP_ROLES } from "@/lib/auth/roles";
-import { getAllCurriculumModules, getMyCurriculumModules } from "@/lib/curriculum/queries";
+import { getCurriculumModules } from "@/lib/curriculum/queries";
 import { logMeasuredOperation } from "@/lib/observability/performance";
 import { BookOpen } from "lucide-react";
 import { getTranslations } from "next-intl/server";
@@ -59,12 +59,10 @@ export default async function CurriculumPage({ params, searchParams }: Props) {
     const t = await getTranslations({ locale, namespace: "Protected.CurriculumPage" });
     const { user } = await requireRole(locale, APP_ROLES.educator);
 
+    const allModules = await getCurriculumModules({ userId: user.id, locale });
     const myCourses =
-      activeView === "my-courses" ? await getMyCurriculumModules({ userId: user.id, locale }) : [];
-    const allCourses =
-      activeView === "all-courses"
-        ? await getAllCurriculumModules({ userId: user.id, locale })
-        : [];
+      activeView === "my-courses" ? allModules.filter((item) => item.status !== "not_started") : [];
+    const allCourses = activeView === "all-courses" ? allModules : [];
 
     myCoursesCount = myCourses.length;
     allCoursesCount = allCourses.length;

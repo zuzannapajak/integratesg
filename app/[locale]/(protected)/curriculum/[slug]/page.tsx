@@ -1,7 +1,7 @@
 import CourseDetailShell from "@/components/curriculum/course-detail-shell";
 import { requireRole } from "@/features/auth/requireRole";
 import { APP_ROLES } from "@/lib/auth/roles";
-import { getCourseDetail } from "@/lib/curriculum/queries";
+import { getCurriculumModule } from "@/lib/curriculum/queries";
 import { logMeasuredOperation } from "@/lib/observability/performance";
 import { notFound } from "next/navigation";
 
@@ -20,7 +20,7 @@ export default async function CourseDetailPage({ params }: Props) {
     slugForLog = slug;
     const { user } = await requireRole(locale, APP_ROLES.educator);
 
-    const data = await getCourseDetail({
+    const data = await getCurriculumModule({
       userId: user.id,
       locale,
       slug,

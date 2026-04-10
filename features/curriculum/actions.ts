@@ -1,6 +1,6 @@
 "use server";
 
-import { getCourseLearningWorkspace } from "@/lib/curriculum/queries";
+import { getCurriculumModule } from "@/lib/curriculum/queries";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 
@@ -268,14 +268,14 @@ export async function submitQuizAttemptAction(input: SubmitQuizInput) {
     });
   }
 
-  const courseModule = await getCourseLearningWorkspace({
+  const courseModuleResult = await getCurriculumModule({
     userId,
     locale: input.locale,
     slug: input.courseSlug,
   });
 
   return {
-    module: courseModule,
+    module: courseModuleResult?.module ?? null,
     meta: {
       score,
       correctCount,
@@ -341,13 +341,13 @@ export async function completeLessonAction(input: CompleteLessonInput) {
     },
   });
 
-  const courseModule = await getCourseLearningWorkspace({
+  const courseModuleResult = await getCurriculumModule({
     userId,
     locale: input.locale,
     slug: input.courseSlug,
   });
 
-  return { module: courseModule };
+  return { module: courseModuleResult?.module ?? null };
 }
 
 export async function retakeCourseAction(input: RetakeCourseInput) {
@@ -400,11 +400,11 @@ export async function retakeCourseAction(input: RetakeCourseInput) {
     },
   });
 
-  const courseModule = await getCourseLearningWorkspace({
+  const courseModuleResult = await getCurriculumModule({
     userId,
     locale: input.locale,
     slug: input.courseSlug,
   });
 
-  return { module: courseModule };
+  return { module: courseModuleResult?.module ?? null };
 }

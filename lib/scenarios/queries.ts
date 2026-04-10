@@ -13,9 +13,6 @@ import {
   ScenarioLaunchViewModel,
   ScenarioListItemViewModel,
   ScenarioProgressStatus,
-  ScenarioRecord,
-  ScenarioVariantRecord,
-  UserScenarioAttemptRecord,
 } from "@/lib/scenarios/types";
 import { Prisma, ScenarioAttemptStatus } from "@prisma/client";
 
@@ -31,6 +28,14 @@ function normalizeOptionalText(value: string | null | undefined) {
   return trimmed && trimmed.length > 0 ? trimmed : null;
 }
 
+function getRequestedLanguages(locale: string) {
+  return locale === "en" ? ["en"] : [locale, "en"];
+}
+
+function estimateJsonBytes(value: unknown) {
+  return new TextEncoder().encode(JSON.stringify(value)).length;
+}
+
 function mapArea(area: string): ScenarioListItemViewModel["area"] {
   switch (area) {
     case "environmental":
@@ -44,10 +49,7 @@ function mapArea(area: string): ScenarioListItemViewModel["area"] {
   }
 }
 
-function pickVariant(
-  variants: ScenarioVariantRecord[],
-  locale: string,
-): ScenarioVariantRecord | null {
+function pickVariant<T extends { language: string }>(variants: T[], locale: string): T | null {
   const localeVariant = variants.find((variant) => variant.language === locale);
   if (localeVariant) {
     return localeVariant;
@@ -61,7 +63,7 @@ function pickVariant(
   return variants[0] ?? null;
 }
 
-function mapScenarioStatus(attempts: UserScenarioAttemptRecord[]): ScenarioProgressStatus {
+function mapScenarioStatus(attempts: Array<{ status: string }>): ScenarioProgressStatus {
   if (attempts.length === 0) {
     return "not_started";
   }
@@ -100,6 +102,10 @@ function normalizeRuntimeStatus(status: string | null | undefined): ScenarioAtte
   }
 }
 
+function toIsoStringOrNull(value?: Date | null) {
+  return value ? value.toISOString() : null;
+}
+
 function normalizeScore(scoreRaw: string | null | undefined) {
   if (typeof scoreRaw !== "string" || scoreRaw.trim().length === 0) {
     return null;
@@ -111,22 +117,20 @@ function normalizeScore(scoreRaw: string | null | undefined) {
     return null;
   }
 
-  return Math.max(0, Math.min(100, Math.round(parsed)));
+  return parsed;
 }
 
-function parseScormTimeToCentiseconds(value: string | null | undefined) {
-  if (typeof value !== "string") {
+function parseScormTimeToCentiseconds(value: string | null | undefined): number | null {
+  if (!value) {
     return null;
   }
 
-  const trimmed = value.trim();
-
-  if (trimmed.length === 0) {
+  const normalized = value.trim();
+  if (!normalized) {
     return null;
   }
 
-  const match = trimmed.match(/^(\d{1,4}):([0-5]?\d):([0-5]?\d)(?:\.(\d{1,2}))?$/);
-
+  const match = normalized.match(/^(\d{2,4}):(\d{2}):(\d{2})(?:\.(\d{1,2}))?$/);
   if (!match) {
     return null;
   }
@@ -134,8 +138,8 @@ function parseScormTimeToCentiseconds(value: string | null | undefined) {
   const hours = Number(match[1]);
   const minutes = Number(match[2]);
   const seconds = Number(match[3]);
-  const centisecondsPart = match[4] || "0";
-  const centiseconds = Number(centisecondsPart.padEnd(2, "0").slice(0, 2));
+  const centisecondsPart = match[4] ? match[4] : "0";
+  const centiseconds = Number(centisecondsPart.padEnd(2, "0"));
 
   if (
     !Number.isFinite(hours) ||
@@ -149,30 +153,19 @@ function parseScormTimeToCentiseconds(value: string | null | undefined) {
   return ((hours * 60 + minutes) * 60 + seconds) * 100 + centiseconds;
 }
 
-function formatCentisecondsToScormTime(totalCentiseconds: number | null | undefined) {
-  if (
-    totalCentiseconds === null ||
-    totalCentiseconds === undefined ||
-    !Number.isFinite(totalCentiseconds) ||
-    totalCentiseconds < 0
-  ) {
-    return null;
-  }
+function formatCentisecondsToScormTime(totalCentiseconds: number) {
+  const safeValue = Math.max(0, Math.floor(totalCentiseconds));
+  const hours = Math.floor(safeValue / 360000);
+  const minutes = Math.floor((safeValue % 360000) / 6000);
+  const seconds = Math.floor((safeValue % 6000) / 100);
+  const centiseconds = safeValue % 100;
 
-  const normalized = Math.floor(totalCentiseconds);
-  const centiseconds = normalized % 100;
-  const totalSeconds = Math.floor(normalized / 100);
-  const seconds = totalSeconds % 60;
-  const totalMinutes = Math.floor(totalSeconds / 60);
-  const minutes = totalMinutes % 60;
-  const hours = Math.floor(totalMinutes / 60);
-
-  return `${String(hours).padStart(4, "0")}:${String(minutes).padStart(2, "0")}:${String(
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(
     seconds,
   ).padStart(2, "0")}.${String(centiseconds).padStart(2, "0")}`;
 }
 
-function readRuntimeTrackingObject(value: unknown): JsonObject {
+function readRuntimeTrackingObject(value: Prisma.JsonValue | null | undefined): JsonObject {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return {};
   }
@@ -180,22 +173,9 @@ function readRuntimeTrackingObject(value: unknown): JsonObject {
   return value as JsonObject;
 }
 
-function readStoredCentiseconds(rawTrackingData: JsonObject, key: string) {
-  const value = rawTrackingData[key];
-
-  if (typeof value === "number" && Number.isFinite(value)) {
-    return Math.max(0, Math.floor(value));
-  }
-
-  if (typeof value === "string" && value.trim().length > 0) {
-    const parsed = Number(value);
-
-    if (Number.isFinite(parsed)) {
-      return Math.max(0, Math.floor(parsed));
-    }
-  }
-
-  return null;
+function readNumberFromJsonObject(record: JsonObject, key: string): number | null {
+  const value = record[key];
+  return typeof value === "number" && Number.isFinite(value) ? value : null;
 }
 
 function calculateNextTotalTime(params: {
@@ -204,12 +184,11 @@ function calculateNextTotalTime(params: {
   previousTotalTimeString: string | null | undefined;
 }) {
   const currentSessionCentis = parseScormTimeToCentiseconds(params.incomingSessionTime);
-
   const previousSnapshotCentis =
-    readStoredCentiseconds(params.previousRawTrackingData, RUNTIME_LAST_SESSION_SNAPSHOT_KEY) ?? 0;
-
+    readNumberFromJsonObject(params.previousRawTrackingData, RUNTIME_LAST_SESSION_SNAPSHOT_KEY) ??
+    0;
   const previousAccumulatedCentis =
-    readStoredCentiseconds(params.previousRawTrackingData, RUNTIME_TOTAL_TIME_CENTIS_KEY) ??
+    readNumberFromJsonObject(params.previousRawTrackingData, RUNTIME_TOTAL_TIME_CENTIS_KEY) ??
     parseScormTimeToCentiseconds(params.previousTotalTimeString) ??
     0;
 
@@ -237,7 +216,19 @@ function calculateNextTotalTime(params: {
 }
 
 function mapScenarioToViewModel(
-  scenario: ScenarioRecord,
+  scenario: {
+    slug: string;
+    area: string;
+    variants: Array<{
+      language: string;
+      title: string | null;
+      description: string | null;
+      estimatedDurationMinutes: number | null;
+    }>;
+    userAttempts: Array<{
+      status: string;
+    }>;
+  },
   locale: string,
 ): ScenarioListItemViewModel | null {
   const variant = pickVariant(scenario.variants, locale);
@@ -252,11 +243,10 @@ function mapScenarioToViewModel(
   return {
     slug: scenario.slug,
     language: variant.language,
-    title: variant.title,
+    title: variant.title ?? scenario.slug,
     description: normalizeOptionalText(variant.description),
     area: mapArea(scenario.area),
-    packagePath: variant.launchUrl,
-    estimatedDurationMinutes: variant.estimatedDurationMinutes,
+    estimatedDurationMinutes: variant.estimatedDurationMinutes ?? null,
     status,
     hasAttempt,
   };
@@ -271,6 +261,8 @@ function countScenarioAttempts(scenarios: Array<{ userAttempts: unknown[] }>) {
 }
 
 async function getScenarioLibraryBase(params: { locale: string; userId: string; onlyMy: boolean }) {
+  const requestedLanguages = getRequestedLanguages(params.locale);
+
   const prismaStartedAt = Date.now();
   const scenarios = await prisma.scenario.findMany({
     where: {
@@ -291,22 +283,15 @@ async function getScenarioLibraryBase(params: { locale: string; userId: string; 
       variants: {
         where: {
           language: {
-            in: [params.locale, "en"],
+            in: requestedLanguages,
           },
           availabilityStatus: "available",
         },
         select: {
-          id: true,
           language: true,
           title: true,
           description: true,
-          instruction: true,
-          launchUrl: true,
-          packagePath: true,
-          entryPoint: true,
-          thumbnailUrl: true,
           estimatedDurationMinutes: true,
-          availabilityStatus: true,
         },
       },
       userAttempts: {
@@ -315,9 +300,6 @@ async function getScenarioLibraryBase(params: { locale: string; userId: string; 
         },
         select: {
           status: true,
-          startedAt: true,
-          lastOpenedAt: true,
-          completedAt: true,
           createdAt: true,
         },
         orderBy: [{ createdAt: "desc" }],
@@ -336,10 +318,11 @@ async function getScenarioLibraryBase(params: { locale: string; userId: string; 
     meta: {
       variants: countScenarioVariants(scenarios),
       attempts: countScenarioAttempts(scenarios),
+      responseBytes: estimateJsonBytes(scenarios),
     },
   });
 
-  return measureSyncOperation({
+  const mappedScenarios = measureSyncOperation({
     operation: params.onlyMy
       ? "scenarios.getMyScenarioLibrary.map"
       : "scenarios.getAllScenarioLibrary.map",
@@ -351,9 +334,22 @@ async function getScenarioLibraryBase(params: { locale: string; userId: string; 
     },
     execute: () =>
       scenarios
-        .map((scenario: ScenarioRecord) => mapScenarioToViewModel(scenario, params.locale))
+        .map((scenario) => mapScenarioToViewModel(scenario, params.locale))
         .filter((scenario): scenario is ScenarioListItemViewModel => scenario !== null),
   });
+
+  logMeasuredOperation({
+    operation: params.onlyMy
+      ? "scenarios.getMyScenarioLibrary.payload"
+      : "scenarios.getAllScenarioLibrary.payload",
+    durationMs: 0,
+    records: mappedScenarios.length,
+    meta: {
+      responseBytes: estimateJsonBytes(mappedScenarios),
+    },
+  });
+
+  return mappedScenarios;
 }
 
 export async function getAllScenarioLibrary(params: { locale: string; userId: string }) {
@@ -397,20 +393,20 @@ function mapScenarioToDetailViewModel(
   return {
     slug: scenario.slug,
     language: variant.language,
-    title: variant.title,
+    title: variant.title ?? scenario.slug,
     description: normalizeOptionalText(variant.description),
     instruction: normalizeOptionalText(variant.instruction),
     area: mapArea(scenario.area),
-    estimatedDurationMinutes: variant.estimatedDurationMinutes,
+    estimatedDurationMinutes: variant.estimatedDurationMinutes ?? null,
     status: mapScenarioStatus(scenario.userAttempts),
-    launchUrl: variant.launchUrl,
-    thumbnailUrl: variant.thumbnailUrl,
+    launchUrl: variant.launchUrl ?? "",
+    thumbnailUrl: variant.thumbnailUrl ?? null,
     isFeatured: scenario.isFeatured,
     hasAttempt: latestAttempt !== null,
     score: latestAttempt?.score ?? null,
-    startedAt: latestAttempt?.startedAt.toISOString() ?? null,
-    lastOpenedAt: latestAttempt?.lastOpenedAt?.toISOString() ?? null,
-    completedAt: latestAttempt?.completedAt?.toISOString() ?? null,
+    startedAt: toIsoStringOrNull(latestAttempt?.startedAt),
+    lastOpenedAt: toIsoStringOrNull(latestAttempt?.lastOpenedAt),
+    completedAt: toIsoStringOrNull(latestAttempt?.completedAt),
     lessonLocation: latestAttempt?.lessonLocation ?? null,
   };
 }
@@ -426,12 +422,12 @@ function mapScenarioToLaunchViewModel(
   }
 
   const latestAttempt = scenario.userAttempts.at(0) ?? null;
-  const trimmedLaunchUrl = variant.launchUrl.trim();
+  const trimmedLaunchUrl = (variant.launchUrl ?? "").trim();
 
   return {
     slug: scenario.slug,
     language: variant.language,
-    title: variant.title,
+    title: variant.title ?? scenario.slug,
     description: normalizeOptionalText(variant.description),
     area: mapArea(scenario.area),
     launchUrl: trimmedLaunchUrl.length > 0 ? trimmedLaunchUrl : null,
@@ -441,9 +437,9 @@ function mapScenarioToLaunchViewModel(
     lessonLocation: latestAttempt?.lessonLocation ?? null,
     suspendData: latestAttempt?.suspendData ?? null,
     sessionTime: latestAttempt?.sessionTime ?? null,
-    startedAt: latestAttempt?.startedAt.toISOString() ?? null,
-    lastOpenedAt: latestAttempt?.lastOpenedAt?.toISOString() ?? null,
-    completedAt: latestAttempt?.completedAt?.toISOString() ?? null,
+    startedAt: toIsoStringOrNull(latestAttempt?.startedAt),
+    lastOpenedAt: toIsoStringOrNull(latestAttempt?.lastOpenedAt),
+    completedAt: toIsoStringOrNull(latestAttempt?.completedAt),
   };
 }
 
@@ -452,6 +448,8 @@ export async function getScenarioDetail(params: { locale: string; userId: string
     operation: "scenarios.getScenarioDetail",
     getRecords: (result) => (result ? 1 : 0),
     execute: async () => {
+      const requestedLanguages = getRequestedLanguages(params.locale);
+
       const prismaStartedAt = Date.now();
       const scenario = await prisma.scenario.findFirst({
         where: {
@@ -465,22 +463,18 @@ export async function getScenarioDetail(params: { locale: string; userId: string
           variants: {
             where: {
               language: {
-                in: [params.locale, "en"],
+                in: requestedLanguages,
               },
               availabilityStatus: "available",
             },
             select: {
-              id: true,
               language: true,
               title: true,
               description: true,
               instruction: true,
               launchUrl: true,
-              packagePath: true,
-              entryPoint: true,
               thumbnailUrl: true,
               estimatedDurationMinutes: true,
-              availabilityStatus: true,
             },
           },
           userAttempts: {
@@ -494,10 +488,6 @@ export async function getScenarioDetail(params: { locale: string; userId: string
               lastOpenedAt: true,
               completedAt: true,
               lessonLocation: true,
-              suspendData: true,
-              sessionTime: true,
-              totalTime: true,
-              rawTrackingData: true,
               createdAt: true,
             },
             orderBy: [{ createdAt: "desc" }],
@@ -535,6 +525,15 @@ export async function getScenarioDetail(params: { locale: string; userId: string
             return null;
           }
 
+          logMeasuredOperation({
+            operation: "scenarios.getScenarioDetail.payload",
+            durationMs: 0,
+            records: 1,
+            meta: {
+              responseBytes: estimateJsonBytes(mappedScenario),
+            },
+          });
+
           return {
             scenario: mappedScenario,
           };
@@ -553,6 +552,8 @@ export async function getRelatedScenarios(params: {
     operation: "scenarios.getRelatedScenarios",
     getRecords: (scenarios) => scenarios.length,
     execute: async () => {
+      const requestedLanguages = getRequestedLanguages(params.locale);
+
       const areaLookupStartedAt = Date.now();
       const scenario = await prisma.scenario.findFirst({
         where: {
@@ -589,22 +590,15 @@ export async function getRelatedScenarios(params: {
           variants: {
             where: {
               language: {
-                in: [params.locale, "en"],
+                in: requestedLanguages,
               },
               availabilityStatus: "available",
             },
             select: {
-              id: true,
               language: true,
               title: true,
               description: true,
-              instruction: true,
-              launchUrl: true,
-              packagePath: true,
-              entryPoint: true,
-              thumbnailUrl: true,
               estimatedDurationMinutes: true,
-              availabilityStatus: true,
             },
           },
           userAttempts: {
@@ -613,9 +607,6 @@ export async function getRelatedScenarios(params: {
             },
             select: {
               status: true,
-              startedAt: true,
-              lastOpenedAt: true,
-              completedAt: true,
               createdAt: true,
             },
             orderBy: [{ createdAt: "desc" }],
@@ -636,7 +627,7 @@ export async function getRelatedScenarios(params: {
         },
       });
 
-      return measureSyncOperation({
+      const mappedScenarios = measureSyncOperation({
         operation: "scenarios.getRelatedScenarios.map",
         records: relatedScenarios.length,
         meta: {
@@ -646,9 +637,20 @@ export async function getRelatedScenarios(params: {
         },
         execute: () =>
           relatedScenarios
-            .map((item: ScenarioRecord) => mapScenarioToViewModel(item, params.locale))
+            .map((item) => mapScenarioToViewModel(item, params.locale))
             .filter((item): item is ScenarioListItemViewModel => item !== null),
       });
+
+      logMeasuredOperation({
+        operation: "scenarios.getRelatedScenarios.payload",
+        durationMs: 0,
+        records: mappedScenarios.length,
+        meta: {
+          responseBytes: estimateJsonBytes(mappedScenarios),
+        },
+      });
+
+      return mappedScenarios;
     },
   });
 }
@@ -658,6 +660,8 @@ export async function logScenarioLaunch(params: { locale: string; userId: string
     operation: "scenarios.logScenarioLaunch",
     getRecords: (attemptId) => (attemptId ? 1 : 0),
     execute: async () => {
+      const requestedLanguages = getRequestedLanguages(params.locale);
+
       const scenario = await prisma.scenario.findFirst({
         where: {
           slug: params.slug,
@@ -667,20 +671,15 @@ export async function logScenarioLaunch(params: { locale: string; userId: string
           id: true,
           variants: {
             where: {
+              language: {
+                in: requestedLanguages,
+              },
               availabilityStatus: "available",
             },
             select: {
               id: true,
               language: true,
-              title: true,
-              description: true,
-              instruction: true,
               launchUrl: true,
-              packagePath: true,
-              entryPoint: true,
-              thumbnailUrl: true,
-              estimatedDurationMinutes: true,
-              availabilityStatus: true,
             },
           },
         },
@@ -691,8 +690,9 @@ export async function logScenarioLaunch(params: { locale: string; userId: string
       }
 
       const variant = pickVariant(scenario.variants, params.locale);
+      const variantId = variant?.id;
 
-      if (!variant || variant.launchUrl.trim().length === 0) {
+      if (!variant || !variantId || variant.launchUrl.trim().length === 0) {
         return null;
       }
 
@@ -701,7 +701,7 @@ export async function logScenarioLaunch(params: { locale: string; userId: string
         where: {
           userId: params.userId,
           scenarioId: scenario.id,
-          scenarioVariantId: variant.id,
+          scenarioVariantId: variantId,
         },
         orderBy: [{ attemptNumber: "desc" }, { createdAt: "desc" }],
         select: {
@@ -734,7 +734,7 @@ export async function logScenarioLaunch(params: { locale: string; userId: string
         data: {
           userId: params.userId,
           scenarioId: scenario.id,
-          scenarioVariantId: variant.id,
+          scenarioVariantId: variantId,
           attemptNumber: nextAttemptNumber,
           status: "incomplete",
           startedAt: now,
@@ -773,13 +773,8 @@ export async function completeScenarioAttempt(params: {
               language: true,
               title: true,
               description: true,
-              instruction: true,
               launchUrl: true,
-              packagePath: true,
-              entryPoint: true,
-              thumbnailUrl: true,
               estimatedDurationMinutes: true,
-              availabilityStatus: true,
             },
           },
         },
@@ -790,8 +785,9 @@ export async function completeScenarioAttempt(params: {
       }
 
       const variant = pickVariant(scenario.variants, params.locale);
+      const variantId = variant?.id;
 
-      if (!variant) {
+      if (!variant || !variantId) {
         return null;
       }
 
@@ -800,7 +796,7 @@ export async function completeScenarioAttempt(params: {
         where: {
           userId: params.userId,
           scenarioId: scenario.id,
-          scenarioVariantId: variant.id,
+          scenarioVariantId: variantId,
         },
         orderBy: [{ attemptNumber: "desc" }, { createdAt: "desc" }],
         select: {
@@ -816,7 +812,7 @@ export async function completeScenarioAttempt(params: {
           data: {
             userId: params.userId,
             scenarioId: scenario.id,
-            scenarioVariantId: variant.id,
+            scenarioVariantId: variantId,
             attemptNumber: 1,
             status: "completed",
             startedAt: now,
@@ -878,13 +874,8 @@ export async function updateScenarioRuntimeProgress(input: RuntimeTrackingInput)
               language: true,
               title: true,
               description: true,
-              instruction: true,
               launchUrl: true,
-              packagePath: true,
-              entryPoint: true,
-              thumbnailUrl: true,
               estimatedDurationMinutes: true,
-              availabilityStatus: true,
             },
           },
         },
@@ -901,8 +892,9 @@ export async function updateScenarioRuntimeProgress(input: RuntimeTrackingInput)
       }
 
       const variant = pickVariant(scenario.variants, input.locale);
+      const variantId = variant?.id;
 
-      if (!variant) {
+      if (!variant || !variantId) {
         return null;
       }
 
@@ -914,7 +906,7 @@ export async function updateScenarioRuntimeProgress(input: RuntimeTrackingInput)
         where: {
           userId: input.userId,
           scenarioId: scenario.id,
-          scenarioVariantId: variant.id,
+          scenarioVariantId: variantId,
         },
         orderBy: [{ attemptNumber: "desc" }, { createdAt: "desc" }],
         select: {
@@ -980,7 +972,7 @@ export async function updateScenarioRuntimeProgress(input: RuntimeTrackingInput)
         data: {
           userId: input.userId,
           scenarioId: scenario.id,
-          scenarioVariantId: variant.id,
+          scenarioVariantId: variantId,
           attemptNumber: 1,
           startedAt: now,
           ...updateData,
@@ -1000,6 +992,8 @@ export async function getScenarioLaunch(params: { locale: string; userId: string
     operation: "scenarios.getScenarioLaunch",
     getRecords: (scenario) => (scenario ? 1 : 0),
     execute: async () => {
+      const requestedLanguages = getRequestedLanguages(params.locale);
+
       const prismaStartedAt = Date.now();
       const scenario = await prisma.scenario.findFirst({
         where: {
@@ -1012,22 +1006,16 @@ export async function getScenarioLaunch(params: { locale: string; userId: string
           variants: {
             where: {
               language: {
-                in: [params.locale, "en"],
+                in: requestedLanguages,
               },
               availabilityStatus: "available",
             },
             select: {
-              id: true,
               language: true,
               title: true,
               description: true,
-              instruction: true,
               launchUrl: true,
-              packagePath: true,
-              entryPoint: true,
-              thumbnailUrl: true,
               estimatedDurationMinutes: true,
-              availabilityStatus: true,
             },
           },
           userAttempts: {
@@ -1043,11 +1031,10 @@ export async function getScenarioLaunch(params: { locale: string; userId: string
               lessonLocation: true,
               suspendData: true,
               sessionTime: true,
-              totalTime: true,
-              rawTrackingData: true,
               createdAt: true,
             },
             orderBy: [{ createdAt: "desc" }],
+            take: 1,
           },
         },
       });
@@ -1074,7 +1061,20 @@ export async function getScenarioLaunch(params: { locale: string; userId: string
           variants: scenario.variants.length,
           attempts: scenario.userAttempts.length,
         },
-        execute: () => mapScenarioToLaunchViewModel(scenario, params.locale),
+        execute: () => {
+          const mappedScenario = mapScenarioToLaunchViewModel(scenario, params.locale);
+
+          logMeasuredOperation({
+            operation: "scenarios.getScenarioLaunch.payload",
+            durationMs: 0,
+            records: mappedScenario ? 1 : 0,
+            meta: {
+              responseBytes: estimateJsonBytes(mappedScenario),
+            },
+          });
+
+          return mappedScenario;
+        },
       });
     },
   });

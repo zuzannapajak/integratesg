@@ -1,7 +1,7 @@
 "use client";
 
 import CurriculumListShell from "@/components/curriculum/curriculum-list-shell";
-import { CurriculumModuleViewModel } from "@/lib/curriculum/types";
+import { CurriculumListItemViewModel } from "@/lib/curriculum/types";
 import { BookOpen, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -11,8 +11,8 @@ type ViewMode = "my-courses" | "all-courses";
 type Props = {
   locale: string;
   activeView: ViewMode;
-  myCourses: CurriculumModuleViewModel[];
-  allCourses: CurriculumModuleViewModel[];
+  myCourses: CurriculumListItemViewModel[];
+  allCourses: CurriculumListItemViewModel[];
 };
 
 export default function CurriculumSwitcher({ locale, activeView, myCourses, allCourses }: Props) {

@@ -12,7 +12,6 @@ export type ScenarioListItemViewModel = {
   title: string;
   description: string | null;
   area: ScenarioArea;
-  packagePath: string;
   estimatedDurationMinutes: number | null;
   status: ScenarioProgressStatus;
   hasAttempt: boolean;
@@ -57,17 +56,16 @@ export type ScenarioLaunchViewModel = {
 };
 
 export type ScenarioVariantRecord = {
-  id: string;
+  id?: string;
   language: string;
-  title: string;
-  description: string | null;
-  instruction: string | null;
-  launchUrl: string;
-  packagePath: string;
-  entryPoint: string;
-  thumbnailUrl: string | null;
-  estimatedDurationMinutes: number | null;
-  availabilityStatus: string;
+  title?: string;
+  description?: string | null;
+  instruction?: string | null;
+  launchUrl?: string;
+  entryPoint?: string;
+  thumbnailUrl?: string | null;
+  estimatedDurationMinutes?: number | null;
+  availabilityStatus?: string;
 };
 
 export type UserScenarioAttemptRecord = {
@@ -87,15 +85,15 @@ export type ScenarioRecord = {
 
 export type ScenarioAttemptDetailRecord = {
   status: string;
-  score: number | null;
-  startedAt: Date;
-  lastOpenedAt: Date | null;
-  completedAt: Date | null;
-  lessonLocation: string | null;
-  suspendData: string | null;
-  sessionTime: string | null;
-  totalTime: string | null;
-  rawTrackingData: Prisma.JsonValue | null;
+  score?: number | null;
+  startedAt?: Date;
+  lastOpenedAt?: Date | null;
+  completedAt?: Date | null;
+  lessonLocation?: string | null;
+  suspendData?: string | null;
+  sessionTime?: string | null;
+  totalTime?: string | null;
+  rawTrackingData?: Prisma.JsonValue | null;
   createdAt: Date;
 };
 

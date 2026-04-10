@@ -17,6 +17,12 @@ import {
 } from "@/lib/observability/performance";
 import { prisma } from "@/lib/prisma";
 
+const DASHBOARD_ROWS_LIMIT = 12;
+
+function estimateJsonBytes(value: unknown) {
+  return new TextEncoder().encode(JSON.stringify(value)).length;
+}
+
 function toIntlLocale(locale: string) {
   if (locale === "pl") return "pl-PL";
   if (locale === "it") return "it-IT";
@@ -527,7 +533,7 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
         }),
 
         prisma.userScenarioAttempt.findMany({
-          take: 20,
+          take: DASHBOARD_ROWS_LIMIT,
           orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }],
           select: {
             id: true,
@@ -559,7 +565,7 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
         }),
 
         prisma.userCourseAttempt.findMany({
-          take: 20,
+          take: DASHBOARD_ROWS_LIMIT,
           orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }],
           select: {
             id: true,
@@ -591,7 +597,7 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
         }),
 
         prisma.userCaseStudyProgress.findMany({
-          take: 20,
+          take: DASHBOARD_ROWS_LIMIT,
           orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }, { completedAt: "desc" }],
           select: {
             id: true,
@@ -999,6 +1005,14 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
         meta: {
           nodeElements:
             scenarioBreakdown.length + courseBreakdown.length + languageBreakdown.length,
+          responseBytes: estimateJsonBytes({
+            languageBreakdown,
+            scenarioBreakdown,
+            courseBreakdown,
+            scenarioAttemptRows,
+            curriculumAttemptRows,
+            eportfolioProgressRows,
+          }),
         },
         execute: () => ({
           generatedAt: new Date().toISOString(),
