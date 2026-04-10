@@ -1,3 +1,4 @@
+import { estimateJsonBytes } from "@/lib/observability/json-size";
 import {
   logMeasuredOperation,
   measureAsyncOperation,
@@ -41,10 +42,6 @@ function getRequestedLanguages(locale: string) {
   return locale === "en" ? ["en"] : [locale, "en"];
 }
 
-function estimateJsonBytes(value: unknown) {
-  return new TextEncoder().encode(JSON.stringify(value)).length;
-}
-
 function mapArea(area: string): ScenarioListItemViewModel["area"] {
   switch (area) {
     case "environmental":
@@ -59,17 +56,22 @@ function mapArea(area: string): ScenarioListItemViewModel["area"] {
 }
 
 function pickVariant<T extends { language: string }>(variants: T[], locale: string): T | null {
-  const localeVariant = variants.find((variant) => variant.language === locale);
-  if (localeVariant) {
-    return localeVariant;
+  let englishVariant: T | null = null;
+  let firstVariant: T | null = null;
+
+  for (const variant of variants) {
+    firstVariant ??= variant;
+
+    if (variant.language === locale) {
+      return variant;
+    }
+
+    if (englishVariant === null && variant.language === "en") {
+      englishVariant = variant;
+    }
   }
 
-  const englishVariant = variants.find((variant) => variant.language === "en");
-  if (englishVariant) {
-    return englishVariant;
-  }
-
-  return variants[0] ?? null;
+  return englishVariant ?? firstVariant;
 }
 
 function mapScenarioStatus(attempts: Array<{ status: string }>): ScenarioProgressStatus {
@@ -322,12 +324,47 @@ function mapScenarioToViewModel(
   };
 }
 
-function countScenarioVariants(scenarios: Array<{ variants: unknown[] }>) {
-  return scenarios.reduce((sum, scenario) => sum + scenario.variants.length, 0);
+function getScenarioCollectionMeta(
+  scenarios: Array<{ variants: unknown[]; userAttempts: unknown[] }>,
+) {
+  let variants = 0;
+  let attempts = 0;
+
+  for (const scenario of scenarios) {
+    variants += scenario.variants.length;
+    attempts += scenario.userAttempts.length;
+  }
+
+  return { variants, attempts };
 }
 
-function countScenarioAttempts(scenarios: Array<{ userAttempts: unknown[] }>) {
-  return scenarios.reduce((sum, scenario) => sum + scenario.userAttempts.length, 0);
+function mapScenarioCollectionToViewModels(
+  scenarios: Array<{
+    slug: string;
+    area: string;
+    variants: Array<{
+      language: string;
+      title: string | null;
+      description: string | null;
+      estimatedDurationMinutes: number | null;
+    }>;
+    userAttempts: Array<{
+      status: string;
+    }>;
+  }>,
+  locale: string,
+) {
+  const mappedScenarios: ScenarioListItemViewModel[] = [];
+
+  for (const scenario of scenarios) {
+    const mappedScenario = mapScenarioToViewModel(scenario, locale);
+
+    if (mappedScenario !== null) {
+      mappedScenarios.push(mappedScenario);
+    }
+  }
+
+  return mappedScenarios;
 }
 
 async function getScenarioLibraryBase(params: { locale: string; userId: string; onlyMy: boolean }) {
@@ -379,6 +416,8 @@ async function getScenarioLibraryBase(params: { locale: string; userId: string; 
     orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
   });
 
+  const collectionMeta = getScenarioCollectionMeta(scenarios);
+
   logMeasuredOperation({
     operation: params.onlyMy
       ? "scenarios.getMyScenarioLibrary.prisma"
@@ -386,8 +425,8 @@ async function getScenarioLibraryBase(params: { locale: string; userId: string; 
     durationMs: Date.now() - prismaStartedAt,
     records: scenarios.length,
     meta: {
-      variants: countScenarioVariants(scenarios),
-      attempts: countScenarioAttempts(scenarios),
+      variants: collectionMeta.variants,
+      attempts: collectionMeta.attempts,
       responseBytes: estimateJsonBytes(scenarios),
     },
   });
@@ -399,13 +438,10 @@ async function getScenarioLibraryBase(params: { locale: string; userId: string; 
     records: scenarios.length,
     meta: {
       nodeElements: scenarios.length,
-      variants: countScenarioVariants(scenarios),
-      attempts: countScenarioAttempts(scenarios),
+      variants: collectionMeta.variants,
+      attempts: collectionMeta.attempts,
     },
-    execute: () =>
-      scenarios
-        .map((scenario) => mapScenarioToViewModel(scenario, params.locale))
-        .filter((scenario): scenario is ScenarioListItemViewModel => scenario !== null),
+    execute: () => mapScenarioCollectionToViewModels(scenarios, params.locale),
   });
 
   logMeasuredOperation({
@@ -687,13 +723,15 @@ export async function getRelatedScenarios(params: {
         take: 3,
       });
 
+      const collectionMeta = getScenarioCollectionMeta(relatedScenarios);
+
       logMeasuredOperation({
         operation: "scenarios.getRelatedScenarios.prisma",
         durationMs: Date.now() - prismaStartedAt,
         records: relatedScenarios.length,
         meta: {
-          variants: countScenarioVariants(relatedScenarios),
-          attempts: countScenarioAttempts(relatedScenarios),
+          variants: collectionMeta.variants,
+          attempts: collectionMeta.attempts,
         },
       });
 
@@ -702,13 +740,10 @@ export async function getRelatedScenarios(params: {
         records: relatedScenarios.length,
         meta: {
           nodeElements: relatedScenarios.length,
-          variants: countScenarioVariants(relatedScenarios),
-          attempts: countScenarioAttempts(relatedScenarios),
+          variants: collectionMeta.variants,
+          attempts: collectionMeta.attempts,
         },
-        execute: () =>
-          relatedScenarios
-            .map((item) => mapScenarioToViewModel(item, params.locale))
-            .filter((item): item is ScenarioListItemViewModel => item !== null),
+        execute: () => mapScenarioCollectionToViewModels(relatedScenarios, params.locale),
       });
 
       logMeasuredOperation({

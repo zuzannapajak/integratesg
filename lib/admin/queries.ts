@@ -118,16 +118,25 @@ function buildLast24HoursSeries(
 }
 
 function pickLocalizedTitle(items: LocalizedTitleItem[], locale: string, fallback: string) {
-  const direct = items.find((item) => item.language === locale);
-  if (direct?.title.trim()) return direct.title.trim();
+  let englishTitle: string | null = null;
+  let firstTitle: string | null = null;
 
-  const english = items.find((item) => item.language === "en");
-  if (english?.title.trim()) return english.title.trim();
+  for (const item of items) {
+    const title = item.title.trim();
+    if (!title) continue;
 
-  const first = items.find((item) => item.title.trim());
-  if (first) return first.title.trim();
+    firstTitle ??= title;
 
-  return fallback;
+    if (item.language === locale) {
+      return title;
+    }
+
+    if (englishTitle === null && item.language === "en") {
+      englishTitle = title;
+    }
+  }
+
+  return englishTitle ?? firstTitle ?? fallback;
 }
 
 function hasActivityInRange(
@@ -372,7 +381,18 @@ function countScenarioVariants(scenarios: Array<{ variants: unknown[] }>) {
   return scenarios.reduce((sum, scenario) => sum + scenario.variants.length, 0);
 }
 
-export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<BasicAdminStats> {
+type GetBasicAdminStatsOptions = {
+  includeBreakdowns?: boolean;
+  includeRows?: boolean;
+};
+
+export async function getBasicAdminStats(
+  locale = DEFAULT_LOCALE,
+  options: GetBasicAdminStatsOptions = {},
+): Promise<BasicAdminStats> {
+  const includeBreakdowns = options.includeBreakdowns ?? true;
+  const includeRows = options.includeRows ?? true;
+
   return measureAsyncOperation({
     operation: "admin.getBasicAdminStats",
     getRecords: (stats) =>
@@ -498,98 +518,104 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
           },
         }),
 
-        prisma.userScenarioAttempt.findMany({
-          take: DASHBOARD_ROWS_LIMIT,
-          orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }],
-          select: {
-            id: true,
-            attemptNumber: true,
-            status: true,
-            score: true,
-            startedAt: true,
-            lastOpenedAt: true,
-            completedAt: true,
-            user: {
+        includeRows
+          ? prisma.userScenarioAttempt.findMany({
+              take: DASHBOARD_ROWS_LIMIT,
+              orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }],
               select: {
-                fullName: true,
-                email: true,
-              },
-            },
-            scenario: {
-              select: {
-                slug: true,
-                area: true,
-              },
-            },
-            scenarioVariant: {
-              select: {
-                language: true,
-                title: true,
-              },
-            },
-          },
-        }),
-
-        prisma.userCourseAttempt.findMany({
-          take: DASHBOARD_ROWS_LIMIT,
-          orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }],
-          select: {
-            id: true,
-            status: true,
-            preQuizScore: true,
-            postQuizScore: true,
-            startedAt: true,
-            lastOpenedAt: true,
-            completedAt: true,
-            user: {
-              select: {
-                fullName: true,
-                email: true,
-              },
-            },
-            course: {
-              select: {
-                slug: true,
-                area: true,
-                translations: {
+                id: true,
+                attemptNumber: true,
+                status: true,
+                score: true,
+                startedAt: true,
+                lastOpenedAt: true,
+                completedAt: true,
+                user: {
+                  select: {
+                    fullName: true,
+                    email: true,
+                  },
+                },
+                scenario: {
+                  select: {
+                    slug: true,
+                    area: true,
+                  },
+                },
+                scenarioVariant: {
                   select: {
                     language: true,
                     title: true,
                   },
                 },
               },
-            },
-          },
-        }),
+            })
+          : Promise.resolve([]),
 
-        prisma.userCaseStudyProgress.findMany({
-          take: DASHBOARD_ROWS_LIMIT,
-          orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }, { completedAt: "desc" }],
-          select: {
-            id: true,
-            startedAt: true,
-            lastOpenedAt: true,
-            completedAt: true,
-            user: {
+        includeRows
+          ? prisma.userCourseAttempt.findMany({
+              take: DASHBOARD_ROWS_LIMIT,
+              orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }],
               select: {
-                fullName: true,
-                email: true,
-                preferredLanguage: true,
-              },
-            },
-            caseStudy: {
-              select: {
-                slug: true,
-                translations: {
+                id: true,
+                status: true,
+                preQuizScore: true,
+                postQuizScore: true,
+                startedAt: true,
+                lastOpenedAt: true,
+                completedAt: true,
+                user: {
                   select: {
-                    language: true,
-                    title: true,
+                    fullName: true,
+                    email: true,
+                  },
+                },
+                course: {
+                  select: {
+                    slug: true,
+                    area: true,
+                    translations: {
+                      select: {
+                        language: true,
+                        title: true,
+                      },
+                    },
                   },
                 },
               },
-            },
-          },
-        }),
+            })
+          : Promise.resolve([]),
+
+        includeRows
+          ? prisma.userCaseStudyProgress.findMany({
+              take: DASHBOARD_ROWS_LIMIT,
+              orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }, { completedAt: "desc" }],
+              select: {
+                id: true,
+                startedAt: true,
+                lastOpenedAt: true,
+                completedAt: true,
+                user: {
+                  select: {
+                    fullName: true,
+                    email: true,
+                    preferredLanguage: true,
+                  },
+                },
+                caseStudy: {
+                  select: {
+                    slug: true,
+                    translations: {
+                      select: {
+                        language: true,
+                        title: true,
+                      },
+                    },
+                  },
+                },
+              },
+            })
+          : Promise.resolve([]),
       ]);
 
       logMeasuredOperation({
@@ -642,20 +668,24 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
       const publishedScenarios = publishedScenariosWithVariants.length;
 
       const publishedCoursesByLanguage = new Map<string, number>();
-      for (const course of publishedCoursesWithTranslations) {
-        const languages = new Set(course.translations.map((translation) => translation.language));
-        for (const language of languages) {
-          incrementMapCount(publishedCoursesByLanguage, language);
+      if (includeBreakdowns) {
+        for (const course of publishedCoursesWithTranslations) {
+          const languages = new Set(course.translations.map((translation) => translation.language));
+          for (const language of languages) {
+            incrementMapCount(publishedCoursesByLanguage, language);
+          }
         }
       }
 
       const publishedCaseStudiesByLanguage = new Map<string, number>();
-      for (const caseStudy of publishedCaseStudiesWithTranslations) {
-        const languages = new Set(
-          caseStudy.translations.map((translation) => translation.language),
-        );
-        for (const language of languages) {
-          incrementMapCount(publishedCaseStudiesByLanguage, language);
+      if (includeBreakdowns) {
+        for (const caseStudy of publishedCaseStudiesWithTranslations) {
+          const languages = new Set(
+            caseStudy.translations.map((translation) => translation.language),
+          );
+          for (const language of languages) {
+            incrementMapCount(publishedCaseStudiesByLanguage, language);
+          }
         }
       }
 
@@ -665,7 +695,9 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
         for (const variant of scenario.variants) {
           if (variant.availabilityStatus !== "available") continue;
           availableScenarioVariants += 1;
-          incrementMapCount(availableScenarioVariantsByLanguage, variant.language);
+          if (includeBreakdowns) {
+            incrementMapCount(availableScenarioVariantsByLanguage, variant.language);
+          }
         }
       }
 
@@ -786,218 +818,233 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
         activeUsers: activeUsersLast30Days,
       });
 
-      const languageBreakdown: AdminLanguageStat[] = APP_LOCALES.map((code) => ({
-        code,
-        label: LOCALE_META[code].label,
-        users: usersByLanguage.get(code) ?? 0,
-        publishedCourses: publishedCoursesByLanguage.get(code) ?? 0,
-        publishedCaseStudies: publishedCaseStudiesByLanguage.get(code) ?? 0,
-        availableScenarioVariants: availableScenarioVariantsByLanguage.get(code) ?? 0,
-      }));
+      const languageBreakdown: AdminLanguageStat[] = includeBreakdowns
+        ? APP_LOCALES.map((code) => ({
+            code,
+            label: LOCALE_META[code].label,
+            users: usersByLanguage.get(code) ?? 0,
+            publishedCourses: publishedCoursesByLanguage.get(code) ?? 0,
+            publishedCaseStudies: publishedCaseStudiesByLanguage.get(code) ?? 0,
+            availableScenarioVariants: availableScenarioVariantsByLanguage.get(code) ?? 0,
+          }))
+        : [];
 
-      const scenarioAttemptsByScenarioId = new Map<
-        string,
-        {
-          totalAttempts: number;
-          passed: number;
-          completed: number;
-          scoreSum: number;
-          scoreCount: number;
-        }
-      >();
+      const scenarioAttemptsByScenarioId = includeBreakdowns
+        ? new Map<
+            string,
+            {
+              totalAttempts: number;
+              passed: number;
+              completed: number;
+              scoreSum: number;
+              scoreCount: number;
+            }
+          >()
+        : null;
 
-      for (const attempt of scenarioAttempts) {
-        const aggregate = scenarioAttemptsByScenarioId.get(attempt.scenarioId) ?? {
-          totalAttempts: 0,
-          passed: 0,
-          completed: 0,
-          scoreSum: 0,
-          scoreCount: 0,
-        };
-
-        aggregate.totalAttempts += 1;
-        if (attempt.status === "passed") aggregate.passed += 1;
-        if (attempt.status === "completed") aggregate.completed += 1;
-        if (attempt.score !== null) {
-          aggregate.scoreSum += attempt.score;
-          aggregate.scoreCount += 1;
-        }
-
-        scenarioAttemptsByScenarioId.set(attempt.scenarioId, aggregate);
-      }
-
-      const courseAttemptsByCourseId = new Map<
-        string,
-        {
-          totalAttempts: number;
-          completed: number;
-          inProgress: number;
-          failed: number;
-          preQuizScoreSum: number;
-          preQuizScoreCount: number;
-          postQuizScoreSum: number;
-          postQuizScoreCount: number;
-        }
-      >();
-
-      for (const attempt of courseAttempts) {
-        const aggregate = courseAttemptsByCourseId.get(attempt.courseId) ?? {
-          totalAttempts: 0,
-          completed: 0,
-          inProgress: 0,
-          failed: 0,
-          preQuizScoreSum: 0,
-          preQuizScoreCount: 0,
-          postQuizScoreSum: 0,
-          postQuizScoreCount: 0,
-        };
-
-        aggregate.totalAttempts += 1;
-        if (attempt.status === "completed") aggregate.completed += 1;
-        if (attempt.status === "in_progress") aggregate.inProgress += 1;
-        if (attempt.status === "failed") aggregate.failed += 1;
-
-        if (attempt.preQuizScore !== null) {
-          aggregate.preQuizScoreSum += attempt.preQuizScore;
-          aggregate.preQuizScoreCount += 1;
-        }
-
-        if (attempt.postQuizScore !== null) {
-          aggregate.postQuizScoreSum += attempt.postQuizScore;
-          aggregate.postQuizScoreCount += 1;
-        }
-
-        courseAttemptsByCourseId.set(attempt.courseId, aggregate);
-      }
-
-      const scenarioBreakdown: AdminScenarioStat[] = publishedScenariosWithVariants.map(
-        (scenario) => {
-          let availableVariants = 0;
-          const languages = new Set<string>();
-
-          for (const variant of scenario.variants) {
-            languages.add(variant.language);
-            if (variant.availabilityStatus === "available") availableVariants += 1;
-          }
-
-          const aggregate = scenarioAttemptsByScenarioId.get(scenario.id) ?? {
+      if (scenarioAttemptsByScenarioId !== null) {
+        for (const attempt of scenarioAttempts) {
+          const aggregate = scenarioAttemptsByScenarioId.get(attempt.scenarioId) ?? {
             totalAttempts: 0,
             passed: 0,
             completed: 0,
             scoreSum: 0,
             scoreCount: 0,
           };
-          const completedLikeTotal = aggregate.passed + aggregate.completed;
 
-          return {
-            id: scenario.id,
-            slug: scenario.slug,
-            title: pickLocalizedTitle(
-              scenario.variants.map((variant) => ({
+          aggregate.totalAttempts += 1;
+          if (attempt.status === "passed") aggregate.passed += 1;
+          if (attempt.status === "completed") aggregate.completed += 1;
+          if (attempt.score !== null) {
+            aggregate.scoreSum += attempt.score;
+            aggregate.scoreCount += 1;
+          }
+
+          scenarioAttemptsByScenarioId.set(attempt.scenarioId, aggregate);
+        }
+      }
+
+      const courseAttemptsByCourseId = includeBreakdowns
+        ? new Map<
+            string,
+            {
+              totalAttempts: number;
+              completed: number;
+              inProgress: number;
+              failed: number;
+              preQuizScoreSum: number;
+              preQuizScoreCount: number;
+              postQuizScoreSum: number;
+              postQuizScoreCount: number;
+            }
+          >()
+        : null;
+
+      if (courseAttemptsByCourseId !== null) {
+        for (const attempt of courseAttempts) {
+          const aggregate = courseAttemptsByCourseId.get(attempt.courseId) ?? {
+            totalAttempts: 0,
+            completed: 0,
+            inProgress: 0,
+            failed: 0,
+            preQuizScoreSum: 0,
+            preQuizScoreCount: 0,
+            postQuizScoreSum: 0,
+            postQuizScoreCount: 0,
+          };
+
+          aggregate.totalAttempts += 1;
+          if (attempt.status === "completed") aggregate.completed += 1;
+          if (attempt.status === "in_progress") aggregate.inProgress += 1;
+          if (attempt.status === "failed") aggregate.failed += 1;
+
+          if (attempt.preQuizScore !== null) {
+            aggregate.preQuizScoreSum += attempt.preQuizScore;
+            aggregate.preQuizScoreCount += 1;
+          }
+
+          if (attempt.postQuizScore !== null) {
+            aggregate.postQuizScoreSum += attempt.postQuizScore;
+            aggregate.postQuizScoreCount += 1;
+          }
+
+          courseAttemptsByCourseId.set(attempt.courseId, aggregate);
+        }
+      }
+
+      const scenarioBreakdown: AdminScenarioStat[] = includeBreakdowns
+        ? publishedScenariosWithVariants.map((scenario) => {
+            let availableVariants = 0;
+            const languages = new Set<string>();
+            const localizedVariants: LocalizedTitleItem[] = [];
+
+            for (const variant of scenario.variants) {
+              languages.add(variant.language);
+              localizedVariants.push({
                 language: variant.language,
                 title: variant.title,
-              })),
+              });
+              if (variant.availabilityStatus === "available") availableVariants += 1;
+            }
+
+            const aggregate = scenarioAttemptsByScenarioId?.get(scenario.id) ?? {
+              totalAttempts: 0,
+              passed: 0,
+              completed: 0,
+              scoreSum: 0,
+              scoreCount: 0,
+            };
+            const completedLikeTotal = aggregate.passed + aggregate.completed;
+
+            return {
+              id: scenario.id,
+              slug: scenario.slug,
+              title: pickLocalizedTitle(localizedVariants, locale, scenario.slug),
+              area: scenario.area,
+              languages: [...languages].sort(),
+              availableVariants,
+              totalAttempts: aggregate.totalAttempts,
+              completedLikeTotal,
+              completionRate: toPercent(completedLikeTotal, aggregate.totalAttempts),
+              averageScore: averageFromSumAndCount(aggregate.scoreSum, aggregate.scoreCount),
+            };
+          })
+        : [];
+
+      const courseBreakdown: AdminCourseStat[] = includeBreakdowns
+        ? publishedCoursesWithTranslations.map((course) => {
+            const aggregate = courseAttemptsByCourseId?.get(course.id) ?? {
+              totalAttempts: 0,
+              completed: 0,
+              inProgress: 0,
+              failed: 0,
+              preQuizScoreSum: 0,
+              preQuizScoreCount: 0,
+              postQuizScoreSum: 0,
+              postQuizScoreCount: 0,
+            };
+
+            return {
+              id: course.id,
+              slug: course.slug,
+              title: pickLocalizedTitle(course.translations, locale, course.slug),
+              area: course.area,
+              difficulty: course.difficulty,
+              totalAttempts: aggregate.totalAttempts,
+              completed: aggregate.completed,
+              inProgress: aggregate.inProgress,
+              failed: aggregate.failed,
+              completionRate: toPercent(aggregate.completed, aggregate.totalAttempts),
+              averagePreQuizScore: averageFromSumAndCount(
+                aggregate.preQuizScoreSum,
+                aggregate.preQuizScoreCount,
+              ),
+              averagePostQuizScore: averageFromSumAndCount(
+                aggregate.postQuizScoreSum,
+                aggregate.postQuizScoreCount,
+              ),
+            };
+          })
+        : [];
+
+      const scenarioAttemptRows: DashboardScenarioAttemptRow[] = includeRows
+        ? scenarioAttemptRowsRaw.map((attempt) => ({
+            id: attempt.id,
+            learnerName: attempt.user.fullName ?? attempt.user.email.split("@")[0],
+            learnerEmail: attempt.user.email,
+            scenarioTitle: attempt.scenarioVariant.title,
+            scenarioSlug: attempt.scenario.slug,
+            area: normalizeArea(attempt.scenario.area),
+            language: attempt.scenarioVariant.language.toUpperCase(),
+            attemptNumber: attempt.attemptNumber,
+            status: attempt.status as DashboardScenarioAttemptRow["status"],
+            scoreLabel: formatScore(attempt.score),
+            startedAtLabel: formatDateTimeLabel(attempt.startedAt, locale),
+            lastOpenedAtLabel: formatDateTimeLabel(attempt.lastOpenedAt, locale),
+            completedAtLabel: formatDateTimeLabel(attempt.completedAt, locale),
+          }))
+        : [];
+
+      const curriculumAttemptRows: DashboardCurriculumAttemptRow[] = includeRows
+        ? curriculumAttemptRowsRaw.map((attempt, index) => ({
+            id: attempt.id,
+            learnerName: attempt.user.fullName ?? attempt.user.email.split("@")[0],
+            learnerEmail: attempt.user.email,
+            courseTitle: pickLocalizedTitle(
+              attempt.course.translations,
               locale,
-              scenario.slug,
+              attempt.course.slug,
             ),
-            area: scenario.area,
-            languages: [...languages].sort(),
-            availableVariants,
-            totalAttempts: aggregate.totalAttempts,
-            completedLikeTotal,
-            completionRate: toPercent(completedLikeTotal, aggregate.totalAttempts),
-            averageScore: averageFromSumAndCount(aggregate.scoreSum, aggregate.scoreCount),
-          };
-        },
-      );
+            courseSlug: attempt.course.slug,
+            area: normalizeArea(attempt.course.area),
+            attemptNumber: index + 1,
+            status: attempt.status as DashboardCurriculumAttemptRow["status"],
+            preQuizScoreLabel: formatScore(attempt.preQuizScore),
+            postQuizScoreLabel: formatScore(attempt.postQuizScore),
+            startedAtLabel: formatDateTimeLabel(attempt.startedAt, locale),
+            lastOpenedAtLabel: formatDateTimeLabel(attempt.lastOpenedAt, locale),
+            completedAtLabel: formatDateTimeLabel(attempt.completedAt, locale),
+          }))
+        : [];
 
-      const courseBreakdown: AdminCourseStat[] = publishedCoursesWithTranslations.map((course) => {
-        const aggregate = courseAttemptsByCourseId.get(course.id) ?? {
-          totalAttempts: 0,
-          completed: 0,
-          inProgress: 0,
-          failed: 0,
-          preQuizScoreSum: 0,
-          preQuizScoreCount: 0,
-          postQuizScoreSum: 0,
-          postQuizScoreCount: 0,
-        };
-
-        return {
-          id: course.id,
-          slug: course.slug,
-          title: pickLocalizedTitle(course.translations, locale, course.slug),
-          area: course.area,
-          difficulty: course.difficulty,
-          totalAttempts: aggregate.totalAttempts,
-          completed: aggregate.completed,
-          inProgress: aggregate.inProgress,
-          failed: aggregate.failed,
-          completionRate: toPercent(aggregate.completed, aggregate.totalAttempts),
-          averagePreQuizScore: averageFromSumAndCount(
-            aggregate.preQuizScoreSum,
-            aggregate.preQuizScoreCount,
-          ),
-          averagePostQuizScore: averageFromSumAndCount(
-            aggregate.postQuizScoreSum,
-            aggregate.postQuizScoreCount,
-          ),
-        };
-      });
-
-      const scenarioAttemptRows: DashboardScenarioAttemptRow[] = scenarioAttemptRowsRaw.map(
-        (attempt) => ({
-          id: attempt.id,
-          learnerName: attempt.user.fullName ?? attempt.user.email.split("@")[0],
-          learnerEmail: attempt.user.email,
-          scenarioTitle: attempt.scenarioVariant.title,
-          scenarioSlug: attempt.scenario.slug,
-          area: normalizeArea(attempt.scenario.area),
-          language: attempt.scenarioVariant.language.toUpperCase(),
-          attemptNumber: attempt.attemptNumber,
-          status: attempt.status as DashboardScenarioAttemptRow["status"],
-          scoreLabel: formatScore(attempt.score),
-          startedAtLabel: formatDateTimeLabel(attempt.startedAt, locale),
-          lastOpenedAtLabel: formatDateTimeLabel(attempt.lastOpenedAt, locale),
-          completedAtLabel: formatDateTimeLabel(attempt.completedAt, locale),
-        }),
-      );
-
-      const curriculumAttemptRows: DashboardCurriculumAttemptRow[] = curriculumAttemptRowsRaw.map(
-        (attempt, index) => ({
-          id: attempt.id,
-          learnerName: attempt.user.fullName ?? attempt.user.email.split("@")[0],
-          learnerEmail: attempt.user.email,
-          courseTitle: pickLocalizedTitle(attempt.course.translations, locale, attempt.course.slug),
-          courseSlug: attempt.course.slug,
-          area: normalizeArea(attempt.course.area),
-          attemptNumber: index + 1,
-          status: attempt.status as DashboardCurriculumAttemptRow["status"],
-          preQuizScoreLabel: formatScore(attempt.preQuizScore),
-          postQuizScoreLabel: formatScore(attempt.postQuizScore),
-          startedAtLabel: formatDateTimeLabel(attempt.startedAt, locale),
-          lastOpenedAtLabel: formatDateTimeLabel(attempt.lastOpenedAt, locale),
-          completedAtLabel: formatDateTimeLabel(attempt.completedAt, locale),
-        }),
-      );
-
-      const eportfolioProgressRows: DashboardEportfolioProgressRow[] =
-        eportfolioProgressRowsRaw.map((progress) => ({
-          id: progress.id,
-          learnerName: progress.user.fullName ?? progress.user.email.split("@")[0],
-          learnerEmail: progress.user.email,
-          caseStudyTitle: pickLocalizedTitle(
-            progress.caseStudy.translations,
-            locale,
-            progress.caseStudy.slug,
-          ),
-          caseStudySlug: progress.caseStudy.slug,
-          language: progress.user.preferredLanguage.toUpperCase(),
-          isCompleted: progress.completedAt !== null,
-          startedAtLabel: formatDateTimeLabel(progress.startedAt, locale),
-          lastOpenedAtLabel: formatDateTimeLabel(progress.lastOpenedAt, locale),
-          completedAtLabel: formatDateTimeLabel(progress.completedAt, locale),
-        }));
+      const eportfolioProgressRows: DashboardEportfolioProgressRow[] = includeRows
+        ? eportfolioProgressRowsRaw.map((progress) => ({
+            id: progress.id,
+            learnerName: progress.user.fullName ?? progress.user.email.split("@")[0],
+            learnerEmail: progress.user.email,
+            caseStudyTitle: pickLocalizedTitle(
+              progress.caseStudy.translations,
+              locale,
+              progress.caseStudy.slug,
+            ),
+            caseStudySlug: progress.caseStudy.slug,
+            language: progress.user.preferredLanguage.toUpperCase(),
+            isCompleted: progress.completedAt !== null,
+            startedAtLabel: formatDateTimeLabel(progress.startedAt, locale),
+            lastOpenedAtLabel: formatDateTimeLabel(progress.lastOpenedAt, locale),
+            completedAtLabel: formatDateTimeLabel(progress.completedAt, locale),
+          }))
+        : [];
 
       logMeasuredOperation({
         operation: "admin.getBasicAdminStats.map",

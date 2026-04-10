@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
-export async function GET() {
+export async function GET(request: Request) {
   const startedAt = Date.now();
   let records = 0;
   let status: "ok" | "error" = "ok";
@@ -14,7 +14,15 @@ export async function GET() {
   try {
     await requireRole("en", APP_ROLES.admin);
 
-    const stats = await getBasicAdminStats("en");
+    const { searchParams } = new URL(request.url);
+    const detail = searchParams.get("detail");
+    const includeBreakdowns = detail === "full";
+    const includeRows = detail === "full";
+
+    const stats = await getBasicAdminStats("en", {
+      includeBreakdowns,
+      includeRows,
+    });
     records = 1;
 
     return measureSyncOperation({

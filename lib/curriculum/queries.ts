@@ -10,6 +10,7 @@ import {
   StoredQuizAttempt,
   TranslationRecord,
 } from "@/lib/curriculum/types";
+import { estimateJsonBytes } from "@/lib/observability/json-size";
 import {
   logMeasuredOperation,
   measureAsyncOperation,
@@ -17,38 +18,33 @@ import {
 } from "@/lib/observability/performance";
 import { prisma } from "@/lib/prisma";
 
-function pickTranslation(
-  translations: TranslationRecord[],
-  locale: string,
-): TranslationRecord | null {
-  const localeTranslation = translations.find((translation) => translation.language === locale);
-  if (localeTranslation) {
-    return localeTranslation;
-  }
-
-  const englishTranslation = translations.find((translation) => translation.language === "en");
-  if (englishTranslation) {
-    return englishTranslation;
-  }
-
-  return translations[0] ?? null;
-}
-
 function pickLocalizedRecord<T extends { language: string }>(
   records: T[],
   locale: string,
 ): T | null {
-  const localeRecord = records.find((record) => record.language === locale);
-  if (localeRecord) {
-    return localeRecord;
+  let englishRecord: T | null = null;
+  let firstRecord: T | null = null;
+
+  for (const record of records) {
+    firstRecord ??= record;
+
+    if (record.language === locale) {
+      return record;
+    }
+
+    if (englishRecord === null && record.language === "en") {
+      englishRecord = record;
+    }
   }
 
-  const englishRecord = records.find((record) => record.language === "en");
-  if (englishRecord) {
-    return englishRecord;
-  }
+  return englishRecord ?? firstRecord;
+}
 
-  return records[0] ?? null;
+function pickTranslation(
+  translations: TranslationRecord[],
+  locale: string,
+): TranslationRecord | null {
+  return pickLocalizedRecord(translations, locale);
 }
 
 function mapArea(area: string): CurriculumModuleViewModel["area"] {
@@ -97,10 +93,6 @@ function normalizeOptionalText(value: string | null | undefined) {
 
 function getRequestedLanguages(locale: string) {
   return locale === "en" ? ["en"] : [locale, "en"];
-}
-
-function estimateJsonBytes(value: unknown) {
-  return new TextEncoder().encode(JSON.stringify(value)).length;
 }
 
 function mapDifficulty(difficulty: string): CurriculumModuleViewModel["difficulty"] {
@@ -162,47 +154,58 @@ function mapSectionsToLessons(
     return [];
   }
 
-  return [...sections]
-    .sort((a, b) => a.sortOrder - b.sortOrder)
-    .map((section, index) => {
-      const translation = pickLocalizedRecord(section.translations, locale);
+  const lessons: CurriculumLessonViewModel[] = [];
 
-      return {
-        index: index + 1,
-        slug: section.slug,
-        title: translation?.title ?? section.slug,
-        summary: normalizeOptionalText(translation?.summary),
-        content: normalizeOptionalText(translation?.content),
-        estimatedMinutes: section.estimatedMinutes ?? 8,
-      };
+  for (let index = 0; index < sections.length; index += 1) {
+    const section = sections[index];
+    const translation = pickLocalizedRecord(section.translations, locale);
+
+    lessons.push({
+      index: index + 1,
+      slug: section.slug,
+      title: translation?.title ?? section.slug,
+      summary: normalizeOptionalText(translation?.summary),
+      content: normalizeOptionalText(translation?.content),
+      estimatedMinutes: section.estimatedMinutes ?? 8,
     });
+  }
+
+  return lessons;
 }
 
 function parseAttempts(raw: unknown): CurriculumQuizAttemptViewModel[] {
   if (!Array.isArray(raw)) return [];
 
-  return raw
-    .filter((item): item is StoredQuizAttempt => {
-      if (typeof item !== "object" || item === null) return false;
+  const attempts: CurriculumQuizAttemptViewModel[] = [];
 
-      const candidate = item as Partial<StoredQuizAttempt>;
+  for (const item of raw) {
+    if (typeof item !== "object" || item === null) continue;
 
-      return (
-        typeof candidate.attemptNumber === "number" &&
-        typeof candidate.score === "number" &&
-        typeof candidate.correctCount === "number" &&
-        typeof candidate.totalQuestions === "number" &&
-        typeof candidate.submittedAt === "string"
-      );
-    })
-    .map((item) => ({
-      attemptNumber: item.attemptNumber,
-      score: item.score,
-      correctCount: item.correctCount,
-      totalQuestions: item.totalQuestions,
-      submittedAt: formatAttemptDate(item.submittedAt),
-      flaggedQuestionIds: Array.isArray(item.flaggedQuestionIds) ? item.flaggedQuestionIds : [],
-    }));
+    const candidate = item as Partial<StoredQuizAttempt>;
+
+    if (
+      typeof candidate.attemptNumber !== "number" ||
+      typeof candidate.score !== "number" ||
+      typeof candidate.correctCount !== "number" ||
+      typeof candidate.totalQuestions !== "number" ||
+      typeof candidate.submittedAt !== "string"
+    ) {
+      continue;
+    }
+
+    attempts.push({
+      attemptNumber: candidate.attemptNumber,
+      score: candidate.score,
+      correctCount: candidate.correctCount,
+      totalQuestions: candidate.totalQuestions,
+      submittedAt: formatAttemptDate(candidate.submittedAt),
+      flaggedQuestionIds: Array.isArray(candidate.flaggedQuestionIds)
+        ? candidate.flaggedQuestionIds
+        : [],
+    });
+  }
+
+  return attempts;
 }
 
 function buildProgressState(params: {
@@ -317,8 +320,12 @@ function mapCourseToViewModel(
     difficulty: mapDifficulty(course.difficulty),
     outcomes: buildGeneratedOutcomes(area),
     structure: buildGeneratedStructure(quizzesCount),
-    quizItems:
-      course.quizzes?.map((quiz) => {
+    quizItems: (() => {
+      if (!course.quizzes || course.quizzes.length === 0) {
+        return [];
+      }
+
+      return course.quizzes.map((quiz) => {
         const quizTranslation = pickLocalizedRecord(quiz.translations, locale);
 
         return {
@@ -327,35 +334,32 @@ function mapCourseToViewModel(
           title: quizTranslation?.title ?? quiz.title,
           description: normalizeOptionalText(quizTranslation?.description ?? quiz.description),
           passingScore: quiz.passingScore,
-          questions: [...quiz.questions]
-            .sort((a, b) => a.sortOrder - b.sortOrder)
-            .map((question) => {
-              const questionTranslation = pickLocalizedRecord(question.translations, locale);
+          questions: quiz.questions.map((question) => {
+            const questionTranslation = pickLocalizedRecord(question.translations, locale);
 
-              return {
-                id: question.id,
-                prompt: questionTranslation?.prompt ?? question.prompt,
-                explanation: normalizeOptionalText(
-                  questionTranslation?.explanation ?? question.explanation,
-                ),
-                answers: [...question.answers]
-                  .sort((a, b) => a.sortOrder - b.sortOrder)
-                  .map((answer) => {
-                    const answerTranslation = pickLocalizedRecord(answer.translations, locale);
+            return {
+              id: question.id,
+              prompt: questionTranslation?.prompt ?? question.prompt,
+              explanation: normalizeOptionalText(
+                questionTranslation?.explanation ?? question.explanation,
+              ),
+              answers: question.answers.map((answer) => {
+                const answerTranslation = pickLocalizedRecord(answer.translations, locale);
 
-                    return {
-                      id: answer.id,
-                      text: answerTranslation?.text ?? answer.text,
-                      isCorrect: answer.isCorrect,
-                      feedbackText: normalizeOptionalText(
-                        answerTranslation?.feedbackText ?? answer.feedbackText,
-                      ),
-                    };
-                  }),
-              };
-            }),
+                return {
+                  id: answer.id,
+                  text: answerTranslation?.text ?? answer.text,
+                  isCorrect: answer.isCorrect,
+                  feedbackText: normalizeOptionalText(
+                    answerTranslation?.feedbackText ?? answer.feedbackText,
+                  ),
+                };
+              }),
+            };
+          }),
         };
-      }) ?? [],
+      });
+    })(),
     lessonsData,
     progressState,
   };
