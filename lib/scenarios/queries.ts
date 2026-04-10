@@ -407,7 +407,6 @@ async function getScenarioLibraryBase(params: { locale: string; userId: string; 
         },
         select: {
           status: true,
-          createdAt: true,
         },
         orderBy: [{ createdAt: "desc" }],
         take: 1,
@@ -428,6 +427,7 @@ async function getScenarioLibraryBase(params: { locale: string; userId: string; 
       variants: collectionMeta.variants,
       attempts: collectionMeta.attempts,
       responseBytes: estimateJsonBytes(scenarios),
+      activeLibrary: params.onlyMy ? "my-scenarios" : "all-scenarios",
     },
   });
 
@@ -440,6 +440,7 @@ async function getScenarioLibraryBase(params: { locale: string; userId: string; 
       nodeElements: scenarios.length,
       variants: collectionMeta.variants,
       attempts: collectionMeta.attempts,
+      activeLibrary: params.onlyMy ? "my-scenarios" : "all-scenarios",
     },
     execute: () => mapScenarioCollectionToViewModels(scenarios, params.locale),
   });
@@ -452,6 +453,7 @@ async function getScenarioLibraryBase(params: { locale: string; userId: string; 
     records: mappedScenarios.length,
     meta: {
       responseBytes: estimateJsonBytes(mappedScenarios),
+      activeLibrary: params.onlyMy ? "my-scenarios" : "all-scenarios",
     },
   });
 

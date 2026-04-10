@@ -2,6 +2,7 @@ import CurriculumSwitcher from "@/components/curriculum/curriculum-switcher";
 import { requireRole } from "@/features/auth/requireRole";
 import { APP_ROLES } from "@/lib/auth/roles";
 import { getCurriculumModules } from "@/lib/curriculum/queries";
+import { estimateJsonBytes } from "@/lib/observability/json-size";
 import { logMeasuredOperation } from "@/lib/observability/performance";
 import { BookOpen } from "lucide-react";
 import { getTranslations } from "next-intl/server";
@@ -47,6 +48,7 @@ export default async function CurriculumPage({ params, searchParams }: Props) {
   let myCoursesCount = 0;
   let allCoursesCount = 0;
   let activeView: ViewMode = "my-courses";
+  let responseBytes = 0;
 
   try {
     const [{ locale }, resolvedSearchParams] = await Promise.all([
@@ -61,14 +63,18 @@ export default async function CurriculumPage({ params, searchParams }: Props) {
       requireRole(locale, APP_ROLES.educator),
     ]);
 
-    const allModules = await getCurriculumModules({ userId: user.id, locale });
-    const myCourses =
-      activeView === "my-courses" ? allModules.filter((item) => item.status !== "not_started") : [];
-    const allCourses = activeView === "all-courses" ? allModules : [];
+    const modules = await getCurriculumModules({
+      userId: user.id,
+      locale,
+      viewMode: activeView,
+    });
+    const myCourses = activeView === "my-courses" ? modules : [];
+    const allCourses = activeView === "all-courses" ? modules : [];
 
     myCoursesCount = myCourses.length;
     allCoursesCount = allCourses.length;
-    records = myCourses.length + allCourses.length;
+    records = modules.length;
+    responseBytes = estimateJsonBytes(modules);
 
     return (
       <main className="relative min-h-screen bg-[#f5f5f3] pb-20 transition-all duration-300">
@@ -110,6 +116,7 @@ export default async function CurriculumPage({ params, searchParams }: Props) {
         loadingMode: "active-tab-only",
         myCourses: myCoursesCount,
         allCourses: allCoursesCount,
+        responseBytes,
       },
     });
   }

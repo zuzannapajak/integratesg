@@ -1,6 +1,7 @@
 import ScenarioSwitcher from "@/components/scenarios/scenario-switcher";
 import { requireRole } from "@/features/auth/requireRole";
 import { APP_ROLES } from "@/lib/auth/roles";
+import { estimateJsonBytes } from "@/lib/observability/json-size";
 import { logMeasuredOperation } from "@/lib/observability/performance";
 import { getAllScenarioLibrary, getMyScenarioLibrary } from "@/lib/scenarios/queries";
 import { PlayCircle } from "lucide-react";
@@ -47,6 +48,7 @@ export default async function ScenariosPage({ params, searchParams }: Props) {
   let myScenariosCount = 0;
   let allScenariosCount = 0;
   let activeView: ViewMode = "my-scenarios";
+  let responseBytes = 0;
 
   try {
     const [{ locale }, resolvedSearchParams] = await Promise.all([
@@ -61,16 +63,17 @@ export default async function ScenariosPage({ params, searchParams }: Props) {
       requireRole(locale, [APP_ROLES.student, APP_ROLES.educator]),
     ]);
 
-    const myScenarios =
-      activeView === "my-scenarios" ? await getMyScenarioLibrary({ userId: user.id, locale }) : [];
-    const allScenarios =
-      activeView === "all-scenarios"
-        ? await getAllScenarioLibrary({ userId: user.id, locale })
-        : [];
+    const scenarios =
+      activeView === "my-scenarios"
+        ? await getMyScenarioLibrary({ userId: user.id, locale })
+        : await getAllScenarioLibrary({ userId: user.id, locale });
+    const myScenarios = activeView === "my-scenarios" ? scenarios : [];
+    const allScenarios = activeView === "all-scenarios" ? scenarios : [];
 
     myScenariosCount = myScenarios.length;
     allScenariosCount = allScenarios.length;
-    records = myScenarios.length + allScenarios.length;
+    records = scenarios.length;
+    responseBytes = estimateJsonBytes(scenarios);
 
     return (
       <main className="relative min-h-screen bg-[#f5f5f3] pb-20 transition-all duration-300">
@@ -112,6 +115,7 @@ export default async function ScenariosPage({ params, searchParams }: Props) {
         loadingMode: "active-tab-only",
         myScenarios: myScenariosCount,
         allScenarios: allScenariosCount,
+        responseBytes,
       },
     });
   }

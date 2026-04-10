@@ -388,17 +388,36 @@ function mapCourseToListItem(
   };
 }
 
-export async function getCurriculumModules(params: { locale: string; userId: string }) {
+type CurriculumListViewMode = "my-courses" | "all-courses";
+
+export async function getCurriculumModules(params: {
+  locale: string;
+  userId: string;
+  viewMode?: CurriculumListViewMode;
+}) {
   return measureAsyncOperation({
     operation: "curriculum.getCurriculumModules",
     getRecords: (modules) => modules.length,
     execute: async () => {
       const requestedLanguages = getRequestedLanguages(params.locale);
+      const isMyCoursesView = params.viewMode === "my-courses";
 
       const prismaStartedAt = Date.now();
       const courses = await prisma.course.findMany({
         where: {
           status: "published",
+          ...(isMyCoursesView
+            ? {
+                userCourseAttempts: {
+                  some: {
+                    userId: params.userId,
+                    status: {
+                      not: "not_started",
+                    },
+                  },
+                },
+              }
+            : {}),
         },
         select: {
           slug: true,
@@ -427,6 +446,13 @@ export async function getCurriculumModules(params: { locale: string; userId: str
           userCourseAttempts: {
             where: {
               userId: params.userId,
+              ...(isMyCoursesView
+                ? {
+                    status: {
+                      not: "not_started",
+                    },
+                  }
+                : {}),
             },
             select: {
               status: true,
@@ -447,6 +473,7 @@ export async function getCurriculumModules(params: { locale: string; userId: str
         meta: {
           translations: courses.reduce((sum, course) => sum + course.translations.length, 0),
           responseBytes: estimateJsonBytes(courses),
+          viewMode: params.viewMode ?? "all-courses",
         },
       });
 
@@ -455,6 +482,7 @@ export async function getCurriculumModules(params: { locale: string; userId: str
         records: courses.length,
         meta: {
           nodeElements: courses.length,
+          viewMode: params.viewMode ?? "all-courses",
         },
         execute: () =>
           courses.map((course) => mapCourseToListItem(course as CourseMappedInput, params.locale)),
@@ -466,6 +494,7 @@ export async function getCurriculumModules(params: { locale: string; userId: str
         records: modules.length,
         meta: {
           responseBytes: estimateJsonBytes(modules),
+          viewMode: params.viewMode ?? "all-courses",
         },
       });
 
