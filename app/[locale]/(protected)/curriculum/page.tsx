@@ -6,26 +6,65 @@ import { logMeasuredOperation } from "@/lib/observability/performance";
 import { BookOpen } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
+type ViewMode = "my-courses" | "all-courses";
+
 type Props = {
   params: Promise<{ locale: string }>;
+  searchParams?: Promise<unknown>;
 };
 
-export default async function CurriculumPage({ params }: Props) {
+function getSingleSearchParam(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] : value;
+}
+
+function getViewParam(searchParams: unknown): string | string[] | undefined {
+  if (typeof searchParams !== "object" || searchParams === null) {
+    return undefined;
+  }
+
+  const candidate = (searchParams as Record<string, unknown>).view;
+
+  if (typeof candidate === "string") {
+    return candidate;
+  }
+
+  if (Array.isArray(candidate) && candidate.every((item) => typeof item === "string")) {
+    return candidate;
+  }
+
+  return undefined;
+}
+
+function resolveViewMode(view: string | string[] | undefined): ViewMode {
+  const resolvedView = getSingleSearchParam(view);
+  return resolvedView === "all-courses" ? "all-courses" : "my-courses";
+}
+
+export default async function CurriculumPage({ params, searchParams }: Props) {
   const startedAt = Date.now();
   let records = 0;
   let status: "ok" | "error" = "ok";
   let myCoursesCount = 0;
   let allCoursesCount = 0;
+  let activeView: ViewMode = "my-courses";
 
   try {
-    const { locale } = await params;
+    const [{ locale }, resolvedSearchParams] = await Promise.all([
+      params,
+      searchParams ?? Promise.resolve(undefined),
+    ]);
+
+    activeView = resolveViewMode(getViewParam(resolvedSearchParams));
+
     const t = await getTranslations({ locale, namespace: "Protected.CurriculumPage" });
     const { user } = await requireRole(locale, APP_ROLES.educator);
 
-    const [myCourses, allCourses] = await Promise.all([
-      getMyCurriculumModules({ userId: user.id, locale }),
-      getAllCurriculumModules({ userId: user.id, locale }),
-    ]);
+    const myCourses =
+      activeView === "my-courses" ? await getMyCurriculumModules({ userId: user.id, locale }) : [];
+    const allCourses =
+      activeView === "all-courses"
+        ? await getAllCurriculumModules({ userId: user.id, locale })
+        : [];
 
     myCoursesCount = myCourses.length;
     allCoursesCount = allCourses.length;
@@ -47,7 +86,12 @@ export default async function CurriculumPage({ params }: Props) {
             </div>
           </header>
 
-          <CurriculumSwitcher locale={locale} myCourses={myCourses} allCourses={allCourses} />
+          <CurriculumSwitcher
+            locale={locale}
+            activeView={activeView}
+            myCourses={myCourses}
+            allCourses={allCourses}
+          />
         </div>
       </main>
     );
@@ -62,6 +106,8 @@ export default async function CurriculumPage({ params }: Props) {
       status,
       meta: {
         path: "/[locale]/curriculum",
+        activeView,
+        loadingMode: "active-tab-only",
         myCourses: myCoursesCount,
         allCourses: allCoursesCount,
       },

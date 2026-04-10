@@ -6,26 +6,65 @@ import { getAllScenarioLibrary, getMyScenarioLibrary } from "@/lib/scenarios/que
 import { PlayCircle } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
+type ViewMode = "my-scenarios" | "all-scenarios";
+
 type Props = {
   params: Promise<{ locale: string }>;
+  searchParams?: Promise<unknown>;
 };
 
-export default async function ScenariosPage({ params }: Props) {
+function getSingleSearchParam(value: string | string[] | undefined) {
+  return Array.isArray(value) ? value[0] : value;
+}
+
+function getViewParam(searchParams: unknown): string | string[] | undefined {
+  if (typeof searchParams !== "object" || searchParams === null) {
+    return undefined;
+  }
+
+  const candidate = (searchParams as Record<string, unknown>).view;
+
+  if (typeof candidate === "string") {
+    return candidate;
+  }
+
+  if (Array.isArray(candidate) && candidate.every((item) => typeof item === "string")) {
+    return candidate;
+  }
+
+  return undefined;
+}
+
+function resolveViewMode(view: string | string[] | undefined): ViewMode {
+  const resolvedView = getSingleSearchParam(view);
+  return resolvedView === "all-scenarios" ? "all-scenarios" : "my-scenarios";
+}
+
+export default async function ScenariosPage({ params, searchParams }: Props) {
   const startedAt = Date.now();
   let records = 0;
   let status: "ok" | "error" = "ok";
   let myScenariosCount = 0;
   let allScenariosCount = 0;
+  let activeView: ViewMode = "my-scenarios";
 
   try {
-    const { locale } = await params;
+    const [{ locale }, resolvedSearchParams] = await Promise.all([
+      params,
+      searchParams ?? Promise.resolve(undefined),
+    ]);
+
+    activeView = resolveViewMode(getViewParam(resolvedSearchParams));
+
     const t = await getTranslations({ locale, namespace: "Protected.ScenariosPage" });
     const { user } = await requireRole(locale, [APP_ROLES.student, APP_ROLES.educator]);
 
-    const [myScenarios, allScenarios] = await Promise.all([
-      getMyScenarioLibrary({ userId: user.id, locale }),
-      getAllScenarioLibrary({ userId: user.id, locale }),
-    ]);
+    const myScenarios =
+      activeView === "my-scenarios" ? await getMyScenarioLibrary({ userId: user.id, locale }) : [];
+    const allScenarios =
+      activeView === "all-scenarios"
+        ? await getAllScenarioLibrary({ userId: user.id, locale })
+        : [];
 
     myScenariosCount = myScenarios.length;
     allScenariosCount = allScenarios.length;
@@ -47,7 +86,12 @@ export default async function ScenariosPage({ params }: Props) {
             </div>
           </header>
 
-          <ScenarioSwitcher locale={locale} myScenarios={myScenarios} allScenarios={allScenarios} />
+          <ScenarioSwitcher
+            locale={locale}
+            activeView={activeView}
+            myScenarios={myScenarios}
+            allScenarios={allScenarios}
+          />
         </div>
       </main>
     );
@@ -62,6 +106,8 @@ export default async function ScenariosPage({ params }: Props) {
       status,
       meta: {
         path: "/[locale]/scenarios",
+        activeView,
+        loadingMode: "active-tab-only",
         myScenarios: myScenariosCount,
         allScenarios: allScenariosCount,
       },

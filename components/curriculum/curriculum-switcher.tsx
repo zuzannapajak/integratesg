@@ -4,19 +4,35 @@ import CurriculumListShell from "@/components/curriculum/curriculum-list-shell";
 import { CurriculumModuleViewModel } from "@/lib/curriculum/types";
 import { BookOpen, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type ViewMode = "my-courses" | "all-courses";
 
 type Props = {
   locale: string;
+  activeView: ViewMode;
   myCourses: CurriculumModuleViewModel[];
   allCourses: CurriculumModuleViewModel[];
 };
 
-export default function CurriculumSwitcher({ locale, myCourses, allCourses }: Props) {
+export default function CurriculumSwitcher({ locale, activeView, myCourses, allCourses }: Props) {
   const t = useTranslations("Protected.CurriculumSwitcher");
-  const [viewMode, setViewMode] = useState<ViewMode>("my-courses");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  function setViewMode(viewMode: ViewMode) {
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (viewMode === "my-courses") {
+      params.delete("view");
+    } else {
+      params.set("view", viewMode);
+    }
+
+    const query = params.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+  }
 
   return (
     <section className="space-y-6">
@@ -29,7 +45,7 @@ export default function CurriculumSwitcher({ locale, myCourses, allCourses }: Pr
                 setViewMode("my-courses");
               }}
               className={`inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-xl px-3 py-2.5 text-sm font-semibold transition sm:px-4 ${
-                viewMode === "my-courses"
+                activeView === "my-courses"
                   ? "bg-[#31425a] text-white shadow-sm"
                   : "text-[#5f6f82] hover:bg-[#f4f7fa]"
               }`}
@@ -44,7 +60,7 @@ export default function CurriculumSwitcher({ locale, myCourses, allCourses }: Pr
                 setViewMode("all-courses");
               }}
               className={`inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-xl px-3 py-2.5 text-sm font-semibold transition sm:px-4 ${
-                viewMode === "all-courses"
+                activeView === "all-courses"
                   ? "bg-[#31425a] text-white shadow-sm"
                   : "text-[#5f6f82] hover:bg-[#f4f7fa]"
               }`}
@@ -56,7 +72,7 @@ export default function CurriculumSwitcher({ locale, myCourses, allCourses }: Pr
         </div>
       </div>
 
-      {viewMode === "my-courses" ? (
+      {activeView === "my-courses" ? (
         <CurriculumListShell
           locale={locale}
           items={myCourses}

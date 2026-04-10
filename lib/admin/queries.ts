@@ -31,14 +31,9 @@ function toPercent(part: number, total: number) {
   return Math.round((part / total) * 100);
 }
 
-function roundNullable(value: number | null) {
-  return value === null ? null : Math.round(value);
-}
-
-function averageNullable(values: Array<number | null>) {
-  const filtered = values.filter((value): value is number => value !== null);
-  if (filtered.length === 0) return null;
-  return Math.round(filtered.reduce((sum, value) => sum + value, 0) / filtered.length);
+function averageFromSumAndCount(sum: number, count: number) {
+  if (count <= 0) return null;
+  return Math.round(sum / count);
 }
 
 function formatScore(value: number | null) {
@@ -67,29 +62,24 @@ function addHours(date: Date, hours: number) {
   return next;
 }
 
-function sameDay(a: Date | null, b: Date) {
-  if (a === null) return false;
-
-  return (
-    a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate()
-  );
+function incrementMapCount(map: Map<number | string, number>, key: number | string, amount = 1) {
+  map.set(key, (map.get(key) ?? 0) + amount);
 }
 
-function sameHour(a: Date | null, b: Date) {
-  if (a === null) return false;
+function addDateToBucketMap(
+  map: Map<number, number>,
+  date: Date | null,
+  mode: "day" | "hour",
+  since: Date,
+) {
+  if (date === null || date < since) return;
 
-  return (
-    a.getFullYear() === b.getFullYear() &&
-    a.getMonth() === b.getMonth() &&
-    a.getDate() === b.getDate() &&
-    a.getHours() === b.getHours()
-  );
+  const bucketStart = mode === "hour" ? startOfHour(date).getTime() : startOfDay(date).getTime();
+  incrementMapCount(map, bucketStart);
 }
 
 function buildLastDaysSeries(
-  dates: Array<Date | null>,
+  bucketCounts: Map<number, number>,
   days: number,
   formatter: Intl.DateTimeFormat,
 ): ChartPoint[] {
@@ -100,13 +90,13 @@ function buildLastDaysSeries(
 
     return {
       label: formatter.format(day),
-      value: dates.filter((date) => sameDay(date, day)).length,
+      value: bucketCounts.get(day.getTime()) ?? 0,
     };
   });
 }
 
 function buildLast24HoursSeries(
-  dates: Array<Date | null>,
+  bucketCounts: Map<number, number>,
   formatter: Intl.DateTimeFormat,
 ): ChartPoint[] {
   const currentHour = startOfHour(new Date());
@@ -116,7 +106,7 @@ function buildLast24HoursSeries(
 
     return {
       label: formatter.format(hour),
-      value: dates.filter((date) => sameHour(date, hour)).length,
+      value: bucketCounts.get(hour.getTime()) ?? 0,
     };
   });
 }
@@ -149,62 +139,195 @@ function hasActivityInRange(
   );
 }
 
-function getAttemptActivityDates(
-  rows: Array<{
-    startedAt: Date | null;
-    lastOpenedAt: Date | null;
-    completedAt: Date | null;
-  }>,
-) {
-  return rows.flatMap((row) => [row.startedAt, row.lastOpenedAt, row.completedAt]);
-}
+type ScenarioWindowAggregate = {
+  total: number;
+  passed: number;
+  completed: number;
+  failed: number;
+  scoreSum: number;
+  scoreCount: number;
+  activeUsers: Set<string>;
+  hourBuckets: Map<number, number>;
+  dayBuckets: Map<number, number>;
+};
 
-function buildScenarioWindowStats(
-  attempts: Array<{
-    status: string;
-    score: number | null;
-  }>,
-) {
-  const passed = attempts.filter((attempt) => attempt.status === "passed").length;
-  const completed = attempts.filter((attempt) => attempt.status === "completed").length;
-  const failed = attempts.filter((attempt) => attempt.status === "failed").length;
-  const completedLikeTotal = passed + completed;
+type CurriculumWindowAggregate = {
+  total: number;
+  completed: number;
+  inProgress: number;
+  preQuizScoreSum: number;
+  preQuizScoreCount: number;
+  postQuizScoreSum: number;
+  postQuizScoreCount: number;
+  activeUsers: Set<string>;
+  hourBuckets: Map<number, number>;
+  dayBuckets: Map<number, number>;
+};
 
+type EportfolioWindowAggregate = {
+  total: number;
+  completed: number;
+  hourBuckets: Map<number, number>;
+  dayBuckets: Map<number, number>;
+};
+
+function createScenarioWindowAggregate(): ScenarioWindowAggregate {
   return {
-    completionRate: toPercent(completedLikeTotal, attempts.length),
-    averageScore: averageNullable(attempts.map((attempt) => attempt.score)),
-    completedLikeTotal,
-    failed,
+    total: 0,
+    passed: 0,
+    completed: 0,
+    failed: 0,
+    scoreSum: 0,
+    scoreCount: 0,
+    activeUsers: new Set<string>(),
+    hourBuckets: new Map<number, number>(),
+    dayBuckets: new Map<number, number>(),
   };
 }
 
-function buildCurriculumWindowStats(
-  attempts: Array<{
+function createCurriculumWindowAggregate(): CurriculumWindowAggregate {
+  return {
+    total: 0,
+    completed: 0,
+    inProgress: 0,
+    preQuizScoreSum: 0,
+    preQuizScoreCount: 0,
+    postQuizScoreSum: 0,
+    postQuizScoreCount: 0,
+    activeUsers: new Set<string>(),
+    hourBuckets: new Map<number, number>(),
+    dayBuckets: new Map<number, number>(),
+  };
+}
+
+function createEportfolioWindowAggregate(): EportfolioWindowAggregate {
+  return {
+    total: 0,
+    completed: 0,
+    hourBuckets: new Map<number, number>(),
+    dayBuckets: new Map<number, number>(),
+  };
+}
+
+function updateScenarioWindowAggregate(
+  aggregate: ScenarioWindowAggregate,
+  attempt: {
+    userId: string;
+    status: string;
+    score: number | null;
+    startedAt: Date | null;
+    lastOpenedAt: Date | null;
+    completedAt: Date | null;
+  },
+  since: Date,
+  bucketMode: "day" | "hour",
+) {
+  if (!hasActivityInRange(attempt, since)) return;
+
+  aggregate.total += 1;
+  aggregate.activeUsers.add(attempt.userId);
+
+  if (attempt.status === "passed") aggregate.passed += 1;
+  if (attempt.status === "completed") aggregate.completed += 1;
+  if (attempt.status === "failed") aggregate.failed += 1;
+
+  if (attempt.score !== null) {
+    aggregate.scoreSum += attempt.score;
+    aggregate.scoreCount += 1;
+  }
+
+  const bucketMap = bucketMode === "hour" ? aggregate.hourBuckets : aggregate.dayBuckets;
+  addDateToBucketMap(bucketMap, attempt.startedAt, bucketMode, since);
+  addDateToBucketMap(bucketMap, attempt.lastOpenedAt, bucketMode, since);
+  addDateToBucketMap(bucketMap, attempt.completedAt, bucketMode, since);
+}
+
+function updateCurriculumWindowAggregate(
+  aggregate: CurriculumWindowAggregate,
+  attempt: {
+    userId: string;
     status: string;
     preQuizScore: number | null;
     postQuizScore: number | null;
-  }>,
+    startedAt: Date | null;
+    lastOpenedAt: Date | null;
+    completedAt: Date | null;
+  },
+  since: Date,
+  bucketMode: "day" | "hour",
 ) {
-  const completed = attempts.filter((attempt) => attempt.status === "completed").length;
-  const inProgress = attempts.filter((attempt) => attempt.status === "in_progress").length;
+  if (!hasActivityInRange(attempt, since)) return;
+
+  aggregate.total += 1;
+  aggregate.activeUsers.add(attempt.userId);
+
+  if (attempt.status === "completed") aggregate.completed += 1;
+  if (attempt.status === "in_progress") aggregate.inProgress += 1;
+
+  if (attempt.preQuizScore !== null) {
+    aggregate.preQuizScoreSum += attempt.preQuizScore;
+    aggregate.preQuizScoreCount += 1;
+  }
+
+  if (attempt.postQuizScore !== null) {
+    aggregate.postQuizScoreSum += attempt.postQuizScore;
+    aggregate.postQuizScoreCount += 1;
+  }
+
+  const bucketMap = bucketMode === "hour" ? aggregate.hourBuckets : aggregate.dayBuckets;
+  addDateToBucketMap(bucketMap, attempt.startedAt, bucketMode, since);
+  addDateToBucketMap(bucketMap, attempt.lastOpenedAt, bucketMode, since);
+  addDateToBucketMap(bucketMap, attempt.completedAt, bucketMode, since);
+}
+
+function updateEportfolioWindowAggregate(
+  aggregate: EportfolioWindowAggregate,
+  record: { completedAt: Date | null },
+  since: Date,
+  bucketMode: "day" | "hour",
+) {
+  if (record.completedAt === null || record.completedAt < since) return;
+
+  aggregate.total += 1;
+  aggregate.completed += 1;
+
+  const bucketMap = bucketMode === "hour" ? aggregate.hourBuckets : aggregate.dayBuckets;
+  addDateToBucketMap(bucketMap, record.completedAt, bucketMode, since);
+}
+
+function buildScenarioWindowStats(aggregate: ScenarioWindowAggregate) {
+  const completedLikeTotal = aggregate.passed + aggregate.completed;
 
   return {
-    completionRate: toPercent(completed, attempts.length),
-    averagePreQuizScore: averageNullable(attempts.map((attempt) => attempt.preQuizScore)),
-    averagePostQuizScore: averageNullable(attempts.map((attempt) => attempt.postQuizScore)),
-    inProgress,
+    completionRate: toPercent(completedLikeTotal, aggregate.total),
+    averageScore: averageFromSumAndCount(aggregate.scoreSum, aggregate.scoreCount),
+    completedLikeTotal,
+    failed: aggregate.failed,
+  };
+}
+
+function buildCurriculumWindowStats(aggregate: CurriculumWindowAggregate) {
+  return {
+    completionRate: toPercent(aggregate.completed, aggregate.total),
+    averagePreQuizScore: averageFromSumAndCount(
+      aggregate.preQuizScoreSum,
+      aggregate.preQuizScoreCount,
+    ),
+    averagePostQuizScore: averageFromSumAndCount(
+      aggregate.postQuizScoreSum,
+      aggregate.postQuizScoreCount,
+    ),
+    inProgress: aggregate.inProgress,
   };
 }
 
 function buildEportfolioWindowStats(params: {
-  records: Array<{ completedAt: Date | null }>;
+  aggregate: EportfolioWindowAggregate;
   published: number;
   activeUsers: number;
 }) {
-  const completed = params.records.filter((record) => record.completedAt !== null).length;
-
   return {
-    completionRate: toPercent(completed, params.records.length),
+    completionRate: toPercent(params.aggregate.completed, params.aggregate.total),
     published: params.published,
     activeUsers: params.activeUsers,
   };
@@ -529,199 +652,202 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
 
       const mappingStartedAt = Date.now();
 
-      const totalUsers = profiles.length;
-      const totalStudents = profiles.filter((profile) => profile.role === "student").length;
-      const totalEducators = profiles.filter((profile) => profile.role === "educator").length;
-      const totalAdmins = profiles.filter((profile) => profile.role === "admin").length;
+      let totalStudents = 0;
+      let totalEducators = 0;
+      let totalAdmins = 0;
+      const usersByLanguage = new Map<string, number>();
 
+      for (const profile of profiles) {
+        if (profile.role === "student") totalStudents += 1;
+        if (profile.role === "educator") totalEducators += 1;
+        if (profile.role === "admin") totalAdmins += 1;
+        incrementMapCount(usersByLanguage, profile.preferredLanguage);
+      }
+
+      const totalUsers = profiles.length;
       const publishedCourses = publishedCoursesWithTranslations.length;
       const publishedCaseStudies = publishedCaseStudiesWithTranslations.length;
       const publishedScenarios = publishedScenariosWithVariants.length;
-      const availableScenarioVariants = publishedScenariosWithVariants.reduce(
-        (sum, scenario) =>
-          sum +
-          scenario.variants.filter((variant) => variant.availabilityStatus === "available").length,
-        0,
-      );
 
-      const passedScenarioAttempts = scenarioAttempts.filter(
-        (attempt) => attempt.status === "passed",
-      ).length;
-      const completedScenarioAttempts = scenarioAttempts.filter(
-        (attempt) => attempt.status === "completed",
-      ).length;
-      const failedScenarioAttempts = scenarioAttempts.filter(
-        (attempt) => attempt.status === "failed",
-      ).length;
-      const incompleteScenarioAttempts = scenarioAttempts.filter(
-        (attempt) => attempt.status === "incomplete",
-      ).length;
-      const browsedScenarioAttempts = scenarioAttempts.filter(
-        (attempt) => attempt.status === "browsed",
-      ).length;
+      const publishedCoursesByLanguage = new Map<string, number>();
+      for (const course of publishedCoursesWithTranslations) {
+        const languages = new Set(course.translations.map((translation) => translation.language));
+        for (const language of languages) {
+          incrementMapCount(publishedCoursesByLanguage, language);
+        }
+      }
+
+      const publishedCaseStudiesByLanguage = new Map<string, number>();
+      for (const caseStudy of publishedCaseStudiesWithTranslations) {
+        const languages = new Set(
+          caseStudy.translations.map((translation) => translation.language),
+        );
+        for (const language of languages) {
+          incrementMapCount(publishedCaseStudiesByLanguage, language);
+        }
+      }
+
+      const availableScenarioVariantsByLanguage = new Map<string, number>();
+      let availableScenarioVariants = 0;
+      for (const scenario of publishedScenariosWithVariants) {
+        for (const variant of scenario.variants) {
+          if (variant.availabilityStatus !== "available") continue;
+          availableScenarioVariants += 1;
+          incrementMapCount(availableScenarioVariantsByLanguage, variant.language);
+        }
+      }
+
+      let passedScenarioAttempts = 0;
+      let completedScenarioAttempts = 0;
+      let failedScenarioAttempts = 0;
+      let incompleteScenarioAttempts = 0;
+      let browsedScenarioAttempts = 0;
+      let scenarioScoreSum = 0;
+      let scenarioScoreCount = 0;
+
+      const scenarioWindow24h = createScenarioWindowAggregate();
+      const scenarioWindow7d = createScenarioWindowAggregate();
+      const scenarioWindow30d = createScenarioWindowAggregate();
+
+      for (const attempt of scenarioAttempts) {
+        if (attempt.status === "passed") passedScenarioAttempts += 1;
+        if (attempt.status === "completed") completedScenarioAttempts += 1;
+        if (attempt.status === "failed") failedScenarioAttempts += 1;
+        if (attempt.status === "incomplete") incompleteScenarioAttempts += 1;
+        if (attempt.status === "browsed") browsedScenarioAttempts += 1;
+
+        if (attempt.score !== null) {
+          scenarioScoreSum += attempt.score;
+          scenarioScoreCount += 1;
+        }
+
+        updateScenarioWindowAggregate(scenarioWindow24h, attempt, last24hStart, "hour");
+        updateScenarioWindowAggregate(scenarioWindow7d, attempt, last7dStart, "day");
+        updateScenarioWindowAggregate(scenarioWindow30d, attempt, last30dStart, "day");
+      }
+
       const scenarioCompletedLike = passedScenarioAttempts + completedScenarioAttempts;
-      const scenarioScores = scenarioAttempts
-        .map((attempt) => attempt.score)
-        .filter((score): score is number => score !== null);
 
-      const completedCourseAttempts = courseAttempts.filter(
-        (attempt) => attempt.status === "completed",
-      ).length;
-      const inProgressCourseAttempts = courseAttempts.filter(
-        (attempt) => attempt.status === "in_progress",
-      ).length;
-      const failedCourseAttempts = courseAttempts.filter(
-        (attempt) => attempt.status === "failed",
-      ).length;
+      let completedCourseAttempts = 0;
+      let inProgressCourseAttempts = 0;
+      let failedCourseAttempts = 0;
+      let preQuizScoreSum = 0;
+      let preQuizScoreCount = 0;
+      let postQuizScoreSum = 0;
+      let postQuizScoreCount = 0;
 
-      const preQuizScores = courseAttempts
-        .map((attempt) => attempt.preQuizScore)
-        .filter((score): score is number => score !== null);
+      const curriculumWindow24h = createCurriculumWindowAggregate();
+      const curriculumWindow7d = createCurriculumWindowAggregate();
+      const curriculumWindow30d = createCurriculumWindowAggregate();
 
-      const postQuizScores = courseAttempts
-        .map((attempt) => attempt.postQuizScore)
-        .filter((score): score is number => score !== null);
+      for (const attempt of courseAttempts) {
+        if (attempt.status === "completed") completedCourseAttempts += 1;
+        if (attempt.status === "in_progress") inProgressCourseAttempts += 1;
+        if (attempt.status === "failed") failedCourseAttempts += 1;
 
-      const completedCaseStudies = caseStudyProgressRecords.filter(
-        (item) => item.completedAt !== null,
-      ).length;
+        if (attempt.preQuizScore !== null) {
+          preQuizScoreSum += attempt.preQuizScore;
+          preQuizScoreCount += 1;
+        }
 
-      const recentScenarioAttempts24h = scenarioAttempts.filter((attempt) =>
-        hasActivityInRange(attempt, last24hStart),
-      );
-      const recentScenarioAttempts7d = scenarioAttempts.filter((attempt) =>
-        hasActivityInRange(attempt, last7dStart),
-      );
-      const recentScenarioAttempts30d = scenarioAttempts.filter((attempt) =>
-        hasActivityInRange(attempt, last30dStart),
-      );
+        if (attempt.postQuizScore !== null) {
+          postQuizScoreSum += attempt.postQuizScore;
+          postQuizScoreCount += 1;
+        }
 
-      const recentCourseAttempts24h = courseAttempts.filter((attempt) =>
-        hasActivityInRange(attempt, last24hStart),
-      );
-      const recentCourseAttempts7d = courseAttempts.filter((attempt) =>
-        hasActivityInRange(attempt, last7dStart),
-      );
-      const recentCourseAttempts30d = courseAttempts.filter((attempt) =>
-        hasActivityInRange(attempt, last30dStart),
-      );
+        updateCurriculumWindowAggregate(curriculumWindow24h, attempt, last24hStart, "hour");
+        updateCurriculumWindowAggregate(curriculumWindow7d, attempt, last7dStart, "day");
+        updateCurriculumWindowAggregate(curriculumWindow30d, attempt, last30dStart, "day");
+      }
 
-      const recentEportfolioRecords24h = caseStudyProgressRecords.filter(
-        (item) => item.completedAt !== null && item.completedAt >= last24hStart,
-      );
-      const recentEportfolioRecords7d = caseStudyProgressRecords.filter(
-        (item) => item.completedAt !== null && item.completedAt >= last7dStart,
-      );
-      const recentEportfolioRecords30d = caseStudyProgressRecords.filter(
-        (item) => item.completedAt !== null && item.completedAt >= last30dStart,
-      );
+      let completedCaseStudies = 0;
+      const eportfolioWindow24h = createEportfolioWindowAggregate();
+      const eportfolioWindow7d = createEportfolioWindowAggregate();
+      const eportfolioWindow30d = createEportfolioWindowAggregate();
+
+      for (const item of caseStudyProgressRecords) {
+        if (item.completedAt !== null) completedCaseStudies += 1;
+
+        updateEportfolioWindowAggregate(eportfolioWindow24h, item, last24hStart, "hour");
+        updateEportfolioWindowAggregate(eportfolioWindow7d, item, last7dStart, "day");
+        updateEportfolioWindowAggregate(eportfolioWindow30d, item, last30dStart, "day");
+      }
 
       const activeUsersLast24h = new Set([
-        ...recentScenarioAttempts24h.map((item) => item.userId),
-        ...recentCourseAttempts24h.map((item) => item.userId),
+        ...scenarioWindow24h.activeUsers,
+        ...curriculumWindow24h.activeUsers,
       ]).size;
 
       const activeUsersLast7Days = new Set([
-        ...recentScenarioAttempts7d.map((item) => item.userId),
-        ...recentCourseAttempts7d.map((item) => item.userId),
+        ...scenarioWindow7d.activeUsers,
+        ...curriculumWindow7d.activeUsers,
       ]).size;
 
       const activeUsersLast30Days = new Set([
-        ...recentScenarioAttempts30d.map((item) => item.userId),
-        ...recentCourseAttempts30d.map((item) => item.userId),
+        ...scenarioWindow30d.activeUsers,
+        ...curriculumWindow30d.activeUsers,
       ]).size;
 
-      const scenarioDates24h = getAttemptActivityDates(recentScenarioAttempts24h);
-      const scenarioDates7d = getAttemptActivityDates(recentScenarioAttempts7d);
-      const scenarioDates30d = getAttemptActivityDates(recentScenarioAttempts30d);
+      const scenarioStats24h = buildScenarioWindowStats(scenarioWindow24h);
+      const scenarioStats7d = buildScenarioWindowStats(scenarioWindow7d);
+      const scenarioStats30d = buildScenarioWindowStats(scenarioWindow30d);
 
-      const curriculumDates24h = getAttemptActivityDates(recentCourseAttempts24h);
-      const curriculumDates7d = getAttemptActivityDates(recentCourseAttempts7d);
-      const curriculumDates30d = getAttemptActivityDates(recentCourseAttempts30d);
-
-      const eportfolioDates24h = recentEportfolioRecords24h.map((row) => row.completedAt);
-      const eportfolioDates7d = recentEportfolioRecords7d.map((row) => row.completedAt);
-      const eportfolioDates30d = recentEportfolioRecords30d.map((row) => row.completedAt);
-
-      const scenarioStats24h = buildScenarioWindowStats(recentScenarioAttempts24h);
-      const scenarioStats7d = buildScenarioWindowStats(recentScenarioAttempts7d);
-      const scenarioStats30d = buildScenarioWindowStats(recentScenarioAttempts30d);
-
-      const curriculumStats24h = buildCurriculumWindowStats(recentCourseAttempts24h);
-      const curriculumStats7d = buildCurriculumWindowStats(recentCourseAttempts7d);
-      const curriculumStats30d = buildCurriculumWindowStats(recentCourseAttempts30d);
+      const curriculumStats24h = buildCurriculumWindowStats(curriculumWindow24h);
+      const curriculumStats7d = buildCurriculumWindowStats(curriculumWindow7d);
+      const curriculumStats30d = buildCurriculumWindowStats(curriculumWindow30d);
 
       const eportfolioStats24h = buildEportfolioWindowStats({
-        records: recentEportfolioRecords24h,
+        aggregate: eportfolioWindow24h,
         published: publishedCaseStudies,
         activeUsers: activeUsersLast24h,
       });
 
       const eportfolioStats7d = buildEportfolioWindowStats({
-        records: recentEportfolioRecords7d,
+        aggregate: eportfolioWindow7d,
         published: publishedCaseStudies,
         activeUsers: activeUsersLast7Days,
       });
 
       const eportfolioStats30d = buildEportfolioWindowStats({
-        records: recentEportfolioRecords30d,
+        aggregate: eportfolioWindow30d,
         published: publishedCaseStudies,
         activeUsers: activeUsersLast30Days,
       });
 
-      const languageCodes = new Set<string>();
-
-      for (const profile of profiles) {
-        languageCodes.add(profile.preferredLanguage);
-      }
-
-      for (const course of publishedCoursesWithTranslations) {
-        for (const translation of course.translations) {
-          languageCodes.add(translation.language);
-        }
-      }
-
-      for (const caseStudy of publishedCaseStudiesWithTranslations) {
-        for (const translation of caseStudy.translations) {
-          languageCodes.add(translation.language);
-        }
-      }
-
-      for (const scenario of publishedScenariosWithVariants) {
-        for (const variant of scenario.variants) {
-          languageCodes.add(variant.language);
-        }
-      }
-
       const languageBreakdown: AdminLanguageStat[] = APP_LOCALES.map((code) => ({
         code,
         label: LOCALE_META[code].label,
-        users: profiles.filter((profile) => profile.preferredLanguage === code).length,
-        publishedCourses: publishedCoursesWithTranslations.filter((course) =>
-          course.translations.some((translation) => translation.language === code),
-        ).length,
-        publishedCaseStudies: publishedCaseStudiesWithTranslations.filter((caseStudy) =>
-          caseStudy.translations.some((translation) => translation.language === code),
-        ).length,
-        availableScenarioVariants: publishedScenariosWithVariants.reduce((sum, scenario) => {
-          return (
-            sum +
-            scenario.variants.filter(
-              (variant) => variant.language === code && variant.availabilityStatus === "available",
-            ).length
-          );
-        }, 0),
+        users: usersByLanguage.get(code) ?? 0,
+        publishedCourses: publishedCoursesByLanguage.get(code) ?? 0,
+        publishedCaseStudies: publishedCaseStudiesByLanguage.get(code) ?? 0,
+        availableScenarioVariants: availableScenarioVariantsByLanguage.get(code) ?? 0,
       }));
 
       const scenarioBreakdown: AdminScenarioStat[] = publishedScenariosWithVariants.map(
         (scenario) => {
-          const attempts = scenario.variants.flatMap((variant) => variant.userAttempts);
-          const scores = attempts
-            .map((attempt) => attempt.score)
-            .filter((score): score is number => score !== null);
+          let availableVariants = 0;
+          let totalAttempts = 0;
+          let passed = 0;
+          let completed = 0;
+          let scoreSum = 0;
+          let scoreCount = 0;
+          const languages = new Set<string>();
 
-          const passed = attempts.filter((attempt) => attempt.status === "passed").length;
-          const completed = attempts.filter((attempt) => attempt.status === "completed").length;
+          for (const variant of scenario.variants) {
+            languages.add(variant.language);
+            if (variant.availabilityStatus === "available") availableVariants += 1;
+
+            for (const attempt of variant.userAttempts) {
+              totalAttempts += 1;
+              if (attempt.status === "passed") passed += 1;
+              if (attempt.status === "completed") completed += 1;
+              if (attempt.score !== null) {
+                scoreSum += attempt.score;
+                scoreCount += 1;
+              }
+            }
+          }
+
           const completedLikeTotal = passed + completed;
 
           return {
@@ -736,34 +862,40 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
               scenario.slug,
             ),
             area: scenario.area,
-            languages: [...new Set(scenario.variants.map((variant) => variant.language))].sort(),
-            availableVariants: scenario.variants.filter(
-              (variant) => variant.availabilityStatus === "available",
-            ).length,
-            totalAttempts: attempts.length,
+            languages: [...languages].sort(),
+            availableVariants,
+            totalAttempts,
             completedLikeTotal,
-            completionRate: toPercent(completedLikeTotal, attempts.length),
-            averageScore:
-              scores.length > 0
-                ? Math.round(scores.reduce((sum, value) => sum + value, 0) / scores.length)
-                : null,
+            completionRate: toPercent(completedLikeTotal, totalAttempts),
+            averageScore: averageFromSumAndCount(scoreSum, scoreCount),
           };
         },
       );
 
       const courseBreakdown: AdminCourseStat[] = publishedCoursesWithTranslations.map((course) => {
-        const attempts = course.userCourseAttempts;
-        const completed = attempts.filter((attempt) => attempt.status === "completed").length;
-        const inProgress = attempts.filter((attempt) => attempt.status === "in_progress").length;
-        const failed = attempts.filter((attempt) => attempt.status === "failed").length;
+        let completed = 0;
+        let inProgress = 0;
+        let failed = 0;
+        let coursePreScoreSum = 0;
+        let coursePreScoreCount = 0;
+        let coursePostScoreSum = 0;
+        let coursePostScoreCount = 0;
 
-        const coursePreScores = attempts
-          .map((attempt) => attempt.preQuizScore)
-          .filter((score): score is number => score !== null);
+        for (const attempt of course.userCourseAttempts) {
+          if (attempt.status === "completed") completed += 1;
+          if (attempt.status === "in_progress") inProgress += 1;
+          if (attempt.status === "failed") failed += 1;
 
-        const coursePostScores = attempts
-          .map((attempt) => attempt.postQuizScore)
-          .filter((score): score is number => score !== null);
+          if (attempt.preQuizScore !== null) {
+            coursePreScoreSum += attempt.preQuizScore;
+            coursePreScoreCount += 1;
+          }
+
+          if (attempt.postQuizScore !== null) {
+            coursePostScoreSum += attempt.postQuizScore;
+            coursePostScoreCount += 1;
+          }
+        }
 
         return {
           id: course.id,
@@ -771,23 +903,13 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
           title: pickLocalizedTitle(course.translations, locale, course.slug),
           area: course.area,
           difficulty: course.difficulty,
-          totalAttempts: attempts.length,
+          totalAttempts: course.userCourseAttempts.length,
           completed,
           inProgress,
           failed,
-          completionRate: toPercent(completed, attempts.length),
-          averagePreQuizScore:
-            coursePreScores.length > 0
-              ? Math.round(
-                  coursePreScores.reduce((sum, value) => sum + value, 0) / coursePreScores.length,
-                )
-              : null,
-          averagePostQuizScore:
-            coursePostScores.length > 0
-              ? Math.round(
-                  coursePostScores.reduce((sum, value) => sum + value, 0) / coursePostScores.length,
-                )
-              : null,
+          completionRate: toPercent(completed, course.userCourseAttempts.length),
+          averagePreQuizScore: averageFromSumAndCount(coursePreScoreSum, coursePreScoreCount),
+          averagePostQuizScore: averageFromSumAndCount(coursePostScoreSum, coursePostScoreCount),
         };
       });
 
@@ -901,12 +1023,7 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
             browsed: browsedScenarioAttempts,
             completedLikeTotal: scenarioCompletedLike,
             completionRate: toPercent(scenarioCompletedLike, scenarioAttempts.length),
-            averageScore:
-              scenarioScores.length > 0
-                ? roundNullable(
-                    scenarioScores.reduce((sum, value) => sum + value, 0) / scenarioScores.length,
-                  )
-                : null,
+            averageScore: averageFromSumAndCount(scenarioScoreSum, scenarioScoreCount),
           },
           curriculum: {
             totalAttempts: courseAttempts.length,
@@ -914,18 +1031,8 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
             inProgress: inProgressCourseAttempts,
             failed: failedCourseAttempts,
             completionRate: toPercent(completedCourseAttempts, courseAttempts.length),
-            averagePreQuizScore:
-              preQuizScores.length > 0
-                ? roundNullable(
-                    preQuizScores.reduce((sum, value) => sum + value, 0) / preQuizScores.length,
-                  )
-                : null,
-            averagePostQuizScore:
-              postQuizScores.length > 0
-                ? roundNullable(
-                    postQuizScores.reduce((sum, value) => sum + value, 0) / postQuizScores.length,
-                  )
-                : null,
+            averagePreQuizScore: averageFromSumAndCount(preQuizScoreSum, preQuizScoreCount),
+            averagePostQuizScore: averageFromSumAndCount(postQuizScoreSum, postQuizScoreCount),
           },
           eportfolio: {
             totalProgressRecords: caseStudyProgressRecords.length,
@@ -937,29 +1044,50 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
             activeUsersLast7Days,
             activeUsersLast30Days,
 
-            recentScenarioAttempts24h: recentScenarioAttempts24h.length,
-            recentScenarioAttempts: recentScenarioAttempts7d.length,
-            recentScenarioAttempts30d: recentScenarioAttempts30d.length,
+            recentScenarioAttempts24h: scenarioWindow24h.total,
+            recentScenarioAttempts: scenarioWindow7d.total,
+            recentScenarioAttempts30d: scenarioWindow30d.total,
 
-            recentCourseAttempts24h: recentCourseAttempts24h.length,
-            recentCourseAttempts: recentCourseAttempts7d.length,
-            recentCourseAttempts30d: recentCourseAttempts30d.length,
+            recentCourseAttempts24h: curriculumWindow24h.total,
+            recentCourseAttempts: curriculumWindow7d.total,
+            recentCourseAttempts30d: curriculumWindow30d.total,
 
-            recentEportfolioEvents24h: recentEportfolioRecords24h.length,
-            recentEportfolioEvents: recentEportfolioRecords7d.length,
-            recentEportfolioEvents30d: recentEportfolioRecords30d.length,
+            recentEportfolioEvents24h: eportfolioWindow24h.total,
+            recentEportfolioEvents: eportfolioWindow7d.total,
+            recentEportfolioEvents30d: eportfolioWindow30d.total,
 
-            scenarioSeries24h: buildLast24HoursSeries(scenarioDates24h, hourFormatter24h),
-            scenarioSeries: buildLastDaysSeries(scenarioDates7d, 7, dayFormatter7d),
-            scenarioSeries30d: buildLastDaysSeries(scenarioDates30d, 30, dayFormatter30d),
+            scenarioSeries24h: buildLast24HoursSeries(
+              scenarioWindow24h.hourBuckets,
+              hourFormatter24h,
+            ),
+            scenarioSeries: buildLastDaysSeries(scenarioWindow7d.dayBuckets, 7, dayFormatter7d),
+            scenarioSeries30d: buildLastDaysSeries(
+              scenarioWindow30d.dayBuckets,
+              30,
+              dayFormatter30d,
+            ),
 
-            curriculumSeries24h: buildLast24HoursSeries(curriculumDates24h, hourFormatter24h),
-            curriculumSeries: buildLastDaysSeries(curriculumDates7d, 7, dayFormatter7d),
-            curriculumSeries30d: buildLastDaysSeries(curriculumDates30d, 30, dayFormatter30d),
+            curriculumSeries24h: buildLast24HoursSeries(
+              curriculumWindow24h.hourBuckets,
+              hourFormatter24h,
+            ),
+            curriculumSeries: buildLastDaysSeries(curriculumWindow7d.dayBuckets, 7, dayFormatter7d),
+            curriculumSeries30d: buildLastDaysSeries(
+              curriculumWindow30d.dayBuckets,
+              30,
+              dayFormatter30d,
+            ),
 
-            eportfolioSeries24h: buildLast24HoursSeries(eportfolioDates24h, hourFormatter24h),
-            eportfolioSeries: buildLastDaysSeries(eportfolioDates7d, 7, dayFormatter7d),
-            eportfolioSeries30d: buildLastDaysSeries(eportfolioDates30d, 30, dayFormatter30d),
+            eportfolioSeries24h: buildLast24HoursSeries(
+              eportfolioWindow24h.hourBuckets,
+              hourFormatter24h,
+            ),
+            eportfolioSeries: buildLastDaysSeries(eportfolioWindow7d.dayBuckets, 7, dayFormatter7d),
+            eportfolioSeries30d: buildLastDaysSeries(
+              eportfolioWindow30d.dayBuckets,
+              30,
+              dayFormatter30d,
+            ),
 
             scenarioStats24h,
             scenarioStats7d,
