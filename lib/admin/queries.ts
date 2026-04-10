@@ -154,6 +154,16 @@ function hasActivityInRange(
   );
 }
 
+function buildRecentActivityWhere(since: Date) {
+  return {
+    OR: [
+      { startedAt: { gte: since } },
+      { lastOpenedAt: { gte: since } },
+      { completedAt: { gte: since } },
+    ],
+  };
+}
+
 type ScenarioWindowAggregate = {
   total: number;
   passed: number;
@@ -381,6 +391,14 @@ function countScenarioVariants(scenarios: Array<{ variants: unknown[] }>) {
   return scenarios.reduce((sum, scenario) => sum + scenario.variants.length, 0);
 }
 
+function getGroupedCount<T extends { _count: { _all: number } }>(
+  rows: T[],
+  predicate: (row: T) => boolean,
+) {
+  const match = rows.find(predicate);
+  return match?._count._all ?? 0;
+}
+
 type GetBasicAdminStatsOptions = {
   includeBreakdowns?: boolean;
   includeRows?: boolean;
@@ -418,79 +436,140 @@ export async function getBasicAdminStats(
         month: "short",
       });
 
+      const recentActivityWhere = buildRecentActivityWhere(last30dStart);
+
       const [
-        profiles,
+        totalUsers,
+        profilesByRole,
+        usersByLanguageRaw,
+        publishedCourses,
+        publishedCaseStudies,
+        publishedScenarios,
+        availableScenarioVariants,
         publishedCoursesWithTranslations,
         publishedCaseStudiesWithTranslations,
         publishedScenariosWithVariants,
-        scenarioAttempts,
-        courseAttempts,
+        scenarioAttemptsAggregate,
+        scenarioAttemptsByStatus,
+        scenarioAttemptsRecent,
+        scenarioAttemptsByScenario,
+        scenarioAttemptsByScenarioStatus,
+        courseAttemptsAggregate,
+        courseAttemptsByStatus,
+        courseAttemptsRecent,
+        courseAttemptsByCourse,
+        courseAttemptsByCourseStatus,
+        totalProgressRecords,
+        completedCaseStudies,
         caseStudyProgressRecords,
         scenarioAttemptRowsRaw,
         curriculumAttemptRowsRaw,
         eportfolioProgressRowsRaw,
       ] = await Promise.all([
-        prisma.profile.findMany({
-          select: {
-            id: true,
-            role: true,
-            preferredLanguage: true,
-          },
+        prisma.profile.count(),
+
+        prisma.profile.groupBy({
+          by: ["role"],
+          _count: { _all: true },
         }),
 
-        prisma.course.findMany({
+        includeBreakdowns
+          ? prisma.profile.groupBy({
+              by: ["preferredLanguage"],
+              _count: { _all: true },
+            })
+          : Promise.resolve([]),
+
+        prisma.course.count({
           where: { status: "published" },
-          select: {
-            id: true,
-            slug: true,
-            area: true,
-            difficulty: true,
-            translations: {
-              select: {
-                language: true,
-                title: true,
-              },
-            },
-          },
-          orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
         }),
 
-        prisma.caseStudy.findMany({
+        prisma.caseStudy.count({
           where: { status: "published" },
-          select: {
-            id: true,
-            slug: true,
-            translations: {
-              select: {
-                language: true,
-                title: true,
-              },
+        }),
+
+        prisma.scenario.count({
+          where: { status: "published" },
+        }),
+
+        prisma.scenarioVariant.count({
+          where: {
+            availabilityStatus: "available",
+            scenario: {
+              status: "published",
             },
           },
         }),
 
-        prisma.scenario.findMany({
-          where: { status: "published" },
-          select: {
-            id: true,
-            slug: true,
-            area: true,
-            variants: {
+        includeBreakdowns
+          ? prisma.course.findMany({
+              where: { status: "published" },
               select: {
                 id: true,
-                language: true,
-                title: true,
-                availabilityStatus: true,
+                slug: true,
+                area: true,
+                difficulty: true,
+                translations: {
+                  select: {
+                    language: true,
+                    title: true,
+                  },
+                },
               },
-            },
-          },
-          orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+              orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+            })
+          : Promise.resolve([]),
+
+        includeBreakdowns
+          ? prisma.caseStudy.findMany({
+              where: { status: "published" },
+              select: {
+                id: true,
+                slug: true,
+                translations: {
+                  select: {
+                    language: true,
+                    title: true,
+                  },
+                },
+              },
+            })
+          : Promise.resolve([]),
+
+        includeBreakdowns
+          ? prisma.scenario.findMany({
+              where: { status: "published" },
+              select: {
+                id: true,
+                slug: true,
+                area: true,
+                variants: {
+                  select: {
+                    id: true,
+                    language: true,
+                    title: true,
+                    availabilityStatus: true,
+                  },
+                },
+              },
+              orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+            })
+          : Promise.resolve([]),
+
+        prisma.userScenarioAttempt.aggregate({
+          _count: { _all: true },
+          _avg: { score: true },
+        }),
+
+        prisma.userScenarioAttempt.groupBy({
+          by: ["status"],
+          _count: { _all: true },
         }),
 
         prisma.userScenarioAttempt.findMany({
+          where: recentActivityWhere,
           select: {
             userId: true,
-            scenarioId: true,
             status: true,
             score: true,
             startedAt: true,
@@ -499,10 +578,38 @@ export async function getBasicAdminStats(
           },
         }),
 
+        includeBreakdowns
+          ? prisma.userScenarioAttempt.groupBy({
+              by: ["scenarioId"],
+              _count: { _all: true },
+              _avg: { score: true },
+            })
+          : Promise.resolve([]),
+
+        includeBreakdowns
+          ? prisma.userScenarioAttempt.groupBy({
+              by: ["scenarioId", "status"],
+              _count: { _all: true },
+            })
+          : Promise.resolve([]),
+
+        prisma.userCourseAttempt.aggregate({
+          _count: { _all: true },
+          _avg: {
+            preQuizScore: true,
+            postQuizScore: true,
+          },
+        }),
+
+        prisma.userCourseAttempt.groupBy({
+          by: ["status"],
+          _count: { _all: true },
+        }),
+
         prisma.userCourseAttempt.findMany({
+          where: recentActivityWhere,
           select: {
             userId: true,
-            courseId: true,
             status: true,
             preQuizScore: true,
             postQuizScore: true,
@@ -512,7 +619,40 @@ export async function getBasicAdminStats(
           },
         }),
 
+        includeBreakdowns
+          ? prisma.userCourseAttempt.groupBy({
+              by: ["courseId"],
+              _count: { _all: true },
+              _avg: {
+                preQuizScore: true,
+                postQuizScore: true,
+              },
+            })
+          : Promise.resolve([]),
+
+        includeBreakdowns
+          ? prisma.userCourseAttempt.groupBy({
+              by: ["courseId", "status"],
+              _count: { _all: true },
+            })
+          : Promise.resolve([]),
+
+        prisma.userCaseStudyProgress.count(),
+
+        prisma.userCaseStudyProgress.count({
+          where: {
+            completedAt: {
+              not: null,
+            },
+          },
+        }),
+
         prisma.userCaseStudyProgress.findMany({
+          where: {
+            completedAt: {
+              gte: last30dStart,
+            },
+          },
           select: {
             completedAt: true,
           },
@@ -622,12 +762,19 @@ export async function getBasicAdminStats(
         operation: "admin.getBasicAdminStats.fetch",
         durationMs: Date.now() - queryStartedAt,
         records:
-          profiles.length +
+          profilesByRole.length +
+          usersByLanguageRaw.length +
           publishedCoursesWithTranslations.length +
           publishedCaseStudiesWithTranslations.length +
           publishedScenariosWithVariants.length +
-          scenarioAttempts.length +
-          courseAttempts.length +
+          scenarioAttemptsByStatus.length +
+          scenarioAttemptsRecent.length +
+          scenarioAttemptsByScenario.length +
+          scenarioAttemptsByScenarioStatus.length +
+          courseAttemptsByStatus.length +
+          courseAttemptsRecent.length +
+          courseAttemptsByCourse.length +
+          courseAttemptsByCourseStatus.length +
           caseStudyProgressRecords.length +
           scenarioAttemptRowsRaw.length +
           curriculumAttemptRowsRaw.length +
@@ -636,11 +783,17 @@ export async function getBasicAdminStats(
           courseTranslations: countCourseTranslations(publishedCoursesWithTranslations),
           caseStudyTranslations: countCaseStudyTranslations(publishedCaseStudiesWithTranslations),
           scenarioVariants: countScenarioVariants(publishedScenariosWithVariants),
-          scenarioVariantAttempts: scenarioAttempts.length,
+          scenarioRecentAttempts: scenarioAttemptsRecent.length,
+          courseRecentAttempts: courseAttemptsRecent.length,
+          eportfolioRecentRecords: caseStudyProgressRecords.length,
           nodeElements:
-            profiles.length +
-            scenarioAttempts.length +
-            courseAttempts.length +
+            profilesByRole.length +
+            usersByLanguageRaw.length +
+            publishedCoursesWithTranslations.length +
+            publishedCaseStudiesWithTranslations.length +
+            publishedScenariosWithVariants.length +
+            scenarioAttemptsRecent.length +
+            courseAttemptsRecent.length +
             caseStudyProgressRecords.length +
             scenarioAttemptRowsRaw.length +
             curriculumAttemptRowsRaw.length +
@@ -650,22 +803,16 @@ export async function getBasicAdminStats(
 
       const mappingStartedAt = Date.now();
 
-      let totalStudents = 0;
-      let totalEducators = 0;
-      let totalAdmins = 0;
+      const totalStudents = getGroupedCount(profilesByRole, (row) => row.role === "student");
+      const totalEducators = getGroupedCount(profilesByRole, (row) => row.role === "educator");
+      const totalAdmins = getGroupedCount(profilesByRole, (row) => row.role === "admin");
+
       const usersByLanguage = new Map<string, number>();
-
-      for (const profile of profiles) {
-        if (profile.role === "student") totalStudents += 1;
-        if (profile.role === "educator") totalEducators += 1;
-        if (profile.role === "admin") totalAdmins += 1;
-        incrementMapCount(usersByLanguage, profile.preferredLanguage);
+      if (includeBreakdowns) {
+        for (const row of usersByLanguageRaw) {
+          incrementMapCount(usersByLanguage, row.preferredLanguage, row._count._all);
+        }
       }
-
-      const totalUsers = profiles.length;
-      const publishedCourses = publishedCoursesWithTranslations.length;
-      const publishedCaseStudies = publishedCaseStudiesWithTranslations.length;
-      const publishedScenarios = publishedScenariosWithVariants.length;
 
       const publishedCoursesByLanguage = new Map<string, number>();
       if (includeBreakdowns) {
@@ -690,41 +837,41 @@ export async function getBasicAdminStats(
       }
 
       const availableScenarioVariantsByLanguage = new Map<string, number>();
-      let availableScenarioVariants = 0;
-      for (const scenario of publishedScenariosWithVariants) {
-        for (const variant of scenario.variants) {
-          if (variant.availabilityStatus !== "available") continue;
-          availableScenarioVariants += 1;
-          if (includeBreakdowns) {
+      if (includeBreakdowns) {
+        for (const scenario of publishedScenariosWithVariants) {
+          for (const variant of scenario.variants) {
+            if (variant.availabilityStatus !== "available") continue;
             incrementMapCount(availableScenarioVariantsByLanguage, variant.language);
           }
         }
       }
 
-      let passedScenarioAttempts = 0;
-      let completedScenarioAttempts = 0;
-      let failedScenarioAttempts = 0;
-      let incompleteScenarioAttempts = 0;
-      let browsedScenarioAttempts = 0;
-      let scenarioScoreSum = 0;
-      let scenarioScoreCount = 0;
+      const passedScenarioAttempts = getGroupedCount(
+        scenarioAttemptsByStatus,
+        (row) => row.status === "passed",
+      );
+      const completedScenarioAttempts = getGroupedCount(
+        scenarioAttemptsByStatus,
+        (row) => row.status === "completed",
+      );
+      const failedScenarioAttempts = getGroupedCount(
+        scenarioAttemptsByStatus,
+        (row) => row.status === "failed",
+      );
+      const incompleteScenarioAttempts = getGroupedCount(
+        scenarioAttemptsByStatus,
+        (row) => row.status === "incomplete",
+      );
+      const browsedScenarioAttempts = getGroupedCount(
+        scenarioAttemptsByStatus,
+        (row) => row.status === "browsed",
+      );
 
       const scenarioWindow24h = createScenarioWindowAggregate();
       const scenarioWindow7d = createScenarioWindowAggregate();
       const scenarioWindow30d = createScenarioWindowAggregate();
 
-      for (const attempt of scenarioAttempts) {
-        if (attempt.status === "passed") passedScenarioAttempts += 1;
-        if (attempt.status === "completed") completedScenarioAttempts += 1;
-        if (attempt.status === "failed") failedScenarioAttempts += 1;
-        if (attempt.status === "incomplete") incompleteScenarioAttempts += 1;
-        if (attempt.status === "browsed") browsedScenarioAttempts += 1;
-
-        if (attempt.score !== null) {
-          scenarioScoreSum += attempt.score;
-          scenarioScoreCount += 1;
-        }
-
+      for (const attempt of scenarioAttemptsRecent) {
         updateScenarioWindowAggregate(scenarioWindow24h, attempt, last24hStart, "hour");
         updateScenarioWindowAggregate(scenarioWindow7d, attempt, last7dStart, "day");
         updateScenarioWindowAggregate(scenarioWindow30d, attempt, last30dStart, "day");
@@ -732,46 +879,34 @@ export async function getBasicAdminStats(
 
       const scenarioCompletedLike = passedScenarioAttempts + completedScenarioAttempts;
 
-      let completedCourseAttempts = 0;
-      let inProgressCourseAttempts = 0;
-      let failedCourseAttempts = 0;
-      let preQuizScoreSum = 0;
-      let preQuizScoreCount = 0;
-      let postQuizScoreSum = 0;
-      let postQuizScoreCount = 0;
+      const completedCourseAttempts = getGroupedCount(
+        courseAttemptsByStatus,
+        (row) => row.status === "completed",
+      );
+      const inProgressCourseAttempts = getGroupedCount(
+        courseAttemptsByStatus,
+        (row) => row.status === "in_progress",
+      );
+      const failedCourseAttempts = getGroupedCount(
+        courseAttemptsByStatus,
+        (row) => row.status === "failed",
+      );
 
       const curriculumWindow24h = createCurriculumWindowAggregate();
       const curriculumWindow7d = createCurriculumWindowAggregate();
       const curriculumWindow30d = createCurriculumWindowAggregate();
 
-      for (const attempt of courseAttempts) {
-        if (attempt.status === "completed") completedCourseAttempts += 1;
-        if (attempt.status === "in_progress") inProgressCourseAttempts += 1;
-        if (attempt.status === "failed") failedCourseAttempts += 1;
-
-        if (attempt.preQuizScore !== null) {
-          preQuizScoreSum += attempt.preQuizScore;
-          preQuizScoreCount += 1;
-        }
-
-        if (attempt.postQuizScore !== null) {
-          postQuizScoreSum += attempt.postQuizScore;
-          postQuizScoreCount += 1;
-        }
-
+      for (const attempt of courseAttemptsRecent) {
         updateCurriculumWindowAggregate(curriculumWindow24h, attempt, last24hStart, "hour");
         updateCurriculumWindowAggregate(curriculumWindow7d, attempt, last7dStart, "day");
         updateCurriculumWindowAggregate(curriculumWindow30d, attempt, last30dStart, "day");
       }
 
-      let completedCaseStudies = 0;
       const eportfolioWindow24h = createEportfolioWindowAggregate();
       const eportfolioWindow7d = createEportfolioWindowAggregate();
       const eportfolioWindow30d = createEportfolioWindowAggregate();
 
       for (const item of caseStudyProgressRecords) {
-        if (item.completedAt !== null) completedCaseStudies += 1;
-
         updateEportfolioWindowAggregate(eportfolioWindow24h, item, last24hStart, "hour");
         updateEportfolioWindowAggregate(eportfolioWindow7d, item, last7dStart, "day");
         updateEportfolioWindowAggregate(eportfolioWindow30d, item, last30dStart, "day");
@@ -836,31 +971,33 @@ export async function getBasicAdminStats(
               totalAttempts: number;
               passed: number;
               completed: number;
-              scoreSum: number;
-              scoreCount: number;
+              averageScore: number | null;
             }
           >()
         : null;
 
       if (scenarioAttemptsByScenarioId !== null) {
-        for (const attempt of scenarioAttempts) {
-          const aggregate = scenarioAttemptsByScenarioId.get(attempt.scenarioId) ?? {
+        for (const row of scenarioAttemptsByScenario) {
+          scenarioAttemptsByScenarioId.set(row.scenarioId, {
+            totalAttempts: row._count._all,
+            passed: 0,
+            completed: 0,
+            averageScore: row._avg.score ?? null,
+          });
+        }
+
+        for (const row of scenarioAttemptsByScenarioStatus) {
+          const aggregate = scenarioAttemptsByScenarioId.get(row.scenarioId) ?? {
             totalAttempts: 0,
             passed: 0,
             completed: 0,
-            scoreSum: 0,
-            scoreCount: 0,
+            averageScore: null,
           };
 
-          aggregate.totalAttempts += 1;
-          if (attempt.status === "passed") aggregate.passed += 1;
-          if (attempt.status === "completed") aggregate.completed += 1;
-          if (attempt.score !== null) {
-            aggregate.scoreSum += attempt.score;
-            aggregate.scoreCount += 1;
-          }
+          if (row.status === "passed") aggregate.passed = row._count._all;
+          if (row.status === "completed") aggregate.completed = row._count._all;
 
-          scenarioAttemptsByScenarioId.set(attempt.scenarioId, aggregate);
+          scenarioAttemptsByScenarioId.set(row.scenarioId, aggregate);
         }
       }
 
@@ -872,43 +1009,39 @@ export async function getBasicAdminStats(
               completed: number;
               inProgress: number;
               failed: number;
-              preQuizScoreSum: number;
-              preQuizScoreCount: number;
-              postQuizScoreSum: number;
-              postQuizScoreCount: number;
+              averagePreQuizScore: number | null;
+              averagePostQuizScore: number | null;
             }
           >()
         : null;
 
       if (courseAttemptsByCourseId !== null) {
-        for (const attempt of courseAttempts) {
-          const aggregate = courseAttemptsByCourseId.get(attempt.courseId) ?? {
+        for (const row of courseAttemptsByCourse) {
+          courseAttemptsByCourseId.set(row.courseId, {
+            totalAttempts: row._count._all,
+            completed: 0,
+            inProgress: 0,
+            failed: 0,
+            averagePreQuizScore: row._avg.preQuizScore ?? null,
+            averagePostQuizScore: row._avg.postQuizScore ?? null,
+          });
+        }
+
+        for (const row of courseAttemptsByCourseStatus) {
+          const aggregate = courseAttemptsByCourseId.get(row.courseId) ?? {
             totalAttempts: 0,
             completed: 0,
             inProgress: 0,
             failed: 0,
-            preQuizScoreSum: 0,
-            preQuizScoreCount: 0,
-            postQuizScoreSum: 0,
-            postQuizScoreCount: 0,
+            averagePreQuizScore: null,
+            averagePostQuizScore: null,
           };
 
-          aggregate.totalAttempts += 1;
-          if (attempt.status === "completed") aggregate.completed += 1;
-          if (attempt.status === "in_progress") aggregate.inProgress += 1;
-          if (attempt.status === "failed") aggregate.failed += 1;
+          if (row.status === "completed") aggregate.completed = row._count._all;
+          if (row.status === "in_progress") aggregate.inProgress = row._count._all;
+          if (row.status === "failed") aggregate.failed = row._count._all;
 
-          if (attempt.preQuizScore !== null) {
-            aggregate.preQuizScoreSum += attempt.preQuizScore;
-            aggregate.preQuizScoreCount += 1;
-          }
-
-          if (attempt.postQuizScore !== null) {
-            aggregate.postQuizScoreSum += attempt.postQuizScore;
-            aggregate.postQuizScoreCount += 1;
-          }
-
-          courseAttemptsByCourseId.set(attempt.courseId, aggregate);
+          courseAttemptsByCourseId.set(row.courseId, aggregate);
         }
       }
 
@@ -931,8 +1064,7 @@ export async function getBasicAdminStats(
               totalAttempts: 0,
               passed: 0,
               completed: 0,
-              scoreSum: 0,
-              scoreCount: 0,
+              averageScore: null,
             };
             const completedLikeTotal = aggregate.passed + aggregate.completed;
 
@@ -946,7 +1078,7 @@ export async function getBasicAdminStats(
               totalAttempts: aggregate.totalAttempts,
               completedLikeTotal,
               completionRate: toPercent(completedLikeTotal, aggregate.totalAttempts),
-              averageScore: averageFromSumAndCount(aggregate.scoreSum, aggregate.scoreCount),
+              averageScore: aggregate.averageScore,
             };
           })
         : [];
@@ -958,10 +1090,8 @@ export async function getBasicAdminStats(
               completed: 0,
               inProgress: 0,
               failed: 0,
-              preQuizScoreSum: 0,
-              preQuizScoreCount: 0,
-              postQuizScoreSum: 0,
-              postQuizScoreCount: 0,
+              averagePreQuizScore: null,
+              averagePostQuizScore: null,
             };
 
             return {
@@ -975,14 +1105,8 @@ export async function getBasicAdminStats(
               inProgress: aggregate.inProgress,
               failed: aggregate.failed,
               completionRate: toPercent(aggregate.completed, aggregate.totalAttempts),
-              averagePreQuizScore: averageFromSumAndCount(
-                aggregate.preQuizScoreSum,
-                aggregate.preQuizScoreCount,
-              ),
-              averagePostQuizScore: averageFromSumAndCount(
-                aggregate.postQuizScoreSum,
-                aggregate.postQuizScoreCount,
-              ),
+              averagePreQuizScore: aggregate.averagePreQuizScore,
+              averagePostQuizScore: aggregate.averagePostQuizScore,
             };
           })
         : [];
@@ -1055,12 +1179,13 @@ export async function getBasicAdminStats(
           eportfolioProgressRowsRaw.length,
         meta: {
           nodeElements:
-            profiles.length +
+            profilesByRole.length +
+            usersByLanguageRaw.length +
             publishedCoursesWithTranslations.length +
             publishedCaseStudiesWithTranslations.length +
             publishedScenariosWithVariants.length +
-            scenarioAttempts.length +
-            courseAttempts.length +
+            scenarioAttemptsRecent.length +
+            courseAttemptsRecent.length +
             caseStudyProgressRecords.length +
             scenarioAttemptRowsRaw.length +
             curriculumAttemptRowsRaw.length +
@@ -1102,29 +1227,29 @@ export async function getBasicAdminStats(
             availableScenarioVariants,
           },
           scenarioAttempts: {
-            total: scenarioAttempts.length,
+            total: scenarioAttemptsAggregate._count._all,
             passed: passedScenarioAttempts,
             completed: completedScenarioAttempts,
             failed: failedScenarioAttempts,
             incomplete: incompleteScenarioAttempts,
             browsed: browsedScenarioAttempts,
             completedLikeTotal: scenarioCompletedLike,
-            completionRate: toPercent(scenarioCompletedLike, scenarioAttempts.length),
-            averageScore: averageFromSumAndCount(scenarioScoreSum, scenarioScoreCount),
+            completionRate: toPercent(scenarioCompletedLike, scenarioAttemptsAggregate._count._all),
+            averageScore: scenarioAttemptsAggregate._avg.score ?? null,
           },
           curriculum: {
-            totalAttempts: courseAttempts.length,
+            totalAttempts: courseAttemptsAggregate._count._all,
             completed: completedCourseAttempts,
             inProgress: inProgressCourseAttempts,
             failed: failedCourseAttempts,
-            completionRate: toPercent(completedCourseAttempts, courseAttempts.length),
-            averagePreQuizScore: averageFromSumAndCount(preQuizScoreSum, preQuizScoreCount),
-            averagePostQuizScore: averageFromSumAndCount(postQuizScoreSum, postQuizScoreCount),
+            completionRate: toPercent(completedCourseAttempts, courseAttemptsAggregate._count._all),
+            averagePreQuizScore: courseAttemptsAggregate._avg.preQuizScore ?? null,
+            averagePostQuizScore: courseAttemptsAggregate._avg.postQuizScore ?? null,
           },
           eportfolio: {
-            totalProgressRecords: caseStudyProgressRecords.length,
+            totalProgressRecords,
             completedCaseStudies,
-            completionRate: toPercent(completedCaseStudies, caseStudyProgressRecords.length),
+            completionRate: toPercent(completedCaseStudies, totalProgressRecords),
           },
           activity: {
             activeUsersLast24h,
