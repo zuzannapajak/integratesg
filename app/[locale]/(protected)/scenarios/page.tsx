@@ -56,8 +56,10 @@ export default async function ScenariosPage({ params, searchParams }: Props) {
 
     activeView = resolveViewMode(getViewParam(resolvedSearchParams));
 
-    const t = await getTranslations({ locale, namespace: "Protected.ScenariosPage" });
-    const { user } = await requireRole(locale, [APP_ROLES.student, APP_ROLES.educator]);
+    const [t, { user }] = await Promise.all([
+      getTranslations({ locale, namespace: "Protected.ScenariosPage" }),
+      requireRole(locale, [APP_ROLES.student, APP_ROLES.educator]),
+    ]);
 
     const myScenarios =
       activeView === "my-scenarios" ? await getMyScenarioLibrary({ userId: user.id, locale }) : [];

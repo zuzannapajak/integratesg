@@ -430,9 +430,10 @@ export default async function DashboardPage({ params }: Props) {
 
   try {
     const { locale } = await params;
-    const t = await getTranslations({ locale, namespace: "Protected.DashboardPage" });
-
-    const supabase = await createClient();
+    const [t, supabase] = await Promise.all([
+      getTranslations({ locale, namespace: "Protected.DashboardPage" }),
+      createClient(),
+    ]);
     const {
       data: { user },
     } = await supabase.auth.getUser();

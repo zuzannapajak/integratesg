@@ -56,8 +56,10 @@ export default async function CurriculumPage({ params, searchParams }: Props) {
 
     activeView = resolveViewMode(getViewParam(resolvedSearchParams));
 
-    const t = await getTranslations({ locale, namespace: "Protected.CurriculumPage" });
-    const { user } = await requireRole(locale, APP_ROLES.educator);
+    const [t, { user }] = await Promise.all([
+      getTranslations({ locale, namespace: "Protected.CurriculumPage" }),
+      requireRole(locale, APP_ROLES.educator),
+    ]);
 
     const allModules = await getCurriculumModules({ userId: user.id, locale });
     const myCourses =
