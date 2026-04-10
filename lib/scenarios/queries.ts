@@ -18,6 +18,15 @@ import { Prisma, ScenarioAttemptStatus } from "@prisma/client";
 
 const RUNTIME_LAST_SESSION_SNAPSHOT_KEY = "__runtime.lastSessionTimeSnapshot";
 const RUNTIME_TOTAL_TIME_CENTIS_KEY = "__runtime.totalTimeCentis";
+const RUNTIME_PROGRESS_WRITE_DEBOUNCE_MS = 5000;
+const MIN_RUNTIME_SESSION_TIME_WRITE_DELTA_CENTIS = 1000;
+const PERSISTED_RUNTIME_TRACKING_KEYS = new Set<string>([
+  RUNTIME_LAST_SESSION_SNAPSHOT_KEY,
+  RUNTIME_TOTAL_TIME_CENTIS_KEY,
+  "cmi.core.entry",
+  "cmi.core.exit",
+  "cmi.core.lesson_mode",
+]);
 
 function toPrismaJsonObject(value: JsonObject): Prisma.InputJsonObject {
   return value as Prisma.InputJsonObject;
@@ -176,6 +185,67 @@ function readRuntimeTrackingObject(value: Prisma.JsonValue | null | undefined): 
 function readNumberFromJsonObject(record: JsonObject, key: string): number | null {
   const value = record[key];
   return typeof value === "number" && Number.isFinite(value) ? value : null;
+}
+
+function sanitizeRuntimeTrackingData(
+  value: Record<string, string> | JsonObject | null | undefined,
+) {
+  const sanitized: JsonObject = {};
+
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return sanitized;
+  }
+
+  for (const [key, rawValue] of Object.entries(value)) {
+    if (!PERSISTED_RUNTIME_TRACKING_KEYS.has(key)) {
+      continue;
+    }
+
+    if (typeof rawValue === "number" && Number.isFinite(rawValue)) {
+      sanitized[key] = rawValue;
+      continue;
+    }
+
+    if (typeof rawValue === "string") {
+      const normalizedValue = normalizeOptionalText(rawValue);
+      if (normalizedValue !== null) {
+        sanitized[key] = normalizedValue;
+      }
+    }
+  }
+
+  return sanitized;
+}
+
+function areJsonObjectsEqual(left: JsonObject, right: JsonObject) {
+  const leftKeys = Object.keys(left);
+  const rightKeys = Object.keys(right);
+
+  if (leftKeys.length !== rightKeys.length) {
+    return false;
+  }
+
+  for (const key of leftKeys) {
+    if (!(key in right) || left[key] !== right[key]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function hasMeaningfulSessionTimeDelta(params: {
+  previousSessionTime: string | null | undefined;
+  nextSessionTime: string | null | undefined;
+}) {
+  const previousCentis = parseScormTimeToCentiseconds(params.previousSessionTime);
+  const nextCentis = parseScormTimeToCentiseconds(params.nextSessionTime);
+
+  if (previousCentis === null || nextCentis === null) {
+    return params.previousSessionTime !== params.nextSessionTime;
+  }
+
+  return Math.abs(nextCentis - previousCentis) >= MIN_RUNTIME_SESSION_TIME_WRITE_DELTA_CENTIS;
 }
 
 function calculateNextTotalTime(params: {
@@ -855,7 +925,7 @@ export async function completeScenarioAttempt(params: {
 export async function updateScenarioRuntimeProgress(input: RuntimeTrackingInput) {
   return measureAsyncOperation({
     operation: "scenarios.updateScenarioRuntimeProgress",
-    getRecords: (attemptId) => (attemptId ? 1 : 0),
+    getRecords: (result) => (result?.attemptId ? 1 : 0),
     execute: async () => {
       const queryStartedAt = Date.now();
       const scenario = await prisma.scenario.findFirst({
@@ -872,10 +942,6 @@ export async function updateScenarioRuntimeProgress(input: RuntimeTrackingInput)
             select: {
               id: true,
               language: true,
-              title: true,
-              description: true,
-              launchUrl: true,
-              estimatedDurationMinutes: true,
             },
           },
         },
@@ -925,7 +991,9 @@ export async function updateScenarioRuntimeProgress(input: RuntimeTrackingInput)
         },
       });
 
-      const previousRawTrackingData = readRuntimeTrackingObject(latestAttempt?.rawTrackingData);
+      const previousRawTrackingData = sanitizeRuntimeTrackingData(
+        readRuntimeTrackingObject(latestAttempt?.rawTrackingData),
+      );
       const nextTotalTimeState = calculateNextTotalTime({
         previousRawTrackingData,
         incomingSessionTime: input.sessionTime,
@@ -934,38 +1002,88 @@ export async function updateScenarioRuntimeProgress(input: RuntimeTrackingInput)
 
       const nextRawTrackingData: JsonObject = {
         ...previousRawTrackingData,
-        ...(input.rawTrackingData ?? {}),
+        ...sanitizeRuntimeTrackingData(input.rawTrackingData),
         [RUNTIME_LAST_SESSION_SNAPSHOT_KEY]: nextTotalTimeState.nextSnapshotCentis,
         [RUNTIME_TOTAL_TIME_CENTIS_KEY]: nextTotalTimeState.nextTotalCentis,
       };
 
+      const nextStatus =
+        normalizedStatus ??
+        (latestAttempt?.status === "completed" || latestAttempt?.status === "passed"
+          ? latestAttempt.status
+          : "incomplete");
+      const nextScore = normalizedScore ?? latestAttempt?.score ?? null;
+      const nextLessonLocation =
+        normalizeOptionalText(input.lessonLocation) ?? latestAttempt?.lessonLocation ?? null;
+      const nextSuspendData =
+        normalizeOptionalText(input.suspendData) ?? latestAttempt?.suspendData ?? null;
+      const nextSessionTime =
+        normalizeOptionalText(input.sessionTime) ?? latestAttempt?.sessionTime ?? null;
+      const nextCompletedAt =
+        normalizedStatus === "completed" || normalizedStatus === "passed"
+          ? now
+          : (latestAttempt?.completedAt ?? null);
+
       const updateData = {
-        status:
-          normalizedStatus ??
-          (latestAttempt?.status === "completed" || latestAttempt?.status === "passed"
-            ? latestAttempt.status
-            : "incomplete"),
-        score: normalizedScore ?? latestAttempt?.score ?? null,
-        lessonLocation:
-          normalizeOptionalText(input.lessonLocation) ?? latestAttempt?.lessonLocation ?? null,
-        suspendData: normalizeOptionalText(input.suspendData) ?? latestAttempt?.suspendData ?? null,
-        sessionTime: normalizeOptionalText(input.sessionTime) ?? latestAttempt?.sessionTime ?? null,
+        status: nextStatus,
+        score: nextScore,
+        lessonLocation: nextLessonLocation,
+        suspendData: nextSuspendData,
+        sessionTime: nextSessionTime,
         totalTime: nextTotalTimeState.nextTotalTime,
         rawTrackingData: toPrismaJsonObject(nextRawTrackingData),
         lastOpenedAt: now,
-        completedAt:
-          normalizedStatus === "completed" || normalizedStatus === "passed"
-            ? now
-            : (latestAttempt?.completedAt ?? null),
+        completedAt: nextCompletedAt,
       };
 
       if (latestAttempt) {
+        const lastPersistedAt = latestAttempt.lastOpenedAt ?? latestAttempt.startedAt;
+        const isWithinDebounceWindow =
+          now.getTime() - lastPersistedAt.getTime() < RUNTIME_PROGRESS_WRITE_DEBOUNCE_MS;
+
+        const hasImmediateChange =
+          nextStatus !== latestAttempt.status ||
+          nextScore !== (latestAttempt.score ?? null) ||
+          nextLessonLocation !== (latestAttempt.lessonLocation ?? null) ||
+          nextSuspendData !== (latestAttempt.suspendData ?? null) ||
+          nextCompletedAt?.getTime() !== latestAttempt.completedAt?.getTime();
+
+        const hasDeferredRuntimeChange =
+          hasMeaningfulSessionTimeDelta({
+            previousSessionTime: latestAttempt.sessionTime ?? null,
+            nextSessionTime,
+          }) ||
+          nextTotalTimeState.nextTotalTime !== (latestAttempt.totalTime ?? null) ||
+          !areJsonObjectsEqual(nextRawTrackingData, previousRawTrackingData);
+
+        if (!hasImmediateChange && !hasDeferredRuntimeChange) {
+          return {
+            attemptId: latestAttempt.id,
+            saved: false,
+          };
+        }
+
+        if (
+          !input.forceWrite &&
+          !hasImmediateChange &&
+          hasDeferredRuntimeChange &&
+          isWithinDebounceWindow
+        ) {
+          return {
+            attemptId: latestAttempt.id,
+            saved: false,
+          };
+        }
+
         await prisma.userScenarioAttempt.update({
           where: { id: latestAttempt.id },
           data: updateData,
         });
 
-        return latestAttempt.id;
+        return {
+          attemptId: latestAttempt.id,
+          saved: true,
+        };
       }
 
       const createdAttempt = await prisma.userScenarioAttempt.create({
@@ -982,7 +1100,10 @@ export async function updateScenarioRuntimeProgress(input: RuntimeTrackingInput)
         },
       });
 
-      return createdAttempt.id;
+      return {
+        attemptId: createdAttempt.id,
+        saved: true,
+      };
     },
   });
 }

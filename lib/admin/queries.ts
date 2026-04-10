@@ -368,24 +368,8 @@ function countCaseStudyTranslations(
   return caseStudies.reduce((sum, caseStudy) => sum + caseStudy.translations.length, 0);
 }
 
-function countScenarioVariants(
-  scenarios: Array<{ variants: Array<{ userAttempts?: Array<unknown> }> }>,
-) {
+function countScenarioVariants(scenarios: Array<{ variants: unknown[] }>) {
   return scenarios.reduce((sum, scenario) => sum + scenario.variants.length, 0);
-}
-
-function countScenarioVariantAttempts(
-  scenarios: Array<{ variants: Array<{ userAttempts?: Array<unknown> }> }>,
-) {
-  return scenarios.reduce(
-    (sum, scenario) =>
-      sum +
-      scenario.variants.reduce(
-        (variantSum, variant) => variantSum + (variant.userAttempts?.length ?? 0),
-        0,
-      ),
-    0,
-  );
 }
 
 export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<BasicAdminStats> {
@@ -447,16 +431,6 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
                 title: true,
               },
             },
-            userCourseAttempts: {
-              select: {
-                status: true,
-                preQuizScore: true,
-                postQuizScore: true,
-                startedAt: true,
-                lastOpenedAt: true,
-                completedAt: true,
-              },
-            },
           },
           orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
         }),
@@ -487,16 +461,6 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
                 language: true,
                 title: true,
                 availabilityStatus: true,
-                userAttempts: {
-                  select: {
-                    userId: true,
-                    status: true,
-                    score: true,
-                    startedAt: true,
-                    lastOpenedAt: true,
-                    completedAt: true,
-                  },
-                },
               },
             },
           },
@@ -506,6 +470,7 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
         prisma.userScenarioAttempt.findMany({
           select: {
             userId: true,
+            scenarioId: true,
             status: true,
             score: true,
             startedAt: true,
@@ -517,6 +482,7 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
         prisma.userCourseAttempt.findMany({
           select: {
             userId: true,
+            courseId: true,
             status: true,
             preQuizScore: true,
             postQuizScore: true,
@@ -644,7 +610,7 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
           courseTranslations: countCourseTranslations(publishedCoursesWithTranslations),
           caseStudyTranslations: countCaseStudyTranslations(publishedCaseStudiesWithTranslations),
           scenarioVariants: countScenarioVariants(publishedScenariosWithVariants),
-          scenarioVariantAttempts: countScenarioVariantAttempts(publishedScenariosWithVariants),
+          scenarioVariantAttempts: scenarioAttempts.length,
           nodeElements:
             profiles.length +
             scenarioAttempts.length +
@@ -829,32 +795,99 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
         availableScenarioVariants: availableScenarioVariantsByLanguage.get(code) ?? 0,
       }));
 
+      const scenarioAttemptsByScenarioId = new Map<
+        string,
+        {
+          totalAttempts: number;
+          passed: number;
+          completed: number;
+          scoreSum: number;
+          scoreCount: number;
+        }
+      >();
+
+      for (const attempt of scenarioAttempts) {
+        const aggregate = scenarioAttemptsByScenarioId.get(attempt.scenarioId) ?? {
+          totalAttempts: 0,
+          passed: 0,
+          completed: 0,
+          scoreSum: 0,
+          scoreCount: 0,
+        };
+
+        aggregate.totalAttempts += 1;
+        if (attempt.status === "passed") aggregate.passed += 1;
+        if (attempt.status === "completed") aggregate.completed += 1;
+        if (attempt.score !== null) {
+          aggregate.scoreSum += attempt.score;
+          aggregate.scoreCount += 1;
+        }
+
+        scenarioAttemptsByScenarioId.set(attempt.scenarioId, aggregate);
+      }
+
+      const courseAttemptsByCourseId = new Map<
+        string,
+        {
+          totalAttempts: number;
+          completed: number;
+          inProgress: number;
+          failed: number;
+          preQuizScoreSum: number;
+          preQuizScoreCount: number;
+          postQuizScoreSum: number;
+          postQuizScoreCount: number;
+        }
+      >();
+
+      for (const attempt of courseAttempts) {
+        const aggregate = courseAttemptsByCourseId.get(attempt.courseId) ?? {
+          totalAttempts: 0,
+          completed: 0,
+          inProgress: 0,
+          failed: 0,
+          preQuizScoreSum: 0,
+          preQuizScoreCount: 0,
+          postQuizScoreSum: 0,
+          postQuizScoreCount: 0,
+        };
+
+        aggregate.totalAttempts += 1;
+        if (attempt.status === "completed") aggregate.completed += 1;
+        if (attempt.status === "in_progress") aggregate.inProgress += 1;
+        if (attempt.status === "failed") aggregate.failed += 1;
+
+        if (attempt.preQuizScore !== null) {
+          aggregate.preQuizScoreSum += attempt.preQuizScore;
+          aggregate.preQuizScoreCount += 1;
+        }
+
+        if (attempt.postQuizScore !== null) {
+          aggregate.postQuizScoreSum += attempt.postQuizScore;
+          aggregate.postQuizScoreCount += 1;
+        }
+
+        courseAttemptsByCourseId.set(attempt.courseId, aggregate);
+      }
+
       const scenarioBreakdown: AdminScenarioStat[] = publishedScenariosWithVariants.map(
         (scenario) => {
           let availableVariants = 0;
-          let totalAttempts = 0;
-          let passed = 0;
-          let completed = 0;
-          let scoreSum = 0;
-          let scoreCount = 0;
           const languages = new Set<string>();
 
           for (const variant of scenario.variants) {
             languages.add(variant.language);
             if (variant.availabilityStatus === "available") availableVariants += 1;
-
-            for (const attempt of variant.userAttempts) {
-              totalAttempts += 1;
-              if (attempt.status === "passed") passed += 1;
-              if (attempt.status === "completed") completed += 1;
-              if (attempt.score !== null) {
-                scoreSum += attempt.score;
-                scoreCount += 1;
-              }
-            }
           }
 
-          const completedLikeTotal = passed + completed;
+          const aggregate = scenarioAttemptsByScenarioId.get(scenario.id) ?? {
+            totalAttempts: 0,
+            passed: 0,
+            completed: 0,
+            scoreSum: 0,
+            scoreCount: 0,
+          };
+          const completedLikeTotal = aggregate.passed + aggregate.completed;
 
           return {
             id: scenario.id,
@@ -870,38 +903,25 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
             area: scenario.area,
             languages: [...languages].sort(),
             availableVariants,
-            totalAttempts,
+            totalAttempts: aggregate.totalAttempts,
             completedLikeTotal,
-            completionRate: toPercent(completedLikeTotal, totalAttempts),
-            averageScore: averageFromSumAndCount(scoreSum, scoreCount),
+            completionRate: toPercent(completedLikeTotal, aggregate.totalAttempts),
+            averageScore: averageFromSumAndCount(aggregate.scoreSum, aggregate.scoreCount),
           };
         },
       );
 
       const courseBreakdown: AdminCourseStat[] = publishedCoursesWithTranslations.map((course) => {
-        let completed = 0;
-        let inProgress = 0;
-        let failed = 0;
-        let coursePreScoreSum = 0;
-        let coursePreScoreCount = 0;
-        let coursePostScoreSum = 0;
-        let coursePostScoreCount = 0;
-
-        for (const attempt of course.userCourseAttempts) {
-          if (attempt.status === "completed") completed += 1;
-          if (attempt.status === "in_progress") inProgress += 1;
-          if (attempt.status === "failed") failed += 1;
-
-          if (attempt.preQuizScore !== null) {
-            coursePreScoreSum += attempt.preQuizScore;
-            coursePreScoreCount += 1;
-          }
-
-          if (attempt.postQuizScore !== null) {
-            coursePostScoreSum += attempt.postQuizScore;
-            coursePostScoreCount += 1;
-          }
-        }
+        const aggregate = courseAttemptsByCourseId.get(course.id) ?? {
+          totalAttempts: 0,
+          completed: 0,
+          inProgress: 0,
+          failed: 0,
+          preQuizScoreSum: 0,
+          preQuizScoreCount: 0,
+          postQuizScoreSum: 0,
+          postQuizScoreCount: 0,
+        };
 
         return {
           id: course.id,
@@ -909,13 +929,19 @@ export async function getBasicAdminStats(locale = DEFAULT_LOCALE): Promise<Basic
           title: pickLocalizedTitle(course.translations, locale, course.slug),
           area: course.area,
           difficulty: course.difficulty,
-          totalAttempts: course.userCourseAttempts.length,
-          completed,
-          inProgress,
-          failed,
-          completionRate: toPercent(completed, course.userCourseAttempts.length),
-          averagePreQuizScore: averageFromSumAndCount(coursePreScoreSum, coursePreScoreCount),
-          averagePostQuizScore: averageFromSumAndCount(coursePostScoreSum, coursePostScoreCount),
+          totalAttempts: aggregate.totalAttempts,
+          completed: aggregate.completed,
+          inProgress: aggregate.inProgress,
+          failed: aggregate.failed,
+          completionRate: toPercent(aggregate.completed, aggregate.totalAttempts),
+          averagePreQuizScore: averageFromSumAndCount(
+            aggregate.preQuizScoreSum,
+            aggregate.preQuizScoreCount,
+          ),
+          averagePostQuizScore: averageFromSumAndCount(
+            aggregate.postQuizScoreSum,
+            aggregate.postQuizScoreCount,
+          ),
         };
       });
 

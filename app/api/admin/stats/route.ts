@@ -20,11 +20,7 @@ export async function GET() {
     return measureSyncOperation({
       operation: "api.admin.stats.GET.response",
       records: 1,
-      execute: () =>
-        NextResponse.json({
-          ok: true,
-          stats,
-        }),
+      execute: () => NextResponse.json(stats),
     });
   } catch (error) {
     status = "error";

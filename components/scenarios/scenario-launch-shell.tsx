@@ -67,6 +67,8 @@ export default function ScenarioLaunchShell({ locale, scenario }: Props) {
         </div>
 
         <ScenarioPlayerFrame
+          locale={locale}
+          scenarioSlug={scenario.slug}
           title={scenario.title}
           src={scenario.launchUrl}
           backHref={`/${locale}/scenarios`}

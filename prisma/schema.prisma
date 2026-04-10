@@ -340,6 +340,7 @@ model ScenarioVariant {
   @@index([scenarioId])
   @@index([language])
   @@index([availabilityStatus])
+  @@index([scenarioId, availabilityStatus, language])
 }
 
 model UserScenarioAttempt {
@@ -371,6 +372,8 @@ model UserScenarioAttempt {
   @@index([scenarioVariantId])
   @@index([status])
   @@index([startedAt])
+  @@index([userId, scenarioId, scenarioVariantId, attemptNumber])
+  @@index([lastOpenedAt, startedAt])
 }
 
 model QuizTranslation {

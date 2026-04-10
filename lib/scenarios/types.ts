@@ -122,6 +122,7 @@ export type RuntimeTrackingInput = {
   suspendData?: string | null;
   lessonLocation?: string | null;
   rawTrackingData?: Record<string, string> | null;
+  forceWrite?: boolean;
 };
 
 export type JsonPrimitive = string | number | boolean | null;

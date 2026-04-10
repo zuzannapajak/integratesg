@@ -12,7 +12,17 @@ type RuntimeRequestBody = {
   suspendData?: string | null;
   lessonLocation?: string | null;
   rawTrackingData?: Record<string, string> | null;
+  forceWrite?: boolean;
+  commitReason?: string;
+  changedKeys?: string[];
+  clientSetValueCount?: number;
+  clientCommitCount?: number;
+  clientRequestCount?: number;
+  clientWriteMode?: string;
+  lastFlushAgeMs?: number | null;
 };
+
+const runtimeRequestIntervals = new Map<string, number>();
 
 function isRuntimeRequestBody(value: unknown): value is RuntimeRequestBody {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
@@ -26,6 +36,11 @@ export async function POST(request: Request) {
   const startedAt = Date.now();
   let records = 0;
   let status: "ok" | "error" = "ok";
+  let payloadBytes = 0;
+  let intervalMs: number | null = null;
+  let saved = false;
+  let clientWriteMode: string | null = null;
+  let commitReason: string | null = null;
 
   try {
     const supabase = await createClient();
@@ -38,7 +53,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const json: unknown = await request.json();
+    const rawBody = await request.text();
+    payloadBytes = new TextEncoder().encode(rawBody).length;
+
+    let json: unknown = null;
+
+    try {
+      json = rawBody.length > 0 ? JSON.parse(rawBody) : null;
+    } catch {
+      status = "error";
+      return NextResponse.json({ error: "Invalid runtime payload" }, { status: 400 });
+    }
 
     if (!isRuntimeRequestBody(json)) {
       status = "error";
@@ -46,6 +71,8 @@ export async function POST(request: Request) {
     }
 
     const body = json;
+    clientWriteMode = typeof body.clientWriteMode === "string" ? body.clientWriteMode : null;
+    commitReason = typeof body.commitReason === "string" ? body.commitReason : null;
 
     if (
       typeof body.locale !== "string" ||
@@ -57,7 +84,13 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Invalid runtime payload" }, { status: 400 });
     }
 
-    const scenario = await updateScenarioRuntimeProgress({
+    const requestKey = `${user.id}:${body.scenarioSlug}`;
+    const now = Date.now();
+    const lastRequestAt = runtimeRequestIntervals.get(requestKey);
+    intervalMs = lastRequestAt ? now - lastRequestAt : null;
+    runtimeRequestIntervals.set(requestKey, now);
+
+    const result = await updateScenarioRuntimeProgress({
       locale: body.locale,
       userId: user.id,
       slug: body.scenarioSlug,
@@ -67,19 +100,28 @@ export async function POST(request: Request) {
       suspendData: body.suspendData ?? null,
       lessonLocation: body.lessonLocation ?? null,
       rawTrackingData: body.rawTrackingData ?? null,
+      forceWrite: body.forceWrite === true,
     });
 
-    if (!scenario) {
+    if (!result) {
       status = "error";
       return NextResponse.json({ error: "Scenario not found" }, { status: 404 });
     }
 
     records = 1;
+    saved = result.saved;
 
     return measureSyncOperation({
       operation: "api.scorm.runtime.POST.response",
       records: 1,
-      execute: () => NextResponse.json({ ok: true, scenario }),
+      meta: {
+        payloadBytes,
+        intervalMs,
+        saved,
+        clientWriteMode,
+        commitReason,
+      },
+      execute: () => NextResponse.json({ ok: true, saved }),
     });
   } catch (error) {
     status = "error";
@@ -91,6 +133,13 @@ export async function POST(request: Request) {
       durationMs: Date.now() - startedAt,
       records,
       status,
+      meta: {
+        payloadBytes,
+        intervalMs,
+        saved,
+        clientWriteMode,
+        commitReason,
+      },
     });
   }
 }
