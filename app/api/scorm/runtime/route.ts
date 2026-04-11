@@ -39,8 +39,14 @@ export async function POST(request: Request) {
   let payloadBytes = 0;
   let intervalMs: number | null = null;
   let saved = false;
+  let changedKeysCount = 0;
+  let rawTrackingKeysCount = 0;
   let clientWriteMode: string | null = null;
   let commitReason: string | null = null;
+  let clientSetValueCount: number | null = null;
+  let clientCommitCount: number | null = null;
+  let clientRequestCount: number | null = null;
+  let lastFlushAgeMs: number | null = null;
 
   try {
     const supabase = await createClient();
@@ -73,6 +79,17 @@ export async function POST(request: Request) {
     const body = json;
     clientWriteMode = typeof body.clientWriteMode === "string" ? body.clientWriteMode : null;
     commitReason = typeof body.commitReason === "string" ? body.commitReason : null;
+    changedKeysCount = Array.isArray(body.changedKeys) ? body.changedKeys.length : 0;
+    rawTrackingKeysCount =
+      body.rawTrackingData && typeof body.rawTrackingData === "object"
+        ? Object.keys(body.rawTrackingData).length
+        : 0;
+    clientSetValueCount =
+      typeof body.clientSetValueCount === "number" ? body.clientSetValueCount : null;
+    clientCommitCount = typeof body.clientCommitCount === "number" ? body.clientCommitCount : null;
+    clientRequestCount =
+      typeof body.clientRequestCount === "number" ? body.clientRequestCount : null;
+    lastFlushAgeMs = typeof body.lastFlushAgeMs === "number" ? body.lastFlushAgeMs : null;
 
     if (
       typeof body.locale !== "string" ||
@@ -116,12 +133,19 @@ export async function POST(request: Request) {
       records: 1,
       meta: {
         payloadBytes,
+        responseBytes: 0,
         intervalMs,
         saved,
+        changedKeysCount,
+        rawTrackingKeysCount,
         clientWriteMode,
         commitReason,
+        clientSetValueCount,
+        clientCommitCount,
+        clientRequestCount,
+        lastFlushAgeMs,
       },
-      execute: () => NextResponse.json({ ok: true, saved }),
+      execute: () => new Response(null, { status: 204 }),
     });
   } catch (error) {
     status = "error";
@@ -135,10 +159,17 @@ export async function POST(request: Request) {
       status,
       meta: {
         payloadBytes,
+        responseBytes: status === "ok" ? 0 : undefined,
         intervalMs,
         saved,
+        changedKeysCount,
+        rawTrackingKeysCount,
         clientWriteMode,
         commitReason,
+        clientSetValueCount,
+        clientCommitCount,
+        clientRequestCount,
+        lastFlushAgeMs,
       },
     });
   }
