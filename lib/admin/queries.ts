@@ -9,6 +9,7 @@ import type {
   DashboardScenarioAttemptRow,
   LocalizedTitleItem,
 } from "@/lib/admin/types";
+import type { AppLocale } from "@/lib/i18n/locales";
 import { APP_LOCALES, DEFAULT_LOCALE, LOCALE_META } from "@/lib/i18n/locales";
 import {
   logMeasuredOperation,
@@ -16,6 +17,7 @@ import {
   measureSyncOperation,
 } from "@/lib/observability/performance";
 import { prisma } from "@/lib/prisma";
+import { unstable_cache } from "next/cache";
 
 const DASHBOARD_ROWS_LIMIT = 12;
 
@@ -404,8 +406,8 @@ type GetBasicAdminStatsOptions = {
   includeRows?: boolean;
 };
 
-export async function getBasicAdminStats(
-  locale = DEFAULT_LOCALE,
+async function getBasicAdminStatsUncached(
+  locale: AppLocale = DEFAULT_LOCALE,
   options: GetBasicAdminStatsOptions = {},
 ): Promise<BasicAdminStats> {
   const includeBreakdowns = options.includeBreakdowns ?? true;
@@ -1323,4 +1325,26 @@ export async function getBasicAdminStats(
       });
     },
   });
+}
+
+const getBasicAdminStatsCached = unstable_cache(
+  async (locale: AppLocale, includeBreakdowns: boolean, includeRows: boolean) =>
+    getBasicAdminStatsUncached(locale, {
+      includeBreakdowns,
+      includeRows,
+    }),
+  ["admin.getBasicAdminStats"],
+  {
+    revalidate: 60,
+  },
+);
+
+export async function getBasicAdminStats(
+  locale: AppLocale = DEFAULT_LOCALE,
+  options: GetBasicAdminStatsOptions = {},
+): Promise<BasicAdminStats> {
+  const includeBreakdowns = options.includeBreakdowns ?? true;
+  const includeRows = options.includeRows ?? true;
+
+  return getBasicAdminStatsCached(locale, includeBreakdowns, includeRows);
 }
