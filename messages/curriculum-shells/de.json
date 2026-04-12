@@ -80,7 +80,13 @@
         "quiz": "Wissenscheck",
         "progress": "Ihr Fortschritt",
         "overviewEyebrow": "Modulübersicht",
-        "overviewTitle": "Was dieses Modul beinhaltet"
+        "overviewTitle": "Was dieses Modul beinhaltet",
+        "outcomesEyebrow": "Lernergebnisse",
+        "outcomesTitle": "Was Sie aus diesem Modul mitnehmen sollten",
+        "flowEyebrow": "Modulablauf",
+        "flowTitle": "So arbeiten Sie dieses Modul durch",
+        "progressEyebrow": "Fortschrittsverfolgung",
+        "progressTitle": "Verfolgen Sie Ihre Aktivitäten und Kontrollpunkte"
       },
       "labels": {
         "area": "Bereich",
@@ -106,7 +112,11 @@
         "crossCutting": "Übergreifend"
       },
       "heroIntro": {
-        "preQuiz": "Beginnen Sie mit dem Pre-Quiz, um Ihren Ausgangspunkt zu bewerten und zu verstehen, worauf Sie sich während des Moduls konzentrieren sollten."
+        "preQuiz": "Beginnen Sie mit dem Pre-Quiz, um Ihren Ausgangspunkt zu bewerten und zu verstehen, worauf Sie sich während des Moduls konzentrieren sollten.",
+        "default": "Prüfen Sie die Modulübersicht und beginnen Sie, sobald Sie bereit sind.",
+        "lessons": "Setzen Sie die Lektionen fort, um Schritt für Schritt ein praxisnahes Verständnis aufzubauen.",
+        "postQuiz": "Absolvieren Sie den abschließenden Checkpoint, um zu überprüfen, was Sie in diesem Modul gelernt haben.",
+        "completed": "Sie haben dieses Modul abgeschlossen. Prüfen Sie die Ergebnisse und kehren Sie bei Bedarf zu einzelnen Abschnitten zurück."
       },
       "status": {
         "not_started": "Nicht gestartet",
@@ -114,7 +124,8 @@
         "completed": "Abgeschlossen",
         "failed": "Überprüfung erforderlich",
         "notStarted": "Nicht gestartet",
-        "inProgress": "In Bearbeitung"
+        "inProgress": "In Bearbeitung",
+        "readyToStart": "Bereit zum Start"
       },
       "difficulty": {
         "foundation": "Grundlagen",
@@ -127,12 +138,18 @@
         }
       },
       "progressSummary": {
-        "preQuiz": "Pre-Quiz"
+        "preQuiz": "Pre-Quiz",
+        "default": "Bereit zum Start",
+        "lessonInProgress": "Lektion {index} in Bearbeitung",
+        "postQuiz": "Abschließender Checkpoint",
+        "completed": "Modul abgeschlossen"
       },
       "nextAction": {
         "title": "Nächste Aktion",
         "defaultDescription": "Überprüfen Sie die Modulstruktur und fahren Sie mit dem nächsten empfohlenen Schritt fort.",
-        "viewFlow": "Ablauf anzeigen"
+        "viewFlow": "Ablauf anzeigen",
+        "reviewWorkspace": "Modularbeitsbereich prüfen",
+        "completedDescription": "Sie haben dieses Modul abgeschlossen. Sie können die Struktur, Ergebnisse und bisherigen Versuche überprüfen."
       },
       "progressState": {
         "nextAction": {
@@ -182,6 +199,32 @@
         "preTest": "Pre-Test",
         "lessons": "Lektionen",
         "postTest": "Post-Test"
+      },
+      "flowDescriptions": {
+        "opening": "Beginnen Sie mit dem ersten Checkpoint, um Ihr Ausgangsniveau einzuschätzen.",
+        "lessons": "{completed} von {total} Lektionen wurden bisher abgeschlossen.",
+        "closing": "Schließen Sie mit dem letzten Checkpoint ab, um Ihren Fortschritt zu festigen und zu überprüfen."
+      },
+      "progress": {
+        "currentLocation": "Aktueller Standort",
+        "lessonsCompleted": "Abgeschlossene Lektionen",
+        "openingCheckpointHistory": "Verlauf des ersten Checkpoints",
+        "openingCheckpointEmpty": "Noch keine Versuche für den ersten Checkpoint.",
+        "finalCheckpointHistory": "Verlauf des letzten Checkpoints",
+        "finalCheckpointEmpty": "Noch keine Versuche für den letzten Checkpoint.",
+        "lessonStatus": "Status der Lektion"
+      },
+      "attempt": {
+        "attemptLabel": "Versuch {number}",
+        "correctSummary": "{correct} von {total} richtig • Abgegeben am {submittedAt}",
+        "flaggedQuestions": "{count} markierte Fragen"
+      },
+      "relatedModules": "Verwandte Module",
+      "overviewCopy": {
+        "environmental": "Dieses Modul führt über strukturierte Lektionen und anwendungsbezogene Checkpoints in umweltbezogene ESG-Themen ein.",
+        "social": "Dieses Modul behandelt soziale ESG-Themen mit Fokus auf Menschen, Verantwortung und praktische Umsetzung.",
+        "governance": "Dieses Modul erläutert Governance-bezogene ESG-Themen durch strukturierte Inhalte, Entscheidungen und verantwortungsorientiertes Lernen.",
+        "crossCutting": "Dieses Modul verbindet Umwelt-, Sozial- und Governance-Themen in einem gemeinsamen praxisorientierten Lernpfad."
       },
       "fallbacks": {
         "subtitle": "Lehrplanmodul",
