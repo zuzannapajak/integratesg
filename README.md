@@ -13,7 +13,7 @@ The system acts as a specialized Micro-LMS, focusing on the seamless delivery of
 
 ## 👥 User Roles
 
-- **Student**
+- **Learner**
   - Accesses case studies and the scenario library.
   - Completes interactive scenarios.
   - Tracks personal progress and scores.
@@ -97,7 +97,7 @@ This project is licensed under the **MIT License**.
 
 ### Content
 
-Educational materials (case studies, descriptions) are licensed under  
+Educational materials (case studies, descriptions) are licensed under
 **Creative Commons Attribution 4.0 (CC BY 4.0)**.
 
 ### Scenarios

@@ -6,6 +6,7 @@ import {
   DashboardMetric,
   DashboardRole,
 } from "@/lib/dashboard/types";
+import { logMeasuredOperation } from "@/lib/observability/performance";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 import { Prisma } from "@prisma/client";
@@ -331,7 +332,7 @@ function buildGamificationStats(
   learnerAttempts: { startedAt: Date | null; completedAt?: Date | null }[],
   t: Awaited<ReturnType<typeof getTranslations>>,
 ): DashboardGamificationStat[] {
-  if (role !== "student" && role !== "educator") {
+  if (role !== "learner" && role !== "educator") {
     return [];
   }
 
@@ -423,190 +424,216 @@ function buildAdminKpis(
 }
 
 export default async function DashboardPage({ params }: Props) {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "Protected.DashboardPage" });
+  const startedAt = Date.now();
+  let records = 0;
+  let status: "ok" | "error" = "ok";
 
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  try {
+    const { locale } = await params;
+    const [t, supabase] = await Promise.all([
+      getTranslations({ locale, namespace: "Protected.DashboardPage" }),
+      createClient(),
+    ]);
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
 
-  if (!user) {
-    redirect(`/${locale}/auth/login`);
-  }
+    if (!user) {
+      redirect(`/${locale}/auth/login`);
+    }
 
-  const profile = await prisma.profile.findUnique({
-    where: { id: user.id },
-    select: {
-      id: true,
-      email: true,
-      fullName: true,
-      role: true,
-    },
-  });
+    const profile = await prisma.profile.findUnique({
+      where: { id: user.id },
+      select: {
+        id: true,
+        email: true,
+        fullName: true,
+        role: true,
+      },
+    });
 
-  if (!profile) {
-    redirect(`/${locale}/auth/login`);
-  }
+    if (!profile) {
+      redirect(`/${locale}/auth/login`);
+    }
 
-  const role = profile.role as DashboardRole;
+    const role = profile.role as DashboardRole;
 
-  const curriculumAttemptsPromise =
-    role === "educator"
-      ? prisma.userCourseAttempt.findMany({
-          where: { userId: profile.id },
-          orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }],
-          include: {
-            course: {
-              select: {
-                slug: true,
-                translations: {
-                  select: {
-                    language: true,
-                    title: true,
-                    description: true,
+    const curriculumAttemptsPromise =
+      role === "educator"
+        ? prisma.userCourseAttempt.findMany({
+            where: { userId: profile.id },
+            orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }],
+            include: {
+              course: {
+                select: {
+                  slug: true,
+                  translations: {
+                    select: {
+                      language: true,
+                      title: true,
+                      description: true,
+                    },
                   },
                 },
               },
             },
-          },
-        })
-      : Promise.resolve([]);
+          })
+        : Promise.resolve([]);
 
-  const scenarioAttemptsPromise =
-    role === "student" || role === "educator"
-      ? prisma.userScenarioAttempt.findMany({
-          where: { userId: profile.id },
-          orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }],
-          include: {
-            scenario: {
-              select: {
-                slug: true,
+    const scenarioAttemptsPromise =
+      role === "learner" || role === "educator"
+        ? prisma.userScenarioAttempt.findMany({
+            where: { userId: profile.id },
+            orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }],
+            include: {
+              scenario: {
+                select: {
+                  slug: true,
+                },
+              },
+              scenarioVariant: {
+                select: {
+                  title: true,
+                  language: true,
+                },
               },
             },
-            scenarioVariant: {
-              select: {
-                title: true,
-                language: true,
-              },
+          })
+        : Promise.resolve([]);
+
+    const adminScenarioAttemptsPromise =
+      role === "admin"
+        ? prisma.userScenarioAttempt.findMany({
+            orderBy: [{ startedAt: "desc" }],
+            take: 90,
+            ...scenarioAttemptWithRelations,
+          })
+        : Promise.resolve([]);
+
+    const totalUsersPromise = role === "admin" ? prisma.profile.count() : Promise.resolve(0);
+
+    const publishedCoursesCountPromise =
+      role === "educator"
+        ? prisma.course.count({
+            where: {
+              status: "published",
             },
-          },
-        })
-      : Promise.resolve([]);
+          })
+        : Promise.resolve(0);
 
-  const adminScenarioAttemptsPromise =
-    role === "admin"
-      ? prisma.userScenarioAttempt.findMany({
-          orderBy: [{ startedAt: "desc" }],
-          take: 90,
-          ...scenarioAttemptWithRelations,
-        })
-      : Promise.resolve([]);
+    const [
+      curriculumAttempts,
+      scenarioAttempts,
+      adminScenarioAttempts,
+      totalUsers,
+      publishedCoursesCount,
+    ] = await Promise.all([
+      curriculumAttemptsPromise,
+      scenarioAttemptsPromise,
+      adminScenarioAttemptsPromise,
+      totalUsersPromise,
+      publishedCoursesCountPromise,
+    ]);
 
-  const totalUsersPromise = role === "admin" ? prisma.profile.count() : Promise.resolve(0);
+    records =
+      curriculumAttempts.length +
+      scenarioAttempts.length +
+      adminScenarioAttempts.length +
+      totalUsers +
+      publishedCoursesCount;
 
-  const publishedCoursesCountPromise =
-    role === "educator"
-      ? prisma.course.count({
-          where: {
-            status: "published",
-          },
-        })
-      : Promise.resolve(0);
+    const learnerAttemptsForActivity =
+      role === "educator"
+        ? [...curriculumAttempts, ...scenarioAttempts].map((attempt) => ({
+            startedAt: attempt.startedAt,
+          }))
+        : scenarioAttempts.map((attempt) => ({
+            startedAt: attempt.startedAt,
+          }));
 
-  const [
-    curriculumAttempts,
-    scenarioAttempts,
-    adminScenarioAttempts,
-    totalUsers,
-    publishedCoursesCount,
-  ] = await Promise.all([
-    curriculumAttemptsPromise,
-    scenarioAttemptsPromise,
-    adminScenarioAttemptsPromise,
-    totalUsersPromise,
-    publishedCoursesCountPromise,
-  ]);
+    const learnerCurrentWeekAttempts = buildWeeklyAttempts(learnerAttemptsForActivity, 6, -1);
+    const learnerPreviousWeekAttempts = buildWeeklyAttempts(learnerAttemptsForActivity, 13, 6);
 
-  const learnerAttemptsForActivity =
-    role === "educator"
-      ? [...curriculumAttempts, ...scenarioAttempts].map((attempt) => ({
-          startedAt: attempt.startedAt,
-        }))
-      : scenarioAttempts.map((attempt) => ({
-          startedAt: attempt.startedAt,
-        }));
+    const learnerActivityData = buildWeeklyActivityChart(learnerCurrentWeekAttempts, locale);
+    const learnerTrendLabel = buildTrendLabel(
+      learnerActivityData,
+      learnerPreviousWeekAttempts.length,
+      t,
+    );
 
-  const learnerCurrentWeekAttempts = buildWeeklyAttempts(learnerAttemptsForActivity, 6, -1);
-  const learnerPreviousWeekAttempts = buildWeeklyAttempts(learnerAttemptsForActivity, 13, 6);
+    const adminActivitySource = adminScenarioAttempts.map((attempt) => ({
+      startedAt: attempt.startedAt,
+    }));
 
-  const learnerActivityData = buildWeeklyActivityChart(learnerCurrentWeekAttempts, locale);
-  const learnerTrendLabel = buildTrendLabel(
-    learnerActivityData,
-    learnerPreviousWeekAttempts.length,
-    t,
-  );
+    const adminCurrentWeekAttempts = buildWeeklyAttempts(adminActivitySource, 6, -1);
+    const adminPreviousWeekAttempts = buildWeeklyAttempts(adminActivitySource, 13, 6);
 
-  const adminActivitySource = adminScenarioAttempts.map((attempt) => ({
-    startedAt: attempt.startedAt,
-  }));
+    const adminActivityData = buildWeeklyActivityChart(adminCurrentWeekAttempts, locale);
+    const adminTrendLabel = buildTrendLabel(adminActivityData, adminPreviousWeekAttempts.length, t);
 
-  const adminCurrentWeekAttempts = buildWeeklyAttempts(adminActivitySource, 6, -1);
-  const adminPreviousWeekAttempts = buildWeeklyAttempts(adminActivitySource, 13, 6);
+    const continueLearning =
+      role === "learner" || role === "educator"
+        ? buildContinueLearningItem(
+            {
+              curriculumAttempts,
+              scenarioAttempts,
+              locale,
+            },
+            t,
+          )
+        : null;
 
-  const adminActivityData = buildWeeklyActivityChart(adminCurrentWeekAttempts, locale);
-  const adminTrendLabel = buildTrendLabel(adminActivityData, adminPreviousWeekAttempts.length, t);
+    const learnerSummaryMetrics = buildLearnerSummaryMetrics(
+      role,
+      curriculumAttempts,
+      scenarioAttempts,
+      t,
+    );
 
-  const continueLearning =
-    role === "student" || role === "educator"
-      ? buildContinueLearningItem(
-          {
-            curriculumAttempts,
-            scenarioAttempts,
-            locale,
-          },
-          t,
-        )
-      : null;
+    const gamificationStats = buildGamificationStats(
+      role,
+      role === "educator"
+        ? curriculumAttempts.map((attempt) => ({
+            startedAt: attempt.startedAt,
+            completedAt: attempt.completedAt,
+          }))
+        : scenarioAttempts.map((attempt) => ({
+            startedAt: attempt.startedAt,
+            completedAt: attempt.completedAt ?? null,
+          })),
+      t,
+    );
 
-  const learnerSummaryMetrics = buildLearnerSummaryMetrics(
-    role,
-    curriculumAttempts,
-    scenarioAttempts,
-    t,
-  );
+    const adminKpis = buildAdminKpis(totalUsers, adminScenarioAttempts, t);
 
-  const gamificationStats = buildGamificationStats(
-    role,
-    role === "educator"
-      ? curriculumAttempts.map((attempt) => ({
-          startedAt: attempt.startedAt,
-          completedAt: attempt.completedAt,
-        }))
-      : scenarioAttempts.map((attempt) => ({
-          startedAt: attempt.startedAt,
-          completedAt: attempt.completedAt ?? null,
-        })),
-    t,
-  );
-
-  const adminKpis = buildAdminKpis(totalUsers, adminScenarioAttempts, t);
-
-  return (
-    <DashboardShell
-      locale={locale}
-      role={role}
-      displayName={profile.fullName ?? profile.email.split("@")[0]}
-      heroStats={role === "admin" ? adminKpis : learnerSummaryMetrics}
-      continueLearning={role === "student" || role === "educator" ? continueLearning : null}
-      gamificationStats={role === "student" || role === "educator" ? gamificationStats : []}
-      publishedCoursesCount={role === "educator" ? publishedCoursesCount : 0}
-      learnerSummaryMetrics={role === "student" || role === "educator" ? learnerSummaryMetrics : []}
-      learnerActivityData={role === "student" || role === "educator" ? learnerActivityData : []}
-      learnerTrendLabel={role === "student" || role === "educator" ? learnerTrendLabel : ""}
-      adminActivityData={role === "admin" ? adminActivityData : []}
-      adminTrendLabel={role === "admin" ? adminTrendLabel : ""}
-      adminKpis={role === "admin" ? adminKpis : []}
-    />
-  );
+    return (
+      <DashboardShell
+        locale={locale}
+        role={role}
+        displayName={profile.fullName ?? profile.email.split("@")[0]}
+        heroStats={role === "admin" ? adminKpis : learnerSummaryMetrics}
+        continueLearning={role === "learner" || role === "educator" ? continueLearning : null}
+        gamificationStats={role === "learner" || role === "educator" ? gamificationStats : []}
+        publishedCoursesCount={role === "educator" ? publishedCoursesCount : 0}
+        learnerSummaryMetrics={
+          role === "learner" || role === "educator" ? learnerSummaryMetrics : []
+        }
+        learnerActivityData={role === "learner" || role === "educator" ? learnerActivityData : []}
+        learnerTrendLabel={role === "learner" || role === "educator" ? learnerTrendLabel : ""}
+        adminActivityData={role === "admin" ? adminActivityData : []}
+        adminTrendLabel={role === "admin" ? adminTrendLabel : ""}
+        adminKpis={role === "admin" ? adminKpis : []}
+      />
+    );
+  } catch (error) {
+    status = "error";
+    throw error;
+  } finally {
+    logMeasuredOperation({
+      operation: "page.dashboard.data",
+      durationMs: Date.now() - startedAt,
+      records,
+      status,
+    });
+  }
 }

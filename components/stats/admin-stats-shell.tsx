@@ -96,9 +96,105 @@ function getAreaBadgeClass(area: string) {
   }
 }
 
-function average(values: number[]) {
-  if (values.length === 0) return null;
-  return values.reduce((sum, value) => sum + value, 0) / values.length;
+function averageFromSum(sum: number, count: number) {
+  if (count === 0) return null;
+  return sum / count;
+}
+
+function findMostActiveScenario(items: AdminScenarioStat[]) {
+  let best: AdminScenarioStat | null = null;
+
+  for (const item of items) {
+    if (best === null || item.totalAttempts > best.totalAttempts) {
+      best = item;
+    }
+  }
+
+  return best;
+}
+
+function findBestCourse(items: AdminCourseStat[]) {
+  let best: AdminCourseStat | null = null;
+
+  for (const item of items) {
+    if (
+      best === null ||
+      item.completionRate > best.completionRate ||
+      (item.completionRate === best.completionRate && item.totalAttempts > best.totalAttempts)
+    ) {
+      best = item;
+    }
+  }
+
+  return best;
+}
+
+function findLargestLanguage(items: AdminLanguageStat[]) {
+  let best: AdminLanguageStat | null = null;
+
+  for (const item of items) {
+    if (best === null || item.users > best.users) {
+      best = item;
+    }
+  }
+
+  return best;
+}
+
+function summarizeScenarios(items: AdminScenarioStat[]) {
+  let attempts = 0;
+  let variants = 0;
+  let completionSum = 0;
+  let completionCount = 0;
+  let scoreSum = 0;
+  let scoreCount = 0;
+
+  for (const item of items) {
+    attempts += item.totalAttempts;
+    variants += item.availableVariants;
+    completionSum += item.completionRate;
+    completionCount += 1;
+
+    if (item.averageScore !== null) {
+      scoreSum += item.averageScore;
+      scoreCount += 1;
+    }
+  }
+
+  return {
+    attempts,
+    variants,
+    avgCompletion: averageFromSum(completionSum, completionCount),
+    avgScore: averageFromSum(scoreSum, scoreCount),
+  };
+}
+
+function summarizeCourses(items: AdminCourseStat[]) {
+  let attempts = 0;
+  let inProgress = 0;
+  let completionSum = 0;
+  let completionCount = 0;
+  let postQuizSum = 0;
+  let postQuizCount = 0;
+
+  for (const item of items) {
+    attempts += item.totalAttempts;
+    inProgress += item.inProgress;
+    completionSum += item.completionRate;
+    completionCount += 1;
+
+    if (item.averagePostQuizScore !== null) {
+      postQuizSum += item.averagePostQuizScore;
+      postQuizCount += 1;
+    }
+  }
+
+  return {
+    attempts,
+    inProgress,
+    avgCompletion: averageFromSum(completionSum, completionCount),
+    avgPostQuiz: averageFromSum(postQuizSum, postQuizCount),
+  };
 }
 
 function getScenarioSeries(stats: BasicAdminStats, window: ActivityWindow) {
@@ -156,41 +252,35 @@ function getEportfolioWindowStats(stats: BasicAdminStats, window: ActivityWindow
 }
 
 function deriveInsights(stats: BasicAdminStats, t: ReturnType<typeof useTranslations>) {
-  const scenarioLeader = [...stats.scenarioBreakdown].sort(
-    (a, b) => b.totalAttempts - a.totalAttempts,
-  )[0];
-
-  const courseLeader = [...stats.courseBreakdown].sort(
-    (a, b) => b.completionRate - a.completionRate,
-  )[0];
-
-  const languageLeader = [...stats.languageBreakdown].sort((a, b) => b.users - a.users)[0];
+  const scenarioLeader = findMostActiveScenario(stats.scenarioBreakdown);
+  const courseLeader = findBestCourse(stats.courseBreakdown);
+  const languageLeader = findLargestLanguage(stats.languageBreakdown);
 
   return [
     {
       title: t("highlights.mostActiveScenario"),
-      value: scenarioLeader.title,
+      value: scenarioLeader?.title ?? "—",
       detail: t("highlights.attemptsCompletion", {
-        attempts: scenarioLeader.totalAttempts,
-        completion: formatPercent(scenarioLeader.completionRate),
+        attempts: scenarioLeader?.totalAttempts ?? 0,
+        completion: formatPercent(scenarioLeader?.completionRate ?? 0),
       }),
       tone: "green" as const,
     },
     {
       title: t("highlights.bestCompletionResult"),
-      value: courseLeader.title,
+      value: courseLeader?.title ?? "—",
       detail: t("highlights.completionPostQuiz", {
-        completion: formatPercent(courseLeader.completionRate),
-        score: formatScore(courseLeader.averagePostQuizScore),
+        completion: formatPercent(courseLeader?.completionRate ?? 0),
+        score: formatScore(courseLeader?.averagePostQuizScore ?? null),
       }),
       tone: "orange" as const,
     },
     {
       title: t("highlights.largestLanguageCohort"),
-      value: languageLeader.label,
+      value: languageLeader?.label ?? "—",
       detail: t("highlights.usersVariants", {
-        users: languageLeader.users,
-        variants: languageLeader.availableScenarioVariants,
+        users: languageLeader?.users ?? 0,
+        variants: languageLeader?.availableScenarioVariants ?? 0,
       }),
       tone: "blue" as const,
     },
@@ -856,37 +946,9 @@ export default function AdminStatsShell({ stats }: Props) {
     return sorted;
   }, [courseSort, query, stats.courseBreakdown]);
 
-  const scenarioSummary = useMemo(() => {
-    const avgCompletion = average(filteredScenarios.map((item) => item.completionRate));
-    const avgScore = average(
-      filteredScenarios
-        .map((item) => item.averageScore)
-        .filter((value): value is number => value !== null),
-    );
+  const scenarioSummary = useMemo(() => summarizeScenarios(filteredScenarios), [filteredScenarios]);
 
-    return {
-      attempts: filteredScenarios.reduce((sum, item) => sum + item.totalAttempts, 0),
-      variants: filteredScenarios.reduce((sum, item) => sum + item.availableVariants, 0),
-      avgCompletion,
-      avgScore,
-    };
-  }, [filteredScenarios]);
-
-  const courseSummary = useMemo(() => {
-    const avgCompletion = average(filteredCourses.map((item) => item.completionRate));
-    const avgPostQuiz = average(
-      filteredCourses
-        .map((item) => item.averagePostQuizScore)
-        .filter((value): value is number => value !== null),
-    );
-
-    return {
-      attempts: filteredCourses.reduce((sum, item) => sum + item.totalAttempts, 0),
-      inProgress: filteredCourses.reduce((sum, item) => sum + item.inProgress, 0),
-      avgCompletion,
-      avgPostQuiz,
-    };
-  }, [filteredCourses]);
+  const courseSummary = useMemo(() => summarizeCourses(filteredCourses), [filteredCourses]);
 
   const scenarioChart = useMemo(() => {
     const windowStats = getScenarioWindowStats(stats, activityWindow);
@@ -1126,8 +1188,8 @@ export default function AdminStatsShell({ stats }: Props) {
                         value={String(stats.users.educators)}
                       />
                       <MiniKpi
-                        label={t("platformStructure.students")}
-                        value={String(stats.users.students)}
+                        label={t("platformStructure.learners")}
+                        value={String(stats.users.learners)}
                       />
                       <MiniKpi
                         label={t("platformStructure.admins")}

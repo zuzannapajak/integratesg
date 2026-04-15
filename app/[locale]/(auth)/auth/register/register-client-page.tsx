@@ -15,7 +15,7 @@ type Step = 1 | 2;
 
 export default function RegisterClientPage({ locale }: Props) {
   const [step, setStep] = useState<Step>(1);
-  const [role, setRole] = useState<SelfServiceRole>(APP_ROLES.student);
+  const [role, setRole] = useState<SelfServiceRole>(APP_ROLES.learner);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

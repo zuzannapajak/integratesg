@@ -158,11 +158,11 @@
         "secondaryCta": "Sign in"
       }
     },
-    "Students": {
+    "Learners": {
       "hero": {
-        "eyebrow": "For students",
+        "eyebrow": "For learners",
         "title": "Explore ESG topics through interactive scenarios, case studies, and guided learning materials.",
-        "description": "Students can use the platform to build practical understanding of ESG issues through self-paced exploration, structured resources, and applied learning experiences.",
+        "description": "Learners can use the platform to build practical understanding of ESG issues through self-paced exploration, structured resources, and applied learning experiences.",
         "primaryCta": "Register",
         "secondaryCta": "Learn more"
       },
@@ -177,8 +177,8 @@
       },
       "highlights": {
         "eyebrow": "Learning experience",
-        "title": "What students can explore",
-        "description": "Students can explore ESG topics through practical scenarios, structured examples, and accessible learning materials.",
+        "title": "What learners can explore",
+        "description": "Learners can explore ESG topics through practical scenarios, structured examples, and accessible learning materials.",
         "items": {
           "1": {
             "title": "Interactive decision-making scenarios",
@@ -200,10 +200,10 @@
       },
       "sections": {
         "eyebrow": "Practical use",
-        "title": "How students can use the platform",
+        "title": "How learners can use the platform",
         "1": {
           "title": "Scenario-based learning",
-          "description": "The platform allows students to approach ESG through practical tasks and simulated decision-making situations."
+          "description": "The platform allows learners to approach ESG through practical tasks and simulated decision-making situations."
         },
         "2": {
           "title": "Learning through examples",
@@ -211,13 +211,13 @@
         },
         "3": {
           "title": "Independent learning support",
-          "description": "Students can use the platform at their own pace and return to resources as part of broader coursework or project-based activity."
+          "description": "Learners can use the platform at their own pace and return to resources as part of broader coursework or project-based activity."
         }
       },
       "cta": {
         "eyebrow": "Start learning",
         "title": "Create your account and access practical ESG resources.",
-        "description": "Register to explore scenarios, case studies, and guided learning content prepared for student users.",
+        "description": "Register to explore scenarios, case studies, and guided learning content prepared for learner users.",
         "primaryCta": "Register",
         "secondaryCta": "Sign in"
       }

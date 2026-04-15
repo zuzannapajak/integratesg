@@ -80,7 +80,13 @@
         "quiz": "Sprawdzenie wiedzy",
         "progress": "Twój postęp",
         "overviewEyebrow": "Przegląd modułu",
-        "overviewTitle": "Co zawiera ten moduł"
+        "overviewTitle": "Co zawiera ten moduł",
+        "outcomesEyebrow": "Efekty uczenia się",
+        "outcomesTitle": "Co warto wynieść z tego modułu",
+        "flowEyebrow": "Przebieg modułu",
+        "flowTitle": "Jak przejść przez ten moduł",
+        "progressEyebrow": "Śledzenie postępów",
+        "progressTitle": "Śledź swoją aktywność i punkty kontrolne"
       },
       "labels": {
         "area": "Obszar",
@@ -106,7 +112,11 @@
         "crossCutting": "Przekrojowe"
       },
       "heroIntro": {
-        "preQuiz": "Zacznij od testu wstępnego, aby ocenić swój poziom startowy i dowiedzieć się, na czym skupić się podczas modułu."
+        "preQuiz": "Zacznij od testu wstępnego, aby ocenić swój poziom startowy i dowiedzieć się, na czym skupić się podczas modułu.",
+        "default": "Zapoznaj się z przeglądem modułu i rozpocznij, gdy będziesz gotowy.",
+        "lessons": "Kontynuuj kolejne lekcje, aby krok po kroku budować praktyczne zrozumienie tematu.",
+        "postQuiz": "Ukończ końcowy punkt kontrolny, aby sprawdzić, czego nauczyłeś się w tym module.",
+        "completed": "Ten moduł został ukończony. Przejrzyj efekty i wróć do wybranych sekcji, jeśli będzie to potrzebne."
       },
       "status": {
         "not_started": "Nie rozpoczęto",
@@ -114,7 +124,8 @@
         "completed": "Ukończono",
         "failed": "Wymaga przeglądu",
         "notStarted": "Nie rozpoczęto",
-        "inProgress": "W toku"
+        "inProgress": "W toku",
+        "readyToStart": "Gotowe do rozpoczęcia"
       },
       "difficulty": {
         "foundation": "Podstawowy",
@@ -127,12 +138,18 @@
         }
       },
       "progressSummary": {
-        "preQuiz": "Pre-quiz"
+        "preQuiz": "Pre-quiz",
+        "default": "Gotowe do rozpoczęcia",
+        "lessonInProgress": "Lekcja {index} w toku",
+        "postQuiz": "Końcowy punkt kontrolny",
+        "completed": "Moduł ukończony"
       },
       "nextAction": {
         "title": "Następny krok",
         "defaultDescription": "Zapoznaj się ze strukturą modułu i kontynuuj od zalecanego kroku.",
-        "viewFlow": "Zobacz przebieg"
+        "viewFlow": "Zobacz przebieg",
+        "reviewWorkspace": "Przejrzyj przestrzeń modułu",
+        "completedDescription": "Ten moduł został ukończony. Możesz przejrzeć strukturę, efekty oraz wcześniejsze podejścia."
       },
       "progressState": {
         "nextAction": {
@@ -182,6 +199,32 @@
         "preTest": "Test wstępny",
         "lessons": "Lekcje",
         "postTest": "Test końcowy"
+      },
+      "flowDescriptions": {
+        "opening": "Rozpocznij od początkowego punktu kontrolnego, aby ocenić swój poziom wyjściowy.",
+        "lessons": "Do tej pory ukończono {completed} z {total} lekcji.",
+        "closing": "Zakończ końcowym punktem kontrolnym, aby utrwalić i potwierdzić swoje postępy."
+      },
+      "progress": {
+        "currentLocation": "Obecne miejsce",
+        "lessonsCompleted": "Ukończone lekcje",
+        "openingCheckpointHistory": "Historia początkowego punktu kontrolnego",
+        "openingCheckpointEmpty": "Brak podejść do początkowego punktu kontrolnego.",
+        "finalCheckpointHistory": "Historia końcowego punktu kontrolnego",
+        "finalCheckpointEmpty": "Brak podejść do końcowego punktu kontrolnego.",
+        "lessonStatus": "Status lekcji"
+      },
+      "attempt": {
+        "attemptLabel": "Podejście {number}",
+        "correctSummary": "{correct} z {total} poprawnych • Wysłano {submittedAt}",
+        "flaggedQuestions": "{count} oznaczonych pytań"
+      },
+      "relatedModules": "Powiązane moduły",
+      "overviewCopy": {
+        "environmental": "Ten moduł wprowadza zagadnienia środowiskowe ESG poprzez uporządkowane lekcje i praktyczne punkty kontrolne.",
+        "social": "Ten moduł omawia społeczne zagadnienia ESG, koncentrując się na ludziach, odpowiedzialności i praktycznym wdrażaniu.",
+        "governance": "Ten moduł wyjaśnia zagadnienia ESG związane z ładem korporacyjnym poprzez uporządkowaną treść, decyzje i naukę ukierunkowaną na odpowiedzialność.",
+        "crossCutting": "Ten moduł łączy zagadnienia środowiskowe, społeczne i dotyczące ładu korporacyjnego w jedną praktyczną ścieżkę nauki."
       },
       "fallbacks": {
         "subtitle": "Moduł programu",

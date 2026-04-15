@@ -28,7 +28,7 @@
         "subtitle": "Your core platform indicators at a glance, designed for fast executive review.",
         "allUsers": {
           "label": "All users",
-          "hint": "Registered accounts across studentsa and educators."
+          "hint": "Registered accounts across learners and educators."
         },
         "activeUsers": {
           "label": "Active users",
@@ -49,7 +49,7 @@
         "roleDistribution": "Role distribution",
         "publishedResources": "Published resources",
         "educators": "Educators",
-        "students": "Students",
+        "learners": "Learners",
         "admins": "Admins",
         "courses": "Courses",
         "caseStudies": "Case studies",

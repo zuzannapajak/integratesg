@@ -21,7 +21,7 @@
       "title": "Uzupełnij profil",
       "eyebrow": "Konfiguracja profilu",
       "chooseRole": "Wybierz swoją rolę",
-      "studentDescription": "Dostęp do case studies i scenariuszy",
+      "learnerDescription": "Dostęp do case studies i scenariuszy",
       "educatorDescription": "Dostęp do curriculum i materiałów dydaktycznych",
       "error": "Nie udało się zapisać profilu.",
       "submit": "Kontynuuj",
@@ -37,7 +37,7 @@
       "eyebrow": "Utwórz konto",
       "title": "Wybierz swoją rolę",
       "subtitle": "Wybierz, w jaki sposób będziesz korzystać z platformy.",
-      "studentDescription": "Case studies, scenariusze i samoocena.",
+      "learnerDescription": "Case studies, scenariusze i samoocena.",
       "educatorDescription": "Narzędzia curriculum i materiały dydaktyczne.",
       "continue": "Kontynuuj"
     },

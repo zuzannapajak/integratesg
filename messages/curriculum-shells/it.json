@@ -80,7 +80,13 @@
         "quiz": "Verifica delle conoscenze",
         "progress": "Il tuo progresso",
         "overviewEyebrow": "Panoramica del modulo",
-        "overviewTitle": "Cosa include questo modulo"
+        "overviewTitle": "Cosa include questo modulo",
+        "outcomesEyebrow": "Risultati di apprendimento",
+        "outcomesTitle": "Cosa dovresti portare con te",
+        "flowEyebrow": "Flusso del modulo",
+        "flowTitle": "Come procedere in questo modulo",
+        "progressEyebrow": "Monitoraggio dei progressi",
+        "progressTitle": "Monitora la tua attività e i tuoi punti di controllo"
       },
       "labels": {
         "area": "Area",
@@ -106,7 +112,11 @@
         "crossCutting": "Trasversale"
       },
       "heroIntro": {
-        "preQuiz": "Inizia con il pre-quiz per valutare il tuo punto di partenza e capire su cosa concentrarti durante il modulo."
+        "preQuiz": "Inizia con il pre-quiz per valutare il tuo punto di partenza e capire su cosa concentrarti durante il modulo.",
+        "default": "Esamina la panoramica del modulo e inizia quando sei pronto.",
+        "lessons": "Continua con la sequenza delle lezioni per costruire una comprensione pratica passo dopo passo.",
+        "postQuiz": "Completa il checkpoint finale per verificare ciò che hai appreso in questo modulo.",
+        "completed": "Hai completato questo modulo. Rivedi i risultati e torna alle sezioni necessarie, se necessario."
       },
       "status": {
         "not_started": "Non iniziato",
@@ -114,7 +124,8 @@
         "completed": "Completato",
         "failed": "Richiede revisione",
         "notStarted": "Non iniziato",
-        "inProgress": "In corso"
+        "inProgress": "In corso",
+        "readyToStart": "Pronto per iniziare"
       },
       "difficulty": {
         "foundation": "Base",
@@ -127,12 +138,18 @@
         }
       },
       "progressSummary": {
-        "preQuiz": "Pre-quiz"
+        "preQuiz": "Pre-quiz",
+        "default": "Pronto per iniziare",
+        "lessonInProgress": "Lezione {index} in corso",
+        "postQuiz": "Checkpoint finale",
+        "completed": "Modulo completato"
       },
       "nextAction": {
         "title": "Prossima azione",
         "defaultDescription": "Esamina la struttura del modulo e continua con il prossimo passaggio consigliato.",
-        "viewFlow": "Visualizza flusso"
+        "viewFlow": "Visualizza flusso",
+        "reviewWorkspace": "Rivedi l’area di lavoro del modulo",
+        "completedDescription": "Hai completato questo modulo. Puoi rivedere la struttura, i risultati e i tentativi precedenti."
       },
       "progressState": {
         "nextAction": {
@@ -182,6 +199,32 @@
         "preTest": "Pre-test",
         "lessons": "Lezioni",
         "postTest": "Post-test"
+      },
+      "flowDescriptions": {
+        "opening": "Inizia con il checkpoint iniziale per valutare il tuo livello di comprensione di partenza.",
+        "lessons": "{completed} lezioni su {total} sono state completate finora.",
+        "closing": "Concludi con il checkpoint finale per consolidare e verificare i tuoi progressi."
+      },
+      "progress": {
+        "currentLocation": "Posizione attuale",
+        "lessonsCompleted": "Lezioni completate",
+        "openingCheckpointHistory": "Storico del checkpoint iniziale",
+        "openingCheckpointEmpty": "Nessun tentativo ancora per il checkpoint iniziale.",
+        "finalCheckpointHistory": "Storico del checkpoint finale",
+        "finalCheckpointEmpty": "Nessun tentativo ancora per il checkpoint finale.",
+        "lessonStatus": "Stato della lezione"
+      },
+      "attempt": {
+        "attemptLabel": "Tentativo {number}",
+        "correctSummary": "{correct} su {total} corrette • Inviato {submittedAt}",
+        "flaggedQuestions": "{count} domande contrassegnate"
+      },
+      "relatedModules": "Moduli correlati",
+      "overviewCopy": {
+        "environmental": "Questo modulo introduce i temi ESG ambientali attraverso lezioni strutturate e checkpoint applicativi.",
+        "social": "Questo modulo esplora i temi ESG sociali con particolare attenzione alle persone, alla responsabilità e all’applicazione pratica.",
+        "governance": "Questo modulo spiega i temi ESG legati alla governance attraverso contenuti strutturati, decisioni e apprendimento orientato alla responsabilità.",
+        "crossCutting": "Questo modulo collega temi ambientali, sociali e di governance in un unico percorso di apprendimento pratico."
       },
       "fallbacks": {
         "subtitle": "Modulo del curriculum",

@@ -21,7 +21,7 @@
       "title": "Completa il tuo profilo",
       "eyebrow": "Configurazione del profilo",
       "chooseRole": "Scegli il tuo ruolo",
-      "studentDescription": "Accedi a casi di studio e scenari",
+      "learnerDescription": "Accedi a casi di studio e scenari",
       "educatorDescription": "Accedi al curriculum e alle risorse didattiche",
       "error": "Impossibile salvare il profilo.",
       "submit": "Continua",
@@ -37,7 +37,7 @@
       "eyebrow": "Crea il tuo account",
       "title": "Scegli il tuo ruolo",
       "subtitle": "Seleziona come utilizzerai la piattaforma.",
-      "studentDescription": "Casi di studio, scenari e autovalutazione.",
+      "learnerDescription": "Casi di studio, scenari e autovalutazione.",
       "educatorDescription": "Strumenti per il curriculum e risorse didattiche.",
       "continue": "Continua"
     },

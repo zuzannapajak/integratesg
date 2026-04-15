@@ -21,7 +21,7 @@
       "title": "Vervollständigen Sie Ihr Profil",
       "eyebrow": "Profil-Setup",
       "chooseRole": "Wählen Sie Ihre Rolle",
-      "studentDescription": "Zugriff auf Fallstudien und Szenarien",
+      "learnerDescription": "Zugriff auf Fallstudien und Szenarien",
       "educatorDescription": "Zugriff auf Curriculum und Lehrressourcen",
       "error": "Profil konnte nicht gespeichert werden.",
       "submit": "Weiter",
@@ -37,7 +37,7 @@
       "eyebrow": "Erstellen Sie Ihr Konto",
       "title": "Wählen Sie Ihre Rolle",
       "subtitle": "Wählen Sie aus, wie Sie die Plattform nutzen werden.",
-      "studentDescription": "Fallstudien, Szenarien und Selbstbewertung.",
+      "learnerDescription": "Fallstudien, Szenarien und Selbstbewertung.",
       "educatorDescription": "Curriculum-Tools und Lehrressourcen.",
       "continue": "Weiter"
     },

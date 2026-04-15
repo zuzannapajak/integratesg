@@ -1,16 +1,16 @@
 export const APP_ROLES = {
-  student: "student",
+  learner: "learner",
   educator: "educator",
   admin: "admin",
 } as const;
 
 export type AppRole = (typeof APP_ROLES)[keyof typeof APP_ROLES];
-export type SelfServiceRole = typeof APP_ROLES.student | typeof APP_ROLES.educator;
+export type SelfServiceRole = typeof APP_ROLES.learner | typeof APP_ROLES.educator;
 
-export const SELF_SERVICE_ROLES = [APP_ROLES.student, APP_ROLES.educator] as const;
+export const SELF_SERVICE_ROLES = [APP_ROLES.learner, APP_ROLES.educator] as const;
 
 export const ROLE_LABELS: Record<AppRole, string> = {
-  [APP_ROLES.student]: "Student",
+  [APP_ROLES.learner]: "Learner",
   [APP_ROLES.educator]: "Educator",
   [APP_ROLES.admin]: "Admin",
 };

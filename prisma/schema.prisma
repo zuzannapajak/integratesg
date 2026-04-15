@@ -6,10 +6,349 @@ datasource db {
   provider = "postgresql"
 }
 
-// Enums
+model Profile {
+  id                    String                  @id
+  email                 String                  @unique
+  fullName              String?
+  role                  UserRole                @default(learner)
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  preferredLanguage     String                  @default("en")
+  userCaseStudyProgress UserCaseStudyProgress[]
+  userCourseAttempts    UserCourseAttempt[]
+  userScenarioAttempts  UserScenarioAttempt[]
+}
+
+model CaseStudy {
+  id           String                  @id @default(cuid())
+  slug         String                  @unique
+  area         CourseArea
+  status       PublicationStatus       @default(draft)
+  sortOrder    Int                     @default(0)
+  isFeatured   Boolean                 @default(false)
+  createdAt    DateTime                @default(now())
+  updatedAt    DateTime                @updatedAt
+  translations CaseStudyTranslation[]
+  userProgress UserCaseStudyProgress[]
+
+  @@index([status])
+  @@index([area])
+  @@index([sortOrder])
+  @@index([isFeatured])
+}
+
+model CaseStudyTranslation {
+  id           String    @id @default(cuid())
+  caseStudyId  String
+  language     String
+  title        String
+  summary      String?
+  content      String
+  keyTakeaways Json?
+  organization String?
+  industry     String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  caseStudy    CaseStudy @relation(fields: [caseStudyId], references: [id], onDelete: Cascade)
+
+  @@unique([caseStudyId, language])
+  @@index([language])
+  @@index([caseStudyId])
+}
+
+model UserCaseStudyProgress {
+  id           String                  @id @default(cuid())
+  userId       String
+  caseStudyId  String
+  completedAt  DateTime?
+  createdAt    DateTime                @default(now())
+  updatedAt    DateTime                @updatedAt
+  lastOpenedAt DateTime?
+  startedAt    DateTime?
+  status       CaseStudyProgressStatus @default(not_started)
+  caseStudy    CaseStudy               @relation(fields: [caseStudyId], references: [id], onDelete: Cascade)
+  user         Profile                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, caseStudyId])
+  @@index([userId])
+  @@index([caseStudyId])
+  @@index([status])
+  @@index([lastOpenedAt])
+  @@index([completedAt])
+}
+
+model Course {
+  id                       String              @id @default(cuid())
+  slug                     String              @unique
+  status                   PublicationStatus   @default(draft)
+  createdAt                DateTime            @default(now())
+  updatedAt                DateTime            @updatedAt
+  area                     CourseArea
+  difficulty               CourseDifficulty    @default(foundation)
+  estimatedDurationMinutes Int?
+  isFeatured               Boolean             @default(false)
+  lessonsCount             Int                 @default(0)
+  sortOrder                Int                 @default(0)
+  sections                 CourseSection[]
+  translations             CourseTranslation[]
+  quizzes                  Quiz[]
+  userCourseAttempts       UserCourseAttempt[]
+
+  @@index([status])
+  @@index([area])
+  @@index([difficulty])
+  @@index([sortOrder])
+  @@index([isFeatured])
+}
+
+model CourseTranslation {
+  id          String   @id @default(cuid())
+  courseId    String
+  language    String
+  title       String
+  description String?
+  content     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  subtitle    String?
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([courseId, language])
+  @@index([language])
+  @@index([courseId])
+}
+
+model CourseSection {
+  id               String                     @id @default(cuid())
+  courseId         String
+  slug             String
+  sortOrder        Int                        @default(0)
+  estimatedMinutes Int?
+  createdAt        DateTime                   @default(now())
+  updatedAt        DateTime                   @updatedAt
+  course           Course                     @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  translations     CourseSectionTranslation[]
+
+  @@unique([courseId, slug])
+  @@index([courseId])
+  @@index([courseId, sortOrder])
+}
+
+model CourseSectionTranslation {
+  id              String        @id @default(cuid())
+  courseSectionId String
+  language        String
+  title           String
+  summary         String?
+  content         String
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  courseSection   CourseSection @relation(fields: [courseSectionId], references: [id], onDelete: Cascade)
+
+  @@unique([courseSectionId, language])
+  @@index([courseSectionId])
+  @@index([language])
+}
+
+model Quiz {
+  id           String            @id @default(cuid())
+  courseId     String
+  type         QuizType
+  title        String?
+  description  String?
+  passingScore Int?
+  sortOrder    Int               @default(0)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  questions    Question[]
+  course       Course            @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  translations QuizTranslation[]
+
+  @@unique([courseId, type])
+  @@index([courseId])
+}
+
+model Question {
+  id           String                @id @default(cuid())
+  quizId       String
+  prompt       String
+  explanation  String?
+  sortOrder    Int                   @default(0)
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+  answers      Answer[]
+  quiz         Quiz                  @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  translations QuestionTranslation[]
+
+  @@index([quizId])
+}
+
+model Answer {
+  id           String              @id @default(cuid())
+  questionId   String
+  text         String
+  isCorrect    Boolean             @default(false)
+  feedbackText String?
+  sortOrder    Int                 @default(0)
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+  question     Question            @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  translations AnswerTranslation[]
+
+  @@index([questionId])
+}
+
+model UserCourseAttempt {
+  id                 String              @id @default(cuid())
+  userId             String
+  courseId           String
+  status             CourseAttemptStatus @default(not_started)
+  preQuizScore       Int?
+  postQuizScore      Int?
+  startedAt          DateTime?
+  lastOpenedAt       DateTime?
+  completedAt        DateTime?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  progressPercent    Int                 @default(0)
+  completedLessons   Int                 @default(0)
+  currentLessonIndex Int                 @default(0)
+  currentStage       CourseStage         @default(overview)
+  postQuizAttempts   Json?
+  preQuizAttempts    Json?
+  course             Course              @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  user               Profile             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+  @@index([userId])
+  @@index([courseId])
+  @@index([status])
+  @@index([currentStage])
+}
+
+model Scenario {
+  id           String                @id @default(cuid())
+  slug         String                @unique
+  area         CourseArea
+  status       PublicationStatus     @default(draft)
+  sortOrder    Int                   @default(0)
+  isFeatured   Boolean               @default(false)
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+  variants     ScenarioVariant[]
+  userAttempts UserScenarioAttempt[]
+
+  @@index([status])
+  @@index([area])
+  @@index([sortOrder])
+  @@index([isFeatured])
+}
+
+model ScenarioVariant {
+  id                       String                     @id @default(cuid())
+  scenarioId               String
+  language                 String
+  title                    String
+  description              String?
+  instruction              String?
+  launchUrl                String
+  packagePath              String
+  entryPoint               String                     @default("index_lms.html")
+  thumbnailUrl             String?
+  estimatedDurationMinutes Int?
+  availabilityStatus       ScenarioAvailabilityStatus @default(available)
+  createdAt                DateTime                   @default(now())
+  updatedAt                DateTime                   @updatedAt
+  scenario                 Scenario                   @relation(fields: [scenarioId], references: [id], onDelete: Cascade)
+  userAttempts             UserScenarioAttempt[]
+
+  @@unique([scenarioId, language])
+  @@index([scenarioId])
+  @@index([language])
+  @@index([availabilityStatus])
+  @@index([scenarioId, availabilityStatus, language])
+}
+
+model UserScenarioAttempt {
+  id                String                @id @default(cuid())
+  userId            String
+  scenarioId        String
+  scenarioVariantId String
+  attemptNumber     Int                   @default(1)
+  score             Int?
+  status            ScenarioAttemptStatus @default(incomplete)
+  startedAt         DateTime              @default(now())
+  lastOpenedAt      DateTime?
+  completedAt       DateTime?
+  suspendData       String?
+  lessonLocation    String?
+  sessionTime       String?
+  totalTime         String?
+  rawTrackingData   Json?
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+  scenario          Scenario              @relation(fields: [scenarioId], references: [id], onDelete: Cascade)
+  scenarioVariant   ScenarioVariant       @relation(fields: [scenarioVariantId], references: [id], onDelete: Cascade)
+  user              Profile               @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, scenarioVariantId, attemptNumber])
+  @@index([userId])
+  @@index([scenarioId])
+  @@index([scenarioVariantId])
+  @@index([status])
+  @@index([startedAt])
+  @@index([userId, scenarioId, scenarioVariantId, attemptNumber])
+  @@index([lastOpenedAt, startedAt])
+}
+
+model QuizTranslation {
+  id          String   @id @default(cuid())
+  quizId      String
+  language    String
+  title       String?
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  quiz        Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+
+  @@unique([quizId, language])
+  @@index([quizId])
+  @@index([language])
+}
+
+model QuestionTranslation {
+  id          String   @id @default(cuid())
+  questionId  String
+  language    String
+  prompt      String
+  explanation String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([questionId, language])
+  @@index([questionId])
+  @@index([language])
+}
+
+model AnswerTranslation {
+  id           String   @id @default(cuid())
+  answerId     String
+  language     String
+  text         String
+  feedbackText String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  answer       Answer   @relation(fields: [answerId], references: [id], onDelete: Cascade)
+
+  @@unique([answerId, language])
+  @@index([answerId])
+  @@index([language])
+}
+
 enum UserRole {
   educator
-  student
+  learner
   admin
 }
 
@@ -67,356 +406,4 @@ enum CaseStudyProgressStatus {
   not_started
   in_progress
   completed
-}
-
-// Models
-model Profile {
-  id                    String                  @id
-  email                 String                  @unique
-  fullName              String?
-  role                  UserRole                @default(student)
-  preferredLanguage     String                  @default("en")
-  createdAt             DateTime                @default(now())
-  updatedAt             DateTime                @updatedAt
-  userCourseAttempts    UserCourseAttempt[]
-  userScenarioAttempts  UserScenarioAttempt[]
-  userCaseStudyProgress UserCaseStudyProgress[]
-}
-
-model CaseStudy {
-  id           String                  @id @default(cuid())
-  slug         String                  @unique
-  area         CourseArea
-  status       PublicationStatus       @default(draft)
-  sortOrder    Int                     @default(0)
-  isFeatured   Boolean                 @default(false)
-  createdAt    DateTime                @default(now())
-  updatedAt    DateTime                @updatedAt
-  translations CaseStudyTranslation[]
-  userProgress UserCaseStudyProgress[]
-
-  @@index([status])
-  @@index([area])
-  @@index([sortOrder])
-  @@index([isFeatured])
-}
-
-model CaseStudyTranslation {
-  id           String   @id @default(cuid())
-  caseStudyId  String
-  language     String
-  title        String
-  summary      String?
-  content      String
-  keyTakeaways Json?
-  organization String?
-  industry     String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  caseStudy CaseStudy @relation(fields: [caseStudyId], references: [id], onDelete: Cascade)
-
-  @@unique([caseStudyId, language])
-  @@index([language])
-  @@index([caseStudyId])
-}
-
-model UserCaseStudyProgress {
-  id           String                  @id @default(cuid())
-  userId       String
-  caseStudyId  String
-  status       CaseStudyProgressStatus @default(not_started)
-  startedAt    DateTime?
-  lastOpenedAt DateTime?
-  completedAt  DateTime?
-  createdAt    DateTime                @default(now())
-  updatedAt    DateTime                @updatedAt
-
-  user      Profile   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  caseStudy CaseStudy @relation(fields: [caseStudyId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, caseStudyId])
-  @@index([userId])
-  @@index([caseStudyId])
-  @@index([status])
-  @@index([lastOpenedAt])
-  @@index([completedAt])
-}
-
-model Course {
-  id                       String              @id @default(cuid())
-  slug                     String              @unique
-  status                   PublicationStatus   @default(draft)
-  area                     CourseArea
-  difficulty               CourseDifficulty    @default(foundation)
-  estimatedDurationMinutes Int?
-  lessonsCount             Int                 @default(0)
-  sortOrder                Int                 @default(0)
-  isFeatured               Boolean             @default(false)
-  createdAt                DateTime            @default(now())
-  updatedAt                DateTime            @updatedAt
-  translations             CourseTranslation[]
-  sections                 CourseSection[]
-  quizzes                  Quiz[]
-  userCourseAttempts       UserCourseAttempt[]
-
-  @@index([status])
-  @@index([area])
-  @@index([difficulty])
-  @@index([sortOrder])
-  @@index([isFeatured])
-}
-
-model CourseTranslation {
-  id          String   @id @default(cuid())
-  courseId    String
-  language    String
-  title       String
-  subtitle    String?
-  description String?
-  content     String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  course Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
-
-  @@unique([courseId, language])
-  @@index([language])
-  @@index([courseId])
-}
-
-model CourseSection {
-  id               String   @id @default(cuid())
-  courseId         String
-  slug             String
-  sortOrder        Int      @default(0)
-  estimatedMinutes Int?
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-
-  course       Course                     @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  translations CourseSectionTranslation[]
-
-  @@unique([courseId, slug])
-  @@index([courseId])
-  @@index([courseId, sortOrder])
-}
-
-model CourseSectionTranslation {
-  id              String   @id @default(cuid())
-  courseSectionId String
-  language        String
-  title           String
-  summary         String?
-  content         String
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-
-  courseSection CourseSection @relation(fields: [courseSectionId], references: [id], onDelete: Cascade)
-
-  @@unique([courseSectionId, language])
-  @@index([courseSectionId])
-  @@index([language])
-}
-
-model Quiz {
-  id           String   @id @default(cuid())
-  courseId     String
-  type         QuizType
-  title        String?
-  description  String?
-  passingScore Int?
-  sortOrder    Int      @default(0)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  course       Course            @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  questions    Question[]
-  translations QuizTranslation[]
-
-  @@unique([courseId, type])
-  @@index([courseId])
-}
-
-model Question {
-  id          String   @id @default(cuid())
-  quizId      String
-  prompt      String
-  explanation String?
-  sortOrder   Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  quiz         Quiz                  @relation(fields: [quizId], references: [id], onDelete: Cascade)
-  answers      Answer[]
-  translations QuestionTranslation[]
-
-  @@index([quizId])
-}
-
-model Answer {
-  id           String   @id @default(cuid())
-  questionId   String
-  text         String
-  isCorrect    Boolean  @default(false)
-  feedbackText String?
-  sortOrder    Int      @default(0)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  question     Question            @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  translations AnswerTranslation[]
-
-  @@index([questionId])
-}
-
-model UserCourseAttempt {
-  id                 String              @id @default(cuid())
-  userId             String
-  courseId           String
-  status             CourseAttemptStatus @default(not_started)
-  currentStage       CourseStage         @default(overview)
-  currentLessonIndex Int                 @default(0)
-  completedLessons   Int                 @default(0)
-  progressPercent    Int                 @default(0)
-  preQuizScore       Int?
-  postQuizScore      Int?
-  preQuizAttempts    Json?
-  postQuizAttempts   Json?
-  startedAt          DateTime?
-  lastOpenedAt       DateTime?
-  completedAt        DateTime?
-  createdAt          DateTime            @default(now())
-  updatedAt          DateTime            @updatedAt
-
-  user   Profile @relation(fields: [userId], references: [id], onDelete: Cascade)
-  course Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, courseId])
-  @@index([userId])
-  @@index([courseId])
-  @@index([status])
-  @@index([currentStage])
-}
-
-model Scenario {
-  id           String                @id @default(cuid())
-  slug         String                @unique
-  area         CourseArea
-  status       PublicationStatus     @default(draft)
-  sortOrder    Int                   @default(0)
-  isFeatured   Boolean               @default(false)
-  createdAt    DateTime              @default(now())
-  updatedAt    DateTime              @updatedAt
-  variants     ScenarioVariant[]
-  userAttempts UserScenarioAttempt[]
-
-  @@index([status])
-  @@index([area])
-  @@index([sortOrder])
-  @@index([isFeatured])
-}
-
-model ScenarioVariant {
-  id                       String                     @id @default(cuid())
-  scenarioId               String
-  language                 String
-  title                    String
-  description              String?
-  instruction              String?
-  launchUrl                String
-  packagePath              String
-  entryPoint               String                     @default("index_lms.html")
-  thumbnailUrl             String?
-  estimatedDurationMinutes Int?
-  availabilityStatus       ScenarioAvailabilityStatus @default(available)
-  createdAt                DateTime                   @default(now())
-  updatedAt                DateTime                   @updatedAt
-
-  scenario     Scenario              @relation(fields: [scenarioId], references: [id], onDelete: Cascade)
-  userAttempts UserScenarioAttempt[]
-
-  @@unique([scenarioId, language])
-  @@index([scenarioId])
-  @@index([language])
-  @@index([availabilityStatus])
-}
-
-model UserScenarioAttempt {
-  id                String                @id @default(cuid())
-  userId            String
-  scenarioId        String
-  scenarioVariantId String
-  attemptNumber     Int                   @default(1)
-  score             Int?
-  status            ScenarioAttemptStatus @default(incomplete)
-  startedAt         DateTime              @default(now())
-  lastOpenedAt      DateTime?
-  completedAt       DateTime?
-  suspendData       String?
-  lessonLocation    String?
-  sessionTime       String?
-  totalTime         String?
-  rawTrackingData   Json?
-  createdAt         DateTime              @default(now())
-  updatedAt         DateTime              @updatedAt
-
-  user            Profile         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  scenario        Scenario        @relation(fields: [scenarioId], references: [id], onDelete: Cascade)
-  scenarioVariant ScenarioVariant @relation(fields: [scenarioVariantId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, scenarioVariantId, attemptNumber])
-  @@index([userId])
-  @@index([scenarioId])
-  @@index([scenarioVariantId])
-  @@index([status])
-  @@index([startedAt])
-}
-
-model QuizTranslation {
-  id          String   @id @default(cuid())
-  quizId      String
-  language    String
-  title       String?
-  description String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  quiz Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
-
-  @@unique([quizId, language])
-  @@index([quizId])
-  @@index([language])
-}
-
-model QuestionTranslation {
-  id          String   @id @default(cuid())
-  questionId  String
-  language    String
-  prompt      String
-  explanation String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
-
-  @@unique([questionId, language])
-  @@index([questionId])
-  @@index([language])
-}
-
-model AnswerTranslation {
-  id           String   @id @default(cuid())
-  answerId     String
-  language     String
-  text         String
-  feedbackText String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  answer Answer @relation(fields: [answerId], references: [id], onDelete: Cascade)
-
-  @@unique([answerId, language])
-  @@index([answerId])
-  @@index([language])
 }

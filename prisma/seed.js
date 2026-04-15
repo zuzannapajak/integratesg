@@ -1543,14 +1543,14 @@ async function upsertCourse(courseData) {
 }
 
 async function seedScenarioAttempts(scenarioMap) {
-  const students = await prisma.profile.findMany({
-    where: { role: "student" },
+  const learners = await prisma.profile.findMany({
+    where: { role: "learner" },
     orderBy: { createdAt: "asc" },
     take: 3,
   });
 
-  if (students.length === 0) {
-    console.log("No student profiles found. Skipping UserScenarioAttempt seed.");
+  if (learners.length === 0) {
+    console.log("No learner profiles found. Skipping UserScenarioAttempt seed.");
     return;
   }
 
@@ -1582,11 +1582,11 @@ async function seedScenarioAttempts(scenarioMap) {
 
   const allAttempts = [];
 
-  const primaryStudent = students[0];
+  const primaryLearner = learners[0];
 
   allAttempts.push(
     {
-      userId: primaryStudent.id,
+      userId: primaryLearner.id,
       scenarioId: environmentalScenario.id,
       scenarioVariantId: environmentalVariant.id,
       attemptNumber: 1,
@@ -1606,7 +1606,7 @@ async function seedScenarioAttempts(scenarioMap) {
       },
     },
     {
-      userId: primaryStudent.id,
+      userId: primaryLearner.id,
       scenarioId: socialScenario.id,
       scenarioVariantId: socialVariant.id,
       attemptNumber: 1,
@@ -1625,7 +1625,7 @@ async function seedScenarioAttempts(scenarioMap) {
       },
     },
     {
-      userId: primaryStudent.id,
+      userId: primaryLearner.id,
       scenarioId: governanceScenario.id,
       scenarioVariantId: governanceVariant.id,
       attemptNumber: 1,
@@ -1645,7 +1645,7 @@ async function seedScenarioAttempts(scenarioMap) {
       },
     },
     {
-      userId: primaryStudent.id,
+      userId: primaryLearner.id,
       scenarioId: environmentalScenario.id,
       scenarioVariantId: environmentalVariant.id,
       attemptNumber: 2,
@@ -1666,12 +1666,12 @@ async function seedScenarioAttempts(scenarioMap) {
     },
   );
 
-  if (students[1]) {
-    const secondStudent = students[1];
+  if (learners[1]) {
+    const secondLearner = learners[1];
 
     allAttempts.push(
       {
-        userId: secondStudent.id,
+        userId: secondLearner.id,
         scenarioId: socialScenario.id,
         scenarioVariantId: socialVariant.id,
         attemptNumber: 1,
@@ -1691,7 +1691,7 @@ async function seedScenarioAttempts(scenarioMap) {
         },
       },
       {
-        userId: secondStudent.id,
+        userId: secondLearner.id,
         scenarioId: governanceScenario.id,
         scenarioVariantId: governanceVariant.id,
         attemptNumber: 1,
@@ -1712,12 +1712,12 @@ async function seedScenarioAttempts(scenarioMap) {
     );
   }
 
-  if (students[2]) {
-    const thirdStudent = students[2];
+  if (learners[2]) {
+    const thirdLearner = learners[2];
 
     allAttempts.push(
       {
-        userId: thirdStudent.id,
+        userId: thirdLearner.id,
         scenarioId: environmentalScenario.id,
         scenarioVariantId: environmentalVariant.id,
         attemptNumber: 1,
@@ -1737,7 +1737,7 @@ async function seedScenarioAttempts(scenarioMap) {
         },
       },
       {
-        userId: thirdStudent.id,
+        userId: thirdLearner.id,
         scenarioId: socialScenario.id,
         scenarioVariantId: socialVariant.id,
         attemptNumber: 1,
@@ -1797,7 +1797,7 @@ async function seedScenarioAttempts(scenarioMap) {
   }
 
   console.log(
-    `Seeded ${seededAttemptKeys.length} scenario attempts for ${students.length} student profile(s).`,
+    `Seeded ${seededAttemptKeys.length} scenario attempts for ${learners.length} learner profile(s).`,
   );
 }
 

@@ -2,9 +2,10 @@ import AdminStatsShell from "@/components/stats/admin-stats-shell";
 import { requireRole } from "@/features/auth/requireRole";
 import { getBasicAdminStats } from "@/lib/admin/queries";
 import { APP_ROLES } from "@/lib/auth/roles";
+import type { AppLocale } from "@/lib/i18n/locales";
 
 type Props = {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: AppLocale }>;
 };
 
 export default async function AdminStatsPage({ params }: Props) {

@@ -28,7 +28,7 @@
         "subtitle": "I principali indicatori della piattaforma a colpo d’occhio, pensati per una rapida revisione esecutiva.",
         "allUsers": {
           "label": "Tutti gli utenti",
-          "hint": "Account registrati tra studenti e docenti."
+          "hint": "Account registrati tra discenti ed educatori."
         },
         "activeUsers": {
           "label": "Utenti attivi",
@@ -40,7 +40,7 @@
         },
         "curriculumCompletion": {
           "label": "Completamento curriculum",
-          "hint": "Percentuale di tentativi del curriculum completati dagli studenti."
+          "hint": "Quota di tentativi di curriculum completati dai discenti."
         }
       },
       "platformStructure": {
@@ -49,7 +49,7 @@
         "roleDistribution": "Distribuzione dei ruoli",
         "publishedResources": "Risorse pubblicate",
         "educators": "Docenti",
-        "students": "Studenti",
+        "learners": "Discenti",
         "admins": "Amministratori",
         "courses": "Corsi",
         "caseStudies": "Casi di studio",
@@ -57,7 +57,7 @@
       },
       "highlights": {
         "title": "In evidenza",
-        "subtitle": "Segnali chiave che aiutano a identificare le aree più forti di attività e adozione da parte degli studenti.",
+        "subtitle": "Segnali chiave che aiutano a identificare le aree più forti di attività e adozione da parte degli discenti.",
         "mostActiveScenario": "Scenario più attivo",
         "bestCompletionResult": "Miglior risultato di completamento",
         "largestLanguageCohort": "Gruppo linguistico più numeroso",
@@ -184,24 +184,24 @@
       },
       "scenarioAttempts": {
         "title": "Tentativi utente negli scenari",
-        "subtitle": "Ultima attività degli studenti nel simulatore di scenari, inclusi stato, punteggio e tempi.",
+        "subtitle": "Ultima attività degli learneri nel simulatore di scenari, inclusi stato, punteggio e tempi.",
         "records": "{count} record"
       },
       "curriculumAttempts": {
         "title": "Tentativi utente nel curriculum",
-        "subtitle": "Ultima attività degli studenti nei moduli del curriculum, inclusi progresso, valutazione e tempi.",
+        "subtitle": "Ultima attività degli learneri nei moduli del curriculum, inclusi progresso, valutazione e tempi.",
         "records": "{count} record"
       },
       "eportfolioProgress": {
         "title": "Progressi utente nell’ePortfolio",
-        "subtitle": "Ultimi progressi degli studenti nei casi di studio, inclusi completamento e tempi.",
+        "subtitle": "Ultimi progressi degli learneri nei casi di studio, inclusi completamento e tempi.",
         "records": "{count} record"
       },
       "tableScenario": {
         "emptyTitle": "Nessuna attività negli scenari",
-        "emptyDescription": "I tentativi di scenario appariranno qui quando gli studenti inizieranno a interagire con il simulatore.",
+        "emptyDescription": "I tentativi di scenario appariranno qui quando gli learneri inizieranno a interagire con il simulatore.",
         "headers": {
-          "learner": "Studente",
+          "learner": "Learnere",
           "scenario": "Scenario",
           "area": "Area",
           "language": "Lingua",
@@ -222,9 +222,9 @@
       },
       "tableCurriculum": {
         "emptyTitle": "Nessuna attività nel curriculum",
-        "emptyDescription": "I tentativi del curriculum appariranno qui quando gli studenti inizieranno a progredire nei moduli.",
+        "emptyDescription": "I tentativi del curriculum appariranno qui quando gli learneri inizieranno a progredire nei moduli.",
         "headers": {
-          "learner": "Studente",
+          "learner": "Learnere",
           "course": "Corso",
           "area": "Area",
           "status": "Stato",
@@ -243,9 +243,9 @@
       },
       "tableEportfolio": {
         "emptyTitle": "Nessuna attività nell’ePortfolio",
-        "emptyDescription": "I progressi nei casi di studio appariranno qui quando gli studenti inizieranno a lavorare sui contenuti dell’ePortfolio.",
+        "emptyDescription": "I progressi nei casi di studio appariranno qui quando gli learneri inizieranno a lavorare sui contenuti dell’ePortfolio.",
         "headers": {
-          "learner": "Studente",
+          "learner": "Learnere",
           "caseStudy": "Caso di studio",
           "language": "Lingua",
           "status": "Stato",

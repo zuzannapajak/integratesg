@@ -27,7 +27,6 @@ type ModuleStatus = "not_started" | "in_progress" | "completed" | "failed";
 type Props = {
   locale: string;
   module: CurriculumModuleViewModel;
-  relatedModules: CurriculumModuleViewModel[];
 };
 
 const SURFACE =
@@ -173,13 +172,13 @@ function getProgressSummary(
   }
 }
 
-export default function CourseDetailShell({ locale, module, relatedModules }: Props) {
+export default function CourseDetailShell({ locale, module }: Props) {
   const t = useTranslations("Protected.CourseDetailShell");
   const [openPanel, setOpenPanel] = useState<"overview" | "outcomes" | "flow" | "progress">(
     "overview",
   );
-  const contentSectionRef = useRef<HTMLDivElement | null>(null);
 
+  const contentSectionRef = useRef<HTMLDivElement | null>(null);
   const areaMeta = getAreaMeta(module.area, t);
   const statusMeta = getStatusMeta(module.status, t);
 
@@ -336,42 +335,6 @@ export default function CourseDetailShell({ locale, module, relatedModules }: Pr
                 </button>
               </div>
             </div>
-
-            {relatedModules.length > 0 && (
-              <div className="rounded-[28px] border border-white/70 bg-white/86 p-5 shadow-[0_10px_30px_rgba(35,45,62,0.05)] backdrop-blur-xl">
-                <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                  {t("relatedModules")}
-                </p>
-
-                <div className="mt-4 space-y-3">
-                  {relatedModules.slice(0, 3).map((item) => {
-                    const relatedArea = getAreaMeta(item.area, t);
-
-                    return (
-                      <Link
-                        key={item.slug}
-                        href={`/${locale}/curriculum/${item.slug}`}
-                        className="group block rounded-2xl border border-[#e8edf3] bg-white/76 p-4 transition hover:-translate-y-0.5 hover:bg-white"
-                      >
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="min-w-0">
-                            <span
-                              className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.66rem] font-bold uppercase tracking-[0.14em] ${relatedArea.badgeClass}`}
-                            >
-                              {relatedArea.icon}
-                              {relatedArea.label}
-                            </span>
-
-                            <h3 className="mt-3 text-sm font-bold text-[#31425a]">{item.title}</h3>
-                            <p className="mt-1 text-sm text-[#667180]">{item.subtitle}</p>
-                          </div>
-                        </div>
-                      </Link>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
           </aside>
         </div>
       </section>

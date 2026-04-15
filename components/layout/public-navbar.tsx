@@ -109,7 +109,7 @@ export default function PublicNavbar({ locale, forceCompact = false, forceSolid 
   const mobileLinks = [
     { href: `/${locale}/about`, label: t("about") },
     { href: `/${locale}/educators`, label: t("educators") },
-    { href: `/${locale}/students`, label: t("students") },
+    { href: `/${locale}/learners`, label: t("learners") },
   ];
 
   return (
@@ -131,8 +131,8 @@ export default function PublicNavbar({ locale, forceCompact = false, forceSolid 
             <Link className="mock-topbar-link" href={`/${locale}/educators`}>
               {t("educators")}
             </Link>
-            <Link className="mock-topbar-link" href={`/${locale}/students`}>
-              {t("students")}
+            <Link className="mock-topbar-link" href={`/${locale}/learners`}>
+              {t("learners")}
             </Link>
           </nav>
 

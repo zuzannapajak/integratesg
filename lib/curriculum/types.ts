@@ -36,7 +36,7 @@ export type CurriculumLessonViewModel = {
   slug: string;
   title: string;
   summary: string | null;
-  content: string | null;
+  content?: string | null;
   estimatedMinutes: number;
 };
 
@@ -60,6 +60,21 @@ export type CurriculumProgressViewModel = {
   postQuizRemainingAttempts: number;
   nextAction: CurriculumTextToken;
   currentLocation: CurriculumTextToken;
+};
+
+export type CurriculumListItemViewModel = {
+  slug: string;
+  title: string;
+  subtitle: string | null;
+  description: string | null;
+  area: CurriculumArea;
+  status: CurriculumStatus;
+  progress: number;
+  durationMinutes: number | null;
+  lessons: number;
+  quizzes: number;
+  lastOpenedAt: string | null;
+  difficulty: CurriculumDifficulty;
 };
 
 export type CurriculumModuleViewModel = {
@@ -88,7 +103,7 @@ export type TranslationRecord = {
   title: string;
   subtitle: string | null;
   description: string | null;
-  content: string | null;
+  content?: string | null;
 };
 
 type CourseSectionTranslationRecord = {
@@ -142,11 +157,11 @@ type CourseAttemptRecord = {
   status: string;
   progressPercent: number;
   lastOpenedAt: Date | null;
-  currentStage: string;
-  currentLessonIndex: number;
-  completedLessons: number;
-  preQuizAttempts: unknown;
-  postQuizAttempts: unknown;
+  currentStage?: string;
+  currentLessonIndex?: number;
+  completedLessons?: number;
+  preQuizAttempts?: unknown;
+  postQuizAttempts?: unknown;
 };
 
 type QuizRecord = {

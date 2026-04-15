@@ -80,7 +80,13 @@
         "quiz": "Knowledge check",
         "progress": "Your progress",
         "overviewEyebrow": "Module overview",
-        "overviewTitle": "What this module includes"
+        "overviewTitle": "What this module includes",
+        "outcomesEyebrow": "Learning outcomes",
+        "outcomesTitle": "What you should take away",
+        "flowEyebrow": "Module flow",
+        "flowTitle": "How to move through this module",
+        "progressEyebrow": "Progress tracking",
+        "progressTitle": "Track your activity and checkpoints"
       },
       "labels": {
         "area": "Area",
@@ -106,7 +112,11 @@
         "crossCutting": "Cross-cutting"
       },
       "heroIntro": {
-        "preQuiz": "Begin with the pre-quiz to assess your starting point and understand what to focus on during the module."
+        "preQuiz": "Begin with the pre-quiz to assess your starting point and understand what to focus on during the module.",
+        "default": "Review the module overview and begin when you are ready.",
+        "lessons": "Continue with the lesson sequence to build practical understanding step by step.",
+        "postQuiz": "Complete the final checkpoint to verify what you have learned in this module.",
+        "completed": "You have completed this module. Review the outcomes and revisit any section if needed."
       },
       "status": {
         "not_started": "Not started",
@@ -114,7 +124,8 @@
         "completed": "Completed",
         "failed": "Needs review",
         "notStarted": "Not started",
-        "inProgress": "In progress"
+        "inProgress": "In progress",
+        "readyToStart": "Ready to start"
       },
       "difficulty": {
         "foundation": "Foundation",
@@ -127,12 +138,18 @@
         }
       },
       "progressSummary": {
-        "preQuiz": "Pre-quiz"
+        "preQuiz": "Pre-quiz",
+        "default": "Ready to begin",
+        "lessonInProgress": "Lesson {index} in progress",
+        "postQuiz": "Final checkpoint",
+        "completed": "Module completed"
       },
       "nextAction": {
         "title": "Next action",
         "defaultDescription": "Review the module structure and continue with the next recommended step.",
-        "viewFlow": "View flow"
+        "viewFlow": "View flow",
+        "reviewWorkspace": "Review module workspace",
+        "completedDescription": "You have completed this module. You can review the structure, outcomes, and previous attempts."
       },
       "progressState": {
         "nextAction": {
@@ -182,6 +199,32 @@
         "preTest": "Pre-test",
         "lessons": "Lessons",
         "postTest": "Post-test"
+      },
+      "flowDescriptions": {
+        "opening": "Start with the opening checkpoint to assess your baseline understanding.",
+        "lessons": "{completed} of {total} lessons completed so far.",
+        "closing": "Finish with the final checkpoint to consolidate and verify your progress."
+      },
+      "progress": {
+        "currentLocation": "Current location",
+        "lessonsCompleted": "Lessons completed",
+        "openingCheckpointHistory": "Opening checkpoint history",
+        "openingCheckpointEmpty": "No opening checkpoint attempts yet.",
+        "finalCheckpointHistory": "Final checkpoint history",
+        "finalCheckpointEmpty": "No final checkpoint attempts yet.",
+        "lessonStatus": "Lesson status"
+      },
+      "attempt": {
+        "attemptLabel": "Attempt {number}",
+        "correctSummary": "{correct} of {total} correct • Submitted {submittedAt}",
+        "flaggedQuestions": "{count} flagged questions"
+      },
+      "relatedModules": "Related modules",
+      "overviewCopy": {
+        "environmental": "This module introduces environmental ESG themes through structured lessons and applied learning checkpoints.",
+        "social": "This module explores social ESG themes with a focus on people, responsibility, and practical implementation.",
+        "governance": "This module explains governance ESG themes through structured content, decisions, and accountability-focused learning.",
+        "crossCutting": "This module connects environmental, social, and governance topics into one practical learning path."
       },
       "fallbacks": {
         "subtitle": "Curriculum module",

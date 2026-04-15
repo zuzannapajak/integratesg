@@ -25,7 +25,7 @@ body {
   --topbar: #3a3a3a;
   --white: #ffffff;
   --line: #d7d7d7;
-  --student: #ef6c23;
+  --learner: #ef6c23;
   --educator: #0b9c72;
   --blue-shape: #0d7fc2;
 }
@@ -74,13 +74,13 @@ button {
   border-bottom: none;
 }
 
-.mock-card-student {
-  background: var(--student);
+.mock-card-learner {
+  background: var(--learner);
   border-radius: 12px;
   padding: 12px;
 }
 
-.mock-card-student-inner {
+.mock-card-learner-inner {
   border: 5px solid white;
   border-radius: 10px;
   min-height: 140px;

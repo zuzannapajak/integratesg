@@ -1,6 +1,6 @@
 "use client";
 
-import { CurriculumModuleViewModel } from "@/lib/curriculum/types";
+import { CurriculumListItemViewModel } from "@/lib/curriculum/types";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowLeft,
@@ -28,7 +28,7 @@ type ModuleStatus = "not_started" | "in_progress" | "completed" | "failed";
 
 type Props = {
   locale: string;
-  items: CurriculumModuleViewModel[];
+  items: CurriculumListItemViewModel[];
   emptyTitle?: string;
   emptyDescription?: string;
   showRefineControls?: boolean;
@@ -160,7 +160,7 @@ export default function CurriculumListShell({
         return b.progress - a.progress || a.title.localeCompare(b.title);
       }
 
-      const weight = (module: CurriculumModuleViewModel) =>
+      const weight = (module: CurriculumListItemViewModel) =>
         module.status === "in_progress"
           ? 3
           : module.status === "not_started"

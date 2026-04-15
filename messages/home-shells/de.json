@@ -21,8 +21,8 @@
       "signIn": "Anmelden"
     },
     "cards": {
-      "students": {
-        "eyebrow": "Für Studierende",
+      "learners": {
+        "eyebrow": "Für Lernende",
         "title": "Szenario-Simulator",
         "description": "Erkunden Sie ESG-Themen durch interaktive Entscheidungsszenarien und praktische Lernpfade."
       },
@@ -50,7 +50,7 @@
     "cta": {
       "eyebrow": "Loslegen",
       "title": "Greifen Sie auf die Plattform zu und setzen Sie Ihre ESG-Lernreise fort.",
-      "description": "Registrieren Sie sich, um Szenarien, E-Portfolio-Ressourcen und Lernmaterialien für Schüler und Pädagogen zu entdecken.",
+      "description": "Registrieren Sie sich, um Szenarien, E-Portfolio-Ressourcen und Lernmaterialien zu entdecken, die für Lernende und Lehrende konzipiert wurden.",
       "register": "Registrieren",
       "signIn": "Anmelden"
     }

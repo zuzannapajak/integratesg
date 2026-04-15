@@ -3,12 +3,14 @@
 import { CircleAlert, CircleDashed, RefreshCcw } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 type Props = {
   title: string;
   src: string | null;
   backHref: string;
+  locale: string;
+  scenarioSlug: string;
   initialLessonLocation?: string | null;
   initialSuspendData?: string | null;
   initialLessonStatus?: string | null;
@@ -17,8 +19,26 @@ type Props = {
 };
 
 const LOAD_TIMEOUT_MS = 12000;
+const SCORM_WRITE_MODE: "eager" | "batched" = "batched";
+const SCORM_FLUSH_INTERVAL_MS = 15000;
+const SCORM_EAGER_DEBOUNCE_MS = 800;
+const SCORM_COMMIT_DEBOUNCE_MS = 1200;
+const IMPORTANT_RUNTIME_KEYS = new Set<string>([
+  "cmi.core.lesson_status",
+  "cmi.core.score.raw",
+  "cmi.core.session_time",
+  "cmi.suspend_data",
+  "cmi.core.lesson_location",
+]);
+const PERSISTED_RUNTIME_TRACKING_KEYS = new Set<string>([
+  "cmi.core.entry",
+  "cmi.core.exit",
+  "cmi.core.lesson_mode",
+]);
 
 type FrameState = "idle" | "loading" | "ready" | "error";
+
+type FlushReason = "set_value" | "interval" | "commit" | "finish" | "pagehide" | "beforeunload";
 
 type ScormApi = {
   LMSInitialize: (value: string) => string;
@@ -56,10 +76,67 @@ function createInitialRuntimeStore(params: {
   };
 }
 
+function pickRuntimePayload(params: {
+  runtimeStore: RuntimeStore;
+  changedKeys: string[];
+  forceWrite: boolean;
+}) {
+  const keysToSend =
+    params.forceWrite || params.changedKeys.length === 0
+      ? [...IMPORTANT_RUNTIME_KEYS, ...PERSISTED_RUNTIME_TRACKING_KEYS]
+      : params.changedKeys;
+
+  const payload: {
+    lessonStatus?: string | null;
+    scoreRaw?: string | null;
+    sessionTime?: string | null;
+    suspendData?: string | null;
+    lessonLocation?: string | null;
+    rawTrackingData?: Record<string, string>;
+  } = {};
+
+  const rawTrackingData: Record<string, string> = {};
+
+  for (const key of keysToSend) {
+    const value = params.runtimeStore[key] ?? "";
+
+    switch (key) {
+      case "cmi.core.lesson_status":
+        payload.lessonStatus = value || null;
+        break;
+      case "cmi.core.score.raw":
+        payload.scoreRaw = value || null;
+        break;
+      case "cmi.core.session_time":
+        payload.sessionTime = value || null;
+        break;
+      case "cmi.suspend_data":
+        payload.suspendData = value || null;
+        break;
+      case "cmi.core.lesson_location":
+        payload.lessonLocation = value || null;
+        break;
+      default:
+        if (PERSISTED_RUNTIME_TRACKING_KEYS.has(key) && value.trim().length > 0) {
+          rawTrackingData[key] = value;
+        }
+        break;
+    }
+  }
+
+  if (Object.keys(rawTrackingData).length > 0) {
+    payload.rawTrackingData = rawTrackingData;
+  }
+
+  return payload;
+}
+
 export default function ScenarioPlayerFrame({
   title,
   src,
   backHref,
+  locale,
+  scenarioSlug,
   initialLessonLocation = null,
   initialSuspendData = null,
   initialLessonStatus = null,
@@ -83,6 +160,15 @@ export default function ScenarioPlayerFrame({
 
   const initializedRef = useRef(false);
   const lastErrorRef = useRef("0");
+  const dirtyRef = useRef(false);
+  const changedKeysRef = useRef<Set<string>>(new Set());
+  const setValueCountRef = useRef(0);
+  const commitCountRef = useRef(0);
+  const requestCountRef = useRef(0);
+  const lastFlushAtRef = useRef<number | null>(null);
+  const flushInFlightRef = useRef(false);
+  const eagerDebounceTimerRef = useRef<number | null>(null);
+  const commitDebounceTimerRef = useRef<number | null>(null);
 
   const hasValidSrc = useMemo(() => {
     return typeof src === "string" && src.trim().length > 0;
@@ -108,6 +194,104 @@ export default function ScenarioPlayerFrame({
     return "loading";
   }, [hasValidSrc, loadToken, readyToken, timedOutToken]);
 
+  const flushRuntimeProgress = useCallback(
+    async (
+      reason: FlushReason,
+      options?: {
+        forceWrite?: boolean;
+        keepalive?: boolean;
+      },
+    ) => {
+      if (!hasValidSrc || flushInFlightRef.current) {
+        return;
+      }
+
+      if (!dirtyRef.current && !options?.forceWrite) {
+        return;
+      }
+
+      const runtimeStore = runtimeStoreRef.current;
+      const changedKeys = Array.from(changedKeysRef.current);
+      const forceWrite = options?.forceWrite ?? false;
+      const nextRequestCount = requestCountRef.current + 1;
+
+      const payload = {
+        locale,
+        scenarioSlug,
+        ...pickRuntimePayload({
+          runtimeStore,
+          changedKeys,
+          forceWrite,
+        }),
+        forceWrite,
+        commitReason: reason,
+        changedKeys,
+        clientSetValueCount: setValueCountRef.current,
+        clientCommitCount: commitCountRef.current,
+        clientRequestCount: nextRequestCount,
+        clientWriteMode: SCORM_WRITE_MODE,
+        lastFlushAgeMs:
+          lastFlushAtRef.current === null ? null : Date.now() - lastFlushAtRef.current,
+      };
+
+      flushInFlightRef.current = true;
+
+      try {
+        requestCountRef.current = nextRequestCount;
+
+        const response = await fetch("/api/scorm/runtime", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+          keepalive: options?.keepalive ?? false,
+        });
+
+        if (response.ok) {
+          dirtyRef.current = false;
+          changedKeysRef.current.clear();
+          lastFlushAtRef.current = Date.now();
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        flushInFlightRef.current = false;
+      }
+    },
+    [hasValidSrc, locale, scenarioSlug],
+  );
+
+  const scheduleEagerFlush = useCallback(() => {
+    if (SCORM_WRITE_MODE !== "eager") {
+      return;
+    }
+
+    if (eagerDebounceTimerRef.current !== null) {
+      window.clearTimeout(eagerDebounceTimerRef.current);
+    }
+
+    eagerDebounceTimerRef.current = window.setTimeout(() => {
+      void flushRuntimeProgress("set_value");
+    }, SCORM_EAGER_DEBOUNCE_MS);
+  }, [flushRuntimeProgress]);
+
+  const scheduleCommitFlush = useCallback(() => {
+    if (SCORM_WRITE_MODE !== "batched") {
+      void flushRuntimeProgress("commit");
+      return;
+    }
+
+    if (commitDebounceTimerRef.current !== null) {
+      window.clearTimeout(commitDebounceTimerRef.current);
+    }
+
+    commitDebounceTimerRef.current = window.setTimeout(() => {
+      commitDebounceTimerRef.current = null;
+      void flushRuntimeProgress("commit");
+    }, SCORM_COMMIT_DEBOUNCE_MS);
+  }, [flushRuntimeProgress]);
+
   useEffect(() => {
     runtimeStoreRef.current = createInitialRuntimeStore({
       lessonLocation: initialLessonLocation,
@@ -116,6 +300,12 @@ export default function ScenarioPlayerFrame({
       scoreRaw: initialScoreRaw,
       sessionTime: initialSessionTime,
     });
+    dirtyRef.current = false;
+    changedKeysRef.current.clear();
+    setValueCountRef.current = 0;
+    commitCountRef.current = 0;
+    requestCountRef.current = 0;
+    lastFlushAtRef.current = null;
   }, [
     initialLessonLocation,
     initialSuspendData,
@@ -139,6 +329,50 @@ export default function ScenarioPlayerFrame({
   }, [hasValidSrc, loadToken]);
 
   useEffect(() => {
+    if (!hasValidSrc || SCORM_WRITE_MODE !== "batched") {
+      return;
+    }
+
+    const interval = window.setInterval(() => {
+      void flushRuntimeProgress("interval");
+    }, SCORM_FLUSH_INTERVAL_MS);
+
+    return () => {
+      window.clearInterval(interval);
+    };
+  }, [flushRuntimeProgress, hasValidSrc]);
+
+  useEffect(() => {
+    if (!hasValidSrc) {
+      return;
+    }
+
+    const handlePageHide = () => {
+      void flushRuntimeProgress("pagehide", { forceWrite: true, keepalive: true });
+    };
+
+    const handleBeforeUnload = () => {
+      void flushRuntimeProgress("beforeunload", { forceWrite: true, keepalive: true });
+    };
+
+    window.addEventListener("pagehide", handlePageHide);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener("pagehide", handlePageHide);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+
+      if (eagerDebounceTimerRef.current !== null) {
+        window.clearTimeout(eagerDebounceTimerRef.current);
+      }
+
+      if (commitDebounceTimerRef.current !== null) {
+        window.clearTimeout(commitDebounceTimerRef.current);
+      }
+    };
+  }, [flushRuntimeProgress, hasValidSrc]);
+
+  useEffect(() => {
     const api: ScormApi = {
       LMSInitialize: () => {
         initializedRef.current = true;
@@ -151,6 +385,9 @@ export default function ScenarioPlayerFrame({
           lastErrorRef.current = "301";
           return "false";
         }
+
+        commitCountRef.current += 1;
+        void flushRuntimeProgress("finish", { forceWrite: true, keepalive: true });
 
         lastErrorRef.current = "0";
         initializedRef.current = false;
@@ -173,7 +410,22 @@ export default function ScenarioPlayerFrame({
           return "false";
         }
 
+        const previousValue = runtimeStoreRef.current[element] ?? "";
         runtimeStoreRef.current[element] = value;
+        setValueCountRef.current += 1;
+
+        if (previousValue !== value && IMPORTANT_RUNTIME_KEYS.has(element)) {
+          dirtyRef.current = true;
+          changedKeysRef.current.add(element);
+          scheduleEagerFlush();
+        }
+
+        if (previousValue !== value && PERSISTED_RUNTIME_TRACKING_KEYS.has(element)) {
+          dirtyRef.current = true;
+          changedKeysRef.current.add(element);
+          scheduleEagerFlush();
+        }
+
         lastErrorRef.current = "0";
         return "true";
       },
@@ -184,6 +436,8 @@ export default function ScenarioPlayerFrame({
           return "false";
         }
 
+        commitCountRef.current += 1;
+        scheduleCommitFlush();
         lastErrorRef.current = "0";
         return "true";
       },
@@ -222,7 +476,7 @@ export default function ScenarioPlayerFrame({
         delete window.API;
       }
     };
-  }, [t]);
+  }, [flushRuntimeProgress, scheduleCommitFlush, scheduleEagerFlush, t]);
 
   const handleRetry = () => {
     if (!hasValidSrc) {

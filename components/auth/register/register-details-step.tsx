@@ -39,7 +39,7 @@ export default function RegisterDetailsStep({
   const [message, setMessage] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const roleLabel = role === APP_ROLES.educator ? roles("educator") : roles("student");
+  const roleLabel = role === APP_ROLES.educator ? roles("educator") : roles("learner");
 
   const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
