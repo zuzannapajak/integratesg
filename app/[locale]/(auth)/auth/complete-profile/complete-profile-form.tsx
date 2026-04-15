@@ -18,7 +18,7 @@ export default function CompleteProfileForm({ locale, email }: Props) {
   const common = useTranslations("Common");
   const router = useRouter();
 
-  const [role, setRole] = useState<SelfServiceRole>(APP_ROLES.student);
+  const [role, setRole] = useState<SelfServiceRole>(APP_ROLES.learner);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
@@ -60,10 +60,10 @@ export default function CompleteProfileForm({ locale, email }: Props) {
               <form onSubmit={handleSubmit} className="space-y-3">
                 <button
                   type="button"
-                  onClick={() => { setRole(APP_ROLES.student); }}
-                  aria-pressed={role === APP_ROLES.student}
+                  onClick={() => { setRole(APP_ROLES.learner); }}
+                  aria-pressed={role === APP_ROLES.learner}
                   className={`w-full rounded-3xl border p-4 text-left transition-all duration-200 ${
-                    role === APP_ROLES.student
+                    role === APP_ROLES.learner
                       ? "border-[#31425a] bg-[#f4f8fc] shadow-[0_10px_24px_rgba(49,66,90,0.08)]"
                       : "border-[#d9e1ea] bg-white hover:border-[#bcc9d7] hover:bg-[#fbfcfd]"
                   }`}
@@ -71,7 +71,7 @@ export default function CompleteProfileForm({ locale, email }: Props) {
                   <div className="flex items-center gap-3">
                     <div
                       className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl
-                        role === APP_ROLES.student
+                        role === APP_ROLES.learner
                           ? "bg-[#31425a] text-white"
                           : "bg-[#eef3f8] text-[#31425a]"
                       }`}
@@ -82,16 +82,16 @@ export default function CompleteProfileForm({ locale, email }: Props) {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between gap-3">
                         <p className="text-[0.98rem] font-semibold text-[#31425a]">
-                          {roles("student")}
+                          {roles("learner")}
                         </p>
-                        {role === APP_ROLES.student ? (
+                        {role === APP_ROLES.learner ? (
                           <span className="rounded-full bg-[#31425a] px-2.5 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-white">
                             {common("selected")}
                           </span>
                         ) : null}
                       </div>
                       <p className="mt-1 text-[0.88rem] leading-6 text-[#667180]">
-                        {t("studentDescription")}
+                        {t("learnerDescription")}
                       </p>
                     </div>
                   </div>

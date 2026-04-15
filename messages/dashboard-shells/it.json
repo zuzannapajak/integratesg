@@ -47,7 +47,7 @@
           "welcome": "Bentornato",
           "intro": "Continua il tuo percorso di apprendimento e accedi alle tue risorse didattiche."
         },
-        "student": {
+        "learner": {
           "welcome": "Bentornato",
           "intro": "Continua ad imparare da dove avevi interrotto e mantieni il ritmo."
         },
@@ -64,7 +64,7 @@
         "resumeCta": "Riprendi l'apprendimento",
         "fallbackTitle": "Riprendi la tua ultima attività",
         "fallbackDescriptionEducator": "Ritorno rapido all'ultimo modulo aperto.",
-        "fallbackDescriptionStudent": "Ritorno rapido all'ultimo flusso di apprendimento aperto."
+        "fallbackDescriptionLearner": "Ritorno rapido all'ultimo flusso di apprendimento aperto."
       },
       "coreArea": {
         "educator": {
@@ -79,7 +79,7 @@
             "meta": "Casi di studio ed esempi"
           }
         },
-        "student": {
+        "learner": {
           "primary": {
             "title": "Simulatore di scenari",
             "description": "Avvia scenari interattivi e pratica il processo decisionale in contesti realistici.",

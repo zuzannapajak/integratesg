@@ -17,9 +17,9 @@ export default async function HomePage({ params }: Props) {
 
   const focusCards = [
     {
-      eyebrow: t("cards.students.eyebrow"),
-      title: t("cards.students.title"),
-      description: t("cards.students.description"),
+      eyebrow: t("cards.learners.eyebrow"),
+      title: t("cards.learners.title"),
+      description: t("cards.learners.description"),
     },
     {
       eyebrow: t("cards.educators.eyebrow"),

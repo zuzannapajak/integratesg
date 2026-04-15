@@ -1,7 +1,7 @@
 {
   "Home": {
     "hero": {
-      "eyebrow": "Per studenti ed educatori",
+      "eyebrow": "Per discenti ed educatori",
       "title": "Apprendimento pratico ESG",
       "description": "Casi di studio, moduli guidati e scenari interattivi in un'unica piattaforma multilingue.",
       "join": "Unisciti alla piattaforma",
@@ -21,8 +21,8 @@
       "signIn": "Accedi"
     },
     "cards": {
-      "students": {
-        "eyebrow": "Per gli studenti",
+      "learners": {
+        "eyebrow": "Per i discenti",
         "title": "Simulatore di Scenari",
         "description": "Esplora i temi ESG attraverso scenari decisionali interattivi e percorsi di apprendimento pratici."
       },
@@ -50,7 +50,7 @@
     "cta": {
       "eyebrow": "Inizia ora",
       "title": "Accedi alla piattaforma e continua il tuo percorso di apprendimento ESG.",
-      "description": "Registrati per esplorare scenari, risorse ePortfolio e materiali didattici progettati per studenti e educatori.",
+      "description": "Registrati per esplorare scenari, risorse ePortfolio e materiali didattici progettati per discenti ed educatori.",
       "register": "Registrati",
       "signIn": "Accedi"
     }

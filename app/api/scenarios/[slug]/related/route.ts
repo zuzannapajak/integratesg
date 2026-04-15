@@ -42,7 +42,7 @@ export async function GET(request: Request, { params }: RouteContext) {
       },
     });
 
-    if (!profile || (profile.role !== APP_ROLES.student && profile.role !== APP_ROLES.educator)) {
+    if (!profile || (profile.role !== APP_ROLES.learner && profile.role !== APP_ROLES.educator)) {
       status = "error";
       return NextResponse.json({ ok: false, error: "Forbidden" }, { status: 403 });
     }

@@ -60,7 +60,7 @@ export default async function ScenariosPage({ params, searchParams }: Props) {
 
     const [t, { user }] = await Promise.all([
       getTranslations({ locale, namespace: "Protected.ScenariosPage" }),
-      requireRole(locale, [APP_ROLES.student, APP_ROLES.educator]),
+      requireRole(locale, [APP_ROLES.learner, APP_ROLES.educator]),
     ]);
 
     const scenarios =

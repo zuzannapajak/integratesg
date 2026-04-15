@@ -82,7 +82,7 @@
           "2": "Menedżerowie biznesowi",
           "3": "MŚP i duże przedsiębiorstwa",
           "4": "Eksperci środowiskowi / Decydenci / Organizacje pozarządowe",
-          "5": "Uczniowie/Studenci VET",
+          "5": "Osoby uczące się (VET)",
           "6": "Inni kluczowi aktorzy"
         }
       },
@@ -158,11 +158,11 @@
         "secondaryCta": "Zaloguj się"
       }
     },
-    "Students": {
+    "Learners": {
       "hero": {
-        "eyebrow": "Dla uczniów i studentów",
+        "eyebrow": "Dla osób uczących się",
         "title": "Poznawaj tematy ESG poprzez interaktywne scenariusze, studia przypadków i materiały szkoleniowe z przewodnikiem.",
-        "description": "Uczniowie mogą korzystać z platformy, aby budować praktyczne zrozumienie kwestii ESG poprzez samodzielną eksplorację, ustrukturyzowane zasoby i doświadczenia z zakresu uczenia się stosowanego.",
+        "description": "Osoby uczące się mogą korzystać z platformy, aby budować praktyczne zrozumienie kwestii ESG poprzez samodzielną eksplorację, ustrukturyzowane zasoby i doświadczenia z zakresu uczenia się stosowanego.",
         "primaryCta": "Zarejestruj się",
         "secondaryCta": "Dowiedz się więcej"
       },
@@ -177,8 +177,8 @@
       },
       "highlights": {
         "eyebrow": "Doświadczenie edukacyjne",
-        "title": "Co uczniowie mogą odkryć",
-        "description": "Uczniowie mogą zgłębiać tematykę ESG poprzez praktyczne scenariusze, ustrukturyzowane przykłady i przystępne materiały edukacyjne.",
+        "title": "Co osoby uczące się mogą odkryć",
+        "description": "Osoby uczące się mogą zgłębiać tematykę ESG poprzez praktyczne scenariusze, ustrukturyzowane przykłady i przystępne materiały edukacyjne.",
         "items": {
           "1": {
             "title": "Interaktywne scenariusze podejmowania decyzji",
@@ -200,10 +200,10 @@
       },
       "sections": {
         "eyebrow": "Praktyczne zastosowanie",
-        "title": "Jak uczniowie mogą korzystać z platformy",
+        "title": "Jak osoby uczące się mogą korzystać z platformy",
         "1": {
           "title": "Uczenie się oparte na scenariuszach",
-          "description": "Platforma pozwala uczniom podejść do ESG poprzez praktyczne zadania i symulowane sytuacje decyzyjne."
+          "description": "Platforma pozwala osobom uczącym się podejść do ESG poprzez praktyczne zadania i symulowane sytuacje decyzyjne."
         },
         "2": {
           "title": "Nauka poprzez przykłady",
@@ -211,13 +211,13 @@
         },
         "3": {
           "title": "Wsparcie niezależnej nauki",
-          "description": "Uczniowie mogą korzystać z platformy we własnym tempie i wracać do zasobów w ramach szerszych zajęć lub projektów."
+          "description": "Osoby uczące się mogą korzystać z platformy we własnym tempie i wracać do zasobów w ramach szerszych zajęć lub projektów."
         }
       },
       "cta": {
         "eyebrow": "Zacznij naukę",
         "title": "Utwórz konto i uzyskaj dostęp do praktycznych zasobów ESG.",
-        "description": "Zarejestruj się, aby odkrywać scenariusze, studia przypadków i treści edukacyjne przygotowane dla uczniów.",
+        "description": "Zarejestruj się, aby odkrywać scenariusze, studia przypadków i treści edukacyjne przygotowane dla osób uczących się.",
         "primaryCta": "Zarejestruj się",
         "secondaryCta": "Zaloguj się"
       }

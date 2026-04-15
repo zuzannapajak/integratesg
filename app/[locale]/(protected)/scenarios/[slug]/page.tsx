@@ -18,7 +18,7 @@ export default async function ScenarioDetailPage({ params }: Props) {
   try {
     const { locale, slug } = await params;
     slugForLog = slug;
-    const { user } = await requireRole(locale, [APP_ROLES.student, APP_ROLES.educator]);
+    const { user } = await requireRole(locale, [APP_ROLES.learner, APP_ROLES.educator]);
 
     const data = await getScenarioDetail({
       userId: user.id,

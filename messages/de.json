@@ -11,7 +11,7 @@
     "settings": "Einstellungen",
     "about": "Über uns",
     "educators": "Lehrkräfte",
-    "students": "Studierende",
+    "learners": "Studierende",
     "logOut": "Abmelden",
     "signedIn": "Angemeldet",
     "openAccountMenu": "Kontomenü öffnen",
@@ -20,7 +20,7 @@
     "joinPlatform": "Plattform beitreten"
   },
   "Roles": {
-    "student": "Student",
+    "learner": "Studierende",
     "educator": "Lehrkraft",
     "admin": "Admin"
   },
@@ -30,7 +30,7 @@
   "PublicNavbar": {
     "about": "Über uns",
     "educators": "Lehrkräfte",
-    "students": "Studierende",
+    "learners": "Studierende",
     "signIn": "Anmelden",
     "register": "Registrieren"
   },
@@ -63,17 +63,17 @@
   },
   "Topbar": {
     "badge": {
-      "student": "student",
+      "learner": "studierende",
       "educator": "lehrkraft",
       "admin": "admin"
     },
     "title": {
-      "student": "Studenten-Dashboard",
+      "learner": "Studierenden-Dashboard",
       "educator": "Lehrkräfte-Dashboard",
       "admin": "Admin-Dashboard"
     },
     "subtitle": {
-      "student": "Lernen Sie weiter, überprüfen Sie Ihre Kurse und greifen Sie auf Ihre Profilbereiche zu.",
+      "learner": "Lernen Sie weiter, überprüfen Sie Ihre Kurse und greifen Sie auf Ihre Profilbereiche zu.",
       "educator": "Greifen Sie auf Lehrplanressourcen, Kurse und Arbeitspakete zu.",
       "admin": "Überprüfen Sie Statistiken, Plattformstatus und administrative Einstellungen."
     },

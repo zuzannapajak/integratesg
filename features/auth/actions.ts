@@ -4,9 +4,9 @@ import { isAppLocale } from "@/lib/i18n/locales";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 
-type PublicRole = "student" | "educator";
+type PublicRole = "learner" | "educator";
 
-function resolveRole(email: string, requestedRole: PublicRole): "student" | "educator" | "admin" {
+function resolveRole(email: string, requestedRole: PublicRole): "learner" | "educator" | "admin" {
   const allowlistRaw = process.env.ADMIN_EMAIL_ALLOWLIST ?? "";
   const allowlist = allowlistRaw
     .split(",")

@@ -47,7 +47,7 @@
           "welcome": "Witaj ponownie",
           "intro": "Kontynuuj swoją ścieżkę nauki i korzystaj z zasobów dydaktycznych."
         },
-        "student": {
+        "learner": {
           "welcome": "Witaj ponownie",
           "intro": "Kontynuuj naukę tam, gdzie skończyłaś, i utrzymuj swoje tempo."
         },
@@ -64,7 +64,7 @@
         "resumeCta": "Wznów naukę",
         "fallbackTitle": "Wznów ostatnią aktywność",
         "fallbackDescriptionEducator": "Szybki powrót do modułu, który został ostatnio otwarty.",
-        "fallbackDescriptionStudent": "Szybki powrót do ścieżki nauki, która została ostatnio otwarta."
+        "fallbackDescriptionLearner": "Szybki powrót do ścieżki nauki, która została ostatnio otwarta."
       },
       "coreArea": {
         "educator": {
@@ -79,7 +79,7 @@
             "meta": "Studia przypadków i przykłady"
           }
         },
-        "student": {
+        "learner": {
           "primary": {
             "title": "Symulator scenariuszy",
             "description": "Uruchamiaj interaktywne scenariusze i ćwicz podejmowanie decyzji w realistycznych kontekstach.",

@@ -1,7 +1,7 @@
 {
   "Home": {
     "hero": {
-      "eyebrow": "For students and educators",
+      "eyebrow": "For learners and educators",
       "title": "Practical ESG learning",
       "description": "Case studies, guided modules and interactive scenarios in one multilingual platform.",
       "join": "Join the platform",
@@ -21,8 +21,8 @@
       "signIn": "Sign in"
     },
     "cards": {
-      "students": {
-        "eyebrow": "For students",
+      "learners": {
+        "eyebrow": "For learners",
         "title": "Scenario Simulator",
         "description": "Explore ESG topics through interactive decision-making scenarios and practical learning paths."
       },
@@ -50,7 +50,7 @@
     "cta": {
       "eyebrow": "Get started",
       "title": "Access the platform and continue your ESG learning journey.",
-      "description": "Register to explore scenarios, ePortfolio resources, and learning materials designed for students and educators.",
+      "description": "Register to explore scenarios, ePortfolio resources, and learning materials designed for learners and educators.",
       "register": "Register",
       "signIn": "Sign in"
     }

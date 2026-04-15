@@ -11,7 +11,7 @@
     "settings": "Impostazioni",
     "about": "Informazioni",
     "educators": "Educatori",
-    "students": "Studenti",
+    "learners": "Studenti",
     "logOut": "Disconnetti",
     "signedIn": "Accesso effettuato",
     "openAccountMenu": "Apri menu account",
@@ -20,7 +20,7 @@
     "joinPlatform": "Unisciti alla piattaforma"
   },
   "Roles": {
-    "student": "Studente",
+    "learner": "Studente",
     "educator": "Educatore",
     "admin": "Amministratore"
   },
@@ -30,7 +30,7 @@
   "PublicNavbar": {
     "about": "Informazioni",
     "educators": "Educatori",
-    "students": "Studenti",
+    "learners": "Studenti",
     "signIn": "Accedi",
     "register": "Registrati"
   },
@@ -63,17 +63,17 @@
   },
   "Topbar": {
     "badge": {
-      "student": "studente",
+      "learner": "studente",
       "educator": "educatore",
       "admin": "admin"
     },
     "title": {
-      "student": "Dashboard studente",
+      "learner": "Dashboard studente",
       "educator": "Dashboard educatore",
       "admin": "Dashboard amministratore"
     },
     "subtitle": {
-      "student": "Continua a imparare, rivedi i tuoi corsi e accedi alle aree del tuo profilo.",
+      "learner": "Continua a imparare, rivedi i tuoi corsi e accedi alle aree del tuo profilo.",
       "educator": "Accedi alle risorse didattiche, ai corsi e alle aree dei pacchetti di lavoro.",
       "admin": "Controlla le statistiche, lo stato della piattaforma e le impostazioni amministrative."
     },

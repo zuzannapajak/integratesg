@@ -47,7 +47,7 @@
           "welcome": "Welcome back",
           "intro": "Continue your learning path and access your teaching resources."
         },
-        "student": {
+        "learner": {
           "welcome": "Welcome back",
           "intro": "Continue learning where you left off and keep your momentum going."
         },
@@ -64,7 +64,7 @@
         "resumeCta": "Resume learning",
         "fallbackTitle": "Resume your latest activity",
         "fallbackDescriptionEducator": "Quick return to the module you opened most recently.",
-        "fallbackDescriptionStudent": "Quick return to the learning flow you opened most recently."
+        "fallbackDescriptionLearner": "Quick return to the learning flow you opened most recently."
       },
       "coreArea": {
         "educator": {
@@ -79,7 +79,7 @@
             "meta": "Case studies and examples"
           }
         },
-        "student": {
+        "learner": {
           "primary": {
             "title": "Scenario simulator",
             "description": "Launch interactive scenarios and practice decision-making in realistic contexts.",

@@ -1,7 +1,7 @@
 {
   "Home": {
     "hero": {
-      "eyebrow": "Dla studentów i edukatorów",
+      "eyebrow": "Dla kursantów i edukatorów",
       "title": "Praktyczna nauka ESG",
       "description": "Studia przypadków, prowadzone moduły i interaktywne scenariusze na jednej wielojęzycznej platformie.",
       "join": "Dołącz do platformy",
@@ -21,8 +21,8 @@
       "signIn": "Zaloguj się"
     },
     "cards": {
-      "students": {
-        "eyebrow": "Dla studentów",
+      "learners": {
+        "eyebrow": "Dla kursantów",
         "title": "Symulator scenariuszy",
         "description": "Poznawaj zagadnienia ESG poprzez interaktywne scenariusze decyzyjne i praktyczne ścieżki uczenia się."
       },
@@ -50,7 +50,7 @@
     "cta": {
       "eyebrow": "Zacznij teraz",
       "title": "Uzyskaj dostęp do platformy i kontynuuj swoją ścieżkę nauki ESG.",
-      "description": "Zarejestruj się, aby odkrywać scenariusze, zasoby ePortfolio i materiały edukacyjne przygotowane dla studentów i dydaktyków.",
+      "description": "Zarejestruj się, aby odkrywać scenariusze, zasoby ePortfolio i materiały edukacyjne przygotowane dla kursantów i dydaktyków.",
       "register": "Zarejestruj się",
       "signIn": "Zaloguj się"
     }

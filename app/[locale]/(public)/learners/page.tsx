@@ -6,21 +6,21 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export default async function StudentsPage({ params }: Props) {
+export default async function LearnersPage({ params }: Props) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "PublicContent.Students" });
+  const t = await getTranslations({ locale, namespace: "PublicContent.Learners" });
 
-  const studentBenefits = [1, 2, 3, 4].map((index) => ({
+  const learnerBenefits = [1, 2, 3, 4].map((index) => ({
     title: t(`highlights.items.${index}.title`),
     description: t(`highlights.items.${index}.description`),
   }));
 
-  const studentUseCases = [1, 2, 3].map((index) => ({
+  const learnerUseCases = [1, 2, 3].map((index) => ({
     title: t(`sections.${index}.title`),
     description: t(`sections.${index}.description`),
   }));
 
-  const studentHighlights = [1, 2, 3, 4].map((index) => ({
+  const learnerHighlights = [1, 2, 3, 4].map((index) => ({
     title: t(`highlights.items.${index}.title`),
     description: t(`highlights.items.${index}.description`),
   }));
@@ -43,7 +43,7 @@ export default async function StudentsPage({ params }: Props) {
             </p>
 
             <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-              <a href="#students-content" className="landing-secondary-cta">
+              <a href="#learners-content" className="landing-secondary-cta">
                 {t("hero.secondaryCta")}
               </a>
               <Link href={`/${locale}/auth/register`} className="landing-primary-cta">
@@ -92,7 +92,7 @@ export default async function StudentsPage({ params }: Props) {
       </section>
 
       <section
-        id="students-content"
+        id="learners-content"
         className="relative z-10 scroll-mt-28 px-6 py-10 md:px-10 md:py-14 lg:px-14"
       >
         <div className="mx-auto max-w-340 space-y-8">
@@ -108,7 +108,7 @@ export default async function StudentsPage({ params }: Props) {
             </div>
 
             <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-              {studentBenefits.map((item) => (
+              {learnerBenefits.map((item) => (
                 <article
                   key={item.title}
                   className="group rounded-[28px] border border-white/60 bg-white/88 p-6 shadow-[0_12px_34px_rgba(35,45,62,0.05)] backdrop-blur transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_42px_rgba(35,45,62,0.10)]"
@@ -131,7 +131,7 @@ export default async function StudentsPage({ params }: Props) {
               </h2>
 
               <div className="mt-8 space-y-5">
-                {studentUseCases.map((item, index) => (
+                {learnerUseCases.map((item, index) => (
                   <div
                     key={item.title}
                     className="rounded-3xl border border-[#e7ebf0] bg-[#fcfcfd] p-5 transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_30px_rgba(35,45,62,0.06)]"
@@ -162,7 +162,7 @@ export default async function StudentsPage({ params }: Props) {
               </h2>
 
               <div className="mt-8 space-y-4">
-                {studentHighlights.map((item, index) => (
+                {learnerHighlights.map((item, index) => (
                   <article
                     key={item.title}
                     className="rounded-3xl border border-white/70 bg-white/88 px-5 py-4 shadow-[0_10px_26px_rgba(35,45,62,0.04)] transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(35,45,62,0.07)]"

@@ -1188,8 +1188,8 @@ export default function AdminStatsShell({ stats }: Props) {
                         value={String(stats.users.educators)}
                       />
                       <MiniKpi
-                        label={t("platformStructure.students")}
-                        value={String(stats.users.students)}
+                        label={t("platformStructure.learners")}
+                        value={String(stats.users.learners)}
                       />
                       <MiniKpi
                         label={t("platformStructure.admins")}

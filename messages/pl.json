@@ -11,7 +11,7 @@
     "settings": "Ustawienia",
     "about": "O projekcie",
     "educators": "Dla dydaktyków",
-    "students": "Dla studentów",
+    "learners": "Dla kursantów",
     "logOut": "Wyloguj się",
     "signedIn": "Zalogowano jako",
     "openAccountMenu": "Otwórz menu konta",
@@ -20,7 +20,7 @@
     "joinPlatform": "Dołącz do platformy"
   },
   "Roles": {
-    "student": "Student",
+    "learner": "Kursant",
     "educator": "Dydaktyk",
     "admin": "Administrator"
   },
@@ -30,7 +30,7 @@
   "PublicNavbar": {
     "about": "O projekcie",
     "educators": "Dla dydaktyków",
-    "students": "Dla studentów",
+    "learners": "Dla kursantów",
     "signIn": "Zaloguj się",
     "register": "Zarejestruj się"
   },
@@ -63,17 +63,17 @@
   },
   "Topbar": {
     "badge": {
-      "student": "student",
+      "learner": "kursant",
       "educator": "dydaktyk",
       "admin": "admin"
     },
     "title": {
-      "student": "Panel studenta",
+      "learner": "Panel kursanta",
       "educator": "Panel dydaktyka",
       "admin": "Panel administratora"
     },
     "subtitle": {
-      "student": "Kontynuuj naukę, przeglądaj swoje materiały i korzystaj z obszarów profilu.",
+      "learner": "Kontynuuj naukę, przeglądaj swoje materiały i korzystaj z obszarów profilu.",
       "educator": "Uzyskaj dostęp do materiałów curriculum, kursów i obszarów work package.",
       "admin": "Przeglądaj statystyki, status platformy i ustawienia administracyjne."
     },

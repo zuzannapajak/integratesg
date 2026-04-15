@@ -18,7 +18,7 @@ export const PARTNERS = [
 // Protected
 export const USER_ROLES = {
   EDUCATOR: APP_ROLES.educator,
-  STUDENT: APP_ROLES.student,
+  LEARNER: APP_ROLES.learner,
   ADMIN: APP_ROLES.admin,
 } as const;
 

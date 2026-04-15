@@ -1,4 +1,4 @@
-export type DashboardRole = "educator" | "student" | "admin";
+export type DashboardRole = "educator" | "learner" | "admin";
 
 export type DashboardStat = {
   label: string;

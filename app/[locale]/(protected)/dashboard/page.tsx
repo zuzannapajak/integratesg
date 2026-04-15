@@ -332,7 +332,7 @@ function buildGamificationStats(
   learnerAttempts: { startedAt: Date | null; completedAt?: Date | null }[],
   t: Awaited<ReturnType<typeof getTranslations>>,
 ): DashboardGamificationStat[] {
-  if (role !== "student" && role !== "educator") {
+  if (role !== "learner" && role !== "educator") {
     return [];
   }
 
@@ -481,7 +481,7 @@ export default async function DashboardPage({ params }: Props) {
         : Promise.resolve([]);
 
     const scenarioAttemptsPromise =
-      role === "student" || role === "educator"
+      role === "learner" || role === "educator"
         ? prisma.userScenarioAttempt.findMany({
             where: { userId: profile.id },
             orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }],
@@ -572,7 +572,7 @@ export default async function DashboardPage({ params }: Props) {
     const adminTrendLabel = buildTrendLabel(adminActivityData, adminPreviousWeekAttempts.length, t);
 
     const continueLearning =
-      role === "student" || role === "educator"
+      role === "learner" || role === "educator"
         ? buildContinueLearningItem(
             {
               curriculumAttempts,
@@ -612,14 +612,14 @@ export default async function DashboardPage({ params }: Props) {
         role={role}
         displayName={profile.fullName ?? profile.email.split("@")[0]}
         heroStats={role === "admin" ? adminKpis : learnerSummaryMetrics}
-        continueLearning={role === "student" || role === "educator" ? continueLearning : null}
-        gamificationStats={role === "student" || role === "educator" ? gamificationStats : []}
+        continueLearning={role === "learner" || role === "educator" ? continueLearning : null}
+        gamificationStats={role === "learner" || role === "educator" ? gamificationStats : []}
         publishedCoursesCount={role === "educator" ? publishedCoursesCount : 0}
         learnerSummaryMetrics={
-          role === "student" || role === "educator" ? learnerSummaryMetrics : []
+          role === "learner" || role === "educator" ? learnerSummaryMetrics : []
         }
-        learnerActivityData={role === "student" || role === "educator" ? learnerActivityData : []}
-        learnerTrendLabel={role === "student" || role === "educator" ? learnerTrendLabel : ""}
+        learnerActivityData={role === "learner" || role === "educator" ? learnerActivityData : []}
+        learnerTrendLabel={role === "learner" || role === "educator" ? learnerTrendLabel : ""}
         adminActivityData={role === "admin" ? adminActivityData : []}
         adminTrendLabel={role === "admin" ? adminTrendLabel : ""}
         adminKpis={role === "admin" ? adminKpis : []}

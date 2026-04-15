@@ -10,7 +10,7 @@ type Props = {
 
 export default async function ScenarioLaunchPage({ params }: Props) {
   const { locale, slug } = await params;
-  const { profile } = await requireRole(locale, [APP_ROLES.student, APP_ROLES.educator]);
+  const { profile } = await requireRole(locale, [APP_ROLES.learner, APP_ROLES.educator]);
 
   await logScenarioLaunch({
     locale,

@@ -21,7 +21,7 @@
       "title": "Complete your profile",
       "eyebrow": "Profile setup",
       "chooseRole": "Choose your role",
-      "studentDescription": "Access case studies and scenarios",
+      "learnerDescription": "Access case studies and scenarios",
       "educatorDescription": "Access curriculum and teaching resources",
       "error": "Failed to save profile.",
       "submit": "Continue",
@@ -37,7 +37,7 @@
       "eyebrow": "Create your account",
       "title": "Choose your role",
       "subtitle": "Select how you will use the platform.",
-      "studentDescription": "Case studies, scenarios, and self-assessment.",
+      "learnerDescription": "Case studies, scenarios, and self-assessment.",
       "educatorDescription": "Curriculum tools and teaching resources.",
       "continue": "Continue"
     },

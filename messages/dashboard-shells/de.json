@@ -47,7 +47,7 @@
           "welcome": "Willkommen zurück",
           "intro": "Setzen Sie Ihren Lernpfad fort und greifen Sie auf Ihre Unterrichtsmaterialien zu."
         },
-        "student": {
+        "learner": {
           "welcome": "Willkommen zurück",
           "intro": "Lerne dort weiter, wo du aufgehört hast, und bleib am Ball."
         },
@@ -64,7 +64,7 @@
         "resumeCta": "Lernen fortsetzen",
         "fallbackTitle": "Letzte Aktivität fortsetzen",
         "fallbackDescriptionEducator": "Schnelle Rückkehr zum zuletzt geöffneten Modul.",
-        "fallbackDescriptionStudent": "Schnelle Rückkehr zum zuletzt geöffneten Lernfluss."
+        "fallbackDescriptionLearner": "Schnelle Rückkehr zum zuletzt geöffneten Lernfluss."
       },
       "coreArea": {
         "educator": {
@@ -79,7 +79,7 @@
             "meta": "Fallstudien und Beispiele"
           }
         },
-        "student": {
+        "learner": {
           "primary": {
             "title": "Szenario-Simulator",
             "description": "Starten Sie interaktive Szenarien und üben Sie die Entscheidungsfindung in realistischen Kontexten.",

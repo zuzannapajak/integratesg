@@ -9,7 +9,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 type Props = {
   locale: string;
-  role: "educator" | "student" | "admin";
+  role: "educator" | "learner" | "admin";
   email: string;
   forceSolid?: boolean;
 };

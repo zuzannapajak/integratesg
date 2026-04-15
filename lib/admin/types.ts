@@ -49,7 +49,7 @@ export type BasicAdminStats = {
   generatedAt: string;
   users: {
     total: number;
-    students: number;
+    learners: number;
     educators: number;
     admins: number;
   };

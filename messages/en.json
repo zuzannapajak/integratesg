@@ -11,7 +11,7 @@
     "settings": "Settings",
     "about": "About",
     "educators": "Educators",
-    "students": "Students",
+    "learners": "Learners",
     "logOut": "Log out",
     "signedIn": "Signed in",
     "openAccountMenu": "Open account menu",
@@ -20,7 +20,7 @@
     "joinPlatform": "Join the platform"
   },
   "Roles": {
-    "student": "Student",
+    "learner": "Learner",
     "educator": "Educator",
     "admin": "Admin"
   },
@@ -30,7 +30,7 @@
   "PublicNavbar": {
     "about": "About",
     "educators": "Educators",
-    "students": "Students",
+    "learners": "Learners",
     "signIn": "Sign in",
     "register": "Register"
   },
@@ -63,17 +63,17 @@
   },
   "Topbar": {
     "badge": {
-      "student": "student",
+      "learner": "learner",
       "educator": "educator",
       "admin": "admin"
     },
     "title": {
-      "student": "Student dashboard",
+      "learner": "Learner dashboard",
       "educator": "Educator dashboard",
       "admin": "Admin dashboard"
     },
     "subtitle": {
-      "student": "Continue learning, review your courses, and access your profile areas.",
+      "learner": "Continue learning, review your courses, and access your profile areas.",
       "educator": "Access curriculum resources, courses, and work package areas.",
       "admin": "Review statistics, platform status, and administrative settings."
     },

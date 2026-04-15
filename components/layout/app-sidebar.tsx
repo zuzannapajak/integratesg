@@ -14,7 +14,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-type Role = "educator" | "student" | "admin";
+type Role = "educator" | "learner" | "admin";
 
 type Props = {
   locale: string;
@@ -127,7 +127,7 @@ export default function AppSidebar({ locale, role }: Props) {
     },
   ];
 
-  const studentLinks: NavLink[] = [
+  const learnerLinks: NavLink[] = [
     {
       href: `/${locale}/dashboard`,
       labelKey: "dashboard",
@@ -175,7 +175,7 @@ export default function AppSidebar({ locale, role }: Props) {
     },
   ];
 
-  const links = role === "educator" ? educatorLinks : role === "admin" ? adminLinks : studentLinks;
+  const links = role === "educator" ? educatorLinks : role === "admin" ? adminLinks : learnerLinks;
 
   const isActiveLink = (link: NavLink) => {
     if (!pathname) {

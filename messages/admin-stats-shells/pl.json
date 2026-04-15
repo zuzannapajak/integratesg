@@ -28,7 +28,7 @@
         "subtitle": "Kluczowe wskaźniki platformy w jednym miejscu, przygotowane do szybkiego przeglądu.",
         "allUsers": {
           "label": "Wszyscy użytkownicy",
-          "hint": "Zarejestrowane konta studentów i dydaktyków"
+          "hint": "Zarejestrowane konta kursantów i dydaktyków"
         },
         "activeUsers": {
           "label": "Aktywni użytkownicy",
@@ -49,7 +49,7 @@
         "roleDistribution": "Rozkład ról",
         "publishedResources": "Opublikowane zasoby",
         "educators": "Dydaktycy",
-        "students": "Studenci",
+        "learners": "Kursanci",
         "admins": "Administratorzy",
         "courses": "Kursy",
         "caseStudies": "Studia przypadków",

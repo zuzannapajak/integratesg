@@ -805,7 +805,7 @@ async function getBasicAdminStatsUncached(
 
       const mappingStartedAt = Date.now();
 
-      const totalStudents = getGroupedCount(profilesByRole, (row) => row.role === "student");
+      const totalLearners = getGroupedCount(profilesByRole, (row) => row.role === "learner");
       const totalEducators = getGroupedCount(profilesByRole, (row) => row.role === "educator");
       const totalAdmins = getGroupedCount(profilesByRole, (row) => row.role === "admin");
 
@@ -1218,7 +1218,7 @@ async function getBasicAdminStatsUncached(
           generatedAt: new Date().toISOString(),
           users: {
             total: totalUsers,
-            students: totalStudents,
+            learners: totalLearners,
             educators: totalEducators,
             admins: totalAdmins,
           },

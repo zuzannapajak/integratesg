@@ -31,11 +31,11 @@ export default function RegisterRoleStep({ role, onRoleChange, onContinue }: Pro
         <button
           type="button"
           onClick={() => {
-            onRoleChange(APP_ROLES.student);
+            onRoleChange(APP_ROLES.learner);
           }}
-          aria-pressed={role === APP_ROLES.student}
+          aria-pressed={role === APP_ROLES.learner}
           className={`rounded-3xl border p-5 text-left transition-all duration-200 ${
-            role === APP_ROLES.student
+            role === APP_ROLES.learner
               ? "border-[#31425a] bg-[#f4f8fc] shadow-[0_12px_28px_rgba(49,66,90,0.08)]"
               : "border-[#d9e1ea] bg-white hover:border-[#bcc9d7] hover:bg-[#fbfcfd]"
           }`}
@@ -43,7 +43,7 @@ export default function RegisterRoleStep({ role, onRoleChange, onContinue }: Pro
           <div className="flex items-start gap-4">
             <div
               className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl ${
-                role === APP_ROLES.student
+                role === APP_ROLES.learner
                   ? "bg-[#31425a] text-white"
                   : "bg-[#eef3f8] text-[#31425a]"
               }`}
@@ -53,15 +53,15 @@ export default function RegisterRoleStep({ role, onRoleChange, onContinue }: Pro
 
             <div className="min-w-0 flex-1 pr-1">
               <div className="flex items-center justify-between gap-3">
-                <p className="text-[1rem] font-semibold text-[#31425a]">{roles("student")}</p>
-                {role === APP_ROLES.student ? (
+                <p className="text-[1rem] font-semibold text-[#31425a]">{roles("learner")}</p>
+                {role === APP_ROLES.learner ? (
                   <span className="rounded-full bg-[#31425a] px-2.5 py-1 text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-white">
                     {common("selected")}
                   </span>
                 ) : null}
               </div>
               <p className="mt-2 text-[0.92rem] leading-6 text-[#667180]">
-                {t("studentDescription")}
+                {t("learnerDescription")}
               </p>
             </div>
           </div>

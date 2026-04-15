@@ -47,7 +47,7 @@ const roleConfigs: Record<DashboardRole, Omit<RoleConfig, "welcome" | "intro">> 
     accent: "#0b9c72",
     avatar: "bg-emerald-600",
   },
-  student: {
+  learner: {
     accent: "#ef6c23",
     avatar: "bg-orange-600",
   },
@@ -117,8 +117,8 @@ export default function DashboardShell({
           roleConfig={roleConfig}
           displayName={displayName}
           stats={heroStats}
-          continueLearning={role === "student" || role === "educator" ? continueLearning : null}
-          gamificationStats={role === "student" || role === "educator" ? gamificationStats : []}
+          continueLearning={role === "learner" || role === "educator" ? continueLearning : null}
+          gamificationStats={role === "learner" || role === "educator" ? gamificationStats : []}
         />
 
         <motion.div
@@ -127,7 +127,7 @@ export default function DashboardShell({
           variants={STAGGER_CONTAINER}
           className="space-y-8"
         >
-          {(role === "student" || role === "educator") && (
+          {(role === "learner" || role === "educator") && (
             <LearnerDashboard
               locale={locale}
               role={role}
@@ -187,12 +187,12 @@ function DashboardHero({
             </div>
           </div>
 
-          {(role === "student" || role === "educator") && (
+          {(role === "learner" || role === "educator") && (
             <TopStreakBadge gamificationStats={gamificationStats} roleConfig={roleConfig} />
           )}
         </div>
 
-        {(role === "student" || role === "educator") && continueLearning && (
+        {(role === "learner" || role === "educator") && continueLearning && (
           <ContinueLearningHeroCard roleConfig={roleConfig} continueLearning={continueLearning} />
         )}
       </div>
@@ -401,9 +401,9 @@ function LearnerDashboard({
         }
       : {
           icon: <PlayCircle className="h-5 w-5" />,
-          title: t("coreArea.student.primary.title"),
-          description: t("coreArea.student.primary.description"),
-          meta: t("coreArea.student.primary.meta"),
+          title: t("coreArea.learner.primary.title"),
+          description: t("coreArea.learner.primary.description"),
+          meta: t("coreArea.learner.primary.meta"),
           href: `/${locale}/scenarios`,
           accentColor: ESG_colors.GREEN,
           buttonLabel: t("coreArea.buttons.openScenarios"),
@@ -450,9 +450,9 @@ function LearnerDashboard({
         }
       : {
           icon: <FolderOpen className="h-5 w-5" />,
-          title: t("coreArea.student.secondary.title"),
-          description: t("coreArea.student.secondary.description"),
-          meta: t("coreArea.student.secondary.meta"),
+          title: t("coreArea.learner.secondary.title"),
+          description: t("coreArea.learner.secondary.description"),
+          meta: t("coreArea.learner.secondary.meta"),
           href: `/${locale}/eportfolio`,
           accentColor: ESG_colors.BLUE,
           buttonLabel: t("coreArea.buttons.openEportfolio"),
