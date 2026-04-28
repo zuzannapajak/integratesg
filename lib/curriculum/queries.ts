@@ -1,6 +1,7 @@
 import {
   CourseMappedInput,
   CourseSectionRecord,
+  CurriculumCertificateViewModel,
   CurriculumLessonViewModel,
   CurriculumListItemViewModel,
   CurriculumModuleViewModel,
@@ -211,6 +212,7 @@ function parseAttempts(raw: unknown): CurriculumQuizAttemptViewModel[] {
 function buildProgressState(params: {
   attempt?: {
     status: string;
+    completedAt?: Date | null;
     currentStage?: string;
     currentLessonIndex?: number;
     completedLessons?: number;
@@ -278,6 +280,40 @@ function buildProgressState(params: {
     postQuizRemainingAttempts,
     nextAction,
     currentLocation,
+    completedAt: attempt?.completedAt?.toISOString() ?? null,
+  };
+}
+
+function buildCertificateState(params: {
+  attempt: CourseMappedInput["userCourseAttempts"][number] | null;
+  quizzes?: CourseMappedInput["quizzes"];
+  slug: string;
+}): CurriculumCertificateViewModel {
+  const attempt = params.attempt;
+
+  if (
+    attempt?.status !== "completed" ||
+    mapStage(attempt.currentStage) !== "completed"
+  ) {
+    return {
+      isAvailable: false,
+      downloadUrl: null,
+    };
+  }
+
+  const postQuiz = params.quizzes?.find((quiz) => quiz.type === "post") ?? null;
+  const passingScore = postQuiz?.passingScore ?? null;
+
+  const hasPassedPostQuiz =
+    passingScore === null ||
+    passingScore <= 0 ||
+    (typeof attempt.postQuizScore === "number" && attempt.postQuizScore >= passingScore);
+
+  const isAvailable = Boolean(attempt.completedAt) && hasPassedPostQuiz;
+
+  return {
+    isAvailable,
+    downloadUrl: isAvailable ? `/api/curriculum/${params.slug}/certificate` : null,
   };
 }
 
@@ -302,6 +338,11 @@ function mapCourseToViewModel(
   const progressState = buildProgressState({
     attempt,
     lessonsCount,
+  });
+  const certificate = buildCertificateState({
+    attempt,
+    quizzes: course.quizzes,
+    slug: course.slug,
   });
 
   return {
@@ -362,6 +403,7 @@ function mapCourseToViewModel(
     })(),
     lessonsData,
     progressState,
+    certificate,
   };
 }
 
@@ -641,6 +683,8 @@ export async function getCurriculumModule(params: {
               status: true,
               progressPercent: true,
               lastOpenedAt: true,
+              completedAt: true,
+              postQuizScore: true,
               currentStage: true,
               currentLessonIndex: true,
               completedLessons: true,

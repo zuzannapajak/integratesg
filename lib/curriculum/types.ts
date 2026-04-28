@@ -60,6 +60,12 @@ export type CurriculumProgressViewModel = {
   postQuizRemainingAttempts: number;
   nextAction: CurriculumTextToken;
   currentLocation: CurriculumTextToken;
+  completedAt: string | null;
+};
+
+export type CurriculumCertificateViewModel = {
+  isAvailable: boolean;
+  downloadUrl: string | null;
 };
 
 export type CurriculumListItemViewModel = {
@@ -96,6 +102,7 @@ export type CurriculumModuleViewModel = {
   quizItems: CurriculumQuizViewModel[];
   lessonsData: CurriculumLessonViewModel[];
   progressState: CurriculumProgressViewModel;
+  certificate: CurriculumCertificateViewModel;
 };
 
 export type TranslationRecord = {
@@ -157,6 +164,8 @@ type CourseAttemptRecord = {
   status: string;
   progressPercent: number;
   lastOpenedAt: Date | null;
+  completedAt?: Date | null;
+  postQuizScore?: number | null;
   currentStage?: string;
   currentLessonIndex?: number;
   completedLessons?: number;

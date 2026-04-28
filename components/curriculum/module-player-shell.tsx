@@ -1,5 +1,6 @@
 "use client";
 
+import CertificateDownloadButton from "@/components/curriculum/certificate-download-button";
 import {
   completeLessonAction,
   retakeCourseAction,
@@ -91,6 +92,15 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
       : activeQuiz?.type === "post"
         ? module.progressState.postQuizAttempts.length
         : 0;
+
+  const postQuiz = module.quizItems.find((quiz) => quiz.type === "post") ?? null;
+  const latestPostQuizAttempt = module.progressState.postQuizAttempts.at(-1) ?? null;
+  const certificateAvailable =
+    stage === "completed" &&
+    (postQuiz
+      ? typeof latestPostQuizAttempt?.score === "number" &&
+        latestPostQuizAttempt.score >= (postQuiz.passingScore ?? 0)
+      : true);
 
   const totalAttemptsAllowed = activeQuiz?.type === "pre" ? 1 : activeQuiz?.type === "post" ? 2 : 0;
 
@@ -655,6 +665,8 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                 </p>
 
                 <div className="mt-6 flex flex-wrap gap-3">
+                  {certificateAvailable ? <CertificateDownloadButton slug={module.slug} /> : null}
+
                   <button
                     type="button"
                     onClick={() => {
@@ -692,6 +704,17 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                   <div className="mt-4 h-2.5 overflow-hidden rounded-full bg-[#edf2f7]">
                     <div className="h-full w-full rounded-full bg-[#0b9c72]" />
                   </div>
+                </div>
+
+                <div className="rounded-3xl border border-[#e8edf3] bg-white/90 p-5 shadow-[0_10px_28px_rgba(35,45,62,0.05)]">
+                  <p className="text-sm font-semibold text-[#31425a]">
+                    {certificateAvailable ? "Completion certificate" : "Certificate status"}
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-[#667180]">
+                    {certificateAvailable
+                      ? "Your English PDF certificate is ready to download. It includes your full name, the curriculum title, the issue date, and a unique certificate ID."
+                      : "Certificates are issued only after passing the final checkpoint. Retake the module to unlock your certificate."}
+                  </p>
                 </div>
 
                 <div className="rounded-3xl border border-[#e8edf3] bg-white/90 p-5 shadow-[0_10px_28px_rgba(35,45,62,0.05)]">
