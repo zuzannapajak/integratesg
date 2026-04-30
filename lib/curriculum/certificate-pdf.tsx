@@ -345,7 +345,7 @@ function createPdf(objects: ReadonlyArray<string | Buffer>) {
   xref += "0000000000 65535 f \n";
 
   for (let index = 1; index < offsets.length; index += 1) {
-    xref += `${offsets[index]!.toString().padStart(10, "0")} 00000 n \n`;
+    xref += `${offsets[index].toString().padStart(10, "0")} 00000 n \n`;
   }
 
   const trailer = [

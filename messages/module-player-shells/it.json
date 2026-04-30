@@ -73,7 +73,13 @@
         "exploreMore": "Esplora altri moduli",
         "finalProgress": "Progresso finale",
         "whatsNextTitle": "Cosa fare ora",
-        "whatsNextDescription": "Ricomincia il modulo dall'inizio, rivedi la panoramica o passa a un altro argomento correlato."
+        "whatsNextDescription": "Ricomincia il modulo dall'inizio, rivedi la panoramica o passa a un altro argomento correlato.",
+        "certificate": {
+          "availableTitle": "Certificato di completamento",
+          "lockedTitle": "Stato del certificato",
+          "availableDescription": "Il tuo certificato in inglese è pronto per il download.",
+          "lockedDescription": "I certificati vengono rilasciati solo dopo aver superato il checkpoint finale. Ripeti il modulo per sbloccare il certificato."
+        }
       },
       "confirmSubmit": {
         "eyebrow": "Pronto per l'invio",

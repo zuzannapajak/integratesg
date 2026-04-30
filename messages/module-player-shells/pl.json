@@ -73,7 +73,13 @@
         "exploreMore": "Przeglądaj kolejne moduły",
         "finalProgress": "Końcowy postęp",
         "whatsNextTitle": "Co dalej",
-        "whatsNextDescription": "Rozpocznij moduł od nowa, wróć do overview albo przejdź do innego powiązanego tematu."
+        "whatsNextDescription": "Rozpocznij moduł od nowa, wróć do overview albo przejdź do innego powiązanego tematu.",
+        "certificate": {
+          "availableTitle": "Certyfikat ukończenia",
+          "lockedTitle": "Status certyfikatu",
+          "availableDescription": "Twój angielski certyfikat jest gotowy do pobrania.",
+          "lockedDescription": "Certyfikat zostanie wystawiony dopiero po zaliczeniu końcowego sprawdzianu. Powtórz moduł, aby odblokować certyfikat."
+        }
       },
       "confirmSubmit": {
         "eyebrow": "Gotowe do wysłania",

@@ -154,8 +154,7 @@ export async function GET(_request: Request, { params }: RouteContext) {
       (typeof attempt?.postQuizScore === "number" && attempt.postQuizScore >= passingScore);
 
     if (
-      !attempt ||
-      attempt.status !== "completed" ||
+      attempt?.status !== "completed" ||
       attempt.currentStage !== "completed" ||
       !attempt.completedAt ||
       !hasPassedPostQuiz

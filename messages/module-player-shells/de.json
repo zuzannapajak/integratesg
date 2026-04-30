@@ -73,7 +73,13 @@
         "exploreMore": "Weitere Module erkunden",
         "finalProgress": "Endgültiger Fortschritt",
         "whatsNextTitle": "Wie es weitergeht",
-        "whatsNextDescription": "Wiederholen Sie das Modul von Anfang an, besuchen Sie die Übersicht erneut oder fahren Sie mit einem anderen verwandten Thema fort."
+        "whatsNextDescription": "Wiederholen Sie das Modul von Anfang an, besuchen Sie die Übersicht erneut oder fahren Sie mit einem anderen verwandten Thema fort.",
+        "certificate": {
+          "availableTitle": "Abschlusszertifikat",
+          "lockedTitle": "Zertifikatsstatus",
+          "availableDescription": "Ihr englisches Zertifikat steht zum Download bereit.",
+          "lockedDescription": "Zertifikate werden erst nach Bestehen des abschließenden Checkpoints ausgestellt. Wiederholen Sie das Modul, um Ihr Zertifikat freizuschalten."
+        }
       },
       "confirmSubmit": {
         "eyebrow": "Bereit zum Absenden",

@@ -73,7 +73,13 @@
         "exploreMore": "Explore more modules",
         "finalProgress": "Final progress",
         "whatsNextTitle": "What’s next",
-        "whatsNextDescription": "Retake the module from the beginning, revisit the overview, or move on to another related topic."
+        "whatsNextDescription": "Retake the module from the beginning, revisit the overview, or move on to another related topic.",
+        "certificate": {
+          "availableTitle": "Completion certificate",
+          "lockedTitle": "Certificate status",
+          "availableDescription": "Your English certificate is ready to download.",
+          "lockedDescription": "Certificates are issued only after passing the final checkpoint. Retake the module to unlock your certificate."
+        }
       },
       "confirmSubmit": {
         "eyebrow": "Ready to submit",
