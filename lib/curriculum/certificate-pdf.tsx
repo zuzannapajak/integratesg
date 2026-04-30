@@ -406,9 +406,9 @@ function parsePngToRgb(buffer: Buffer) {
     if (type === "IHDR") {
       width = data.readUInt32BE(0);
       height = data.readUInt32BE(4);
-      bitDepth = data[8] ?? 0;
-      colorType = data[9] ?? 0;
-      interlaceMethod = data[12] ?? 0;
+      bitDepth = data.readUInt8(8);
+      colorType = data.readUInt8(9);
+      interlaceMethod = data.readUInt8(12);
     } else if (type === "IDAT") {
       idatParts.push(data);
     } else if (type === "IEND") {

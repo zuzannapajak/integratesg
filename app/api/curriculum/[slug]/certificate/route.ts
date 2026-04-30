@@ -169,8 +169,9 @@ export async function GET(_request: Request, { params }: RouteContext) {
       );
     }
 
-    const learnerName =
-      profile.fullName?.trim() || humanizeFallbackName(profile.email || user.email || "Learner");
+    const learnerName = profile.fullName?.trim()
+      ? profile.fullName.trim()
+      : humanizeFallbackName(profile.email);
     const moduleTitle = pickEnglishTitle(course.translations, course.slug);
     const certificateId = buildCertificateId(course.slug, attempt.id);
 
