@@ -22,7 +22,7 @@ export default async function PublicFooter({ locale }: Props) {
                 alt={t("euAlt")}
                 width={220}
                 height={54}
-                className="h-auto w-auto object-contain"
+                className="h-auto w-full max-w-55 object-contain"
               />
             </div>
 

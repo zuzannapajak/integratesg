@@ -1,16 +1,8 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useId } from "react";
-import {
-  Area,
-  AreaChart,
-  CartesianGrid,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { useEffect, useId, useRef, useState } from "react";
+import { Area, AreaChart, CartesianGrid, Tooltip, XAxis, YAxis } from "recharts";
 
 type ChartPoint = {
   label: string;
@@ -26,13 +18,48 @@ type Props = {
 
 export default function StatsChart({ accentColor, data, height = 240, valueLabel }: Props) {
   const t = useTranslations("Protected.DashboardShell.StatsChart");
-  const gradientId = useId();
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [containerWidth, setContainerWidth] = useState(0);
+
+  const rawGradientId = useId();
+  const gradientId = `stats-gradient-${rawGradientId.replaceAll(":", "")}`;
+
   const resolvedValueLabel = valueLabel ?? t("activity");
 
+  useEffect(() => {
+    const element = containerRef.current;
+
+    if (!element) {
+      return;
+    }
+
+    const updateWidth = () => {
+      const width = element.getBoundingClientRect().width;
+      setContainerWidth(width > 0 ? Math.floor(width) : 0);
+    };
+
+    updateWidth();
+
+    const observer = new ResizeObserver(() => {
+      updateWidth();
+    });
+
+    observer.observe(element);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   return (
-    <div className="w-full" style={{ height }}>
-      <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={data} margin={{ top: 8, right: 8, left: 8, bottom: 0 }}>
+    <div ref={containerRef} className="min-w-0 w-full" style={{ height, minHeight: height }}>
+      {containerWidth > 0 ? (
+        <AreaChart
+          width={containerWidth}
+          height={height}
+          data={data}
+          margin={{ top: 8, right: 8, left: 8, bottom: 0 }}
+        >
           <defs>
             <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor={accentColor} stopOpacity={0.18} />
@@ -78,7 +105,7 @@ export default function StatsChart({ accentColor, data, height = 240, valueLabel
             }}
           />
         </AreaChart>
-      </ResponsiveContainer>
+      ) : null}
     </div>
   );
 }
