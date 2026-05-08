@@ -8,15 +8,27 @@ type Props = {
   nextPath?: string;
 };
 
+function getSiteUrl() {
+  const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
+  if (configuredUrl) {
+    return configuredUrl.replace(/\/$/, "");
+  }
+
+  return window.location.origin.replace(/\/$/, "");
+}
+
 export default function SocialLoginButtons({ locale, nextPath = `/${locale}/dashboard` }: Props) {
   const t = useTranslations("Auth.SocialLogin");
   const supabase = createClient();
 
   const signInWithGoogle = async () => {
+    const siteUrl = getSiteUrl();
+
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/${locale}/auth/callback?next=${encodeURIComponent(nextPath)}`,
+        redirectTo: `${siteUrl}/${locale}/auth/callback?next=${encodeURIComponent(nextPath)}`,
       },
     });
   };
@@ -39,7 +51,7 @@ export default function SocialLoginButtons({ locale, nextPath = `/${locale}/dash
           />
           <path
             fill="#EA4335"
-            d="M12.24 5.955c1.504 0 2.853.517 3.915 1.535l2.92-2.92C17.326 2.941 15.004 2 12.24 2A10.24 10.24 0 0 0 3.08 7.543l3.416 2.639c.809-2.424 3.073-4.227 5.744-4.227Z"
+            d="M12.24 5.955c1.504 0 2.853.517 3.915 1.535l2.92-2.92C17.326 2.941 15.004 2 12.24 2A10.24 10.24 0 0 0 3.08 7.543l3.416 2.639c.809-2.424 3.073-5.744-5.744-5.744Z"
           />
         </svg>
 
