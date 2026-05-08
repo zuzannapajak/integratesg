@@ -38,6 +38,10 @@ function getSafeNextPath(next: string | null) {
   return next;
 }
 
+function redirectToLogin(locale: string, publicOrigin: string) {
+  return NextResponse.redirect(new URL(`/${locale}/auth/login`, publicOrigin));
+}
+
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
   const publicOrigin = getPublicOrigin(request);
@@ -47,39 +51,88 @@ export async function GET(request: Request) {
   const locale = isAppLocale(localeFromPath) ? localeFromPath : "en";
   const next = getSafeNextPath(requestUrl.searchParams.get("next"));
 
-  if (!code) {
-    return NextResponse.redirect(new URL(`/${locale}/auth/login`, publicOrigin));
-  }
-
-  const supabase = await createClient();
-  const { error } = await supabase.auth.exchangeCodeForSession(code);
-
-  if (error) {
-    return NextResponse.redirect(new URL(`/${locale}/auth/login`, publicOrigin));
-  }
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return NextResponse.redirect(new URL(`/${locale}/auth/login`, publicOrigin));
-  }
-
-  const profile = await prisma.profile.findUnique({
-    where: { id: user.id },
+  console.log("[auth/callback] Callback request received", {
+    pathname: requestUrl.pathname,
+    hasCode: Boolean(code),
+    locale,
+    next,
+    publicOrigin,
   });
 
-  if (!profile) {
-    return NextResponse.redirect(new URL(`/${locale}/auth/complete-profile`, publicOrigin));
+  if (!code) {
+    console.warn("[auth/callback] Missing OAuth code");
+    return redirectToLogin(locale, publicOrigin);
   }
 
-  const preferredLocale =
-    profile.preferredLanguage && isAppLocale(profile.preferredLanguage)
-      ? profile.preferredLanguage
-      : locale;
+  try {
+    const supabase = await createClient();
 
-  const target = next ?? getDefaultProtectedRoute(preferredLocale, profile.role);
+    const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
 
-  return NextResponse.redirect(new URL(target, publicOrigin));
+    if (exchangeError) {
+      console.error("[auth/callback] exchangeCodeForSession failed", {
+        name: exchangeError.name,
+        message: exchangeError.message,
+        status: "status" in exchangeError ? exchangeError.status : undefined,
+      });
+
+      return redirectToLogin(locale, publicOrigin);
+    }
+
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+
+    if (userError) {
+      console.error("[auth/callback] getUser failed", {
+        name: userError.name,
+        message: userError.message,
+        status: "status" in userError ? userError.status : undefined,
+      });
+
+      return redirectToLogin(locale, publicOrigin);
+    }
+
+    if (!user) {
+      console.warn("[auth/callback] No user returned after OAuth callback");
+      return redirectToLogin(locale, publicOrigin);
+    }
+
+    console.log("[auth/callback] Supabase user received", {
+      userId: user.id,
+      email: user.email,
+    });
+
+    const profile = await prisma.profile.findUnique({
+      where: { id: user.id },
+    });
+
+    if (!profile) {
+      console.log("[auth/callback] Profile not found, redirecting to complete profile", {
+        userId: user.id,
+      });
+
+      return NextResponse.redirect(new URL(`/${locale}/auth/complete-profile`, publicOrigin));
+    }
+
+    const preferredLocale =
+      profile.preferredLanguage && isAppLocale(profile.preferredLanguage)
+        ? profile.preferredLanguage
+        : locale;
+
+    const target = next ?? getDefaultProtectedRoute(preferredLocale, profile.role);
+
+    console.log("[auth/callback] Login completed", {
+      userId: user.id,
+      role: profile.role,
+      target,
+    });
+
+    return NextResponse.redirect(new URL(target, publicOrigin));
+  } catch (error) {
+    console.error("[auth/callback] Unexpected callback error", error);
+
+    return redirectToLogin(locale, publicOrigin);
+  }
 }
