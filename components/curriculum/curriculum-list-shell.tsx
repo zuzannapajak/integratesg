@@ -1,5 +1,6 @@
 "use client";
 
+import type { CurriculumArea, CurriculumStatus } from "@/lib/curriculum/types";
 import { CurriculumListItemViewModel } from "@/lib/curriculum/types";
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -11,18 +12,18 @@ import {
   Clock3,
   Compass,
   Layers3,
+  Leaf,
   Library,
   Search,
+  ShieldCheck,
   SlidersHorizontal,
   Sparkles,
+  Users,
   XCircle,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { ChangeEvent, useMemo, useState } from "react";
-
-type ModuleArea = "strategy" | "reporting" | "cross-cutting";
-type ModuleStatus = "not_started" | "in_progress" | "completed" | "failed";
 
 type Props = {
   locale: string;
@@ -45,8 +46,35 @@ function formatDurationLabel(minutes: number | null, t: ReturnType<typeof useTra
   return t("generated.duration.minutes", { minutes });
 }
 
-function getAreaMeta(area: ModuleArea, t: ReturnType<typeof useTranslations>) {
+function getAreaMeta(area: CurriculumArea, t: ReturnType<typeof useTranslations>) {
   switch (area) {
+    case "environmental":
+      return {
+        label: t("area.environmental"),
+        icon: <Leaf className="h-4 w-4" />,
+        badgeClass: "border-emerald-100 bg-emerald-50 text-emerald-700",
+        glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.18),transparent_46%)]",
+        accentClass: "from-emerald-100/90 via-white to-emerald-50/80",
+        orbitClass: "border-emerald-200/70 bg-emerald-100/55 text-emerald-700",
+      };
+    case "social":
+      return {
+        label: t("area.social"),
+        icon: <Users className="h-4 w-4" />,
+        badgeClass: "border-sky-100 bg-sky-50 text-sky-700",
+        glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.15),transparent_46%)]",
+        accentClass: "from-sky-100/90 via-white to-sky-50/80",
+        orbitClass: "border-sky-200/70 bg-sky-100/55 text-sky-700",
+      };
+    case "governance":
+      return {
+        label: t("area.governance"),
+        icon: <ShieldCheck className="h-4 w-4" />,
+        badgeClass: "border-violet-100 bg-violet-50 text-violet-700",
+        glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(139,92,246,0.15),transparent_46%)]",
+        accentClass: "from-violet-100/90 via-white to-violet-50/80",
+        orbitClass: "border-violet-200/70 bg-violet-100/55 text-violet-700",
+      };
     case "strategy":
       return {
         label: t("area.strategy"),
@@ -77,7 +105,7 @@ function getAreaMeta(area: ModuleArea, t: ReturnType<typeof useTranslations>) {
   }
 }
 
-function getStatusMeta(status: ModuleStatus, t: ReturnType<typeof useTranslations>) {
+function getStatusMeta(status: CurriculumStatus, t: ReturnType<typeof useTranslations>) {
   switch (status) {
     case "completed":
       return {
@@ -119,8 +147,8 @@ export default function CurriculumListShell({
 }: Props) {
   const t = useTranslations("Protected.CurriculumListShell");
   const [search, setSearch] = useState("");
-  const [selectedArea, setSelectedArea] = useState<ModuleArea | "all">("all");
-  const [selectedStatus, setSelectedStatus] = useState<ModuleStatus | "all">("all");
+  const [selectedArea, setSelectedArea] = useState<CurriculumArea | "all">("all");
+  const [selectedStatus, setSelectedStatus] = useState<CurriculumStatus | "all">("all");
   const [sortBy, setSortBy] = useState<"recommended" | "progress" | "title">("recommended");
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -216,7 +244,7 @@ export default function CurriculumListShell({
             <select
               value={selectedStatus}
               onChange={(e: ChangeEvent<HTMLSelectElement>) => {
-                setSelectedStatus(e.target.value as ModuleStatus | "all");
+                setSelectedStatus(e.target.value as CurriculumStatus | "all");
                 handleFilterChange();
               }}
               className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
@@ -243,7 +271,17 @@ export default function CurriculumListShell({
           </div>
 
           <div className="mt-4 flex flex-wrap gap-2">
-            {(["all", "strategy", "reporting", "cross-cutting"] as const).map((area) => (
+            {(
+              [
+                "all",
+                "environmental",
+                "social",
+                "governance",
+                "strategy",
+                "reporting",
+                "cross-cutting",
+              ] as const
+            ).map((area) => (
               <button
                 key={area}
                 onClick={() => {

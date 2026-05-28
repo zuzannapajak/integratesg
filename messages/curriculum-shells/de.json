@@ -15,6 +15,8 @@
         "environmental": "Umwelt",
         "social": "Soziales",
         "governance": "Unternehmensführung",
+        "strategy": "Strategie",
+        "reporting": "Berichterstattung",
         "crossCutting": "Übergreifend",
         "notStarted": "Nicht gestartet",
         "inProgress": "In Bearbeitung",
@@ -109,6 +111,8 @@
         "environmental": "Umwelt",
         "social": "Soziales",
         "governance": "Unternehmensführung",
+        "strategy": "Strategie",
+        "reporting": "Berichterstattung",
         "crossCutting": "Übergreifend"
       },
       "heroIntro": {

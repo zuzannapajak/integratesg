@@ -15,6 +15,8 @@
         "environmental": "Środowiskowe",
         "social": "Społeczne",
         "governance": "Ład korporacyjny",
+        "strategy": "Strategia",
+        "reporting": "Raportowanie",
         "crossCutting": "Przekrojowe",
         "notStarted": "Nierozpoczęte",
         "inProgress": "W toku",
@@ -109,6 +111,8 @@
         "environmental": "Środowiskowe",
         "social": "Społeczne",
         "governance": "Ład korporacyjny",
+        "strategy": "Strategia",
+        "reporting": "Raportowanie",
         "crossCutting": "Przekrojowe"
       },
       "heroIntro": {

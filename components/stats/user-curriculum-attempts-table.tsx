@@ -1,30 +1,61 @@
 "use client";
 
 import { DashboardCurriculumAttemptRow } from "@/lib/admin/types";
-import { CheckCircle2, CircleDashed, ShieldCheck, Sparkles, Users, XCircle } from "lucide-react";
+import { CurriculumArea } from "@/lib/curriculum/types";
+import {
+  CheckCircle2,
+  CircleDashed,
+  Compass,
+  Leaf,
+  Library,
+  ShieldCheck,
+  Sparkles,
+  Users,
+  XCircle,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 
 type Props = {
   rows: DashboardCurriculumAttemptRow[];
 };
 
-function getAreaMeta(
-  area: DashboardCurriculumAttemptRow["area"],
-  t: ReturnType<typeof useTranslations>,
-) {
+function getAreaMeta(area: CurriculumArea, t: ReturnType<typeof useTranslations>) {
   switch (area) {
+    case "environmental":
+      return {
+        label: t("area.environmental"),
+        icon: <Leaf className="h-3.5 w-3.5" />,
+        className: "border-emerald-100 bg-emerald-50 text-emerald-700",
+      };
+
+    case "social":
+      return {
+        label: t("area.social"),
+        icon: <Users className="h-3.5 w-3.5" />,
+        className: "border-sky-100 bg-sky-50 text-sky-700",
+      };
+
+    case "governance":
+      return {
+        label: t("area.governance"),
+        icon: <ShieldCheck className="h-3.5 w-3.5" />,
+        className: "border-violet-100 bg-violet-50 text-violet-700",
+      };
+
     case "strategy":
       return {
         label: t("area.strategy"),
-        icon: <ShieldCheck className="h-3.5 w-3.5" />,
-        className: "border-blue-100 bg-blue-50 text-blue-700",
+        icon: <Compass className="h-3.5 w-3.5" />,
+        className: "border-emerald-100 bg-emerald-50 text-emerald-700",
       };
+
     case "reporting":
       return {
         label: t("area.reporting"),
-        icon: <Users className="h-3.5 w-3.5" />,
-        className: "border-purple-100 bg-purple-50 text-purple-700",
+        icon: <Library className="h-3.5 w-3.5" />,
+        className: "border-blue-100 bg-blue-50 text-blue-700",
       };
+
     default:
       return {
         label: t("area.crossCutting"),

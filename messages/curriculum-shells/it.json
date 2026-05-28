@@ -15,6 +15,8 @@
         "environmental": "Ambientale",
         "social": "Sociale",
         "governance": "Governance",
+        "strategy": "Strategia",
+        "reporting": "Rendicontazione",
         "crossCutting": "Trasversale",
         "notStarted": "Non iniziato",
         "inProgress": "In corso",
@@ -109,6 +111,8 @@
         "environmental": "Ambientale",
         "social": "Sociale",
         "governance": "Governance",
+        "strategy": "Strategia",
+        "reporting": "Rendicontazione",
         "crossCutting": "Trasversale"
       },
       "heroIntro": {
@@ -186,12 +190,6 @@
         "flaggedQuestions": "{count} domande contrassegnate"
       },
       "relatedModules": "Moduli correlati",
-      "overviewCopy": {
-        "environmental": "Questo modulo introduce i temi ESG ambientali attraverso lezioni strutturate e checkpoint applicativi.",
-        "social": "Questo modulo esplora i temi ESG sociali con particolare attenzione alle persone, alla responsabilità e all’applicazione pratica.",
-        "governance": "Questo modulo spiega i temi ESG legati alla governance attraverso contenuti strutturati, decisioni e apprendimento orientato alla responsabilità.",
-        "crossCutting": "Questo modulo collega temi ambientali, sociali e di governance in un unico percorso di apprendimento pratico."
-      },
       "fallbacks": {
         "subtitle": "Modulo del curriculum",
         "description": "Descrizione non ancora disponibile.",

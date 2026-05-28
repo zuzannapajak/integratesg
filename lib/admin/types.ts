@@ -182,7 +182,7 @@ export type DashboardScenarioAttemptRow = {
   learnerEmail: string;
   scenarioTitle: string;
   scenarioSlug: string;
-  area: "environmental" | "social" | "governance" | "cross-cutting";
+  area: "environmental" | "social" | "governance" | "strategy" | "reporting" | "cross-cutting";
   language: string;
   attemptNumber: number;
   status: "passed" | "completed" | "failed" | "incomplete" | "browsed";
@@ -198,7 +198,7 @@ export type DashboardCurriculumAttemptRow = {
   learnerEmail: string;
   courseTitle: string;
   courseSlug: string;
-  area: "strategy" | "reporting" | "cross-cutting";
+  area: "environmental" | "social" | "governance" | "strategy" | "reporting" | "cross-cutting";
   attemptNumber: number;
   status: "completed" | "in_progress" | "failed";
   preQuizScoreLabel: string;

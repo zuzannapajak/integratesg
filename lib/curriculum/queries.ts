@@ -11,6 +11,7 @@ import {
   StoredQuizAttempt,
   TranslationRecord,
 } from "@/lib/curriculum/types";
+import { mapArea, mapDifficulty } from "@/lib/curriculum/utils";
 import { estimateJsonBytes } from "@/lib/observability/json-size";
 import {
   logMeasuredOperation,
@@ -128,23 +129,6 @@ function pickTranslation(
   return pickLocalizedRecord(translations, locale);
 }
 
-function mapArea(area: string): CurriculumModuleViewModel["area"] {
-  switch (area) {
-    case "environmental":
-      return "environmental";
-    case "social":
-      return "social";
-    case "governance":
-      return "governance";
-    case "strategy":
-      return "strategy";
-    case "reporting":
-      return "reporting";
-    default:
-      return "cross-cutting";
-  }
-}
-
 function mapStatus(status?: string | null): CurriculumModuleViewModel["status"] {
   if (status === "completed") return "completed";
   if (status === "failed") return "failed";
@@ -180,58 +164,9 @@ function getRequestedLanguages(locale: string) {
   return locale === "en" ? ["en"] : [locale, "en"];
 }
 
-function mapDifficulty(difficulty: string): CurriculumModuleViewModel["difficulty"] {
-  return difficulty === "intermediate" ? "intermediate" : "foundation";
-}
-
 function formatAttemptDate(value: string): string {
   const date = new Date(value);
   return date.toISOString();
-}
-
-function buildGeneratedOutcomes(area: CurriculumModuleViewModel["area"]): CurriculumTextToken[] {
-  if (area === "environmental" || area === "social" || area === "governance") {
-    return [
-      { key: `generatedOutcomes.${area}.0` },
-      { key: `generatedOutcomes.${area}.1` },
-      { key: `generatedOutcomes.${area}.2` },
-    ];
-  }
-
-  if (area === "strategy" || area === "reporting") {
-    return [
-      { key: `generatedOutcomes.${area}.0` },
-      { key: `generatedOutcomes.${area}.1` },
-      { key: `generatedOutcomes.${area}.2` },
-    ];
-  }
-
-  return [
-    { key: "generatedOutcomes.crossCutting.0" },
-    { key: "generatedOutcomes.crossCutting.1" },
-    { key: "generatedOutcomes.crossCutting.2" },
-  ];
-}
-
-function buildGeneratedStructure(
-  quizzes: CourseMappedInput["quizzes"] | undefined,
-): CurriculumTextToken[] {
-  const hasPreQuiz = quizzes?.some((quiz) => quiz.type === "pre") ?? false;
-  const hasPostQuiz = quizzes?.some((quiz) => quiz.type === "post") ?? false;
-
-  const steps: CurriculumTextToken[] = [];
-
-  if (hasPreQuiz) {
-    steps.push({ key: "generatedStructure.preTest" });
-  }
-
-  steps.push({ key: "generatedStructure.lessons" });
-
-  if (hasPostQuiz) {
-    steps.push({ key: "generatedStructure.postTest" });
-  }
-
-  return steps;
 }
 
 function mapSectionsToLessons(
@@ -441,8 +376,8 @@ function mapCourseToViewModel(
     quizzes: quizzesCount,
     lastOpenedAt: attempt?.lastOpenedAt?.toISOString() ?? null,
     difficulty: mapDifficulty(course.difficulty),
-    outcomes: buildGeneratedOutcomes(area),
-    structure: buildGeneratedStructure(course.quizzes),
+    outcomes: [],
+    structure: [],
     quizItems: (() => {
       if (!course.quizzes || course.quizzes.length === 0) {
         return [];
