@@ -17,6 +17,41 @@ export const module5 = {
         "Use ESG data, lifecycle planning, daily processes and collaboration to turn goals into measurable practice.",
       content:
         "This module focuses on implementing ESG through structured action, reliable data and collaboration. It explains the ESG implementation lifecycle, practical ESG data gathering and digitalisation, ways to embed ESG into everyday workflows and decisions, and the role of cross-functional and cross-sector cooperation in achieving lasting ESG outcomes.",
+      details: {
+        practicalFocus:
+          "Implement ESG through structured action, reliable data, daily processes and collaboration across teams and partners.",
+        learningProgression:
+          "Move from the ESG implementation lifecycle to data management, daily decision-making and cross-functional cooperation.",
+        outcomes: [
+          "Explain the ESG implementation lifecycle and how planning, execution and evaluation support improvement.",
+          "Identify useful ESG data and manage it consistently for decision-making and reporting.",
+          "Describe how collaboration across departments and external partners strengthens ESG implementation.",
+        ],
+        flow: [
+          {
+            title: "Unit 1: ESG lifecycle",
+            description:
+              "Understand ESG as a continuous cycle of planning, execution and evaluation.",
+          },
+          {
+            title: "Unit 2: ESG data",
+            description:
+              "Learn how to collect, manage and digitalise ESG information in a practical way.",
+          },
+          {
+            title: "Unit 3: Daily processes",
+            description:
+              "Embed ESG into everyday workflows, decisions, incentives and accountability routines.",
+          },
+          {
+            title: "Unit 4: Collaboration",
+            description:
+              "Use cross-functional and cross-sector collaboration to strengthen ESG outcomes.",
+          },
+        ],
+        progressTracking:
+          "Track progress through implementation, data and collaboration topics to identify whether ESG is becoming part of daily practice.",
+      },
     }),
   ],
   sections: [

@@ -89,6 +89,16 @@ export type CurriculumModuleViewModel = {
   subtitle: string | null;
   description: string | null;
   content?: string | null;
+  details?: {
+    practicalFocus: string;
+    learningProgression: string;
+    outcomes: string[];
+    flow: Array<{
+      title: string;
+      description: string;
+    }>;
+    progressTracking: string;
+  } | null;
   area: CurriculumArea;
   status: CurriculumStatus;
   progress: number;

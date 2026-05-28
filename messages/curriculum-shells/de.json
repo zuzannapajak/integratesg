@@ -169,41 +169,7 @@
       },
       "insights": {
         "practicalTitle": "Praxisnähe",
-        "practicalText": "Dieses Modul verbindet ESG-Konzepte mit angewandtem Lernen, strukturierten Inhalten und realem Umsetzungskontext.",
-        "progressionTitle": "Lernfortschritt",
-        "progressionText": "Arbeiten Sie das Modul Schritt für Schritt durch, absolvieren Sie Kontrollpunkte und bauen Sie Ihr Verständnis schrittweise auf."
-      },
-      "generatedOutcomes": {
-        "environmental": [
-          "Umweltrelevante Entscheidungspunkte in der Praxis identifizieren",
-          "Nachhaltigkeitsbezogene Folgen von Entscheidungen interpretieren",
-          "Sicherheit vor dem szenariobasierten Lernen stärken"
-        ],
-        "social": [
-          "Personenbezogene ESG-Risiken und -Chancen erkennen",
-          "Stakeholder-sensibles Denken bei der Entscheidungsfindung anwenden",
-          "Soziale Verantwortung bei der Umsetzungsqualität verstehen"
-        ],
-        "governance": [
-          "Verstehen, wie Governance die ESG-Glaubwürdigkeit prägt",
-          "Rechenschaftspflicht und Richtlinien auf die Umsetzung beziehen",
-          "Governance-Konzepte in die tägliche Praxis übertragen"
-        ],
-        "crossCutting": [
-          "Ein gemeinsames Verständnis der ESG-Integration aufbauen",
-          "Zusammenwirken von Umwelt-, Sozial- und Governance-Themen erkennen",
-          "Vorbereitung auf praktisches fall- und szenariobasiertes Lernen"
-        ]
-      },
-      "generatedStructure": {
-        "preTest": "Pre-Test",
-        "lessons": "Lektionen",
-        "postTest": "Post-Test"
-      },
-      "flowDescriptions": {
-        "opening": "Beginnen Sie mit dem ersten Checkpoint, um Ihr Ausgangsniveau einzuschätzen.",
-        "lessons": "{completed} von {total} Lektionen wurden bisher abgeschlossen.",
-        "closing": "Schließen Sie mit dem letzten Checkpoint ab, um Ihren Fortschritt zu festigen und zu überprüfen."
+        "progressionTitle": "Lernfortschritt"
       },
       "progress": {
         "currentLocation": "Aktueller Standort",
@@ -220,12 +186,6 @@
         "flaggedQuestions": "{count} markierte Fragen"
       },
       "relatedModules": "Verwandte Module",
-      "overviewCopy": {
-        "environmental": "Dieses Modul führt über strukturierte Lektionen und anwendungsbezogene Checkpoints in umweltbezogene ESG-Themen ein.",
-        "social": "Dieses Modul behandelt soziale ESG-Themen mit Fokus auf Menschen, Verantwortung und praktische Umsetzung.",
-        "governance": "Dieses Modul erläutert Governance-bezogene ESG-Themen durch strukturierte Inhalte, Entscheidungen und verantwortungsorientiertes Lernen.",
-        "crossCutting": "Dieses Modul verbindet Umwelt-, Sozial- und Governance-Themen in einem gemeinsamen praxisorientierten Lernpfad."
-      },
       "fallbacks": {
         "subtitle": "Lehrplanmodul",
         "description": "Noch keine Beschreibung verfügbar.",

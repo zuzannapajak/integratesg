@@ -281,6 +281,7 @@ async function upsertCourse(courseData) {
         subtitle: translation.subtitle,
         description: translation.description,
         content: translation.content,
+        details: translation.details ?? undefined,
       },
       create: {
         courseId: course.id,
@@ -289,6 +290,7 @@ async function upsertCourse(courseData) {
         subtitle: translation.subtitle,
         description: translation.description,
         content: translation.content,
+        details: translation.details ?? undefined,
       },
     });
   }

@@ -19,6 +19,100 @@ import {
 } from "@/lib/observability/performance";
 import { prisma } from "@/lib/prisma";
 
+type CurriculumModuleDetails = {
+  practicalFocus: string;
+  learningProgression: string;
+  outcomes: string[];
+  flow: Array<{
+    title: string;
+    description: string;
+  }>;
+  progressTracking: string;
+};
+
+type TranslationRecordWithDetails = TranslationRecord & {
+  details?: unknown;
+};
+
+function hasTranslationDetails(
+  translation: TranslationRecord | null,
+): translation is TranslationRecordWithDetails {
+  return translation !== null && "details" in translation;
+}
+
+type CurriculumModuleViewModelWithDetails = CurriculumModuleViewModel & {
+  details: CurriculumModuleDetails | null;
+};
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function parseStringArray(value: unknown): string[] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value.filter((item): item is string => typeof item === "string" && item.trim().length > 0);
+}
+
+function parseDetailsFlow(value: unknown): CurriculumModuleDetails["flow"] {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+
+  return value.flatMap((item) => {
+    if (!isRecord(item)) {
+      return [];
+    }
+
+    const title = typeof item.title === "string" ? item.title.trim() : "";
+    const description = typeof item.description === "string" ? item.description.trim() : "";
+
+    if (!title || !description) {
+      return [];
+    }
+
+    return [{ title, description }];
+  });
+}
+
+function parseModuleDetails(raw: unknown): CurriculumModuleDetails | null {
+  if (!isRecord(raw)) {
+    return null;
+  }
+
+  const practicalFocus = typeof raw.practicalFocus === "string" ? raw.practicalFocus.trim() : "";
+  const learningProgression =
+    typeof raw.learningProgression === "string" ? raw.learningProgression.trim() : "";
+  const progressTracking =
+    typeof raw.progressTracking === "string" ? raw.progressTracking.trim() : "";
+  const outcomes = parseStringArray(raw.outcomes);
+  const flow = parseDetailsFlow(raw.flow);
+
+  if (!practicalFocus && !learningProgression && outcomes.length === 0 && flow.length === 0) {
+    return null;
+  }
+
+  return {
+    practicalFocus,
+    learningProgression,
+    outcomes,
+    flow,
+    progressTracking,
+  };
+}
+
+function getTranslationDetails(
+  translation: TranslationRecord | null,
+): CurriculumModuleDetails | null {
+  if (!hasTranslationDetails(translation)) {
+    return null;
+  }
+
+  return parseModuleDetails(translation.details);
+}
+
 function pickLocalizedRecord<T extends { language: string }>(
   records: T[],
   locale: string,
@@ -126,13 +220,21 @@ function buildGeneratedOutcomes(area: CurriculumModuleViewModel["area"]): Curric
   }
 }
 
-function buildGeneratedStructure(quizzesCount: number): CurriculumTextToken[] {
-  const steps: CurriculumTextToken[] = [
-    { key: "generatedStructure.preTest" },
-    { key: "generatedStructure.lessons" },
-  ];
+function buildGeneratedStructure(
+  quizzes: CourseMappedInput["quizzes"] | undefined,
+): CurriculumTextToken[] {
+  const hasPreQuiz = quizzes?.some((quiz) => quiz.type === "pre") ?? false;
+  const hasPostQuiz = quizzes?.some((quiz) => quiz.type === "post") ?? false;
 
-  if (quizzesCount > 1) {
+  const steps: CurriculumTextToken[] = [];
+
+  if (hasPreQuiz) {
+    steps.push({ key: "generatedStructure.preTest" });
+  }
+
+  steps.push({ key: "generatedStructure.lessons" });
+
+  if (hasPostQuiz) {
     steps.push({ key: "generatedStructure.postTest" });
   }
 
@@ -212,6 +314,7 @@ function buildProgressState(params: {
     postQuizAttempts?: unknown;
   } | null;
   lessonsCount: number;
+  hasPreQuiz: boolean;
 }): CurriculumProgressViewModel {
   const attempt = params.attempt ?? null;
 
@@ -223,13 +326,13 @@ function buildProgressState(params: {
   const currentLessonIndex = attempt?.currentLessonIndex ?? 0;
   const totalLessons = Math.max(params.lessonsCount, 1);
 
-  const preQuizRemainingAttempts = Math.max(0, 1 - preQuizAttempts.length);
+  const preQuizRemainingAttempts = params.hasPreQuiz ? Math.max(0, 1 - preQuizAttempts.length) : 0;
   const postQuizRemainingAttempts = Math.max(0, 2 - postQuizAttempts.length);
 
   let nextAction: CurriculumTextToken = { key: "progressState.nextAction.startModule" };
-  let currentLocation: CurriculumTextToken = {
-    key: "progressState.currentLocation.preTestNotStarted",
-  };
+  let currentLocation: CurriculumTextToken = params.hasPreQuiz
+    ? { key: "progressState.currentLocation.preTestNotStarted" }
+    : { key: "progressState.currentLocation.lessons" };
 
   if (currentStage === "pre_quiz") {
     nextAction =
@@ -309,7 +412,7 @@ function buildCertificateState(params: {
 function mapCourseToViewModel(
   course: CourseMappedInput,
   locale: string,
-): CurriculumModuleViewModel {
+): CurriculumModuleViewModelWithDetails {
   const translation = pickTranslation(course.translations, locale);
   const attempt = course.userCourseAttempts.at(0) ?? null;
   const area = mapArea(course.area);
@@ -319,6 +422,8 @@ function mapCourseToViewModel(
   const subtitle = normalizeOptionalText(translation?.subtitle);
   const description = normalizeOptionalText(translation?.description);
   const content = normalizeOptionalText(translation?.content);
+  const details = getTranslationDetails(translation);
+  const hasPreQuiz = course.quizzes?.some((quiz) => quiz.type === "pre") ?? false;
 
   const lessonsData = mapSectionsToLessons(course.sections, locale);
   const lessonsCount =
@@ -327,6 +432,7 @@ function mapCourseToViewModel(
   const progressState = buildProgressState({
     attempt,
     lessonsCount,
+    hasPreQuiz,
   });
   const certificate = buildCertificateState({
     attempt,
@@ -340,6 +446,7 @@ function mapCourseToViewModel(
     subtitle,
     description,
     content,
+    details,
     area,
     status: mapStatus(attempt?.status),
     progress: attempt?.progressPercent ?? 0,
@@ -349,7 +456,7 @@ function mapCourseToViewModel(
     lastOpenedAt: attempt?.lastOpenedAt?.toISOString() ?? null,
     difficulty: mapDifficulty(course.difficulty),
     outcomes: buildGeneratedOutcomes(area),
-    structure: buildGeneratedStructure(quizzesCount),
+    structure: buildGeneratedStructure(course.quizzes),
     quizItems: (() => {
       if (!course.quizzes || course.quizzes.length === 0) {
         return [];
@@ -569,6 +676,7 @@ export async function getCurriculumModule(params: {
               subtitle: true,
               description: true,
               content: true,
+              details: true,
             },
           },
           sections: {

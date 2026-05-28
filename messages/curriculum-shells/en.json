@@ -169,41 +169,7 @@
       },
       "insights": {
         "practicalTitle": "Practical focus",
-        "practicalText": "This module connects ESG concepts with applied learning, structured content, and real implementation context.",
-        "progressionTitle": "Learning progression",
-        "progressionText": "Work through the module step by step, complete checkpoints, and build understanding progressively."
-      },
-      "generatedOutcomes": {
-        "environmental": [
-          "Identify environmental decision points in practice",
-          "Interpret sustainability-related consequences of choices",
-          "Strengthen confidence before scenario-based learning"
-        ],
-        "social": [
-          "Recognise people-related ESG risks and opportunities",
-          "Apply stakeholder-sensitive thinking in decision-making",
-          "Understand social responsibility in implementation quality"
-        ],
-        "governance": [
-          "Understand how governance shapes ESG credibility",
-          "Relate accountability and policies to implementation",
-          "Translate governance concepts into everyday practice"
-        ],
-        "crossCutting": [
-          "Build a shared understanding of ESG integration",
-          "Recognise how environmental, social, and governance topics interact",
-          "Prepare for practical case-based and scenario-based learning"
-        ]
-      },
-      "generatedStructure": {
-        "preTest": "Pre-test",
-        "lessons": "Lessons",
-        "postTest": "Post-test"
-      },
-      "flowDescriptions": {
-        "opening": "Start with the opening checkpoint to assess your baseline understanding.",
-        "lessons": "{completed} of {total} lessons completed so far.",
-        "closing": "Finish with the final checkpoint to consolidate and verify your progress."
+        "progressionTitle": "Learning progression"
       },
       "progress": {
         "currentLocation": "Current location",
@@ -220,12 +186,6 @@
         "flaggedQuestions": "{count} flagged questions"
       },
       "relatedModules": "Related modules",
-      "overviewCopy": {
-        "environmental": "This module introduces environmental ESG themes through structured lessons and applied learning checkpoints.",
-        "social": "This module explores social ESG themes with a focus on people, responsibility, and practical implementation.",
-        "governance": "This module explains governance ESG themes through structured content, decisions, and accountability-focused learning.",
-        "crossCutting": "This module connects environmental, social, and governance topics into one practical learning path."
-      },
       "fallbacks": {
         "subtitle": "Curriculum module",
         "description": "No description available yet.",

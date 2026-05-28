@@ -17,6 +17,41 @@ export const module2 = {
         "Link ESG with mission, values, leadership, priorities and performance so it becomes part of strategy.",
       content:
         "This module focuses on aligning ESG with organisational strategy. It explains how ESG can be connected to a company’s mission, values and long-term direction, how to set meaningful ESG priorities and objectives, how leadership and culture support ESG integration, and how to balance sustainability goals with financial and operational performance.",
+      details: {
+        practicalFocus:
+          "Translate ESG from a general ambition into strategy, priorities, leadership behaviour and performance decisions.",
+        learningProgression:
+          "Move from mission and values to ESG priorities, leadership culture and the balance between ESG and business performance.",
+        outcomes: [
+          "Analyse how ESG can be linked to mission, values and long-term organisational strategy.",
+          "Set ESG priorities and objectives based on stakeholder relevance and business impact.",
+          "Explain how leadership, culture and performance management support ESG integration.",
+        ],
+        flow: [
+          {
+            title: "Unit 1: Mission, values and strategy",
+            description:
+              "Identify ESG alignment gaps and reframe mission, values and strategy around sustainability.",
+          },
+          {
+            title: "Unit 2: ESG priorities",
+            description:
+              "Use stakeholder and business impact logic to define material ESG priorities and measurable objectives.",
+          },
+          {
+            title: "Unit 3: Leadership and culture",
+            description:
+              "Build leadership commitment and embed ESG values into organisational culture.",
+          },
+          {
+            title: "Unit 4: ESG and performance",
+            description:
+              "Balance ESG objectives with financial and operational performance in practical decision-making.",
+          },
+        ],
+        progressTracking:
+          "Track completion of strategic units and unit quizzes to see whether ESG alignment, prioritisation and leadership concepts are understood.",
+      },
     }),
   ],
   sections: [

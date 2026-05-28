@@ -17,6 +17,39 @@ export const module4 = {
         "Turn ESG into practical daily actions across operations, workforce, suppliers, governance and customer communication.",
       content:
         "This module shows how to turn ESG principles into everyday business practice. It focuses on identifying ESG touchpoints in core operations, improving workforce and supplier responsibility, strengthening governance in daily decision-making, and communicating ESG actions to customers in a credible and non-misleading way.",
+      details: {
+        practicalFocus:
+          "Turn ESG principles into concrete improvements in everyday operations, people practices, governance and customer communication.",
+        learningProgression:
+          "Move from operational ESG hotspots to workforce and supplier responsibility, governance controls and credible ESG communication.",
+        outcomes: [
+          "Identify ESG touchpoints in daily operations and prioritise practical environmental improvements.",
+          "Recognise social responsibility risks in workforce routines and supplier relationships.",
+          "Apply simple governance and communication rules that reduce risk and build customer trust.",
+        ],
+        flow: [
+          {
+            title: "Unit 1: Operational touchpoints",
+            description:
+              "Find environmental hotspots in energy, materials, water and waste within daily work.",
+          },
+          {
+            title: "Unit 2: Workforce and supply chain",
+            description:
+              "Improve fairness, inclusion, safety and supplier responsibility through simple routines.",
+          },
+          {
+            title: "Unit 3: Governance in decisions",
+            description: "Define roles, approvals, escalation paths and basic ethical controls.",
+          },
+          {
+            title: "Unit 4: Credible communication",
+            description: "Communicate ESG actions in a specific, checkable and proportionate way.",
+          },
+        ],
+        progressTracking:
+          "Track unit completion and self-assessment results to confirm that ESG can be applied in daily operational decisions.",
+      },
     }),
   ],
   sections: [

@@ -169,41 +169,7 @@
       },
       "insights": {
         "practicalTitle": "Nacisk na praktykę",
-        "practicalText": "Ten moduł łączy koncepcje ESG z nauką stosowaną, ustrukturyzowaną treścią i realnym kontekstem wdrożeniowym.",
-        "progressionTitle": "Postęp nauki",
-        "progressionText": "Przechodź przez moduł krok po kroku, zaliczaj punkty kontrolne i stopniowo buduj zrozumienie tematu."
-      },
-      "generatedOutcomes": {
-        "environmental": [
-          "Identyfikacja środowiskowych punktów decyzyjnych w praktyce",
-          "Interpretacja skutków wyborów związanych ze zrównoważonym rozwojem",
-          "Wzmocnienie pewności siebie przed nauką opartą na scenariuszach"
-        ],
-        "social": [
-          "Rozpoznawanie ryzyk i szans ESG związanych z ludźmi",
-          "Stosowanie myślenia uwzględniającego interesariuszy w podejmowaniu decyzji",
-          "Zrozumienie odpowiedzialności społecznej w jakości wdrożenia"
-        ],
-        "governance": [
-          "Zrozumienie, jak ład korporacyjny kształtuje wiarygodność ESG",
-          "Powiązanie odpowiedzialności i polityk z wdrożeniem",
-          "Przekładanie koncepcji ładu na codzienną praktykę"
-        ],
-        "crossCutting": [
-          "Budowanie wspólnego zrozumienia integracji ESG",
-          "Rozpoznawanie interakcji między tematami środowiskowymi, społecznymi i zarządczymi",
-          "Przygotowanie do praktycznej nauki opartej na przypadkach i scenariuszach"
-        ]
-      },
-      "generatedStructure": {
-        "preTest": "Test wstępny",
-        "lessons": "Lekcje",
-        "postTest": "Test końcowy"
-      },
-      "flowDescriptions": {
-        "opening": "Rozpocznij od początkowego punktu kontrolnego, aby ocenić swój poziom wyjściowy.",
-        "lessons": "Do tej pory ukończono {completed} z {total} lekcji.",
-        "closing": "Zakończ końcowym punktem kontrolnym, aby utrwalić i potwierdzić swoje postępy."
+        "progressionTitle": "Postęp nauki"
       },
       "progress": {
         "currentLocation": "Obecne miejsce",
@@ -220,12 +186,6 @@
         "flaggedQuestions": "{count} oznaczonych pytań"
       },
       "relatedModules": "Powiązane moduły",
-      "overviewCopy": {
-        "environmental": "Ten moduł wprowadza zagadnienia środowiskowe ESG poprzez uporządkowane lekcje i praktyczne punkty kontrolne.",
-        "social": "Ten moduł omawia społeczne zagadnienia ESG, koncentrując się na ludziach, odpowiedzialności i praktycznym wdrażaniu.",
-        "governance": "Ten moduł wyjaśnia zagadnienia ESG związane z ładem korporacyjnym poprzez uporządkowaną treść, decyzje i naukę ukierunkowaną na odpowiedzialność.",
-        "crossCutting": "Ten moduł łączy zagadnienia środowiskowe, społeczne i dotyczące ładu korporacyjnego w jedną praktyczną ścieżkę nauki."
-      },
       "fallbacks": {
         "subtitle": "Moduł programu",
         "description": "Opis nie jest jeszcze dostępny.",

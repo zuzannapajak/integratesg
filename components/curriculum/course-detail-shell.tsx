@@ -22,6 +22,19 @@ import { useRef, useState } from "react";
 type ModuleArea = "strategy" | "reporting" | "cross-cutting";
 type ModuleStatus = "not_started" | "in_progress" | "completed" | "failed";
 
+type ModuleFlowStep = {
+  title: string;
+  description: string;
+};
+
+type ModuleDetails = {
+  practicalFocus: string | null;
+  learningProgression: string | null;
+  outcomes: string[];
+  flow: ModuleFlowStep[];
+  progressTracking: string | null;
+};
+
 type Props = {
   locale: string;
   module: CurriculumModuleViewModel;
@@ -106,6 +119,62 @@ function getStatusMeta(status: ModuleStatus, t: ReturnType<typeof useTranslation
   }
 }
 
+function normalizeDetailText(value: unknown): string | null {
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : null;
+}
+
+function getModuleDetails(module: CurriculumModuleViewModel): ModuleDetails | null {
+  const rawDetails = (module as CurriculumModuleViewModel & { details?: unknown }).details;
+
+  if (!rawDetails || typeof rawDetails !== "object" || Array.isArray(rawDetails)) {
+    return null;
+  }
+
+  const details = rawDetails as Record<string, unknown>;
+
+  const outcomes = Array.isArray(details.outcomes)
+    ? details.outcomes
+        .map((item) => normalizeDetailText(item))
+        .filter((item): item is string => Boolean(item))
+    : [];
+
+  const flow = Array.isArray(details.flow)
+    ? details.flow
+        .map((item) => {
+          if (!item || typeof item !== "object" || Array.isArray(item)) {
+            return null;
+          }
+
+          const step = item as Record<string, unknown>;
+          const title = normalizeDetailText(step.title);
+          const description = normalizeDetailText(step.description);
+
+          if (!title || !description) {
+            return null;
+          }
+
+          return {
+            title,
+            description,
+          };
+        })
+        .filter((item): item is ModuleFlowStep => Boolean(item))
+    : [];
+
+  return {
+    practicalFocus: normalizeDetailText(details.practicalFocus),
+    learningProgression: normalizeDetailText(details.learningProgression),
+    outcomes,
+    flow,
+    progressTracking: normalizeDetailText(details.progressTracking),
+  };
+}
+
 function getOverviewCopy(module: CurriculumModuleViewModel, t: ReturnType<typeof useTranslations>) {
   if (module.content?.trim()) {
     return module.content;
@@ -166,6 +235,7 @@ export default function CourseDetailShell({ locale, module }: Props) {
   const contentSectionRef = useRef<HTMLDivElement | null>(null);
   const areaMeta = getAreaMeta(module.area, t);
   const statusMeta = getStatusMeta(module.status, t);
+  const details = getModuleDetails(module);
 
   const handleScrollToFlow = () => {
     setOpenPanel("flow");
@@ -388,11 +458,11 @@ export default function CourseDetailShell({ locale, module }: Props) {
               <div className="mt-7 grid gap-4 md:grid-cols-2">
                 <InsightCard
                   title={t("insights.practicalTitle")}
-                  text={t("insights.practicalText")}
+                  text={details?.practicalFocus ?? t("insights.practicalText")}
                 />
                 <InsightCard
                   title={t("insights.progressionTitle")}
-                  text={t("insights.progressionText")}
+                  text={details?.learningProgression ?? t("insights.progressionText")}
                 />
               </div>
             </motion.div>
@@ -413,19 +483,31 @@ export default function CourseDetailShell({ locale, module }: Props) {
               />
 
               <div className="mt-5 grid gap-3">
-                {module.outcomes.map((outcome, index) => (
-                  <div
-                    key={`${module.slug}-outcome-${index}`}
-                    className="flex items-start gap-3 rounded-2xl border border-[#e8edf3] bg-white/72 px-4 py-4"
-                  >
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0b9c72] text-sm font-bold text-white">
-                      {index + 1}
-                    </span>
-                    <p className="pt-1 text-sm leading-6 text-[#556274]">
-                      {renderToken(outcome, t)}
-                    </p>
-                  </div>
-                ))}
+                {details?.outcomes.length
+                  ? details.outcomes.map((outcome, index) => (
+                      <div
+                        key={`${module.slug}-detail-outcome-${index}`}
+                        className="flex items-start gap-3 rounded-2xl border border-[#e8edf3] bg-white/72 px-4 py-4"
+                      >
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0b9c72] text-sm font-bold text-white">
+                          {index + 1}
+                        </span>
+                        <p className="pt-1 text-sm leading-6 text-[#556274]">{outcome}</p>
+                      </div>
+                    ))
+                  : module.outcomes.map((outcome, index) => (
+                      <div
+                        key={`${module.slug}-generated-outcome-${index}`}
+                        className="flex items-start gap-3 rounded-2xl border border-[#e8edf3] bg-white/72 px-4 py-4"
+                      >
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0b9c72] text-sm font-bold text-white">
+                          {index + 1}
+                        </span>
+                        <p className="pt-1 text-sm leading-6 text-[#556274]">
+                          {renderToken(outcome, t)}
+                        </p>
+                      </div>
+                    ))}
               </div>
             </motion.div>
           )}
@@ -442,40 +524,73 @@ export default function CourseDetailShell({ locale, module }: Props) {
               <SectionTitle eyebrow={t("sections.flowEyebrow")} title={t("sections.flowTitle")} />
 
               <div className="mt-5 space-y-3">
-                {module.structure.map((step, index) => {
-                  const isActiveOrPast = index < module.progressState.completedLessons + 1;
+                {details?.flow.length
+                  ? details.flow.map((step, index) => {
+                      const isCompleted = index < module.progressState.completedLessons;
+                      const isCurrent =
+                        module.progressState.currentStage === "lessons" &&
+                        index + 1 === module.progressState.currentLessonIndex;
+                      const isActiveOrPast =
+                        isCompleted ||
+                        isCurrent ||
+                        (module.progressState.currentStage === "overview" && index === 0);
 
-                  return (
-                    <div
-                      key={renderToken(step, t)}
-                      className={`flex items-center gap-4 rounded-2xl border px-4 py-4 ${
-                        isActiveOrPast
-                          ? "border-emerald-200 bg-emerald-50/60"
-                          : "border-[#e8edf3] bg-white/72"
-                      }`}
-                    >
-                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#d9e2ec] bg-white text-sm font-bold text-[#31425a]">
-                        {index + 1}
-                      </span>
+                      return (
+                        <div
+                          key={`${module.slug}-detail-flow-${index}`}
+                          className={`flex items-center gap-4 rounded-2xl border px-4 py-4 ${
+                            isActiveOrPast
+                              ? "border-emerald-200 bg-emerald-50/60"
+                              : "border-[#e8edf3] bg-white/72"
+                          }`}
+                        >
+                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#d9e2ec] bg-white text-sm font-bold text-[#31425a]">
+                            {index + 1}
+                          </span>
 
-                      <div className="min-w-0 flex-1">
-                        <p className="text-sm font-semibold text-[#31425a]">
-                          {renderToken(step, t)}
-                        </p>
-                        <p className="mt-1 text-sm text-[#667180]">
-                          {index === 0
-                            ? t("flowDescriptions.opening")
-                            : index === module.structure.length - 1
-                              ? t("flowDescriptions.closing")
-                              : t("flowDescriptions.lessons", {
-                                  completed: module.progressState.completedLessons,
-                                  total: module.progressState.totalLessons,
-                                })}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
+                          <div className="min-w-0 flex-1">
+                            <p className="text-sm font-semibold text-[#31425a]">{step.title}</p>
+                            <p className="mt-1 text-sm leading-6 text-[#667180]">
+                              {step.description}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })
+                  : module.structure.map((step, index) => {
+                      const isActiveOrPast = index < module.progressState.completedLessons + 1;
+
+                      return (
+                        <div
+                          key={renderToken(step, t)}
+                          className={`flex items-center gap-4 rounded-2xl border px-4 py-4 ${
+                            isActiveOrPast
+                              ? "border-emerald-200 bg-emerald-50/60"
+                              : "border-[#e8edf3] bg-white/72"
+                          }`}
+                        >
+                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#d9e2ec] bg-white text-sm font-bold text-[#31425a]">
+                            {index + 1}
+                          </span>
+
+                          <div className="min-w-0 flex-1">
+                            <p className="text-sm font-semibold text-[#31425a]">
+                              {renderToken(step, t)}
+                            </p>
+                            <p className="mt-1 text-sm text-[#667180]">
+                              {index === 0
+                                ? t("flowDescriptions.opening")
+                                : index === module.structure.length - 1
+                                  ? t("flowDescriptions.closing")
+                                  : t("flowDescriptions.lessons", {
+                                      completed: module.progressState.completedLessons,
+                                      total: module.progressState.totalLessons,
+                                    })}
+                            </p>
+                          </div>
+                        </div>
+                      );
+                    })}
               </div>
             </motion.div>
           )}
@@ -501,8 +616,14 @@ export default function CourseDetailShell({ locale, module }: Props) {
                       {t("progress.currentLocation")}
                     </p>
                     <p className="mt-2 text-sm leading-6 text-[#667180]">
-                      renderToken(module.progressState.currentLocation, t)
+                      {renderToken(module.progressState.currentLocation, t)}
                     </p>
+
+                    {details?.progressTracking ? (
+                      <p className="mt-3 rounded-2xl border border-[#e8edf3] bg-[#f8fafc] px-4 py-3 text-sm leading-6 text-[#667180]">
+                        {details.progressTracking}
+                      </p>
+                    ) : null}
 
                     <div className="mt-5">
                       <div className="mb-2 flex items-center justify-between text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">

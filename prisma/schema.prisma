@@ -108,6 +108,7 @@ model CourseTranslation {
   title       String
   description String?
   content     String?
+  details     Json?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   subtitle    String?

@@ -169,41 +169,7 @@
       },
       "insights": {
         "practicalTitle": "Focus pratico",
-        "practicalText": "Questo modulo collega i concetti ESG con l'apprendimento applicato, contenuti strutturati e un contesto di implementazione reale.",
-        "progressionTitle": "Progressione dell'apprendimento",
-        "progressionText": "Lavora attraverso il modulo passo dopo passo, completa i punti di controllo e costruisci la comprensione progressivamente."
-      },
-      "generatedOutcomes": {
-        "environmental": [
-          "Identificare i punti decisionali ambientali nella pratica",
-          "Interpretare le conseguenze delle scelte legate alla sostenibilità",
-          "Rafforzare la fiducia prima dell'apprendimento basato su scenari"
-        ],
-        "social": [
-          "Riconoscere rischi e opportunità ESG legati alle persone",
-          "Applicare un pensiero attento agli stakeholder nel processo decisionale",
-          "Comprendere la responsabilità sociale nella qualità dell'implementazione"
-        ],
-        "governance": [
-          "Comprendere come la governance modella la credibilità ESG",
-          "Relazionare responsabilità e politiche all'implementazione",
-          "Tradurre i concetti di governance nella pratica quotidiana"
-        ],
-        "crossCutting": [
-          "Costruire una comprensione condivisa dell'integrazione ESG",
-          "Riconoscere come interagiscono i temi ambientali, sociali e di governance",
-          "Prepararsi per l'apprendimento pratico basato su casi e scenari"
-        ]
-      },
-      "generatedStructure": {
-        "preTest": "Pre-test",
-        "lessons": "Lezioni",
-        "postTest": "Post-test"
-      },
-      "flowDescriptions": {
-        "opening": "Inizia con il checkpoint iniziale per valutare il tuo livello di comprensione di partenza.",
-        "lessons": "{completed} lezioni su {total} sono state completate finora.",
-        "closing": "Concludi con il checkpoint finale per consolidare e verificare i tuoi progressi."
+        "progressionTitle": "Progressione dell'apprendimento"
       },
       "progress": {
         "currentLocation": "Posizione attuale",

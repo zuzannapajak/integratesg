@@ -17,6 +17,41 @@ export const module6 = {
         "Measure ESG progress, report credibly, use innovation and prepare for future EU and global ESG trends.",
       content:
         "This module focuses on monitoring ESG progress and preparing for future developments. It explains how to select meaningful ESG indicators and KPIs, how to report and communicate ESG performance credibly, how innovation and digital tools can improve ESG outcomes, and how organisations can adapt to future EU policies and global ESG trends.",
+      details: {
+        practicalFocus:
+          "Measure ESG progress, communicate performance credibly and prepare for future regulatory and market expectations.",
+        learningProgression:
+          "Start with ESG indicators and KPIs, then move to reporting, innovation and future ESG trends.",
+        outcomes: [
+          "Select meaningful ESG indicators and KPIs that support management decisions.",
+          "Report and communicate ESG performance transparently while avoiding misleading claims.",
+          "Explain how innovation, digital tools and future EU policies influence ESG strategy.",
+        ],
+        flow: [
+          {
+            title: "Unit 1: ESG indicators and KPIs",
+            description:
+              "Choose practical ESG metrics that measure what matters and support decisions.",
+          },
+          {
+            title: "Unit 2: ESG reporting",
+            description:
+              "Learn how to communicate ESG performance clearly, credibly and transparently.",
+          },
+          {
+            title: "Unit 3: Innovation",
+            description:
+              "Explore how digital tools, AI and sustainable finance can support ESG performance.",
+          },
+          {
+            title: "Unit 4: Future trends",
+            description:
+              "Understand how future EU policies and global ESG trends affect business strategy.",
+          },
+        ],
+        progressTracking:
+          "Track KPI, reporting and innovation checkpoints to confirm readiness for ongoing ESG monitoring and future developments.",
+      },
     }),
   ],
   sections: [

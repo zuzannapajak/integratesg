@@ -17,6 +17,41 @@ export const module1 = {
         "Learn the ESG pillars, how ESG evolved, why it matters for SMEs, and how business actions connect to the SDGs.",
       content:
         "This module introduces the foundations of ESG and sustainable development. It explains the Environmental, Social and Governance pillars, shows how ESG evolved from earlier approaches such as CSR and SRI, and presents why ESG is strategically relevant for both SMEs and larger organisations. The module also connects everyday business actions with the Sustainable Development Goals.",
+      details: {
+        practicalFocus:
+          "Build a clear foundation for understanding ESG as a practical business concept, not only a reporting term.",
+        learningProgression:
+          "Start with the three ESG pillars, then explore ESG’s evolution, strategic value and connection to the SDGs.",
+        outcomes: [
+          "Explain the Environmental, Social and Governance pillars and recognise examples of each in business practice.",
+          "Describe how ESG evolved from SRI and CSR into a strategic business framework.",
+          "Connect everyday business actions with relevant Sustainable Development Goals.",
+        ],
+        flow: [
+          {
+            title: "Unit 1: ESG pillars",
+            description:
+              "Understand the Environmental, Social and Governance dimensions and how they shape business responsibility.",
+          },
+          {
+            title: "Unit 2: ESG evolution",
+            description:
+              "Explore the shift from philanthropy and CSR toward integrated ESG practice.",
+          },
+          {
+            title: "Unit 3: Strategic relevance",
+            description:
+              "Learn why ESG matters for SMEs, large companies, competitiveness and risk management.",
+          },
+          {
+            title: "Unit 4: ESG and SDGs",
+            description:
+              "Connect company-level ESG actions with global Sustainable Development Goals.",
+          },
+        ],
+        progressTracking:
+          "Track completed units and self-assessment checkpoints to confirm that the ESG foundations are understood before moving forward.",
+      },
     }),
   ],
   sections: [

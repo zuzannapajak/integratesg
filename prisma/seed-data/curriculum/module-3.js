@@ -17,6 +17,40 @@ export const module3 = {
         "Understand SDGs, GRI, SASB, TCFD, ESRS and CSRD, and translate reporting rules into SME actions.",
       content:
         "This module explains the main ESG frameworks and EU reporting standards that shape sustainability practice. It introduces SDGs, GRI, SASB, TCFD, ESRS and CSRD, shows how these frameworks relate to each other, and explains how ESG ratings, audits and disclosures affect credibility, financing, partnerships and practical implementation for SMEs.",
+      details: {
+        practicalFocus:
+          "Understand the ESG frameworks and EU reporting rules that shape credible sustainability practice.",
+        learningProgression:
+          "Start with global frameworks, move into EU reporting requirements, then examine ratings, audits and SME implications.",
+        outcomes: [
+          "Differentiate between SDGs, GRI, SASB, TCFD, ESRS and CSRD and explain their main purposes.",
+          "Describe how CSRD and related EU policies affect sustainability reporting and value chains.",
+          "Recognise how ESG ratings, audits and disclosures influence credibility, finance and partnerships.",
+        ],
+        flow: [
+          {
+            title: "Unit 1: ESG frameworks",
+            description: "Compare key frameworks such as SDGs, GRI, SASB, TCFD and ESRS.",
+          },
+          {
+            title: "Unit 2: CSRD and EU policies",
+            description:
+              "Understand CSRD requirements, double materiality and links with EU sustainable finance rules.",
+          },
+          {
+            title: "Unit 3: Ratings, audits and disclosures",
+            description:
+              "Explore how ESG performance is evaluated, verified and communicated externally.",
+          },
+          {
+            title: "Unit 4: SME implications",
+            description:
+              "Translate ESG frameworks and reporting expectations into realistic SME actions.",
+          },
+        ],
+        progressTracking:
+          "Track progress through frameworks, reporting requirements and self-assessments to identify which ESG reporting topics need further review.",
+      },
     }),
   ],
   sections: [
