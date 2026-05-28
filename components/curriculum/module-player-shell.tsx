@@ -5,6 +5,7 @@ import MarkdownContent from "@/components/ui/markdown-content";
 import {
   completeLessonAction,
   retakeCourseAction,
+  startCourseAction,
   submitQuizAttemptAction,
 } from "@/features/curriculum/actions";
 import { CurriculumModuleViewModel } from "@/lib/curriculum/types";
@@ -59,15 +60,37 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
 
   const stage = module.progressState.currentStage;
 
+  const postQuizzes = useMemo(
+    () => module.quizItems.filter((quiz) => quiz.type === "post"),
+    [module.quizItems],
+  );
+
   const activeQuiz = useMemo(() => {
     if (stage === "pre_quiz") {
       return module.quizItems.find((quiz) => quiz.type === "pre") ?? null;
     }
+
     if (stage === "post_quiz") {
-      return module.quizItems.find((quiz) => quiz.type === "post") ?? null;
+      const currentUnitIndex =
+        module.progressState.currentLessonIndex > 0
+          ? module.progressState.currentLessonIndex
+          : Math.max(module.progressState.completedLessons, 1);
+
+      return (
+        postQuizzes.find((quiz) => quiz.sortOrder === currentUnitIndex) ??
+        postQuizzes[currentUnitIndex - 1] ??
+        null
+      );
     }
+
     return null;
-  }, [module, stage]);
+  }, [
+    module.progressState.completedLessons,
+    module.progressState.currentLessonIndex,
+    module.quizItems,
+    postQuizzes,
+    stage,
+  ]);
 
   const reviewQuiz = useMemo(() => {
     if (!reviewState) return null;
@@ -91,17 +114,12 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
     activeQuiz?.type === "pre"
       ? module.progressState.preQuizAttempts.length
       : activeQuiz?.type === "post"
-        ? module.progressState.postQuizAttempts.length
+        ? module.progressState.postQuizAttempts.filter(
+            (attempt) => attempt.quizId === activeQuiz.id,
+          ).length
         : 0;
 
-  const postQuiz = module.quizItems.find((quiz) => quiz.type === "post") ?? null;
-  const latestPostQuizAttempt = module.progressState.postQuizAttempts.at(-1) ?? null;
-  const certificateAvailable =
-    stage === "completed" &&
-    (postQuiz
-      ? typeof latestPostQuizAttempt?.score === "number" &&
-        latestPostQuizAttempt.score >= (postQuiz.passingScore ?? 0)
-      : true);
+  const certificateAvailable = module.certificate.isAvailable;
 
   const totalAttemptsAllowed = activeQuiz?.type === "pre" ? 1 : activeQuiz?.type === "post" ? 2 : 0;
 
@@ -152,6 +170,23 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
     );
   };
 
+  const handleStartModule = () => {
+    startTransition(async () => {
+      try {
+        const result = await startCourseAction({
+          locale,
+          courseSlug: module.slug,
+        });
+
+        if (result.module) {
+          setModule(result.module);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    });
+  };
+
   const handleFinishQuiz = () => {
     if (!activeQuiz || !allAnswered) return;
     setConfirmOpen(true);
@@ -165,6 +200,7 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
         const result = await submitQuizAttemptAction({
           locale,
           courseSlug: module.slug,
+          quizId: activeQuiz.id,
           quizType: activeQuiz.type,
           selectedAnswers,
           flaggedQuestionIds,
@@ -243,6 +279,51 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
 
   return (
     <div className="space-y-6">
+      {stage === "overview" && !reviewState ? (
+        <section className={`${SURFACE} p-6 md:p-7`}>
+          <div className="max-w-4xl">
+            <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
+              {t("sections.overview")}
+            </p>
+
+            <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#31425a] md:text-[2rem]">
+              {module.title}
+            </h2>
+
+            {module.description ? (
+              <p className="mt-3 max-w-3xl text-sm leading-7 text-[#667180]">
+                {module.description}
+              </p>
+            ) : null}
+
+            {module.content ? (
+              <div className="mt-6 rounded-3xl border border-[#e8edf3] bg-white/76 p-5">
+                <MarkdownContent content={module.content} />
+              </div>
+            ) : null}
+
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={handleStartModule}
+                disabled={isPending}
+                className="inline-flex items-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347] disabled:opacity-60"
+              >
+                <PlayCircle className="h-4.5 w-4.5" />
+                {t("actions.startModule")}
+              </button>
+
+              <Link
+                href={`/${locale}/curriculum/${module.slug}`}
+                className="inline-flex items-center gap-2 rounded-2xl border border-[#d9e2ec] bg-white px-5 py-3 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc]"
+              >
+                {t("navigation.backToCurriculum")}
+              </Link>
+            </div>
+          </div>
+        </section>
+      ) : null}
+
       {stage === "lessons" && currentLesson && !reviewState ? (
         <section className={`${SURFACE} p-5 md:p-7`}>
           <div className="flex flex-col gap-6 xl:grid xl:grid-cols-[260px_minmax(0,1fr)] xl:items-start">

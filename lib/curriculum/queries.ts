@@ -30,16 +30,6 @@ type CurriculumModuleDetails = {
   progressTracking: string;
 };
 
-type TranslationRecordWithDetails = TranslationRecord & {
-  details?: unknown;
-};
-
-function hasTranslationDetails(
-  translation: TranslationRecord | null,
-): translation is TranslationRecordWithDetails {
-  return translation !== null && "details" in translation;
-}
-
 type CurriculumModuleViewModelWithDetails = CurriculumModuleViewModel & {
   details: CurriculumModuleDetails | null;
 };
@@ -106,11 +96,7 @@ function parseModuleDetails(raw: unknown): CurriculumModuleDetails | null {
 function getTranslationDetails(
   translation: TranslationRecord | null,
 ): CurriculumModuleDetails | null {
-  if (!hasTranslationDetails(translation)) {
-    return null;
-  }
-
-  return parseModuleDetails(translation.details);
+  return parseModuleDetails(translation?.details);
 }
 
 function pickLocalizedRecord<T extends { language: string }>(
@@ -144,6 +130,12 @@ function pickTranslation(
 
 function mapArea(area: string): CurriculumModuleViewModel["area"] {
   switch (area) {
+    case "environmental":
+      return "environmental";
+    case "social":
+      return "social";
+    case "governance":
+      return "governance";
     case "strategy":
       return "strategy";
     case "reporting":
@@ -198,26 +190,27 @@ function formatAttemptDate(value: string): string {
 }
 
 function buildGeneratedOutcomes(area: CurriculumModuleViewModel["area"]): CurriculumTextToken[] {
-  switch (area) {
-    case "strategy":
-      return [
-        { key: "generatedOutcomes.strategy.0" },
-        { key: "generatedOutcomes.strategy.1" },
-        { key: "generatedOutcomes.strategy.2" },
-      ];
-    case "reporting":
-      return [
-        { key: "generatedOutcomes.reporting.0" },
-        { key: "generatedOutcomes.reporting.1" },
-        { key: "generatedOutcomes.reporting.2" },
-      ];
-    default:
-      return [
-        { key: "generatedOutcomes.crossCutting.0" },
-        { key: "generatedOutcomes.crossCutting.1" },
-        { key: "generatedOutcomes.crossCutting.2" },
-      ];
+  if (area === "environmental" || area === "social" || area === "governance") {
+    return [
+      { key: `generatedOutcomes.${area}.0` },
+      { key: `generatedOutcomes.${area}.1` },
+      { key: `generatedOutcomes.${area}.2` },
+    ];
   }
+
+  if (area === "strategy" || area === "reporting") {
+    return [
+      { key: `generatedOutcomes.${area}.0` },
+      { key: `generatedOutcomes.${area}.1` },
+      { key: `generatedOutcomes.${area}.2` },
+    ];
+  }
+
+  return [
+    { key: "generatedOutcomes.crossCutting.0" },
+    { key: "generatedOutcomes.crossCutting.1" },
+    { key: "generatedOutcomes.crossCutting.2" },
+  ];
 }
 
 function buildGeneratedStructure(
@@ -289,6 +282,11 @@ function parseAttempts(raw: unknown): CurriculumQuizAttemptViewModel[] {
     }
 
     attempts.push({
+      quizId: typeof candidate.quizId === "string" ? candidate.quizId : null,
+      quizType:
+        candidate.quizType === "pre" || candidate.quizType === "post" ? candidate.quizType : null,
+      quizSortOrder: typeof candidate.quizSortOrder === "number" ? candidate.quizSortOrder : null,
+      passed: typeof candidate.passed === "boolean" ? candidate.passed : null,
       attemptNumber: candidate.attemptNumber,
       score: candidate.score,
       correctCount: candidate.correctCount,
@@ -325,9 +323,12 @@ function buildProgressState(params: {
   const completedLessons = attempt?.completedLessons ?? 0;
   const currentLessonIndex = attempt?.currentLessonIndex ?? 0;
   const totalLessons = Math.max(params.lessonsCount, 1);
+  const currentPostQuizAttempts = postQuizAttempts.filter(
+    (quizAttempt) => quizAttempt.quizSortOrder === currentLessonIndex,
+  );
 
   const preQuizRemainingAttempts = params.hasPreQuiz ? Math.max(0, 1 - preQuizAttempts.length) : 0;
-  const postQuizRemainingAttempts = Math.max(0, 2 - postQuizAttempts.length);
+  const postQuizRemainingAttempts = Math.max(0, 2 - currentPostQuizAttempts.length);
 
   let nextAction: CurriculumTextToken = { key: "progressState.nextAction.startModule" };
   let currentLocation: CurriculumTextToken = params.hasPreQuiz
@@ -353,10 +354,10 @@ function buildProgressState(params: {
   } else if (currentStage === "post_quiz") {
     nextAction = { key: "progressState.nextAction.continueModule" };
     currentLocation =
-      postQuizAttempts.length > 0
+      currentPostQuizAttempts.length > 0
         ? {
             key: "progressState.currentLocation.postTestAttempt",
-            values: { current: postQuizAttempts.length + 1, total: 2 },
+            values: { current: currentPostQuizAttempts.length + 1, total: 2 },
           }
         : { key: "progressState.currentLocation.postTest" };
   } else if (currentStage === "completed") {
@@ -381,27 +382,13 @@ function buildProgressState(params: {
 
 function buildCertificateState(params: {
   attempt: CourseMappedInput["userCourseAttempts"][number] | null;
-  quizzes?: CourseMappedInput["quizzes"];
   slug: string;
 }): CurriculumCertificateViewModel {
   const attempt = params.attempt;
-
-  if (attempt?.status !== "completed" || mapStage(attempt.currentStage) !== "completed") {
-    return {
-      isAvailable: false,
-      downloadUrl: null,
-    };
-  }
-
-  const postQuiz = params.quizzes?.find((quiz) => quiz.type === "post") ?? null;
-  const passingScore = postQuiz?.passingScore ?? null;
-
-  const hasPassedPostQuiz =
-    passingScore === null ||
-    passingScore <= 0 ||
-    (typeof attempt.postQuizScore === "number" && attempt.postQuizScore >= passingScore);
-
-  const isAvailable = Boolean(attempt.completedAt) && hasPassedPostQuiz;
+  const isAvailable =
+    attempt?.status === "completed" &&
+    mapStage(attempt.currentStage) === "completed" &&
+    Boolean(attempt.completedAt);
 
   return {
     isAvailable,
@@ -436,7 +423,6 @@ function mapCourseToViewModel(
   });
   const certificate = buildCertificateState({
     attempt,
-    quizzes: course.quizzes,
     slug: course.slug,
   });
 
@@ -468,6 +454,7 @@ function mapCourseToViewModel(
         return {
           id: quiz.id,
           type: mapQuizType(quiz.type),
+          sortOrder: quiz.sortOrder,
           title: quizTranslation?.title ?? quiz.title,
           description: normalizeOptionalText(quizTranslation?.description ?? quiz.description),
           passingScore: quiz.passingScore,

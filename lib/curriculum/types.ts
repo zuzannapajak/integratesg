@@ -1,4 +1,10 @@
-export type CurriculumArea = "strategy" | "reporting" | "cross-cutting";
+export type CurriculumArea =
+  | "environmental"
+  | "social"
+  | "governance"
+  | "strategy"
+  | "reporting"
+  | "cross-cutting";
 export type CurriculumStatus = "not_started" | "in_progress" | "completed" | "failed";
 export type CurriculumDifficulty = "foundation" | "intermediate";
 export type CurriculumStage = "overview" | "pre_quiz" | "lessons" | "post_quiz" | "completed";
@@ -25,6 +31,7 @@ export type CurriculumQuizQuestionViewModel = {
 export type CurriculumQuizViewModel = {
   id: string;
   type: "pre" | "post";
+  sortOrder: number;
   title: string | null;
   description: string | null;
   passingScore: number | null;
@@ -41,6 +48,10 @@ export type CurriculumLessonViewModel = {
 };
 
 export type CurriculumQuizAttemptViewModel = {
+  quizId: string | null;
+  quizType: "pre" | "post" | null;
+  quizSortOrder: number | null;
+  passed: boolean | null;
   attemptNumber: number;
   score: number;
   correctCount: number;
@@ -121,6 +132,7 @@ export type TranslationRecord = {
   subtitle: string | null;
   description: string | null;
   content?: string | null;
+  details?: unknown;
 };
 
 type CourseSectionTranslationRecord = {
@@ -157,6 +169,10 @@ type AnswerTranslationRecord = {
 };
 
 export type StoredQuizAttempt = {
+  quizId?: string;
+  quizType?: "pre" | "post";
+  quizSortOrder?: number;
+  passed?: boolean;
   attemptNumber: number;
   score: number;
   correctCount: number;
