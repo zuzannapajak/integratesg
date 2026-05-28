@@ -423,17 +423,19 @@ function buildAdminKpis(
   ];
 }
 
-export default async function DashboardPage({ params }: Props) {
+async function getDashboardPageData({ params }: Props) {
   const startedAt = Date.now();
   let records = 0;
   let status: "ok" | "error" = "ok";
 
   try {
     const { locale } = await params;
+
     const [t, supabase] = await Promise.all([
       getTranslations({ locale, namespace: "Protected.DashboardPage" }),
       createClient(),
     ]);
+
     const {
       data: { user },
     } = await supabase.auth.getUser();
@@ -456,7 +458,7 @@ export default async function DashboardPage({ params }: Props) {
       redirect(`/${locale}/auth/login`);
     }
 
-    const role = profile.role as DashboardRole;
+    const role = profile.role;
 
     const curriculumAttemptsPromise =
       role === "educator"
@@ -606,25 +608,21 @@ export default async function DashboardPage({ params }: Props) {
 
     const adminKpis = buildAdminKpis(totalUsers, adminScenarioAttempts, t);
 
-    return (
-      <DashboardShell
-        locale={locale}
-        role={role}
-        displayName={profile.fullName ?? profile.email.split("@")[0]}
-        heroStats={role === "admin" ? adminKpis : learnerSummaryMetrics}
-        continueLearning={role === "learner" || role === "educator" ? continueLearning : null}
-        gamificationStats={role === "learner" || role === "educator" ? gamificationStats : []}
-        publishedCoursesCount={role === "educator" ? publishedCoursesCount : 0}
-        learnerSummaryMetrics={
-          role === "learner" || role === "educator" ? learnerSummaryMetrics : []
-        }
-        learnerActivityData={role === "learner" || role === "educator" ? learnerActivityData : []}
-        learnerTrendLabel={role === "learner" || role === "educator" ? learnerTrendLabel : ""}
-        adminActivityData={role === "admin" ? adminActivityData : []}
-        adminTrendLabel={role === "admin" ? adminTrendLabel : ""}
-        adminKpis={role === "admin" ? adminKpis : []}
-      />
-    );
+    return {
+      locale,
+      role,
+      displayName: profile.fullName ?? profile.email.split("@")[0],
+      heroStats: role === "admin" ? adminKpis : learnerSummaryMetrics,
+      continueLearning: role === "learner" || role === "educator" ? continueLearning : null,
+      gamificationStats: role === "learner" || role === "educator" ? gamificationStats : [],
+      publishedCoursesCount: role === "educator" ? publishedCoursesCount : 0,
+      learnerSummaryMetrics: role === "learner" || role === "educator" ? learnerSummaryMetrics : [],
+      learnerActivityData: role === "learner" || role === "educator" ? learnerActivityData : [],
+      learnerTrendLabel: role === "learner" || role === "educator" ? learnerTrendLabel : "",
+      adminActivityData: role === "admin" ? adminActivityData : [],
+      adminTrendLabel: role === "admin" ? adminTrendLabel : "",
+      adminKpis: role === "admin" ? adminKpis : [],
+    };
   } catch (error) {
     status = "error";
     throw error;
@@ -636,4 +634,10 @@ export default async function DashboardPage({ params }: Props) {
       status,
     });
   }
+}
+
+export default async function DashboardPage(props: Props) {
+  const dashboardProps = await getDashboardPageData(props);
+
+  return <DashboardShell {...dashboardProps} />;
 }

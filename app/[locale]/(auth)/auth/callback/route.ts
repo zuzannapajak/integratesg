@@ -51,7 +51,7 @@ export async function GET(request: Request) {
   const locale = isAppLocale(localeFromPath) ? localeFromPath : "en";
   const next = getSafeNextPath(requestUrl.searchParams.get("next"));
 
-  console.log("[auth/callback] Callback request received", {
+  console.warn("[auth/callback] Callback request received", {
     pathname: requestUrl.pathname,
     hasCode: Boolean(code),
     locale,
@@ -99,7 +99,7 @@ export async function GET(request: Request) {
       return redirectToLogin(locale, publicOrigin);
     }
 
-    console.log("[auth/callback] Supabase user received", {
+    console.warn("[auth/callback] Supabase user received", {
       userId: user.id,
       email: user.email,
     });
@@ -109,7 +109,7 @@ export async function GET(request: Request) {
     });
 
     if (!profile) {
-      console.log("[auth/callback] Profile not found, redirecting to complete profile", {
+      console.warn("[auth/callback] Profile not found, redirecting to complete profile", {
         userId: user.id,
       });
 
@@ -123,7 +123,7 @@ export async function GET(request: Request) {
 
     const target = next ?? getDefaultProtectedRoute(preferredLocale, profile.role);
 
-    console.log("[auth/callback] Login completed", {
+    console.warn("[auth/callback] Login completed", {
       userId: user.id,
       role: profile.role,
       target,
