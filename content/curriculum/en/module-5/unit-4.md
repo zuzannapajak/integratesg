@@ -1,5 +1,3 @@
-# Unit 4: Cross-Functional and Cross-Sector Collaboration
-
 ## Training Objectives
 
 Upon completing the Unit, you should be able to:

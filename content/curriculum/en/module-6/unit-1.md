@@ -1,5 +1,3 @@
-# Unit 1: ESG Indicators and KPIs: Measuring what matters
-
 ## Unit 1 – Introduction
 
 ESG indicators and KPIs are the foundation of effective sustainability management. Without clear and relevant metrics, organisations risk losing control over their ESG commitments or focusing on what is easy to measure rather than what truly matters.

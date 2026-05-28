@@ -1,5 +1,3 @@
-# Module 4: Integrating ESG into Business Operations
-
 ## Module’s Goal
 
 This module will help you turn ESG from a broad idea into practical action in daily business operations. You will learn how to improve environmental, social, and governance practices through simple operational decisions, and how to communicate these actions credibly so your business builds trust, reduces risk, and avoids empty ESG claims.

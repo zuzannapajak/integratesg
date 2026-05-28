@@ -1,5 +1,3 @@
-# Unit 3: Governance in Operational Decision-Making
-
 Governance can sound like something meant for boards, reports, or large corporations. In daily business operations, it is much simpler than that. It is about how decisions are made, who is responsible, what gets approved, and what happens when something goes wrong.
 
 ## Training Objectives

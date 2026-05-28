@@ -6,6 +6,28 @@ type MarkdownContentProps = {
   content?: string | null;
 };
 
+type MarkdownNode = {
+  type?: string;
+  tagName?: string;
+  children?: MarkdownNode[];
+};
+
+function containsImageNode(node: unknown): boolean {
+  const currentNode = node as MarkdownNode | undefined;
+
+  if (!currentNode?.children) {
+    return false;
+  }
+
+  return currentNode.children.some((child) => {
+    if (child.type === "element" && child.tagName === "img") {
+      return true;
+    }
+
+    return containsImageNode(child);
+  });
+}
+
 export default function MarkdownContent({ content }: MarkdownContentProps) {
   if (!content) {
     return null;
@@ -19,25 +41,37 @@ export default function MarkdownContent({ content }: MarkdownContentProps) {
           h1: ({ children }) => (
             <h1 className="pt-2 text-2xl font-bold text-[#31425a]">{children}</h1>
           ),
+
           h2: ({ children }) => (
             <h2 className="pt-4 text-xl font-bold text-[#31425a]">{children}</h2>
           ),
+
           h3: ({ children }) => (
             <h3 className="pt-3 text-lg font-bold text-[#31425a]">{children}</h3>
           ),
-          p: ({ children }) => (
-            <p className="text-[0.98rem] leading-8 text-[#556274]">{children}</p>
-          ),
+
+          p: ({ node, children }) => {
+            if (containsImageNode(node)) {
+              return <div className="my-6">{children}</div>;
+            }
+
+            return <p className="text-[0.98rem] leading-8 text-[#556274]">{children}</p>;
+          },
+
           ul: ({ children }) => <ul className="list-disc space-y-2 pl-6">{children}</ul>,
+
           ol: ({ children }) => <ol className="list-decimal space-y-2 pl-6">{children}</ol>,
+
           blockquote: ({ children }) => (
             <blockquote className="rounded-2xl border-l-4 border-[#31425a] bg-[#f8fafc] px-4 py-3 italic text-[#31425a]">
               {children}
             </blockquote>
           ),
+
           strong: ({ children }) => (
             <strong className="font-semibold text-[#31425a]">{children}</strong>
           ),
+
           img: ({ src, alt }) => {
             const imageSrc = typeof src === "string" ? src : "";
 

@@ -1,5 +1,3 @@
-# Unit 2: From Corporate Philanthropy to Business Necessity
-
 ## Training Objective
 
 - Describe the historical evolution of ESG in the business landscape.

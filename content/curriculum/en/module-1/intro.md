@@ -1,5 +1,3 @@
-# Module 1: Introduction to ESG (Environmental, Social, Governance) and sustainable development
-
 ## Module's Goal
 
 This module will equip you with a fundamental understanding of ESG and its evolution, enabling you to grasp the core concepts of the Environmental, Social, and Governance pillars. It will help you see the strategic value of integrating ESG, whether you manage an SME or a large enterprise, and show how your actions link directly to global Sustainable Development Goals (SDGs). This knowledge is essential for promoting sustainable development.

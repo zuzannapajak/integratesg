@@ -1,5 +1,3 @@
-# Module 2: Strategy, Vision and Organisational Alignment
-
 ## Module’s Goal
 
 This module explores the alignment of organisational strategy and vision with ESG principles. It provides practical insights into integrating ESG into core business processes, enabling sustainable value creation. By understanding the link between ESG and organisational success, learners will be equipped to champion transparent and credible ESG practices, contributing to a more sustainable future for business and stakeholders.

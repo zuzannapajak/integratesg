@@ -1,5 +1,3 @@
-# Unit 2: ESG Data Gathering, Management, and Digitalisation
-
 ## Training Objectives
 
 Upon completing the Unit, you should be able to:

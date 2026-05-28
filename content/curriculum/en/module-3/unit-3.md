@@ -1,5 +1,3 @@
-# Unit 3: ESG Ratings, Audits, Disclosures and Their Impact
-
 ## Training objectives
 
 Upon completing this unit, you should be able to:

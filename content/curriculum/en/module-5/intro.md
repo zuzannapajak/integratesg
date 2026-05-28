@@ -1,5 +1,3 @@
-# Module 5: Implementation, Data, and Cross-Functional Practice
-
 ## Module Introduction
 
 This module focuses on ESG as a practical business process rather than a reporting exercise. Through a realistic scenario, you will explore how organisations organise ESG responsibilities, work with data, and collaborate with external partners. The aim is to help you understand how everyday decisions, coordination between teams, and structured collaboration shape effective ESG integration over time.

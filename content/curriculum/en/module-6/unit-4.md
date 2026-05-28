@@ -1,5 +1,3 @@
-# Unit 4: Continuous Improvement, Future EU Policies and Global ESG Trends
-
 ## Unit 4 – Introduction
 
 ESG is a dynamic field shaped by evolving regulations, market expectations and societal challenges. Organisations that treat ESG as a one-off project risk falling behind.

@@ -1,5 +1,3 @@
-# Unit 2: Social Responsibility in Workforce and Supply Chain
-
 ## Training Objectives
 
 Upon completing this unit, you should be able to:

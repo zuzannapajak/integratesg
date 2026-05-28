@@ -1,5 +1,3 @@
-# Unit 4: Credible ESG in Customer Communication and Claims
-
 In business operations, ESG becomes visible when it affects the customer experience. This includes packaging, delivery, repair, complaints, product use, service quality, and communication. If you say your business is responsible, but the customer cannot see any real change, your message will quickly lose credibility.
 
 ## Training Objectives

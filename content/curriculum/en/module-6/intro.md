@@ -1,5 +1,3 @@
-# Module 6: Monitoring, Reporting and Future Trends of ESG
-
 ## Module’s Goal
 
 This module helps learners monitor ESG implementation through meaningful indicators and KPIs, report ESG performance credibly, including key EU reporting principles, and use innovation and future-trend scanning to continuously improve ESG practices.

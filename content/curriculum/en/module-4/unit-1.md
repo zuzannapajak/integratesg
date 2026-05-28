@@ -1,5 +1,3 @@
-# Unit 1: ESG Touchpoints in Core Operating Processes
-
 You’re not going to “build an ESG programme” here. You’re going to do something much more useful for an SME: spot where ESG already shows up in your daily operations and then choose a small set of actions that give you the biggest benefit for the least effort.
 
 That matters because many SMEs feel ESG is “extra work,” especially with tight margins and limited staff. In the Polish and wider EU context, common barriers are lack of time, money, and skills, plus a feeling that ESG means paperwork and bureaucracy.

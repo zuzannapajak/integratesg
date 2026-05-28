@@ -1,5 +1,3 @@
-# Unit 3: Why ESG is Your Strategic Advantage
-
 ## Training Objective
 
 - Identify the strategic relevance of ESG for both SMEs and large enterprises.

@@ -1,5 +1,3 @@
-# Unit 2: The EU Corporate Sustainability Reporting Directive (CSRD) and related EU Policies
-
 ## Training objectives
 
 Upon completing this unit, you should be able to:

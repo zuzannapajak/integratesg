@@ -1,5 +1,3 @@
-# Unit 4: Practical Implications for SMEs and Sector-Specific Realities
-
 ## Training Objectives
 
 Upon completing this unit, you should be able to:

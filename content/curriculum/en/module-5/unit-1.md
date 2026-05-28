@@ -66,6 +66,6 @@ Once an organisation completes one full cycle — from planning through executio
 
 The ESG lifecycle encourages flexibility and resilience. Regulations evolve, technologies change, and stakeholder expectations grow. Organisations that treat ESG as an ongoing process are better equipped to adapt and thrive in these conditions. The ultimate goal is not just compliance but long-term value creation — for the company, its employees, its community, and the planet.
 
-![ESG integration lifecycle](/curriculum/module-5/images/module-5-unit-1-esg-integration-lifecycle.webp)
+![Source: Author’s iteration aided by AI](/curriculum/module-5/images/module-5-unit-1-esg-integration-lifecycle.webp)
 
 _Source: Author’s iteration aided by AI_

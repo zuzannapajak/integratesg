@@ -1,5 +1,3 @@
-# Unit 1: The Three Pillars of ESG (Environmental, Social, Governance)
-
 ## Training Objective
 
 - Define the three core components of ESG (Environmental, Social, Governance).

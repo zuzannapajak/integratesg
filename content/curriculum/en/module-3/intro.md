@@ -1,5 +1,3 @@
-# Module 3: Navigating ESG Frameworks and EU Reporting Standards
-
 ## Module’s goal
 
 This module will help you understand how key ESG frameworks and European reporting standards connect and shape today’s sustainability landscape. You will learn how to interpret and apply these frameworks to your organisation, prepare for EU reporting requirements, and recognise their practical implications for SMEs across different sectors.

@@ -1,5 +1,3 @@
-# Unit 3: Innovation as a Driver for ESG Performance
-
 ## Unit 3 – Introduction
 
 Innovation plays a crucial role in enabling organisations to achieve ESG goals more effectively and efficiently. Digital tools, new technologies and innovative processes can support better data collection, monitoring and impact management.

@@ -1,5 +1,3 @@
-# Unit 1: Key Frameworks – SDGs, GRI, SASB, TCFD, ESRS
-
 ## Training objectives
 
 Upon completing this unit, you should be able to:

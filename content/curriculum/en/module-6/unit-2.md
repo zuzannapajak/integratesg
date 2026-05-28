@@ -1,5 +1,3 @@
-# Unit 2: Reporting and Communicating ESG Performance
-
 ## Unit 2 – Introduction
 
 Reporting is not just about compliance, but about building trust. As stakeholders increasingly scrutinise ESG claims, organisations must communicate their performance in a clear, balanced and credible way.

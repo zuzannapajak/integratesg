@@ -1,5 +1,3 @@
-# Unit 4: Linking Your Business Actions to Global Goals
-
 ## Training Objective
 
 - Explain the connections between the ESG framework and the Sustainable Development Goals (SDGs).
