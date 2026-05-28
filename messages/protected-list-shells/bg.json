@@ -7,10 +7,12 @@
       "recommended": "Препоръчани",
       "area": {
         "all": "Всички области",
-        "environmental": "Екологична",
-        "social": "Социална",
-        "governance": "Управленска",
-        "crossCutting": "Междусекторна"
+        "environmental": "Екологични",
+        "social": "Социални",
+        "governance": "Управление",
+        "strategy": "Стратегия",
+        "reporting": "Отчитане",
+        "crossCutting": "Междусекторни"
       },
       "status": {
         "notStarted": "Не е стартиран",

@@ -7,12 +7,10 @@ import {
 
 export function mapArea(area: string): CurriculumArea {
   switch (area) {
-    case "environmental":
-      return "environmental";
-    case "social":
-      return "social";
-    case "governance":
-      return "governance";
+    case "strategy":
+      return "strategy";
+    case "reporting":
+      return "reporting";
     default:
       return "cross-cutting";
   }
@@ -31,23 +29,17 @@ export function mapAttemptStatus(status?: string | null): CurriculumModuleViewMo
 
 export function buildGeneratedOutcomes(area: CurriculumArea): CurriculumTextToken[] {
   switch (area) {
-    case "environmental":
+    case "strategy":
       return [
-        { key: "generatedOutcomes.environmental.0" },
-        { key: "generatedOutcomes.environmental.1" },
-        { key: "generatedOutcomes.environmental.2" },
+        { key: "generatedOutcomes.strategy.0" },
+        { key: "generatedOutcomes.strategy.1" },
+        { key: "generatedOutcomes.strategy.2" },
       ];
-    case "social":
+    case "reporting":
       return [
-        { key: "generatedOutcomes.social.0" },
-        { key: "generatedOutcomes.social.1" },
-        { key: "generatedOutcomes.social.2" },
-      ];
-    case "governance":
-      return [
-        { key: "generatedOutcomes.governance.0" },
-        { key: "generatedOutcomes.governance.1" },
-        { key: "generatedOutcomes.governance.2" },
+        { key: "generatedOutcomes.reporting.0" },
+        { key: "generatedOutcomes.reporting.1" },
+        { key: "generatedOutcomes.reporting.2" },
       ];
     default:
       return [

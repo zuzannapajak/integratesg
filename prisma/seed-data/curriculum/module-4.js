@@ -1,4 +1,4 @@
-import { question, readMarkdown, section, selfAssessmentQuiz, translation } from "./helpers.js";
+import { question, readCurriculumMarkdown, section, translation, unitQuiz } from "./helpers.js";
 
 export const module4 = {
   slug: "module-4-integrating-esg-into-business-operations",
@@ -12,11 +12,11 @@ export const module4 = {
   translations: [
     translation("en", {
       title: "Module 4: Integrating ESG into Business Operations",
-      subtitle: "Turning ESG into practical daily business actions",
+      subtitle: "ESG in daily operations",
       description:
-        "This module helps learners turn ESG from a broad idea into practical action in daily business operations. It focuses on environmental hotspots, workforce and supplier responsibility, governance in operational decisions, and credible ESG communication with customers.",
+        "Turn ESG into practical daily actions across operations, workforce, suppliers, governance and customer communication.",
       content:
-        "This module focuses on integrating ESG into everyday SME operations through practical, manageable changes. The full module content is divided into four Markdown-based units.",
+        "This module shows how to turn ESG principles into everyday business practice. It focuses on identifying ESG touchpoints in core operations, improving workforce and supplier responsibility, strengthening governance in daily decision-making, and communicating ESG actions to customers in a credible and non-misleading way.",
     }),
   ],
   sections: [
@@ -27,7 +27,7 @@ export const module4 = {
       title: "Unit 1: ESG Touchpoints in Core Operating Processes",
       summary:
         "Analyse key operational workflows to identify ESG impact points and prioritise practical environmental improvements using impact-versus-effort reasoning.",
-      content: readMarkdown("content/curriculum/module-4/unit-1.md"),
+      content: readCurriculumMarkdown("en", "module-4", "unit-1"),
     }),
     section({
       slug: "unit-2-social-responsibility-in-workforce-and-supply-chain",
@@ -36,7 +36,7 @@ export const module4 = {
       title: "Unit 2: Social Responsibility in Workforce and Supply Chain",
       summary:
         "Assess social responsibility risks in workforce practices and supplier relationships, then implement simple actions supporting fairness, inclusion and responsible supply chain engagement.",
-      content: readMarkdown("content/curriculum/module-4/unit-2.md"),
+      content: readCurriculumMarkdown("en", "module-4", "unit-2"),
     }),
     section({
       slug: "unit-3-governance-in-operational-decision-making",
@@ -45,7 +45,7 @@ export const module4 = {
       title: "Unit 3: Governance in Operational Decision-Making",
       summary:
         "Analyse everyday decisions, define clear roles and approvals, and introduce simple governance controls that support transparency, accountability and ethical behaviour.",
-      content: readMarkdown("content/curriculum/module-4/unit-3.md"),
+      content: readCurriculumMarkdown("en", "module-4", "unit-3"),
     }),
     section({
       slug: "unit-4-credible-esg-in-customer-communication-and-claims",
@@ -54,13 +54,15 @@ export const module4 = {
       title: "Unit 4: Credible ESG in Customer Communication and Claims",
       summary:
         "Evaluate customer-facing ESG claims and communicate ESG actions in a specific, checkable and proportionate way.",
-      content: readMarkdown("content/curriculum/module-4/unit-4.md"),
+      content: readCurriculumMarkdown("en", "module-4", "unit-4"),
     }),
   ],
   quizzes: [
-    selfAssessmentQuiz({
-      title: "Module 4 Self-assessment",
-      description: "Self-assessment quiz for Module 4: Integrating ESG into Business Operations.",
+    unitQuiz({
+      unitSlug: "unit-1-esg-touchpoints-in-core-operating-processes",
+      sortOrder: 1,
+      title: "Unit 1 Self-assessment",
+      description: "Self-assessment quiz for Unit 1: ESG Touchpoints in Core Operating Processes.",
       passingScore: 70,
       questions: [
         question({
@@ -207,9 +209,19 @@ export const module4 = {
             },
           ],
         }),
+      ],
+    }),
 
+    unitQuiz({
+      unitSlug: "unit-2-social-responsibility-in-workforce-and-supply-chain",
+      sortOrder: 2,
+      title: "Unit 2 Self-assessment",
+      description:
+        "Self-assessment quiz for Unit 2: Social Responsibility in Workforce and Supply Chain.",
+      passingScore: 70,
+      questions: [
         question({
-          sortOrder: 6,
+          sortOrder: 1,
           prompt:
             "Question 6 — You want to improve social responsibility in an SME, but you do not want to start with long policies or a formal HR system. According to this unit, what is the most useful first step for identifying the main risks and improvement points?",
           answers: [
@@ -238,7 +250,7 @@ export const module4 = {
         }),
 
         question({
-          sortOrder: 7,
+          sortOrder: 2,
           prompt:
             "Question 7 — You are doing a short walk-through of people-related routines in your business. Which of the following is the strongest sign that you have found a real social responsibility hotspot that should be treated as a priority?",
           answers: [
@@ -267,7 +279,7 @@ export const module4 = {
         }),
 
         question({
-          sortOrder: 8,
+          sortOrder: 3,
           prompt:
             "Question 8 — A small workshop notices that training opportunities are shared only informally, the same people get the better assignments, and new workers are expected to learn by watching. Based on this unit, what is the best interpretation of this situation?",
           answers: [
@@ -296,7 +308,7 @@ export const module4 = {
         }),
 
         question({
-          sortOrder: 9,
+          sortOrder: 4,
           prompt:
             "Question 9 — You want to make inclusion more practical in daily operations without creating extra bureaucracy. Which action best matches the unit's advice?",
           answers: [
@@ -325,7 +337,7 @@ export const module4 = {
         }),
 
         question({
-          sortOrder: 10,
+          sortOrder: 5,
           prompt:
             "Question 10 — A key supplier delivers on time and offers a good price, but when asked about working conditions and complaint responsibility, they give vague answers. They do seem open to improving. According to this unit, what is the most appropriate next step?",
           answers: [
@@ -352,9 +364,18 @@ export const module4 = {
             },
           ],
         }),
+      ],
+    }),
 
+    unitQuiz({
+      unitSlug: "unit-3-governance-in-operational-decision-making",
+      sortOrder: 3,
+      title: "Unit 3 Self-assessment",
+      description: "Self-assessment quiz for Unit 3: Governance in Operational Decision-Making.",
+      passingScore: 70,
+      questions: [
         question({
-          sortOrder: 11,
+          sortOrder: 1,
           prompt:
             "Question 11 — You want to improve governance in daily operations, but you do not want to create a heavy system that people ignore. According to this unit, what is the most useful first step for increasing transparency and accountability in an SME?",
           answers: [
@@ -383,7 +404,7 @@ export const module4 = {
         }),
 
         question({
-          sortOrder: 12,
+          sortOrder: 2,
           prompt:
             "Question 12 — You are building a decision map for governance in normal operations. Which approach best supports long-term clarity and accountability when roles change or when staff are absent?",
           answers: [
@@ -412,7 +433,7 @@ export const module4 = {
         }),
 
         question({
-          sortOrder: 13,
+          sortOrder: 3,
           prompt:
             "Question 13 — A customer complaint may lead to a refund and possible legal risk. The employee who received it is unsure whether they can decide, the team lead is busy, and the case stays unresolved for several days. Based on this unit, what is the main governance weakness in this situation?",
           answers: [
@@ -441,7 +462,7 @@ export const module4 = {
         }),
 
         question({
-          sortOrder: 14,
+          sortOrder: 4,
           prompt:
             "Question 14 — You want to reduce corruption risk in operational decisions without introducing a complicated compliance system. Which of the following is the strongest basic control for purchasing and invoice handling in an SME?",
           answers: [
@@ -470,7 +491,7 @@ export const module4 = {
         }),
 
         question({
-          sortOrder: 15,
+          sortOrder: 5,
           prompt:
             "Question 15 — You want employees to raise concerns about unethical behaviour, unsafe shortcuts, or unfair treatment before the situation becomes more serious. According to this unit, what makes a speak-up channel most credible and useful in an SME?",
           answers: [
@@ -497,9 +518,19 @@ export const module4 = {
             },
           ],
         }),
+      ],
+    }),
 
+    unitQuiz({
+      unitSlug: "unit-4-credible-esg-in-customer-communication-and-claims",
+      sortOrder: 4,
+      title: "Unit 4 Self-assessment",
+      description:
+        "Self-assessment quiz for Unit 4: Credible ESG in Customer Communication and Claims.",
+      passingScore: 70,
+      questions: [
         question({
-          sortOrder: 16,
+          sortOrder: 1,
           prompt:
             "Question 16 — A company wants to communicate its ESG efforts to customers, but it is not sure whether its current message is credible or too promotional. According to this unit, which type of statement creates the highest greenwashing or social washing risk?",
           answers: [
@@ -528,7 +559,7 @@ export const module4 = {
         }),
 
         question({
-          sortOrder: 17,
+          sortOrder: 2,
           prompt:
             "Question 17 — You want to decide whether a customer-facing ESG message reflects a real improvement or only sounds good in marketing. Based on this unit, what is the most useful test to apply first?",
           answers: [
@@ -557,7 +588,7 @@ export const module4 = {
         }),
 
         question({
-          sortOrder: 18,
+          sortOrder: 3,
           prompt:
             "Question 18 — A company adds a green-looking slogan to its website and changes some label colours to look more natural, but it does not change packaging, delivery, repair, complaints handling, or customer information. According to this unit, what is the main risk in this situation?",
           answers: [
@@ -586,7 +617,7 @@ export const module4 = {
         }),
 
         question({
-          sortOrder: 19,
+          sortOrder: 4,
           prompt:
             "Question 19 — A business wants to communicate one ESG-related improvement to customers in a credible and proportionate way. Which of the following messages best follows the communication rules from this unit?",
           answers: [
@@ -615,7 +646,7 @@ export const module4 = {
         }),
 
         question({
-          sortOrder: 20,
+          sortOrder: 5,
           prompt:
             "Question 20 — Before communicating an ESG action externally, a company wants to make sure the message is credible and not exaggerated. According to this unit, which filter should it apply before publishing the claim?",
           answers: [

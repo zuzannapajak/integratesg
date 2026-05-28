@@ -7,10 +7,12 @@
       "recommended": "Προτεινόμενα",
       "area": {
         "all": "Όλοι οι τομείς",
-        "environmental": "Περιβαλλοντικό",
-        "social": "Κοινωνικό",
+        "environmental": "Περιβάλλον",
+        "social": "Κοινωνία",
         "governance": "Διακυβέρνηση",
-        "crossCutting": "Οριζόντιο"
+        "strategy": "Στρατηγική",
+        "reporting": "Αναφορά",
+        "crossCutting": "Οριζόντια θέματα"
       },
       "status": {
         "notStarted": "Δεν ξεκίνησε",

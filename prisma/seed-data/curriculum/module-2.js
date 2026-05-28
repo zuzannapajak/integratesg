@@ -1,4 +1,4 @@
-import { question, readMarkdown, section, selfAssessmentQuiz, translation } from "./helpers.js";
+import { question, readCurriculumMarkdown, section, translation, unitQuiz } from "./helpers.js";
 
 export const module2 = {
   slug: "module-2-strategy-vision-and-organisational-alignment",
@@ -12,11 +12,11 @@ export const module2 = {
   translations: [
     translation("en", {
       title: "Module 2: Strategy, Vision and Organisational Alignment",
-      subtitle: "Integrating ESG into strategy, leadership and performance",
+      subtitle: "ESG strategy and alignment",
       description:
-        "This module explores the alignment of organisational strategy and vision with ESG principles. It provides practical insights into integrating ESG into core business processes, setting priorities, building leadership commitment, and balancing ESG with financial and operational performance.",
+        "Link ESG with mission, values, leadership, priorities and performance so it becomes part of strategy.",
       content:
-        "This module explores how to anchor ESG directly to organisational mission, values, strategy, leadership culture, priorities and performance. The full module content is divided into four Markdown-based units.",
+        "This module focuses on aligning ESG with organisational strategy. It explains how ESG can be connected to a company’s mission, values and long-term direction, how to set meaningful ESG priorities and objectives, how leadership and culture support ESG integration, and how to balance sustainability goals with financial and operational performance.",
     }),
   ],
   sections: [
@@ -27,7 +27,7 @@ export const module2 = {
       title: "Unit 1: Linking ESG to mission, values and long-term strategy",
       summary:
         "Analyse mission, values and long-term strategy to identify ESG alignment gaps and develop an ESG-integrated strategic framework.",
-      content: readMarkdown("content/curriculum/module-2/unit-1.md"),
+      content: readCurriculumMarkdown("en", "module-2", "unit-1"),
     }),
     section({
       slug: "unit-2-setting-esg-priorities-and-objectives",
@@ -36,7 +36,7 @@ export const module2 = {
       title: "Unit 2: Setting ESG priorities and objectives",
       summary:
         "Prioritise ESG issues by evaluating stakeholder relevance and business impact, then formulate measurable ESG objectives.",
-      content: readMarkdown("content/curriculum/module-2/unit-2.md"),
+      content: readCurriculumMarkdown("en", "module-2", "unit-2"),
     }),
     section({
       slug: "unit-3-building-leadership-commitment-and-organisational-culture",
@@ -45,7 +45,7 @@ export const module2 = {
       title: "Unit 3: Building leadership commitment and organisational culture",
       summary:
         "Foster leadership commitment and cultivate an organisational culture that supports and sustains ESG values and practices.",
-      content: readMarkdown("content/curriculum/module-2/unit-3.md"),
+      content: readCurriculumMarkdown("en", "module-2", "unit-3"),
     }),
     section({
       slug: "unit-4-balancing-esg-with-financial-and-operational-performance",
@@ -54,14 +54,16 @@ export const module2 = {
       title: "Unit 4: Balancing ESG with financial and operational performance",
       summary:
         "Evaluate ESG and financial trade-offs and design strategies that integrate ESG into operational processes.",
-      content: readMarkdown("content/curriculum/module-2/unit-4.md"),
+      content: readCurriculumMarkdown("en", "module-2", "unit-4"),
     }),
   ],
   quizzes: [
-    selfAssessmentQuiz({
-      title: "Module 2 Self-assessment",
+    unitQuiz({
+      unitSlug: "unit-1-linking-esg-to-mission-values-and-long-term-strategy",
+      sortOrder: 1,
+      title: "Unit 1 Self-assessment",
       description:
-        "Self-assessment quiz for Module 2: Strategy, Vision and Organisational Alignment.",
+        "Self-assessment quiz for Unit 1: Linking ESG to mission, values and long-term strategy.",
       passingScore: 70,
       questions: [
         question({
@@ -237,9 +239,18 @@ export const module2 = {
             },
           ],
         }),
+      ],
+    }),
 
+    unitQuiz({
+      unitSlug: "unit-2-setting-esg-priorities-and-objectives",
+      sortOrder: 2,
+      title: "Unit 2 Self-assessment",
+      description: "Self-assessment quiz for Unit 2: Setting ESG priorities and objectives.",
+      passingScore: 70,
+      questions: [
         question({
-          sortOrder: 7,
+          sortOrder: 1,
           prompt: "Question 7 — Which approach best helps you identify your top ESG priorities?",
           answers: [
             {
@@ -267,7 +278,7 @@ export const module2 = {
         }),
 
         question({
-          sortOrder: 8,
+          sortOrder: 2,
           prompt:
             "Question 8 — When engaging stakeholders to set ESG priorities, what is most important?",
           answers: [
@@ -296,7 +307,7 @@ export const module2 = {
         }),
 
         question({
-          sortOrder: 9,
+          sortOrder: 3,
           prompt: "Question 9 — What does a materiality matrix help you do?",
           answers: [
             {
@@ -324,7 +335,7 @@ export const module2 = {
         }),
 
         question({
-          sortOrder: 10,
+          sortOrder: 4,
           prompt: "Question 10 — Which is the best example of a measurable ESG objective?",
           answers: [
             {
@@ -352,7 +363,7 @@ export const module2 = {
         }),
 
         question({
-          sortOrder: 11,
+          sortOrder: 5,
           prompt:
             "Question 11 — Why should ESG objectives be aligned with your organisation’s strategy?",
           answers: [
@@ -381,7 +392,7 @@ export const module2 = {
         }),
 
         question({
-          sortOrder: 12,
+          sortOrder: 6,
           prompt: "Question 12 — What is a key step after setting ESG objectives?",
           answers: [
             {
@@ -407,9 +418,19 @@ export const module2 = {
             },
           ],
         }),
+      ],
+    }),
 
+    unitQuiz({
+      unitSlug: "unit-3-building-leadership-commitment-and-organisational-culture",
+      sortOrder: 3,
+      title: "Unit 3 Self-assessment",
+      description:
+        "Self-assessment quiz for Unit 3: Building leadership commitment and organisational culture.",
+      passingScore: 70,
+      questions: [
         question({
-          sortOrder: 13,
+          sortOrder: 1,
           prompt:
             "Question 13 — Which strategy most effectively builds leadership commitment to ESG?",
           answers: [
@@ -438,7 +459,7 @@ export const module2 = {
         }),
 
         question({
-          sortOrder: 14,
+          sortOrder: 2,
           prompt:
             "Question 14 — How should ESG objectives be connected to gain leadership support?",
           answers: [
@@ -467,7 +488,7 @@ export const module2 = {
         }),
 
         question({
-          sortOrder: 15,
+          sortOrder: 3,
           prompt: "Question 15 — What role should leaders play as ESG ambassadors?",
           answers: [
             {
@@ -495,7 +516,7 @@ export const module2 = {
         }),
 
         question({
-          sortOrder: 16,
+          sortOrder: 4,
           prompt:
             "Question 16 — How can you best embed ESG values into daily organisational practices?",
           answers: [
@@ -524,7 +545,7 @@ export const module2 = {
         }),
 
         question({
-          sortOrder: 17,
+          sortOrder: 5,
           prompt:
             "Question 17 — What is the most effective way to recognize ESG champions in your organisation?",
           answers: [
@@ -553,7 +574,7 @@ export const module2 = {
         }),
 
         question({
-          sortOrder: 18,
+          sortOrder: 6,
           prompt:
             "Question 18 — How should organisations handle employee feedback on ESG initiatives?",
           answers: [
@@ -580,9 +601,19 @@ export const module2 = {
             },
           ],
         }),
+      ],
+    }),
 
+    unitQuiz({
+      unitSlug: "unit-4-balancing-esg-with-financial-and-operational-performance",
+      sortOrder: 4,
+      title: "Unit 4 Self-assessment",
+      description:
+        "Self-assessment quiz for Unit 4: Balancing ESG with financial and operational performance.",
+      passingScore: 70,
+      questions: [
         question({
-          sortOrder: 19,
+          sortOrder: 1,
           prompt:
             "Question 19 — When evaluating an ESG initiative's financial impact, what should you consider?",
           answers: [
@@ -611,7 +642,7 @@ export const module2 = {
         }),
 
         question({
-          sortOrder: 20,
+          sortOrder: 2,
           prompt:
             "Question 20 — A company invests €500,000 in renewable energy but sees no profit in year one. How should you evaluate this trade-off?",
           answers: [
@@ -640,7 +671,7 @@ export const module2 = {
         }),
 
         question({
-          sortOrder: 21,
+          sortOrder: 3,
           prompt:
             "Question 21 — What is the primary risk of focusing only on short-term financial metrics when evaluating ESG initiatives?",
           answers: [
@@ -669,7 +700,7 @@ export const module2 = {
         }),
 
         question({
-          sortOrder: 22,
+          sortOrder: 4,
           prompt: "Question 22 — Which approach best integrates ESG into operational processes?",
           answers: [
             {
@@ -697,7 +728,7 @@ export const module2 = {
         }),
 
         question({
-          sortOrder: 23,
+          sortOrder: 5,
           prompt:
             "Question 23 — How can you foster innovation to find solutions that address both ESG and financial goals?",
           answers: [
@@ -726,7 +757,7 @@ export const module2 = {
         }),
 
         question({
-          sortOrder: 24,
+          sortOrder: 6,
           prompt:
             "Question 24 — What is the primary purpose of tracking both ESG and financial metrics together?",
           answers: [

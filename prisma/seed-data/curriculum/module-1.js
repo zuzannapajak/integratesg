@@ -1,4 +1,4 @@
-import { question, readMarkdown, section, selfAssessmentQuiz, translation } from "./helpers.js";
+import { question, readCurriculumMarkdown, section, translation, unitQuiz } from "./helpers.js";
 
 export const module1 = {
   slug: "module-1-introduction-to-esg-and-sustainable-development",
@@ -11,13 +11,12 @@ export const module1 = {
   isFeatured: true,
   translations: [
     translation("en", {
-      title:
-        "Module 1: Introduction to ESG (Environmental, Social, Governance) and sustainable development",
+      title: "Module 1: Introduction to ESG and sustainable development",
       subtitle: "Foundation module",
       description:
-        "A foundational module introducing ESG pillars, the historical evolution of ESG, its strategic relevance for SMEs and large enterprises, and the connection between ESG and the Sustainable Development Goals.",
+        "Learn the ESG pillars, how ESG evolved, why it matters for SMEs, and how business actions connect to the SDGs.",
       content:
-        "This module equips learners with a fundamental understanding of ESG and its evolution. The full module content is divided into four Markdown-based units.",
+        "This module introduces the foundations of ESG and sustainable development. It explains the Environmental, Social and Governance pillars, shows how ESG evolved from earlier approaches such as CSR and SRI, and presents why ESG is strategically relevant for both SMEs and larger organisations. The module also connects everyday business actions with the Sustainable Development Goals.",
     }),
   ],
   sections: [
@@ -27,7 +26,7 @@ export const module1 = {
       estimatedMinutes: 12,
       title: "Unit 1: The Three Pillars of ESG (Environmental, Social, Governance)",
       summary: "Define the three core components of ESG: Environmental, Social, and Governance.",
-      content: readMarkdown("content/curriculum/module-1/unit-1.md"),
+      content: readCurriculumMarkdown("en", "module-1", "unit-1"),
     }),
     section({
       slug: "unit-2-from-corporate-philanthropy-to-business-necessity",
@@ -35,7 +34,7 @@ export const module1 = {
       estimatedMinutes: 10,
       title: "Unit 2: From Corporate Philanthropy to Business Necessity",
       summary: "Describe the historical evolution of ESG in the business landscape.",
-      content: readMarkdown("content/curriculum/module-1/unit-2.md"),
+      content: readCurriculumMarkdown("en", "module-1", "unit-2"),
     }),
     section({
       slug: "unit-3-why-esg-is-your-strategic-advantage",
@@ -43,7 +42,7 @@ export const module1 = {
       estimatedMinutes: 10,
       title: "Unit 3: Why ESG is Your Strategic Advantage",
       summary: "Identify the strategic relevance of ESG for both SMEs and large enterprises.",
-      content: readMarkdown("content/curriculum/module-1/unit-3.md"),
+      content: readCurriculumMarkdown("en", "module-1", "unit-3"),
     }),
     section({
       slug: "unit-4-linking-your-business-actions-to-global-goals",
@@ -52,14 +51,16 @@ export const module1 = {
       title: "Unit 4: Linking Your Business Actions to Global Goals",
       summary:
         "Explain the connections between the ESG framework and the Sustainable Development Goals.",
-      content: readMarkdown("content/curriculum/module-1/unit-4.md"),
+      content: readCurriculumMarkdown("en", "module-1", "unit-4"),
     }),
   ],
   quizzes: [
-    selfAssessmentQuiz({
-      title: "Module 1 Self-assessment",
+    unitQuiz({
+      unitSlug: "unit-1-the-three-pillars-of-esg",
+      sortOrder: 1,
+      title: "Unit 1 Self-assessment",
       description:
-        "Self-assessment quiz for Module 1: Introduction to ESG and sustainable development.",
+        "Self-assessment quiz for Unit 1: The Three Pillars of ESG (Environmental, Social, Governance).",
       passingScore: 70,
       questions: [
         question({
@@ -177,9 +178,19 @@ export const module1 = {
             },
           ],
         }),
+      ],
+    }),
 
+    unitQuiz({
+      unitSlug: "unit-2-from-corporate-philanthropy-to-business-necessity",
+      sortOrder: 2,
+      title: "Unit 2 Self-assessment",
+      description:
+        "Self-assessment quiz for Unit 2: From Corporate Philanthropy to Business Necessity.",
+      passingScore: 70,
+      questions: [
         question({
-          sortOrder: 5,
+          sortOrder: 1,
           prompt:
             "Question 2.1 — What was the key characteristic of the historical Socially Responsible Investing (SRI) era?",
           answers: [
@@ -208,7 +219,7 @@ export const module1 = {
         }),
 
         question({
-          sortOrder: 6,
+          sortOrder: 2,
           prompt:
             "Question 2.2 — The shift from Corporate Social Responsibility (CSR) to the current ESG framework was primarily driven by:",
           answers: [
@@ -237,7 +248,7 @@ export const module1 = {
         }),
 
         question({
-          sortOrder: 7,
+          sortOrder: 3,
           prompt:
             "Question 2.3 — Why was the traditional Corporate Social Responsibility (CSR) model often considered insufficient?",
           answers: [
@@ -264,9 +275,18 @@ export const module1 = {
             },
           ],
         }),
+      ],
+    }),
 
+    unitQuiz({
+      unitSlug: "unit-3-why-esg-is-your-strategic-advantage",
+      sortOrder: 3,
+      title: "Unit 3 Self-assessment",
+      description: "Self-assessment quiz for Unit 3: Why ESG is Your Strategic Advantage.",
+      passingScore: 70,
+      questions: [
         question({
-          sortOrder: 8,
+          sortOrder: 1,
           prompt:
             "Question 3.1 — For an SME, which factor demonstrates the most immediate strategic relevance of strong ESG performance?",
           answers: [
@@ -295,7 +315,7 @@ export const module1 = {
         }),
 
         question({
-          sortOrder: 9,
+          sortOrder: 2,
           prompt:
             "Question 3.2 — Viewing ESG as a framework for long-term resilience and value creation rather than short-term gains is an example of which strategic process?",
           answers: [
@@ -324,7 +344,7 @@ export const module1 = {
         }),
 
         question({
-          sortOrder: 10,
+          sortOrder: 3,
           prompt:
             "Question 3.3 — How does focusing on the Environmental (E) pillar support the financial success of an SME?",
           answers: [
@@ -353,7 +373,7 @@ export const module1 = {
         }),
 
         question({
-          sortOrder: 11,
+          sortOrder: 4,
           prompt:
             "Question 3.4 — What is a critical first step for an organization to embed ESG into its strategic operations?",
           answers: [
@@ -380,9 +400,19 @@ export const module1 = {
             },
           ],
         }),
+      ],
+    }),
 
+    unitQuiz({
+      unitSlug: "unit-4-linking-your-business-actions-to-global-goals",
+      sortOrder: 4,
+      title: "Unit 4 Self-assessment",
+      description:
+        "Self-assessment quiz for Unit 4: Linking Your Business Actions to Global Goals.",
+      passingScore: 70,
+      questions: [
         question({
-          sortOrder: 12,
+          sortOrder: 1,
           prompt:
             "Question 4.1 — Which statement best explains the relationship between ESG and the SDGs?",
           answers: [
@@ -411,7 +441,7 @@ export const module1 = {
         }),
 
         question({
-          sortOrder: 13,
+          sortOrder: 2,
           prompt:
             "Question 4.2 — A company’s strong commitment to internal Diversity, Equality, and Inclusion (DEI) efforts primarily aligns with which pair of Sustainable Development Goals (SDGs)?",
           answers: [
@@ -440,7 +470,7 @@ export const module1 = {
         }),
 
         question({
-          sortOrder: 14,
+          sortOrder: 3,
           prompt:
             "Question 4.3 — Measuring and reducing a company’s carbon footprint is a business action that directly supports which SDG?",
           answers: [
@@ -469,7 +499,7 @@ export const module1 = {
         }),
 
         question({
-          sortOrder: 15,
+          sortOrder: 4,
           prompt:
             "Question 4.4 — Why is it beneficial for an SME to communicate its ESG achievements using the language of the SDGs?",
           answers: [

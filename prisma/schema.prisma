@@ -164,7 +164,7 @@ model Quiz {
   course       Course            @relation(fields: [courseId], references: [id], onDelete: Cascade)
   translations QuizTranslation[]
 
-  @@unique([courseId, type])
+  @@unique([courseId, type, sortOrder])
   @@index([courseId])
 }
 
@@ -374,6 +374,8 @@ enum CourseArea {
   social
   governance
   cross_cutting
+  strategy
+  reporting
 }
 
 enum CourseDifficulty {

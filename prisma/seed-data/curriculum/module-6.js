@@ -1,4 +1,4 @@
-import { question, readMarkdown, section, selfAssessmentQuiz, translation } from "./helpers.js";
+import { question, readCurriculumMarkdown, section, translation, unitQuiz } from "./helpers.js";
 
 export const module6 = {
   slug: "module-6-monitoring-reporting-and-future-trends-of-esg",
@@ -12,11 +12,11 @@ export const module6 = {
   translations: [
     translation("en", {
       title: "Module 6: Monitoring, Reporting and Future Trends of ESG",
-      subtitle: "Measuring ESG progress, communicating performance and preparing for future trends",
+      subtitle: "ESG monitoring and future trends",
       description:
-        "This module helps learners monitor ESG implementation through meaningful indicators and KPIs, report ESG performance credibly, use innovation to improve ESG outcomes, and prepare for future EU policies and global ESG trends.",
+        "Measure ESG progress, report credibly, use innovation and prepare for future EU and global ESG trends.",
       content:
-        "This module focuses on selecting meaningful ESG indicators, reporting ESG performance credibly, using innovation as a driver of ESG performance, and continuously improving ESG practices in response to future EU policies and global trends. The full module content is divided into four Markdown-based units.",
+        "This module focuses on monitoring ESG progress and preparing for future developments. It explains how to select meaningful ESG indicators and KPIs, how to report and communicate ESG performance credibly, how innovation and digital tools can improve ESG outcomes, and how organisations can adapt to future EU policies and global ESG trends.",
     }),
   ],
   sections: [
@@ -27,7 +27,7 @@ export const module6 = {
       title: "Unit 1: ESG Indicators and Key Performance Indicators (KPIs)",
       summary:
         "Define ESG indicators, understand environmental, social and governance categories, and use KPIs as a practical management tool for sustainable business.",
-      content: readMarkdown("content/curriculum/module-6/unit-1.md"),
+      content: readCurriculumMarkdown("en", "module-6", "unit-1"),
     }),
     section({
       slug: "unit-2-reporting-and-communicating-esg-performance",
@@ -36,7 +36,7 @@ export const module6 = {
       title: "Unit 2: Reporting and Communicating ESG Performance",
       summary:
         "Apply ESG reporting principles and communicate ESG performance in a transparent, balanced and credible way.",
-      content: readMarkdown("content/curriculum/module-6/unit-2.md"),
+      content: readCurriculumMarkdown("en", "module-6", "unit-2"),
     }),
     section({
       slug: "unit-3-innovation-as-a-driver-for-esg-performance",
@@ -45,7 +45,7 @@ export const module6 = {
       title: "Unit 3: Innovation as a Driver for ESG Performance",
       summary:
         "Understand how innovation, digital transformation, AI and sustainable finance can support ESG performance and efficiency.",
-      content: readMarkdown("content/curriculum/module-6/unit-3.md"),
+      content: readCurriculumMarkdown("en", "module-6", "unit-3"),
     }),
     section({
       slug: "unit-4-continuous-improvement-future-eu-policies-and-global-esg-trends",
@@ -54,14 +54,16 @@ export const module6 = {
       title: "Unit 4: Continuous Improvement, Future EU Policies and Global ESG Trends",
       summary:
         "Use continuous improvement, future-trend scanning and regulatory awareness to keep ESG strategies relevant over time.",
-      content: readMarkdown("content/curriculum/module-6/unit-4.md"),
+      content: readCurriculumMarkdown("en", "module-6", "unit-4"),
     }),
   ],
   quizzes: [
-    selfAssessmentQuiz({
-      title: "Module 6 Self-assessment",
+    unitQuiz({
+      unitSlug: "unit-1-esg-indicators-and-key-performance-indicators-kpis",
+      sortOrder: 1,
+      title: "Unit 1 Self-assessment",
       description:
-        "Self-assessment quiz for Module 6: Monitoring, Reporting and Future Trends of ESG.",
+        "Self-assessment quiz for Unit 1: ESG Indicators and Key Performance Indicators (KPIs).",
       passingScore: 70,
       questions: [
         question({
@@ -157,9 +159,18 @@ export const module6 = {
             },
           ],
         }),
+      ],
+    }),
 
+    unitQuiz({
+      unitSlug: "unit-2-reporting-and-communicating-esg-performance",
+      sortOrder: 2,
+      title: "Unit 2 Self-assessment",
+      description: "Self-assessment quiz for Unit 2: Reporting and Communicating ESG Performance.",
+      passingScore: 70,
+      questions: [
         question({
-          sortOrder: 4,
+          sortOrder: 1,
           prompt: "Question 4 — What is the main purpose of ESG reporting?",
           answers: [
             {
@@ -194,7 +205,7 @@ export const module6 = {
         }),
 
         question({
-          sortOrder: 5,
+          sortOrder: 2,
           prompt:
             "Question 5 — Your marketing team publishes: “We are a fully sustainable company committed to protecting the planet.” No data, targets, or boundaries are provided. What is the main reporting risk?",
           answers: [
@@ -230,7 +241,7 @@ export const module6 = {
         }),
 
         question({
-          sortOrder: 6,
+          sortOrder: 3,
           prompt:
             "Question 6 — An investor asks how climate risks affect your long-term profitability. Your ESG report only describes recycling initiatives. What is missing?",
           answers: [
@@ -264,9 +275,18 @@ export const module6 = {
             },
           ],
         }),
+      ],
+    }),
 
+    unitQuiz({
+      unitSlug: "unit-3-innovation-as-a-driver-for-esg-performance",
+      sortOrder: 3,
+      title: "Unit 3 Self-assessment",
+      description: "Self-assessment quiz for Unit 3: Innovation as a Driver for ESG Performance.",
+      passingScore: 70,
+      questions: [
         question({
-          sortOrder: 7,
+          sortOrder: 1,
           prompt: "Question 7 — In the context of ESG, innovation is best described as:",
           answers: [
             {
@@ -301,7 +321,7 @@ export const module6 = {
         }),
 
         question({
-          sortOrder: 8,
+          sortOrder: 2,
           prompt:
             "Question 8 — Your SME wants to reduce waste but has limited budget. You have two options: invest €80,000 in a new automated waste-sorting machine or run a 3-month pilot redesigning packaging to reduce material use. What is the most suitable SME innovation approach?",
           answers: [
@@ -337,7 +357,7 @@ export const module6 = {
         }),
 
         question({
-          sortOrder: 9,
+          sortOrder: 3,
           prompt:
             "Question 9 — True or false: An ESG innovation should always be linked to at least one measurable KPI.",
           answers: [
@@ -357,9 +377,19 @@ export const module6 = {
             },
           ],
         }),
+      ],
+    }),
 
+    unitQuiz({
+      unitSlug: "unit-4-continuous-improvement-future-eu-policies-and-global-esg-trends",
+      sortOrder: 4,
+      title: "Unit 4 Self-assessment",
+      description:
+        "Self-assessment quiz for Unit 4: Continuous Improvement, Future EU Policies and Global ESG Trends.",
+      passingScore: 70,
+      questions: [
         question({
-          sortOrder: 10,
+          sortOrder: 1,
           prompt:
             "Question 10 — Your SME supplies parts to a large EU manufacturer that announces a net-zero roadmap aligned with the 2040 EU climate target. What is the most strategic action?",
           answers: [
@@ -395,7 +425,7 @@ export const module6 = {
         }),
 
         question({
-          sortOrder: 11,
+          sortOrder: 2,
           prompt: "Question 11 — Which of the following is a good ESG review routine for an SME?",
           answers: [
             {
@@ -430,7 +460,7 @@ export const module6 = {
         }),
 
         question({
-          sortOrder: 12,
+          sortOrder: 3,
           prompt:
             "Question 12 — Your ESG KPIs have remained unchanged for 2 years. No formal review meetings are held. What is the main risk?",
           answers: [

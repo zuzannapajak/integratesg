@@ -50,12 +50,10 @@ function pickTranslation(
 
 function mapArea(area: string): CurriculumModuleViewModel["area"] {
   switch (area) {
-    case "environmental":
-      return "environmental";
-    case "social":
-      return "social";
-    case "governance":
-      return "governance";
+    case "strategy":
+      return "strategy";
+    case "reporting":
+      return "reporting";
     default:
       return "cross-cutting";
   }
@@ -107,23 +105,17 @@ function formatAttemptDate(value: string): string {
 
 function buildGeneratedOutcomes(area: CurriculumModuleViewModel["area"]): CurriculumTextToken[] {
   switch (area) {
-    case "environmental":
+    case "strategy":
       return [
-        { key: "generatedOutcomes.environmental.0" },
-        { key: "generatedOutcomes.environmental.1" },
-        { key: "generatedOutcomes.environmental.2" },
+        { key: "generatedOutcomes.strategy.0" },
+        { key: "generatedOutcomes.strategy.1" },
+        { key: "generatedOutcomes.strategy.2" },
       ];
-    case "social":
+    case "reporting":
       return [
-        { key: "generatedOutcomes.social.0" },
-        { key: "generatedOutcomes.social.1" },
-        { key: "generatedOutcomes.social.2" },
-      ];
-    case "governance":
-      return [
-        { key: "generatedOutcomes.governance.0" },
-        { key: "generatedOutcomes.governance.1" },
-        { key: "generatedOutcomes.governance.2" },
+        { key: "generatedOutcomes.reporting.0" },
+        { key: "generatedOutcomes.reporting.1" },
+        { key: "generatedOutcomes.reporting.2" },
       ];
     default:
       return [
@@ -291,10 +283,7 @@ function buildCertificateState(params: {
 }): CurriculumCertificateViewModel {
   const attempt = params.attempt;
 
-  if (
-    attempt?.status !== "completed" ||
-    mapStage(attempt.currentStage) !== "completed"
-  ) {
+  if (attempt?.status !== "completed" || mapStage(attempt.currentStage) !== "completed") {
     return {
       isAvailable: false,
       downloadUrl: null,

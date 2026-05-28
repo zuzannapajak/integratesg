@@ -7,10 +7,12 @@
       "recommended": "Rekomendowane",
       "area": {
         "all": "Wszystkie obszary",
-        "environmental": "Environmental",
-        "social": "Social",
-        "governance": "Governance",
-        "crossCutting": "Cross-cutting"
+        "environmental": "Środowisko",
+        "social": "Społeczne",
+        "governance": "Ład korporacyjny",
+        "strategy": "Strategia",
+        "reporting": "Raportowanie",
+        "crossCutting": "Przekrojowe"
       },
       "status": {
         "notStarted": "Nie rozpoczęto",
@@ -52,10 +54,10 @@
       "searchPlaceholder": "Szukaj scenariuszy...",
       "area": {
         "all": "Wszystkie obszary ESG",
-        "environmental": "Environmental",
-        "social": "Social",
-        "governance": "Governance",
-        "crossCutting": "Cross-cutting"
+        "environmental": "Środowisko",
+        "social": "Społeczne",
+        "governance": "Ład korporacyjny",
+        "crossCutting": "Przekrojowe"
       },
       "status": {
         "notStarted": "Nie rozpoczęto",
@@ -97,10 +99,10 @@
       "searchPlaceholder": "Szukaj w ePortfolio...",
       "area": {
         "all": "Wszystkie obszary ESG",
-        "environmental": "Environmental",
-        "social": "Social",
-        "governance": "Governance",
-        "crossCutting": "Cross-cutting"
+        "environmental": "Środowisko",
+        "social": "Społeczne",
+        "governance": "Ład korporacyjny",
+        "crossCutting": "Przekrojowe"
       },
       "filters": {
         "status": {

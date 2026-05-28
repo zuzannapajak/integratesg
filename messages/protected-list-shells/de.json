@@ -10,7 +10,9 @@
         "environmental": "Umwelt",
         "social": "Soziales",
         "governance": "Unternehmensführung",
-        "crossCutting": "Übergreifend"
+        "strategy": "Strategie",
+        "reporting": "Berichterstattung",
+        "crossCutting": "Querschnittsthemen"
       },
       "status": {
         "notStarted": "Nicht gestartet",

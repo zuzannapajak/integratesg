@@ -10,18 +10,16 @@ import {
   Clock3,
   Compass,
   Layers3,
-  Leaf,
+  Library,
   PlayCircle,
-  ShieldCheck,
   Sparkles,
   Trophy,
-  Users,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRef, useState } from "react";
 
-type ModuleArea = "environmental" | "social" | "governance" | "cross-cutting";
+type ModuleArea = "strategy" | "reporting" | "cross-cutting";
 type ModuleStatus = "not_started" | "in_progress" | "completed" | "failed";
 
 type Props = {
@@ -49,32 +47,23 @@ function renderToken(
 
 function getAreaMeta(area: ModuleArea, t: ReturnType<typeof useTranslations>) {
   switch (area) {
-    case "environmental":
+    case "strategy":
       return {
-        label: t("area.environmental"),
-        icon: <Leaf className="h-4 w-4" />,
+        label: t("area.strategy"),
+        icon: <Compass className="h-4 w-4" />,
         badgeClass: "border-emerald-100 bg-emerald-50 text-emerald-700",
-        glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.18),transparent_46%)]",
+        glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.15),transparent_46%)]",
         accentClass: "from-emerald-100/90 via-white to-emerald-50/80",
         orbitClass: "border-emerald-200/70 bg-emerald-100/55 text-emerald-700",
       };
-    case "social":
+    case "reporting":
       return {
-        label: t("area.social"),
-        icon: <Users className="h-4 w-4" />,
-        badgeClass: "border-sky-100 bg-sky-50 text-sky-700",
-        glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.15),transparent_46%)]",
-        accentClass: "from-sky-100/90 via-white to-sky-50/80",
-        orbitClass: "border-sky-200/70 bg-sky-100/55 text-sky-700",
-      };
-    case "governance":
-      return {
-        label: t("area.governance"),
-        icon: <ShieldCheck className="h-4 w-4" />,
-        badgeClass: "border-violet-100 bg-violet-50 text-violet-700",
-        glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(139,92,246,0.15),transparent_46%)]",
-        accentClass: "from-violet-100/90 via-white to-violet-50/80",
-        orbitClass: "border-violet-200/70 bg-violet-100/55 text-violet-700",
+        label: t("area.reporting"),
+        icon: <Library className="h-4 w-4" />,
+        badgeClass: "border-blue-100 bg-blue-50 text-blue-700",
+        glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.15),transparent_46%)]",
+        accentClass: "from-blue-100/90 via-white to-blue-50/80",
+        orbitClass: "border-blue-200/70 bg-blue-100/55 text-blue-700",
       };
     default:
       return {
@@ -122,16 +111,12 @@ function getOverviewCopy(module: CurriculumModuleViewModel, t: ReturnType<typeof
     return module.content;
   }
 
-  if (module.area === "environmental") {
-    return t("overviewCopy.environmental");
+  if (module.area === "strategy") {
+    return t("overviewCopy.strategy");
   }
 
-  if (module.area === "social") {
-    return t("overviewCopy.social");
-  }
-
-  if (module.area === "governance") {
-    return t("overviewCopy.governance");
+  if (module.area === "reporting") {
+    return t("overviewCopy.reporting");
   }
 
   return t("overviewCopy.crossCutting");

@@ -10,6 +10,8 @@
         "environmental": "Environmental",
         "social": "Social",
         "governance": "Governance",
+        "strategy": "Strategy",
+        "reporting": "Reporting",
         "crossCutting": "Cross-cutting"
       },
       "status": {

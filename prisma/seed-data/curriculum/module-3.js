@@ -1,4 +1,4 @@
-import { question, readMarkdown, section, selfAssessmentQuiz, translation } from "./helpers.js";
+import { question, readCurriculumMarkdown, section, translation, unitQuiz } from "./helpers.js";
 
 export const module3 = {
   slug: "module-3-navigating-esg-frameworks-and-eu-reporting-standards",
@@ -12,11 +12,11 @@ export const module3 = {
   translations: [
     translation("en", {
       title: "Module 3: Navigating ESG Frameworks and EU Reporting Standards",
-      subtitle: "Understanding frameworks, EU reporting rules and practical SME implications",
+      subtitle: "ESG frameworks and EU reporting",
       description:
-        "This module explains how key ESG frameworks and European reporting standards connect, how organisations can prepare for EU reporting requirements, and how SMEs can translate complex frameworks into practical business actions.",
+        "Understand SDGs, GRI, SASB, TCFD, ESRS and CSRD, and translate reporting rules into SME actions.",
       content:
-        "This module introduces SDGs, GRI, SASB, TCFD, ESRS, CSRD, ESG ratings, audits and disclosures, and practical implications for SMEs. The full module content is divided into four Markdown-based units.",
+        "This module explains the main ESG frameworks and EU reporting standards that shape sustainability practice. It introduces SDGs, GRI, SASB, TCFD, ESRS and CSRD, shows how these frameworks relate to each other, and explains how ESG ratings, audits and disclosures affect credibility, financing, partnerships and practical implementation for SMEs.",
     }),
   ],
   sections: [
@@ -27,7 +27,7 @@ export const module3 = {
       title: "Unit 1: Key Frameworks – SDGs, GRI, SASB, TCFD, ESRS",
       summary:
         "Differentiate between the main ESG frameworks, understand their purposes, and select the framework or combination of frameworks most relevant to your organisation.",
-      content: readMarkdown("content/curriculum/module-3/unit-1.md"),
+      content: readCurriculumMarkdown("en", "module-3", "unit-1"),
     }),
     section({
       slug: "unit-2-csrd-and-related-eu-policies",
@@ -37,7 +37,7 @@ export const module3 = {
         "Unit 2: The EU Corporate Sustainability Reporting Directive (CSRD) and related EU Policies",
       summary:
         "Explain the purpose, scope and requirements of the CSRD, how it connects to other EU policies, and how to prepare for CSRD-compliant reporting.",
-      content: readMarkdown("content/curriculum/module-3/unit-2.md"),
+      content: readCurriculumMarkdown("en", "module-3", "unit-2"),
     }),
     section({
       slug: "unit-3-esg-ratings-audits-disclosures-and-their-impact",
@@ -46,7 +46,7 @@ export const module3 = {
       title: "Unit 3: ESG Ratings, Audits, Disclosures and Their Impact",
       summary:
         "Understand how ESG ratings, audits and disclosures work, why they matter, and how to prepare for ESG evaluation and assurance.",
-      content: readMarkdown("content/curriculum/module-3/unit-3.md"),
+      content: readCurriculumMarkdown("en", "module-3", "unit-3"),
     }),
     section({
       slug: "unit-4-practical-implications-for-smes-and-sector-specific-realities",
@@ -55,14 +55,16 @@ export const module3 = {
       title: "Unit 4: Practical Implications for SMEs and Sector-Specific Realities",
       summary:
         "Translate ESG frameworks and reporting obligations into practical, sector-appropriate actions for SMEs.",
-      content: readMarkdown("content/curriculum/module-3/unit-4.md"),
+      content: readCurriculumMarkdown("en", "module-3", "unit-4"),
     }),
   ],
   quizzes: [
-    selfAssessmentQuiz({
-      title: "Module 3 Self-assessment",
+    unitQuiz({
+      unitSlug: "unit-1-key-frameworks-sdgs-gri-sasb-tcfd-esrs",
+      sortOrder: 1,
+      title: "Unit 1 Self-assessment",
       description:
-        "Self-assessment quiz for Module 3: Navigating ESG Frameworks and EU Reporting Standards.",
+        "Self-assessment quiz for Unit 1: Key Frameworks \u2013 SDGs, GRI, SASB, TCFD, ESRS.",
       passingScore: 70,
       questions: [
         question({
@@ -237,9 +239,19 @@ export const module3 = {
             },
           ],
         }),
+      ],
+    }),
 
+    unitQuiz({
+      unitSlug: "unit-2-csrd-and-related-eu-policies",
+      sortOrder: 2,
+      title: "Unit 2 Self-assessment",
+      description:
+        "Self-assessment quiz for Unit 2: The EU Corporate Sustainability Reporting Directive (CSRD) and related EU Policies.",
+      passingScore: 70,
+      questions: [
         question({
-          sortOrder: 7,
+          sortOrder: 1,
           prompt: "Question 7 — What is the primary purpose of the CSRD?",
           answers: [
             {
@@ -267,7 +279,7 @@ export const module3 = {
         }),
 
         question({
-          sortOrder: 8,
+          sortOrder: 2,
           prompt:
             "Question 8 — A company preparing for CSRD-aligned reporting wants to understand what is required. Which of the following actions is necessary to comply with the CSRD?",
           answers: [
@@ -296,7 +308,7 @@ export const module3 = {
         }),
 
         question({
-          sortOrder: 9,
+          sortOrder: 3,
           prompt: "Question 9 — How does the CSRD connect to the EU Taxonomy Regulation?",
           answers: [
             {
@@ -324,7 +336,7 @@ export const module3 = {
         }),
 
         question({
-          sortOrder: 10,
+          sortOrder: 4,
           prompt: "Question 10 — What is the relationship between the CSRD and the SFDR?",
           answers: [
             {
@@ -352,7 +364,7 @@ export const module3 = {
         }),
 
         question({
-          sortOrder: 11,
+          sortOrder: 5,
           prompt: "Question 11 — How does the CSRD connect to the CSDDD?",
           answers: [
             {
@@ -380,7 +392,7 @@ export const module3 = {
         }),
 
         question({
-          sortOrder: 12,
+          sortOrder: 6,
           prompt:
             "Question 12 — Your organisation wants to begin preparing for CSRD-compliant reporting. Which of the following actions is the most appropriate first step?",
           answers: [
@@ -409,7 +421,7 @@ export const module3 = {
         }),
 
         question({
-          sortOrder: 13,
+          sortOrder: 7,
           prompt:
             "Question 13 — Your company has confirmed that the CSRD will apply to it within the next two years. What is the next essential step you should take to move towards CSRD-compliant reporting?",
           answers: [
@@ -436,9 +448,19 @@ export const module3 = {
             },
           ],
         }),
+      ],
+    }),
 
+    unitQuiz({
+      unitSlug: "unit-3-esg-ratings-audits-disclosures-and-their-impact",
+      sortOrder: 3,
+      title: "Unit 3 Self-assessment",
+      description:
+        "Self-assessment quiz for Unit 3: ESG Ratings, Audits, Disclosures and Their Impact.",
+      passingScore: 70,
+      questions: [
         question({
-          sortOrder: 14,
+          sortOrder: 1,
           prompt:
             "Question 14 — Which statement best describes how ESG ratings, audits, and disclosures relate to one another?",
           answers: [
@@ -467,7 +489,7 @@ export const module3 = {
         }),
 
         question({
-          sortOrder: 15,
+          sortOrder: 2,
           prompt:
             "Question 15 — Why do ESG ratings and audited disclosures matter for organisations, including SMEs?",
           answers: [
@@ -496,7 +518,7 @@ export const module3 = {
         }),
 
         question({
-          sortOrder: 16,
+          sortOrder: 3,
           prompt:
             "Question 16 — How can strong ESG performance, supported by clear disclosures, influence investor confidence?",
           answers: [
@@ -525,7 +547,7 @@ export const module3 = {
         }),
 
         question({
-          sortOrder: 17,
+          sortOrder: 4,
           prompt:
             "Question 17 — Why does strong ESG performance contribute to an organisation’s long-term competitiveness?",
           answers: [
@@ -553,7 +575,7 @@ export const module3 = {
         }),
 
         question({
-          sortOrder: 18,
+          sortOrder: 5,
           prompt:
             "Question 18 — Which practical step should you take first when preparing your organisation for an ESG evaluation?",
           answers: [
@@ -582,7 +604,7 @@ export const module3 = {
         }),
 
         question({
-          sortOrder: 19,
+          sortOrder: 6,
           prompt:
             "Question 19 — Your organisation is preparing for external ESG audit for the first time. Which step will most effectively support a smooth process?",
           answers: [
@@ -609,9 +631,19 @@ export const module3 = {
             },
           ],
         }),
+      ],
+    }),
 
+    unitQuiz({
+      unitSlug: "unit-4-practical-implications-for-smes-and-sector-specific-realities",
+      sortOrder: 4,
+      title: "Unit 4 Self-assessment",
+      description:
+        "Self-assessment quiz for Unit 4: Practical Implications for SMEs and Sector-Specific Realities.",
+      passingScore: 70,
+      questions: [
         question({
-          sortOrder: 20,
+          sortOrder: 1,
           prompt:
             "Question 20 — An SME wants to begin integrating ESG principles into its daily operations. Which approach best reflects how frameworks and reporting obligations translate into practical, manageable actions for smaller businesses?",
           answers: [
@@ -640,7 +672,7 @@ export const module3 = {
         }),
 
         question({
-          sortOrder: 21,
+          sortOrder: 2,
           prompt:
             "Question 21 — An SME wants to align ESG frameworks but is concerned about complexity. Which practical steps can the SME make to integrate ESG principles?",
           answers: [
@@ -669,7 +701,7 @@ export const module3 = {
         }),
 
         question({
-          sortOrder: 22,
+          sortOrder: 3,
           prompt:
             "Question 22 — A small manufacturing company wants to integrate ESG into its daily operations without overextending its resources. Which approach aligns best with realistic, sector-appropriate ESG integration?",
           answers: [
@@ -698,7 +730,7 @@ export const module3 = {
         }),
 
         question({
-          sortOrder: 23,
+          sortOrder: 4,
           prompt:
             "Question 23 — Imagine you are the manager of a tourism and hospitality SME and want to integrate ESG principles into daily decisions. Which priority areas should you choose?",
           answers: [
@@ -727,7 +759,7 @@ export const module3 = {
         }),
 
         question({
-          sortOrder: 24,
+          sortOrder: 5,
           prompt:
             "Question 24 — Which challenge commonly affects SMEs when trying to implement sustainability initiatives?",
           answers: [
@@ -756,7 +788,7 @@ export const module3 = {
         }),
 
         question({
-          sortOrder: 25,
+          sortOrder: 6,
           prompt:
             "Question 25 — Which of the following reflects a realistic opportunity for SMEs when integrating sustainability into their business model?",
           answers: [

@@ -1,4 +1,4 @@
-export type CurriculumArea = "environmental" | "social" | "governance" | "cross-cutting";
+export type CurriculumArea = "strategy" | "reporting" | "cross-cutting";
 export type CurriculumStatus = "not_started" | "in_progress" | "completed" | "failed";
 export type CurriculumDifficulty = "foundation" | "intermediate";
 export type CurriculumStage = "overview" | "pre_quiz" | "lessons" | "post_quiz" | "completed";

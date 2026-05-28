@@ -1,4 +1,4 @@
-import { question, readMarkdown, section, selfAssessmentQuiz, translation } from "./helpers.js";
+import { question, readCurriculumMarkdown, section, translation, unitQuiz } from "./helpers.js";
 
 export const module5 = {
   slug: "module-5-implementation-data-and-cross-functional-practice",
@@ -12,11 +12,11 @@ export const module5 = {
   translations: [
     translation("en", {
       title: "Module 5: Implementation, Data, and Cross-Functional Practice",
-      subtitle: "Turning ESG goals into measurable and coordinated business practice",
+      subtitle: "ESG implementation and data",
       description:
-        "This module focuses on ESG as a practical business process. Learners explore the ESG implementation lifecycle, data gathering and digitalisation, embedding ESG into daily decision-making, and cross-functional and cross-sector collaboration.",
+        "Use ESG data, lifecycle planning, daily processes and collaboration to turn goals into measurable practice.",
       content:
-        "This module helps learners understand how everyday decisions, structured data, coordination between teams and partnerships shape effective ESG integration over time. The full module content is divided into four Markdown-based units.",
+        "This module focuses on implementing ESG through structured action, reliable data and collaboration. It explains the ESG implementation lifecycle, practical ESG data gathering and digitalisation, ways to embed ESG into everyday workflows and decisions, and the role of cross-functional and cross-sector cooperation in achieving lasting ESG outcomes.",
     }),
   ],
   sections: [
@@ -27,7 +27,7 @@ export const module5 = {
       title: "Unit 1: Lifecycle of ESG Integration",
       summary:
         "Identify the main stages of the ESG implementation lifecycle and apply structured planning and evaluation approaches.",
-      content: readMarkdown("content/curriculum/module-5/unit-1.md"),
+      content: readCurriculumMarkdown("en", "module-5", "unit-1"),
     }),
     section({
       slug: "unit-2-esg-data-gathering-management-and-digitalisation",
@@ -36,7 +36,7 @@ export const module5 = {
       title: "Unit 2: ESG Data Gathering, Management, and Digitalisation",
       summary:
         "Recognise key ESG data types and apply practical methods to collect, manage and digitalise ESG information effectively.",
-      content: readMarkdown("content/curriculum/module-5/unit-2.md"),
+      content: readCurriculumMarkdown("en", "module-5", "unit-2"),
     }),
     section({
       slug: "unit-3-embedding-esg-into-daily-processes-and-decision-making",
@@ -45,7 +45,7 @@ export const module5 = {
       title: "Unit 3: Embedding ESG into Daily Processes and Decision-Making",
       summary:
         "Integrate ESG values into daily workflows and strengthen organisational culture around responsibility, ethics and sustainability.",
-      content: readMarkdown("content/curriculum/module-5/unit-3.md"),
+      content: readCurriculumMarkdown("en", "module-5", "unit-3"),
     }),
     section({
       slug: "unit-4-cross-functional-and-cross-sector-collaboration",
@@ -54,14 +54,15 @@ export const module5 = {
       title: "Unit 4: Cross-Functional and Cross-Sector Collaboration",
       summary:
         "Identify collaboration opportunities within and beyond the organisation and apply partnership approaches that enhance ESG outcomes.",
-      content: readMarkdown("content/curriculum/module-5/unit-4.md"),
+      content: readCurriculumMarkdown("en", "module-5", "unit-4"),
     }),
   ],
   quizzes: [
-    selfAssessmentQuiz({
-      title: "Module 5 Self-assessment",
-      description:
-        "Self-assessment quiz for Module 5: Implementation, Data, and Cross-Functional Practice.",
+    unitQuiz({
+      unitSlug: "unit-1-lifecycle-of-esg-integration",
+      sortOrder: 1,
+      title: "Unit 1 Self-assessment",
+      description: "Self-assessment quiz for Unit 1: Lifecycle of ESG Integration.",
       passingScore: 70,
       questions: [
         question({
@@ -148,9 +149,19 @@ export const module5 = {
             },
           ],
         }),
+      ],
+    }),
 
+    unitQuiz({
+      unitSlug: "unit-2-esg-data-gathering-management-and-digitalisation",
+      sortOrder: 2,
+      title: "Unit 2 Self-assessment",
+      description:
+        "Self-assessment quiz for Unit 2: ESG Data Gathering, Management, and Digitalisation.",
+      passingScore: 70,
+      questions: [
         question({
-          sortOrder: 4,
+          sortOrder: 1,
           prompt: "Question 4 — Which of the following is an example of environmental data?",
           answers: [
             {
@@ -175,7 +186,7 @@ export const module5 = {
         }),
 
         question({
-          sortOrder: 5,
+          sortOrder: 2,
           prompt: "Question 5 — What ensures data comparability in ESG management?",
           answers: [
             {
@@ -201,7 +212,7 @@ export const module5 = {
         }),
 
         question({
-          sortOrder: 6,
+          sortOrder: 3,
           prompt: "Question 6 — Why is digitalisation important for ESG data?",
           answers: [
             {
@@ -226,9 +237,19 @@ export const module5 = {
             },
           ],
         }),
+      ],
+    }),
 
+    unitQuiz({
+      unitSlug: "unit-3-embedding-esg-into-daily-processes-and-decision-making",
+      sortOrder: 3,
+      title: "Unit 3 Self-assessment",
+      description:
+        "Self-assessment quiz for Unit 3: Embedding ESG into Daily Processes and Decision-Making.",
+      passingScore: 70,
+      questions: [
         question({
-          sortOrder: 7,
+          sortOrder: 1,
           prompt: "Question 7 — What does “embedding ESG into daily work” primarily mean?",
           answers: [
             {
@@ -255,7 +276,7 @@ export const module5 = {
         }),
 
         question({
-          sortOrder: 8,
+          sortOrder: 2,
           prompt:
             "Question 8 — Which factor most strongly supports embedding ESG in company culture?",
           answers: [
@@ -283,7 +304,7 @@ export const module5 = {
         }),
 
         question({
-          sortOrder: 9,
+          sortOrder: 3,
           prompt: "Question 9 — How can performance management systems strengthen ESG integration?",
           answers: [
             {
@@ -308,9 +329,19 @@ export const module5 = {
             },
           ],
         }),
+      ],
+    }),
 
+    unitQuiz({
+      unitSlug: "unit-4-cross-functional-and-cross-sector-collaboration",
+      sortOrder: 4,
+      title: "Unit 4 Self-assessment",
+      description:
+        "Self-assessment quiz for Unit 4: Cross-Functional and Cross-Sector Collaboration.",
+      passingScore: 70,
+      questions: [
         question({
-          sortOrder: 10,
+          sortOrder: 1,
           prompt:
             "Question 10 — What is the main purpose of cross-functional collaboration in ESG?",
           answers: [
@@ -338,7 +369,7 @@ export const module5 = {
         }),
 
         question({
-          sortOrder: 11,
+          sortOrder: 2,
           prompt: "Question 11 — Which of the following best defines cross-sector collaboration?",
           answers: [
             {
@@ -365,7 +396,7 @@ export const module5 = {
         }),
 
         question({
-          sortOrder: 12,
+          sortOrder: 3,
           prompt:
             "Question 12 — What is the most effective way to sustain successful ESG partnerships?",
           answers: [

@@ -198,7 +198,7 @@ export type DashboardCurriculumAttemptRow = {
   learnerEmail: string;
   courseTitle: string;
   courseSlug: string;
-  area: "environmental" | "social" | "governance" | "cross-cutting";
+  area: "strategy" | "reporting" | "cross-cutting";
   attemptNumber: number;
   status: "completed" | "in_progress" | "failed";
   preQuizScoreLabel: string;
