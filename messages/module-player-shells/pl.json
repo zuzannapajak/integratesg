@@ -1,8 +1,8 @@
 {
   "Protected": {
     "ModulePlayerShell": {
-      "lessonNavigator": "Nawigator lekcji",
-      "lessonLabel": "Lekcja {index}",
+      "lessonNavigator": "Nawigator",
+      "lessonLabel": "Dział {index}",
       "lessonActions": {
         "finishLessons": "Zakończ lekcje",
         "completeAndContinue": "Ukończ lekcję i kontynuuj",

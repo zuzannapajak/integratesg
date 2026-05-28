@@ -31,6 +31,8 @@ Not every ESG topic will be equally important for your business. Prioritising me
 
 What ESG topics do you think your stakeholders care about most? Why?
 
+<!-- page -->
+
 ## Section 2: Steps to Prioritise ESG Issues
 
 ## Step 1: Identify Relevant ESG Topics
@@ -95,6 +97,8 @@ Here’s how:
 
 A manufacturing company used a materiality matrix and found that energy efficiency, worker safety, and ethical sourcing were top priorities for both stakeholders and business impact. These became the focus of their ESG strategy.
 
+<!-- page -->
+
 ## Section 3: Setting ESG Objectives
 
 ## Step 1: Turn Priorities into Objectives
@@ -126,6 +130,8 @@ Make sure your ESG objectives support your organisation’s overall mission and 
 ## Reflection question
 
 Which ESG objective would create the most value for your organisation and its stakeholders if achieved?
+
+<!-- page -->
 
 ## Step 4: Assign Responsibility and Resources
 

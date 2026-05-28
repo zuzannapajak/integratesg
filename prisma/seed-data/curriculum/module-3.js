@@ -15,8 +15,7 @@ export const module3 = {
       subtitle: "ESG frameworks and EU reporting",
       description:
         "Understand SDGs, GRI, SASB, TCFD, ESRS and CSRD, and translate reporting rules into SME actions.",
-      content:
-        "This module explains the main ESG frameworks and EU reporting standards that shape sustainability practice. It introduces SDGs, GRI, SASB, TCFD, ESRS and CSRD, shows how these frameworks relate to each other, and explains how ESG ratings, audits and disclosures affect credibility, financing, partnerships and practical implementation for SMEs.",
+      content: readCurriculumMarkdown("en", "module-3", "intro"),
       details: {
         practicalFocus:
           "Understand the ESG frameworks and EU reporting rules that shape credible sustainability practice.",

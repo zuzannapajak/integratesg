@@ -15,8 +15,7 @@ export const module1 = {
       subtitle: "Foundation module",
       description:
         "Learn the ESG pillars, how ESG evolved, why it matters for SMEs, and how business actions connect to the SDGs.",
-      content:
-        "This module introduces the foundations of ESG and sustainable development. It explains the Environmental, Social and Governance pillars, shows how ESG evolved from earlier approaches such as CSR and SRI, and presents why ESG is strategically relevant for both SMEs and larger organisations. The module also connects everyday business actions with the Sustainable Development Goals.",
+      content: readCurriculumMarkdown("en", "module-1", "intro"),
       details: {
         practicalFocus:
           "Build a clear foundation for understanding ESG as a practical business concept, not only a reporting term.",

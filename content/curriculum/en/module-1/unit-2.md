@@ -18,6 +18,8 @@ Decades ago, the focus wasn't on what companies should do, but what investors di
 - **The Big Idea:** This approach was about values alignment — making sure money wasn't supporting industries the investor morally opposed.
 - **The Limit:** SRI focused on avoiding harm but didn't actually push companies to do better. It was passive, not active.
 
+<!-- page -->
+
 ## 2. The Inclusion Era: The Rise of Corporate Social Responsibility (CSR)
 
 By the late 20th century, the focus shifted from avoiding the bad to actively promoting the good. This is where Corporate Social Responsibility (CSR) took centre stage.
@@ -25,7 +27,6 @@ By the late 20th century, the focus shifted from avoiding the bad to actively pr
 - **What it looked like:** Companies started dedicating resources to social projects, charitable donations, and environmental initiatives. You probably remember seeing reports on a company's community day or its tree-planting efforts.
 - **The Key Distinction:** CSR was largely seen as philanthropy or a separate add-on. It was often managed by a dedicated CSR department, separate from the core business strategy and financial decision-making.
 
-> **Definition / Term / Highlighted sentence:**
 > **Corporate Social Responsibility (CSR):** A business model that helps a company be socially accountable to itself, its stakeholders, and the public. It is generally voluntary and separate from core operations.
 
 ## Why CSR Wasn't Enough
@@ -36,6 +37,8 @@ While good-hearted, CSR often had two problems:
 2. **It wasn't always linked to the business:** A factory dumping pollution but donating to a children's hospital, a practice sometimes called "greenwashing", wasn't truly sustainable.
 
 This is what led to the demand for a more structured, financially relevant framework.
+
+<!-- page -->
 
 ## 3. The Integration Era: The Birth of ESG
 

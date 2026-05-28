@@ -42,6 +42,8 @@ How would you know if your organisation’s leaders are truly committed to ESG? 
 
 A global logistics company invited its C-suite to a workshop on climate risk. After seeing the data, the CEO championed a new emissions reduction initiative. In another case, a bank’s board attended a sustainability summit and subsequently integrated ESG into their annual strategy review.
 
+<!-- page -->
+
 ## Step 2: Align ESG with Business Goals
 
 - Connect ESG objectives to core business strategy.
@@ -90,6 +92,8 @@ What’s one way you could encourage your leaders to take more ownership of ESG 
 ## Real-life example
 
 A retail company launched an internal campaign sharing employee stories about volunteering and sustainability, making ESG personal and relatable. Another company created an ESG values video featuring staff from different departments.
+
+<!-- page -->
 
 ## Step 2: Embed ESG in Everyday Practices
 
@@ -145,6 +149,8 @@ How could you make ESG values more visible and meaningful in your team’s daily
 ## Real-life example
 
 A manufacturing company faced resistance to a new waste reduction programme. By piloting the initiative in one department and sharing the cost savings, they gained broader buy-in across the organisation.
+
+<!-- page -->
 
 ## Section 5: Sustaining ESG Commitment and Culture
 

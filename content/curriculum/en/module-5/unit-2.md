@@ -23,6 +23,8 @@ Every organisation, regardless of size, generates valuable ESG data. To make sen
 
 These categories are interconnected. For example, energy reduction, which is environmental, can lower costs and improve working conditions, which are social, while strong internal policies, which are governance-related, ensure that reporting on both remains transparent.
 
+<!-- page -->
+
 ## 2. Building a Data Strategy: Start Simple, Stay Consistent
 
 The biggest challenge for many organisations is knowing where to begin. You don’t need expensive software or consultants to start gathering ESG data. What matters most is consistency — using the same indicators, in the same way, over time.
@@ -42,6 +44,8 @@ Reliable data builds trust — both inside and outside the organisation. To main
 - **Traceability** ensures that data sources can be verified. Save original files or screenshots so results can be checked if needed.
 
 These principles also align with major frameworks such as GRI (Global Reporting Initiative) and SASB (Sustainability Accounting Standards Board), which emphasise data integrity and context. Following such standards now makes it much easier to adapt to upcoming EU regulations later.
+
+<!-- page -->
 
 ## 4. The Role of Digitalisation
 

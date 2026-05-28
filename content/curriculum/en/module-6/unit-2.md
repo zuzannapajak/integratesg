@@ -36,6 +36,8 @@ Finally, all ESG information must meet key qualitative characteristics. It shoul
 - clear and understandable for non-experts;
 - verifiable, meaning that data and statements can be checked and supported by evidence.
 
+<!-- page -->
+
 ## Minimum disclosures that apply to all reporters (ESRS 2)
 
 In addition to general principles, ESRS requires organisations to disclose a minimum set of information regardless of sector.
@@ -83,6 +85,8 @@ Where do you see risks that your organisation’s reporting may be misleading or
 
 ## Credible ESG Communication
 
+<!-- page -->
+
 ## Key factors for a credible ESG communication
 
 Credible ESG communication starts with realistic and achievable goals. Organisations should clearly communicate their level of ambition while avoiding exaggerated claims. Messages should be adapted to different audiences, recognising that investors, employees, customers and communities have different expectations and concerns.
@@ -113,6 +117,8 @@ How should our ESG communication differ for investors, employees, customers and 
 - Take ESG ratings and public ESG commitments into account, analysing which ESG commitments are a good fit for your company.
 - Consider sustainability disclosure operating model, overall strategic ambitions and data technology that you have available.
 - Create appropriate IT structures and internal communication processes.
+
+<!-- page -->
 
 ## 4. Draw implementation roadmap for ESG-related communication
 

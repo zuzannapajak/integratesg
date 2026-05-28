@@ -31,6 +31,8 @@ The Commission proposed series of changes as part of its February 2025 omnibus p
 
 How might the EU 2040 climate target and 2050 climate neutrality goal affect my organisation’s strategy, operations and investments?
 
+<!-- page -->
+
 ## Steps for best implementation of future policies
 
 The proposed target set by the European Commission establishes the tone for regulatory expectations in the years ahead and sends a clear signal to companies across all sectors.
@@ -53,6 +55,8 @@ Furthermore, investing in training programmes for internal teams and board membe
 
 Finally, engaging third-party ESG assurance providers can enhance credibility, strengthen investor trust, and demonstrate a concrete commitment to transparency and accountability.
 
+<!-- page -->
+
 ## Global ESG Trends
 
 At a global level, institutional investors are largely maintaining their ESG commitments, although recent data reveals significant geographical differences. In the United States, for instance, the market has experienced its tenth consecutive quarter of ESG fund withdrawals, amounting to 6.1 billion dollars. These trends have been influenced in part by political developments, including the policy direction associated with President Donald Trump.
@@ -72,6 +76,8 @@ Financial institutions and corporations are progressively integrating sustainabi
 ## Reflection Question
 
 Looking ahead 3–5 years, what role would I like to play in my organisation’s ESG journey?
+
+<!-- page -->
 
 # Module Conclusion
 

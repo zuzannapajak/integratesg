@@ -34,6 +34,8 @@ When these departments work together, the organisation gains both alignment and 
 
 A Bulgarian manufacturing company created an ESG task force with managers from production, HR, and finance. They met monthly to review data and coordinate initiatives. As a result, they reduced waste costs by 12% and improved employee participation in sustainability programmes by 40% within one year.
 
+<!-- page -->
+
 ## 2. Building a Culture of Cooperation
 
 Collaboration works best in a culture that values openness, trust, and shared learning. Encourage teams to share not only successes but also challenges. ESG integration often involves experimentation — not every initiative works immediately, and that’s okay. The goal is to learn and improve together.
@@ -60,6 +62,8 @@ Partnerships add resources, innovation, and legitimacy. Working together allows 
 ## Example
 
 A logistics SME in Italy joined forces with a recycling company and a local university to develop a circular supply chain model. The company reduced its carbon footprint by optimising transport routes and recycling packaging materials, while students conducted research and helped analyse data. This three-way partnership resulted in measurable savings and valuable community engagement.
+
+<!-- page -->
 
 ## 4. Building and Managing Effective Partnerships
 
@@ -88,6 +92,8 @@ Above all, remember that collaboration is a skill. It improves through practice,
 
 This module shows that successful ESG integration depends on shared responsibility, simple and consistent use of data, and structured collaboration across organisations and sectors. When ESG is embedded into daily processes and decision-making, it supports long-term value creation, credibility, and continuous improvement. By applying these principles, organisations can move beyond compliance and treat ESG as a core part of how they operate and evolve.
 
+<!-- page -->
+
 # References
 
 1. European Commission (2020). _The European Green Deal._ Available at: https://commission.europa.eu. Accessed: 2026.
@@ -103,6 +109,8 @@ This module shows that successful ESG integration depends on shared responsibili
 11. MSCI (2024). _MSCI ESG Ratings Methodology._ Available at: https://www.msci.com. Accessed: 2026.
 12. Sustainalytics (2024). _ESG Risk Ratings Methodology._ Available at: https://www.sustainalytics.com. Accessed: 2026.
 13. Bloomberg (2024). _ESG Disclosure Scores Methodology._ Available at: https://www.bloomberg.com. Accessed: 2026.
+
+<!-- page -->
 
 # Further Resources
 

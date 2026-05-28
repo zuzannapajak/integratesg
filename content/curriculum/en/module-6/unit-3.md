@@ -47,6 +47,8 @@ Innovation supports corporate sustainability by enhancing firm value and enablin
 - Line between philanthropy and impact investing becomes blurred.
 - Mobilizing significant resources for impact.
 
+<!-- page -->
+
 ## Opportunities for your company
 
 Strong ESG practices can improve financial performance. Companies with robust ESG profiles often show better operational efficiency, lower cost of capital and reduced financial risk, which together contribute to long-term competitiveness.
@@ -62,6 +64,8 @@ By integrating digital solutions into core activities, organisations can strengt
 At the same time, digital transformation can alleviate financing constraints, thereby fostering improvements in financial performance and enhancing the innovation capacity of enterprises. By optimising processes and increasing efficiency, digitalisation reduces operational costs and frees up resources that can be reinvested in research, development, and sustainable innovation.
 
 Moreover, digital transformation can positively moderate the relationship between ESG performance and enterprise innovation performance, meaning that companies with stronger digital capabilities are better positioned to translate ESG efforts into tangible innovation outcomes. In this sense, digital transformation improves overall enterprise efficiency, mitigates financial constraints, and promotes growth in both financial and innovation performance.
+
+<!-- page -->
 
 When looking specifically at the intersection between digital transformation and ESG, digitalisation has been shown to have a significantly positive effect on ESG performance, particularly by improving enterprise green innovation performance. However, the impact of digital transformation on ESG performance can be heterogeneous, varying according to sector, company size, digital maturity, and organisational culture.
 
@@ -88,6 +92,8 @@ To effectively monitor and improve ESG performance, organisations can adopt a ra
 - integrated dashboards for performance tracking;
 - advanced analytics systems.
 
+<!-- page -->
+
 Among these, Artificial Intelligence stands out as a transformative enabler. By using AI, companies can drive new innovations and significantly improve their ability to analyse and communicate complex sustainability data.
 
 AI encourages greater stakeholder engagement through enhanced collaboration toward sustainable solutions and leverages vast datasets to simulate complex scenarios and automate decision-making processes. It enables businesses to make sustainability-related decisions, processes, and reporting more data-driven, efficient, and accurate.
@@ -95,6 +101,8 @@ AI encourages greater stakeholder engagement through enhanced collaboration towa
 Furthermore, AI enhances sustainability risk assessment by analysing large volumes of weather data, climate projections, and business indicators, helping organisations identify and manage climate-related risks more effectively. It can determine climate hazards at greater granularity, identifying specific geographic locations and exposure types.
 
 AI also improves the efficiency of sustainable finance by automating tasks related to tracking, interoperability, and sustainability reporting, thereby empowering businesses to make better-informed strategic decisions. In addition, it can detect anomalies in sustainability data, strengthening data integrity and enabling the rapid resolution of irregularities.
+
+<!-- page -->
 
 ## Innovative idea: AI-driven ESG intelligence platform
 

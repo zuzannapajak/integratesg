@@ -65,6 +65,8 @@ Example:
 
 This keeps decisions visible and prevents the common SME problem where difficult cases stay stuck because nobody is sure who should act.
 
+<!-- page -->
+
 ## Introduce a micro code of ethics
 
 A code of ethics does not need to be long. In fact, a short one works better in daily operations. The current module draft already points toward a micro code of ethics as a practical governance tool.
@@ -101,6 +103,8 @@ A useful example is purchasing. If one employee can choose a supplier, approve t
 - one role records or checks
 
 Even in a very small firm, this logic can often be applied at a basic level.
+
+<!-- page -->
 
 ## Make transparency visible in daily operations
 

@@ -15,8 +15,7 @@ export const module6 = {
       subtitle: "ESG monitoring and future trends",
       description:
         "Measure ESG progress, report credibly, use innovation and prepare for future EU and global ESG trends.",
-      content:
-        "This module focuses on monitoring ESG progress and preparing for future developments. It explains how to select meaningful ESG indicators and KPIs, how to report and communicate ESG performance credibly, how innovation and digital tools can improve ESG outcomes, and how organisations can adapt to future EU policies and global ESG trends.",
+      content: readCurriculumMarkdown("en", "module-6", "intro"),
       details: {
         practicalFocus:
           "Measure ESG progress, communicate performance credibly and prepare for future regulatory and market expectations.",

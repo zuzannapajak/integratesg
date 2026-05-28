@@ -42,6 +42,8 @@ These are your first social responsibility hotspots.
 
 You do not need a large HR system to improve social responsibility. You need a few routines that happen regularly.
 
+<!-- page -->
+
 ## 1. Daily safety and clarity check
 
 At the start of the day or shift, ask:
@@ -84,6 +86,8 @@ Two simple habits help a lot:
 - **Use one clear rule for flexibility** — For example, allow shift swaps with notice, publish schedules earlier, or offer a small flexible start window where possible.
 
 These steps reduce favouritism and help people feel they are treated fairly. You do not need to solve every issue at once. But you should avoid a system where some people always hear about opportunities first and others are expected just to cope.
+
+<!-- page -->
 
 ## Check social risks in your supply chain
 

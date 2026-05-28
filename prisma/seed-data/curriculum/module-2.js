@@ -15,8 +15,7 @@ export const module2 = {
       subtitle: "ESG strategy and alignment",
       description:
         "Link ESG with mission, values, leadership, priorities and performance so it becomes part of strategy.",
-      content:
-        "This module focuses on aligning ESG with organisational strategy. It explains how ESG can be connected to a company’s mission, values and long-term direction, how to set meaningful ESG priorities and objectives, how leadership and culture support ESG integration, and how to balance sustainability goals with financial and operational performance.",
+      content: readCurriculumMarkdown("en", "module-2", "intro"),
       details: {
         practicalFocus:
           "Translate ESG from a general ambition into strategy, priorities, leadership behaviour and performance decisions.",

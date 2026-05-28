@@ -36,6 +36,8 @@ The Environmental pillar of ESG aligns with the SDGs that focus on the planet an
 - **E Focus: Water and Waste Management**
   - **Linked SDGs:** SDG 6: Clean Water and Sanitation and SDG 12: Responsible Consumption and Production.
 
+<!-- page -->
+
 ## 2. Social (S) and the People Goals
 
 The Social pillar aligns with SDGs that focus on people, equality, and wellbeing.
@@ -62,6 +64,8 @@ You don't need a formal SDG reporting framework to make this link. You can start
 
 By linking your ESG work to the SDGs, you move beyond mere compliance. You give your team, your customers, and your partners a clear view of how your day-to-day actions contribute to realising a global vision for sustainable development.
 
+<!-- page -->
+
 # Module's Conclusion
 
 Congratulations on completing Module 1! You have effectively established the foundation for a deep comprehension of sustainable business.
@@ -79,6 +83,8 @@ You’ve discovered that:
 Understanding the What and Why is the first step. As you move forward, keep your reflection answers in mind. The shift from philanthropy to integration is where the real value lies. In the upcoming modules, we will build on this foundation, moving from these core concepts to the practical application and reporting of ESG within your organisation.
 
 > **Key Takeaway:** ESG is not a destination you reach; it is a way of doing business that ensures your organisation is built to thrive in a sustainable future.
+
+<!-- page -->
 
 # References
 
@@ -102,6 +108,8 @@ Understanding the What and Why is the first step. As you move forward, keep your
 - Friede, G., Busch, T., & Bassen, A. (2015). _ESG and Financial Performance: Aggregated evidence from more than 2,000 empirical studies._ Journal of Sustainable Finance & Investment. The definitive study linking ESG to financial smartness.
 - McKinsey & Company. (2019). _Five ways that ESG creates value._ A strategic business paper on how ESG drives top-line growth and cost reductions.
 - PwC. (2023). _Global Private Equity ESG Survey._ Demonstrates how ESG performance is now a prerequisite for supply chain access and capital.
+
+<!-- page -->
 
 ## Unit 4: Linking Your Business Actions to Global Goals
 

@@ -373,7 +373,7 @@ export async function submitQuizAttemptAction(input: SubmitQuizInput) {
     const completedLessonIndex = Math.max(
       courseAttempt.completedLessons,
       quiz.sortOrder,
-      courseAttempt.currentLessonIndex ?? 0,
+      courseAttempt.currentLessonIndex,
     );
     const isFinalUnit = completedLessonIndex >= totalLessons;
     const nextStage = quizFinished ? (isFinalUnit ? "completed" : "lessons") : "post_quiz";

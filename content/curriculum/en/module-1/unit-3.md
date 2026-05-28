@@ -21,6 +21,8 @@ For large companies, ESG is primarily driven by three external forces: Investors
 - Big investors, such as pension funds and asset managers, increasingly use ESG scores to decide where to put their money. They see poor ESG performance as a major financial risk.
 - If you're a large company, having a strong ESG profile can lead to a lower cost of capital, making it cheaper for you to borrow money or raise funds.
 
+<!-- page -->
+
 ## 2. Navigating the Regulatory Landscape
 
 - Large companies face a growing wave of mandatory EU legislation. Frameworks like the EU Corporate Sustainability Reporting Directive (CSRD) demand detailed disclosures on E, S, and G matters.
@@ -40,6 +42,8 @@ You might think ESG is just for big companies, but for SMEs, it can be an even m
 - **Supply Chain Access:** Many large corporations are now required to check the ESG performance of their suppliers. If you want to sell your products or services to a large client, they will likely ask for proof of your ESG credentials. Your ESG performance can be the key to winning major contracts.
 - **Talent Attraction and Retention:** Good talent, especially younger workers, wants to work for businesses that align with their values. Demonstrating a commitment to employee wellbeing and inclusion, the S pillar, makes you an employer of choice.
 - **Cost Reduction Through Efficiency:** This is a direct financial win. Focusing on the E pillar — like energy and resource efficiency — directly reduces your operational costs, boosting your competitiveness.
+
+<!-- page -->
 
 ## How to Apply this Process: Embedding Strategic Relevance
 

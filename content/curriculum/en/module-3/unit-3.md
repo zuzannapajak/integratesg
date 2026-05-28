@@ -42,6 +42,8 @@ Together:
 
 Under the CSRD, ESG disclosures must now follow the European Sustainability Reporting Standards (ESRS) and will be externally assured, meaning auditors will verify that the data is correct.
 
+<!-- page -->
+
 ## Why They Matter
 
 In today’s market, ESG ratings and verified disclosures directly influence:
@@ -84,6 +86,8 @@ Imagine you run a small manufacturing business that recently introduced solar pa
 An external consultant reviews your data to ensure accuracy – a form of light ESG audit. Later, a rating agency uses your publicly available data to assign an ESG score. Because your disclosure is clear, complete, and consistent, your business receives a strong rating.
 
 As a result, a potential investor sees your rating and contacts you for collaboration. Transparency pays off.
+
+<!-- page -->
 
 ## Common Challenges
 

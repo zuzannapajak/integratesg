@@ -33,6 +33,8 @@ To comply, you must assess both. For example, if you manufacture packaging, you 
 
 This approach ensures that your sustainability report gives a full picture – not just of your footprint, but also of the risks and opportunities you face.
 
+<!-- page -->
+
 ## Key Steps to Prepare for CSRD-aligned Reporting
 
 To prepare for CSRD-aligned reporting, you’ll need to follow a few key steps:
@@ -56,6 +58,8 @@ Even if you’re not legally required to report yet, the CSRD affects you in sev
 - **Efficiency:** Tracking ESG data often reveals areas where you can save resources and costs.
 
 In short, the CSRD sets the standard for responsible and future-proof business in Europe.
+
+<!-- page -->
 
 ## How CSRD connects with other EU policies
 

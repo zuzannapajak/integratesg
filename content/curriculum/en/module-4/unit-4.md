@@ -53,6 +53,8 @@ A pure marketing move might be:
 
 The rule is simple: if the process has not changed, the claim should not get stronger.
 
+<!-- page -->
+
 ## Design customer-visible ESG improvements carefully
 
 When you improve ESG in customer-facing operations, choose changes that customers can understand and that fit real business needs.
@@ -118,6 +120,8 @@ For example, a new packaging option may cost slightly more, but reduce waste and
 
 Another example: tighter appointment windows may require better planning, but they reduce missed visits and customer frustration. That improves trust, even if the internal process becomes a bit stricter.
 
+<!-- page -->
+
 ## Build credibility through small, documented changes
 
 Credibility usually does not come from one big campaign. It comes from small improvements that are real, repeated, and documented.
@@ -135,6 +139,8 @@ For example:
 > We reduced packaging size for our most common orders. We tested the change for two weeks. Damage rates did not increase. We now use the new standard as part of our normal packing routine.
 
 This kind of message is strong because it shows restraint. It does not try to claim too much. It shows that the business made a practical decision and can stand behind it.
+
+<!-- page -->
 
 # References
 
@@ -158,6 +164,8 @@ This kind of message is strong because it shows restraint. It does not try to cl
 2. Transparency International (2013). _Business Principles for Countering Bribery._ Available at: https://www.transparency.org/en/publications/business-principles-for-countering-bribery. Accessed: 2026.
 3. European Commission (2024). _EU legislation on anti-corruption._ Available at: https://commission.europa.eu/strategy-and-policy/policies/justice-and-fundamental-rights/democracy-eu-citizenship-anti-corruption/anti-corruption/eu-legislation-anti-corruption_en. Accessed: 2026.
 4. European Commission (2024). _Protection for whistleblowers._ Available at: https://commission.europa.eu/topics/human-rights/your-fundamental-rights-eu/protection-whistleblowers_en. Accessed: 2026.
+
+<!-- page -->
 
 ## Unit 4: Credible ESG in Customer Communication and Claims
 

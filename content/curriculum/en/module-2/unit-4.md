@@ -23,6 +23,8 @@ For too long, ESG has been seen as a separate "add-on" to business, rather than 
 
 > Companies that integrate ESG factors into their business strategy often outperform those that don't, as they are better positioned to manage risks, attract capital, and innovate for the future.
 
+<!-- page -->
+
 ## The Reality: ESG as a Value Driver
 
 The reality is that ESG can be a powerful driver of financial and operational performance. Here's how:
@@ -66,6 +68,8 @@ For each trade-off, ask:
 - How does this affect reputation, compliance, customer trust, employee retention, or operational efficiency?
 
 A narrow analysis may show only the short-term cost. A strategic analysis shows the longer-term value.
+
+<!-- page -->
 
 ## Step 3: Look at the Time Horizon
 
@@ -131,6 +135,8 @@ Examples include:
 
 These actions support ESG goals while improving cost control, resilience and performance.
 
+<!-- page -->
+
 ## Step 3: Foster Innovation
 
 Innovation is essential for solving ESG and financial challenges at the same time.
@@ -188,6 +194,8 @@ This will help you:
 - **Attract capital and customers:** Investors increasingly want to fund sustainable companies. Customers increasingly want to buy from them.
 - **Enhance your company's reputation:** ESG performance is becoming a key part of how companies are evaluated.
 
+<!-- page -->
+
 ## Step 3: Continuously Improve
 
 Use the data you collect to continuously improve your ESG performance and your strategies for balancing ESG with financial and operational goals. This is not a one-time project — it's an ongoing journey.
@@ -211,6 +219,8 @@ Use the data you collect to continuously improve your ESG performance and your s
 **The Problem:** You don't have the data or expertise to evaluate ESG/financial trade-offs.
 
 **The Solution:** Start small. Pick one area where you can gather data and analyse it. Learn as you go. Partner with external experts if needed. You don't need to be perfect — you just need to start.
+
+<!-- page -->
 
 ## Conclusion: Building a Sustainable and Profitable Future
 
@@ -240,6 +250,8 @@ The future belongs to companies that can balance purpose with profit. That's the
 
 ![Balancing ESG with financial and operational performance](/curriculum/module-2/images/module-2-unit-4-esg-financial-performance-workshop.webp)
 
+<!-- page -->
+
 # References
 
 ## Unit 1
@@ -268,6 +280,8 @@ The future belongs to companies that can balance purpose with profit. That's the
 16. World Economic Forum. (2020). _Measuring Stakeholder Capitalism: Towards Common Metrics and Consistent Reporting of Sustainable Value Creation._
 17. Kotter, J. P., & Heskett, J. L. (1992). _Corporate Culture and Performance._ Free Press.
 18. Guiso, L., Sapienza, P., & Zingales, L. (2015). _The Value of Corporate Culture._ Journal of Financial Economics, 117(1), 60–76.
+
+<!-- page -->
 
 ## Unit 4
 

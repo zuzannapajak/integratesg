@@ -1,37 +1,3 @@
-# Module 5: Implementation, Data, and Cross-Functional Practice
-
-## Module Introduction
-
-This module focuses on ESG as a practical business process rather than a reporting exercise. Through a realistic scenario, you will explore how organisations organise ESG responsibilities, work with data, and collaborate with external partners. The aim is to help you understand how everyday decisions, coordination between teams, and structured collaboration shape effective ESG integration over time.
-
-## Module’s Units
-
-- Unit 1: Lifecycle of ESG Integration
-- Unit 2: ESG Data Gathering, Management, and Digitalisation
-- Unit 3: Embedding ESG into Daily Processes and Decision-Making
-- Unit 4: Cross-Functional and Cross-Sector Collaboration
-
-## Module’s Goal
-
-You will learn how to plan and execute ESG integration across the organisation, gather and manage data effectively, embed sustainability into everyday decisions, and build collaboration across teams and sectors. By completing this module, you’ll gain the tools to transform ESG goals into measurable and lasting impact.
-
-## Training Audience
-
-VET educators, SME managers, and sustainability leads responsible for implementing ESG strategies.
-
-# Unit 1: Lifecycle of ESG Integration
-
-## Training Objectives
-
-Upon completing the Unit, you should be able to:
-
-- Identify the main stages of the ESG implementation lifecycle.
-- Apply structured planning and evaluation approaches in your organisation.
-
-## Content
-
-ESG implementation is not a one-time project — it is a continuous improvement cycle that connects strategy with everyday practice. You can think of it as a living process that evolves with your organisation. It usually follows three key stages: planning, execution, and evaluation. Each stage builds on the previous one, helping you refine your actions, improve performance, and strengthen your organisation’s credibility.
-
 ## 1. Planning: Defining Direction and Accountability
 
 Planning sets the foundation for everything that follows. It begins with understanding where you are now. Before setting any targets, take time to assess your current ESG situation. This can include reviewing energy use, diversity levels, safety practices, or governance structures. Even a small organisation can perform a quick internal audit using available data such as utility bills, employee surveys, or supplier checklists.
@@ -49,6 +15,8 @@ Assigning responsibilities is equally important. ESG cannot be handled by one de
 Many organisations designate ESG champions or cross-departmental task forces to coordinate actions. This not only distributes workload but also creates shared accountability and communication across teams.
 
 Good planning also includes setting key performance indicators (KPIs) for each goal. KPIs translate broad ambitions into measurable targets — for example, the number of supplier audits completed, waste reduction percentage, or gender balance in management roles. The clearer the metrics, the easier it becomes to track success later in the process.
+
+<!-- page -->
 
 ## 2. Execution: Turning Plans into Practice
 
@@ -70,6 +38,8 @@ Resources are another success factor. Assigning a modest budget or dedicated tim
 
 Digitalisation further strengthens this phase. Automating data collection, using ESG dashboards, or linking performance metrics with reporting tools makes implementation smoother. For SMEs, even simple shared spreadsheets can act as a starting point before moving to more advanced platforms.
 
+<!-- page -->
+
 ## 3. Evaluation: Learning and Improving
 
 The third stage, evaluation, is about learning from results. It closes the loop and feeds directly back into planning. Evaluation ensures your ESG approach remains relevant, measurable, and transparent.
@@ -87,6 +57,8 @@ A medium-sized food manufacturer began by planning to reduce water use by 20% in
 Evaluation revealed that one older production line used significantly more water. The company adjusted its plan to prioritise equipment replacement in the next budget cycle. By revisiting the process, they achieved their target in the following year.
 
 This example shows that ESG is not a checklist — it’s a continuous habit of thinking, deciding, and improving responsibly. Every evaluation creates new insights that strengthen planning and execution in the next round.
+
+<!-- page -->
 
 ## 4. The Continuous Loop
 

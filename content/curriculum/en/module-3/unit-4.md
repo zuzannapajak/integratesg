@@ -37,6 +37,8 @@ It’s true that SMEs often face specific hurdles when implementing ESG initiati
 
 The good news is that you don’t need to do everything at once. ESG success for SMEs comes from small, consistent steps that align with your core business activities.
 
+<!-- page -->
+
 ## Practical Steps to Integrate ESG in SMEs
 
 Here’s how you can start embedding ESG principles into your daily operations:
@@ -88,6 +90,8 @@ Different sectors face different ESG realities. Here are a few examples to show 
 
 Even though the details differ, the logic remains the same: understand your impacts, manage your risks, and communicate your progress clearly.
 
+<!-- page -->
+
 ## Aligning with Frameworks Without Overload
 
 You don’t need to apply every ESG framework in full. Instead, use them as reference tools:
@@ -109,6 +113,8 @@ Imagine you run a small packaging company. You decide to take a few manageable E
 
 After sharing your progress on your website, a large client notices your efforts and chooses you over a competitor without any ESG transparency. Step by step, your sustainability commitment turns into a tangible business advantage.
 
+<!-- page -->
+
 ## The Road Ahead
 
 ESG integration is a journey, not a one-off task. For SMEs, the goal is to build systems that last – simple, adaptable, and useful for decision-making.
@@ -120,6 +126,8 @@ As regulations evolve, early movers will have a head start. By developing a basi
 ESG is not about ticking boxes – it’s about building a business that thrives responsibly. Start with the essentials, stay consistent, and focus on progress rather than perfection.
 
 Every small improvement in energy use, equality, transparency, or governance counts. Over time, these steps will not only help you meet future EU standards but also position your SME as part of Europe’s sustainable and competitive economy.
+
+<!-- page -->
 
 # Module conclusion
 
@@ -144,6 +152,8 @@ In the next module, you’ll move from understanding frameworks to applying ESG 
 - European Parliament & Council of the European Union. (2019). _Regulation (EU) 2019/2088 of 27 November 2019 on sustainability-related disclosures in the financial services sector (SFDR)._ EUR-Lex. https://eur-lex.europa.eu/eli/reg/2019/2088/oj/eng
 - European Commission. (2019). _The European Green Deal (COM(2019) 640 final)._ EUR-Lex. https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52019DC0640
 - European Parliament & Council of the European Union. (2024). _Directive (EU) 2024/1760 of 13 June 2024 on corporate sustainability due diligence (CSDDD)._ EUR-Lex. https://eur-lex.europa.eu/eli/dir/2024/1760/oj/eng
+
+<!-- page -->
 
 ## Unit 3
 

@@ -15,8 +15,7 @@ export const module4 = {
       subtitle: "ESG in daily operations",
       description:
         "Turn ESG into practical daily actions across operations, workforce, suppliers, governance and customer communication.",
-      content:
-        "This module shows how to turn ESG principles into everyday business practice. It focuses on identifying ESG touchpoints in core operations, improving workforce and supplier responsibility, strengthening governance in daily decision-making, and communicating ESG actions to customers in a credible and non-misleading way.",
+      content: readCurriculumMarkdown("en", "module-4", "intro"),
       details: {
         practicalFocus:
           "Turn ESG principles into concrete improvements in everyday operations, people practices, governance and customer communication.",

@@ -15,8 +15,7 @@ export const module5 = {
       subtitle: "ESG implementation and data",
       description:
         "Use ESG data, lifecycle planning, daily processes and collaboration to turn goals into measurable practice.",
-      content:
-        "This module focuses on implementing ESG through structured action, reliable data and collaboration. It explains the ESG implementation lifecycle, practical ESG data gathering and digitalisation, ways to embed ESG into everyday workflows and decisions, and the role of cross-functional and cross-sector cooperation in achieving lasting ESG outcomes.",
+      content: readCurriculumMarkdown("en", "module-5", "intro"),
       details: {
         practicalFocus:
           "Implement ESG through structured action, reliable data, daily processes and collaboration across teams and partners.",

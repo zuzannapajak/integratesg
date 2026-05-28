@@ -1,8 +1,8 @@
 {
   "Protected": {
     "ModulePlayerShell": {
-      "lessonNavigator": "Πλοήγηση μαθήματος",
-      "lessonLabel": "Μάθημα {index}",
+      "lessonNavigator": "Πλοήγηση",
+      "lessonLabel": "Ενότητα {index}",
       "lessonActions": {
         "finishLessons": "Ολοκλήρωση μαθημάτων",
         "completeAndContinue": "Ολοκλήρωση μαθήματος και συνέχεια",

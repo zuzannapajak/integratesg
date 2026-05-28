@@ -48,6 +48,19 @@ type ReviewState = {
 const SURFACE =
   "rounded-[28px] border border-white/70 bg-white/88 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";
 
+function splitMarkdownIntoPages(content: string | null | undefined): string[] {
+  if (!content?.trim()) {
+    return [];
+  }
+
+  const pages = content
+    .split(/<!--\s*page\s*-->/gi)
+    .map((page) => page.trim())
+    .filter(Boolean);
+
+  return pages.length > 0 ? pages : [content.trim()];
+}
+
 export default function ModulePlayerShell({ locale, module: initialModule }: Props) {
   const t = useTranslations("Protected.ModulePlayerShell");
   const [module, setModule] = useState(initialModule);
@@ -57,7 +70,13 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [retakeConfirmOpen, setRetakeConfirmOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
-
+  const [lessonPageState, setLessonPageState] = useState<{
+    lessonSlug: string | null;
+    pageIndex: number;
+  }>({
+    lessonSlug: null,
+    pageIndex: 0,
+  });
   const stage = module.progressState.currentStage;
 
   const postQuizzes = useMemo(
@@ -76,11 +95,12 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
           ? module.progressState.currentLessonIndex
           : Math.max(module.progressState.completedLessons, 1);
 
-      return (
-        postQuizzes.find((quiz) => quiz.sortOrder === currentUnitIndex) ??
-        postQuizzes[currentUnitIndex - 1] ??
-        null
-      );
+      const fallbackQuiz =
+        currentUnitIndex > 0 && currentUnitIndex <= postQuizzes.length
+          ? postQuizzes[currentUnitIndex - 1]
+          : null;
+
+      return postQuizzes.find((quiz) => quiz.sortOrder === currentUnitIndex) ?? fallbackQuiz;
     }
 
     return null;
@@ -103,6 +123,32 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
     stage === "lessons" && module.progressState.currentLessonIndex > 0
       ? module.lessonsData[module.progressState.currentLessonIndex - 1]
       : null;
+
+  const lessonPages = useMemo(
+    () => splitMarkdownIntoPages(currentLesson?.content),
+    [currentLesson?.content],
+  );
+
+  const currentLessonSlug = currentLesson?.slug ?? null;
+
+  const lessonPageIndex =
+    lessonPageState.lessonSlug === currentLessonSlug ? lessonPageState.pageIndex : 0;
+
+  const currentLessonPage = lessonPages.at(lessonPageIndex) ?? currentLesson?.content ?? "";
+
+  const isLastLessonPage = lessonPages.length <= 1 || lessonPageIndex >= lessonPages.length - 1;
+
+  const setCurrentLessonPageIndex = (getNextPageIndex: (previousPageIndex: number) => number) => {
+    setLessonPageState((previousState) => {
+      const previousPageIndex =
+        previousState.lessonSlug === currentLessonSlug ? previousState.pageIndex : 0;
+
+      return {
+        lessonSlug: currentLessonSlug,
+        pageIndex: getNextPageIndex(previousPageIndex),
+      };
+    });
+  };
 
   const answeredCount = activeQuiz
     ? activeQuiz.questions.filter((question) => Boolean(selectedAnswers[question.id])).length
@@ -365,22 +411,55 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
               </h2>
               <p className="mt-3 text-sm leading-7 text-[#667180]">{currentLesson.summary}</p>
 
+              {lessonPages.length > 1 ? (
+                <p className="mt-2 text-sm font-medium text-[#8a97a6]">
+                  Page {lessonPageIndex + 1} of {lessonPages.length}
+                </p>
+              ) : null}
+
               <div className="mt-6 rounded-3xl border border-[#e8edf3] bg-white/76 p-5">
-                <MarkdownContent content={currentLesson.content} />
+                <MarkdownContent content={currentLessonPage} />
               </div>
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
-                <button
-                  type="button"
-                  onClick={handleCompleteLesson}
-                  disabled={isPending}
-                  className="inline-flex items-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347] disabled:opacity-60"
-                >
-                  <PlayCircle className="h-4.5 w-4.5" />
-                  {currentLesson.index === module.lessonsData.length
-                    ? t("lessonActions.finishLessons")
-                    : t("lessonActions.completeAndContinue")}
-                </button>
+                {lessonPageIndex > 0 ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setCurrentLessonPageIndex((prev) => Math.max(0, prev - 1));
+                    }}
+                    disabled={isPending}
+                    className="inline-flex items-center gap-2 rounded-2xl border border-[#d9e2ec] bg-white px-5 py-3 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc] disabled:opacity-60"
+                  >
+                    {t("navigation.previous")}
+                  </button>
+                ) : null}
+
+                {!isLastLessonPage ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setCurrentLessonPageIndex((prev) =>
+                        Math.min(prev + 1, lessonPages.length - 1),
+                      );
+                    }}
+                    disabled={isPending}
+                    className="inline-flex items-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347] disabled:opacity-60"
+                  >
+                    {t("navigation.next")}
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={handleCompleteLesson}
+                    disabled={isPending}
+                    className="inline-flex items-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347] disabled:opacity-60"
+                  >
+                    <PlayCircle className="h-4.5 w-4.5" />
+                    {t("lessonActions.completeAndContinue")}
+                  </button>
+                )}
 
                 <span className="text-sm text-[#667180]">
                   {t("lessonActions.estimatedTime", {
