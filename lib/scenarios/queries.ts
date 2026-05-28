@@ -30,7 +30,7 @@ const PERSISTED_RUNTIME_TRACKING_KEYS = new Set<string>([
 ]);
 
 function toPrismaJsonObject(value: JsonObject): Prisma.InputJsonObject {
-  return value as Prisma.InputJsonObject;
+  return value;
 }
 
 function normalizeOptionalText(value: string | null | undefined) {

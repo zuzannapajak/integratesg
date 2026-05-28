@@ -1123,7 +1123,7 @@ async function getBasicAdminStatsUncached(
             area: normalizeArea(attempt.scenario.area),
             language: attempt.scenarioVariant.language.toUpperCase(),
             attemptNumber: attempt.attemptNumber,
-            status: attempt.status as DashboardScenarioAttemptRow["status"],
+            status: attempt.status,
             scoreLabel: formatScore(attempt.score),
             startedAtLabel: formatDateTimeLabel(attempt.startedAt, locale),
             lastOpenedAtLabel: formatDateTimeLabel(attempt.lastOpenedAt, locale),

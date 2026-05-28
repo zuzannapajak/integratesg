@@ -1,6 +1,7 @@
 "use client";
 
 import CertificateDownloadButton from "@/components/curriculum/certificate-download-button";
+import MarkdownContent from "@/components/ui/markdown-content";
 import {
   completeLessonAction,
   retakeCourseAction,
@@ -284,7 +285,7 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
               <p className="mt-3 text-sm leading-7 text-[#667180]">{currentLesson.summary}</p>
 
               <div className="mt-6 rounded-3xl border border-[#e8edf3] bg-white/76 p-5">
-                <p className="text-[0.98rem] leading-8 text-[#556274]">{currentLesson.content}</p>
+                <MarkdownContent content={currentLesson.content} />
               </div>
 
               <div className="mt-6 flex flex-wrap items-center gap-3">
