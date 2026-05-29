@@ -17,6 +17,8 @@ export const module4 = {
         "Turn ESG into practical daily actions across operations, workforce, suppliers, governance and customer communication.",
       content: readCurriculumMarkdown("en", "module-4", "intro"),
       details: {
+        overview:
+          "This module focuses on the everyday side of ESG. It is useful for learners who want to understand how sustainability principles translate into concrete actions in operations, workforce practices, supplier relationships, governance routines and customer communication, without treating ESG as a separate or abstract topic.",
         practicalFocus:
           "Turn ESG principles into concrete improvements in everyday operations, people practices, governance and customer communication.",
         learningProgression:

@@ -21,6 +21,7 @@ import {
 import { prisma } from "@/lib/prisma";
 
 type CurriculumModuleDetails = {
+  overview: string | null;
   practicalFocus: string;
   learningProgression: string;
   outcomes: string[];
@@ -80,12 +81,20 @@ function parseModuleDetails(raw: unknown): CurriculumModuleDetails | null {
     typeof raw.progressTracking === "string" ? raw.progressTracking.trim() : "";
   const outcomes = parseStringArray(raw.outcomes);
   const flow = parseDetailsFlow(raw.flow);
+  const overview = typeof raw.overview === "string" ? raw.overview.trim() : "";
 
-  if (!practicalFocus && !learningProgression && outcomes.length === 0 && flow.length === 0) {
+  if (
+    !overview &&
+    !practicalFocus &&
+    !learningProgression &&
+    outcomes.length === 0 &&
+    flow.length === 0
+  ) {
     return null;
   }
 
   return {
+    overview: overview.length > 0 ? overview : null,
     practicalFocus,
     learningProgression,
     outcomes,

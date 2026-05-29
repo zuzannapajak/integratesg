@@ -101,6 +101,7 @@ export type CurriculumModuleViewModel = {
   description: string | null;
   content?: string | null;
   details?: {
+    overview: string | null;
     practicalFocus: string;
     learningProgression: string;
     outcomes: string[];

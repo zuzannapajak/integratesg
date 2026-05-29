@@ -1,6 +1,6 @@
 "use client";
 
-import {
+import type {
   CurriculumArea,
   CurriculumModuleViewModel,
   CurriculumStatus,
@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useRef, useState, type ReactNode } from "react";
 
 type ModuleFlowStep = {
   title: string;
@@ -32,6 +32,7 @@ type ModuleFlowStep = {
 };
 
 type ModuleDetails = {
+  overview: string | null;
   practicalFocus: string | null;
   learningProgression: string | null;
   outcomes: string[];
@@ -73,6 +74,7 @@ function getAreaMeta(area: CurriculumArea, t: ReturnType<typeof useTranslations>
         accentClass: "from-emerald-100/90 via-white to-emerald-50/80",
         orbitClass: "border-emerald-200/70 bg-emerald-100/55 text-emerald-700",
       };
+
     case "social":
       return {
         label: t("area.social"),
@@ -82,6 +84,7 @@ function getAreaMeta(area: CurriculumArea, t: ReturnType<typeof useTranslations>
         accentClass: "from-sky-100/90 via-white to-sky-50/80",
         orbitClass: "border-sky-200/70 bg-sky-100/55 text-sky-700",
       };
+
     case "governance":
       return {
         label: t("area.governance"),
@@ -91,6 +94,7 @@ function getAreaMeta(area: CurriculumArea, t: ReturnType<typeof useTranslations>
         accentClass: "from-violet-100/90 via-white to-violet-50/80",
         orbitClass: "border-violet-200/70 bg-violet-100/55 text-violet-700",
       };
+
     case "strategy":
       return {
         label: t("area.strategy"),
@@ -100,6 +104,7 @@ function getAreaMeta(area: CurriculumArea, t: ReturnType<typeof useTranslations>
         accentClass: "from-emerald-100/90 via-white to-emerald-50/80",
         orbitClass: "border-emerald-200/70 bg-emerald-100/55 text-emerald-700",
       };
+
     case "reporting":
       return {
         label: t("area.reporting"),
@@ -109,7 +114,8 @@ function getAreaMeta(area: CurriculumArea, t: ReturnType<typeof useTranslations>
         accentClass: "from-blue-100/90 via-white to-blue-50/80",
         orbitClass: "border-blue-200/70 bg-blue-100/55 text-blue-700",
       };
-    default:
+
+    case "cross-cutting":
       return {
         label: t("area.crossCutting"),
         icon: <Layers3 className="h-4 w-4" />,
@@ -129,18 +135,21 @@ function getStatusMeta(status: CurriculumStatus, t: ReturnType<typeof useTransla
         icon: <CheckCircle2 className="h-4 w-4" />,
         badgeClass: "border-emerald-100 bg-emerald-50 text-emerald-700",
       };
+
     case "in_progress":
       return {
         label: t("status.inProgress"),
         icon: <CircleDashed className="h-4 w-4" />,
         badgeClass: "border-orange-100 bg-orange-50 text-orange-700",
       };
+
     case "failed":
       return {
         label: t("status.failed"),
         icon: <CircleDashed className="h-4 w-4" />,
         badgeClass: "border-rose-100 bg-rose-50 text-rose-700",
       };
+
     default:
       return {
         label: t("status.readyToStart"),
@@ -198,6 +207,7 @@ function getModuleDetails(module: CurriculumModuleViewModel): ModuleDetails | nu
     : [];
 
   return {
+    overview: normalizeDetailText(details.overview),
     practicalFocus: normalizeDetailText(details.practicalFocus),
     learningProgression: normalizeDetailText(details.learningProgression),
     outcomes,
@@ -206,44 +216,20 @@ function getModuleDetails(module: CurriculumModuleViewModel): ModuleDetails | nu
   };
 }
 
-function getOverviewCopy(module: CurriculumModuleViewModel, t: ReturnType<typeof useTranslations>) {
-  if (module.content?.trim()) {
-    return module.content;
-  }
-
-  if (module.area === "environmental") {
-    return t("overviewCopy.environmental");
-  }
-
-  if (module.area === "social") {
-    return t("overviewCopy.social");
-  }
-
-  if (module.area === "governance") {
-    return t("overviewCopy.governance");
-  }
-
-  if (module.area === "strategy") {
-    return t("overviewCopy.strategy");
-  }
-
-  if (module.area === "reporting") {
-    return t("overviewCopy.reporting");
-  }
-
-  return t("overviewCopy.crossCutting");
-}
-
 function getHeroIntro(module: CurriculumModuleViewModel, t: ReturnType<typeof useTranslations>) {
   switch (module.progressState.currentStage) {
     case "pre_quiz":
       return t("heroIntro.preQuiz");
+
     case "lessons":
       return t("heroIntro.lessons");
+
     case "post_quiz":
       return t("heroIntro.postQuiz");
+
     case "completed":
       return t("heroIntro.completed");
+
     default:
       return t("heroIntro.default");
   }
@@ -256,14 +242,18 @@ function getProgressSummary(
   switch (module.progressState.currentStage) {
     case "pre_quiz":
       return t("progressSummary.preQuiz");
+
     case "lessons":
       return t("progressSummary.lessonInProgress", {
         index: module.progressState.currentLessonIndex,
       });
+
     case "post_quiz":
       return t("progressSummary.postQuiz");
+
     case "completed":
       return t("progressSummary.completed");
+
     default:
       return t("progressSummary.default");
   }
@@ -279,9 +269,21 @@ export default function CourseDetailShell({ locale, module }: Props) {
   const areaMeta = getAreaMeta(module.area, t);
   const statusMeta = getStatusMeta(module.status, t);
   const details = getModuleDetails(module);
+  const outcomes = details?.outcomes ?? [];
+  const practicalFocus = details?.practicalFocus ?? null;
+  const learningProgression = details?.learningProgression ?? null;
+
+  const flowSteps =
+    details?.flow && details.flow.length > 0
+      ? details.flow
+      : module.lessonsData.map((lesson) => ({
+          title: lesson.title,
+          description: lesson.summary ?? "",
+        }));
 
   const handleScrollToFlow = () => {
     setOpenPanel("flow");
+
     requestAnimationFrame(() => {
       contentSectionRef.current?.scrollIntoView({
         behavior: "smooth",
@@ -356,16 +358,19 @@ export default function CourseDetailShell({ locale, module }: Props) {
                 label={t("metrics.duration")}
                 value={formatDurationLabel(module.durationMinutes, t)}
               />
+
               <MetricCard
                 icon={<Layers3 className="h-4 w-4" />}
                 label={t("metrics.lessons")}
                 value={`${module.lessons}`}
               />
+
               <MetricCard
                 icon={<BookOpen className="h-4 w-4" />}
                 label={t("metrics.checkpoints")}
                 value={`${module.quizzes}`}
               />
+
               <MetricCard
                 icon={<Compass className="h-4 w-4" />}
                 label={t("metrics.currentStep")}
@@ -382,6 +387,7 @@ export default function CourseDetailShell({ locale, module }: Props) {
                 <div className="text-[1.9rem] font-bold leading-none tracking-tight text-[#31425a]">
                   {module.progress}%
                 </div>
+
                 <div className="text-[0.72rem] font-bold uppercase tracking-[0.16em] text-[#8a97a6]">
                   {t("metrics.completed")}
                 </div>
@@ -448,6 +454,7 @@ export default function CourseDetailShell({ locale, module }: Props) {
               icon={<Sparkles className="h-4 w-4" />}
               label={t("tabs.overview")}
             />
+
             <ToggleButton
               active={openPanel === "outcomes"}
               onClick={() => {
@@ -456,6 +463,7 @@ export default function CourseDetailShell({ locale, module }: Props) {
               icon={<CheckCircle2 className="h-4 w-4" />}
               label={t("tabs.outcomes")}
             />
+
             <ToggleButton
               active={openPanel === "flow"}
               onClick={() => {
@@ -464,6 +472,7 @@ export default function CourseDetailShell({ locale, module }: Props) {
               icon={<Layers3 className="h-4 w-4" />}
               label={t("tabs.flow")}
             />
+
             <ToggleButton
               active={openPanel === "progress"}
               onClick={() => {
@@ -494,20 +503,24 @@ export default function CourseDetailShell({ locale, module }: Props) {
 
               <div className="mt-5 max-w-4xl">
                 <p className="text-[0.98rem] leading-8 text-[#667180]">
-                  {getOverviewCopy(module, t)}
+                  {details?.overview ?? module.description ?? t("fallbacks.description")}
                 </p>
               </div>
 
-              <div className="mt-7 grid gap-4 md:grid-cols-2">
-                <InsightCard
-                  title={t("insights.practicalTitle")}
-                  text={details?.practicalFocus ?? t("insights.practicalText")}
-                />
-                <InsightCard
-                  title={t("insights.progressionTitle")}
-                  text={details?.learningProgression ?? t("insights.progressionText")}
-                />
-              </div>
+              {practicalFocus || learningProgression ? (
+                <div className="mt-7 grid gap-4 md:grid-cols-2">
+                  {practicalFocus ? (
+                    <InsightCard title={t("insights.practicalTitle")} text={practicalFocus} />
+                  ) : null}
+
+                  {learningProgression ? (
+                    <InsightCard
+                      title={t("insights.progressionTitle")}
+                      text={learningProgression}
+                    />
+                  ) : null}
+                </div>
+              ) : null}
             </motion.div>
           )}
 
@@ -526,31 +539,26 @@ export default function CourseDetailShell({ locale, module }: Props) {
               />
 
               <div className="mt-5 grid gap-3">
-                {details?.outcomes.length
-                  ? details.outcomes.map((outcome, index) => (
-                      <div
-                        key={`${module.slug}-detail-outcome-${index}`}
-                        className="flex items-start gap-3 rounded-2xl border border-[#e8edf3] bg-white/72 px-4 py-4"
-                      >
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0b9c72] text-sm font-bold text-white">
-                          {index + 1}
-                        </span>
-                        <p className="pt-1 text-sm leading-6 text-[#556274]">{outcome}</p>
-                      </div>
-                    ))
-                  : module.outcomes.map((outcome, index) => (
-                      <div
-                        key={`${module.slug}-generated-outcome-${index}`}
-                        className="flex items-start gap-3 rounded-2xl border border-[#e8edf3] bg-white/72 px-4 py-4"
-                      >
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0b9c72] text-sm font-bold text-white">
-                          {index + 1}
-                        </span>
-                        <p className="pt-1 text-sm leading-6 text-[#556274]">
-                          {renderToken(outcome, t)}
-                        </p>
-                      </div>
-                    ))}
+                {outcomes.length > 0 ? (
+                  outcomes.map((outcome, index) => (
+                    <div
+                      key={`${module.slug}-outcome-${index}`}
+                      className="flex items-start gap-3 rounded-2xl border border-[#e8edf3] bg-white/72 px-4 py-4"
+                    >
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0b9c72] text-sm font-bold text-white">
+                        {index + 1}
+                      </span>
+
+                      <p className="pt-1 text-sm leading-6 text-[#556274]">{outcome}</p>
+                    </div>
+                  ))
+                ) : (
+                  <div className="rounded-2xl border border-[#e8edf3] bg-white/72 px-4 py-4">
+                    <p className="text-sm leading-6 text-[#667180]">
+                      No learning outcomes have been configured for this module yet.
+                    </p>
+                  </div>
+                )}
               </div>
             </motion.div>
           )}
@@ -567,73 +575,49 @@ export default function CourseDetailShell({ locale, module }: Props) {
               <SectionTitle eyebrow={t("sections.flowEyebrow")} title={t("sections.flowTitle")} />
 
               <div className="mt-5 space-y-3">
-                {details?.flow.length
-                  ? details.flow.map((step, index) => {
-                      const isCompleted = index < module.progressState.completedLessons;
-                      const isCurrent =
-                        module.progressState.currentStage === "lessons" &&
-                        index + 1 === module.progressState.currentLessonIndex;
-                      const isActiveOrPast =
-                        isCompleted ||
-                        isCurrent ||
-                        (module.progressState.currentStage === "overview" && index === 0);
+                {flowSteps.length > 0 ? (
+                  flowSteps.map((step, index) => {
+                    const isCompleted = index < module.progressState.completedLessons;
+                    const isCurrent =
+                      module.progressState.currentStage === "lessons" &&
+                      index + 1 === module.progressState.currentLessonIndex;
+                    const isActiveOrPast =
+                      isCompleted ||
+                      isCurrent ||
+                      (module.progressState.currentStage === "overview" && index === 0);
 
-                      return (
-                        <div
-                          key={`${module.slug}-detail-flow-${index}`}
-                          className={`flex items-center gap-4 rounded-2xl border px-4 py-4 ${
-                            isActiveOrPast
-                              ? "border-emerald-200 bg-emerald-50/60"
-                              : "border-[#e8edf3] bg-white/72"
-                          }`}
-                        >
-                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#d9e2ec] bg-white text-sm font-bold text-[#31425a]">
-                            {index + 1}
-                          </span>
+                    return (
+                      <div
+                        key={`${module.slug}-flow-${index}`}
+                        className={`flex items-center gap-4 rounded-2xl border px-4 py-4 ${
+                          isActiveOrPast
+                            ? "border-emerald-200 bg-emerald-50/60"
+                            : "border-[#e8edf3] bg-white/72"
+                        }`}
+                      >
+                        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#d9e2ec] bg-white text-sm font-bold text-[#31425a]">
+                          {index + 1}
+                        </span>
 
-                          <div className="min-w-0 flex-1">
-                            <p className="text-sm font-semibold text-[#31425a]">{step.title}</p>
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-semibold text-[#31425a]">{step.title}</p>
+
+                          {step.description ? (
                             <p className="mt-1 text-sm leading-6 text-[#667180]">
                               {step.description}
                             </p>
-                          </div>
+                          ) : null}
                         </div>
-                      );
-                    })
-                  : module.structure.map((step, index) => {
-                      const isActiveOrPast = index < module.progressState.completedLessons + 1;
-
-                      return (
-                        <div
-                          key={renderToken(step, t)}
-                          className={`flex items-center gap-4 rounded-2xl border px-4 py-4 ${
-                            isActiveOrPast
-                              ? "border-emerald-200 bg-emerald-50/60"
-                              : "border-[#e8edf3] bg-white/72"
-                          }`}
-                        >
-                          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#d9e2ec] bg-white text-sm font-bold text-[#31425a]">
-                            {index + 1}
-                          </span>
-
-                          <div className="min-w-0 flex-1">
-                            <p className="text-sm font-semibold text-[#31425a]">
-                              {renderToken(step, t)}
-                            </p>
-                            <p className="mt-1 text-sm text-[#667180]">
-                              {index === 0
-                                ? t("flowDescriptions.opening")
-                                : index === module.structure.length - 1
-                                  ? t("flowDescriptions.closing")
-                                  : t("flowDescriptions.lessons", {
-                                      completed: module.progressState.completedLessons,
-                                      total: module.progressState.totalLessons,
-                                    })}
-                            </p>
-                          </div>
-                        </div>
-                      );
-                    })}
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div className="rounded-2xl border border-[#e8edf3] bg-white/72 px-4 py-4">
+                    <p className="text-sm leading-6 text-[#667180]">
+                      No module flow has been configured for this module yet.
+                    </p>
+                  </div>
+                )}
               </div>
             </motion.div>
           )}
@@ -658,6 +642,7 @@ export default function CourseDetailShell({ locale, module }: Props) {
                     <p className="text-sm font-semibold text-[#31425a]">
                       {t("progress.currentLocation")}
                     </p>
+
                     <p className="mt-2 text-sm leading-6 text-[#667180]">
                       {renderToken(module.progressState.currentLocation, t)}
                     </p>
@@ -671,11 +656,13 @@ export default function CourseDetailShell({ locale, module }: Props) {
                     <div className="mt-5">
                       <div className="mb-2 flex items-center justify-between text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
                         <span>{t("progress.lessonsCompleted")}</span>
+
                         <span>
                           {module.progressState.completedLessons}/
                           {module.progressState.totalLessons}
                         </span>
                       </div>
+
                       <div className="h-2 overflow-hidden rounded-full bg-[#edf2f7]">
                         <motion.div
                           initial={{ width: 0 }}
@@ -732,6 +719,7 @@ export default function CourseDetailShell({ locale, module }: Props) {
                           }`}
                         >
                           <div className="text-sm font-semibold text-[#31425a]">{lesson.title}</div>
+
                           <div className="mt-1 text-sm text-[#667180]">{lesson.summary}</div>
                         </div>
                       );
@@ -747,19 +735,13 @@ export default function CourseDetailShell({ locale, module }: Props) {
   );
 }
 
-function MetricCard({
-  icon,
-  label,
-  value,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-}) {
+function MetricCard({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
   return (
     <div className="rounded-[22px] border border-white/70 bg-white/82 px-4 py-4 shadow-[0_8px_24px_rgba(35,45,62,0.04)]">
       <div className="flex items-center gap-2 text-[#0b9c72]">{icon}</div>
+
       <div className="mt-3 text-lg font-bold text-[#31425a]">{value}</div>
+
       <div className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
         {label}
       </div>
@@ -775,7 +757,7 @@ function ToggleButton({
 }: {
   active: boolean;
   onClick: () => void;
-  icon: React.ReactNode;
+  icon: ReactNode;
   label: string;
 }) {
   return (
@@ -798,6 +780,7 @@ function SectionTitle({ eyebrow, title }: { eyebrow: string; title: string }) {
       <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
         {eyebrow}
       </p>
+
       <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#31425a]">{title}</h2>
     </div>
   );
@@ -807,6 +790,7 @@ function InsightCard({ title, text }: { title: string; text: string }) {
   return (
     <div className="rounded-2xl border border-[#e8edf3] bg-white/72 p-5">
       <h3 className="text-base font-bold text-[#31425a]">{title}</h3>
+
       <p className="mt-2 text-sm leading-6 text-[#667180]">{text}</p>
     </div>
   );
@@ -833,15 +817,17 @@ function AttemptBlock({
         <div className="mt-4 space-y-3">
           {attempts.map((attempt) => (
             <div
-              key={`${title}-${attempt.attemptNumber}`}
+              key={`${title}-${attempt.quizId ?? "quiz"}-${attempt.attemptNumber}-${attempt.submittedAt}`}
               className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-4"
             >
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="text-sm font-semibold text-[#31425a]">
                   {t("attempt.attemptLabel", { number: attempt.attemptNumber })}
                 </div>
+
                 <div className="text-sm font-semibold text-[#31425a]">{attempt.score}%</div>
               </div>
+
               <p className="mt-1 text-sm text-[#667180]">
                 {t("attempt.correctSummary", {
                   correct: attempt.correctCount,
@@ -849,6 +835,7 @@ function AttemptBlock({
                   submittedAt: attempt.submittedAt,
                 })}
               </p>
+
               {attempt.flaggedQuestionIds.length > 0 ? (
                 <p className="mt-1 text-sm text-[#8a97a6]">
                   {t("attempt.flaggedQuestions", {

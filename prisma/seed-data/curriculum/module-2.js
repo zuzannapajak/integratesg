@@ -17,6 +17,8 @@ export const module2 = {
         "Link ESG with mission, values, leadership, priorities and performance so it becomes part of strategy.",
       content: readCurriculumMarkdown("en", "module-2", "intro"),
       details: {
+        overview:
+          "This module is designed for learners who already understand the basics of ESG and now need to connect them with strategy. It shows how ESG can be reflected in mission, values, priorities, leadership behaviour and performance decisions, so sustainability becomes part of how an organisation plans and manages its future.",
         practicalFocus:
           "Translate ESG from a general ambition into strategy, priorities, leadership behaviour and performance decisions.",
         learningProgression:

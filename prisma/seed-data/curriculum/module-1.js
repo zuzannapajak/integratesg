@@ -17,6 +17,8 @@ export const module1 = {
         "Learn the ESG pillars, how ESG evolved, why it matters for SMEs, and how business actions connect to the SDGs.",
       content: readCurriculumMarkdown("en", "module-1", "intro"),
       details: {
+        overview:
+          "This module is the starting point for understanding ESG as a practical business framework. It helps learners recognise what Environmental, Social and Governance issues mean in real organisational contexts, why ESG has become important for companies of all sizes, and how everyday business decisions can contribute to broader sustainable development goals.",
         practicalFocus:
           "Build a clear foundation for understanding ESG as a practical business concept, not only a reporting term.",
         learningProgression:

@@ -17,6 +17,8 @@ export const module6 = {
         "Measure ESG progress, report credibly, use innovation and prepare for future EU and global ESG trends.",
       content: readCurriculumMarkdown("en", "module-6", "intro"),
       details: {
+        overview:
+          "This module supports learners in moving from ESG implementation to ongoing monitoring and improvement. It explains how to choose meaningful indicators, communicate performance credibly, use innovation to strengthen ESG outcomes and stay prepared for future EU policies, reporting expectations and global sustainability trends.",
         practicalFocus:
           "Measure ESG progress, communicate performance credibly and prepare for future regulatory and market expectations.",
         learningProgression:

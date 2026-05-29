@@ -17,6 +17,8 @@ export const module5 = {
         "Use ESG data, lifecycle planning, daily processes and collaboration to turn goals into measurable practice.",
       content: readCurriculumMarkdown("en", "module-5", "intro"),
       details: {
+        overview:
+          "This module is about turning ESG intentions into organised implementation. It shows how organisations can move from planning to action by using structured processes, reliable data, digital tools and collaboration across teams and external partners, so ESG becomes measurable, coordinated and easier to manage over time.",
         practicalFocus:
           "Implement ESG through structured action, reliable data, daily processes and collaboration across teams and partners.",
         learningProgression:

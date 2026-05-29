@@ -673,7 +673,6 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
               {currentQuiz.questions.map((question, index) => {
                 const selectedId = reviewState.selectedAnswers[question.id];
                 const selectedAnswer = question.answers.find((answer) => answer.id === selectedId);
-                const correctAnswer = question.answers.find((answer) => answer.isCorrect);
                 const isCorrect = selectedAnswer?.isCorrect === true;
                 const wasFlagged = reviewState.flaggedQuestionIds.includes(question.id);
 
@@ -769,16 +768,6 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
                           </div>
                         );
                       })}
-                    </div>
-
-                    <div className="mt-4 rounded-2xl border border-[#e8edf3] bg-[#f8fafc] px-4 py-4">
-                      <p className="text-sm font-semibold text-[#31425a]">
-                        {isCorrect ? t("review.whyCorrect") : t("review.correction")}
-                      </p>
-                      <p className="mt-1 text-sm leading-6 text-[#556274]">
-                        {t("review.correctAnswerIs")}{" "}
-                        <span className="font-semibold">{correctAnswer?.text ?? "—"}</span>
-                      </p>
                     </div>
                   </div>
                 );
