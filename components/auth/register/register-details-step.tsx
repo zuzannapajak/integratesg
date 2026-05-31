@@ -1,6 +1,5 @@
 "use client";
 
-import SocialLoginButtons from "@/components/auth/login/social-login-buttons";
 import { createProfile } from "@/features/auth/actions";
 import { APP_ROLES, SelfServiceRole } from "@/lib/auth/roles";
 import { createClient } from "@/lib/supabase/client";
@@ -203,7 +202,7 @@ export default function RegisterDetailsStep({
               </div>
 
               <div className="mt-8">
-                <SocialLoginButtons locale={locale} nextPath={`/${locale}/auth/complete-profile`} />
+                {/* <SocialLoginButtons locale={locale} nextPath={`/${locale}/auth/complete-profile`} /> */}
               </div>
             </div>
           </div>

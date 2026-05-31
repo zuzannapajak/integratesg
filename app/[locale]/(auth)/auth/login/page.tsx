@@ -1,5 +1,4 @@
 import LoginForm from "@/components/auth/login/login-form";
-import SocialLoginButtons from "@/components/auth/login/social-login-buttons";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 
@@ -27,7 +26,7 @@ export default async function LoginPage({ params }: Props) {
             </div>
 
             <div className="mt-8 space-y-6">
-              <SocialLoginButtons locale={locale} />
+              {/* <SocialLoginButtons locale={locale} /> */}
 
               <div className="flex items-center gap-4">
                 <div className="h-px flex-1 bg-[#d9e1ea]" />
