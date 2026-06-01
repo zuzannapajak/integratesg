@@ -39,7 +39,7 @@ function getSafeNextPath(next: string | null) {
 }
 
 function redirectToLogin(locale: string, publicOrigin: string) {
-  return NextResponse.redirect(new URL(`/${locale}/auth/login`, publicOrigin));
+  return NextResponse.redirect(new URL(`/${locale}/auth/login`, publicOrigin), 303);
 }
 
 export async function GET(request: Request) {
@@ -113,7 +113,7 @@ export async function GET(request: Request) {
         userId: user.id,
       });
 
-      return NextResponse.redirect(new URL(`/${locale}/auth/complete-profile`, publicOrigin));
+      return NextResponse.redirect(new URL(`/${locale}/auth/complete-profile`, publicOrigin), 303);
     }
 
     const preferredLocale =
@@ -129,7 +129,7 @@ export async function GET(request: Request) {
       target,
     });
 
-    return NextResponse.redirect(new URL(target, publicOrigin));
+    return NextResponse.redirect(new URL(target, publicOrigin), 303);
   } catch (error) {
     console.error("[auth/callback] Unexpected callback error", error);
 

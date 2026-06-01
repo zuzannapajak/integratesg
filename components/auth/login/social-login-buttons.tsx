@@ -9,12 +9,6 @@ type Props = {
 };
 
 function getSiteUrl() {
-  const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL;
-
-  if (configuredUrl) {
-    return configuredUrl.replace(/\/$/, "");
-  }
-
   return window.location.origin.replace(/\/$/, "");
 }
 

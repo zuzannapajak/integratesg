@@ -30,7 +30,11 @@ export async function updateSession(request: NextRequest) {
     },
   });
 
-  await supabase.auth.getUser();
+  try {
+    await supabase.auth.getUser();
+  } catch (error) {
+    console.error("[supabase/middleware] getUser failed", error);
+  }
 
   return supabaseResponse;
 }
