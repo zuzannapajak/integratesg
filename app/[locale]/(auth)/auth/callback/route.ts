@@ -38,8 +38,57 @@ function getSafeNextPath(next: string | null) {
   return next;
 }
 
+function createCleanRedirect(url: URL) {
+  const response = NextResponse.redirect(url, 303);
+
+  response.headers.delete("link");
+  response.headers.set("Cache-Control", "no-store, max-age=0");
+
+  return response;
+}
+
+function escapeHtmlAttribute(value: string) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+}
+
+function createHtmlRedirect(url: URL) {
+  const href = url.toString();
+  const escapedHref = escapeHtmlAttribute(href);
+
+  const html = `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="refresh" content="0;url=${escapedHref}" />
+  <title>Redirecting...</title>
+</head>
+<body>
+  <p>Redirecting...</p>
+  <script>
+    window.location.replace(${JSON.stringify(href)});
+  </script>
+</body>
+</html>`;
+
+  const response = new NextResponse(html, {
+    status: 200,
+    headers: {
+      "Content-Type": "text/html; charset=utf-8",
+      "Cache-Control": "no-store, max-age=0",
+    },
+  });
+
+  response.headers.delete("link");
+
+  return response;
+}
+
 function redirectToLogin(locale: string, publicOrigin: string) {
-  return NextResponse.redirect(new URL(`/${locale}/auth/login`, publicOrigin), 303);
+  return createCleanRedirect(new URL(`/${locale}/auth/login`, publicOrigin));
 }
 
 export async function GET(request: Request) {
@@ -113,7 +162,7 @@ export async function GET(request: Request) {
         userId: user.id,
       });
 
-      return NextResponse.redirect(new URL(`/${locale}/auth/complete-profile`, publicOrigin), 303);
+      return createCleanRedirect(new URL(`/${locale}/auth/complete-profile`, publicOrigin));
     }
 
     const preferredLocale =
@@ -122,6 +171,7 @@ export async function GET(request: Request) {
         : locale;
 
     const target = next ?? getDefaultProtectedRoute(preferredLocale, profile.role);
+    const redirectUrl = new URL(target, publicOrigin);
 
     console.warn("[auth/callback] Login completed", {
       userId: user.id,
@@ -129,7 +179,11 @@ export async function GET(request: Request) {
       target,
     });
 
-    return NextResponse.redirect(new URL(target, publicOrigin), 303);
+    console.warn("[auth/callback] Returning HTML redirect", {
+      redirectUrl: redirectUrl.toString(),
+    });
+
+    return createHtmlRedirect(redirectUrl);
   } catch (error) {
     console.error("[auth/callback] Unexpected callback error", error);
 
