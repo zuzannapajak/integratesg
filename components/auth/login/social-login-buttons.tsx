@@ -22,7 +22,7 @@ export default function SocialLoginButtons({ locale, nextPath = `/${locale}/dash
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${siteUrl}/${locale}/auth/callback?next=${encodeURIComponent(nextPath)}`,
+        redirectTo: `${siteUrl}/${locale}/auth/client-callback?next=${encodeURIComponent(nextPath)}`,
       },
     });
   };
