@@ -111,8 +111,35 @@ export default function ClientAuthCallback({ locale }: Props) {
         aria-live="polite"
         aria-busy="true"
       >
-        <div className="mx-auto mb-6 h-10 w-10 animate-spin rounded-full border-2 border-muted border-t-foreground" />
-
+        <div className="mx-auto mb-6 flex h-12 w-12 items-center justify-center text-foreground">
+          <svg className="h-10 w-10" viewBox="0 0 50 50" aria-hidden="true">
+            <circle
+              cx="25"
+              cy="25"
+              r="20"
+              fill="none"
+              stroke="currentColor"
+              strokeOpacity="0.15"
+              strokeWidth="5"
+            />
+            <path
+              d="M45 25a20 20 0 0 1-20 20"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeWidth="5"
+            >
+              <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="0 25 25"
+                to="360 25 25"
+                dur="0.8s"
+                repeatCount="indefinite"
+              />
+            </path>
+          </svg>
+        </div>
         <h1 className="text-xl font-semibold tracking-tight">{title}</h1>
 
         <p className="mt-3 text-sm leading-6 text-muted-foreground">{message}</p>
