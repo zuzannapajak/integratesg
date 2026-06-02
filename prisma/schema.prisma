@@ -17,6 +17,7 @@ model Profile {
   userCaseStudyProgress UserCaseStudyProgress[]
   userCourseAttempts    UserCourseAttempt[]
   userScenarioAttempts  UserScenarioAttempt[]
+  curriculumPilot       CurriculumPilot?
 }
 
 model CaseStudy {
@@ -227,6 +228,103 @@ model UserCourseAttempt {
   @@index([currentStage])
 }
 
+model CurriculumPilot {
+  id                          String                      @id @default(cuid())
+  userId                      String                      @unique
+  status                      CurriculumPilotStatus       @default(pre_prompt_shown)
+  preAssessmentSeenAt         DateTime?
+  preAssessmentSkippedAt      DateTime?
+  preAssessmentCompletedAt    DateTime?
+  postAssessmentCompletedAt   DateTime?
+  preAssessmentAverageScore   Float?
+  postAssessmentAverageScore  Float?
+  assessmentAverageScoreDelta Float?
+  createdAt                   DateTime                    @default(now())
+  updatedAt                   DateTime                    @updatedAt
+  submissions                 CurriculumPilotSubmission[]
+  user                        Profile                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+  @@index([preAssessmentSeenAt])
+  @@index([preAssessmentSkippedAt])
+  @@index([preAssessmentCompletedAt])
+  @@index([postAssessmentCompletedAt])
+}
+
+model CurriculumPilotQuestion {
+  id           String                               @id @default(cuid())
+  key          String                               @unique
+  sortOrder    Int                                  @default(0)
+  inputType    CurriculumPilotQuestionType          @default(likert)
+  minValue     Int?
+  maxValue     Int?
+  isRequired   Boolean                              @default(true)
+  isActive     Boolean                              @default(true)
+  createdAt    DateTime                             @default(now())
+  updatedAt    DateTime                             @updatedAt
+  answers      CurriculumPilotAnswer[]
+  translations CurriculumPilotQuestionTranslation[]
+
+  @@index([sortOrder])
+  @@index([isActive])
+}
+
+model CurriculumPilotQuestionTranslation {
+  id         String                  @id @default(cuid())
+  questionId String
+  language   String
+  prompt     String
+  helpText   String?
+  labels     Json?
+  createdAt  DateTime                @default(now())
+  updatedAt  DateTime                @updatedAt
+  question   CurriculumPilotQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([questionId, language])
+  @@index([questionId])
+  @@index([language])
+}
+
+model CurriculumPilotSubmission {
+  id                               String                        @id @default(cuid())
+  pilotId                          String
+  type                             CurriculumPilotAssessmentType
+  submittedAt                      DateTime                      @default(now())
+  totalScore                       Float?
+  averageScore                     Float?
+  answersSnapshot                  Json?
+  modulesStartedBeforeSubmission   Int                           @default(0)
+  modulesCompletedBeforeSubmission Int                           @default(0)
+  startedCourseIdsSnapshot         Json?
+  completedCourseIdsSnapshot       Json?
+  createdAt                        DateTime                      @default(now())
+  updatedAt                        DateTime                      @updatedAt
+  answers                          CurriculumPilotAnswer[]
+  pilot                            CurriculumPilot               @relation(fields: [pilotId], references: [id], onDelete: Cascade)
+
+  @@unique([pilotId, type])
+  @@index([pilotId])
+  @@index([type])
+  @@index([submittedAt])
+}
+
+model CurriculumPilotAnswer {
+  id           String                    @id @default(cuid())
+  submissionId String
+  questionId   String
+  valueInt     Int?
+  valueText    String?
+  valueJson    Json?
+  createdAt    DateTime                  @default(now())
+  updatedAt    DateTime                  @updatedAt
+  question     CurriculumPilotQuestion   @relation(fields: [questionId], references: [id], onDelete: Restrict)
+  submission   CurriculumPilotSubmission @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+
+  @@unique([submissionId, questionId])
+  @@index([submissionId])
+  @@index([questionId])
+}
+
 model Scenario {
   id           String                @id @default(cuid())
   slug         String                @unique
@@ -345,6 +443,24 @@ model AnswerTranslation {
   @@unique([answerId, language])
   @@index([answerId])
   @@index([language])
+}
+
+enum CurriculumPilotStatus {
+  pre_prompt_shown
+  pre_skipped
+  pilot_active
+  pilot_completed
+}
+
+enum CurriculumPilotAssessmentType {
+  pre
+  post
+}
+
+enum CurriculumPilotQuestionType {
+  likert
+  single_choice
+  open_text
 }
 
 enum UserRole {
