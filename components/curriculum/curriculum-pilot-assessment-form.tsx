@@ -1,7 +1,10 @@
 "use client";
 
-import { submitCurriculumPilotPreAssessmentAction } from "@/features/curriculum/pilot-actions";
-import type { CurriculumPilotLikertQuestionViewModel } from "@/lib/curriculum/pilot";
+import {
+  submitCurriculumPilotPostAssessmentAction,
+  submitCurriculumPilotPreAssessmentAction,
+} from "@/features/curriculum/pilot-actions";
+import type { CurriculumPilotAssessmentQuestionViewModel } from "@/lib/curriculum/pilot";
 import { ArrowRight, ClipboardCheck, Loader2, Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { SyntheticEvent } from "react";
@@ -10,10 +13,11 @@ import { useMemo, useState, useTransition } from "react";
 type Props = {
   locale: string;
   nextPath: string;
-  questions: CurriculumPilotLikertQuestionViewModel[];
+  assessmentType: "pre" | "post";
+  questions: CurriculumPilotAssessmentQuestionViewModel[];
 };
 
-type PreAssessmentCopy = {
+type AssessmentCopy = {
   eyebrow: string;
   title: string;
   description: string;
@@ -21,6 +25,7 @@ type PreAssessmentCopy = {
   submit: string;
   submitting: string;
   answered: string;
+  required: string;
   validationError: string;
   submitError: string;
 };
@@ -28,8 +33,24 @@ type PreAssessmentCopy = {
 const SURFACE =
   "rounded-[30px] border border-white/70 bg-white/88 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";
 
-function getPreAssessmentCopy(locale: string): PreAssessmentCopy {
+function getAssessmentCopy(locale: string, assessmentType: "pre" | "post"): AssessmentCopy {
   if (locale === "pl") {
+    if (assessmentType === "post") {
+      return {
+        eyebrow: "Post-assessment pilotażowy",
+        title: "Samoocena po korzystaniu z modułów IntegratESG",
+        description:
+          "Po ukończeniu wybranych modułów IntegratESG wskaż, jak pewnie czujesz się teraz w poniższych zadaniach związanych z ESG. Odpowiedz ponownie na te same pytania, aby można było zmierzyć postęp w nauce.",
+        scaleTitle: "Skala odpowiedzi",
+        submit: "Zapisz post-assessment i zakończ udział w pilotażu",
+        submitting: "Zapisywanie odpowiedzi...",
+        answered: "Udzielono odpowiedzi",
+        required: "Wymagane",
+        validationError: "Odpowiedz na wszystkie pytania przed przejściem dalej.",
+        submitError: "Nie udało się zapisać post-assessmentu. Spróbuj ponownie.",
+      };
+    }
+
     return {
       eyebrow: "Pre-assessment pilotażowy",
       title: "Samoocena przed rozpoczęciem modułów IntegratESG",
@@ -39,8 +60,25 @@ function getPreAssessmentCopy(locale: string): PreAssessmentCopy {
       submit: "Zapisz pre-assessment i przejdź dalej",
       submitting: "Zapisywanie odpowiedzi...",
       answered: "Udzielono odpowiedzi",
+      required: "Wymagane",
       validationError: "Odpowiedz na wszystkie pytania przed przejściem dalej.",
       submitError: "Nie udało się zapisać pre-assessmentu. Spróbuj ponownie.",
+    };
+  }
+
+  if (assessmentType === "post") {
+    return {
+      eyebrow: "Pilot post-assessment",
+      title: "Self-assessment after using the IntegratESG modules",
+      description:
+        "After completing the IntegratESG modules, please indicate how confident you now feel about the following ESG-related tasks. Please answer the same questions again so that learning progress can be measured.",
+      scaleTitle: "Response scale",
+      submit: "Save post-assessment and finish pilot participation",
+      submitting: "Saving answers...",
+      answered: "Answered",
+      required: "Required",
+      validationError: "Please answer all questions before continuing.",
+      submitError: "We could not save your post-assessment. Please try again.",
     };
   }
 
@@ -53,56 +91,89 @@ function getPreAssessmentCopy(locale: string): PreAssessmentCopy {
     submit: "Save pre-assessment and continue",
     submitting: "Saving answers...",
     answered: "Answered",
+    required: "Required",
     validationError: "Please answer all questions before continuing.",
     submitError: "We could not save your pre-assessment. Please try again.",
   };
 }
 
-export default function CurriculumPilotAssessmentForm({ locale, nextPath, questions }: Props) {
+export default function CurriculumPilotAssessmentForm({
+  locale,
+  nextPath,
+  assessmentType,
+  questions,
+}: Props) {
   const router = useRouter();
-  const copy = getPreAssessmentCopy(locale);
-  const [selectedAnswers, setSelectedAnswers] = useState<Partial<Record<string, number>>>({});
+  const copy = getAssessmentCopy(locale, assessmentType);
+  const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number | string>>({});
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  const answeredCount = useMemo(
-    () => questions.filter((question) => selectedAnswers[question.id] !== undefined).length,
+  const answeredRequiredCount = useMemo(
+    () =>
+      questions.filter((question) => {
+        const answer = selectedAnswers[question.id];
+
+        if (question.inputType === "likert") {
+          return typeof answer === "number";
+        }
+
+        return typeof answer === "string" && answer.trim().length > 0;
+      }).length,
     [questions, selectedAnswers],
   );
 
-  const allAnswered = answeredCount === questions.length;
+  const allRequiredAnswered = answeredRequiredCount === questions.length;
 
-  const responseScale = questions.at(0)?.scaleOptions ?? [];
+  const responseScale =
+    questions.find((question) => question.inputType === "likert")?.scaleOptions ?? [];
 
   const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
 
-    if (!allAnswered) {
+    if (!allRequiredAnswered) {
       setError(copy.validationError);
       return;
     }
 
     startTransition(async () => {
       try {
-        const answers = questions.map((question) => {
-          const value = selectedAnswers[question.id];
-
-          if (value === undefined) {
-            throw new Error(`Missing answer for question ${question.id}.`);
+        const answers = Object.entries(selectedAnswers).map(([questionId, value]) => {
+          if (typeof value === "number") {
+            return {
+              questionId,
+              value,
+            };
           }
 
           return {
-            questionId: question.id,
-            value,
+            questionId,
+            valueText: value,
           };
         });
 
-        const result = await submitCurriculumPilotPreAssessmentAction({
-          locale,
-          nextPath,
-          answers,
-        });
+        const result =
+          assessmentType === "pre"
+            ? await submitCurriculumPilotPreAssessmentAction({
+                locale,
+                nextPath,
+                answers: answers.map((answer) => {
+                  if (!("value" in answer) || typeof answer.value !== "number") {
+                    throw new Error("Invalid pre-assessment answer.");
+                  }
+
+                  return {
+                    questionId: answer.questionId,
+                    value: answer.value,
+                  };
+                }),
+              })
+            : await submitCurriculumPilotPostAssessmentAction({
+                locale,
+                nextPath,
+                answers,
+              });
 
         router.replace(result.nextPath);
         router.refresh();
@@ -156,55 +227,93 @@ export default function CurriculumPilotAssessmentForm({ locale, nextPath, questi
             </aside>
           </div>
 
-          <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+          <form onSubmit={handleSubmit} className="mt-8 space-y-5">
             {questions.map((question, questionIndex) => (
               <fieldset
                 key={question.id}
-                className="rounded-[26px] border border-[#e8edf3] bg-white/82 p-5 shadow-[0_8px_24px_rgba(35,45,62,0.04)]"
+                className="rounded-[28px] border border-[#e8edf3] bg-white/82 p-4 shadow-[0_8px_24px_rgba(35,45,62,0.04)] md:p-5"
               >
-                <legend className="text-base font-bold leading-7 text-[#31425a]">
-                  <span className="mr-2 text-emerald-700">{questionIndex + 1}.</span>
-                  {question.prompt}
+                <legend className="sr-only">
+                  {questionIndex + 1}. {question.prompt}
                 </legend>
 
-                {question.helpText ? (
-                  <p className="mt-2 text-sm leading-6 text-[#667180]">{question.helpText}</p>
-                ) : null}
+                <div className="flex items-start gap-3">
+                  <span className="mt-0.5 shrink-0 text-base font-bold leading-7 text-emerald-700">
+                    {questionIndex + 1}.
+                  </span>
 
-                <div className="mt-5 grid gap-2 md:grid-cols-5">
-                  {question.scaleOptions.map((option) => {
-                    const selected = selectedAnswers[question.id] === option.value;
-
-                    return (
-                      <label
-                        key={option.value}
-                        className={`flex cursor-pointer flex-col gap-2 rounded-2xl border px-3 py-3 text-sm transition ${
-                          selected
-                            ? "border-emerald-300 bg-emerald-50 text-emerald-800 shadow-sm"
-                            : "border-[#e8edf3] bg-white text-[#667180] hover:border-emerald-200 hover:bg-emerald-50/40"
-                        }`}
+                  <div className="min-w-0">
+                    <p className="text-base font-bold leading-7 text-[#31425a]">
+                      {question.prompt}
+                      <span
+                        aria-label={copy.required}
+                        title={copy.required}
+                        className="ml-1 text-rose-500"
                       >
-                        <span className="flex items-center gap-2">
-                          <input
-                            type="radio"
-                            name={question.id}
-                            value={option.value}
-                            checked={selected}
-                            onChange={() => {
-                              setSelectedAnswers((previousAnswers) => ({
-                                ...previousAnswers,
-                                [question.id]: option.value,
-                              }));
-                            }}
-                            className="h-4 w-4 accent-emerald-600"
-                          />
-                          <span className="font-bold">{option.value}</span>
-                        </span>
-                        <span className="text-xs leading-5">{option.label}</span>
-                      </label>
-                    );
-                  })}
+                        *
+                      </span>
+                    </p>
+
+                    {question.helpText ? (
+                      <p className="mt-2 text-sm leading-6 text-[#667180]">{question.helpText}</p>
+                    ) : null}
+                  </div>
                 </div>
+
+                {question.inputType === "likert" ? (
+                  <div className="mt-5 grid gap-3 md:grid-cols-5">
+                    {question.scaleOptions.map((option) => {
+                      const selected = selectedAnswers[question.id] === option.value;
+
+                      return (
+                        <label
+                          key={option.value}
+                          className={`flex cursor-pointer flex-col gap-2 rounded-2xl border px-3 py-3 text-sm transition ${
+                            selected
+                              ? "border-emerald-300 bg-emerald-50 text-emerald-800 shadow-sm"
+                              : "border-[#e8edf3] bg-white text-[#667180] hover:border-emerald-200 hover:bg-emerald-50/40"
+                          }`}
+                        >
+                          <span className="flex items-center gap-2">
+                            <input
+                              type="radio"
+                              name={question.id}
+                              value={option.value}
+                              checked={selected}
+                              required
+                              onChange={() => {
+                                setSelectedAnswers((previousAnswers) => ({
+                                  ...previousAnswers,
+                                  [question.id]: option.value,
+                                }));
+                              }}
+                              className="h-4 w-4 accent-emerald-600"
+                            />
+                            <span className="font-bold">{option.value}</span>
+                          </span>
+                          <span className="text-xs leading-5">{option.label}</span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <textarea
+                    value={
+                      typeof selectedAnswers[question.id] === "string"
+                        ? selectedAnswers[question.id]
+                        : ""
+                    }
+                    required
+                    onChange={(event) => {
+                      setSelectedAnswers((previousAnswers) => ({
+                        ...previousAnswers,
+                        [question.id]: event.target.value,
+                      }));
+                    }}
+                    rows={5}
+                    className="mt-5 w-full rounded-2xl border border-[#d9e2ec] bg-white px-4 py-3 text-sm leading-6 text-[#31425a] outline-none transition placeholder:text-[#a8b3bf] focus:border-emerald-300 focus:ring-4 focus:ring-emerald-100"
+                  />
+                )}
               </fieldset>
             ))}
 
@@ -213,14 +322,14 @@ export default function CurriculumPilotAssessmentForm({ locale, nextPath, questi
                 <p className="text-sm font-semibold text-[#667180]">
                   {copy.answered}:{" "}
                   <span className="text-[#31425a]">
-                    {answeredCount}/{questions.length}
+                    {answeredRequiredCount}/{questions.length}
                   </span>
                 </p>
 
                 <button
                   type="submit"
-                  disabled={isPending}
-                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347] disabled:opacity-60"
+                  disabled={isPending || !allRequiredAnswered}
+                  className="inline-flex items-center justify-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347] disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
                   {isPending ? copy.submitting : copy.submit}

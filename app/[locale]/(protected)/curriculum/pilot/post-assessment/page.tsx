@@ -2,7 +2,7 @@ import CurriculumPilotAssessmentForm from "@/components/curriculum/curriculum-pi
 import { requireRole } from "@/features/auth/requireRole";
 import { APP_ROLES } from "@/lib/auth/roles";
 import {
-  getCurriculumPilotPreAssessmentViewModel,
+  getCurriculumPilotPostAssessmentViewModel,
   getSafeCurriculumNextPath,
 } from "@/lib/curriculum/pilot";
 import { redirect } from "next/navigation";
@@ -24,7 +24,7 @@ function getSingleSearchParam(value: string | string[] | undefined) {
   return value;
 }
 
-export default async function CurriculumPilotPreAssessmentPage({ params, searchParams }: Props) {
+export default async function CurriculumPilotPostAssessmentPage({ params, searchParams }: Props) {
   const { locale } = await params;
   const resolvedSearchParams = await searchParams;
   const nextPath = getSafeCurriculumNextPath(
@@ -34,7 +34,7 @@ export default async function CurriculumPilotPreAssessmentPage({ params, searchP
 
   const { user } = await requireRole(locale, APP_ROLES.educator);
 
-  const assessment = await getCurriculumPilotPreAssessmentViewModel({
+  const assessment = await getCurriculumPilotPostAssessmentViewModel({
     userId: user.id,
     locale,
   });
@@ -51,7 +51,7 @@ export default async function CurriculumPilotPreAssessmentPage({ params, searchP
         <CurriculumPilotAssessmentForm
           locale={locale}
           nextPath={nextPath}
-          assessmentType="pre"
+          assessmentType="post"
           questions={assessment.questions}
         />
       </div>

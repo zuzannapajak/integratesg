@@ -23,17 +23,27 @@ export type CurriculumPilotEntryGateState = {
   postAssessmentCompletedAt: string | null;
 };
 
-export type CurriculumPilotLikertQuestionViewModel = {
+export type CurriculumPilotQuestionInputType = "likert" | "single_choice" | "open_text";
+
+export type CurriculumPilotAssessmentQuestionViewModel = {
   id: string;
   key: string;
+  inputType: CurriculumPilotQuestionInputType;
   prompt: string;
   helpText: string | null;
-  minValue: number;
-  maxValue: number;
+  minValue: number | null;
+  maxValue: number | null;
+  isRequired: boolean;
   scaleOptions: Array<{
     value: number;
     label: string;
   }>;
+};
+
+export type CurriculumPilotLikertQuestionViewModel = CurriculumPilotAssessmentQuestionViewModel & {
+  inputType: "likert";
+  minValue: number;
+  maxValue: number;
 };
 
 export type CurriculumPilotPreAssessmentViewModel =
@@ -45,6 +55,32 @@ export type CurriculumPilotPreAssessmentViewModel =
       status: "unavailable";
       reason: "pre_skipped" | "pre_completed" | "pilot_already_started_or_completed";
     };
+
+export type CurriculumPilotPostAssessmentViewModel =
+  | {
+      status: "available";
+      completedModulesCount: number;
+      questions: CurriculumPilotAssessmentQuestionViewModel[];
+    }
+  | {
+      status: "unavailable";
+      reason:
+        | "no_pilot"
+        | "pre_skipped"
+        | "pre_missing"
+        | "post_completed"
+        | "no_completed_module"
+        | "pilot_not_active";
+      completedModulesCount: number;
+    };
+
+export type CurriculumPilotPostAssessmentCalloutViewModel = {
+  shouldShow: boolean;
+  isAvailable: boolean;
+  isCompleted: boolean;
+  completedModulesCount: number;
+  postAssessmentCompletedAt: string | null;
+};
 
 const DEFAULT_SCALE_LABELS: Record<number, string> = {
   1: "Not confident at all",
@@ -186,10 +222,32 @@ async function ensureCurriculumPilotPromptForUser(userId: string): Promise<Curri
   return existingPilot;
 }
 
+async function getCompletedCurriculumModulesCount(userId: string) {
+  return prisma.userCourseAttempt.count({
+    where: {
+      userId,
+      OR: [
+        {
+          status: "completed",
+        },
+        {
+          completedAt: {
+            not: null,
+          },
+        },
+      ],
+    },
+  });
+}
+
 export function getSafeCurriculumNextPath(locale: string, rawPath: string | null | undefined) {
   const fallbackPath = `/${locale}/curriculum`;
 
   if (!rawPath) {
+    return fallbackPath;
+  }
+
+  if (rawPath === fallbackPath) {
     return fallbackPath;
   }
 
@@ -201,7 +259,7 @@ export function getSafeCurriculumNextPath(locale: string, rawPath: string | null
     return fallbackPath;
   }
 
-  if (rawPath.includes("/curriculum/pilot/pre-assessment")) {
+  if (rawPath.includes("/curriculum/pilot/")) {
     return fallbackPath;
   }
 
@@ -273,10 +331,12 @@ export async function getCurriculumPilotPreAssessmentViewModel(params: {
       return {
         id: question.id,
         key: question.key,
+        inputType: "likert",
         prompt: translation?.prompt ?? question.key,
         helpText: translation?.helpText ?? null,
         minValue,
         maxValue,
+        isRequired: question.isRequired,
         scaleOptions: mapScaleOptions({
           minValue,
           maxValue,
@@ -284,5 +344,164 @@ export async function getCurriculumPilotPreAssessmentViewModel(params: {
         }),
       };
     }),
+  };
+}
+
+export async function getCurriculumPilotPostAssessmentViewModel(params: {
+  userId: string;
+  locale: string;
+}): Promise<CurriculumPilotPostAssessmentViewModel> {
+  const [pilot, completedModulesCount] = await Promise.all([
+    prisma.curriculumPilot.findUnique({
+      where: {
+        userId: params.userId,
+      },
+      select: {
+        status: true,
+        preAssessmentSkippedAt: true,
+        preAssessmentCompletedAt: true,
+        postAssessmentCompletedAt: true,
+      },
+    }),
+    getCompletedCurriculumModulesCount(params.userId),
+  ]);
+
+  if (!pilot) {
+    return {
+      status: "unavailable",
+      reason: "no_pilot",
+      completedModulesCount,
+    };
+  }
+
+  if (pilot.preAssessmentSkippedAt || pilot.status === "pre_skipped") {
+    return {
+      status: "unavailable",
+      reason: "pre_skipped",
+      completedModulesCount,
+    };
+  }
+
+  if (!pilot.preAssessmentCompletedAt) {
+    return {
+      status: "unavailable",
+      reason: "pre_missing",
+      completedModulesCount,
+    };
+  }
+
+  if (pilot.postAssessmentCompletedAt || pilot.status === "pilot_completed") {
+    return {
+      status: "unavailable",
+      reason: "post_completed",
+      completedModulesCount,
+    };
+  }
+
+  if (pilot.status !== "pilot_active") {
+    return {
+      status: "unavailable",
+      reason: "pilot_not_active",
+      completedModulesCount,
+    };
+  }
+
+  if (completedModulesCount < 1) {
+    return {
+      status: "unavailable",
+      reason: "no_completed_module",
+      completedModulesCount,
+    };
+  }
+
+  const questions = await prisma.curriculumPilotQuestion.findMany({
+    where: {
+      isActive: true,
+      inputType: {
+        in: ["likert", "open_text"],
+      },
+    },
+    orderBy: {
+      sortOrder: "asc",
+    },
+    include: {
+      translations: {
+        where: {
+          language: {
+            in: getRequestedLanguages(params.locale),
+          },
+        },
+      },
+    },
+  });
+
+  return {
+    status: "available",
+    completedModulesCount,
+    questions: questions.map((question) => {
+      const translation = pickLocalizedRecord(question.translations, params.locale);
+      const minValue = question.inputType === "likert" ? (question.minValue ?? 1) : null;
+      const maxValue = question.inputType === "likert" ? (question.maxValue ?? 5) : null;
+      const scaleLabels = parseScaleLabels(translation?.labels);
+
+      return {
+        id: question.id,
+        key: question.key,
+        inputType: question.inputType,
+        prompt: translation?.prompt ?? question.key,
+        helpText: translation?.helpText ?? null,
+        minValue,
+        maxValue,
+        isRequired: question.isRequired,
+        scaleOptions:
+          question.inputType === "likert" && minValue !== null && maxValue !== null
+            ? mapScaleOptions({
+                minValue,
+                maxValue,
+                labels: scaleLabels,
+              })
+            : [],
+      };
+    }),
+  };
+}
+
+export async function getCurriculumPilotPostAssessmentCalloutViewModel(params: {
+  userId: string;
+}): Promise<CurriculumPilotPostAssessmentCalloutViewModel> {
+  const [pilot, completedModulesCount] = await Promise.all([
+    prisma.curriculumPilot.findUnique({
+      where: {
+        userId: params.userId,
+      },
+      select: {
+        status: true,
+        preAssessmentCompletedAt: true,
+        postAssessmentCompletedAt: true,
+      },
+    }),
+    getCompletedCurriculumModulesCount(params.userId),
+  ]);
+
+  if (!pilot?.preAssessmentCompletedAt) {
+    return {
+      shouldShow: false,
+      isAvailable: false,
+      isCompleted: false,
+      completedModulesCount,
+      postAssessmentCompletedAt: null,
+    };
+  }
+
+  const isCompleted =
+    pilot.status === "pilot_completed" || Boolean(pilot.postAssessmentCompletedAt);
+  const isAvailable = pilot.status === "pilot_active" && !isCompleted && completedModulesCount >= 1;
+
+  return {
+    shouldShow: pilot.status === "pilot_active" || isCompleted,
+    isAvailable,
+    isCompleted,
+    completedModulesCount,
+    postAssessmentCompletedAt: pilot.postAssessmentCompletedAt?.toISOString() ?? null,
   };
 }

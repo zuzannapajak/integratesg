@@ -180,7 +180,7 @@ export const curriculumPilotQuestions = [
     inputType: "open_text",
     minValue: null,
     maxValue: null,
-    isRequired: false,
+    isRequired: true,
     isActive: true,
     translations: [
       {

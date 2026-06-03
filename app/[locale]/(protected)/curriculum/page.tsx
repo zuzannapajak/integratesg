@@ -1,6 +1,8 @@
+import CurriculumPilotPostAssessmentCard from "@/components/curriculum/curriculum-pilot-post-assessment-form";
 import CurriculumSwitcher from "@/components/curriculum/curriculum-switcher";
 import { requireRole } from "@/features/auth/requireRole";
 import { APP_ROLES } from "@/lib/auth/roles";
+import { getCurriculumPilotPostAssessmentCalloutViewModel } from "@/lib/curriculum/pilot";
 import { getCurriculumModules } from "@/lib/curriculum/queries";
 import { estimateJsonBytes } from "@/lib/observability/json-size";
 import { logMeasuredOperation } from "@/lib/observability/performance";
@@ -63,11 +65,16 @@ async function getCurriculumPageData({ params, searchParams }: Props) {
       requireRole(locale, APP_ROLES.educator),
     ]);
 
-    const modules = await getCurriculumModules({
-      userId: user.id,
-      locale,
-      viewMode: activeView,
-    });
+    const [modules, pilotPostAssessment] = await Promise.all([
+      getCurriculumModules({
+        userId: user.id,
+        locale,
+        viewMode: activeView,
+      }),
+      getCurriculumPilotPostAssessmentCalloutViewModel({
+        userId: user.id,
+      }),
+    ]);
 
     const myCourses = activeView === "my-courses" ? modules : [];
     const allCourses = activeView === "all-courses" ? modules : [];
@@ -82,6 +89,7 @@ async function getCurriculumPageData({ params, searchParams }: Props) {
       activeView,
       myCourses,
       allCourses,
+      pilotPostAssessment,
       title: t("title"),
       subtitle: t("subtitle"),
     };
@@ -107,7 +115,7 @@ async function getCurriculumPageData({ params, searchParams }: Props) {
 }
 
 export default async function CurriculumPage(props: Props) {
-  const { locale, activeView, myCourses, allCourses, title, subtitle } =
+  const { locale, activeView, myCourses, allCourses, pilotPostAssessment, title, subtitle } =
     await getCurriculumPageData(props);
 
   return (
@@ -125,6 +133,8 @@ export default async function CurriculumPage(props: Props) {
             <p className="text-[#667180]">{subtitle}</p>
           </div>
         </header>
+
+        <CurriculumPilotPostAssessmentCard locale={locale} state={pilotPostAssessment} />
 
         <CurriculumSwitcher
           locale={locale}
