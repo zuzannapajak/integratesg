@@ -3,7 +3,7 @@ import "dotenv/config";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 
-import { courses } from "./seed-data/curriculum/index.js";
+import { courses, curriculumPilotQuestions } from "./seed-data/curriculum/index.js";
 
 const connectionString = process.env.DIRECT_URL || process.env.DATABASE_URL;
 
@@ -179,6 +179,59 @@ function pickAnswer(question, kind = "correct") {
   }
 
   return answer;
+}
+
+async function upsertCurriculumPilotQuestions() {
+  for (const questionData of curriculumPilotQuestions) {
+    const question = await prisma.curriculumPilotQuestion.upsert({
+      where: {
+        key: questionData.key,
+      },
+      update: {
+        sortOrder: questionData.sortOrder,
+        inputType: questionData.inputType,
+        minValue: questionData.minValue,
+        maxValue: questionData.maxValue,
+        isRequired: questionData.isRequired,
+        isActive: questionData.isActive,
+      },
+      create: {
+        id: questionData.id,
+        key: questionData.key,
+        sortOrder: questionData.sortOrder,
+        inputType: questionData.inputType,
+        minValue: questionData.minValue,
+        maxValue: questionData.maxValue,
+        isRequired: questionData.isRequired,
+        isActive: questionData.isActive,
+      },
+    });
+
+    for (const translation of questionData.translations) {
+      await prisma.curriculumPilotQuestionTranslation.upsert({
+        where: {
+          questionId_language: {
+            questionId: question.id,
+            language: translation.language,
+          },
+        },
+        update: {
+          prompt: translation.prompt,
+          helpText: translation.helpText ?? null,
+          labels: translation.labels ?? undefined,
+        },
+        create: {
+          questionId: question.id,
+          language: translation.language,
+          prompt: translation.prompt,
+          helpText: translation.helpText ?? null,
+          labels: translation.labels ?? undefined,
+        },
+      });
+    }
+  }
+
+  console.log(`Seeded curriculum pilot questions: ${curriculumPilotQuestions.length}`);
 }
 
 async function upsertScenario(scenarioData) {
@@ -887,6 +940,7 @@ async function seedCourseAttempts(courseMap) {
 
 async function main() {
   console.log("Seeding curriculum and scenario data...");
+  await upsertCurriculumPilotQuestions();
 
   const scenarioMap = new Map();
   for (const scenarioData of scenarios) {
