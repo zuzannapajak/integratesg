@@ -390,7 +390,7 @@ async function upsertCourse(courseData) {
         type: quizData.type,
         title: quizData.title,
         description: quizData.description,
-        passingScore: quizData.passingScore,
+        passingScore: quizData.type === "post" ? 75 : quizData.passingScore,
         sortOrder: quizData.sortOrder,
       },
     });

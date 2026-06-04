@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 
+export const CURRICULUM_MODULE_QUIZ_PASSING_SCORE = 75;
+
 export function readMarkdown(relativePath) {
   return fs.readFileSync(path.join(process.cwd(), relativePath), "utf8");
 }
@@ -79,7 +81,7 @@ export function question({ prompt, explanation = null, sortOrder, answers, trans
 export function selfAssessmentQuiz({
   title,
   description,
-  passingScore = 70,
+  passingScore = CURRICULUM_MODULE_QUIZ_PASSING_SCORE,
   sortOrder = 1,
   questions,
   translations,
@@ -104,7 +106,7 @@ export function unitQuiz({
   unitSlug,
   title,
   description,
-  passingScore = 70,
+  passingScore = CURRICULUM_MODULE_QUIZ_PASSING_SCORE,
   sortOrder,
   questions,
   translations,

@@ -1,6 +1,11 @@
 "use server";
 
 import { getCurriculumModule } from "@/lib/curriculum/queries";
+import {
+  CURRICULUM_MODULE_QUIZ_PASSING_SCORE,
+  CURRICULUM_POST_QUIZ_MAX_ATTEMPTS,
+  CURRICULUM_PRE_QUIZ_MAX_ATTEMPTS,
+} from "@/lib/curriculum/quiz-rules";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 
@@ -72,28 +77,40 @@ function parseAttemptArray(raw: unknown): StoredQuizAttempt[] {
 }
 
 function getCompletedUnitQuizCount(attempts: StoredQuizAttempt[], totalLessons: number) {
-  const groupedAttempts = new Map<string, StoredQuizAttempt[]>();
+  const passedQuizIds = new Set<string>();
 
   for (const attempt of attempts) {
     if (attempt.quizType !== "post" || !attempt.quizId) continue;
 
-    const currentAttempts = groupedAttempts.get(attempt.quizId) ?? [];
-    currentAttempts.push(attempt);
-    groupedAttempts.set(attempt.quizId, currentAttempts);
-  }
-
-  let completed = 0;
-
-  for (const attemptsForQuiz of groupedAttempts.values()) {
-    const hasPassedAttempt = attemptsForQuiz.some((attempt) => attempt.passed === true);
-    const attemptsExhausted = attemptsForQuiz.length >= 2;
-
-    if (hasPassedAttempt || attemptsExhausted) {
-      completed += 1;
+    if (attempt.passed === true && attempt.score >= CURRICULUM_MODULE_QUIZ_PASSING_SCORE) {
+      passedQuizIds.add(attempt.quizId);
     }
   }
 
-  return Math.min(completed, totalLessons);
+  return Math.min(passedQuizIds.size, totalLessons);
+}
+
+function getAllRequiredPostQuizzesPassed(params: {
+  attempts: StoredQuizAttempt[];
+  postQuizzes: Array<{ id: string; type: string }>;
+}) {
+  const requiredPostQuizIds = params.postQuizzes
+    .filter((quiz) => quiz.type === "post")
+    .map((quiz) => quiz.id);
+
+  if (requiredPostQuizIds.length === 0) {
+    return true;
+  }
+
+  return requiredPostQuizIds.every((quizId) =>
+    params.attempts.some(
+      (attempt) =>
+        attempt.quizId === quizId &&
+        attempt.quizType === "post" &&
+        attempt.passed === true &&
+        attempt.score >= CURRICULUM_MODULE_QUIZ_PASSING_SCORE,
+    ),
+  );
 }
 
 function calculateProgress(params: {
@@ -228,9 +245,6 @@ export async function submitQuizAttemptAction(input: SubmitQuizInput) {
     where: { slug: input.courseSlug },
     include: {
       quizzes: {
-        where: {
-          id: input.quizId,
-        },
         include: {
           questions: {
             include: {
@@ -249,7 +263,7 @@ export async function submitQuizAttemptAction(input: SubmitQuizInput) {
     throw new Error("Course not found.");
   }
 
-  const quiz = course.quizzes.at(0);
+  const quiz = course.quizzes.find((item) => item.id === input.quizId);
 
   if (quiz?.type !== input.quizType) {
     throw new Error("Quiz not found.");
@@ -280,7 +294,8 @@ export async function submitQuizAttemptAction(input: SubmitQuizInput) {
     throw new Error("All questions must be answered before finishing the quiz.");
   }
 
-  const maxAttempts = input.quizType === "pre" ? 1 : 2;
+  const maxAttempts =
+    input.quizType === "pre" ? CURRICULUM_PRE_QUIZ_MAX_ATTEMPTS : CURRICULUM_POST_QUIZ_MAX_ATTEMPTS;
   const rawAttempts =
     input.quizType === "pre" ? courseAttempt.preQuizAttempts : courseAttempt.postQuizAttempts;
   const allAttempts = parseAttemptArray(rawAttempts);
@@ -317,7 +332,8 @@ export async function submitQuizAttemptAction(input: SubmitQuizInput) {
   const score = Math.round((correctCount / totalQuestions) * 100);
   const attemptNumber = attemptsForCurrentQuiz.length + 1;
   const submittedAt = new Date().toISOString();
-  const passingScore = quiz.passingScore ?? 0;
+  const passingScore =
+    input.quizType === "post" ? CURRICULUM_MODULE_QUIZ_PASSING_SCORE : (quiz.passingScore ?? 0);
   const passed = score >= passingScore;
 
   const storedRecord: StoredQuizAttempt = {
@@ -370,14 +386,25 @@ export async function submitQuizAttemptAction(input: SubmitQuizInput) {
     const totalLessons = Math.max(course.lessonsCount, 1);
     const attemptsExhausted = attemptNumber >= maxAttempts;
     const quizFinished = passed || attemptsExhausted;
-    const completedLessonIndex = Math.max(
-      courseAttempt.completedLessons,
-      quiz.sortOrder,
-      courseAttempt.currentLessonIndex,
-    );
-    const isFinalUnit = completedLessonIndex >= totalLessons;
-    const nextStage = quizFinished ? (isFinalUnit ? "completed" : "lessons") : "post_quiz";
+    const completedLessonIndex = passed
+      ? Math.max(courseAttempt.completedLessons, quiz.sortOrder, courseAttempt.currentLessonIndex)
+      : courseAttempt.completedLessons;
+
     const completedUnitQuizzes = getCompletedUnitQuizCount(nextAttempts, totalLessons);
+    const allRequiredPostQuizzesPassed = getAllRequiredPostQuizzesPassed({
+      attempts: nextAttempts,
+      postQuizzes: course.quizzes,
+    });
+
+    const isFinalUnit = completedLessonIndex >= totalLessons;
+    const moduleCompleted = isFinalUnit && allRequiredPostQuizzesPassed;
+    const moduleFailed = attemptsExhausted && !passed;
+
+    const nextStage = moduleCompleted
+      ? "completed"
+      : quizFinished && passed
+        ? "lessons"
+        : "post_quiz";
 
     await prisma.userCourseAttempt.update({
       where: {
@@ -396,7 +423,7 @@ export async function submitQuizAttemptAction(input: SubmitQuizInput) {
             : completedLessonIndex + 1
           : completedLessonIndex,
         completedLessons: completedLessonIndex,
-        status: nextStage === "completed" ? "completed" : "in_progress",
+        status: moduleCompleted ? "completed" : moduleFailed ? "failed" : "in_progress",
         progressPercent:
           nextStage === "completed"
             ? 100
@@ -407,7 +434,7 @@ export async function submitQuizAttemptAction(input: SubmitQuizInput) {
                 hasPreQuiz: false,
                 hasFinishedPreQuiz: parseAttemptArray(courseAttempt.preQuizAttempts).length > 0,
               }),
-        completedAt: nextStage === "completed" ? new Date() : null,
+        completedAt: moduleCompleted ? new Date() : null,
         lastOpenedAt: new Date(),
       },
     });
@@ -475,6 +502,11 @@ export async function completeLessonAction(input: CompleteLessonInput) {
   const finishedAllLessons = completedLessons >= totalLessons;
   const currentPostAttempts = parseAttemptArray(courseAttempt.postQuizAttempts);
   const completedUnitQuizzes = getCompletedUnitQuizCount(currentPostAttempts, totalLessons);
+  const allRequiredPostQuizzesPassed = getAllRequiredPostQuizzesPassed({
+    attempts: currentPostAttempts,
+    postQuizzes: course.quizzes,
+  });
+  const moduleCompleted = finishedAllLessons && !unitQuiz && allRequiredPostQuizzesPassed;
 
   await prisma.userCourseAttempt.update({
     where: {
@@ -490,19 +522,18 @@ export async function completeLessonAction(input: CompleteLessonInput) {
         : finishedAllLessons
           ? totalLessons
           : completedLessons + 1,
-      currentStage: unitQuiz ? "post_quiz" : finishedAllLessons ? "completed" : "lessons",
-      status: finishedAllLessons && !unitQuiz ? "completed" : "in_progress",
-      progressPercent:
-        finishedAllLessons && !unitQuiz
-          ? 100
-          : calculateProgress({
-              totalLessons,
-              completedLessons,
-              completedUnitQuizzes,
-              hasPreQuiz: false,
-              hasFinishedPreQuiz: parseAttemptArray(courseAttempt.preQuizAttempts).length > 0,
-            }),
-      completedAt: finishedAllLessons && !unitQuiz ? new Date() : null,
+      currentStage: unitQuiz ? "post_quiz" : moduleCompleted ? "completed" : "lessons",
+      status: moduleCompleted ? "completed" : "in_progress",
+      progressPercent: moduleCompleted
+        ? 100
+        : calculateProgress({
+            totalLessons,
+            completedLessons,
+            completedUnitQuizzes,
+            hasPreQuiz: false,
+            hasFinishedPreQuiz: parseAttemptArray(courseAttempt.preQuizAttempts).length > 0,
+          }),
+      completedAt: moduleCompleted ? new Date() : null,
       lastOpenedAt: new Date(),
     },
   });
