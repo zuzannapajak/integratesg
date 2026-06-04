@@ -2,6 +2,7 @@ import type { CurriculumPilotAdminStats } from "@/lib/admin/curriculum-pilot";
 import { BarChart3, ClipboardCheck, Users } from "lucide-react";
 
 type Props = {
+  locale: string;
   stats: CurriculumPilotAdminStats;
 };
 
@@ -27,7 +28,7 @@ function SummaryCard({ label, value }: { label: string; value: string | number }
   );
 }
 
-export default function CurriculumPilotAdminDashboard({ stats }: Props) {
+export default function CurriculumPilotAdminDashboard({ locale, stats }: Props) {
   return (
     <main className="relative min-h-screen bg-[#f5f5f3] pb-20">
       <div className="relative mx-auto max-w-360 px-4 pt-10 sm:px-6 lg:px-8">
@@ -45,6 +46,22 @@ export default function CurriculumPilotAdminDashboard({ stats }: Props) {
             </p>
           </div>
         </header>
+
+        <div className="mt-4 flex flex-wrap gap-3">
+          <a
+            href={`/${locale}/admin/curriculum-pilot/export?format=csv`}
+            className="rounded-2xl bg-[#31425a] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#253347]"
+          >
+            Export CSV
+          </a>
+
+          <a
+            href={`/${locale}/admin/curriculum-pilot/export?format=xls`}
+            className="rounded-2xl border border-[#d9e2ec] bg-white px-4 py-2.5 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc]"
+          >
+            Export Excel
+          </a>
+        </div>
 
         <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           <SummaryCard label="Pilot path started" value={stats.summary.startedPilotPath} />

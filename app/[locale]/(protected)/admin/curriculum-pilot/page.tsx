@@ -17,5 +17,5 @@ export default async function AdminCurriculumPilotPage({ params }: Props) {
 
   const stats = await getCurriculumPilotAdminStats(locale);
 
-  return <CurriculumPilotAdminDashboard stats={stats} />;
+  return <CurriculumPilotAdminDashboard locale={locale} stats={stats} />;
 }
