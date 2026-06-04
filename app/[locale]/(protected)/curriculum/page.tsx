@@ -3,7 +3,7 @@ import CurriculumSwitcher from "@/components/curriculum/curriculum-switcher";
 import { requireRole } from "@/features/auth/requireRole";
 import { APP_ROLES } from "@/lib/auth/roles";
 import { getCurriculumPilotPostAssessmentCalloutViewModel } from "@/lib/curriculum/pilot";
-import { getCurriculumModules } from "@/lib/curriculum/queries";
+import { getCurriculumModules, getCurriculumRecommendedModuleSlug } from "@/lib/curriculum/queries";
 import { estimateJsonBytes } from "@/lib/observability/json-size";
 import { logMeasuredOperation } from "@/lib/observability/performance";
 import { BookOpen } from "lucide-react";
@@ -65,13 +65,16 @@ async function getCurriculumPageData({ params, searchParams }: Props) {
       requireRole(locale, APP_ROLES.educator),
     ]);
 
-    const [modules, pilotPostAssessment] = await Promise.all([
+    const [modules, pilotPostAssessment, recommendedSlug] = await Promise.all([
       getCurriculumModules({
         userId: user.id,
         locale,
         viewMode: activeView,
       }),
       getCurriculumPilotPostAssessmentCalloutViewModel({
+        userId: user.id,
+      }),
+      getCurriculumRecommendedModuleSlug({
         userId: user.id,
       }),
     ]);
@@ -90,6 +93,7 @@ async function getCurriculumPageData({ params, searchParams }: Props) {
       myCourses,
       allCourses,
       pilotPostAssessment,
+      recommendedSlug,
       title: t("title"),
       subtitle: t("subtitle"),
     };
@@ -115,8 +119,16 @@ async function getCurriculumPageData({ params, searchParams }: Props) {
 }
 
 export default async function CurriculumPage(props: Props) {
-  const { locale, activeView, myCourses, allCourses, pilotPostAssessment, title, subtitle } =
-    await getCurriculumPageData(props);
+  const {
+    locale,
+    activeView,
+    myCourses,
+    allCourses,
+    pilotPostAssessment,
+    recommendedSlug,
+    title,
+    subtitle,
+  } = await getCurriculumPageData(props);
 
   return (
     <main className="relative min-h-screen bg-[#f5f5f3] pb-20 transition-all duration-300">
@@ -141,6 +153,7 @@ export default async function CurriculumPage(props: Props) {
           activeView={activeView}
           myCourses={myCourses}
           allCourses={allCourses}
+          recommendedSlug={recommendedSlug}
         />
       </div>
     </main>

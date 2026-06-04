@@ -13,9 +13,16 @@ type Props = {
   activeView: ViewMode;
   myCourses: CurriculumListItemViewModel[];
   allCourses: CurriculumListItemViewModel[];
+  recommendedSlug: string | null;
 };
 
-export default function CurriculumSwitcher({ locale, activeView, myCourses, allCourses }: Props) {
+export default function CurriculumSwitcher({
+  locale,
+  activeView,
+  myCourses,
+  allCourses,
+  recommendedSlug,
+}: Props) {
   const t = useTranslations("Protected.CurriculumSwitcher");
   const router = useRouter();
   const pathname = usePathname();
@@ -76,6 +83,7 @@ export default function CurriculumSwitcher({ locale, activeView, myCourses, allC
         <CurriculumListShell
           locale={locale}
           items={myCourses}
+          recommendedSlug={recommendedSlug}
           showRefineControls={false}
           emptyTitle={t("empty.noModulesTitle")}
           emptyDescription={t("empty.noModulesDescription")}
@@ -84,6 +92,7 @@ export default function CurriculumSwitcher({ locale, activeView, myCourses, allC
         <CurriculumListShell
           locale={locale}
           items={allCourses}
+          recommendedSlug={recommendedSlug}
           showRefineControls
           emptyTitle={t("empty.noResultsTitle")}
           emptyDescription={t("empty.noResultsDescription")}

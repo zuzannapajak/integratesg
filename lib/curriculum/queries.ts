@@ -572,6 +572,43 @@ export async function getCurriculumModules(params: {
   });
 }
 
+export async function getCurriculumRecommendedModuleSlug(params: { userId: string }) {
+  return measureAsyncOperation({
+    operation: "curriculum.getCurriculumRecommendedModuleSlug",
+    getRecords: (recommendedSlug) => (recommendedSlug ? 1 : 0),
+    execute: async () => {
+      const courses = await prisma.course.findMany({
+        where: {
+          status: "published",
+        },
+        select: {
+          slug: true,
+          userCourseAttempts: {
+            where: {
+              userId: params.userId,
+            },
+            select: {
+              status: true,
+              completedAt: true,
+            },
+            orderBy: [{ lastOpenedAt: "desc" }, { createdAt: "desc" }],
+            take: 1,
+          },
+        },
+        orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
+      });
+
+      const recommendedCourse = courses.find((course) => {
+        const attempt = course.userCourseAttempts.at(0);
+
+        return attempt?.status !== "completed" && !attempt?.completedAt;
+      });
+
+      return recommendedCourse?.slug ?? null;
+    },
+  });
+}
+
 export async function getCurriculumModule(params: {
   locale: string;
   userId: string;

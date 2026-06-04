@@ -6,9 +6,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   ArrowLeft,
   ArrowRight,
-  BookOpen,
-  CheckCircle2,
-  CircleDashed,
   Clock3,
   Compass,
   Layers3,
@@ -19,7 +16,6 @@ import {
   SlidersHorizontal,
   Sparkles,
   Users,
-  XCircle,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -28,6 +24,7 @@ import { ChangeEvent, useMemo, useState } from "react";
 type Props = {
   locale: string;
   items: CurriculumListItemViewModel[];
+  recommendedSlug?: string | null;
   emptyTitle?: string;
   emptyDescription?: string;
   showRefineControls?: boolean;
@@ -37,6 +34,24 @@ const SURFACE =
   "rounded-[28px] border border-white/70 bg-white/88 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";
 
 const ITEMS_PER_PAGE = 12;
+
+function getModuleOrderIndex(
+  module: CurriculumListItemViewModel,
+  moduleOrderIndexBySlug: Map<string, number>,
+) {
+  return moduleOrderIndexBySlug.get(module.slug) ?? Number.MAX_SAFE_INTEGER;
+}
+
+function compareByCurriculumOrder(
+  a: CurriculumListItemViewModel,
+  b: CurriculumListItemViewModel,
+  moduleOrderIndexBySlug: Map<string, number>,
+) {
+  return (
+    getModuleOrderIndex(a, moduleOrderIndexBySlug) -
+      getModuleOrderIndex(b, moduleOrderIndexBySlug) || a.title.localeCompare(b.title)
+  );
+}
 
 function formatDurationLabel(minutes: number | null, t: ReturnType<typeof useTranslations>) {
   if (!minutes || minutes <= 0) {
@@ -54,8 +69,6 @@ function getAreaMeta(area: CurriculumArea, t: ReturnType<typeof useTranslations>
         icon: <Leaf className="h-4 w-4" />,
         badgeClass: "border-emerald-100 bg-emerald-50 text-emerald-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.18),transparent_46%)]",
-        accentClass: "from-emerald-100/90 via-white to-emerald-50/80",
-        orbitClass: "border-emerald-200/70 bg-emerald-100/55 text-emerald-700",
       };
     case "social":
       return {
@@ -63,8 +76,6 @@ function getAreaMeta(area: CurriculumArea, t: ReturnType<typeof useTranslations>
         icon: <Users className="h-4 w-4" />,
         badgeClass: "border-sky-100 bg-sky-50 text-sky-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(14,165,233,0.15),transparent_46%)]",
-        accentClass: "from-sky-100/90 via-white to-sky-50/80",
-        orbitClass: "border-sky-200/70 bg-sky-100/55 text-sky-700",
       };
     case "governance":
       return {
@@ -72,8 +83,6 @@ function getAreaMeta(area: CurriculumArea, t: ReturnType<typeof useTranslations>
         icon: <ShieldCheck className="h-4 w-4" />,
         badgeClass: "border-violet-100 bg-violet-50 text-violet-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(139,92,246,0.15),transparent_46%)]",
-        accentClass: "from-violet-100/90 via-white to-violet-50/80",
-        orbitClass: "border-violet-200/70 bg-violet-100/55 text-violet-700",
       };
     case "strategy":
       return {
@@ -81,8 +90,6 @@ function getAreaMeta(area: CurriculumArea, t: ReturnType<typeof useTranslations>
         icon: <Compass className="h-4 w-4" />,
         badgeClass: "border-emerald-100 bg-emerald-50 text-emerald-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(16,185,129,0.15),transparent_46%)]",
-        accentClass: "from-emerald-100/90 via-white to-emerald-50/80",
-        orbitClass: "border-emerald-200/70 bg-emerald-100/55 text-emerald-700",
       };
     case "reporting":
       return {
@@ -90,8 +97,6 @@ function getAreaMeta(area: CurriculumArea, t: ReturnType<typeof useTranslations>
         icon: <Library className="h-4 w-4" />,
         badgeClass: "border-blue-100 bg-blue-50 text-blue-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.15),transparent_46%)]",
-        accentClass: "from-blue-100/90 via-white to-blue-50/80",
-        orbitClass: "border-blue-200/70 bg-blue-100/55 text-blue-700",
       };
     default:
       return {
@@ -99,8 +104,6 @@ function getAreaMeta(area: CurriculumArea, t: ReturnType<typeof useTranslations>
         icon: <Layers3 className="h-4 w-4" />,
         badgeClass: "border-amber-100 bg-amber-50 text-amber-700",
         glowClass: "bg-[radial-gradient(circle_at_top_left,rgba(245,158,11,0.18),transparent_46%)]",
-        accentClass: "from-amber-100/90 via-white to-amber-50/80",
-        orbitClass: "border-amber-200/70 bg-amber-100/55 text-amber-700",
       };
   }
 }
@@ -108,39 +111,20 @@ function getAreaMeta(area: CurriculumArea, t: ReturnType<typeof useTranslations>
 function getStatusMeta(status: CurriculumStatus, t: ReturnType<typeof useTranslations>) {
   switch (status) {
     case "completed":
-      return {
-        label: t("status.completed"),
-        icon: <CheckCircle2 className="h-4 w-4" />,
-        badgeClass: "border-emerald-100 bg-emerald-50 text-emerald-700",
-        textClassName: "text-emerald-700",
-      };
+      return { label: t("status.completed") };
     case "in_progress":
-      return {
-        label: t("status.inProgress"),
-        icon: <CircleDashed className="h-4 w-4" />,
-        badgeClass: "border-orange-100 bg-orange-50 text-orange-700",
-        textClassName: "text-amber-700",
-      };
+      return { label: t("status.inProgress") };
     case "failed":
-      return {
-        label: t("status.failed"),
-        icon: <XCircle className="h-4 w-4" />,
-        badgeClass: "border-red-100 bg-red-50 text-red-700",
-        textClassName: "text-red-700",
-      };
+      return { label: t("status.failed") };
     default:
-      return {
-        label: t("status.notStarted"),
-        icon: <BookOpen className="h-4 w-4" />,
-        badgeClass: "border-slate-200 bg-slate-50 text-slate-600",
-        textClassName: "text-[#31425a]",
-      };
+      return { label: t("status.notStarted") };
   }
 }
 
 export default function CurriculumListShell({
   locale,
   items,
+  recommendedSlug = null,
   emptyTitle,
   emptyDescription,
   showRefineControls = true,
@@ -151,6 +135,10 @@ export default function CurriculumListShell({
   const [selectedStatus, setSelectedStatus] = useState<CurriculumStatus | "all">("all");
   const [sortBy, setSortBy] = useState<"recommended" | "progress" | "title">("recommended");
   const [currentPage, setCurrentPage] = useState(1);
+
+  const moduleOrderIndexBySlug = useMemo(() => {
+    return new Map(items.map((module, index) => [module.slug, index]));
+  }, [items]);
 
   const handleFilterChange = () => {
     setCurrentPage(1);
@@ -182,21 +170,31 @@ export default function CurriculumListShell({
       }
 
       if (showRefineControls && sortBy === "progress") {
-        return b.progress - a.progress || a.title.localeCompare(b.title);
+        return b.progress - a.progress || compareByCurriculumOrder(a, b, moduleOrderIndexBySlug);
       }
 
-      const weight = (module: CurriculumListItemViewModel) =>
-        module.status === "in_progress"
-          ? 3
-          : module.status === "not_started"
-            ? 2
-            : module.status === "completed"
-              ? 1
-              : 0;
+      if (recommendedSlug) {
+        if (a.slug === recommendedSlug) {
+          return -1;
+        }
 
-      return weight(b) - weight(a) || a.title.localeCompare(b.title);
+        if (b.slug === recommendedSlug) {
+          return 1;
+        }
+      }
+
+      return compareByCurriculumOrder(a, b, moduleOrderIndexBySlug);
     });
-  }, [items, search, selectedArea, selectedStatus, sortBy, showRefineControls]);
+  }, [
+    items,
+    moduleOrderIndexBySlug,
+    recommendedSlug,
+    search,
+    selectedArea,
+    selectedStatus,
+    sortBy,
+    showRefineControls,
+  ]);
 
   const totalPages = Math.ceil(filteredModules.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -204,13 +202,6 @@ export default function CurriculumListShell({
 
   const rangeStart = filteredModules.length === 0 ? 0 : startIndex + 1;
   const rangeEnd = Math.min(startIndex + ITEMS_PER_PAGE, filteredModules.length);
-
-  const recommendedSlug = useMemo(() => {
-    return (
-      items.find((module) => module.status === "in_progress")?.slug ??
-      items.find((module) => module.status === "not_started")?.slug
-    );
-  }, [items]);
 
   return (
     <div className="space-y-8">
@@ -284,6 +275,7 @@ export default function CurriculumListShell({
             ).map((area) => (
               <button
                 key={area}
+                type="button"
                 onClick={() => {
                   setSelectedArea(area);
                   handleFilterChange();
