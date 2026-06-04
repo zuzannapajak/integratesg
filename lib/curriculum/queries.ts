@@ -1,3 +1,4 @@
+import { getCurriculumModuleCertificateEligibility } from "@/lib/curriculum/certificate-eligibility";
 import {
   CourseMappedInput,
   CourseSectionRecord,
@@ -327,16 +328,16 @@ function buildProgressState(params: {
 function buildCertificateState(params: {
   attempt: CourseMappedInput["userCourseAttempts"][number] | null;
   slug: string;
+  quizzes: NonNullable<CourseMappedInput["quizzes"]>;
 }): CurriculumCertificateViewModel {
-  const attempt = params.attempt;
-  const isAvailable =
-    attempt?.status === "completed" &&
-    mapStage(attempt.currentStage) === "completed" &&
-    Boolean(attempt.completedAt);
+  const eligibility = getCurriculumModuleCertificateEligibility({
+    attempt: params.attempt,
+    quizzes: params.quizzes,
+  });
 
   return {
-    isAvailable,
-    downloadUrl: isAvailable ? `/api/curriculum/${params.slug}/certificate` : null,
+    isAvailable: eligibility.isAvailable,
+    downloadUrl: eligibility.isAvailable ? `/api/curriculum/${params.slug}/certificate` : null,
   };
 }
 
@@ -368,6 +369,7 @@ function mapCourseToViewModel(
   const certificate = buildCertificateState({
     attempt,
     slug: course.slug,
+    quizzes: course.quizzes ?? [],
   });
 
   return {

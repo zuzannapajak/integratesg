@@ -1,4 +1,5 @@
 import { APP_ROLES } from "@/lib/auth/roles";
+import { getCurriculumModuleCertificateEligibility } from "@/lib/curriculum/certificate-eligibility";
 import { buildCurriculumCertificatePdf } from "@/lib/curriculum/certificate-pdf";
 import { logMeasuredOperation } from "@/lib/observability/performance";
 import { prisma } from "@/lib/prisma";
@@ -12,13 +13,7 @@ type RouteContext = {
   params: Promise<{ slug: string }>;
 };
 
-function pickEnglishTitle(
-  translations: Array<{
-    language: string;
-    title: string;
-  }>,
-  slug: string,
-) {
+function pickEnglishTitle(translations: Array<{ language: string; title: string }>, slug: string) {
   return translations.find((translation) => translation.language === "en")?.title ?? slug;
 }
 
@@ -55,6 +50,7 @@ function buildDownloadFileName(slug: string) {
     .replace(/[^a-z0-9-]+/gi, "-")
     .replace(/-+/g, "-")
     .toLowerCase();
+
   return `integratesg-certificate-${normalizedSlug || "curriculum"}.pdf`;
 }
 
@@ -119,10 +115,11 @@ export async function GET(_request: Request, { params }: RouteContext) {
             type: "post",
           },
           select: {
+            id: true,
+            type: true,
             passingScore: true,
           },
           orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
-          take: 1,
         },
         userCourseAttempts: {
           where: {
@@ -132,8 +129,8 @@ export async function GET(_request: Request, { params }: RouteContext) {
             id: true,
             status: true,
             currentStage: true,
-            postQuizScore: true,
             completedAt: true,
+            postQuizAttempts: true,
           },
           orderBy: [{ completedAt: "desc" }, { updatedAt: "desc" }],
           take: 1,
@@ -147,23 +144,19 @@ export async function GET(_request: Request, { params }: RouteContext) {
     }
 
     const attempt = course.userCourseAttempts.at(0) ?? null;
-    const passingScore = course.quizzes.at(0)?.passingScore ?? null;
-    const hasPassedPostQuiz =
-      passingScore === null ||
-      passingScore <= 0 ||
-      (typeof attempt?.postQuizScore === "number" && attempt.postQuizScore >= passingScore);
 
-    if (
-      attempt?.status !== "completed" ||
-      attempt.currentStage !== "completed" ||
-      !attempt.completedAt ||
-      !hasPassedPostQuiz
-    ) {
+    const eligibility = getCurriculumModuleCertificateEligibility({
+      attempt,
+      quizzes: course.quizzes,
+    });
+
+    if (!attempt || !eligibility.isAvailable) {
       status = "error";
       return NextResponse.json(
         {
           ok: false,
-          error: "Certificate is not available for this module yet.",
+          error:
+            "Certificate is not available yet. Complete the module and pass all module tests with at least 75%.",
         },
         { status: 403 },
       );
@@ -172,13 +165,14 @@ export async function GET(_request: Request, { params }: RouteContext) {
     const learnerName = profile.fullName?.trim()
       ? profile.fullName.trim()
       : humanizeFallbackName(profile.email);
+
     const moduleTitle = pickEnglishTitle(course.translations, course.slug);
     const certificateId = buildCertificateId(course.slug, attempt.id);
 
     const pdfBuffer = await buildCurriculumCertificatePdf({
       learnerName,
       moduleTitle,
-      issuedAt: attempt.completedAt,
+      issuedAt: attempt.completedAt ?? new Date(),
       durationMinutes: course.estimatedDurationMinutes,
       certificateId,
     });
