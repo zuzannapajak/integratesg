@@ -6,6 +6,11 @@
       "noAccount": "Nie masz jeszcze konta?",
       "createOne": "Utwórz je"
     },
+    "ClientCallback": {
+      "title": "Logowanie",
+      "signingYouIn": "Logowanie...",
+      "signInFailed": "Logowanie nie powiodło się. Przekierowanie do strony logowania..."
+    },
     "LoginForm": {
       "emailLabel": "Adres e-mail",
       "emailPlaceholder": "twoj@email.com",

@@ -6,6 +6,11 @@
       "noAccount": "Sie haben noch kein Konto?",
       "createOne": "Erstellen Sie eins"
     },
+    "ClientCallback": {
+      "title": "Anmeldung",
+      "signingYouIn": "Sie werden angemeldet...",
+      "signInFailed": "Anmeldung fehlgeschlagen. Weiterleitung zur Anmeldung..."
+    },
     "LoginForm": {
       "emailLabel": "E-Mail-Adresse",
       "emailPlaceholder": "sie@beispiel.com",

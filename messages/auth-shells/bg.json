@@ -6,6 +6,11 @@
       "noAccount": "Нямате акаунт?",
       "createOne": "Създайте такъв"
     },
+    "ClientCallback": {
+      "title": "Вход",
+      "signingYouIn": "Вписваме ви...",
+      "signInFailed": "Вписването е неуспешно. Пренасочване към страницата за вход..."
+    },
     "LoginForm": {
       "emailLabel": "Имейл адрес",
       "emailPlaceholder": "you@example.com",

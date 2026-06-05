@@ -1,6 +1,7 @@
 "use client";
 
 import { createClient } from "@/lib/supabase/client";
+import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 
 type Props = {
@@ -20,8 +21,8 @@ function getSafeNextPath(next: string | null, locale: string) {
 }
 
 export default function ClientAuthCallback({ locale }: Props) {
-  const [title, setTitle] = useState("Completing sign-in");
-  const [message, setMessage] = useState("Please wait while we securely finish your login.");
+  const t = useTranslations("Auth.ClientCallback");
+  const [message, setMessage] = useState(t("signingYouIn"));
   const hasRun = useRef(false);
 
   useEffect(() => {
@@ -37,64 +38,17 @@ export default function ClientAuthCallback({ locale }: Props) {
       const code = url.searchParams.get("code");
       const next = getSafeNextPath(url.searchParams.get("next"), locale);
 
-      const existingSession = await supabase.auth.getSession();
-
-      if (existingSession.data.session) {
-        window.location.replace(next);
-        return;
-      }
-
       if (!code) {
-        console.warn("[client-auth-callback] Missing OAuth code");
-
-        setTitle("Sign-in could not be completed");
-        setMessage("We could not verify this sign-in attempt. Redirecting you back to login...");
-
-        window.setTimeout(() => {
-          window.location.replace(`/${locale}/auth/login`);
-        }, 1800);
-
+        window.location.replace(`/${locale}/auth/login`);
         return;
       }
 
       const { error } = await supabase.auth.exchangeCodeForSession(code);
 
       if (error) {
-        console.error("[client-auth-callback] exchangeCodeForSession failed", {
-          name: error.name,
-          message: error.message,
-          status: "status" in error ? error.status : undefined,
-        });
-
-        const sessionAfterError = await supabase.auth.getSession();
-
-        if (sessionAfterError.data.session) {
-          window.location.replace(next);
-          return;
-        }
-
-        setTitle("Sign-in failed");
-        setMessage("Something went wrong while signing you in. Redirecting you back to login...");
-
-        window.setTimeout(() => {
-          window.location.replace(`/${locale}/auth/login`);
-        }, 1800);
-
-        return;
-      }
-
-      const sessionAfterExchange = await supabase.auth.getSession();
-
-      if (!sessionAfterExchange.data.session) {
-        console.warn("[client-auth-callback] No session after successful code exchange");
-
-        setTitle("Sign-in could not be completed");
-        setMessage("Your session could not be created. Redirecting you back to login...");
-
-        window.setTimeout(() => {
-          window.location.replace(`/${locale}/auth/login`);
-        }, 1800);
-
+        console.error("[client-auth-callback] exchangeCodeForSession failed", error);
+        setMessage(t("signInFailed"));
+        window.location.replace(`/${locale}/auth/login`);
         return;
       }
 
@@ -102,48 +56,14 @@ export default function ClientAuthCallback({ locale }: Props) {
     };
 
     void finishLogin();
-  }, [locale]);
+  }, [locale, t]);
 
   return (
     <main className="flex min-h-screen items-center justify-center px-6">
-      <section
-        className="w-full max-w-md rounded-2xl border bg-background px-8 py-10 text-center shadow-sm"
-        aria-live="polite"
-        aria-busy="true"
-      >
-        <div className="mx-auto mb-6 flex h-12 w-12 items-center justify-center text-foreground">
-          <svg className="h-10 w-10" viewBox="0 0 50 50" aria-hidden="true">
-            <circle
-              cx="25"
-              cy="25"
-              r="20"
-              fill="none"
-              stroke="currentColor"
-              strokeOpacity="0.15"
-              strokeWidth="5"
-            />
-            <path
-              d="M45 25a20 20 0 0 1-20 20"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeWidth="5"
-            >
-              <animateTransform
-                attributeName="transform"
-                type="rotate"
-                from="0 25 25"
-                to="360 25 25"
-                dur="0.8s"
-                repeatCount="indefinite"
-              />
-            </path>
-          </svg>
-        </div>
-        <h1 className="text-xl font-semibold tracking-tight">{title}</h1>
-
-        <p className="mt-3 text-sm leading-6 text-muted-foreground">{message}</p>
-      </section>
+      <div className="max-w-md text-center">
+        <h1 className="text-xl font-semibold">{t("title")}</h1>
+        <p className="mt-3 text-sm text-muted-foreground">{message}</p>
+      </div>
     </main>
   );
 }

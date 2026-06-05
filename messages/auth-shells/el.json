@@ -6,6 +6,11 @@
       "noAccount": "Δεν έχετε λογαριασμό;",
       "createOne": "Δημιουργήστε έναν"
     },
+    "ClientCallback": {
+      "title": "Σύνδεση",
+      "signingYouIn": "Γίνεται σύνδεσή σας...",
+      "signInFailed": "Η σύνδεση απέτυχε. Ανακατεύθυνση στη σελίδα σύνδεσης..."
+    },
     "LoginForm": {
       "emailLabel": "Διεύθυνση email",
       "emailPlaceholder": "you@example.com",

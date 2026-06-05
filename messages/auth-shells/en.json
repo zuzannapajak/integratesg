@@ -6,6 +6,11 @@
       "noAccount": "Don't have an account?",
       "createOne": "Create one"
     },
+    "ClientCallback": {
+      "title": "Signing in",
+      "signingYouIn": "Signing you in...",
+      "signInFailed": "Sign-in failed. Redirecting to login..."
+    },
     "LoginForm": {
       "emailLabel": "Email address",
       "emailPlaceholder": "you@example.com",

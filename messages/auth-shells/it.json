@@ -6,6 +6,11 @@
       "noAccount": "Non hai un account?",
       "createOne": "Creane uno"
     },
+    "ClientCallback": {
+      "title": "Accesso",
+      "signingYouIn": "Accesso in corso...",
+      "signInFailed": "Accesso non riuscito. Reindirizzamento alla pagina di accesso..."
+    },
     "LoginForm": {
       "emailLabel": "Indirizzo email",
       "emailPlaceholder": "tuo@esempio.com",
