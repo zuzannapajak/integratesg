@@ -238,6 +238,25 @@
         "lessonContent": "Dieser Lektionsinhalt wurde noch nicht hinzugefügt.",
         "lessonSummary": "Noch keine Zusammenfassung der Lektion verfügbar."
       }
+    },
+    "CurriculumPilotEntryGate": {
+      "eyebrow": "Optionaler Schritt vor dem Start",
+      "title": "Kurze Selbsteinschätzung vor dem Modul",
+      "description": "Vor dem ersten Zugriff auf die Lernmaterialien können Sie eine kurze Selbsteinschätzung ausfüllen. Sie hilft dabei, Ihre Selbsteinschätzung vor und nach der Nutzung des Curriculums zu vergleichen.",
+      "moduleLabel": "Ausgewähltes Modul",
+      "fillTitle": "Pre-Assessment ausfüllen",
+      "fillDescription": "Wählen Sie diese Option, wenn Sie am Pilotprojekt teilnehmen und Ihren Ausgangspunkt vor der Nutzung der Module speichern möchten.",
+      "fillAction": "Pre-Assessment ausfüllen",
+      "skipLink": "Überspringen und ohne Teilnahme am Pilotprojekt fortfahren",
+      "back": "Zurück zum Modul",
+      "error": "Ihre Entscheidung konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+      "skipPending": "Entscheidung wird gespeichert...",
+      "skipModal": {
+        "title": "Teilnahme am Pilotprojekt überspringen?",
+        "description": "Diese Entscheidung wird nur einmal gespeichert. Wenn Sie das Pre-Assessment überspringen, können Sie innerhalb desselben Pilotpfads nicht mehr dazu zurückkehren.",
+        "confirm": "Überspringen und fortfahren",
+        "cancel": "Zurück"
+      }
     }
   }
 }

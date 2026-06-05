@@ -238,6 +238,25 @@
         "lessonContent": "This lesson content has not been added yet.",
         "lessonSummary": "No lesson summary available yet."
       }
+    },
+    "CurriculumPilotEntryGate": {
+      "eyebrow": "Optional step before starting",
+      "title": "Short self-assessment before entering the module",
+      "description": "Before your first access to the learning materials, you can complete a short starting self-assessment. It helps compare your self-assessment before and after using the curriculum.",
+      "moduleLabel": "Selected module",
+      "fillTitle": "Complete the pre-assessment",
+      "fillDescription": "Choose this if you are taking part in the pilot and want to save your starting point before using the modules.",
+      "fillAction": "Complete pre-assessment",
+      "skipLink": "Skip and continue without pilot participation",
+      "back": "Back to module",
+      "error": "We could not save your decision. Please try again.",
+      "skipPending": "Saving decision...",
+      "skipModal": {
+        "title": "Skip pilot participation?",
+        "description": "This decision is saved only once. After skipping the pre-assessment, you will not be able to return to it within the same pilot path.",
+        "confirm": "Skip and continue",
+        "cancel": "Go back"
+      }
     }
   }
 }

@@ -238,6 +238,25 @@
         "lessonContent": "Treść tej lekcji nie została jeszcze dodana.",
         "lessonSummary": "Podsumowanie lekcji nie jest jeszcze dostępne."
       }
+    },
+    "CurriculumPilotEntryGate": {
+      "eyebrow": "Opcjonalny krok przed rozpoczęciem",
+      "title": "Krótka samoocena przed wejściem do modułu",
+      "description": "Przed pierwszym wejściem do materiałów możesz wypełnić krótką ankietę startową. Pomoże ona porównać poziom samooceny przed i po korzystaniu z curriculum.",
+      "moduleLabel": "Wybrany moduł",
+      "fillTitle": "Wypełnij ankietę wstępną",
+      "fillDescription": "Wybierz tę opcję, jeśli bierzesz udział w pilotażu i chcesz zapisać punkt startowy przed korzystaniem z modułów.",
+      "fillAction": "Wypełnij ankietę wstępną",
+      "skipLink": "Pomiń i przejdź bez udziału w pilotażu",
+      "back": "Powrót do modułu",
+      "error": "Nie udało się zapisać decyzji. Spróbuj ponownie.",
+      "skipPending": "Zapisywanie decyzji...",
+      "skipModal": {
+        "title": "Pominąć udział w pilotażu?",
+        "description": "Decyzję zapisujemy tylko raz. Po pominięciu ankietы wstęnej nie będzie możliwości powrotu do niego w ramach tej samej ścieżki pilotażowej.",
+        "confirm": "Pomiń i przejdź dalej",
+        "cancel": "Wróć"
+      }
     }
   }
 }

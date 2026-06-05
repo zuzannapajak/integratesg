@@ -238,6 +238,25 @@
         "lessonContent": "Il contenuto di questa lezione non è stato ancora aggiunto.",
         "lessonSummary": "Riepilogo della lezione non ancora disponibile."
       }
+    },
+    "CurriculumPilotEntryGate": {
+      "eyebrow": "Passaggio opzionale prima di iniziare",
+      "title": "Breve autovalutazione prima di accedere al modulo",
+      "description": "Prima del primo accesso ai materiali didattici, puoi completare una breve autovalutazione iniziale. Aiuta a confrontare la tua autovalutazione prima e dopo l’utilizzo del curriculum.",
+      "moduleLabel": "Modulo selezionato",
+      "fillTitle": "Completa il pre-assessment",
+      "fillDescription": "Scegli questa opzione se partecipi al pilota e vuoi salvare il tuo punto di partenza prima di utilizzare i moduli.",
+      "fillAction": "Completa il pre-assessment",
+      "skipLink": "Salta e continua senza partecipare al pilota",
+      "back": "Torna al modulo",
+      "error": "Non è stato possibile salvare la tua decisione. Riprova.",
+      "skipPending": "Salvataggio della decisione...",
+      "skipModal": {
+        "title": "Saltare la partecipazione al pilota?",
+        "description": "Questa decisione viene salvata una sola volta. Dopo aver saltato il pre-assessment, non sarà possibile tornarci nello stesso percorso pilota.",
+        "confirm": "Salta e continua",
+        "cancel": "Torna indietro"
+      }
     }
   }
 }
