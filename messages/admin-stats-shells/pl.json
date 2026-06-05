@@ -258,6 +258,48 @@
           "inProgress": "W trakcie"
         }
       }
+    },
+    "CurriculumPilotAdminDashboard": {
+      "title": "Postęp pilotażu programu nauczania",
+      "description": "Statystyki oceny przed/po oraz analiza postępów dla poszczególnych pytań.",
+      "actions": {
+        "exportCsv": "Eksportuj CSV",
+        "exportExcel": "Eksportuj Excel"
+      },
+      "summary": {
+        "startedPilotPath": "Rozpoczęto ścieżkę pilotażową",
+        "preCompleted": "Ocena wstępna ukończona",
+        "postCompleted": "Ocena końcowa ukończona",
+        "preSkipped": "Ocena wstępna pominięta",
+        "averagePreScore": "Średni wynik oceny wstępnej",
+        "averagePostScore": "Średni wynik oceny końcowej",
+        "averageDelta": "Średnia różnica",
+        "averageModulesBeforePost": "Śr. liczba modułów przed oceną końcową"
+      },
+      "questionAnalysis": {
+        "title": "Analiza według pytań",
+        "columns": {
+          "question": "Pytanie",
+          "preAverage": "Śr. przed",
+          "postAverage": "Śr. po",
+          "delta": "Różnica",
+          "preAnswers": "Odpowiedzi przed",
+          "postAnswers": "Odpowiedzi po"
+        }
+      },
+      "users": {
+        "title": "Użytkownicy pilotażu",
+        "columns": {
+          "user": "Użytkownik",
+          "status": "Status",
+          "preCompleted": "Ocena wstępna ukończona",
+          "postCompleted": "Ocena końcowa ukończona",
+          "preAverage": "Śr. przed",
+          "postAverage": "Śr. po",
+          "delta": "Różnica",
+          "modulesBeforePost": "Moduły przed oceną końcową"
+        }
+      }
     }
   }
 }

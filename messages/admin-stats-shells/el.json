@@ -258,6 +258,48 @@
           "inProgress": "Σε εξέλιξη"
         }
       }
+    },
+    "CurriculumPilotAdminDashboard": {
+      "title": "Πρόοδος πιλοτικού προγράμματος σπουδών",
+      "description": "Στατιστικά προ/μετά αξιολόγησης και ανάλυση προόδου ανά ερώτηση.",
+      "actions": {
+        "exportCsv": "Εξαγωγή CSV",
+        "exportExcel": "Εξαγωγή Excel"
+      },
+      "summary": {
+        "startedPilotPath": "Ξεκίνησε η πιλοτική διαδρομή",
+        "preCompleted": "Η προ-αξιολόγηση ολοκληρώθηκε",
+        "postCompleted": "Η μετά-αξιολόγηση ολοκληρώθηκε",
+        "preSkipped": "Η προ-αξιολόγηση παραλείφθηκε",
+        "averagePreScore": "Μέση βαθμολογία προ-αξιολόγησης",
+        "averagePostScore": "Μέση βαθμολογία μετά-αξιολόγησης",
+        "averageDelta": "Μέση διαφορά",
+        "averageModulesBeforePost": "Μέσος όρος ενοτήτων πριν από τη μετά-αξιολόγηση"
+      },
+      "questionAnalysis": {
+        "title": "Ανάλυση ανά ερώτηση",
+        "columns": {
+          "question": "Ερώτηση",
+          "preAverage": "Μ.Ο. πριν",
+          "postAverage": "Μ.Ο. μετά",
+          "delta": "Διαφορά",
+          "preAnswers": "Απαντήσεις πριν",
+          "postAnswers": "Απαντήσεις μετά"
+        }
+      },
+      "users": {
+        "title": "Πιλοτικοί χρήστες",
+        "columns": {
+          "user": "Χρήστης",
+          "status": "Κατάσταση",
+          "preCompleted": "Η προ-αξιολόγηση ολοκληρώθηκε",
+          "postCompleted": "Η μετά-αξιολόγηση ολοκληρώθηκε",
+          "preAverage": "Μ.Ο. πριν",
+          "postAverage": "Μ.Ο. μετά",
+          "delta": "Διαφορά",
+          "modulesBeforePost": "Ενότητες πριν από τη μετά-αξιολόγηση"
+        }
+      }
     }
   }
 }

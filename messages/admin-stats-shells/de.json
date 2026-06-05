@@ -258,6 +258,48 @@
           "inProgress": "In Bearbeitung"
         }
       }
+    },
+    "CurriculumPilotAdminDashboard": {
+      "title": "Fortschritt des Curriculum-Piloten",
+      "description": "Statistiken zur Vor-/Nachbewertung und Fortschrittsanalyse pro Frage.",
+      "actions": {
+        "exportCsv": "CSV exportieren",
+        "exportExcel": "Excel exportieren"
+      },
+      "summary": {
+        "startedPilotPath": "Pilotpfad gestartet",
+        "preCompleted": "Vorbewertung abgeschlossen",
+        "postCompleted": "Nachbewertung abgeschlossen",
+        "preSkipped": "Vorbewertung übersprungen",
+        "averagePreScore": "Durchschnittliche Vorbewertung",
+        "averagePostScore": "Durchschnittliche Nachbewertung",
+        "averageDelta": "Durchschnittliche Differenz",
+        "averageModulesBeforePost": "Durchschn. Module vor Nachbewertung"
+      },
+      "questionAnalysis": {
+        "title": "Analyse pro Frage",
+        "columns": {
+          "question": "Frage",
+          "preAverage": "Ø vorher",
+          "postAverage": "Ø nachher",
+          "delta": "Differenz",
+          "preAnswers": "Antworten vorher",
+          "postAnswers": "Antworten nachher"
+        }
+      },
+      "users": {
+        "title": "Pilotnutzer",
+        "columns": {
+          "user": "Nutzer",
+          "status": "Status",
+          "preCompleted": "Vorbewertung abgeschlossen",
+          "postCompleted": "Nachbewertung abgeschlossen",
+          "preAverage": "Ø vorher",
+          "postAverage": "Ø nachher",
+          "delta": "Differenz",
+          "modulesBeforePost": "Module vor Nachbewertung"
+        }
+      }
     }
   }
 }

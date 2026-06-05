@@ -258,6 +258,48 @@
           "inProgress": "В процес"
         }
       }
+    },
+    "CurriculumPilotAdminDashboard": {
+      "title": "Напредък на пилотната учебна програма",
+      "description": "Статистика от предварителното/последващото оценяване и анализ на напредъка по въпроси.",
+      "actions": {
+        "exportCsv": "Експортиране на CSV",
+        "exportExcel": "Експортиране на Excel"
+      },
+      "summary": {
+        "startedPilotPath": "Започнат пилотен път",
+        "preCompleted": "Предварителното оценяване е завършено",
+        "postCompleted": "Последващото оценяване е завършено",
+        "preSkipped": "Предварителното оценяване е пропуснато",
+        "averagePreScore": "Среден резултат от предварителното оценяване",
+        "averagePostScore": "Среден резултат от последващото оценяване",
+        "averageDelta": "Средна разлика",
+        "averageModulesBeforePost": "Среден брой модули преди последващото оценяване"
+      },
+      "questionAnalysis": {
+        "title": "Анализ по въпроси",
+        "columns": {
+          "question": "Въпрос",
+          "preAverage": "Средно преди",
+          "postAverage": "Средно след",
+          "delta": "Разлика",
+          "preAnswers": "Отговори преди",
+          "postAnswers": "Отговори след"
+        }
+      },
+      "users": {
+        "title": "Пилотни потребители",
+        "columns": {
+          "user": "Потребител",
+          "status": "Статус",
+          "preCompleted": "Предварителното оценяване е завършено",
+          "postCompleted": "Последващото оценяване е завършено",
+          "preAverage": "Средно преди",
+          "postAverage": "Средно след",
+          "delta": "Разлика",
+          "modulesBeforePost": "Модули преди последващото оценяване"
+        }
+      }
     }
   }
 }

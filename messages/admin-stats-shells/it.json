@@ -258,6 +258,48 @@
           "inProgress": "In corso"
         }
       }
+    },
+    "CurriculumPilotAdminDashboard": {
+      "title": "Avanzamento del programma pilota",
+      "description": "Statistiche della valutazione pre/post e analisi dei progressi per domanda.",
+      "actions": {
+        "exportCsv": "Esporta CSV",
+        "exportExcel": "Esporta Excel"
+      },
+      "summary": {
+        "startedPilotPath": "Percorso pilota avviato",
+        "preCompleted": "Valutazione pre completata",
+        "postCompleted": "Valutazione post completata",
+        "preSkipped": "Valutazione pre saltata",
+        "averagePreScore": "Punteggio medio pre",
+        "averagePostScore": "Punteggio medio post",
+        "averageDelta": "Delta medio",
+        "averageModulesBeforePost": "Media moduli prima del post"
+      },
+      "questionAnalysis": {
+        "title": "Analisi per domanda",
+        "columns": {
+          "question": "Domanda",
+          "preAverage": "Media pre",
+          "postAverage": "Media post",
+          "delta": "Delta",
+          "preAnswers": "Risposte pre",
+          "postAnswers": "Risposte post"
+        }
+      },
+      "users": {
+        "title": "Utenti pilota",
+        "columns": {
+          "user": "Utente",
+          "status": "Stato",
+          "preCompleted": "Pre completata",
+          "postCompleted": "Post completata",
+          "preAverage": "Media pre",
+          "postAverage": "Media post",
+          "delta": "Delta",
+          "modulesBeforePost": "Moduli prima del post"
+        }
+      }
     }
   }
 }

@@ -258,6 +258,48 @@
           "inProgress": "In progress"
         }
       }
+    },
+    "CurriculumPilotAdminDashboard": {
+      "title": "Curriculum pilot progress",
+      "description": "Pre/post assessment statistics and per-question progress analysis.",
+      "actions": {
+        "exportCsv": "Export CSV",
+        "exportExcel": "Export Excel"
+      },
+      "summary": {
+        "startedPilotPath": "Pilot path started",
+        "preCompleted": "Pre completed",
+        "postCompleted": "Post completed",
+        "preSkipped": "Pre skipped",
+        "averagePreScore": "Average pre score",
+        "averagePostScore": "Average post score",
+        "averageDelta": "Average delta",
+        "averageModulesBeforePost": "Avg. modules before post"
+      },
+      "questionAnalysis": {
+        "title": "Per-question analysis",
+        "columns": {
+          "question": "Question",
+          "preAverage": "Pre avg.",
+          "postAverage": "Post avg.",
+          "delta": "Delta",
+          "preAnswers": "Pre answers",
+          "postAnswers": "Post answers"
+        }
+      },
+      "users": {
+        "title": "Pilot users",
+        "columns": {
+          "user": "User",
+          "status": "Status",
+          "preCompleted": "Pre completed",
+          "postCompleted": "Post completed",
+          "preAverage": "Pre avg.",
+          "postAverage": "Post avg.",
+          "delta": "Delta",
+          "modulesBeforePost": "Modules before post"
+        }
+      }
     }
   }
 }
