@@ -69,7 +69,7 @@ export default function ComingSoonPage({ locale, title, description, badge }: Pr
               <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_70%_10%,rgba(11,156,114,0.16),transparent_34%)]" />
 
               <div className="relative flex h-full min-h-72 flex-col justify-center">
-                <div className="rounded-[32px] border border-white/80 bg-white/86 p-5 shadow-[0_14px_34px_rgba(35,45,62,0.07)]">
+                <div className="rounded-4xl border border-white/80 bg-white/86 p-5 shadow-[0_14px_34px_rgba(35,45,62,0.07)]">
                   <div className="space-y-3">
                     <div className="h-3 w-24 rounded-full bg-emerald-100" />
                     <div className="h-3 w-full rounded-full bg-[#e8edf3]" />
