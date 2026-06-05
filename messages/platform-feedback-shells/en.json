@@ -1,0 +1,110 @@
+{
+  "Protected": {
+    "PlatformFeedbackForm": {
+      "back": "Back to dashboard",
+      "eyebrow": "Platform feedback",
+      "title": "Help us improve the platform",
+      "description": "Your feedback helps us improve the learning materials, navigation, tests and technical experience across the platform.",
+      "answered": "Answered",
+      "submit": "Submit feedback",
+      "submitting": "Submitting feedback...",
+      "scale": {
+        "1": "Very poor",
+        "2": "Poor",
+        "3": "Average",
+        "4": "Good",
+        "5": "Excellent"
+      },
+      "questions": {
+        "easeOfUse": {
+          "label": "How easy is the platform to use?",
+          "hint": "Think about the overall experience of using the platform."
+        },
+        "moduleClarity": {
+          "label": "How clear and understandable are the learning modules?",
+          "hint": "Consider the structure, readability and clarity of module content."
+        },
+        "navigation": {
+          "label": "How easy is it to navigate between sections and modules?",
+          "hint": "Consider menus, buttons, links and moving between platform areas."
+        },
+        "testsExperience": {
+          "label": "How would you rate the experience of completing tests and assessments?",
+          "hint": "Consider clarity of questions, flow, feedback and ease of submission."
+        },
+        "technicalProblems": {
+          "label": "How would you rate the technical reliability of the platform?",
+          "hint": "Consider loading, errors, display issues or other technical problems."
+        },
+        "overallSatisfaction": {
+          "label": "How satisfied are you overall with the platform?",
+          "hint": "Give your overall impression of the platform experience."
+        }
+      },
+      "openQuestions": {
+        "suggestions": {
+          "label": "What would you improve?",
+          "hint": "Share suggestions for improving content, navigation, tests or the general learning experience."
+        },
+        "technicalNotes": {
+          "label": "Did you notice any technical problems?",
+          "hint": "Describe any bugs, loading issues, layout problems or confusing behaviour."
+        }
+      },
+      "validation": {
+        "required": "Please answer all required questions before submitting.",
+        "submitError": "We could not save your feedback. Please try again."
+      },
+      "success": {
+        "title": "Thank you for your feedback",
+        "description": "Your response has been saved. You can continue using the platform as usual.",
+        "backToDashboard": "Back to dashboard"
+      }
+    },
+    "PlatformFeedbackBubble": {
+      "label": "Give feedback"
+    },
+    "PlatformFeedbackDashboardCard": {
+      "eyebrow": "Platform feedback",
+      "title": "Help us improve the platform",
+      "description": "Your feedback will help us improve the materials, navigation and platform experience.",
+      "actions": {
+        "giveFeedback": "Give feedback",
+        "remindLater": "Remind me later",
+        "dismiss": "Dismiss"
+      }
+    }
+  },
+  "PlatformFeedbackAdminDashboard": {
+    "title": "Platform feedback results",
+    "description": "Review user feedback about usability, navigation, tests, technical experience and overall satisfaction.",
+    "actions": {
+      "exportCsv": "Export CSV",
+      "exportExcel": "Export Excel"
+    },
+    "summary": {
+      "totalSubmissions": "Total submissions",
+      "easeOfUse": "Avg. ease of use",
+      "moduleClarity": "Avg. module clarity",
+      "navigation": "Avg. navigation",
+      "testsExperience": "Avg. tests experience",
+      "technicalProblems": "Avg. technical reliability",
+      "overallSatisfaction": "Avg. overall satisfaction"
+    },
+    "table": {
+      "title": "Feedback submissions",
+      "columns": {
+        "user": "User",
+        "createdAt": "Submitted",
+        "easeOfUse": "Ease of use",
+        "moduleClarity": "Module clarity",
+        "navigation": "Navigation",
+        "testsExperience": "Tests",
+        "technicalProblems": "Technical reliability",
+        "overallSatisfaction": "Overall satisfaction",
+        "suggestions": "Suggestions",
+        "technicalNotes": "Technical notes"
+      }
+    }
+  }
+}

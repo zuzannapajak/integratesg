@@ -1,0 +1,110 @@
+{
+  "Protected": {
+    "PlatformFeedbackForm": {
+      "back": "Powrót do panelu",
+      "eyebrow": "Opinia o platformie",
+      "title": "Pomóż nam ulepszyć platformę",
+      "description": "Twoja opinia pomaga nam ulepszać materiały edukacyjne, nawigację, testy oraz doświadczenie techniczne na całej platformie.",
+      "answered": "Odpowiedziano",
+      "submit": "Prześlij opinię",
+      "submitting": "Przesyłanie opinii...",
+      "scale": {
+        "1": "Bardzo słabo",
+        "2": "Słabo",
+        "3": "Przeciętnie",
+        "4": "Dobrze",
+        "5": "Doskonale"
+      },
+      "questions": {
+        "easeOfUse": {
+          "label": "Jak łatwa w obsłudze jest platforma?",
+          "hint": "Pomyśl o ogólnym doświadczeniu korzystania z platformy."
+        },
+        "moduleClarity": {
+          "label": "Jak jasne i zrozumiałe są moduły edukacyjne?",
+          "hint": "Weź pod uwagę strukturę, czytelność i przejrzystość treści modułów."
+        },
+        "navigation": {
+          "label": "Jak łatwo jest poruszać się między sekcjami i modułami?",
+          "hint": "Weź pod uwagę menu, przyciski, linki oraz przechodzenie między obszarami platformy."
+        },
+        "testsExperience": {
+          "label": "Jak oceniasz doświadczenie rozwiązywania testów i ocen?",
+          "hint": "Weź pod uwagę jasność pytań, przebieg, informację zwrotną oraz łatwość przesłania odpowiedzi."
+        },
+        "technicalProblems": {
+          "label": "Jak oceniasz techniczną niezawodność platformy?",
+          "hint": "Weź pod uwagę ładowanie, błędy, problemy z wyświetlaniem lub inne problemy techniczne."
+        },
+        "overallSatisfaction": {
+          "label": "Jak bardzo jesteś ogólnie zadowolony/zadowolona z platformy?",
+          "hint": "Podaj swoje ogólne wrażenie z korzystania z platformy."
+        }
+      },
+      "openQuestions": {
+        "suggestions": {
+          "label": "Co byś ulepszył/ulepszyła?",
+          "hint": "Podziel się sugestiami dotyczącymi ulepszenia treści, nawigacji, testów lub ogólnego doświadczenia edukacyjnego."
+        },
+        "technicalNotes": {
+          "label": "Czy zauważyłeś/zauważyłaś jakieś problemy techniczne?",
+          "hint": "Opisz błędy, problemy z ładowaniem, problemy z układem strony lub niejasne zachowanie platformy."
+        }
+      },
+      "validation": {
+        "required": "Przed przesłaniem odpowiedz na wszystkie wymagane pytania.",
+        "submitError": "Nie udało się zapisać Twojej opinii. Spróbuj ponownie."
+      },
+      "success": {
+        "title": "Dziękujemy za Twoją opinię",
+        "description": "Twoja odpowiedź została zapisana. Możesz dalej korzystać z platformy jak zwykle.",
+        "backToDashboard": "Powrót do panelu"
+      }
+    },
+    "PlatformFeedbackBubble": {
+      "label": "Przekaż opinię"
+    },
+    "PlatformFeedbackDashboardCard": {
+      "eyebrow": "Opinia o platformie",
+      "title": "Pomóż nam ulepszyć platformę",
+      "description": "Twoja opinia pomoże nam ulepszyć materiały, nawigację i doświadczenie korzystania z platformy.",
+      "actions": {
+        "giveFeedback": "Przekaż opinię",
+        "remindLater": "Przypomnij mi później",
+        "dismiss": "Ukryj"
+      }
+    }
+  },
+  "PlatformFeedbackAdminDashboard": {
+    "title": "Wyniki opinii o platformie",
+    "description": "Przejrzyj opinie użytkowników dotyczące użyteczności, nawigacji, testów, doświadczenia technicznego i ogólnej satysfakcji.",
+    "actions": {
+      "exportCsv": "Eksportuj CSV",
+      "exportExcel": "Eksportuj Excel"
+    },
+    "summary": {
+      "totalSubmissions": "Łączna liczba zgłoszeń",
+      "easeOfUse": "Śr. łatwość obsługi",
+      "moduleClarity": "Śr. jasność modułów",
+      "navigation": "Śr. nawigacja",
+      "testsExperience": "Śr. doświadczenie testów",
+      "technicalProblems": "Śr. niezawodność techniczna",
+      "overallSatisfaction": "Śr. ogólna satysfakcja"
+    },
+    "table": {
+      "title": "Przesłane opinie",
+      "columns": {
+        "user": "Użytkownik",
+        "createdAt": "Przesłano",
+        "easeOfUse": "Łatwość obsługi",
+        "moduleClarity": "Jasność modułów",
+        "navigation": "Nawigacja",
+        "testsExperience": "Testy",
+        "technicalProblems": "Niezawodność techniczna",
+        "overallSatisfaction": "Ogólna satysfakcja",
+        "suggestions": "Sugestie",
+        "technicalNotes": "Uwagi techniczne"
+      }
+    }
+  }
+}

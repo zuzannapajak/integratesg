@@ -1,0 +1,110 @@
+{
+  "Protected": {
+    "PlatformFeedbackForm": {
+      "back": "Torna alla dashboard",
+      "eyebrow": "Feedback sulla piattaforma",
+      "title": "Aiutaci a migliorare la piattaforma",
+      "description": "Il tuo feedback ci aiuta a migliorare i materiali didattici, la navigazione, i test e l’esperienza tecnica in tutta la piattaforma.",
+      "answered": "Risposto",
+      "submit": "Invia feedback",
+      "submitting": "Invio del feedback...",
+      "scale": {
+        "1": "Molto scarso",
+        "2": "Scarso",
+        "3": "Nella media",
+        "4": "Buono",
+        "5": "Eccellente"
+      },
+      "questions": {
+        "easeOfUse": {
+          "label": "Quanto è facile usare la piattaforma?",
+          "hint": "Pensa all’esperienza complessiva di utilizzo della piattaforma."
+        },
+        "moduleClarity": {
+          "label": "Quanto sono chiari e comprensibili i moduli didattici?",
+          "hint": "Considera la struttura, la leggibilità e la chiarezza dei contenuti dei moduli."
+        },
+        "navigation": {
+          "label": "Quanto è facile navigare tra sezioni e moduli?",
+          "hint": "Considera menu, pulsanti, link e il passaggio tra le diverse aree della piattaforma."
+        },
+        "testsExperience": {
+          "label": "Come valuteresti l’esperienza di completamento di test e valutazioni?",
+          "hint": "Considera la chiarezza delle domande, il flusso, il feedback e la facilità di invio."
+        },
+        "technicalProblems": {
+          "label": "Come valuteresti l’affidabilità tecnica della piattaforma?",
+          "hint": "Considera caricamento, errori, problemi di visualizzazione o altri problemi tecnici."
+        },
+        "overallSatisfaction": {
+          "label": "Quanto sei complessivamente soddisfatto della piattaforma?",
+          "hint": "Dai la tua impressione generale sull’esperienza offerta dalla piattaforma."
+        }
+      },
+      "openQuestions": {
+        "suggestions": {
+          "label": "Cosa miglioreresti?",
+          "hint": "Condividi suggerimenti per migliorare i contenuti, la navigazione, i test o l’esperienza di apprendimento in generale."
+        },
+        "technicalNotes": {
+          "label": "Hai notato problemi tecnici?",
+          "hint": "Descrivi eventuali bug, problemi di caricamento, problemi di layout o comportamenti poco chiari."
+        }
+      },
+      "validation": {
+        "required": "Rispondi a tutte le domande obbligatorie prima di inviare.",
+        "submitError": "Non siamo riusciti a salvare il tuo feedback. Riprova."
+      },
+      "success": {
+        "title": "Grazie per il tuo feedback",
+        "description": "La tua risposta è stata salvata. Puoi continuare a usare la piattaforma come al solito.",
+        "backToDashboard": "Torna alla dashboard"
+      }
+    },
+    "PlatformFeedbackBubble": {
+      "label": "Lascia un feedback"
+    },
+    "PlatformFeedbackDashboardCard": {
+      "eyebrow": "Feedback sulla piattaforma",
+      "title": "Aiutaci a migliorare la piattaforma",
+      "description": "Il tuo feedback ci aiuterà a migliorare i materiali, la navigazione e l’esperienza sulla piattaforma.",
+      "actions": {
+        "giveFeedback": "Lascia un feedback",
+        "remindLater": "Ricordamelo più tardi",
+        "dismiss": "Ignora"
+      }
+    }
+  },
+  "PlatformFeedbackAdminDashboard": {
+    "title": "Risultati del feedback sulla piattaforma",
+    "description": "Consulta il feedback degli utenti su usabilità, navigazione, test, esperienza tecnica e soddisfazione complessiva.",
+    "actions": {
+      "exportCsv": "Esporta CSV",
+      "exportExcel": "Esporta Excel"
+    },
+    "summary": {
+      "totalSubmissions": "Invii totali",
+      "easeOfUse": "Media facilità d’uso",
+      "moduleClarity": "Media chiarezza dei moduli",
+      "navigation": "Media navigazione",
+      "testsExperience": "Media esperienza dei test",
+      "technicalProblems": "Media affidabilità tecnica",
+      "overallSatisfaction": "Media soddisfazione complessiva"
+    },
+    "table": {
+      "title": "Feedback inviati",
+      "columns": {
+        "user": "Utente",
+        "createdAt": "Inviato",
+        "easeOfUse": "Facilità d’uso",
+        "moduleClarity": "Chiarezza dei moduli",
+        "navigation": "Navigazione",
+        "testsExperience": "Test",
+        "technicalProblems": "Affidabilità tecnica",
+        "overallSatisfaction": "Soddisfazione complessiva",
+        "suggestions": "Suggerimenti",
+        "technicalNotes": "Note tecniche"
+      }
+    }
+  }
+}

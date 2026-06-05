@@ -1,0 +1,110 @@
+{
+  "Protected": {
+    "PlatformFeedbackForm": {
+      "back": "Zurück zum Dashboard",
+      "eyebrow": "Plattform-Feedback",
+      "title": "Helfen Sie uns, die Plattform zu verbessern",
+      "description": "Ihr Feedback hilft uns, die Lernmaterialien, Navigation, Tests und die technische Erfahrung auf der gesamten Plattform zu verbessern.",
+      "answered": "Beantwortet",
+      "submit": "Feedback senden",
+      "submitting": "Feedback wird gesendet...",
+      "scale": {
+        "1": "Sehr schlecht",
+        "2": "Schlecht",
+        "3": "Durchschnittlich",
+        "4": "Gut",
+        "5": "Ausgezeichnet"
+      },
+      "questions": {
+        "easeOfUse": {
+          "label": "Wie einfach ist die Plattform zu nutzen?",
+          "hint": "Denken Sie an die gesamte Erfahrung bei der Nutzung der Plattform."
+        },
+        "moduleClarity": {
+          "label": "Wie klar und verständlich sind die Lernmodule?",
+          "hint": "Berücksichtigen Sie die Struktur, Lesbarkeit und Klarheit der Modulinhalte."
+        },
+        "navigation": {
+          "label": "Wie einfach ist es, zwischen Bereichen und Modulen zu navigieren?",
+          "hint": "Berücksichtigen Sie Menüs, Schaltflächen, Links und den Wechsel zwischen verschiedenen Plattformbereichen."
+        },
+        "testsExperience": {
+          "label": "Wie bewerten Sie die Erfahrung beim Absolvieren von Tests und Bewertungen?",
+          "hint": "Berücksichtigen Sie die Klarheit der Fragen, den Ablauf, das Feedback und die einfache Abgabe."
+        },
+        "technicalProblems": {
+          "label": "Wie bewerten Sie die technische Zuverlässigkeit der Plattform?",
+          "hint": "Berücksichtigen Sie Ladezeiten, Fehler, Darstellungsprobleme oder andere technische Probleme."
+        },
+        "overallSatisfaction": {
+          "label": "Wie zufrieden sind Sie insgesamt mit der Plattform?",
+          "hint": "Geben Sie Ihren Gesamteindruck von der Plattform-Erfahrung an."
+        }
+      },
+      "openQuestions": {
+        "suggestions": {
+          "label": "Was würden Sie verbessern?",
+          "hint": "Teilen Sie Vorschläge zur Verbesserung von Inhalten, Navigation, Tests oder der allgemeinen Lernerfahrung."
+        },
+        "technicalNotes": {
+          "label": "Haben Sie technische Probleme bemerkt?",
+          "hint": "Beschreiben Sie Fehler, Ladeprobleme, Layoutprobleme oder verwirrendes Verhalten."
+        }
+      },
+      "validation": {
+        "required": "Bitte beantworten Sie alle Pflichtfragen, bevor Sie das Formular absenden.",
+        "submitError": "Wir konnten Ihr Feedback nicht speichern. Bitte versuchen Sie es erneut."
+      },
+      "success": {
+        "title": "Vielen Dank für Ihr Feedback",
+        "description": "Ihre Antwort wurde gespeichert. Sie können die Plattform wie gewohnt weiter nutzen.",
+        "backToDashboard": "Zurück zum Dashboard"
+      }
+    },
+    "PlatformFeedbackBubble": {
+      "label": "Feedback geben"
+    },
+    "PlatformFeedbackDashboardCard": {
+      "eyebrow": "Plattform-Feedback",
+      "title": "Helfen Sie uns, die Plattform zu verbessern",
+      "description": "Ihr Feedback hilft uns, die Materialien, die Navigation und die Plattform-Erfahrung zu verbessern.",
+      "actions": {
+        "giveFeedback": "Feedback geben",
+        "remindLater": "Später erinnern",
+        "dismiss": "Ausblenden"
+      }
+    }
+  },
+  "PlatformFeedbackAdminDashboard": {
+    "title": "Ergebnisse des Plattform-Feedbacks",
+    "description": "Überprüfen Sie das Nutzerfeedback zu Benutzerfreundlichkeit, Navigation, Tests, technischer Erfahrung und Gesamtzufriedenheit.",
+    "actions": {
+      "exportCsv": "CSV exportieren",
+      "exportExcel": "Excel exportieren"
+    },
+    "summary": {
+      "totalSubmissions": "Gesamtzahl der Einsendungen",
+      "easeOfUse": "Durchschn. Benutzerfreundlichkeit",
+      "moduleClarity": "Durchschn. Modulverständlichkeit",
+      "navigation": "Durchschn. Navigation",
+      "testsExperience": "Durchschn. Testerfahrung",
+      "technicalProblems": "Durchschn. technische Zuverlässigkeit",
+      "overallSatisfaction": "Durchschn. Gesamtzufriedenheit"
+    },
+    "table": {
+      "title": "Feedback-Einsendungen",
+      "columns": {
+        "user": "Nutzer",
+        "createdAt": "Eingereicht",
+        "easeOfUse": "Benutzerfreundlichkeit",
+        "moduleClarity": "Modulverständlichkeit",
+        "navigation": "Navigation",
+        "testsExperience": "Tests",
+        "technicalProblems": "Technische Zuverlässigkeit",
+        "overallSatisfaction": "Gesamtzufriedenheit",
+        "suggestions": "Vorschläge",
+        "technicalNotes": "Technische Hinweise"
+      }
+    }
+  }
+}

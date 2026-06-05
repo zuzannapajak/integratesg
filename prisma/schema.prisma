@@ -7,17 +7,19 @@ datasource db {
 }
 
 model Profile {
-  id                    String                  @id
-  email                 String                  @unique
-  fullName              String?
-  role                  UserRole                @default(learner)
-  createdAt             DateTime                @default(now())
-  updatedAt             DateTime                @updatedAt
-  preferredLanguage     String                  @default("en")
-  userCaseStudyProgress UserCaseStudyProgress[]
-  userCourseAttempts    UserCourseAttempt[]
-  userScenarioAttempts  UserScenarioAttempt[]
-  curriculumPilot       CurriculumPilot?
+  id                          String                       @id
+  email                       String                       @unique
+  fullName                    String?
+  role                        UserRole                     @default(learner)
+  createdAt                   DateTime                     @default(now())
+  updatedAt                   DateTime                     @updatedAt
+  preferredLanguage           String                       @default("en")
+  userCaseStudyProgress       UserCaseStudyProgress[]
+  userCourseAttempts          UserCourseAttempt[]
+  userScenarioAttempts        UserScenarioAttempt[]
+  curriculumPilot             CurriculumPilot?
+  platformFeedbackSubmissions PlatformFeedbackSubmission[]
+  platformFeedbackReminder    PlatformFeedbackReminder?
 }
 
 model CaseStudy {
@@ -443,6 +445,42 @@ model AnswerTranslation {
   @@unique([answerId, language])
   @@index([answerId])
   @@index([language])
+}
+
+model PlatformFeedbackSubmission {
+  id                  String   @id @default(cuid())
+  userId              String
+  easeOfUse           Int
+  moduleClarity       Int
+  navigation          Int
+  testsExperience     Int
+  technicalProblems   Int
+  overallSatisfaction Int
+  suggestions         String?
+  technicalNotes      String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  user Profile @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model PlatformFeedbackReminder {
+  id            String    @id @default(cuid())
+  userId        String    @unique
+  dismissedAt   DateTime?
+  remindLaterAt DateTime?
+  submittedAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  user Profile @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([dismissedAt])
+  @@index([remindLaterAt])
+  @@index([submittedAt])
 }
 
 enum CurriculumPilotStatus {

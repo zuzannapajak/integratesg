@@ -1,5 +1,6 @@
 import AppSidebar from "@/components/layout/app-sidebar";
 import ProtectedNavbar from "@/components/layout/protected-navbar";
+import PlatformFeedbackBubble from "@/components/platform-feedback/platform-feedback-bubble";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
@@ -34,6 +35,8 @@ export default async function ProtectedOverviewLayout({ children, params }: Prop
           {children}
         </main>
       </div>
+
+      <PlatformFeedbackBubble locale={locale} />
     </div>
   );
 }
