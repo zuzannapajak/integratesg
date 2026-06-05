@@ -257,6 +257,25 @@
         "confirm": "Salta e continua",
         "cancel": "Torna indietro"
       }
+    },
+    "CurriculumPilotPostAssessmentCard": {
+      "completed": {
+        "eyebrow": "Pilota completato",
+        "title": "La valutazione post è stata salvata",
+        "description": "Grazie per aver completato la parte pilota. Puoi continuare a usare i moduli, completare i test dei moduli e lavorare per ottenere il certificato."
+      },
+      "available": {
+        "eyebrow": "Percorso pilota",
+        "title": "Puoi completare la tua partecipazione al pilota",
+        "description": "Hai completato almeno un modulo, quindi la valutazione post è ora disponibile. Dopo averla inviata, avrai ancora accesso al corso e ai moduli.",
+        "action": "Completa la partecipazione al pilota"
+      },
+      "locked": {
+        "eyebrow": "Percorso pilota",
+        "title": "La valutazione post sarà disponibile dopo aver completato almeno un modulo",
+        "description": "Completa prima almeno un modulo del curriculum. Questo rende significativo il confronto pre/post.",
+        "locked": "Moduli completati"
+      }
     }
   }
 }

@@ -5,7 +5,7 @@ import {
   submitCurriculumPilotPreAssessmentAction,
 } from "@/features/curriculum/pilot-actions";
 import type { CurriculumPilotAssessmentQuestionViewModel } from "@/lib/curriculum/pilot";
-import { ArrowRight, ClipboardCheck, Loader2, Sparkles } from "lucide-react";
+import { ArrowRight, ClipboardCheck, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import type { SyntheticEvent } from "react";
 import { useMemo, useState, useTransition } from "react";
@@ -125,9 +125,6 @@ export default function CurriculumPilotAssessmentForm({
 
   const allRequiredAnswered = answeredRequiredCount === questions.length;
 
-  const responseScale =
-    questions.find((question) => question.inputType === "likert")?.scaleOptions ?? [];
-
   const handleSubmit = (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
@@ -195,7 +192,7 @@ export default function CurriculumPilotAssessmentForm({
             {copy.eyebrow}
           </span>
 
-          <div className="mt-5 grid gap-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start">
+          <div className="mt-5 grid gap-6">
             <div>
               <h1 className="max-w-4xl text-3xl font-bold tracking-tight text-[#31425a] md:text-[2.5rem]">
                 {copy.title}
@@ -204,27 +201,6 @@ export default function CurriculumPilotAssessmentForm({
                 {copy.description}
               </p>
             </div>
-
-            <aside className="rounded-3xl border border-[#e8edf3] bg-white/82 p-5">
-              <div className="flex items-center gap-2 text-sm font-bold text-[#31425a]">
-                <Sparkles className="h-4 w-4 text-emerald-600" />
-                {copy.scaleTitle}
-              </div>
-
-              <div className="mt-4 grid gap-2">
-                {responseScale.map((option) => (
-                  <div
-                    key={option.value}
-                    className="flex items-center gap-3 rounded-2xl border border-[#edf1f5] bg-white px-3 py-2 text-sm text-[#667180]"
-                  >
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#f1f5f8] text-xs font-bold text-[#31425a]">
-                      {option.value}
-                    </span>
-                    <span>{option.label}</span>
-                  </div>
-                ))}
-              </div>
-            </aside>
           </div>
 
           <form onSubmit={handleSubmit} className="mt-8 space-y-5">

@@ -1,7 +1,7 @@
 "use client";
 
 import { skipCurriculumPilotPreAssessmentAction } from "@/features/curriculum/pilot-actions";
-import { ArrowLeft, ArrowRight, BookOpenCheck, ClipboardList, Loader2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookOpenCheck, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -66,11 +66,6 @@ export default function CurriculumPilotEntryGate({
               {t("back")}
             </Link>
 
-            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1.5 text-[0.72rem] font-bold uppercase tracking-[0.14em] text-emerald-700">
-              <ClipboardList className="h-3.5 w-3.5" />
-              {t("eyebrow")}
-            </span>
-
             <h1 className="mt-5 max-w-3xl text-3xl font-bold tracking-tight text-[#31425a] md:text-[2.6rem]">
               {t("title")}
             </h1>
@@ -94,7 +89,7 @@ export default function CurriculumPilotEntryGate({
                   <BookOpenCheck className="h-5 w-5" />
                 </span>
 
-                <div>
+                <div className="min-w-0">
                   <h2 className="text-base font-bold text-[#31425a]">{t("fillTitle")}</h2>
                   <p className="mt-2 text-sm leading-6 text-[#667180]">{t("fillDescription")}</p>
                 </div>
@@ -110,7 +105,9 @@ export default function CurriculumPilotEntryGate({
 
               <button
                 type="button"
-                onClick={() => { setShowSkipConfirmation(true); }}
+                onClick={() => {
+                  setShowSkipConfirmation(true);
+                }}
                 className="mt-4 w-full text-center text-sm text-[#667180] underline-offset-4 transition hover:text-[#31425a] hover:underline"
               >
                 {t("skipLink")}
@@ -146,7 +143,9 @@ export default function CurriculumPilotEntryGate({
 
               <button
                 type="button"
-                onClick={() => { setShowSkipConfirmation(false); }}
+                onClick={() => {
+                  setShowSkipConfirmation(false);
+                }}
                 disabled={isPending}
                 className="rounded-2xl border border-[#d9e2ec] px-5 py-3 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc] disabled:opacity-60"
               >

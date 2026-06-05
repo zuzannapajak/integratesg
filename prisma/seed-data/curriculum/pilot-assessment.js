@@ -1,10 +1,139 @@
 const confidenceScaleLabels = {
-  1: "Not confident at all",
-  2: "Slightly confident",
-  3: "Moderately confident",
-  4: "Confident",
-  5: "Very confident",
+  en: {
+    1: "Not confident at all",
+    2: "Slightly confident",
+    3: "Moderately confident",
+    4: "Confident",
+    5: "Very confident",
+  },
+  pl: {
+    1: "Wcale nie czuję się pewnie",
+    2: "Czuję się raczej niepewnie",
+    3: "Czuję się umiarkowanie pewnie",
+    4: "Czuję się pewnie",
+    5: "Czuję się bardzo pewnie",
+  },
+  de: {
+    1: "Überhaupt nicht sicher",
+    2: "Eher unsicher",
+    3: "Mäßig sicher",
+    4: "Sicher",
+    5: "Sehr sicher",
+  },
+  bg: {
+    1: "Изобщо не се чувствам уверен/а",
+    2: "Чувствам се слабо уверен/а",
+    3: "Чувствам се умерено уверен/а",
+    4: "Чувствам се уверен/а",
+    5: "Чувствам се много уверен/а",
+  },
+  el: {
+    1: "Καθόλου σίγουρος/η",
+    2: "Λίγο σίγουρος/η",
+    3: "Μέτρια σίγουρος/η",
+    4: "Σίγουρος/η",
+    5: "Πολύ σίγουρος/η",
+  },
+  it: {
+    1: "Per niente sicuro/a",
+    2: "Poco sicuro/a",
+    3: "Moderatamente sicuro/a",
+    4: "Sicuro/a",
+    5: "Molto sicuro/a",
+  },
 };
+
+const prompts = {
+  q01: {
+    en: "I can explain what ESG means and why it is relevant for organisations.",
+    pl: "Potrafię wyjaśnić, czym jest ESG i dlaczego jest istotne dla organizacji.",
+    de: "Ich kann erklären, was ESG bedeutet und warum es für Organisationen relevant ist.",
+    bg: "Мога да обясня какво означава ESG и защо е важно за организациите.",
+    el: "Μπορώ να εξηγήσω τι σημαίνει ESG και γιατί είναι σημαντικό για τους οργανισμούς.",
+    it: "So spiegare cosa significa ESG e perché è rilevante per le organizzazioni.",
+  },
+  q02: {
+    en: "I can describe the connection between ESG, sustainable development and business competitiveness.",
+    pl: "Potrafię opisać związek między ESG, zrównoważonym rozwojem i konkurencyjnością biznesową.",
+    de: "Ich kann den Zusammenhang zwischen ESG, nachhaltiger Entwicklung und Wettbewerbsfähigkeit von Unternehmen beschreiben.",
+    bg: "Мога да опиша връзката между ESG, устойчивото развитие и бизнес конкурентоспособността.",
+    el: "Μπορώ να περιγράψω τη σύνδεση μεταξύ ESG, βιώσιμης ανάπτυξης και επιχειρηματικής ανταγωνιστικότητας.",
+    it: "So descrivere il collegamento tra ESG, sviluppo sostenibile e competitività aziendale.",
+  },
+  q03: {
+    en: "I can explain how ESG can be linked to an organisation’s mission, values and strategy.",
+    pl: "Potrafię wyjaśnić, jak ESG może być powiązane z misją, wartościami i strategią organizacji.",
+    de: "Ich kann erklären, wie ESG mit der Mission, den Werten und der Strategie einer Organisation verknüpft werden kann.",
+    bg: "Мога да обясня как ESG може да бъде свързано с мисията, ценностите и стратегията на организацията.",
+    el: "Μπορώ να εξηγήσω πώς το ESG μπορεί να συνδεθεί με την αποστολή, τις αξίες και τη στρατηγική ενός οργανισμού.",
+    it: "So spiegare come l’ESG può essere collegato alla missione, ai valori e alla strategia di un’organizzazione.",
+  },
+  q04: {
+    en: "I can identify relevant ESG priorities and objectives for an organisation.",
+    pl: "Potrafię wskazać istotne priorytety i cele ESG dla organizacji.",
+    de: "Ich kann relevante ESG-Prioritäten und -Ziele für eine Organisation identifizieren.",
+    bg: "Мога да определя релевантни ESG приоритети и цели за дадена организация.",
+    el: "Μπορώ να εντοπίσω σχετικές προτεραιότητες και στόχους ESG για έναν οργανισμό.",
+    it: "So identificare priorità e obiettivi ESG rilevanti per un’organizzazione.",
+  },
+  q05: {
+    en: "I can recognise key ESG frameworks, standards and regulatory requirements relevant to organisations.",
+    pl: "Potrafię rozpoznać kluczowe ramy, standardy i wymagania regulacyjne ESG istotne dla organizacji.",
+    de: "Ich kann wichtige ESG-Rahmenwerke, Standards und regulatorische Anforderungen erkennen, die für Organisationen relevant sind.",
+    bg: "Мога да разпознавам основни ESG рамки, стандарти и регулаторни изисквания, релевантни за организациите.",
+    el: "Μπορώ να αναγνωρίσω βασικά πλαίσια, πρότυπα και κανονιστικές απαιτήσεις ESG που σχετίζονται με οργανισμούς.",
+    it: "So riconoscere i principali framework, standard e requisiti normativi ESG rilevanti per le organizzazioni.",
+  },
+  q06: {
+    en: "I can identify practical steps for integrating ESG into business operations.",
+    pl: "Potrafię wskazać praktyczne kroki służące integracji ESG z działalnością operacyjną firmy.",
+    de: "Ich kann praktische Schritte zur Integration von ESG in Geschäftsprozesse identifizieren.",
+    bg: "Мога да определя практически стъпки за интегриране на ESG в бизнес операциите.",
+    el: "Μπορώ να εντοπίσω πρακτικά βήματα για την ενσωμάτωση του ESG στις επιχειρησιακές λειτουργίες.",
+    it: "So identificare passaggi pratici per integrare l’ESG nelle attività aziendali.",
+  },
+  q07: {
+    en: "I can explain how ESG data, indicators or KPIs can be used to monitor progress.",
+    pl: "Potrafię wyjaśnić, jak dane ESG, wskaźniki lub KPI mogą być wykorzystywane do monitorowania postępów.",
+    de: "Ich kann erklären, wie ESG-Daten, Indikatoren oder KPIs zur Überwachung von Fortschritten genutzt werden können.",
+    bg: "Мога да обясня как ESG данни, индикатори или KPI могат да се използват за проследяване на напредъка.",
+    el: "Μπορώ να εξηγήσω πώς τα δεδομένα, οι δείκτες ή τα KPI ESG μπορούν να χρησιμοποιηθούν για την παρακολούθηση της προόδου.",
+    it: "So spiegare come dati ESG, indicatori o KPI possono essere utilizzati per monitorare i progressi.",
+  },
+  q08: {
+    en: "I can recognise risks such as greenwashing or social washing and suggest ways to avoid them.",
+    pl: "Potrafię rozpoznać ryzyka takie jak greenwashing lub social washing i zaproponować sposoby ich unikania.",
+    de: "Ich kann Risiken wie Greenwashing oder Social Washing erkennen und Möglichkeiten vorschlagen, diese zu vermeiden.",
+    bg: "Мога да разпознавам рискове като greenwashing или social washing и да предлагам начини за избягването им.",
+    el: "Μπορώ να αναγνωρίσω κινδύνους όπως το greenwashing ή το social washing και να προτείνω τρόπους αποφυγής τους.",
+    it: "So riconoscere rischi come il greenwashing o il social washing e suggerire modi per evitarli.",
+  },
+  q09: {
+    en: "I can apply ESG knowledge to a realistic organisational or SME-related situation.",
+    pl: "Potrafię zastosować wiedzę ESG w realistycznej sytuacji organizacyjnej lub związanej z MŚP.",
+    de: "Ich kann ESG-Wissen auf eine realistische organisatorische Situation oder eine Situation im Zusammenhang mit KMU anwenden.",
+    bg: "Мога да прилагам знания за ESG в реалистична организационна ситуация или ситуация, свързана с МСП.",
+    el: "Μπορώ να εφαρμόσω γνώσεις ESG σε μια ρεαλιστική οργανωσιακή κατάσταση ή σε περίπτωση σχετική με ΜΜΕ.",
+    it: "So applicare le conoscenze ESG a una situazione organizzativa realistica o legata a una PMI.",
+  },
+  q10: {
+    en: "In which ESG-related area do you feel you improved the most, and why?",
+    pl: "W którym obszarze związanym z ESG czujesz największą poprawę i dlaczego?",
+    de: "In welchem ESG-bezogenen Bereich haben Sie sich Ihrer Meinung nach am stärksten verbessert und warum?",
+    bg: "В коя област, свързана с ESG, смятате, че сте постигнали най-голям напредък и защо?",
+    el: "Σε ποιον τομέα που σχετίζεται με το ESG αισθάνεστε ότι βελτιωθήκατε περισσότερο και γιατί;",
+    it: "In quale area legata all’ESG ritieni di essere migliorato/a di più e perché?",
+  },
+};
+
+function buildTranslations(promptKey, labels) {
+  return ["en", "pl", "de", "bg", "el", "it"].map((language) => ({
+    language,
+    prompt: prompts[promptKey][language],
+    helpText: null,
+    labels: labels ? confidenceScaleLabels[language] : null,
+  }));
+}
 
 export const curriculumPilotQuestions = [
   {
@@ -16,14 +145,7 @@ export const curriculumPilotQuestions = [
     maxValue: 5,
     isRequired: true,
     isActive: true,
-    translations: [
-      {
-        language: "en",
-        prompt: "I can explain what ESG means and why it is relevant for organisations.",
-        helpText: null,
-        labels: confidenceScaleLabels,
-      },
-    ],
+    translations: buildTranslations("q01", true),
   },
   {
     id: "curriculum-pilot-q-02",
@@ -34,15 +156,7 @@ export const curriculumPilotQuestions = [
     maxValue: 5,
     isRequired: true,
     isActive: true,
-    translations: [
-      {
-        language: "en",
-        prompt:
-          "I can describe the connection between ESG, sustainable development and business competitiveness.",
-        helpText: null,
-        labels: confidenceScaleLabels,
-      },
-    ],
+    translations: buildTranslations("q02", true),
   },
   {
     id: "curriculum-pilot-q-03",
@@ -53,15 +167,7 @@ export const curriculumPilotQuestions = [
     maxValue: 5,
     isRequired: true,
     isActive: true,
-    translations: [
-      {
-        language: "en",
-        prompt:
-          "I can explain how ESG can be linked to an organisation’s mission, values and strategy.",
-        helpText: null,
-        labels: confidenceScaleLabels,
-      },
-    ],
+    translations: buildTranslations("q03", true),
   },
   {
     id: "curriculum-pilot-q-04",
@@ -72,14 +178,7 @@ export const curriculumPilotQuestions = [
     maxValue: 5,
     isRequired: true,
     isActive: true,
-    translations: [
-      {
-        language: "en",
-        prompt: "I can identify relevant ESG priorities and objectives for an organisation.",
-        helpText: null,
-        labels: confidenceScaleLabels,
-      },
-    ],
+    translations: buildTranslations("q04", true),
   },
   {
     id: "curriculum-pilot-q-05",
@@ -90,15 +189,7 @@ export const curriculumPilotQuestions = [
     maxValue: 5,
     isRequired: true,
     isActive: true,
-    translations: [
-      {
-        language: "en",
-        prompt:
-          "I can recognise key ESG frameworks, standards and regulatory requirements relevant to organisations.",
-        helpText: null,
-        labels: confidenceScaleLabels,
-      },
-    ],
+    translations: buildTranslations("q05", true),
   },
   {
     id: "curriculum-pilot-q-06",
@@ -109,14 +200,7 @@ export const curriculumPilotQuestions = [
     maxValue: 5,
     isRequired: true,
     isActive: true,
-    translations: [
-      {
-        language: "en",
-        prompt: "I can identify practical steps for integrating ESG into business operations.",
-        helpText: null,
-        labels: confidenceScaleLabels,
-      },
-    ],
+    translations: buildTranslations("q06", true),
   },
   {
     id: "curriculum-pilot-q-07",
@@ -127,14 +211,7 @@ export const curriculumPilotQuestions = [
     maxValue: 5,
     isRequired: true,
     isActive: true,
-    translations: [
-      {
-        language: "en",
-        prompt: "I can explain how ESG data, indicators or KPIs can be used to monitor progress.",
-        helpText: null,
-        labels: confidenceScaleLabels,
-      },
-    ],
+    translations: buildTranslations("q07", true),
   },
   {
     id: "curriculum-pilot-q-08",
@@ -145,15 +222,7 @@ export const curriculumPilotQuestions = [
     maxValue: 5,
     isRequired: true,
     isActive: true,
-    translations: [
-      {
-        language: "en",
-        prompt:
-          "I can recognise risks such as greenwashing or social washing and suggest ways to avoid them.",
-        helpText: null,
-        labels: confidenceScaleLabels,
-      },
-    ],
+    translations: buildTranslations("q08", true),
   },
   {
     id: "curriculum-pilot-q-09",
@@ -164,14 +233,7 @@ export const curriculumPilotQuestions = [
     maxValue: 5,
     isRequired: true,
     isActive: true,
-    translations: [
-      {
-        language: "en",
-        prompt: "I can apply ESG knowledge to a realistic organisational or SME-related situation.",
-        helpText: null,
-        labels: confidenceScaleLabels,
-      },
-    ],
+    translations: buildTranslations("q09", true),
   },
   {
     id: "curriculum-pilot-q-10",
@@ -182,13 +244,6 @@ export const curriculumPilotQuestions = [
     maxValue: null,
     isRequired: true,
     isActive: true,
-    translations: [
-      {
-        language: "en",
-        prompt: "In which ESG-related area do you feel you improved the most, and why?",
-        helpText: null,
-        labels: null,
-      },
-    ],
+    translations: buildTranslations("q10", false),
   },
 ];

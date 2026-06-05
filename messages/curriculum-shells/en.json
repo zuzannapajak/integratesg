@@ -257,6 +257,25 @@
         "confirm": "Skip and continue",
         "cancel": "Go back"
       }
+    },
+    "CurriculumPilotPostAssessmentCard": {
+      "completed": {
+        "eyebrow": "Pilot completed",
+        "title": "Post-assessment has been saved",
+        "description": "Thank you for completing the pilot part. You can still use the modules, complete module tests and work towards the certificate."
+      },
+      "available": {
+        "eyebrow": "Pilot path",
+        "title": "You can finish your pilot participation",
+        "description": "You have completed at least one module, so the post-assessment is now available. After submitting it, you will still have access to the course and modules.",
+        "action": "Finish pilot participation"
+      },
+      "locked": {
+        "eyebrow": "Pilot path",
+        "title": "Post-assessment will be available after completing at least one module",
+        "description": "Please complete at least one curriculum module first. This makes the pre/post comparison meaningful.",
+        "locked": "Completed modules"
+      }
     }
   }
 }

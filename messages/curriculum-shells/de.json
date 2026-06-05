@@ -257,6 +257,25 @@
         "confirm": "Überspringen und fortfahren",
         "cancel": "Zurück"
       }
+    },
+    "CurriculumPilotPostAssessmentCard": {
+      "completed": {
+        "eyebrow": "Pilot abgeschlossen",
+        "title": "Die Nachbewertung wurde gespeichert",
+        "description": "Vielen Dank, dass Sie den Pilotteil abgeschlossen haben. Sie können die Module weiterhin nutzen, Modultests absolvieren und auf das Zertifikat hinarbeiten."
+      },
+      "available": {
+        "eyebrow": "Pilotpfad",
+        "title": "Sie können Ihre Pilotteilnahme abschließen",
+        "description": "Sie haben mindestens ein Modul abgeschlossen, daher ist die Nachbewertung jetzt verfügbar. Nach dem Absenden haben Sie weiterhin Zugriff auf den Kurs und die Module.",
+        "action": "Pilotteilnahme abschließen"
+      },
+      "locked": {
+        "eyebrow": "Pilotpfad",
+        "title": "Die Nachbewertung wird nach Abschluss von mindestens einem Modul verfügbar sein",
+        "description": "Bitte schließen Sie zuerst mindestens ein Curriculum-Modul ab. Dadurch wird der Vorher/Nachher-Vergleich aussagekräftig.",
+        "locked": "Abgeschlossene Module"
+      }
     }
   }
 }

@@ -257,6 +257,25 @@
         "confirm": "Pomiń i przejdź dalej",
         "cancel": "Wróć"
       }
+    },
+    "CurriculumPilotPostAssessmentCard": {
+      "completed": {
+        "eyebrow": "Pilotaż ukończony",
+        "title": "Ocena końcowa została zapisana",
+        "description": "Dziękujemy za ukończenie części pilotażowej. Nadal możesz korzystać z modułów, zaliczać testy modułowe i pracować nad uzyskaniem certyfikatu."
+      },
+      "available": {
+        "eyebrow": "Ścieżka pilotażowa",
+        "title": "Możesz zakończyć udział w pilotażu",
+        "description": "Ukończyłeś co najmniej jeden moduł, dlatego ocena końcowa jest już dostępna. Po jej przesłaniu nadal będziesz mieć dostęp do kursu i modułów.",
+        "action": "Zakończ udział w pilotażu"
+      },
+      "locked": {
+        "eyebrow": "Ścieżka pilotażowa",
+        "title": "Ocena końcowa będzie dostępna po ukończeniu co najmniej jednego modułu",
+        "description": "Najpierw ukończ co najmniej jeden moduł programu nauczania. Dzięki temu porównanie przed/po będzie miarodajne.",
+        "locked": "Ukończone moduły"
+      }
     }
   }
 }
