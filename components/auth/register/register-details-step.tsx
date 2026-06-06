@@ -114,7 +114,7 @@ export default function RegisterDetailsStep({
             {t("confirmationDescription")}
           </p>
 
-          <div className="mx-auto mt-6 max-w-[460px] rounded-3xl border border-[#e1eadf] bg-white px-5 py-4 text-left shadow-[0_12px_30px_rgba(49,66,90,0.06)]">
+          <div className="mx-auto mt-6 max-w-115 rounded-3xl border border-[#e1eadf] bg-white px-5 py-4 text-left shadow-[0_12px_30px_rgba(49,66,90,0.06)]">
             <p className="text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-[#7a8594]">
               {t("confirmationEmailLabel")}
             </p>
