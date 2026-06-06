@@ -2,6 +2,7 @@
 
 import { createClient } from "@/lib/supabase/client";
 import { useLocale, useTranslations } from "next-intl";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -61,14 +62,12 @@ export default function LoginForm() {
       </div>
 
       <div className="space-y-2">
-        <div className="flex items-center justify-between gap-4">
-          <label
-            htmlFor="password"
-            className="block text-[0.92rem] font-semibold tracking-[-0.01em] text-[#31425a]"
-          >
-            {t("passwordLabel")}
-          </label>
-        </div>
+        <label
+          htmlFor="password"
+          className="block text-[0.92rem] font-semibold tracking-[-0.01em] text-[#31425a]"
+        >
+          {t("passwordLabel")}
+        </label>
 
         <input
           id="password"
@@ -82,6 +81,15 @@ export default function LoginForm() {
           }}
           required
         />
+
+        <div className="flex justify-end pt-1">
+          <Link
+            href={`/${locale}/auth/forgot-password`}
+            className="text-[0.86rem] font-medium text-[#7a8594] transition hover:text-[#0d7fc2]"
+          >
+            {t("forgotPassword")}
+          </Link>
+        </div>
       </div>
 
       {message && (

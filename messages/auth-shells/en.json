@@ -17,7 +17,8 @@
       "passwordLabel": "Password",
       "passwordPlaceholder": "Enter your password",
       "submit": "Login",
-      "submitting": "Signing in..."
+      "submitting": "Signing in...",
+      "forgotPassword": "Forgot password?"
     },
     "SocialLogin": {
       "continueWithGoogle": "Continue with Google"
@@ -31,6 +32,37 @@
       "error": "Failed to save profile.",
       "submit": "Continue",
       "submitting": "Saving..."
+    },
+    "ForgotPasswordPage": {
+      "title": "Reset your password",
+      "subtitle": "Enter your email address and we will send you a secure link to choose a new password."
+    },
+    "ForgotPasswordForm": {
+      "emailLabel": "Email address",
+      "emailPlaceholder": "you@example.com",
+      "submit": "Send reset link",
+      "submitting": "Sending...",
+      "success": "If an account exists for this email address, a password reset link has been sent.",
+      "backToLogin": "Back to login"
+    },
+    "ResetPasswordPage": {
+      "title": "Choose a new password",
+      "subtitle": "Set a new password for your account. For security, you will be asked to sign in again afterwards."
+    },
+    "ResetPasswordForm": {
+      "checkingLink": "Checking password reset link...",
+      "invalidLink": "This password reset link is invalid or has expired. Please request a new one.",
+      "passwordLabel": "New password",
+      "passwordPlaceholder": "Enter a new password",
+      "confirmPasswordLabel": "Confirm new password",
+      "confirmPasswordPlaceholder": "Repeat the new password",
+      "passwordTooShort": "Password must be at least 8 characters long.",
+      "passwordsDoNotMatch": "Passwords do not match.",
+      "submit": "Save new password",
+      "submitting": "Saving...",
+      "success": "Your password has been changed successfully. You can now sign in with the new password.",
+      "goToLogin": "Go to login",
+      "requestNewLink": "Request a new reset link"
     }
   },
   "Register": {

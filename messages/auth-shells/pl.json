@@ -17,7 +17,8 @@
       "passwordLabel": "Hasło",
       "passwordPlaceholder": "Wpisz hasło",
       "submit": "Zaloguj się",
-      "submitting": "Logowanie..."
+      "submitting": "Logowanie...",
+      "forgotPassword": "Nie pamiętasz hasła?"
     },
     "SocialLogin": {
       "continueWithGoogle": "Kontynuuj z Google"
@@ -31,6 +32,37 @@
       "error": "Nie udało się zapisać profilu.",
       "submit": "Kontynuuj",
       "submitting": "Zapisywanie..."
+    },
+    "ForgotPasswordPage": {
+      "title": "Resetowanie hasła",
+      "subtitle": "Wpisz adres e-mail, a wyślemy bezpieczny link do ustawienia nowego hasła."
+    },
+    "ForgotPasswordForm": {
+      "emailLabel": "Adres e-mail",
+      "emailPlaceholder": "twoj@email.com",
+      "submit": "Wyślij link resetujący",
+      "submitting": "Wysyłanie...",
+      "success": "Jeśli konto z tym adresem e-mail istnieje, link do resetowania hasła został wysłany.",
+      "backToLogin": "Wróć do logowania"
+    },
+    "ResetPasswordPage": {
+      "title": "Ustaw nowe hasło",
+      "subtitle": "Ustaw nowe hasło do swojego konta. Ze względów bezpieczeństwa po zmianie zalogujesz się ponownie."
+    },
+    "ResetPasswordForm": {
+      "checkingLink": "Sprawdzanie linku do resetowania hasła...",
+      "invalidLink": "Ten link do resetowania hasła jest nieprawidłowy albo wygasł. Poproś o nowy link.",
+      "passwordLabel": "Nowe hasło",
+      "passwordPlaceholder": "Wpisz nowe hasło",
+      "confirmPasswordLabel": "Potwierdź nowe hasło",
+      "confirmPasswordPlaceholder": "Powtórz nowe hasło",
+      "passwordTooShort": "Hasło musi mieć co najmniej 8 znaków.",
+      "passwordsDoNotMatch": "Hasła nie są takie same.",
+      "submit": "Zapisz nowe hasło",
+      "submitting": "Zapisywanie...",
+      "success": "Hasło zostało zmienione. Możesz teraz zalogować się nowym hasłem.",
+      "goToLogin": "Przejdź do logowania",
+      "requestNewLink": "Poproś o nowy link resetujący"
     }
   },
   "Register": {

@@ -17,7 +17,8 @@
       "passwordLabel": "Password",
       "passwordPlaceholder": "Inserisci la tua password",
       "submit": "Accedi",
-      "submitting": "Accesso in corso..."
+      "submitting": "Accesso in corso...",
+      "forgotPassword": "Password dimenticata?"
     },
     "SocialLogin": {
       "continueWithGoogle": "Continua con Google"
@@ -31,6 +32,37 @@
       "error": "Impossibile salvare il profilo.",
       "submit": "Continua",
       "submitting": "Salvataggio in corso..."
+    },
+    "ForgotPasswordPage": {
+      "title": "Reimposta la password",
+      "subtitle": "Inserisci il tuo indirizzo email e ti invieremo un link sicuro per scegliere una nuova password."
+    },
+    "ForgotPasswordForm": {
+      "emailLabel": "Indirizzo email",
+      "emailPlaceholder": "tuo@esempio.com",
+      "submit": "Invia link di reimpostazione",
+      "submitting": "Invio in corso...",
+      "success": "Se esiste un account con questo indirizzo email, è stato inviato un link per reimpostare la password.",
+      "backToLogin": "Torna all’accesso"
+    },
+    "ResetPasswordPage": {
+      "title": "Scegli una nuova password",
+      "subtitle": "Imposta una nuova password per il tuo account. Per sicurezza, ti verrà chiesto di accedere di nuovo in seguito."
+    },
+    "ResetPasswordForm": {
+      "checkingLink": "Controllo del link di reimpostazione password...",
+      "invalidLink": "Questo link di reimpostazione password non è valido o è scaduto. Richiedi un nuovo link.",
+      "passwordLabel": "Nuova password",
+      "passwordPlaceholder": "Inserisci una nuova password",
+      "confirmPasswordLabel": "Conferma nuova password",
+      "confirmPasswordPlaceholder": "Ripeti la nuova password",
+      "passwordTooShort": "La password deve contenere almeno 8 caratteri.",
+      "passwordsDoNotMatch": "Le password non coincidono.",
+      "submit": "Salva nuova password",
+      "submitting": "Salvataggio in corso...",
+      "success": "La password è stata modificata correttamente. Ora puoi accedere con la nuova password.",
+      "goToLogin": "Vai all’accesso",
+      "requestNewLink": "Richiedi un nuovo link"
     }
   },
   "Register": {

@@ -1,16 +1,13 @@
-import LoginForm from "@/components/auth/login/login-form";
-import SocialLoginButtons from "@/components/auth/login/social-login-buttons";
+import ForgotPasswordForm from "@/components/auth/password-recovery/forgot-password-form";
 import { getTranslations } from "next-intl/server";
-import Link from "next/link";
 
-type Props = {
+export default async function ForgotPasswordPage({
+  params,
+}: {
   params: Promise<{ locale: string }>;
-};
-
-export default async function LoginPage({ params }: Props) {
+}) {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "Auth.LoginPage" });
-  const common = await getTranslations({ locale, namespace: "Common" });
+  const t = await getTranslations({ locale, namespace: "Auth.ForgotPasswordPage" });
 
   return (
     <main className="flex h-full min-h-0 overflow-hidden bg-[#ececec]">
@@ -26,28 +23,8 @@ export default async function LoginPage({ params }: Props) {
               <p className="mt-3 text-[0.98rem] leading-7 text-[#596170]">{t("subtitle")}</p>
             </div>
 
-            <div className="mt-8 space-y-6">
-              <SocialLoginButtons locale={locale} />
-
-              <div className="flex items-center gap-4">
-                <div className="h-px flex-1 bg-[#d9e1ea]" />
-                <span className="text-[0.82rem] font-semibold uppercase tracking-[0.14em] text-[#7a8594]">
-                  {common("or")}
-                </span>
-                <div className="h-px flex-1 bg-[#d9e1ea]" />
-              </div>
-
-              <LoginForm />
-
-              <p className="text-center text-[0.95rem] text-[#5e6776]">
-                {t("noAccount")}{" "}
-                <Link
-                  href={`/${locale}/auth/register`}
-                  className="font-semibold text-[#31425a] transition hover:text-[#0d7fc2]"
-                >
-                  {t("createOne")}
-                </Link>
-              </p>
+            <div className="mt-8">
+              <ForgotPasswordForm locale={locale} />
             </div>
           </div>
         </div>

@@ -17,7 +17,8 @@
       "passwordLabel": "Парола",
       "passwordPlaceholder": "Въведете вашата парола",
       "submit": "Вход",
-      "submitting": "Влизане..."
+      "submitting": "Влизане...",
+      "forgotPassword": "Забравена парола?"
     },
     "SocialLogin": {
       "continueWithGoogle": "Продължете с Google"
@@ -31,6 +32,37 @@
       "error": "Неуспешно запазване на профила.",
       "submit": "Продължи",
       "submitting": "Запазване..."
+    },
+    "ForgotPasswordPage": {
+      "title": "Нулиране на паролата",
+      "subtitle": "Въведете своя имейл адрес и ще ви изпратим защитена връзка за задаване на нова парола."
+    },
+    "ForgotPasswordForm": {
+      "emailLabel": "Имейл адрес",
+      "emailPlaceholder": "you@example.com",
+      "submit": "Изпрати връзка за нулиране",
+      "submitting": "Изпращане...",
+      "success": "Ако съществува акаунт с този имейл адрес, е изпратена връзка за нулиране на паролата.",
+      "backToLogin": "Назад към входа"
+    },
+    "ResetPasswordPage": {
+      "title": "Задайте нова парола",
+      "subtitle": "Задайте нова парола за вашия акаунт. От съображения за сигурност след това ще трябва да влезете отново."
+    },
+    "ResetPasswordForm": {
+      "checkingLink": "Проверка на връзката за нулиране на паролата...",
+      "invalidLink": "Тази връзка за нулиране на паролата е невалидна или е изтекла. Моля, поискайте нова връзка.",
+      "passwordLabel": "Нова парола",
+      "passwordPlaceholder": "Въведете нова парола",
+      "confirmPasswordLabel": "Потвърдете новата парола",
+      "confirmPasswordPlaceholder": "Повторете новата парола",
+      "passwordTooShort": "Паролата трябва да бъде поне 8 символа.",
+      "passwordsDoNotMatch": "Паролите не съвпадат.",
+      "submit": "Запази новата парола",
+      "submitting": "Запазване...",
+      "success": "Паролата беше променена успешно. Вече можете да влезете с новата парола.",
+      "goToLogin": "Към страницата за вход",
+      "requestNewLink": "Поискай нова връзка за нулиране"
     }
   },
   "Register": {
