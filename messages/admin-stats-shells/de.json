@@ -14,63 +14,70 @@
       },
       "header": {
         "title": "Statistiken",
-        "subtitle": "Ein klarer Überblick über die Nutzung der Plattform, den Lernfortschritt und die Performance der Inhalte"
+        "subtitle": "Ein klarer Überblick über die Nutzung der Plattform, Lernfortschritte und Inhaltsleistung"
       },
       "segments": {
-        "summary": "Zusammenfassung",
+        "summary": "Übersicht",
         "languages": "Sprachen",
         "scenarios": "Szenarien",
-        "courses": "Kurse",
-        "eportfolio": "ePortfolio"
+        "courses": "Curriculum",
+        "eportfolio": "ePortfolio",
+        "platformFeedback": "Plattform-Feedback"
+      },
+      "curriculumViews": {
+        "all": "Alle",
+        "mainPath": "Hauptpfad",
+        "pilotPath": "Pilotpfad",
+        "prePost": "Pre/Post-Assessment"
       },
       "glance": {
         "title": "Auf einen Blick",
-        "subtitle": "Ihre zentralen Plattformkennzahlen auf einen Blick, für eine schnelle Management-Übersicht konzipiert.",
+        "subtitle": "Die wichtigsten Plattformindikatoren auf einen Blick, für eine schnelle Managementübersicht.",
         "allUsers": {
-          "label": "Alle Benutzer",
+          "label": "Alle Nutzer",
           "hint": "Registrierte Konten von Lernenden und Lehrenden."
         },
         "activeUsers": {
-          "label": "Aktive Benutzer",
-          "hint": "Benutzer mit erfasster Aktivität in den letzten 7 Tagen."
+          "label": "Aktive Nutzer",
+          "hint": "Nutzer mit erfasster Aktivität in den letzten 7 Tagen."
         },
         "scenarioCompletion": {
           "label": "Szenario-Abschluss",
-          "hint": "Anteil der Szenarioversuche, die erfolgreich abgeschlossen wurden."
+          "hint": "Anteil der Szenario-Versuche, die erfolgreich abgeschlossen wurden."
         },
         "curriculumCompletion": {
           "label": "Curriculum-Abschluss",
-          "hint": "Anteil der von Lernenden abgeschlossenen Curriculum-Versuche."
+          "hint": "Anteil der Curriculum-Versuche, die von Lernenden abgeschlossen wurden."
         }
       },
       "platformStructure": {
         "title": "Plattformstruktur",
-        "subtitle": "Eine kompakte Ansicht der Rollenverteilung und veröffentlichten Lernressourcen.",
+        "subtitle": "Eine kompakte Ansicht der Rollenverteilung und der veröffentlichten Lernressourcen.",
         "roleDistribution": "Rollenverteilung",
         "publishedResources": "Veröffentlichte Ressourcen",
         "educators": "Lehrende",
         "learners": "Lernende",
         "admins": "Administratoren",
-        "courses": "Kurse",
+        "courses": "Curriculum-Module",
         "caseStudies": "Fallstudien",
         "scenarios": "Szenarien"
       },
       "highlights": {
         "title": "Highlights",
-        "subtitle": "Zentrale Signale, die helfen, die stärksten Bereiche der Lernaktivität und Nutzung zu erkennen.",
+        "subtitle": "Wichtige Signale zur Identifikation der stärksten Bereiche der Lernaktivität und Plattformnutzung.",
         "mostActiveScenario": "Aktivstes Szenario",
         "bestCompletionResult": "Bestes Abschlussergebnis",
         "largestLanguageCohort": "Größte Sprachgruppe",
         "attemptsCompletion": "{attempts} Versuche · {completion} Abschluss",
         "completionPostQuiz": "{completion} Abschluss · {score} durchschnittlicher Post-Quiz-Wert",
-        "usersVariants": "{users} Benutzer · {variants} Szenariovarianten"
+        "usersVariants": "{users} Nutzer · {variants} Szenariovarianten"
       },
       "learningQuality": {
         "title": "Lernqualität",
         "subtitle": "Abschluss- und Bewertungsqualität nach Erfahrungstyp gruppiert.",
         "scenarioSimulator": {
           "title": "Szenario-Simulator",
-          "subtitle": "Übergeordnete Ergebnisse und Abschlussqualität über alle Versuche hinweg."
+          "subtitle": "Übergeordnete Ergebnis- und Abschlussqualität über alle Versuche hinweg."
         },
         "curriculum": {
           "title": "Curriculum",
@@ -81,67 +88,67 @@
           "subtitle": "Signale zu Fallstudien-Abschlüssen und Beteiligung."
         },
         "completionRate": "Abschlussrate",
-        "averageScore": "Durchschnittliche Punktzahl",
+        "averageScore": "Durchschnittswert",
         "passed": "Bestanden",
         "failed": "Nicht bestanden",
-        "avgPreQuiz": "Ø Pre-Quiz",
-        "avgPostQuiz": "Ø Post-Quiz",
+        "avgPreQuiz": "Durchschn. Pre-Quiz",
+        "avgPostQuiz": "Durchschn. Post-Quiz",
         "inProgress": "In Bearbeitung",
         "published": "Veröffentlicht",
         "active7d": "Aktiv / 7 Tage"
       },
       "languages": {
         "title": "Sprachabdeckung",
-        "subtitle": "Prüfen Sie Nutzung und Inhaltsverfügbarkeit in den unterstützten Sprachgruppen.",
-        "users": "Benutzer",
-        "publishedCourses": "Veröffentlichte Kurse",
+        "subtitle": "Überprüfung der Nutzung und Inhaltsverfügbarkeit über unterstützte Sprachgruppen hinweg.",
+        "users": "Nutzer",
+        "publishedCourses": "Veröffentlichte Curriculum-Module",
         "caseStudies": "Fallstudien",
         "scenarioVariants": "Szenariovarianten"
       },
       "scenarioActivity": {
-        "title": "Aktivität des Szenario-Simulators",
+        "title": "Aktivität im Szenario-Simulator",
         "subtitle": "Verfolgen Sie Simulationsnutzung, Abschlussqualität und Ergebnismuster in einer Ansicht.",
         "valueLabel": "Szenario-Ereignisse",
         "events": "Ereignisse",
         "completionRate": "Abschlussrate",
-        "averageScore": "Durchschnittliche Punktzahl",
+        "averageScore": "Durchschnittswert",
         "passedCompleted": "Bestanden / abgeschlossen",
         "failed": "Nicht bestanden"
       },
       "curriculumActivity": {
         "title": "Curriculum-Aktivität",
-        "subtitle": "Überwachen Sie Modulbeteiligung, Abschlussfortschritt und Trends bei Lernbewertungen.",
+        "subtitle": "Überwachen Sie Modulbeteiligung, Abschlussfortschritt und Bewertungstrends.",
         "valueLabel": "Curriculum-Ereignisse",
         "events": "Ereignisse",
         "completionRate": "Abschlussrate",
-        "averagePreQuiz": "Ø Pre-Quiz",
-        "averagePostQuiz": "Ø Post-Quiz",
+        "averagePreQuiz": "Durchschnittlicher Pre-Quiz",
+        "averagePostQuiz": "Durchschnittlicher Post-Quiz",
         "inProgress": "In Bearbeitung"
       },
       "eportfolioActivity": {
         "title": "ePortfolio-Aktivität",
-        "subtitle": "Sehen Sie Fallstudien-Beteiligung, Abschlüsse und Teilnahme innerhalb des Portfolio-Erlebnisses.",
+        "subtitle": "Sehen Sie Fallstudien-Beteiligung, Abschlüsse und Teilnahme im Portfolio-Erlebnis.",
         "valueLabel": "ePortfolio-Ereignisse",
         "events": "Ereignisse",
         "completionRate": "Abschlussrate",
         "published": "Veröffentlicht",
-        "activeUsers": "Aktive Benutzer"
+        "activeUsers": "Aktive Nutzer"
       },
       "scenarioPerformance": {
-        "title": "Szenario-Performance",
-        "subtitle": "Suchen, vergleichen und sortieren Sie Szenarien nach Nutzung, Abschluss und Punktzahl.",
+        "title": "Szenario-Leistung",
+        "subtitle": "Suchen, vergleichen und sortieren Sie Szenarien nach Nutzung, Abschluss und Bewertung.",
         "results": "{count} Ergebnisse",
         "searchPlaceholder": "Nach Szenariotitel, Slug, Sprache oder ESG-Bereich suchen...",
         "sort": {
           "attempts": "Nach Versuchen sortieren",
           "completion": "Nach Abschlussrate sortieren",
-          "score": "Nach durchschnittlicher Punktzahl sortieren"
+          "score": "Nach Durchschnittswert sortieren"
         },
         "summary": {
           "results": "Ergebnisse",
           "attempts": "Versuche",
           "averageCompletion": "Durchschnittlicher Abschluss",
-          "averageScore": "Durchschnittliche Punktzahl"
+          "averageScore": "Durchschnittswert"
         },
         "empty": {
           "title": "Keine Szenarien entsprechen Ihrer Suche",
@@ -150,28 +157,28 @@
         "row": {
           "attempts": "Versuche",
           "completionRate": "Abschlussrate",
-          "averageScore": "Durchschnittliche Punktzahl",
+          "averageScore": "Durchschnittswert",
           "variants": "Varianten"
         }
       },
       "coursePerformance": {
-        "title": "Kurs-Performance",
+        "title": "Curriculum-Leistung",
         "subtitle": "Suchen, vergleichen und sortieren Sie Curriculum-Module nach Beteiligung und Lernergebnissen.",
         "results": "{count} Ergebnisse",
-        "searchPlaceholder": "Nach Kurstitel, Slug oder ESG-Bereich suchen...",
+        "searchPlaceholder": "Nach Modultitel, Slug oder ESG-Bereich suchen...",
         "sort": {
           "attempts": "Nach Versuchen sortieren",
           "completion": "Nach Abschlussrate sortieren",
-          "postQuiz": "Nach Post-Quiz-Ergebnis sortieren"
+          "postQuiz": "Nach Post-Quiz-Wert sortieren"
         },
         "summary": {
           "results": "Ergebnisse",
           "attempts": "Versuche",
           "averageCompletion": "Durchschnittlicher Abschluss",
-          "averagePostQuiz": "Ø Post-Quiz"
+          "averagePostQuiz": "Durchschnittlicher Post-Quiz"
         },
         "empty": {
-          "title": "Keine Kurse entsprechen Ihrer Suche",
+          "title": "Keine Curriculum-Module entsprechen Ihrer Suche",
           "subtitle": "Versuchen Sie einen anderen Titel, Slug oder ESG-Bereich."
         },
         "row": {
@@ -183,31 +190,31 @@
         }
       },
       "scenarioAttempts": {
-        "title": "Szenario-Versuche der Benutzer",
-        "subtitle": "Neueste Lernaktivität im Szenario-Simulator, einschließlich Status, Punktzahl und Zeitangaben.",
-        "records": "{count} Einträge"
+        "title": "Szenario-Versuche der Nutzer",
+        "subtitle": "Aktuelle Lernaktivität im Szenario-Simulator, einschließlich Status, Bewertung und Zeitpunkt.",
+        "records": "{count} Datensätze"
       },
       "curriculumAttempts": {
-        "title": "Curriculum-Versuche der Benutzer",
-        "subtitle": "Neueste Lernaktivität in den Curriculum-Modulen, einschließlich Fortschritt, Bewertung und Zeitangaben.",
-        "records": "{count} Einträge"
+        "title": "Curriculum-Versuche der Nutzer",
+        "subtitle": "Aktuelle Lernaktivität in Curriculum-Modulen, einschließlich Fortschritt, Bewertung und Zeitpunkt.",
+        "records": "{count} Datensätze"
       },
       "eportfolioProgress": {
-        "title": "ePortfolio-Fortschritt der Benutzer",
-        "subtitle": "Neuester Lernfortschritt bei Fallstudien, einschließlich Abschluss und Zeitangaben.",
-        "records": "{count} Einträge"
+        "title": "ePortfolio-Fortschritt der Nutzer",
+        "subtitle": "Aktueller Lernfortschritt in Fallstudien, einschließlich Abschluss und Zeitpunkt.",
+        "records": "{count} Datensätze"
       },
       "tableScenario": {
         "emptyTitle": "Noch keine Szenario-Aktivität",
-        "emptyDescription": "Szenario-Versuche werden hier angezeigt, sobald Lernende mit dem Simulator interagieren.",
+        "emptyDescription": "Szenario-Versuche werden hier angezeigt, sobald Lernende mit dem Simulator arbeiten.",
         "headers": {
-          "learner": "Lernender",
+          "learner": "Lernende/r",
           "scenario": "Szenario",
           "area": "Bereich",
           "language": "Sprache",
           "attempt": "Versuch",
           "status": "Status",
-          "score": "Punktzahl",
+          "score": "Bewertung",
           "started": "Gestartet",
           "lastOpened": "Zuletzt geöffnet",
           "completed": "Abgeschlossen"
@@ -224,8 +231,8 @@
         "emptyTitle": "Noch keine Curriculum-Aktivität",
         "emptyDescription": "Curriculum-Versuche werden hier angezeigt, sobald Lernende mit den Modulen beginnen.",
         "headers": {
-          "learner": "Lernender",
-          "course": "Kurs",
+          "learner": "Lernende/r",
+          "course": "Modul",
           "area": "Bereich",
           "status": "Status",
           "progress": "Fortschritt",
@@ -243,9 +250,9 @@
       },
       "tableEportfolio": {
         "emptyTitle": "Noch keine ePortfolio-Aktivität",
-        "emptyDescription": "Der Fortschritt bei Fallstudien wird hier angezeigt, sobald Lernende mit ePortfolio-Inhalten arbeiten.",
+        "emptyDescription": "Fallstudien-Fortschritte werden hier angezeigt, sobald Lernende mit ePortfolio-Inhalten arbeiten.",
         "headers": {
-          "learner": "Lernender",
+          "learner": "Lernende/r",
           "caseStudy": "Fallstudie",
           "language": "Sprache",
           "status": "Status",
@@ -260,31 +267,31 @@
       }
     },
     "CurriculumPilotAdminDashboard": {
-      "title": "Fortschritt des Curriculum-Piloten",
-      "description": "Statistiken zur Vor-/Nachbewertung und Fortschrittsanalyse pro Frage.",
+      "title": "Curriculum-Pilotfortschritt",
+      "description": "Pre/Post-Assessment-Statistiken und Fortschrittsanalyse pro Frage.",
       "actions": {
         "exportCsv": "CSV exportieren",
         "exportExcel": "Excel exportieren"
       },
       "summary": {
         "startedPilotPath": "Pilotpfad gestartet",
-        "preCompleted": "Vorbewertung abgeschlossen",
-        "postCompleted": "Nachbewertung abgeschlossen",
-        "preSkipped": "Vorbewertung übersprungen",
-        "averagePreScore": "Durchschnittliche Vorbewertung",
-        "averagePostScore": "Durchschnittliche Nachbewertung",
-        "averageDelta": "Durchschnittliche Differenz",
-        "averageModulesBeforePost": "Durchschn. Module vor Nachbewertung"
+        "preCompleted": "Pre abgeschlossen",
+        "postCompleted": "Post abgeschlossen",
+        "preSkipped": "Pre übersprungen",
+        "averagePreScore": "Durchschnittlicher Pre-Wert",
+        "averagePostScore": "Durchschnittlicher Post-Wert",
+        "averageDelta": "Durchschnittliche Veränderung",
+        "averageModulesBeforePost": "Durchschn. Module vor Post"
       },
       "questionAnalysis": {
         "title": "Analyse pro Frage",
         "columns": {
           "question": "Frage",
-          "preAverage": "Ø vorher",
-          "postAverage": "Ø nachher",
-          "delta": "Differenz",
-          "preAnswers": "Antworten vorher",
-          "postAnswers": "Antworten nachher"
+          "preAverage": "Pre-Durchschn.",
+          "postAverage": "Post-Durchschn.",
+          "delta": "Delta",
+          "preAnswers": "Pre-Antworten",
+          "postAnswers": "Post-Antworten"
         }
       },
       "users": {
@@ -292,30 +299,44 @@
         "columns": {
           "user": "Nutzer",
           "status": "Status",
-          "preCompleted": "Vorbewertung abgeschlossen",
-          "postCompleted": "Nachbewertung abgeschlossen",
-          "preAverage": "Ø vorher",
-          "postAverage": "Ø nachher",
-          "delta": "Differenz",
-          "modulesBeforePost": "Module vor Nachbewertung"
+          "preCompleted": "Pre abgeschlossen",
+          "postCompleted": "Post abgeschlossen",
+          "preAverage": "Pre-Durchschn.",
+          "postAverage": "Post-Durchschn.",
+          "delta": "Delta",
+          "modulesBeforePost": "Module vor Post"
         }
       }
     },
-    "AdminSectionShortcuts": {
-      "ariaLabel": "Admin-Bereiche",
-      "open": "Öffnen",
-      "cards": {
-        "stats": {
-          "title": "Übersichtsstatistiken",
-          "description": "Allgemeine Plattformnutzung, Lernaktivität, Szenarien, Curriculum und ePortfolio-Daten."
-        },
-        "pilot": {
-          "title": "Pilot-Auswertung",
-          "description": "Pre-Assessment, Post-Assessment und Curriculum-Daten des Pilotpfads für Evaluationsberichte."
-        },
-        "feedback": {
-          "title": "Plattform-Feedback",
-          "description": "Umfrageantworten und Kommentare aus dem Feedback-Formular der Plattform."
+    "PlatformFeedbackAdminDashboard": {
+      "title": "Plattform-Feedback",
+      "description": "Umfrageantworten und Kommentare der Nutzer aus dem Feedback-Formular der Plattform.",
+      "actions": {
+        "exportCsv": "CSV exportieren",
+        "exportExcel": "Excel exportieren"
+      },
+      "summary": {
+        "totalSubmissions": "Antworten insgesamt",
+        "easeOfUse": "Benutzerfreundlichkeit",
+        "moduleClarity": "Klarheit der Module",
+        "navigation": "Navigation",
+        "testsExperience": "Testerfahrung",
+        "technicalProblems": "Technische Probleme",
+        "overallSatisfaction": "Gesamtzufriedenheit"
+      },
+      "table": {
+        "title": "Feedback-Einreichungen",
+        "columns": {
+          "user": "Nutzer",
+          "createdAt": "Eingereicht",
+          "easeOfUse": "Benutzerfreundlichkeit",
+          "moduleClarity": "Klarheit der Module",
+          "navigation": "Navigation",
+          "testsExperience": "Testerfahrung",
+          "technicalProblems": "Technische Probleme",
+          "overallSatisfaction": "Gesamtzufriedenheit",
+          "suggestions": "Vorschläge",
+          "technicalNotes": "Technische Hinweise"
         }
       }
     }

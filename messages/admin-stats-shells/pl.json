@@ -2,10 +2,10 @@
   "Protected": {
     "AdminStatsShell": {
       "area": {
-        "environmental": "Environmental",
-        "social": "Social",
-        "governance": "Governance",
-        "crossCutting": "Cross-cutting"
+        "environmental": "Środowisko",
+        "social": "Społeczeństwo",
+        "governance": "Ład korporacyjny",
+        "crossCutting": "Przekrojowe"
       },
       "window": {
         "24h": "Ostatnie 24 godziny",
@@ -14,50 +14,57 @@
       },
       "header": {
         "title": "Statystyki",
-        "subtitle": "Przejrzysty overview adopcji platformy, postępu nauki i efektywności treści"
+        "subtitle": "Przejrzysty obraz wykorzystania platformy, postępów w nauce i efektywności treści"
       },
       "segments": {
         "summary": "Podsumowanie",
         "languages": "Języki",
         "scenarios": "Scenariusze",
-        "courses": "Kursy",
-        "eportfolio": "ePortfolio"
+        "courses": "Curriculum",
+        "eportfolio": "ePortfolio",
+        "platformFeedback": "Feedback platformy"
+      },
+      "curriculumViews": {
+        "all": "Wszystko",
+        "mainPath": "Główna ścieżka",
+        "pilotPath": "Ścieżka pilotażowa",
+        "prePost": "Pre/Post assessment"
       },
       "glance": {
-        "title": "Na pierwszy rzut oka",
-        "subtitle": "Kluczowe wskaźniki platformy w jednym miejscu, przygotowane do szybkiego przeglądu.",
+        "title": "W skrócie",
+        "subtitle": "Najważniejsze wskaźniki platformy w jednym miejscu, przygotowane do szybkiego przeglądu.",
         "allUsers": {
           "label": "Wszyscy użytkownicy",
-          "hint": "Zarejestrowane konta kursantów i dydaktyków"
+          "hint": "Zarejestrowane konta uczestników i edukatorów."
         },
         "activeUsers": {
           "label": "Aktywni użytkownicy",
-          "hint": "Użytkownicy z odnotowaną aktywnością w ostatnich 7 dniach."
+          "hint": "Użytkownicy z aktywnością zarejestrowaną w ostatnich 7 dniach."
         },
         "scenarioCompletion": {
           "label": "Ukończenie scenariuszy",
-          "hint": "Udział prób scenariuszy, które osiągnęły pomyślny stan ukończenia."
+          "hint": "Odsetek prób scenariuszy zakończonych pomyślnym statusem."
         },
         "curriculumCompletion": {
           "label": "Ukończenie curriculum",
-          "hint": "Udział prób curriculum ukończonych przez użytkowników."
+          "hint": "Odsetek prób curriculum ukończonych przez uczestników."
         }
       },
       "platformStructure": {
         "title": "Struktura platformy",
-        "subtitle": "Zwięzły widok rozkładu ról i opublikowanych zasobów edukacyjnych.",
-        "roleDistribution": "Rozkład ról",
+        "subtitle": "Zwięzły widok ról użytkowników i opublikowanych zasobów edukacyjnych.",
+        "roleDistribution": "Podział ról",
         "publishedResources": "Opublikowane zasoby",
-        "educators": "Dydaktycy",
-        "learners": "Kursanci",
+        "educators": "Edukatorzy",
+        "learners": "Uczestnicy",
         "admins": "Administratorzy",
-        "courses": "Kursy",
-        "caseStudies": "Studia przypadków",
+        "courses": "Moduły curriculum",
+        "caseStudies": "Case studies",
         "scenarios": "Scenariusze"
       },
       "highlights": {
-        "title": "Najważniejsze sygnały",
-        "subtitle": "Kluczowe wskaźniki pomagające wskazać najmocniejsze obszary aktywności i adopcji.",
+        "title": "Najważniejsze informacje",
+        "subtitle": "Kluczowe sygnały pomagające wskazać najmocniejsze obszary aktywności i adopcji platformy.",
         "mostActiveScenario": "Najaktywniejszy scenariusz",
         "bestCompletionResult": "Najlepszy wynik ukończenia",
         "largestLanguageCohort": "Największa grupa językowa",
@@ -67,18 +74,18 @@
       },
       "learningQuality": {
         "title": "Jakość nauki",
-        "subtitle": "Jakość ukończenia i oceny zgrupowana według typu doświadczenia.",
+        "subtitle": "Ukończenie i jakość ocen pogrupowane według typu doświadczenia.",
         "scenarioSimulator": {
-          "title": "Scenario simulator",
-          "subtitle": "Wysokopoziomowa jakość wyników i ukończeń we wszystkich próbach."
+          "title": "Symulator scenariuszy",
+          "subtitle": "Ogólny wynik i jakość ukończenia dla wszystkich prób."
         },
         "curriculum": {
           "title": "Curriculum",
-          "subtitle": "Postęp i jakość oceny we wszystkich modułach curriculum."
+          "subtitle": "Postęp i jakość ocen we wszystkich modułach curriculum."
         },
         "eportfolio": {
           "title": "ePortfolio",
-          "subtitle": "Sygnały ukończenia i udziału w studiach przypadków."
+          "subtitle": "Sygnały ukończenia case studies i uczestnictwa."
         },
         "completionRate": "Wskaźnik ukończenia",
         "averageScore": "Średni wynik",
@@ -86,21 +93,21 @@
         "failed": "Niezaliczone",
         "avgPreQuiz": "Śr. pre-quiz",
         "avgPostQuiz": "Śr. post-quiz",
-        "inProgress": "W trakcie",
+        "inProgress": "W toku",
         "published": "Opublikowane",
         "active7d": "Aktywni / 7 dni"
       },
       "languages": {
         "title": "Pokrycie językowe",
-        "subtitle": "Przejrzyj adopcję i dostępność treści w obsługiwanych grupach językowych.",
+        "subtitle": "Przegląd wykorzystania i dostępności treści w obsługiwanych językach.",
         "users": "Użytkownicy",
-        "publishedCourses": "Opublikowane kursy",
-        "caseStudies": "Studia przypadków",
+        "publishedCourses": "Opublikowane moduły curriculum",
+        "caseStudies": "Case studies",
         "scenarioVariants": "Warianty scenariuszy"
       },
       "scenarioActivity": {
-        "title": "Aktywność scenario simulator",
-        "subtitle": "Śledź użycie symulatora, jakość ukończenia i wzorce wyników w jednym widoku.",
+        "title": "Aktywność symulatora scenariuszy",
+        "subtitle": "Śledź wykorzystanie symulacji, jakość ukończenia i wzorce wyników w jednym widoku.",
         "valueLabel": "Zdarzenia scenariuszy",
         "events": "Zdarzenia",
         "completionRate": "Wskaźnik ukończenia",
@@ -110,17 +117,17 @@
       },
       "curriculumActivity": {
         "title": "Aktywność curriculum",
-        "subtitle": "Monitoruj zaangażowanie w moduły, progres ukończenia i trendy wyników nauki.",
+        "subtitle": "Monitoruj zaangażowanie w moduły, postęp ukończenia i trendy ocen.",
         "valueLabel": "Zdarzenia curriculum",
         "events": "Zdarzenia",
         "completionRate": "Wskaźnik ukończenia",
         "averagePreQuiz": "Średni pre-quiz",
         "averagePostQuiz": "Średni post-quiz",
-        "inProgress": "W trakcie"
+        "inProgress": "W toku"
       },
       "eportfolioActivity": {
         "title": "Aktywność ePortfolio",
-        "subtitle": "Zobacz zaangażowanie w case studies, ukończenia i udział w doświadczeniu portfolio.",
+        "subtitle": "Zobacz zaangażowanie w case studies, ukończenia i uczestnictwo w doświadczeniu portfolio.",
         "valueLabel": "Zdarzenia ePortfolio",
         "events": "Zdarzenia",
         "completionRate": "Wskaźnik ukończenia",
@@ -128,10 +135,10 @@
         "activeUsers": "Aktywni użytkownicy"
       },
       "scenarioPerformance": {
-        "title": "Wyniki scenariuszy",
-        "subtitle": "Wyszukuj, porównuj i sortuj scenariusze według adopcji, ukończenia i wyniku.",
+        "title": "Efektywność scenariuszy",
+        "subtitle": "Wyszukuj, porównuj i sortuj scenariusze według wykorzystania, ukończenia i wyników.",
         "results": "{count} wyników",
-        "searchPlaceholder": "Szukaj po tytule scenariusza, slug, języku lub obszarze ESG...",
+        "searchPlaceholder": "Szukaj po tytule scenariusza, slugu, języku lub obszarze ESG...",
         "sort": {
           "attempts": "Sortuj według prób",
           "completion": "Sortuj według ukończenia",
@@ -144,8 +151,8 @@
           "averageScore": "Średni wynik"
         },
         "empty": {
-          "title": "Żaden scenariusz nie pasuje do wyszukiwania",
-          "subtitle": "Spróbuj innego tytułu, slug, języka lub obszaru ESG."
+          "title": "Brak scenariuszy pasujących do wyszukiwania",
+          "subtitle": "Spróbuj użyć innego tytułu, slugu, języka lub obszaru ESG."
         },
         "row": {
           "attempts": "Próby",
@@ -155,10 +162,10 @@
         }
       },
       "coursePerformance": {
-        "title": "Wyniki kursów",
+        "title": "Efektywność curriculum",
         "subtitle": "Wyszukuj, porównuj i sortuj moduły curriculum według zaangażowania i efektów nauki.",
         "results": "{count} wyników",
-        "searchPlaceholder": "Szukaj po tytule kursu, slug lub obszarze ESG...",
+        "searchPlaceholder": "Szukaj po tytule modułu, slugu lub obszarze ESG...",
         "sort": {
           "attempts": "Sortuj według prób",
           "completion": "Sortuj według ukończenia",
@@ -171,37 +178,37 @@
           "averagePostQuiz": "Średni post-quiz"
         },
         "empty": {
-          "title": "Żaden kurs nie pasuje do wyszukiwania",
-          "subtitle": "Spróbuj innego tytułu, slug lub obszaru ESG."
+          "title": "Brak modułów curriculum pasujących do wyszukiwania",
+          "subtitle": "Spróbuj użyć innego tytułu, slugu lub obszaru ESG."
         },
         "row": {
           "attempts": "Próby",
           "completionRate": "Wskaźnik ukończenia",
           "preQuiz": "Pre-quiz",
           "postQuiz": "Post-quiz",
-          "inProgress": "W trakcie"
+          "inProgress": "W toku"
         }
       },
       "scenarioAttempts": {
         "title": "Próby scenariuszy użytkowników",
-        "subtitle": "Najnowsza aktywność użytkowników w scenario simulator, wraz ze statusem, wynikiem i czasem.",
+        "subtitle": "Najnowsza aktywność uczestników w symulatorze scenariuszy, wraz ze statusem, wynikiem i czasem.",
         "records": "{count} rekordów"
       },
       "curriculumAttempts": {
         "title": "Próby curriculum użytkowników",
-        "subtitle": "Najnowsza aktywność użytkowników w modułach curriculum, wraz z postępem, oceną i czasem.",
+        "subtitle": "Najnowsza aktywność uczestników w modułach curriculum, wraz z postępem, oceną i czasem.",
         "records": "{count} rekordów"
       },
       "eportfolioProgress": {
-        "title": "Postęp użytkowników w ePortfolio",
-        "subtitle": "Najnowszy postęp użytkowników w studiach przypadków, wraz z ukończeniem i czasem.",
+        "title": "Postęp ePortfolio użytkowników",
+        "subtitle": "Najnowszy postęp uczestników w case studies, wraz z ukończeniem i czasem.",
         "records": "{count} rekordów"
       },
       "tableScenario": {
         "emptyTitle": "Brak aktywności scenariuszy",
-        "emptyDescription": "Próby scenariuszy pojawią się tutaj, gdy użytkownicy zaczną korzystać z symulatora.",
+        "emptyDescription": "Próby scenariuszy pojawią się tutaj, gdy uczestnicy zaczną korzystać z symulatora.",
         "headers": {
-          "learner": "Użytkownik",
+          "learner": "Uczestnik",
           "scenario": "Scenariusz",
           "area": "Obszar",
           "language": "Język",
@@ -209,11 +216,11 @@
           "status": "Status",
           "score": "Wynik",
           "started": "Rozpoczęto",
-          "lastOpened": "Ostatnio otwarto",
+          "lastOpened": "Ostatnio otwarte",
           "completed": "Ukończono"
         },
         "status": {
-          "completed": "Ukończono",
+          "completed": "Ukończone",
           "passed": "Zaliczone",
           "failed": "Niezaliczone",
           "browsed": "Przeglądane",
@@ -222,69 +229,69 @@
       },
       "tableCurriculum": {
         "emptyTitle": "Brak aktywności curriculum",
-        "emptyDescription": "Próby curriculum pojawią się tutaj, gdy użytkownicy zaczną przechodzić przez moduły.",
+        "emptyDescription": "Próby curriculum pojawią się tutaj, gdy uczestnicy zaczną przechodzić moduły.",
         "headers": {
-          "learner": "Użytkownik",
-          "course": "Kurs",
+          "learner": "Uczestnik",
+          "course": "Moduł",
           "area": "Obszar",
           "status": "Status",
           "progress": "Postęp",
           "preQuiz": "Pre-quiz",
           "postQuiz": "Post-quiz",
           "started": "Rozpoczęto",
-          "lastOpened": "Ostatnio otwarto",
+          "lastOpened": "Ostatnio otwarte",
           "completed": "Ukończono"
         },
         "status": {
-          "completed": "Ukończono",
+          "completed": "Ukończone",
           "failed": "Niezaliczone",
-          "inProgress": "W trakcie"
+          "inProgress": "W toku"
         }
       },
       "tableEportfolio": {
         "emptyTitle": "Brak aktywności ePortfolio",
-        "emptyDescription": "Postęp studiów przypadków pojawi się tutaj, gdy użytkownicy zaczną pracę z treściami ePortfolio.",
+        "emptyDescription": "Postęp case studies pojawi się tutaj, gdy uczestnicy zaczną pracować z treściami ePortfolio.",
         "headers": {
-          "learner": "Użytkownik",
-          "caseStudy": "Studium przypadku",
+          "learner": "Uczestnik",
+          "caseStudy": "Case study",
           "language": "Język",
           "status": "Status",
           "started": "Rozpoczęto",
-          "lastOpened": "Ostatnio otwarto",
+          "lastOpened": "Ostatnio otwarte",
           "completed": "Ukończono"
         },
         "status": {
-          "completed": "Ukończono",
-          "inProgress": "W trakcie"
+          "completed": "Ukończone",
+          "inProgress": "W toku"
         }
       }
     },
     "CurriculumPilotAdminDashboard": {
-      "title": "Postęp pilotażu programu nauczania",
-      "description": "Statystyki oceny przed/po oraz analiza postępów dla poszczególnych pytań.",
+      "title": "Postęp pilotażu curriculum",
+      "description": "Statystyki pre/post assessment oraz analiza postępów dla poszczególnych pytań.",
       "actions": {
-        "exportCsv": "Eksportuj CSV",
-        "exportExcel": "Eksportuj Excel"
+        "exportCsv": "Eksport CSV",
+        "exportExcel": "Eksport Excel"
       },
       "summary": {
         "startedPilotPath": "Rozpoczęto ścieżkę pilotażową",
-        "preCompleted": "Ocena wstępna ukończona",
-        "postCompleted": "Ocena końcowa ukończona",
-        "preSkipped": "Ocena wstępna pominięta",
-        "averagePreScore": "Średni wynik oceny wstępnej",
-        "averagePostScore": "Średni wynik oceny końcowej",
-        "averageDelta": "Średnia różnica",
-        "averageModulesBeforePost": "Śr. liczba modułów przed oceną końcową"
+        "preCompleted": "Ukończono pre",
+        "postCompleted": "Ukończono post",
+        "preSkipped": "Pominięto pre",
+        "averagePreScore": "Średni wynik pre",
+        "averagePostScore": "Średni wynik post",
+        "averageDelta": "Średnia zmiana",
+        "averageModulesBeforePost": "Śr. modułów przed post"
       },
       "questionAnalysis": {
-        "title": "Analiza według pytań",
+        "title": "Analiza pytań",
         "columns": {
           "question": "Pytanie",
-          "preAverage": "Śr. przed",
-          "postAverage": "Śr. po",
-          "delta": "Różnica",
-          "preAnswers": "Odpowiedzi przed",
-          "postAnswers": "Odpowiedzi po"
+          "preAverage": "Śr. pre",
+          "postAverage": "Śr. post",
+          "delta": "Zmiana",
+          "preAnswers": "Odpowiedzi pre",
+          "postAnswers": "Odpowiedzi post"
         }
       },
       "users": {
@@ -292,30 +299,44 @@
         "columns": {
           "user": "Użytkownik",
           "status": "Status",
-          "preCompleted": "Ocena wstępna ukończona",
-          "postCompleted": "Ocena końcowa ukończona",
-          "preAverage": "Śr. przed",
-          "postAverage": "Śr. po",
-          "delta": "Różnica",
-          "modulesBeforePost": "Moduły przed oceną końcową"
+          "preCompleted": "Pre ukończone",
+          "postCompleted": "Post ukończone",
+          "preAverage": "Śr. pre",
+          "postAverage": "Śr. post",
+          "delta": "Zmiana",
+          "modulesBeforePost": "Moduły przed post"
         }
       }
     },
-    "AdminSectionShortcuts": {
-      "ariaLabel": "Sekcje administracyjne",
-      "open": "Otwórz",
-      "cards": {
-        "stats": {
-          "title": "Statystyki ogólne",
-          "description": "Ogólne użycie platformy, aktywność edukacyjna, scenariusze, curriculum i dane ePortfolio."
-        },
-        "pilot": {
-          "title": "Wyniki pilotażu",
-          "description": "Pre-assessment, post-assessment oraz dane curriculum dla ścieżki pilotażowej do raportowania ewaluacji."
-        },
-        "feedback": {
-          "title": "Feedback platformy",
-          "description": "Odpowiedzi ankietowe i komentarze użytkowników z formularza oceny platformy."
+    "PlatformFeedbackAdminDashboard": {
+      "title": "Feedback platformy",
+      "description": "Odpowiedzi ankietowe i komentarze użytkowników z formularza oceny platformy.",
+      "actions": {
+        "exportCsv": "Eksport CSV",
+        "exportExcel": "Eksport Excel"
+      },
+      "summary": {
+        "totalSubmissions": "Liczba odpowiedzi",
+        "easeOfUse": "Łatwość użycia",
+        "moduleClarity": "Jasność modułów",
+        "navigation": "Nawigacja",
+        "testsExperience": "Doświadczenie testów",
+        "technicalProblems": "Problemy techniczne",
+        "overallSatisfaction": "Ogólna satysfakcja"
+      },
+      "table": {
+        "title": "Odpowiedzi feedbackowe",
+        "columns": {
+          "user": "Użytkownik",
+          "createdAt": "Przesłano",
+          "easeOfUse": "Łatwość użycia",
+          "moduleClarity": "Jasność modułów",
+          "navigation": "Nawigacja",
+          "testsExperience": "Doświadczenie testów",
+          "technicalProblems": "Problemy techniczne",
+          "overallSatisfaction": "Ogólna satysfakcja",
+          "suggestions": "Sugestie",
+          "technicalNotes": "Uwagi techniczne"
         }
       }
     }

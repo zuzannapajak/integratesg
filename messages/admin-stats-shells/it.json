@@ -20,15 +20,22 @@
         "summary": "Riepilogo",
         "languages": "Lingue",
         "scenarios": "Scenari",
-        "courses": "Corsi",
-        "eportfolio": "ePortfolio"
+        "courses": "Curriculum",
+        "eportfolio": "ePortfolio",
+        "platformFeedback": "Feedback piattaforma"
+      },
+      "curriculumViews": {
+        "all": "Tutto",
+        "mainPath": "Percorso principale",
+        "pilotPath": "Percorso pilota",
+        "prePost": "Pre/Post assessment"
       },
       "glance": {
         "title": "In sintesi",
-        "subtitle": "I principali indicatori della piattaforma a colpo d’occhio, pensati per una rapida revisione esecutiva.",
+        "subtitle": "Gli indicatori principali della piattaforma in un’unica vista, pensati per una revisione rapida.",
         "allUsers": {
           "label": "Tutti gli utenti",
-          "hint": "Account registrati tra discenti ed educatori."
+          "hint": "Account registrati di studenti ed educatori."
         },
         "activeUsers": {
           "label": "Utenti attivi",
@@ -40,45 +47,45 @@
         },
         "curriculumCompletion": {
           "label": "Completamento curriculum",
-          "hint": "Quota di tentativi di curriculum completati dai discenti."
+          "hint": "Percentuale di tentativi curriculum completati dagli studenti."
         }
       },
       "platformStructure": {
         "title": "Struttura della piattaforma",
-        "subtitle": "Una vista compatta della distribuzione dei ruoli e delle risorse di apprendimento pubblicate.",
+        "subtitle": "Una vista compatta della distribuzione dei ruoli e delle risorse didattiche pubblicate.",
         "roleDistribution": "Distribuzione dei ruoli",
         "publishedResources": "Risorse pubblicate",
-        "educators": "Docenti",
-        "learners": "Discenti",
+        "educators": "Educatori",
+        "learners": "Studenti",
         "admins": "Amministratori",
-        "courses": "Corsi",
-        "caseStudies": "Casi di studio",
+        "courses": "Moduli curriculum",
+        "caseStudies": "Casi studio",
         "scenarios": "Scenari"
       },
       "highlights": {
-        "title": "In evidenza",
-        "subtitle": "Segnali chiave che aiutano a identificare le aree più forti di attività e adozione da parte degli discenti.",
+        "title": "Punti chiave",
+        "subtitle": "Segnali chiave che aiutano a individuare le aree più forti di attività e adozione.",
         "mostActiveScenario": "Scenario più attivo",
         "bestCompletionResult": "Miglior risultato di completamento",
         "largestLanguageCohort": "Gruppo linguistico più numeroso",
         "attemptsCompletion": "{attempts} tentativi · {completion} completamento",
         "completionPostQuiz": "{completion} completamento · {score} punteggio medio post-quiz",
-        "usersVariants": "{users} utenti · {variants} varianti di scenario"
+        "usersVariants": "{users} utenti · {variants} varianti scenario"
       },
       "learningQuality": {
         "title": "Qualità dell’apprendimento",
-        "subtitle": "Completamento e qualità della valutazione raggruppati per tipologia di esperienza.",
+        "subtitle": "Completamento e qualità della valutazione raggruppati per tipo di esperienza.",
         "scenarioSimulator": {
           "title": "Simulatore di scenari",
-          "subtitle": "Risultati di alto livello e qualità del completamento in tutti i tentativi."
+          "subtitle": "Risultati generali e qualità del completamento su tutti i tentativi."
         },
         "curriculum": {
           "title": "Curriculum",
-          "subtitle": "Progressione e qualità della valutazione in tutti i moduli del curriculum."
+          "subtitle": "Progressione e qualità della valutazione in tutti i moduli curriculum."
         },
         "eportfolio": {
           "title": "ePortfolio",
-          "subtitle": "Segnali di completamento dei casi di studio e di partecipazione."
+          "subtitle": "Segnali di completamento dei casi studio e partecipazione."
         },
         "completionRate": "Tasso di completamento",
         "averageScore": "Punteggio medio",
@@ -92,15 +99,15 @@
       },
       "languages": {
         "title": "Copertura linguistica",
-        "subtitle": "Esamina l’adozione e la disponibilità dei contenuti nei gruppi linguistici supportati.",
+        "subtitle": "Analizza adozione e disponibilità dei contenuti nei gruppi linguistici supportati.",
         "users": "Utenti",
-        "publishedCourses": "Corsi pubblicati",
-        "caseStudies": "Casi di studio",
-        "scenarioVariants": "Varianti di scenario"
+        "publishedCourses": "Moduli curriculum pubblicati",
+        "caseStudies": "Casi studio",
+        "scenarioVariants": "Varianti scenario"
       },
       "scenarioActivity": {
         "title": "Attività del simulatore di scenari",
-        "subtitle": "Monitora in un’unica vista l’uso delle simulazioni, la qualità del completamento e i modelli di risultato.",
+        "subtitle": "Monitora l’uso delle simulazioni, la qualità del completamento e i pattern dei risultati in un’unica vista.",
         "valueLabel": "Eventi scenario",
         "events": "Eventi",
         "completionRate": "Tasso di completamento",
@@ -109,8 +116,8 @@
         "failed": "Non superati"
       },
       "curriculumActivity": {
-        "title": "Attività del curriculum",
-        "subtitle": "Monitora il coinvolgimento nei moduli, la progressione del completamento e le tendenze delle valutazioni di apprendimento.",
+        "title": "Attività curriculum",
+        "subtitle": "Monitora il coinvolgimento nei moduli, la progressione del completamento e le tendenze di valutazione.",
         "valueLabel": "Eventi curriculum",
         "events": "Eventi",
         "completionRate": "Tasso di completamento",
@@ -119,8 +126,8 @@
         "inProgress": "In corso"
       },
       "eportfolioActivity": {
-        "title": "Attività dell’ePortfolio",
-        "subtitle": "Visualizza il coinvolgimento nei casi di studio, i completamenti e la partecipazione nell’esperienza del portfolio.",
+        "title": "Attività ePortfolio",
+        "subtitle": "Visualizza il coinvolgimento nei casi studio, i completamenti e la partecipazione all’esperienza portfolio.",
         "valueLabel": "Eventi ePortfolio",
         "events": "Eventi",
         "completionRate": "Tasso di completamento",
@@ -128,10 +135,10 @@
         "activeUsers": "Utenti attivi"
       },
       "scenarioPerformance": {
-        "title": "Prestazioni degli scenari",
+        "title": "Prestazioni scenari",
         "subtitle": "Cerca, confronta e ordina gli scenari per adozione, completamento e punteggio.",
         "results": "{count} risultati",
-        "searchPlaceholder": "Cerca per titolo dello scenario, slug, lingua o area ESG...",
+        "searchPlaceholder": "Cerca per titolo scenario, slug, lingua o area ESG...",
         "sort": {
           "attempts": "Ordina per tentativi",
           "completion": "Ordina per tasso di completamento",
@@ -144,8 +151,8 @@
           "averageScore": "Punteggio medio"
         },
         "empty": {
-          "title": "Nessuno scenario corrisponde alla tua ricerca",
-          "subtitle": "Prova con un titolo, uno slug, una lingua o un’area ESG diversi."
+          "title": "Nessuno scenario corrisponde alla ricerca",
+          "subtitle": "Prova con un titolo, slug, lingua o area ESG diversa."
         },
         "row": {
           "attempts": "Tentativi",
@@ -155,10 +162,10 @@
         }
       },
       "coursePerformance": {
-        "title": "Prestazioni dei corsi",
-        "subtitle": "Cerca, confronta e ordina i moduli del curriculum in base al coinvolgimento e ai risultati di apprendimento.",
+        "title": "Prestazioni curriculum",
+        "subtitle": "Cerca, confronta e ordina i moduli curriculum per coinvolgimento e risultati di apprendimento.",
         "results": "{count} risultati",
-        "searchPlaceholder": "Cerca per titolo del corso, slug o area ESG...",
+        "searchPlaceholder": "Cerca per titolo modulo, slug o area ESG...",
         "sort": {
           "attempts": "Ordina per tentativi",
           "completion": "Ordina per tasso di completamento",
@@ -171,8 +178,8 @@
           "averagePostQuiz": "Media post-quiz"
         },
         "empty": {
-          "title": "Nessun corso corrisponde alla tua ricerca",
-          "subtitle": "Prova con un titolo, uno slug o un’area ESG diversi."
+          "title": "Nessun modulo curriculum corrisponde alla ricerca",
+          "subtitle": "Prova con un titolo, slug o area ESG diversa."
         },
         "row": {
           "attempts": "Tentativi",
@@ -183,25 +190,25 @@
         }
       },
       "scenarioAttempts": {
-        "title": "Tentativi utente negli scenari",
-        "subtitle": "Ultima attività degli learneri nel simulatore di scenari, inclusi stato, punteggio e tempi.",
+        "title": "Tentativi scenario degli utenti",
+        "subtitle": "Attività recente degli studenti nel simulatore di scenari, inclusi stato, punteggio e tempi.",
         "records": "{count} record"
       },
       "curriculumAttempts": {
-        "title": "Tentativi utente nel curriculum",
-        "subtitle": "Ultima attività degli learneri nei moduli del curriculum, inclusi progresso, valutazione e tempi.",
+        "title": "Tentativi curriculum degli utenti",
+        "subtitle": "Attività recente degli studenti nei moduli curriculum, inclusi progresso, valutazione e tempi.",
         "records": "{count} record"
       },
       "eportfolioProgress": {
-        "title": "Progressi utente nell’ePortfolio",
-        "subtitle": "Ultimi progressi degli learneri nei casi di studio, inclusi completamento e tempi.",
+        "title": "Progresso ePortfolio degli utenti",
+        "subtitle": "Progresso recente degli studenti nei casi studio, inclusi completamento e tempi.",
         "records": "{count} record"
       },
       "tableScenario": {
-        "emptyTitle": "Nessuna attività negli scenari",
-        "emptyDescription": "I tentativi di scenario appariranno qui quando gli learneri inizieranno a interagire con il simulatore.",
+        "emptyTitle": "Ancora nessuna attività scenario",
+        "emptyDescription": "I tentativi scenario appariranno qui quando gli studenti inizieranno a usare il simulatore.",
         "headers": {
-          "learner": "Learnere",
+          "learner": "Studente",
           "scenario": "Scenario",
           "area": "Area",
           "language": "Lingua",
@@ -221,11 +228,11 @@
         }
       },
       "tableCurriculum": {
-        "emptyTitle": "Nessuna attività nel curriculum",
-        "emptyDescription": "I tentativi del curriculum appariranno qui quando gli learneri inizieranno a progredire nei moduli.",
+        "emptyTitle": "Ancora nessuna attività curriculum",
+        "emptyDescription": "I tentativi curriculum appariranno qui quando gli studenti inizieranno a completare i moduli.",
         "headers": {
-          "learner": "Learnere",
-          "course": "Corso",
+          "learner": "Studente",
+          "course": "Modulo",
           "area": "Area",
           "status": "Stato",
           "progress": "Progresso",
@@ -242,11 +249,11 @@
         }
       },
       "tableEportfolio": {
-        "emptyTitle": "Nessuna attività nell’ePortfolio",
-        "emptyDescription": "I progressi nei casi di studio appariranno qui quando gli learneri inizieranno a lavorare sui contenuti dell’ePortfolio.",
+        "emptyTitle": "Ancora nessuna attività ePortfolio",
+        "emptyDescription": "Il progresso nei casi studio apparirà qui quando gli studenti inizieranno a usare i contenuti ePortfolio.",
         "headers": {
-          "learner": "Learnere",
-          "caseStudy": "Caso di studio",
+          "learner": "Studente",
+          "caseStudy": "Caso studio",
           "language": "Lingua",
           "status": "Stato",
           "started": "Iniziato",
@@ -260,17 +267,17 @@
       }
     },
     "CurriculumPilotAdminDashboard": {
-      "title": "Avanzamento del programma pilota",
-      "description": "Statistiche della valutazione pre/post e analisi dei progressi per domanda.",
+      "title": "Progresso del curriculum pilota",
+      "description": "Statistiche pre/post assessment e analisi dei progressi per domanda.",
       "actions": {
         "exportCsv": "Esporta CSV",
         "exportExcel": "Esporta Excel"
       },
       "summary": {
-        "startedPilotPath": "Percorso pilota avviato",
-        "preCompleted": "Valutazione pre completata",
-        "postCompleted": "Valutazione post completata",
-        "preSkipped": "Valutazione pre saltata",
+        "startedPilotPath": "Percorso pilota iniziato",
+        "preCompleted": "Pre completato",
+        "postCompleted": "Post completato",
+        "preSkipped": "Pre saltato",
         "averagePreScore": "Punteggio medio pre",
         "averagePostScore": "Punteggio medio post",
         "averageDelta": "Delta medio",
@@ -292,8 +299,8 @@
         "columns": {
           "user": "Utente",
           "status": "Stato",
-          "preCompleted": "Pre completata",
-          "postCompleted": "Post completata",
+          "preCompleted": "Pre completato",
+          "postCompleted": "Post completato",
           "preAverage": "Media pre",
           "postAverage": "Media post",
           "delta": "Delta",
@@ -301,21 +308,35 @@
         }
       }
     },
-    "AdminSectionShortcuts": {
-      "ariaLabel": "Sezioni admin",
-      "open": "Apri",
-      "cards": {
-        "stats": {
-          "title": "Statistiche generali",
-          "description": "Uso generale della piattaforma, attività di apprendimento, scenari, curriculum e dati ePortfolio."
-        },
-        "pilot": {
-          "title": "Risultati del pilota",
-          "description": "Pre-assessment, post-assessment e dati curriculum del percorso pilota per la reportistica di valutazione."
-        },
-        "feedback": {
-          "title": "Feedback piattaforma",
-          "description": "Risposte al sondaggio e commenti degli utenti raccolti dal modulo di feedback della piattaforma."
+    "PlatformFeedbackAdminDashboard": {
+      "title": "Feedback piattaforma",
+      "description": "Risposte al sondaggio e commenti degli utenti raccolti dal modulo di feedback della piattaforma.",
+      "actions": {
+        "exportCsv": "Esporta CSV",
+        "exportExcel": "Esporta Excel"
+      },
+      "summary": {
+        "totalSubmissions": "Risposte totali",
+        "easeOfUse": "Facilità d’uso",
+        "moduleClarity": "Chiarezza dei moduli",
+        "navigation": "Navigazione",
+        "testsExperience": "Esperienza dei test",
+        "technicalProblems": "Problemi tecnici",
+        "overallSatisfaction": "Soddisfazione generale"
+      },
+      "table": {
+        "title": "Risposte feedback",
+        "columns": {
+          "user": "Utente",
+          "createdAt": "Inviato",
+          "easeOfUse": "Facilità d’uso",
+          "moduleClarity": "Chiarezza dei moduli",
+          "navigation": "Navigazione",
+          "testsExperience": "Esperienza dei test",
+          "technicalProblems": "Problemi tecnici",
+          "overallSatisfaction": "Soddisfazione generale",
+          "suggestions": "Suggerimenti",
+          "technicalNotes": "Note tecniche"
         }
       }
     }

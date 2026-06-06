@@ -20,8 +20,15 @@
         "summary": "Summary",
         "languages": "Languages",
         "scenarios": "Scenarios",
-        "courses": "Courses",
-        "eportfolio": "ePortfolio"
+        "courses": "Curriculum",
+        "eportfolio": "ePortfolio",
+        "platformFeedback": "Platform feedback"
+      },
+      "curriculumViews": {
+        "all": "All",
+        "mainPath": "Main path",
+        "pilotPath": "Pilot path",
+        "prePost": "Pre/Post assessment"
       },
       "glance": {
         "title": "At a glance",
@@ -51,7 +58,7 @@
         "educators": "Educators",
         "learners": "Learners",
         "admins": "Admins",
-        "courses": "Courses",
+        "courses": "Curriculum modules",
         "caseStudies": "Case studies",
         "scenarios": "Scenarios"
       },
@@ -94,7 +101,7 @@
         "title": "Language coverage",
         "subtitle": "Review adoption and content availability across supported language groups.",
         "users": "Users",
-        "publishedCourses": "Published courses",
+        "publishedCourses": "Published curriculum modules",
         "caseStudies": "Case studies",
         "scenarioVariants": "Scenario variants"
       },
@@ -155,10 +162,10 @@
         }
       },
       "coursePerformance": {
-        "title": "Course performance",
+        "title": "Curriculum performance",
         "subtitle": "Search, compare, and sort curriculum modules by engagement and learning outcomes.",
         "results": "{count} results",
-        "searchPlaceholder": "Search by course title, slug, or ESG area...",
+        "searchPlaceholder": "Search by module title, slug, or ESG area...",
         "sort": {
           "attempts": "Sort by attempts",
           "completion": "Sort by completion rate",
@@ -171,7 +178,7 @@
           "averagePostQuiz": "Average post-quiz"
         },
         "empty": {
-          "title": "No courses matched your search",
+          "title": "No curriculum modules matched your search",
           "subtitle": "Try a different title, slug, or ESG area."
         },
         "row": {
@@ -225,7 +232,7 @@
         "emptyDescription": "Curriculum attempts will appear here once learners start progressing through modules.",
         "headers": {
           "learner": "Learner",
-          "course": "Course",
+          "course": "Module",
           "area": "Area",
           "status": "Status",
           "progress": "Progress",
@@ -301,21 +308,35 @@
         }
       }
     },
-    "AdminSectionShortcuts": {
-      "ariaLabel": "Admin sections",
-      "open": "Open",
-      "cards": {
-        "stats": {
-          "title": "Overview statistics",
-          "description": "General platform usage, learning activity, scenarios, curriculum, and ePortfolio data."
-        },
-        "pilot": {
-          "title": "Pilot assessment results",
-          "description": "Pre-assessment, post-assessment, and pilot-path curriculum data for evaluation reporting."
-        },
-        "feedback": {
-          "title": "Platform feedback",
-          "description": "User survey answers and comments collected from the platform feedback form."
+    "PlatformFeedbackAdminDashboard": {
+      "title": "Platform feedback",
+      "description": "User survey answers and comments collected from the platform feedback form.",
+      "actions": {
+        "exportCsv": "Export CSV",
+        "exportExcel": "Export Excel"
+      },
+      "summary": {
+        "totalSubmissions": "Total submissions",
+        "easeOfUse": "Ease of use",
+        "moduleClarity": "Module clarity",
+        "navigation": "Navigation",
+        "testsExperience": "Tests experience",
+        "technicalProblems": "Technical problems",
+        "overallSatisfaction": "Overall satisfaction"
+      },
+      "table": {
+        "title": "Feedback submissions",
+        "columns": {
+          "user": "User",
+          "createdAt": "Submitted",
+          "easeOfUse": "Ease of use",
+          "moduleClarity": "Module clarity",
+          "navigation": "Navigation",
+          "testsExperience": "Tests experience",
+          "technicalProblems": "Technical problems",
+          "overallSatisfaction": "Overall satisfaction",
+          "suggestions": "Suggestions",
+          "technicalNotes": "Technical notes"
         }
       }
     }

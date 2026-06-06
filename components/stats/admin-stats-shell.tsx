@@ -4,6 +4,8 @@ import StatsChart from "@/components/dashboard/stats-chart";
 import UserCurriculumAttemptsTable from "@/components/stats/user-curriculum-attempts-table";
 import UserEportfolioProgressTable from "@/components/stats/user-eportfolio-progress-table";
 import UserScenarioAttemptsTable from "@/components/stats/user-scenario-attempts-table";
+import type { CurriculumPilotAdminStats } from "@/lib/admin/curriculum-pilot";
+import type { PlatformFeedbackAdminStats } from "@/lib/admin/platform-feedback";
 import type {
   AdminCourseStat,
   AdminLanguageStat,
@@ -15,13 +17,16 @@ import { motion, type Variants } from "framer-motion";
 import {
   Activity,
   BookOpen,
+  CheckCircle2,
   ChevronDown,
+  ClipboardCheck,
   Filter,
   FolderOpen,
   Globe2,
   GraduationCap,
   Languages,
   LayoutDashboard,
+  MessageSquareHeart,
   PlayCircle,
   Search,
   TrendingUp,
@@ -33,9 +38,19 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 type Props = {
   locale: string;
   stats: BasicAdminStats;
+  pilotStats: CurriculumPilotAdminStats;
+  feedbackStats: PlatformFeedbackAdminStats;
 };
 
-type Segment = "summary" | "languages" | "scenarios" | "courses" | "eportfolio";
+type Segment =
+  | "summary"
+  | "languages"
+  | "scenarios"
+  | "courses"
+  | "eportfolio"
+  | "platformFeedback";
+
+type CurriculumView = "all" | "mainPath" | "pilotPath" | "prePost";
 type ActivityWindow = "24h" | "7d" | "30d";
 
 const FADE_UP: Variants = {
@@ -68,6 +83,28 @@ function formatScore(value: number | null) {
   if (value === null) return "—";
   const rounded = Number.isInteger(value) ? value : Math.round(value * 10) / 10;
   return `${rounded}%`;
+}
+
+function formatDecimal(value: number | null) {
+  if (value === null) return "—";
+  return Number.isInteger(value) ? String(value) : value.toFixed(2);
+}
+
+function formatDateTime(value: string | null, locale: string) {
+  if (!value) return "—";
+
+  return new Intl.DateTimeFormat(locale, {
+    dateStyle: "medium",
+    timeStyle: "short",
+  }).format(new Date(value));
+}
+
+function formatOptionalText(value: string | null) {
+  if (typeof value === "string" && value.trim().length > 0) {
+    return value;
+  }
+
+  return "—";
 }
 
 function formatArea(area: string, t: ReturnType<typeof useTranslations>) {
@@ -863,9 +900,12 @@ function ActivityChartSection({
   );
 }
 
-export default function AdminStatsShell({ stats }: Props) {
+export default function AdminStatsShell({ locale, stats, pilotStats, feedbackStats }: Props) {
   const t = useTranslations("Protected.AdminStatsShell");
+  const pilotT = useTranslations("Protected.CurriculumPilotAdminDashboard");
+  const feedbackT = useTranslations("Protected.PlatformFeedbackAdminDashboard");
   const [segment, setSegment] = useState<Segment>("summary");
+  const [curriculumView, setCurriculumView] = useState<CurriculumView>("all");
   const [activityWindow, setActivityWindow] = useState<ActivityWindow>("7d");
   const [query, setQuery] = useState("");
   const [scenarioSort, setScenarioSort] = useState<"attempts" | "completion" | "score">("attempts");
@@ -1129,6 +1169,14 @@ export default function AdminStatsShell({ stats }: Props) {
             label={t("segments.eportfolio")}
             onClick={() => {
               setSegment("eportfolio");
+            }}
+          />
+          <SegmentButton
+            active={segment === "platformFeedback"}
+            icon={<MessageSquareHeart className="h-4 w-4" />}
+            label={t("segments.platformFeedback")}
+            onClick={() => {
+              setSegment("platformFeedback");
             }}
           />
         </div>
@@ -1439,106 +1487,302 @@ export default function AdminStatsShell({ stats }: Props) {
 
         {segment === "courses" && (
           <>
-            <section className="mt-8">
-              <ActivityChartSection
-                title={courseChart.title}
-                subtitle={courseChart.subtitle}
-                accent={courseChart.accent}
-                valueLabel={courseChart.valueLabel}
-                data={courseChart.data}
-                chips={courseChart.chips}
-                window={activityWindow}
-                onWindowChange={setActivityWindow}
+            <div className="mt-8 flex gap-2 overflow-x-auto rounded-3xl border border-white/70 bg-[#f8fafc]/80 p-2 shadow-sm [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+              <SegmentButton
+                active={curriculumView === "all"}
+                icon={<BookOpen className="h-4 w-4" />}
+                label={t("curriculumViews.all")}
+                onClick={() => {
+                  setCurriculumView("all");
+                }}
               />
-            </section>
+              <SegmentButton
+                active={curriculumView === "mainPath"}
+                icon={<GraduationCap className="h-4 w-4" />}
+                label={t("curriculumViews.mainPath")}
+                onClick={() => {
+                  setCurriculumView("mainPath");
+                }}
+              />
+              <SegmentButton
+                active={curriculumView === "pilotPath"}
+                icon={<ClipboardCheck className="h-4 w-4" />}
+                label={t("curriculumViews.pilotPath")}
+                onClick={() => {
+                  setCurriculumView("pilotPath");
+                }}
+              />
+              <SegmentButton
+                active={curriculumView === "prePost"}
+                icon={<CheckCircle2 className="h-4 w-4" />}
+                label={t("curriculumViews.prePost")}
+                onClick={() => {
+                  setCurriculumView("prePost");
+                }}
+              />
+            </div>
 
-            <Surface className="mt-8 p-4 sm:p-6">
-              <SectionHeader
-                title={t("coursePerformance.title")}
-                subtitle={t("coursePerformance.subtitle")}
-                right={
-                  <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm">
-                    {t("coursePerformance.results", { count: filteredCourses.length })}
+            {(curriculumView === "all" || curriculumView === "mainPath") && (
+              <>
+                <section className="mt-8">
+                  <ActivityChartSection
+                    title={courseChart.title}
+                    subtitle={courseChart.subtitle}
+                    accent={courseChart.accent}
+                    valueLabel={courseChart.valueLabel}
+                    data={courseChart.data}
+                    chips={courseChart.chips}
+                    window={activityWindow}
+                    onWindowChange={setActivityWindow}
+                  />
+                </section>
+
+                <Surface className="mt-8 p-4 sm:p-6">
+                  <SectionHeader
+                    title={t("coursePerformance.title")}
+                    subtitle={t("coursePerformance.subtitle")}
+                    right={
+                      <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm">
+                        {t("coursePerformance.results", { count: filteredCourses.length })}
+                      </div>
+                    }
+                  />
+
+                  <div className="mb-6 grid gap-4 md:grid-cols-[minmax(0,1fr)_240px]">
+                    <div className="relative">
+                      <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                      <input
+                        value={query}
+                        onChange={(event) => {
+                          setQuery(event.target.value);
+                        }}
+                        placeholder={t("coursePerformance.searchPlaceholder")}
+                        className="h-12 w-full rounded-2xl border border-slate-200 bg-white pl-11 pr-4 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-slate-300 focus:ring-2 focus:ring-slate-200"
+                      />
+                    </div>
+
+                    <SortControl
+                      value={courseSort}
+                      onChange={(value) => {
+                        setCourseSort(value as "attempts" | "completion" | "postQuiz");
+                      }}
+                      options={[
+                        { value: "attempts", label: t("coursePerformance.sort.attempts") },
+                        { value: "completion", label: t("coursePerformance.sort.completion") },
+                        { value: "postQuiz", label: t("coursePerformance.sort.postQuiz") },
+                      ]}
+                    />
                   </div>
-                }
-              />
 
-              <div className="mb-6 grid gap-4 md:grid-cols-[minmax(0,1fr)_240px]">
-                <div className="relative">
-                  <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                  <input
-                    value={query}
-                    onChange={(event) => {
-                      setQuery(event.target.value);
-                    }}
-                    placeholder={t("coursePerformance.searchPlaceholder")}
-                    className="h-12 w-full rounded-2xl border border-slate-200 bg-white pl-11 pr-4 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-slate-300 focus:ring-2 focus:ring-slate-200"
+                  <div className="mb-6 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                    <MiniKpi
+                      label={t("coursePerformance.summary.results")}
+                      value={String(filteredCourses.length)}
+                    />
+                    <MiniKpi
+                      label={t("coursePerformance.summary.attempts")}
+                      value={String(courseSummary.attempts)}
+                    />
+                    <MiniKpi
+                      label={t("coursePerformance.summary.averageCompletion")}
+                      value={
+                        courseSummary.avgCompletion === null
+                          ? "—"
+                          : formatPercent(courseSummary.avgCompletion)
+                      }
+                    />
+                    <MiniKpi
+                      label={t("coursePerformance.summary.averagePostQuiz")}
+                      value={formatScore(courseSummary.avgPostQuiz)}
+                    />
+                  </div>
+
+                  {filteredCourses.length === 0 ? (
+                    <EmptyState
+                      title={t("coursePerformance.empty.title")}
+                      subtitle={t("coursePerformance.empty.subtitle")}
+                    />
+                  ) : (
+                    <div className="space-y-3">
+                      {filteredCourses.map((item) => (
+                        <CourseRow key={item.id} item={item} />
+                      ))}
+                    </div>
+                  )}
+                </Surface>
+
+                <Surface className="mt-8 p-4 sm:p-6">
+                  <SectionHeader
+                    title={t("curriculumAttempts.title")}
+                    subtitle={t("curriculumAttempts.subtitle")}
+                    right={
+                      <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm">
+                        {t("curriculumAttempts.records", {
+                          count: stats.curriculumAttemptRows.length,
+                        })}
+                      </div>
+                    }
+                  />
+
+                  <UserCurriculumAttemptsTable rows={stats.curriculumAttemptRows} />
+                </Surface>
+              </>
+            )}
+
+            {(curriculumView === "all" || curriculumView === "pilotPath") && (
+              <Surface className="mt-8 p-4 sm:p-6">
+                <SectionHeader
+                  title={pilotT("users.title")}
+                  subtitle={pilotT("description")}
+                  right={
+                    <div className="flex flex-wrap gap-2">
+                      <a
+                        href={`/${locale}/admin/curriculum-pilot/export?format=csv`}
+                        className="rounded-2xl bg-[#31425a] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#253347]"
+                      >
+                        {pilotT("actions.exportCsv")}
+                      </a>
+                      <a
+                        href={`/${locale}/admin/curriculum-pilot/export?format=xls`}
+                        className="rounded-2xl border border-[#d9e2ec] bg-white px-4 py-2.5 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc]"
+                      >
+                        {pilotT("actions.exportExcel")}
+                      </a>
+                    </div>
+                  }
+                />
+
+                <div className="mb-6 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                  <MiniKpi
+                    label={pilotT("summary.startedPilotPath")}
+                    value={String(pilotStats.summary.startedPilotPath)}
+                    tone="orange"
+                  />
+                  <MiniKpi
+                    label={pilotT("summary.preCompleted")}
+                    value={String(pilotStats.summary.preCompleted)}
+                    tone="orange"
+                  />
+                  <MiniKpi
+                    label={pilotT("summary.postCompleted")}
+                    value={String(pilotStats.summary.postCompleted)}
+                    tone="orange"
+                  />
+                  <MiniKpi
+                    label={pilotT("summary.preSkipped")}
+                    value={String(pilotStats.summary.preSkipped)}
+                    tone="orange"
                   />
                 </div>
 
-                <SortControl
-                  value={courseSort}
-                  onChange={(value) => {
-                    setCourseSort(value as "attempts" | "completion" | "postQuiz");
-                  }}
-                  options={[
-                    { value: "attempts", label: t("coursePerformance.sort.attempts") },
-                    { value: "completion", label: t("coursePerformance.sort.completion") },
-                    { value: "postQuiz", label: t("coursePerformance.sort.postQuiz") },
-                  ]}
-                />
-              </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-275 border-separate border-spacing-y-2 text-left text-sm">
+                    <thead>
+                      <tr className="text-xs font-bold uppercase tracking-[0.12em] text-[#8a97a6]">
+                        <th className="px-4 py-2">{pilotT("users.columns.user")}</th>
+                        <th className="px-4 py-2">{pilotT("users.columns.status")}</th>
+                        <th className="px-4 py-2">{pilotT("users.columns.preCompleted")}</th>
+                        <th className="px-4 py-2">{pilotT("users.columns.postCompleted")}</th>
+                        <th className="px-4 py-2">{pilotT("users.columns.preAverage")}</th>
+                        <th className="px-4 py-2">{pilotT("users.columns.postAverage")}</th>
+                        <th className="px-4 py-2">{pilotT("users.columns.delta")}</th>
+                        <th className="px-4 py-2">{pilotT("users.columns.modulesBeforePost")}</th>
+                      </tr>
+                    </thead>
 
-              <div className="mb-6 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
-                <MiniKpi
-                  label={t("coursePerformance.summary.results")}
-                  value={String(filteredCourses.length)}
-                />
-                <MiniKpi
-                  label={t("coursePerformance.summary.attempts")}
-                  value={String(courseSummary.attempts)}
-                />
-                <MiniKpi
-                  label={t("coursePerformance.summary.averageCompletion")}
-                  value={
-                    courseSummary.avgCompletion === null
-                      ? "—"
-                      : formatPercent(courseSummary.avgCompletion)
-                  }
-                />
-                <MiniKpi
-                  label={t("coursePerformance.summary.averagePostQuiz")}
-                  value={formatScore(courseSummary.avgPostQuiz)}
-                />
-              </div>
-
-              {filteredCourses.length === 0 ? (
-                <EmptyState
-                  title={t("coursePerformance.empty.title")}
-                  subtitle={t("coursePerformance.empty.subtitle")}
-                />
-              ) : (
-                <div className="space-y-3">
-                  {filteredCourses.map((item) => (
-                    <CourseRow key={item.id} item={item} />
-                  ))}
+                    <tbody>
+                      {pilotStats.userRows.map((row) => (
+                        <tr key={row.userId} className="bg-[#f8fafc] text-[#31425a]">
+                          <td className="rounded-l-2xl px-4 py-3">
+                            <p className="font-semibold">{row.learnerName}</p>
+                            <p className="text-xs text-[#667180]">{row.learnerEmail}</p>
+                          </td>
+                          <td className="px-4 py-3">{row.status}</td>
+                          <td className="px-4 py-3">
+                            {formatDateTime(row.preCompletedAt, locale)}
+                          </td>
+                          <td className="px-4 py-3">
+                            {formatDateTime(row.postCompletedAt, locale)}
+                          </td>
+                          <td className="px-4 py-3">{formatDecimal(row.preAverage)}</td>
+                          <td className="px-4 py-3">{formatDecimal(row.postAverage)}</td>
+                          <td className="px-4 py-3">{formatDecimal(row.delta)}</td>
+                          <td className="rounded-r-2xl px-4 py-3">
+                            {row.modulesBeforePost ?? "—"}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
-              )}
-            </Surface>
+              </Surface>
+            )}
 
-            <Surface className="mt-8 p-4 sm:p-6">
-              <SectionHeader
-                title={t("curriculumAttempts.title")}
-                subtitle={t("curriculumAttempts.subtitle")}
-                right={
-                  <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm">
-                    {t("curriculumAttempts.records", { count: stats.curriculumAttemptRows.length })}
-                  </div>
-                }
-              />
+            {(curriculumView === "all" || curriculumView === "prePost") && (
+              <Surface className="mt-8 p-4 sm:p-6">
+                <SectionHeader
+                  title={pilotT("questionAnalysis.title")}
+                  subtitle={pilotT("description")}
+                />
 
-              <UserCurriculumAttemptsTable rows={stats.curriculumAttemptRows} />
-            </Surface>
+                <div className="mb-6 grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                  <MiniKpi
+                    label={pilotT("summary.averagePreScore")}
+                    value={formatDecimal(pilotStats.summary.averagePreScore)}
+                    tone="orange"
+                  />
+                  <MiniKpi
+                    label={pilotT("summary.averagePostScore")}
+                    value={formatDecimal(pilotStats.summary.averagePostScore)}
+                    tone="orange"
+                  />
+                  <MiniKpi
+                    label={pilotT("summary.averageDelta")}
+                    value={formatDecimal(pilotStats.summary.averageDelta)}
+                    tone="orange"
+                  />
+                  <MiniKpi
+                    label={pilotT("summary.averageModulesBeforePost")}
+                    value={formatDecimal(pilotStats.summary.averageModulesBeforePost)}
+                    tone="orange"
+                  />
+                </div>
+
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-225 border-separate border-spacing-y-2 text-left text-sm">
+                    <thead>
+                      <tr className="text-xs font-bold uppercase tracking-[0.12em] text-[#8a97a6]">
+                        <th className="px-4 py-2">{pilotT("questionAnalysis.columns.question")}</th>
+                        <th className="px-4 py-2">{pilotT("questionAnalysis.columns.preAverage")}</th>
+                        <th className="px-4 py-2">
+                          {pilotT("questionAnalysis.columns.postAverage")}
+                        </th>
+                        <th className="px-4 py-2">{pilotT("questionAnalysis.columns.delta")}</th>
+                        <th className="px-4 py-2">{pilotT("questionAnalysis.columns.preAnswers")}</th>
+                        <th className="px-4 py-2">
+                          {pilotT("questionAnalysis.columns.postAnswers")}
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {pilotStats.questionStats.map((question) => (
+                        <tr key={question.questionId} className="bg-[#f8fafc] text-[#31425a]">
+                          <td className="rounded-l-2xl px-4 py-3 font-medium">
+                            {question.prompt}
+                          </td>
+                          <td className="px-4 py-3">{formatDecimal(question.preAverage)}</td>
+                          <td className="px-4 py-3">{formatDecimal(question.postAverage)}</td>
+                          <td className="px-4 py-3">{formatDecimal(question.delta)}</td>
+                          <td className="px-4 py-3">{question.preAnswers}</td>
+                          <td className="rounded-r-2xl px-4 py-3">{question.postAnswers}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </Surface>
+            )}
           </>
         )}
 
@@ -1571,6 +1815,118 @@ export default function AdminStatsShell({ stats }: Props) {
               />
 
               <UserEportfolioProgressTable rows={stats.eportfolioProgressRows} />
+            </Surface>
+          </>
+        )}
+
+        {segment === "platformFeedback" && (
+          <>
+            <Surface className="mt-8 p-4 sm:p-6">
+              <SectionHeader
+                title={feedbackT("title")}
+                subtitle={feedbackT("description")}
+                right={
+                  <div className="flex flex-wrap gap-2">
+                    <a
+                      href={`/${locale}/admin/platform-feedback/export?format=csv`}
+                      className="rounded-2xl bg-[#31425a] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[#253347]"
+                    >
+                      {feedbackT("actions.exportCsv")}
+                    </a>
+                    <a
+                      href={`/${locale}/admin/platform-feedback/export?format=xls`}
+                      className="rounded-2xl border border-[#d9e2ec] bg-white px-4 py-2.5 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc]"
+                    >
+                      {feedbackT("actions.exportExcel")}
+                    </a>
+                  </div>
+                }
+              />
+
+              <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+                <MiniKpi
+                  label={feedbackT("summary.totalSubmissions")}
+                  value={String(feedbackStats.summary.totalSubmissions)}
+                  tone="green"
+                />
+                <MiniKpi
+                  label={feedbackT("summary.easeOfUse")}
+                  value={formatDecimal(feedbackStats.summary.averageEaseOfUse)}
+                  tone="green"
+                />
+                <MiniKpi
+                  label={feedbackT("summary.moduleClarity")}
+                  value={formatDecimal(feedbackStats.summary.averageModuleClarity)}
+                  tone="green"
+                />
+                <MiniKpi
+                  label={feedbackT("summary.navigation")}
+                  value={formatDecimal(feedbackStats.summary.averageNavigation)}
+                  tone="green"
+                />
+                <MiniKpi
+                  label={feedbackT("summary.testsExperience")}
+                  value={formatDecimal(feedbackStats.summary.averageTestsExperience)}
+                  tone="green"
+                />
+                <MiniKpi
+                  label={feedbackT("summary.technicalProblems")}
+                  value={formatDecimal(feedbackStats.summary.averageTechnicalProblems)}
+                  tone="green"
+                />
+                <MiniKpi
+                  label={feedbackT("summary.overallSatisfaction")}
+                  value={formatDecimal(feedbackStats.summary.averageOverallSatisfaction)}
+                  tone="green"
+                />
+              </div>
+            </Surface>
+
+            <Surface className="mt-8 p-4 sm:p-6">
+              <SectionHeader title={feedbackT("table.title")} subtitle={feedbackT("description")} />
+
+              <div className="overflow-x-auto">
+                <table className="w-full min-w-300 border-separate border-spacing-y-2 text-left text-sm">
+                  <thead>
+                    <tr className="text-xs font-bold uppercase tracking-[0.12em] text-[#8a97a6]">
+                      <th className="px-4 py-2">{feedbackT("table.columns.user")}</th>
+                      <th className="px-4 py-2">{feedbackT("table.columns.createdAt")}</th>
+                      <th className="px-4 py-2">{feedbackT("table.columns.easeOfUse")}</th>
+                      <th className="px-4 py-2">{feedbackT("table.columns.moduleClarity")}</th>
+                      <th className="px-4 py-2">{feedbackT("table.columns.navigation")}</th>
+                      <th className="px-4 py-2">{feedbackT("table.columns.testsExperience")}</th>
+                      <th className="px-4 py-2">{feedbackT("table.columns.technicalProblems")}</th>
+                      <th className="px-4 py-2">
+                        {feedbackT("table.columns.overallSatisfaction")}
+                      </th>
+                      <th className="px-4 py-2">{feedbackT("table.columns.suggestions")}</th>
+                      <th className="px-4 py-2">{feedbackT("table.columns.technicalNotes")}</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {feedbackStats.rows.map((row) => (
+                      <tr key={row.id} className="bg-[#f8fafc] text-[#31425a]">
+                        <td className="rounded-l-2xl px-4 py-3">
+                          <p className="font-semibold">{row.userName}</p>
+                          <p className="text-xs text-[#667180]">{row.userEmail}</p>
+                        </td>
+                        <td className="px-4 py-3">{formatDateTime(row.createdAt, locale)}</td>
+                        <td className="px-4 py-3">{row.easeOfUse}</td>
+                        <td className="px-4 py-3">{row.moduleClarity}</td>
+                        <td className="px-4 py-3">{row.navigation}</td>
+                        <td className="px-4 py-3">{row.testsExperience}</td>
+                        <td className="px-4 py-3">{row.technicalProblems}</td>
+                        <td className="px-4 py-3">{row.overallSatisfaction}</td>
+                        <td className="px-4 py-3">{formatOptionalText(row.suggestions)}</td>
+                        <td className="rounded-r-2xl px-4 py-3">
+                          {formatOptionalText(row.technicalNotes)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </Surface>
           </>
         )}
