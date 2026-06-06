@@ -5,15 +5,20 @@ import { updateSession } from "./lib/supabase/middleware";
 
 const handleI18nRouting = createMiddleware(routing);
 
-function isAuthCallback(pathname: string) {
-  return pathname.includes("/auth/callback");
+function isAuthCodeRoute(pathname: string) {
+  return (
+    pathname.includes("/auth/callback") ||
+    pathname.includes("/auth/client-callback") ||
+    pathname.includes("/auth/reset-password")
+  );
 }
 
 export async function proxy(request: NextRequest) {
   const response = handleI18nRouting(request);
 
-  if (isAuthCallback(request.nextUrl.pathname)) {
+  if (isAuthCodeRoute(request.nextUrl.pathname)) {
     response.headers.delete("link");
+    response.headers.set("Cache-Control", "no-store, max-age=0");
     return response;
   }
 
