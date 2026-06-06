@@ -300,6 +300,24 @@
           "modulesBeforePost": "Moduły przed oceną końcową"
         }
       }
+    },
+    "AdminSectionShortcuts": {
+      "ariaLabel": "Sekcje administracyjne",
+      "open": "Otwórz",
+      "cards": {
+        "stats": {
+          "title": "Statystyki ogólne",
+          "description": "Ogólne użycie platformy, aktywność edukacyjna, scenariusze, curriculum i dane ePortfolio."
+        },
+        "pilot": {
+          "title": "Wyniki pilotażu",
+          "description": "Pre-assessment, post-assessment oraz dane curriculum dla ścieżki pilotażowej do raportowania ewaluacji."
+        },
+        "feedback": {
+          "title": "Feedback platformy",
+          "description": "Odpowiedzi ankietowe i komentarze użytkowników z formularza oceny platformy."
+        }
+      }
     }
   }
 }

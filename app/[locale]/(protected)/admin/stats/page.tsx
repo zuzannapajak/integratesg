@@ -1,3 +1,4 @@
+import AdminSectionShortcuts from "@/components/stats/admin-section-shortcuts";
 import AdminStatsShell from "@/components/stats/admin-stats-shell";
 import { requireRole } from "@/features/auth/requireRole";
 import { getBasicAdminStats } from "@/lib/admin/queries";
@@ -15,5 +16,10 @@ export default async function AdminStatsPage({ params }: Props) {
 
   const stats = await getBasicAdminStats(locale);
 
-  return <AdminStatsShell locale={locale} stats={stats} />;
+  return (
+    <>
+      <AdminSectionShortcuts />
+      <AdminStatsShell locale={locale} stats={stats} />
+    </>
+  );
 }

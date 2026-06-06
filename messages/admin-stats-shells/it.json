@@ -300,6 +300,24 @@
           "modulesBeforePost": "Moduli prima del post"
         }
       }
+    },
+    "AdminSectionShortcuts": {
+      "ariaLabel": "Sezioni admin",
+      "open": "Apri",
+      "cards": {
+        "stats": {
+          "title": "Statistiche generali",
+          "description": "Uso generale della piattaforma, attività di apprendimento, scenari, curriculum e dati ePortfolio."
+        },
+        "pilot": {
+          "title": "Risultati del pilota",
+          "description": "Pre-assessment, post-assessment e dati curriculum del percorso pilota per la reportistica di valutazione."
+        },
+        "feedback": {
+          "title": "Feedback piattaforma",
+          "description": "Risposte al sondaggio e commenti degli utenti raccolti dal modulo di feedback della piattaforma."
+        }
+      }
     }
   }
 }

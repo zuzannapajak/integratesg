@@ -300,6 +300,24 @@
           "modulesBeforePost": "Modules before post"
         }
       }
+    },
+    "AdminSectionShortcuts": {
+      "ariaLabel": "Admin sections",
+      "open": "Open",
+      "cards": {
+        "stats": {
+          "title": "Overview statistics",
+          "description": "General platform usage, learning activity, scenarios, curriculum, and ePortfolio data."
+        },
+        "pilot": {
+          "title": "Pilot assessment results",
+          "description": "Pre-assessment, post-assessment, and pilot-path curriculum data for evaluation reporting."
+        },
+        "feedback": {
+          "title": "Platform feedback",
+          "description": "User survey answers and comments collected from the platform feedback form."
+        }
+      }
     }
   }
 }

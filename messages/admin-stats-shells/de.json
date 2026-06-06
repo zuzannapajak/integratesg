@@ -300,6 +300,24 @@
           "modulesBeforePost": "Module vor Nachbewertung"
         }
       }
+    },
+    "AdminSectionShortcuts": {
+      "ariaLabel": "Admin-Bereiche",
+      "open": "Öffnen",
+      "cards": {
+        "stats": {
+          "title": "Übersichtsstatistiken",
+          "description": "Allgemeine Plattformnutzung, Lernaktivität, Szenarien, Curriculum und ePortfolio-Daten."
+        },
+        "pilot": {
+          "title": "Pilot-Auswertung",
+          "description": "Pre-Assessment, Post-Assessment und Curriculum-Daten des Pilotpfads für Evaluationsberichte."
+        },
+        "feedback": {
+          "title": "Plattform-Feedback",
+          "description": "Umfrageantworten und Kommentare aus dem Feedback-Formular der Plattform."
+        }
+      }
     }
   }
 }
