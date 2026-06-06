@@ -97,7 +97,14 @@
       "alreadyHaveAccount": "Already have an account?",
       "signIn": "Sign in",
       "profileSaveError": "Account created, but the profile could not be saved.",
-      "success": "Account created successfully. Check your email to continue."
+      "success": "Account created successfully. Check your email to continue.",
+      "confirmationEyebrow": "Account created",
+      "confirmationTitle": "Check your inbox",
+      "confirmationDescription": "We sent you a confirmation link. Click the link in the email to activate your account and finish registration.",
+      "confirmationEmailLabel": "Email sent to",
+      "confirmationHint": "If you cannot see the message, check your spam, promotions, or other inbox folders.",
+      "goToLogin": "Go to login",
+      "backToRole": "Back"
     }
   }
 }

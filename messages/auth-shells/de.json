@@ -97,7 +97,14 @@
       "alreadyHaveAccount": "Haben Sie bereits ein Konto?",
       "signIn": "Anmelden",
       "profileSaveError": "Konto wurde erstellt, aber das Profil konnte nicht gespeichert werden.",
-      "success": "Konto erfolgreich erstellt. Prüfen Sie Ihre E-Mails, um fortzufahren."
+      "success": "Konto erfolgreich erstellt. Prüfen Sie Ihre E-Mails, um fortzufahren.",
+      "confirmationEyebrow": "Konto erstellt",
+      "confirmationTitle": "Prüfen Sie Ihren Posteingang",
+      "confirmationDescription": "Wir haben Ihnen einen Bestätigungslink gesendet. Klicken Sie auf den Link in der E-Mail, um Ihr Konto zu aktivieren und die Registrierung abzuschließen.",
+      "confirmationEmailLabel": "E-Mail gesendet an",
+      "confirmationHint": "Wenn Sie die Nachricht nicht sehen, prüfen Sie bitte den Spam-, Werbe- oder andere Posteingangsordner.",
+      "goToLogin": "Zur Anmeldung",
+      "backToRole": "Zurück"
     }
   }
 }

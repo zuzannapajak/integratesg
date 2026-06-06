@@ -97,7 +97,14 @@
       "alreadyHaveAccount": "Masz już konto?",
       "signIn": "Zaloguj się",
       "profileSaveError": "Konto zostało utworzone, ale nie udało się zapisać profilu.",
-      "success": "Konto zostało utworzone. Sprawdź e-mail, aby kontynuować."
+      "success": "Konto zostało utworzone. Sprawdź e-mail, aby kontynuować.",
+      "confirmationEyebrow": "Konto utworzone",
+      "confirmationTitle": "Sprawdź swoją skrzynkę",
+      "confirmationDescription": "Wysłaliśmy wiadomość z linkiem potwierdzającym. Kliknij link w e-mailu, aby aktywować konto i dokończyć rejestrację.",
+      "confirmationEmailLabel": "Wiadomość wysłana na adres",
+      "confirmationHint": "Jeśli nie widzisz wiadomości, sprawdź folder spam, oferty lub inne zakładki w skrzynce.",
+      "goToLogin": "Przejdź do logowania",
+      "backToRole": "Wróć"
     }
   }
 }

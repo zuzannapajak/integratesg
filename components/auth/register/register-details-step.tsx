@@ -21,6 +21,10 @@ type Props = {
   onBack: () => void;
 };
 
+function getEmailConfirmationRedirectUrl(locale: string) {
+  return `${window.location.origin.replace(/\/$/, "")}/${locale}/auth/login`;
+}
+
 export default function RegisterDetailsStep({
   locale,
   role,
@@ -36,20 +40,25 @@ export default function RegisterDetailsStep({
   const roles = useTranslations("Roles");
   const supabase = createClient();
 
-  const [message, setMessage] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [confirmationEmail, setConfirmationEmail] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const roleLabel = role === APP_ROLES.educator ? roles("educator") : roles("learner");
 
   const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setMessage(null);
+
+    const normalizedEmail = email.trim();
+
+    setErrorMessage(null);
     setIsSubmitting(true);
 
     const { data, error } = await supabase.auth.signUp({
-      email,
+      email: normalizedEmail,
       password,
       options: {
+        emailRedirectTo: getEmailConfirmationRedirectUrl(locale),
         data: {
           role,
           full_name: fullName,
@@ -59,7 +68,7 @@ export default function RegisterDetailsStep({
     });
 
     if (error) {
-      setMessage(error.message);
+      setErrorMessage(error.message);
       setIsSubmitting(false);
       return;
     }
@@ -74,15 +83,70 @@ export default function RegisterDetailsStep({
           preferredLanguage: locale,
         });
       } catch {
-        setMessage(t("profileSaveError"));
+        setErrorMessage(t("profileSaveError"));
         setIsSubmitting(false);
         return;
       }
     }
 
-    setMessage(t("success"));
+    setConfirmationEmail(data.user?.email ?? normalizedEmail);
+    onPasswordChange("");
     setIsSubmitting(false);
   };
+
+  if (confirmationEmail) {
+    return (
+      <div className="mx-auto w-full max-w-165">
+        <div className="rounded-4xl border border-[#bfe8cc] bg-[linear-gradient(180deg,rgba(247,255,249,0.96)_0%,rgba(255,255,255,0.94)_100%)] px-6 py-9 text-center shadow-[0_18px_48px_rgba(35,45,62,0.09)] md:px-10 md:py-11">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#e6f8ec] text-[2rem] font-bold text-[#008b5e] shadow-[0_10px_28px_rgba(0,139,94,0.14)]">
+            <span aria-hidden="true">✓</span>
+          </div>
+
+          <p className="mt-6 text-[0.78rem] font-semibold uppercase tracking-[0.18em] text-[#008b5e]">
+            {t("confirmationEyebrow")}
+          </p>
+
+          <h1 className="mt-3 text-[2rem] font-semibold tracking-[-0.035em] text-[#31425a]">
+            {t("confirmationTitle")}
+          </h1>
+
+          <p className="mx-auto mt-3 max-w-[52ch] text-[1rem] leading-7 text-[#5f6977]">
+            {t("confirmationDescription")}
+          </p>
+
+          <div className="mx-auto mt-6 max-w-[460px] rounded-3xl border border-[#e1eadf] bg-white px-5 py-4 text-left shadow-[0_12px_30px_rgba(49,66,90,0.06)]">
+            <p className="text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-[#7a8594]">
+              {t("confirmationEmailLabel")}
+            </p>
+            <p className="mt-1 break-all text-[1rem] font-semibold text-[#31425a]">
+              {confirmationEmail}
+            </p>
+          </div>
+
+          <p className="mx-auto mt-5 max-w-[52ch] text-[0.92rem] leading-6 text-[#6b7480]">
+            {t("confirmationHint")}
+          </p>
+
+          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <Link
+              href={`/${locale}/auth/login`}
+              className="inline-flex min-h-[3.15rem] items-center justify-center rounded-full bg-[#31425a] px-7 font-semibold text-white shadow-[0_10px_26px_rgba(49,66,90,0.18)] transition hover:-translate-y-0.5 hover:bg-[#243246]"
+            >
+              {t("goToLogin")}
+            </Link>
+
+            <button
+              type="button"
+              onClick={onBack}
+              className="inline-flex min-h-[3.15rem] items-center justify-center rounded-full px-6 font-semibold text-[#5f6977] transition hover:bg-[#eef3f8] hover:text-[#31425a]"
+            >
+              {t("backToRole")}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto w-full max-w-220">
@@ -184,8 +248,10 @@ export default function RegisterDetailsStep({
                   {isSubmitting ? t("submitting") : t("submit")}
                 </button>
 
-                {message ? (
-                  <p className="mt-4 text-sm leading-6 text-[#5f6c7b]">{message}</p>
+                {errorMessage ? (
+                  <div className="mt-4 rounded-2xl border border-[#ef6c23]/20 bg-[#ef6c23]/8 px-4 py-3 text-sm leading-6 text-[#8a4a25]">
+                    {errorMessage}
+                  </div>
                 ) : null}
               </div>
             </form>

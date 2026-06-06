@@ -97,7 +97,14 @@
       "alreadyHaveAccount": "Hai già un account?",
       "signIn": "Accedi",
       "profileSaveError": "Account creato, ma non è stato possibile salvare il profilo.",
-      "success": "Account creato con successo. Controlla la tua email per continuare."
+      "success": "Account creato con successo. Controlla la tua email per continuare.",
+      "confirmationEyebrow": "Account creato",
+      "confirmationTitle": "Controlla la tua casella email",
+      "confirmationDescription": "Ti abbiamo inviato un link di conferma. Clicca sul link nell’email per attivare il tuo account e completare la registrazione.",
+      "confirmationEmailLabel": "Email inviata a",
+      "confirmationHint": "Se non vedi il messaggio, controlla la cartella spam, promozioni o altre cartelle della posta in arrivo.",
+      "goToLogin": "Vai all’accesso",
+      "backToRole": "Indietro"
     }
   }
 }
