@@ -1,4 +1,4 @@
-import { ArrowRight, Clock3, Compass, Sparkles } from "lucide-react";
+import { ArrowLeft, Clock3, Sparkles } from "lucide-react";
 import Link from "next/link";
 
 type Props = {
@@ -33,7 +33,7 @@ export default function ComingSoonPage({ locale, title, description, badge }: Pr
                   {description}
                 </p>
 
-                <div className="mt-7 grid gap-3 sm:grid-cols-2">
+                <div className="mt-7 grid max-w-xl gap-3">
                   <div className="rounded-3xl border border-[#e8edf3] bg-white/80 p-4">
                     <div className="flex items-center gap-2 text-sm font-bold text-[#31425a]">
                       <Clock3 className="h-4 w-4 text-emerald-600" />
@@ -43,24 +43,14 @@ export default function ComingSoonPage({ locale, title, description, badge }: Pr
                       This module is being refined and will be available soon.
                     </p>
                   </div>
-
-                  <div className="rounded-3xl border border-[#e8edf3] bg-white/80 p-4">
-                    <div className="flex items-center gap-2 text-sm font-bold text-[#31425a]">
-                      <Compass className="h-4 w-4 text-emerald-600" />
-                      Continue learning now
-                    </div>
-                    <p className="mt-2 text-sm leading-6 text-[#667180]">
-                      The curriculum module is already available and ready to use.
-                    </p>
-                  </div>
                 </div>
 
                 <Link
-                  href={`/${locale}/curriculum`}
+                  href={`/${locale}/dashboard`}
                   className="mt-8 inline-flex items-center justify-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-[#253347]"
                 >
-                  Go to curriculum
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowLeft className="h-4 w-4" />
+                  Back to dashboard
                 </Link>
               </div>
             </div>
