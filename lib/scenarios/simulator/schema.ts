@@ -76,10 +76,10 @@ export const scenarioAssetPathSchema = z
   .string()
   .trim()
   .regex(
-    /^\/(?!\/)(?!.*\.\.)[^?#]+\.(?:svg|webp|avif|png|jpe?g)$/i,
-    "Asset path must point to an image stored under the public directory.",
+    /^\/(?!\/)(?!.*\.\.)[^?#]+\.png$/i,
+    "Scenario asset must be a PNG image stored under the public directory.",
   )
-  .transform((assetPath): ScenarioAssetPath => assetPath as ScenarioAssetPath);
+  .transform((path) => path as ScenarioAssetPath);
 
 export const hotspotPositionSchema = z.strictObject({
   x: z.number().min(0, "Hotspot x must be at least 0.").max(100, "Hotspot x must not exceed 100."),
@@ -90,8 +90,12 @@ export const hotspotPositionSchema = z.strictObject({
 });
 
 export const scenarioAssetsSchema = z.strictObject({
-  boardImage: scenarioAssetPathSchema,
-  coverImage: scenarioAssetPathSchema.optional(),
+  preStartBackground: scenarioAssetPathSchema,
+  inProgressBackground: scenarioAssetPathSchema,
+});
+
+export const scenarioPathwayAssetsSchema = z.strictObject({
+  backgroundImage: scenarioAssetPathSchema,
 });
 
 function createChoiceDefinitionSchema<const TChoiceId extends string>(
@@ -109,16 +113,12 @@ function createChallengeChoicesSchema<const TChallengeId extends ChallengeId>(
   challengeId: TChallengeId,
 ) {
   const choice01Id = createChoiceId(challengeId, "01");
-
   const choice02Id = createChoiceId(challengeId, "02");
-
   const choice03Id = createChoiceId(challengeId, "03");
 
   return strictObjectFromEntries([
     [choice01Id, createChoiceDefinitionSchema(choice01Id, CHOICE_ORDER_BY_NUMBER["01"])],
-
     [choice02Id, createChoiceDefinitionSchema(choice02Id, CHOICE_ORDER_BY_NUMBER["02"])],
-
     [choice03Id, createChoiceDefinitionSchema(choice03Id, CHOICE_ORDER_BY_NUMBER["03"])],
   ] as const);
 }
@@ -162,16 +162,12 @@ function createScenarioChallengesSchema<const TScenarioId extends ScenarioId>(
   scenarioId: TScenarioId,
 ) {
   const challenge01Id = createChallengeId(scenarioId, "01");
-
   const challenge02Id = createChallengeId(scenarioId, "02");
-
   const challenge03Id = createChallengeId(scenarioId, "03");
 
   return strictObjectFromEntries([
     [challenge01Id, createChallengeDefinitionSchema(scenarioId, "01")],
-
     [challenge02Id, createChallengeDefinitionSchema(scenarioId, "02")],
-
     [challenge03Id, createChallengeDefinitionSchema(scenarioId, "03")],
   ] as const);
 }
@@ -239,9 +235,7 @@ function createChallengeChoiceLocaleSchema<const TChallengeId extends ChallengeI
   challengeId: TChallengeId,
 ) {
   const choice01Id = createChoiceId(challengeId, "01");
-
   const choice02Id = createChoiceId(challengeId, "02");
-
   const choice03Id = createChoiceId(challengeId, "03");
 
   return strictObjectFromEntries([
@@ -268,16 +262,12 @@ function createScenarioChallengeLocaleSchema<const TScenarioId extends ScenarioI
   scenarioId: TScenarioId,
 ) {
   const challenge01Id = createChallengeId(scenarioId, "01");
-
   const challenge02Id = createChallengeId(scenarioId, "02");
-
   const challenge03Id = createChallengeId(scenarioId, "03");
 
   return strictObjectFromEntries([
     [challenge01Id, createChallengeLocaleSchema(challenge01Id)],
-
     [challenge02Id, createChallengeLocaleSchema(challenge02Id)],
-
     [challenge03Id, createChallengeLocaleSchema(challenge03Id)],
   ] as const);
 }

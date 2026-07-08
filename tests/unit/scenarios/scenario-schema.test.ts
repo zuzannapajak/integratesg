@@ -194,7 +194,7 @@ describe("scenario data schema", () => {
         ...validScenario01Data.definition,
 
         assets: {
-          boardImage: "https://example.com/board.webp",
+          boardImage: "https://example.com/board.png",
         },
       },
     };
@@ -202,5 +202,51 @@ describe("scenario data schema", () => {
     expect(() => {
       parseScenarioData("scenario-01", invalidData);
     }).toThrow("Invalid scenario data for scenario-01");
+  });
+
+  it("rejects external scenario asset paths", () => {
+    const invalidData = {
+      ...validScenario01Data,
+
+      definition: {
+        ...validScenario01Data.definition,
+
+        assets: {
+          ...validScenario01Data.definition.assets,
+
+          preStartBackground: "https://example.com/pre-start.png",
+        },
+      },
+    };
+
+    expect(() => {
+      parseScenarioData("scenario-01", invalidData);
+    }).toThrow("Invalid scenario data for scenario-01");
+  });
+
+  it("requires scenario backgrounds to use PNG", () => {
+    const invalidData = {
+      ...validScenario01Data,
+
+      definition: {
+        ...validScenario01Data.definition,
+
+        assets: {
+          ...validScenario01Data.definition.assets,
+
+          inProgressBackground: "/scenarios/scenario-01/in-progress.webp",
+        },
+      },
+    };
+
+    const result = safeParseScenarioData("scenario-01", invalidData);
+
+    expect(result.success).toBe(false);
+
+    if (!result.success) {
+      expect(formatScenarioValidationError(result.error)).toContain(
+        "Scenario asset must be a PNG image",
+      );
+    }
   });
 });

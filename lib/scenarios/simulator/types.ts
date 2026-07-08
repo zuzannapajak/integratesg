@@ -162,16 +162,19 @@ export type HotspotPosition = {
   readonly labelSide?: HotspotLabelSide;
 };
 
+/**
+ * Backgrounds used by an individual scenario.
+ */
 export type ScenarioAssets = {
-  /**
-   * Main interactive scenario illustration.
-   */
-  readonly boardImage: PublicAssetPath;
+  readonly preStartBackground: PublicAssetPath;
+  readonly inProgressBackground: PublicAssetPath;
+};
 
-  /**
-   * Optional image used on the scenario introduction screen.
-   */
-  readonly coverImage?: PublicAssetPath;
+/**
+ * Assets used by the shared six-scenario pathway screen.
+ */
+export type ScenarioPathwayAssets = {
+  readonly backgroundImage: PublicAssetPath;
 };
 
 /**

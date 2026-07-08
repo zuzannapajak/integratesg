@@ -82,7 +82,9 @@ export const validScenario01Data = {
     estimatedDurationMinutes: 15,
 
     assets: {
-      boardImage: "/scenarios/scenario-01/board.webp",
+      preStartBackground: "/scenarios/scenario-01/pre-start.png",
+
+      inProgressBackground: "/scenarios/scenario-01/in-progress.png",
     },
 
     pathwayPosition: {
