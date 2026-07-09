@@ -48,3 +48,4 @@ next-env.d.ts
 
 # optimalisation
 profiles/
+app/\[locale]/scenario-preview/page.tsx

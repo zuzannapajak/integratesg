@@ -106,7 +106,7 @@ function getAvailableChallengeButton() {
 }
 
 describe("ScenarioPlayer", () => {
-  it("uses the pre-start background before a challenge is opened", async () => {
+  it("uses the pre-start background until the scenario is started", async () => {
     const user = userEvent.setup();
 
     render(<ScenarioPlayer scenario={testScenario} />);
@@ -118,11 +118,24 @@ describe("ScenarioPlayer", () => {
 
     await user.click(
       screen.getByRole("button", {
+        name: "Continue",
+      }),
+    );
+
+    // Continue only changes the internal ScenarioIntro step.
+    expect(player).toHaveAttribute("data-view", "intro");
+    expect(player).toHaveAttribute("data-background-image", "/scenarios/scenario-02/pre-start.png");
+
+    await user.click(
+      screen.getByRole("button", {
         name: "Start scenario",
       }),
     );
 
-    expect(player).toHaveAttribute("data-view", "board");
+    await waitFor(() => {
+      expect(player).toHaveAttribute("data-view", "board");
+    });
+
     expect(player).toHaveAttribute("data-background-image", "/scenarios/scenario-02/pre-start.png");
   });
 
@@ -140,6 +153,7 @@ describe("ScenarioPlayer", () => {
       "data-background-image",
       "/scenarios/scenario-02/in-progress.png",
     );
+
     expect(
       screen.getByRole("heading", {
         level: 3,
@@ -168,6 +182,7 @@ describe("ScenarioPlayer", () => {
     );
 
     expect(await screen.findByText("Correct approach")).toBeVisible();
+
     expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "feedback");
   });
 
@@ -253,5 +268,36 @@ describe("ScenarioPlayer", () => {
         name: "Confirm decision",
       }),
     ).toBeDisabled();
+  });
+
+  it("reports that the scenario has been started after the second intro step", async () => {
+    const user = userEvent.setup();
+    const onScenarioStarted = vi.fn();
+
+    render(<ScenarioPlayer scenario={testScenario} onScenarioStarted={onScenarioStarted} />);
+
+    await user.click(
+      screen.getByRole("button", {
+        name: "Continue",
+      }),
+    );
+
+    expect(onScenarioStarted).not.toHaveBeenCalled();
+
+    await user.click(
+      screen.getByRole("button", {
+        name: "Start scenario",
+      }),
+    );
+
+    await waitFor(() => {
+      expect(onScenarioStarted).toHaveBeenCalledWith({
+        scenarioId: "scenario-02",
+        scenarioVersion: 1,
+        locale: "en",
+      });
+
+      expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "board");
+    });
   });
 });

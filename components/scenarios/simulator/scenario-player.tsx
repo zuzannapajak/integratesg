@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
+import { ScenarioIntro } from "@/components/scenarios/simulator/scenario-intro";
 import type {
   ChallengeId,
   ChallengeProgressStatus,
@@ -14,6 +15,12 @@ import type {
   ScenarioPlayerMode,
   ScenarioPlayerView,
 } from "@/lib/scenarios/simulator/types";
+
+export type ScenarioStartedEvent = {
+  readonly scenarioId: ScenarioId;
+  readonly scenarioVersion: number;
+  readonly locale: ResolvedScenario["locale"];
+};
 
 export type ScenarioChoiceConfirmedEvent = {
   readonly scenarioId: ScenarioId;
@@ -87,6 +94,8 @@ export type ScenarioPlayerProps = {
   readonly initialCompletedChallengeIds?: readonly ChallengeId[];
 
   readonly labels?: Partial<ScenarioPlayerLabels>;
+
+  readonly onScenarioStarted?: (event: ScenarioStartedEvent) => void | Promise<void>;
 
   readonly onChoiceConfirmed?: (event: ScenarioChoiceConfirmedEvent) => void | Promise<void>;
 
@@ -181,6 +190,7 @@ export function ScenarioPlayer({
   initialChallengeId = null,
   initialCompletedChallengeIds = [],
   labels: customLabels,
+  onScenarioStarted,
   onChoiceConfirmed,
   onChallengeCompleted,
   onScenarioCompleted,
@@ -265,6 +275,33 @@ export function ScenarioPlayer({
     }
 
     return "locked";
+  }
+
+  async function startScenario() {
+    if (isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    try {
+      if (mode === "play") {
+        await onScenarioStarted?.({
+          scenarioId: scenario.id,
+          scenarioVersion: scenario.version,
+          locale: scenario.locale,
+        });
+      }
+
+      setCurrentChallengeId(null);
+      setSelectedChoiceId(null);
+      setView("board");
+    } catch (error) {
+      setErrorMessage(getErrorMessage(error));
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   function openChallenge(challenge: ResolvedChallenge, challengeIndex: number) {
@@ -393,57 +430,6 @@ export function ScenarioPlayer({
     } finally {
       setIsSubmitting(false);
     }
-  }
-
-  function renderIntro() {
-    return (
-      <div className="absolute inset-0 flex items-end bg-linear-to-t from-[#17243a]/85 via-[#17243a]/15 to-transparent p-4 sm:p-6 lg:p-8">
-        <div className="max-h-[82%] w-full max-w-2xl overflow-y-auto rounded-3xl border border-white/30 bg-white/95 p-5 shadow-[0_20px_60px_rgba(23,36,58,0.25)] backdrop-blur-sm sm:p-7">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#0d7fc2]">
-            Scenario {scenario.order}
-          </p>
-
-          <h2 className="mt-2 text-2xl font-semibold tracking-[-0.03em] text-[#31425a] sm:text-3xl">
-            {scenario.title}
-          </h2>
-
-          {scenario.subtitle ? (
-            <p className="mt-2 text-sm leading-6 text-[#667180]">{scenario.subtitle}</p>
-          ) : null}
-
-          <MarkdownContent className="mt-5">{scenario.introduction}</MarkdownContent>
-
-          {scenario.objectives.length > 0 ? (
-            <div className="mt-5">
-              <h3 className="text-sm font-semibold text-[#31425a]">Learning objectives</h3>
-
-              <ul className="mt-3 space-y-2">
-                {scenario.objectives.map((objective) => (
-                  <li key={objective} className="flex gap-3 text-sm leading-6 text-[#596170]">
-                    <span
-                      aria-hidden="true"
-                      className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#0d7fc2]"
-                    />
-
-                    <span>{objective}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
-
-          <button
-            type="button"
-            className="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#31425a] px-6 text-sm font-semibold text-white transition hover:bg-[#243246] sm:w-auto"
-            onClick={() => {
-              setView("board");
-            }}
-          >
-            {labels.startScenario}
-          </button>
-        </div>
-      </div>
-    );
   }
 
   function renderBoardHotspots() {
@@ -799,7 +785,22 @@ export function ScenarioPlayer({
 
         <p className="sr-only">{scenario.boardAlt}</p>
 
-        {view === "intro" ? renderIntro() : null}
+        {view === "intro" ? (
+          <ScenarioIntro
+            scenario={scenario}
+            isStarting={isSubmitting}
+            errorMessage={errorMessage}
+            labels={{
+              startScenario: labels.startScenario,
+
+              backToScenarios: labels.leaveScenario,
+
+              starting: labels.loading,
+            }}
+            onStart={() => void startScenario()}
+            onExit={onExit}
+          />
+        ) : null}
 
         {view === "board" ? renderBoardHotspots() : null}
 
