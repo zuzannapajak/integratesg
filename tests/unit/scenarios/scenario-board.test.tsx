@@ -208,3 +208,20 @@ describe("ScenarioBoard", () => {
     expect(screen.getAllByText("Locked").length).toBeGreaterThan(0);
   });
 });
+
+it("marks the current objective hotspot as active", () => {
+  render(
+    <ScenarioBoard
+      backgroundImage="/scenarios/scenario-02/pre-start.png"
+      boardAlt="Test board."
+      scenarioTitle="Test scenario"
+      items={boardItems}
+      onSelectChallenge={vi.fn()}
+    />,
+  );
+
+  expect(screen.getByTestId("scenario-hotspot-scenario-02-challenge-02")).toHaveAttribute(
+    "data-hotspot-state",
+    "active",
+  );
+});

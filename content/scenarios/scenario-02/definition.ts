@@ -110,7 +110,7 @@ export const scenario02Definition = defineScenarioDefinition<"scenario-02">({
 
       hotspot: {
         x: 18,
-        y: 58,
+        y: 75,
         labelSide: "bottom",
       },
 
@@ -141,7 +141,7 @@ export const scenario02Definition = defineScenarioDefinition<"scenario-02">({
 
       hotspot: {
         x: 50,
-        y: 46,
+        y: 75,
         labelSide: "bottom",
       },
 
@@ -172,7 +172,7 @@ export const scenario02Definition = defineScenarioDefinition<"scenario-02">({
 
       hotspot: {
         x: 82,
-        y: 58,
+        y: 75,
         labelSide: "bottom",
       },
 
