@@ -6,6 +6,10 @@ import { useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 import { ScenarioBoard } from "@/components/scenarios/simulator/scenario-board";
+import {
+  ScenarioChallenge,
+  ScenarioChallengeStep,
+} from "@/components/scenarios/simulator/scenario-challenge";
 import { ScenarioIntro } from "@/components/scenarios/simulator/scenario-intro";
 import type {
   ChallengeId,
@@ -49,9 +53,17 @@ export type ScenarioPlayerLabels = {
   readonly viewChallenges: string;
   readonly openChallenge: string;
   readonly backToBoard: string;
+
+  readonly challengeContext: string;
+  readonly decision: string;
+  readonly continueToDecision: string;
+  readonly back: string;
+  readonly selectOneOption: string;
+
   readonly confirmDecision: string;
   readonly tryAgain: string;
   readonly continue: string;
+
   readonly completeScenario: string;
   readonly leaveScenario: string;
   readonly currentObjective: string;
@@ -70,6 +82,13 @@ const DEFAULT_LABELS: ScenarioPlayerLabels = {
   viewChallenges: "View challenges",
   openChallenge: "Open challenge",
   backToBoard: "Back to challenges",
+
+  challengeContext: "Challenge context",
+  decision: "Decision",
+  continueToDecision: "Continue to decision",
+  back: "Back",
+  selectOneOption: "Select one option",
+
   confirmDecision: "Confirm decision",
   tryAgain: "Try again",
   continue: "Continue",
@@ -179,6 +198,8 @@ export function ScenarioPlayer({
     initialChallengeId && validChallengeIds.has(initialChallengeId) ? initialChallengeId : null,
   );
   const [selectedChoiceId, setSelectedChoiceId] = useState<ChoiceId | null>(null);
+  const [challengeInitialStep, setChallengeInitialStep] =
+    useState<ScenarioChallengeStep>("context");
   const [attemptCounts, setAttemptCounts] = useState<ChallengeAttemptCountMap>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -244,6 +265,7 @@ export function ScenarioPlayer({
 
       setCurrentChallengeId(null);
       setSelectedChoiceId(null);
+      setChallengeInitialStep("context");
       setView("board");
     } catch (error) {
       setErrorMessage(getErrorMessage(error));
@@ -255,13 +277,14 @@ export function ScenarioPlayer({
   function openChallenge(challenge: ResolvedChallenge, challengeIndex: number) {
     const status = getChallengeStatus(challenge, challengeIndex);
 
-    if (status === "locked") {
+    if (status === "locked" || status === "completed") {
       return;
     }
 
     setErrorMessage(null);
     setCurrentChallengeId(challenge.id);
     setSelectedChoiceId(null);
+    setChallengeInitialStep("context");
     setView("challenge");
   }
 
@@ -269,6 +292,7 @@ export function ScenarioPlayer({
     setErrorMessage(null);
     setSelectedChoiceId(null);
     setCurrentChallengeId(null);
+    setChallengeInitialStep("context");
     setView("board");
   }
 
@@ -310,6 +334,12 @@ export function ScenarioPlayer({
   function tryAgain() {
     setErrorMessage(null);
     setSelectedChoiceId(null);
+
+    /*
+     * The learner has already read the context.
+     * A retry returns directly to the decision step.
+     */
+    setChallengeInitialStep("decision");
     setView("challenge");
   }
 
@@ -341,6 +371,7 @@ export function ScenarioPlayer({
       setCompletedChallengeIds(nextCompletedChallengeIds);
       setSelectedChoiceId(null);
       setCurrentChallengeId(null);
+      setChallengeInitialStep("context");
 
       if (nextCompletedChallengeIds.size >= totalChallenges) {
         setView("summary");
@@ -376,107 +407,6 @@ export function ScenarioPlayer({
     } finally {
       setIsSubmitting(false);
     }
-  }
-
-  function renderChallenge() {
-    if (!currentChallenge) {
-      return null;
-    }
-
-    return (
-      <div className="absolute inset-0 flex items-end justify-end bg-[#17243a]/34 p-3 sm:p-4 lg:p-5">
-        <div className="max-h-full w-full overflow-y-auto rounded-3xl border border-white/40 bg-white/97 p-5 shadow-[0_24px_70px_rgba(23,36,58,0.28)] backdrop-blur-md sm:max-w-2xl sm:p-6">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#0d6fe8]">
-                Challenge {currentChallenge.order}
-              </p>
-
-              <h2 className="mt-2 text-xl font-semibold tracking-[-0.03em] text-[#31425a] sm:text-2xl">
-                {currentChallenge.title}
-              </h2>
-            </div>
-
-            <button
-              type="button"
-              className="shrink-0 rounded-full border border-[#d9e1ea] bg-white px-4 py-2 text-sm font-semibold text-[#31425a] transition hover:bg-[#f4f8fc]"
-              onClick={returnToBoard}
-            >
-              {labels.backToBoard}
-            </button>
-          </div>
-
-          <MarkdownContent className="mt-5">{currentChallenge.context}</MarkdownContent>
-
-          <h3 className="mt-6 text-base font-semibold leading-7 text-[#31425a]">
-            {currentChallenge.question}
-          </h3>
-
-          <fieldset className="mt-4 space-y-3">
-            <legend className="sr-only">{currentChallenge.question}</legend>
-
-            {currentChallenge.choices.map((choice) => {
-              const isSelected = selectedChoiceId === choice.id;
-
-              return (
-                <label
-                  key={choice.id}
-                  className={[
-                    "block cursor-pointer rounded-[1.1rem] border p-4 transition",
-                    isSelected
-                      ? "border-[#0d6fe8] bg-[#eef5ff] shadow-[0_8px_24px_rgba(13,111,232,0.12)]"
-                      : "border-[#dfe5ec] bg-white hover:border-[#b8c8d8] hover:bg-[#fbfcfd]",
-                  ].join(" ")}
-                >
-                  <span className="flex items-start gap-3">
-                    <input
-                      type="radio"
-                      name={`${currentChallenge.id}-choice`}
-                      value={choice.id}
-                      checked={isSelected}
-                      className="mt-1 h-4 w-4 accent-[#0d6fe8]"
-                      onChange={() => {
-                        setSelectedChoiceId(choice.id);
-                      }}
-                    />
-
-                    <span>
-                      {choice.label ? (
-                        <span className="block text-sm font-semibold text-[#31425a]">
-                          {choice.label}
-                        </span>
-                      ) : null}
-
-                      <span className="mt-1 block text-sm leading-6 text-[#596170]">
-                        {choice.text}
-                      </span>
-                    </span>
-                  </span>
-                </label>
-              );
-            })}
-          </fieldset>
-
-          {errorMessage ? (
-            <div
-              role="alert"
-              className="mt-4 rounded-xl border border-[#f1c9c9] bg-[#fff6f6] px-4 py-3 text-sm leading-6 text-[#9f3c3c]"
-            >
-              {errorMessage}
-            </div>
-          ) : null}
-
-          <button
-            type="button"
-            disabled={!selectedChoice || isSubmitting}
-            className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-[#0d6fe8] px-6 text-sm font-semibold text-white transition hover:bg-[#095fc8] disabled:cursor-not-allowed disabled:opacity-50"
-            onClick={() => void confirmDecision()}
-          >
-            {isSubmitting ? labels.loading : labels.confirmDecision}
-          </button>
-        </div>
-      </div>
-    );
   }
 
   function renderFeedback() {
@@ -738,7 +668,36 @@ export function ScenarioPlayer({
             />
           ) : null}
 
-          {view === "challenge" ? renderChallenge() : null}
+          {view === "challenge" && currentChallenge ? (
+            <ScenarioChallenge
+              challenge={currentChallenge}
+              selectedChoiceId={selectedChoiceId}
+              initialStep={challengeInitialStep}
+              isSubmitting={isSubmitting}
+              errorMessage={errorMessage}
+              labels={{
+                context: labels.challengeContext,
+
+                decision: labels.decision,
+
+                backToBoard: labels.backToBoard,
+
+                continueToDecision: labels.continueToDecision,
+
+                back: labels.back,
+
+                selectOneOption: labels.selectOneOption,
+
+                confirmDecision: labels.confirmDecision,
+
+                loading: labels.loading,
+              }}
+              onSelectChoice={setSelectedChoiceId}
+              onConfirm={() => void confirmDecision()}
+              onBackToBoard={returnToBoard}
+            />
+          ) : null}
+
           {view === "feedback" ? renderFeedback() : null}
           {view === "summary" ? renderSummary() : null}
           {view === "completion" ? renderCompletion() : null}

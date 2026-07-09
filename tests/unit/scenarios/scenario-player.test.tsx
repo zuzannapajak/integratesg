@@ -99,8 +99,43 @@ const testScenario = {
   },
 } satisfies ResolvedScenario;
 
+type TestUser = ReturnType<typeof userEvent.setup>;
+
 function getAvailableChallengeButton() {
   return screen.getByTestId("scenario-board-hotspot-scenario-02-challenge-01");
+}
+
+async function openChallengeContext(user: TestUser) {
+  await user.click(getAvailableChallengeButton());
+
+  await waitFor(() => {
+    expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "challenge");
+
+    expect(screen.getByTestId("scenario-challenge")).toHaveAttribute(
+      "data-challenge-step",
+      "context",
+    );
+  });
+}
+
+async function continueToDecision(user: TestUser) {
+  await user.click(
+    screen.getByRole("button", {
+      name: "Continue to decision",
+    }),
+  );
+
+  await waitFor(() => {
+    expect(screen.getByTestId("scenario-challenge")).toHaveAttribute(
+      "data-challenge-step",
+      "decision",
+    );
+  });
+}
+
+async function openChallengeDecision(user: TestUser) {
+  await openChallengeContext(user);
+  await continueToDecision(user);
 }
 
 describe("ScenarioPlayer", () => {
@@ -144,9 +179,8 @@ describe("ScenarioPlayer", () => {
 
     const player = screen.getByTestId("scenario-player");
 
-    await user.click(getAvailableChallengeButton());
+    await openChallengeContext(user);
 
-    expect(player).toHaveAttribute("data-view", "challenge");
     expect(player).toHaveAttribute(
       "data-background-image",
       "/scenarios/scenario-02/in-progress.png",
@@ -155,7 +189,28 @@ describe("ScenarioPlayer", () => {
     expect(
       screen.getByRole("heading", {
         level: 3,
+        name: "Challenge context",
+      }),
+    ).toBeVisible();
+
+    expect(
+      screen.queryByRole("radio", {
+        name: /^Optimal choice/,
+      }),
+    ).not.toBeInTheDocument();
+
+    await continueToDecision(user);
+
+    expect(
+      screen.getByRole("heading", {
+        level: 3,
         name: "Which decision should be selected?",
+      }),
+    ).toBeVisible();
+
+    expect(
+      screen.getByRole("radio", {
+        name: /^Optimal choice/,
       }),
     ).toBeVisible();
   });
@@ -165,7 +220,7 @@ describe("ScenarioPlayer", () => {
 
     render(<ScenarioPlayer scenario={testScenario} initialView="board" />);
 
-    await user.click(getAvailableChallengeButton());
+    await openChallengeDecision(user);
 
     await user.click(
       screen.getByRole("radio", {
@@ -198,7 +253,7 @@ describe("ScenarioPlayer", () => {
       />,
     );
 
-    await user.click(getAvailableChallengeButton());
+    await openChallengeDecision(user);
 
     await user.click(
       screen.getByRole("radio", {
@@ -235,7 +290,7 @@ describe("ScenarioPlayer", () => {
 
     render(<ScenarioPlayer scenario={testScenario} initialView="board" />);
 
-    await user.click(getAvailableChallengeButton());
+    await openChallengeDecision(user);
 
     await user.click(
       screen.getByRole("radio", {
@@ -259,6 +314,11 @@ describe("ScenarioPlayer", () => {
 
     await waitFor(() => {
       expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "challenge");
+
+      expect(screen.getByTestId("scenario-challenge")).toHaveAttribute(
+        "data-challenge-step",
+        "decision",
+      );
     });
 
     expect(
@@ -266,6 +326,12 @@ describe("ScenarioPlayer", () => {
         name: "Confirm decision",
       }),
     ).toBeDisabled();
+
+    expect(
+      screen.getByRole("radio", {
+        name: /^Non-optimal choice/,
+      }),
+    ).not.toBeChecked();
   });
 
   it("reports that the scenario has been started after the second intro step", async () => {
