@@ -10,6 +10,7 @@ import {
   ScenarioChallenge,
   ScenarioChallengeStep,
 } from "@/components/scenarios/simulator/scenario-challenge";
+import { ScenarioCorrectFeedback } from "@/components/scenarios/simulator/scenario-correct-feedback";
 import { ScenarioIntro } from "@/components/scenarios/simulator/scenario-intro";
 import type {
   ChallengeId,
@@ -60,6 +61,11 @@ export type ScenarioPlayerLabels = {
   readonly back: string;
   readonly selectOneOption: string;
 
+  readonly correctDecision: string;
+  readonly yourDecision: string;
+  readonly expectedImpact: string;
+  readonly keyTakeaway: string;
+
   readonly confirmDecision: string;
   readonly tryAgain: string;
   readonly continue: string;
@@ -88,6 +94,11 @@ const DEFAULT_LABELS: ScenarioPlayerLabels = {
   continueToDecision: "Continue to decision",
   back: "Back",
   selectOneOption: "Select one option",
+
+  correctDecision: "Correct decision",
+  yourDecision: "Your decision",
+  expectedImpact: "Expected impact",
+  keyTakeaway: "Key takeaway",
 
   confirmDecision: "Confirm decision",
   tryAgain: "Try again",
@@ -414,20 +425,43 @@ export function ScenarioPlayer({
       return null;
     }
 
+    if (selectedChoice.isOptimal) {
+      return (
+        <ScenarioCorrectFeedback
+          challenge={currentChallenge}
+          choice={selectedChoice}
+          isSubmitting={isSubmitting}
+          errorMessage={errorMessage}
+          labels={{
+            correctDecision: labels.correctDecision,
+
+            yourDecision: labels.yourDecision,
+
+            expectedImpact: labels.expectedImpact,
+
+            keyTakeaway: labels.keyTakeaway,
+
+            continue: labels.continue,
+
+            loading: labels.loading,
+          }}
+          onContinue={continueAfterFeedback}
+        />
+      );
+    }
+
     const feedback = selectedChoice.feedback;
 
+    /*
+     * Temporary non-optimal feedback.
+     * It will be extracted into a separate component
+     * in the next implementation step.
+     */
     return (
       <div className="absolute inset-0 flex items-end justify-end bg-[#17243a]/44 p-3 sm:p-4 lg:p-5">
         <div className="max-h-full w-full overflow-y-auto rounded-3xl border border-white/40 bg-white/97 p-5 shadow-[0_24px_70px_rgba(23,36,58,0.3)] backdrop-blur-md sm:max-w-2xl sm:p-6">
-          <div
-            className={[
-              "inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em]",
-              selectedChoice.isOptimal
-                ? "bg-[#ecf8f4] text-[#087658]"
-                : "bg-[#fff5ed] text-[#c95417]",
-            ].join(" ")}
-          >
-            {selectedChoice.isOptimal ? labels.completed : labels.tryAgain}
+          <div className="inline-flex rounded-full bg-[#fff5ed] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#c95417]">
+            {labels.tryAgain}
           </div>
 
           <h2 className="mt-4 text-xl font-semibold tracking-[-0.03em] text-[#31425a] sm:text-2xl">
@@ -439,6 +473,7 @@ export function ScenarioPlayer({
           {feedback.consequence ? (
             <div className="mt-5 rounded-2xl border border-[#dfe5ec] bg-[#f8fafc] p-4">
               <h3 className="text-sm font-semibold text-[#31425a]">Consequence</h3>
+
               <MarkdownContent className="mt-2">{feedback.consequence}</MarkdownContent>
             </div>
           ) : null}
@@ -446,6 +481,7 @@ export function ScenarioPlayer({
           {feedback.takeaway ? (
             <div className="mt-4 rounded-2xl border border-[#0d6fe8]/15 bg-[#eef5ff] p-4">
               <h3 className="text-sm font-semibold text-[#0d5dbf]">Key takeaway</h3>
+
               <MarkdownContent className="mt-2">{feedback.takeaway}</MarkdownContent>
             </div>
           ) : null}
@@ -465,11 +501,7 @@ export function ScenarioPlayer({
             className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-[#0d6fe8] px-6 text-sm font-semibold text-white transition hover:bg-[#095fc8] disabled:cursor-not-allowed disabled:opacity-50"
             onClick={() => void continueAfterFeedback()}
           >
-            {isSubmitting
-              ? labels.loading
-              : selectedChoice.isOptimal
-                ? labels.continue
-                : labels.tryAgain}
+            {isSubmitting ? labels.loading : labels.tryAgain}
           </button>
         </div>
       </div>

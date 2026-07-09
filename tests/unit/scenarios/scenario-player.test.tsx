@@ -267,7 +267,16 @@ describe("ScenarioPlayer", () => {
       }),
     );
 
-    await screen.findByText("Correct approach");
+    expect(await screen.findByText("Correct approach")).toBeVisible();
+
+    expect(screen.getByTestId("scenario-correct-feedback")).toHaveAttribute(
+      "data-feedback-kind",
+      "correct",
+    );
+
+    expect(onChoiceConfirmed).toHaveBeenCalledTimes(1);
+
+    expect(onChallengeCompleted).not.toHaveBeenCalled();
 
     await user.click(
       screen.getByRole("button", {
