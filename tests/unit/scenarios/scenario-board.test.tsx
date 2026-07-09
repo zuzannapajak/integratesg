@@ -212,3 +212,45 @@ describe("ScenarioBoard", () => {
     );
   });
 });
+
+it("marks a completed challenge with a check icon", () => {
+  render(
+    <ScenarioBoard
+      backgroundImage="/scenarios/scenario-02/pre-start.png"
+      boardAlt="Test board."
+      scenarioTitle="Test scenario"
+      items={boardItems}
+      onSelectChallenge={vi.fn()}
+    />,
+  );
+
+  const completedCard = screen.getAllByTestId("scenario-board-card-scenario-02-challenge-01")[0];
+
+  expect(completedCard).toHaveAttribute("data-challenge-status", "completed");
+
+  expect(completedCard).toHaveAttribute("data-completed", "true");
+
+  expect(completedCard).toBeDisabled();
+
+  expect(
+    screen.getAllByTestId("scenario-board-completed-icon-scenario-02-challenge-01").length,
+  ).toBeGreaterThan(0);
+});
+
+it("keeps the next challenge available after the previous one is completed", () => {
+  render(
+    <ScenarioBoard
+      backgroundImage="/scenarios/scenario-02/pre-start.png"
+      boardAlt="Test board."
+      scenarioTitle="Test scenario"
+      items={boardItems}
+      onSelectChallenge={vi.fn()}
+    />,
+  );
+
+  const availableHotspot = screen.getByTestId("scenario-board-hotspot-scenario-02-challenge-02");
+
+  expect(availableHotspot).toBeEnabled();
+
+  expect(availableHotspot).toHaveAttribute("aria-current", "step");
+});

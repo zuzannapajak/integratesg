@@ -274,6 +274,10 @@ describe("ScenarioPlayer", () => {
       "correct",
     );
 
+    const player = screen.getByTestId("scenario-player");
+
+    expect(player).toHaveAttribute("data-completed-count", "0");
+
     expect(onChoiceConfirmed).toHaveBeenCalledTimes(1);
 
     expect(onChallengeCompleted).not.toHaveBeenCalled();
@@ -289,6 +293,16 @@ describe("ScenarioPlayer", () => {
     await waitFor(() => {
       expect(onChoiceConfirmed).toHaveBeenCalledTimes(1);
       expect(onChallengeCompleted).toHaveBeenCalledTimes(1);
+    });
+
+    await waitFor(() => {
+      expect(player).toHaveAttribute("data-completed-count", "1");
+    });
+
+    expect(onChallengeCompleted).toHaveBeenCalledWith({
+      scenarioId: "scenario-02",
+      scenarioVersion: 1,
+      challengeId: "scenario-02-challenge-01",
     });
 
     expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "summary");
@@ -557,4 +571,69 @@ it("supports multiple retries without completing the challenge", async () => {
   expect(
     screen.getByTestId("scenario-decision-choice-scenario-02-challenge-01-choice-03"),
   ).toHaveAttribute("data-previously-tried", "true");
+});
+
+it("restores completed challenges from the initial state", () => {
+  render(
+    <ScenarioPlayer
+      scenario={testScenario}
+      initialView="board"
+      initialCompletedChallengeIds={["scenario-02-challenge-01"]}
+    />,
+  );
+
+  const player = screen.getByTestId("scenario-player");
+
+  expect(player).toHaveAttribute("data-completed-count", "1");
+
+  expect(screen.getByTestId("scenario-board-hotspot-scenario-02-challenge-01")).toBeDisabled();
+
+  expect(screen.getByTestId("scenario-hotspot-scenario-02-challenge-01")).toHaveAttribute(
+    "data-hotspot-state",
+    "completed",
+  );
+});
+
+it("does not mark the challenge as completed when completion persistence fails", async () => {
+  const user = userEvent.setup();
+
+  const onChallengeCompleted = vi
+    .fn()
+    .mockRejectedValue(new Error("The challenge could not be saved."));
+
+  render(
+    <ScenarioPlayer
+      scenario={testScenario}
+      initialView="board"
+      onChallengeCompleted={onChallengeCompleted}
+    />,
+  );
+
+  await openChallengeDecision(user);
+
+  await user.click(
+    screen.getByRole("radio", {
+      name: /^Optimal choice/,
+    }),
+  );
+
+  await user.click(
+    screen.getByRole("button", {
+      name: "Confirm decision",
+    }),
+  );
+
+  await screen.findByTestId("scenario-correct-feedback");
+
+  await user.click(
+    screen.getByRole("button", {
+      name: "Continue",
+    }),
+  );
+
+  expect(await screen.findByRole("alert")).toHaveTextContent("The challenge could not be saved.");
+
+  expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-completed-count", "0");
+
+  expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "feedback");
 });

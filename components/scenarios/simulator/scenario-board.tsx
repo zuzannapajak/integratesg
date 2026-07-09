@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { ScenarioHotspot } from "@/components/scenarios/simulator/scenario-hotspot";
 import type { ChallengeProgressStatus, ResolvedChallenge } from "@/lib/scenarios/simulator/types";
+import { Check } from "lucide-react";
 
 export type ScenarioBoardItem = {
   readonly challenge: ResolvedChallenge;
@@ -172,13 +173,10 @@ export function ScenarioBoard({
       <button
         type="button"
         data-testid={`scenario-board-card-${challenge.id}`}
+        data-challenge-status={status}
+        data-completed={status === "completed"}
         disabled={!isOpenable}
         aria-current={isCurrentObjective ? "step" : undefined}
-        aria-label={
-          isOpenable
-            ? `${labels.openChallenge}: ${challenge.shortTitle}. ${statusLabel}.`
-            : `${challenge.shortTitle}. ${statusLabel}.`
-        }
         className={[
           "flex w-full items-start gap-3 rounded-[1.15rem] border px-4 py-3 text-left backdrop-blur-md transition",
           mobile ? "min-h-18" : "min-h-20",
@@ -202,7 +200,15 @@ export function ScenarioBoard({
             getNumberClasses(status, isCurrentObjective),
           ].join(" ")}
         >
-          {challenge.order}
+          {status === "completed" ? (
+            <Check
+              data-testid={`scenario-board-completed-icon-${challenge.id}`}
+              size={15}
+              strokeWidth={3}
+            />
+          ) : (
+            challenge.order
+          )}
         </span>
 
         <span className="min-w-0">

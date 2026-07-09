@@ -402,19 +402,29 @@ export function ScenarioPlayer({
       return;
     }
 
+    /*
+     * An incorrect response must never complete
+     * the current challenge.
+     */
     if (!selectedChoice.isOptimal) {
       tryAgain();
       return;
     }
 
+    const wasAlreadyCompleted = completedChallengeIds.has(currentChallenge.id);
+
     const nextCompletedChallengeIds = new Set(completedChallengeIds);
+
     nextCompletedChallengeIds.add(currentChallenge.id);
 
     setIsSubmitting(true);
     setErrorMessage(null);
 
     try {
-      if (mode === "play" && !completedChallengeIds.has(currentChallenge.id)) {
+      /*
+       * The completion event is sent only once.
+       */
+      if (mode === "play" && !wasAlreadyCompleted) {
         await onChallengeCompleted?.({
           scenarioId: scenario.id,
           scenarioVersion: scenario.version,
@@ -422,7 +432,16 @@ export function ScenarioPlayer({
         });
       }
 
+      /*
+       * Local state is changed only after the
+       * completion callback succeeds.
+       */
       setCompletedChallengeIds(nextCompletedChallengeIds);
+
+      /*
+       * Retry hints are no longer needed after
+       * completing this challenge.
+       */
       setRejectedChoiceIdsByChallenge((currentChoices) => {
         const nextChoices = {
           ...currentChoices,
@@ -432,6 +451,7 @@ export function ScenarioPlayer({
 
         return nextChoices;
       });
+
       setSelectedChoiceId(null);
       setCurrentChallengeId(null);
       setChallengeInitialStep("context");
@@ -621,6 +641,8 @@ export function ScenarioPlayer({
       data-view={view}
       data-mode={mode}
       data-background-image={backgroundImage}
+      data-completed-count={completedCount}
+      data-total-challenges={totalChallenges}
       className="flex min-h-0 flex-col overflow-hidden rounded-[1.65rem] border border-[#dfe5ec] bg-white shadow-[0_18px_50px_rgba(49,66,90,0.11)]"
       style={{
         height: "calc(100dvh - var(--app-topbar-height, 64px) - var(--scenario-player-gap, 16px))",
