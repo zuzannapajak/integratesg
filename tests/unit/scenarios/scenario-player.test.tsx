@@ -294,10 +294,20 @@ describe("ScenarioPlayer", () => {
     expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "summary");
   });
 
-  it("allows retrying after a non-optimal choice", async () => {
+  it("shows incorrect feedback and allows retrying the decision", async () => {
     const user = userEvent.setup();
 
-    render(<ScenarioPlayer scenario={testScenario} initialView="board" />);
+    const onChoiceConfirmed = vi.fn();
+    const onChallengeCompleted = vi.fn();
+
+    render(
+      <ScenarioPlayer
+        scenario={testScenario}
+        initialView="board"
+        onChoiceConfirmed={onChoiceConfirmed}
+        onChallengeCompleted={onChallengeCompleted}
+      />,
+    );
 
     await openChallengeDecision(user);
 
@@ -313,7 +323,28 @@ describe("ScenarioPlayer", () => {
       }),
     );
 
-    expect(await screen.findByText("Try another approach")).toBeVisible();
+    expect(
+      await screen.findByRole("heading", {
+        level: 2,
+        name: "Try another approach",
+      }),
+    ).toBeVisible();
+
+    expect(screen.getByTestId("scenario-incorrect-feedback")).toHaveAttribute(
+      "data-feedback-kind",
+      "incorrect",
+    );
+
+    expect(onChoiceConfirmed).toHaveBeenCalledWith({
+      scenarioId: "scenario-02",
+      scenarioVersion: 1,
+      challengeId: "scenario-02-challenge-01",
+      choiceId: "scenario-02-challenge-01-choice-01",
+      isOptimal: false,
+      attemptNumber: 1,
+    });
+
+    expect(onChallengeCompleted).not.toHaveBeenCalled();
 
     await user.click(
       screen.getByRole("button", {
@@ -323,18 +354,20 @@ describe("ScenarioPlayer", () => {
 
     await waitFor(() => {
       expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "challenge");
-
-      expect(screen.getByTestId("scenario-challenge")).toHaveAttribute(
-        "data-challenge-step",
-        "decision",
-      );
     });
+
+    expect(screen.getByTestId("scenario-challenge")).toHaveAttribute(
+      "data-challenge-step",
+      "decision",
+    );
 
     expect(
       screen.getByRole("button", {
         name: "Confirm decision",
       }),
     ).toBeDisabled();
+
+    expect(screen.getAllByRole("radio")).toHaveLength(3);
 
     expect(
       screen.getByRole("radio", {
@@ -372,5 +405,72 @@ describe("ScenarioPlayer", () => {
 
       expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "board");
     });
+  });
+});
+
+it("increments the attempt number after retrying", async () => {
+  const user = userEvent.setup();
+  const onChoiceConfirmed = vi.fn();
+
+  render(
+    <ScenarioPlayer
+      scenario={testScenario}
+      initialView="board"
+      onChoiceConfirmed={onChoiceConfirmed}
+    />,
+  );
+
+  await openChallengeDecision(user);
+
+  await user.click(
+    screen.getByRole("radio", {
+      name: /^Non-optimal choice/,
+    }),
+  );
+
+  await user.click(
+    screen.getByRole("button", {
+      name: "Confirm decision",
+    }),
+  );
+
+  await screen.findByTestId("scenario-incorrect-feedback");
+
+  await user.click(
+    screen.getByRole("button", {
+      name: "Try again",
+    }),
+  );
+
+  await user.click(
+    screen.getByRole("radio", {
+      name: /^Optimal choice/,
+    }),
+  );
+
+  await user.click(
+    screen.getByRole("button", {
+      name: "Confirm decision",
+    }),
+  );
+
+  await screen.findByTestId("scenario-correct-feedback");
+
+  expect(onChoiceConfirmed).toHaveBeenNthCalledWith(1, {
+    scenarioId: "scenario-02",
+    scenarioVersion: 1,
+    challengeId: "scenario-02-challenge-01",
+    choiceId: "scenario-02-challenge-01-choice-01",
+    isOptimal: false,
+    attemptNumber: 1,
+  });
+
+  expect(onChoiceConfirmed).toHaveBeenNthCalledWith(2, {
+    scenarioId: "scenario-02",
+    scenarioVersion: 1,
+    challengeId: "scenario-02-challenge-01",
+    choiceId: "scenario-02-challenge-01-choice-02",
+    isOptimal: true,
+    attemptNumber: 2,
   });
 });

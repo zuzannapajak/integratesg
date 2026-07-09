@@ -11,6 +11,7 @@ import {
   ScenarioChallengeStep,
 } from "@/components/scenarios/simulator/scenario-challenge";
 import { ScenarioCorrectFeedback } from "@/components/scenarios/simulator/scenario-correct-feedback";
+import { ScenarioIncorrectFeedback } from "@/components/scenarios/simulator/scenario-incorrect-feedback";
 import { ScenarioIntro } from "@/components/scenarios/simulator/scenario-intro";
 import type {
   ChallengeId,
@@ -62,8 +63,11 @@ export type ScenarioPlayerLabels = {
   readonly selectOneOption: string;
 
   readonly correctDecision: string;
+  readonly incorrectDecision: string;
   readonly yourDecision: string;
+  readonly whyItFallsShort: string;
   readonly expectedImpact: string;
+  readonly likelyConsequence: string;
   readonly keyTakeaway: string;
 
   readonly confirmDecision: string;
@@ -96,8 +100,11 @@ const DEFAULT_LABELS: ScenarioPlayerLabels = {
   selectOneOption: "Select one option",
 
   correctDecision: "Correct decision",
+  incorrectDecision: "Try another approach",
   yourDecision: "Your decision",
+  whyItFallsShort: "Why this approach falls short",
   expectedImpact: "Expected impact",
+  likelyConsequence: "Likely consequence",
   keyTakeaway: "Key takeaway",
 
   confirmDecision: "Confirm decision",
@@ -450,61 +457,29 @@ export function ScenarioPlayer({
       );
     }
 
-    const feedback = selectedChoice.feedback;
-
-    /*
-     * Temporary non-optimal feedback.
-     * It will be extracted into a separate component
-     * in the next implementation step.
-     */
     return (
-      <div className="absolute inset-0 flex items-end justify-end bg-[#17243a]/44 p-3 sm:p-4 lg:p-5">
-        <div className="max-h-full w-full overflow-y-auto rounded-3xl border border-white/40 bg-white/97 p-5 shadow-[0_24px_70px_rgba(23,36,58,0.3)] backdrop-blur-md sm:max-w-2xl sm:p-6">
-          <div className="inline-flex rounded-full bg-[#fff5ed] px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-[#c95417]">
-            {labels.tryAgain}
-          </div>
+      <ScenarioIncorrectFeedback
+        challenge={currentChallenge}
+        choice={selectedChoice}
+        isSubmitting={isSubmitting}
+        errorMessage={errorMessage}
+        labels={{
+          incorrectDecision: labels.incorrectDecision,
 
-          <h2 className="mt-4 text-xl font-semibold tracking-[-0.03em] text-[#31425a] sm:text-2xl">
-            {feedback.title ?? currentChallenge.title}
-          </h2>
+          yourDecision: labels.yourDecision,
 
-          <MarkdownContent className="mt-4">{feedback.body}</MarkdownContent>
+          whyItFallsShort: labels.whyItFallsShort,
 
-          {feedback.consequence ? (
-            <div className="mt-5 rounded-2xl border border-[#dfe5ec] bg-[#f8fafc] p-4">
-              <h3 className="text-sm font-semibold text-[#31425a]">Consequence</h3>
+          likelyConsequence: labels.likelyConsequence,
 
-              <MarkdownContent className="mt-2">{feedback.consequence}</MarkdownContent>
-            </div>
-          ) : null}
+          keyTakeaway: labels.keyTakeaway,
 
-          {feedback.takeaway ? (
-            <div className="mt-4 rounded-2xl border border-[#0d6fe8]/15 bg-[#eef5ff] p-4">
-              <h3 className="text-sm font-semibold text-[#0d5dbf]">Key takeaway</h3>
+          tryAgain: labels.tryAgain,
 
-              <MarkdownContent className="mt-2">{feedback.takeaway}</MarkdownContent>
-            </div>
-          ) : null}
-
-          {errorMessage ? (
-            <div
-              role="alert"
-              className="mt-4 rounded-xl border border-[#f1c9c9] bg-[#fff6f6] px-4 py-3 text-sm leading-6 text-[#9f3c3c]"
-            >
-              {errorMessage}
-            </div>
-          ) : null}
-
-          <button
-            type="button"
-            disabled={isSubmitting}
-            className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-[#0d6fe8] px-6 text-sm font-semibold text-white transition hover:bg-[#095fc8] disabled:cursor-not-allowed disabled:opacity-50"
-            onClick={() => void continueAfterFeedback()}
-          >
-            {isSubmitting ? labels.loading : labels.tryAgain}
-          </button>
-        </div>
-      </div>
+          loading: labels.loading,
+        }}
+        onTryAgain={tryAgain}
+      />
     );
   }
 
