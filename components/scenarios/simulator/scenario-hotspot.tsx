@@ -1,7 +1,6 @@
 "use client";
 
-import { Check, LockKeyhole, Play } from "lucide-react";
-import type { ReactNode } from "react";
+import { Check, LockKeyhole } from "lucide-react";
 
 import type { ChallengeProgressStatus, ResolvedChallenge } from "@/lib/scenarios/simulator/types";
 
@@ -25,17 +24,11 @@ export const DEFAULT_SCENARIO_HOTSPOT_LABELS: ScenarioHotspotLabels = {
 
 export type ScenarioHotspotProps = {
   readonly challenge: ResolvedChallenge;
-
   readonly status: ChallengeProgressStatus;
-
-  /**
-   * Marks the challenge that should currently receive
-   * the learner's attention.
-   */
   readonly isCurrentObjective?: boolean;
-
   readonly labels?: Partial<ScenarioHotspotLabels>;
 
+  readonly onPreviewChange?: (isPreviewed: boolean) => void;
   readonly onSelect: () => void;
 };
 
@@ -53,6 +46,10 @@ function getStatusLabel(status: ChallengeProgressStatus, labels: ScenarioHotspot
     case "locked":
       return labels.locked;
   }
+}
+
+function isChallengeOpenable(status: ChallengeProgressStatus): boolean {
+  return status === "available" || status === "in_progress";
 }
 
 function getVisualState(
@@ -74,106 +71,41 @@ function getVisualState(
   return "available";
 }
 
-function getButtonClasses(
-  status: ChallengeProgressStatus,
-  visualState: ScenarioHotspotVisualState,
-): string {
-  if (visualState === "completed") {
-    return [
-      "border-[#0b9c72]",
-      "bg-[#0b9c72]",
-      "text-white",
-      "shadow-[0_12px_34px_rgba(11,156,114,0.34)]",
-    ].join(" ");
-  }
-
-  if (visualState === "locked") {
-    return [
-      "border-[#aeb8c5]",
-      "bg-[#e9edf1]",
-      "text-[#778391]",
-      "shadow-[0_8px_22px_rgba(49,66,90,0.18)]",
-    ].join(" ");
-  }
-
-  if (visualState === "active" && status === "in_progress") {
-    return [
-      "border-[#0d7fc2]",
-      "bg-[#0d7fc2]",
-      "text-white",
-      "shadow-[0_14px_38px_rgba(13,127,194,0.38)]",
-      "ring-4",
-      "ring-[#0d7fc2]/25",
-    ].join(" ");
-  }
-
-  if (visualState === "active") {
-    return [
-      "border-[#ef6c23]",
-      "bg-[#ef6c23]",
-      "text-white",
-      "shadow-[0_14px_38px_rgba(239,108,35,0.36)]",
-      "ring-4",
-      "ring-[#ef6c23]/25",
-    ].join(" ");
-  }
-
-  return [
-    "border-[#0d7fc2]",
-    "bg-white",
-    "text-[#0d6fa7]",
-    "shadow-[0_10px_28px_rgba(13,127,194,0.24)]",
-  ].join(" ");
-}
-
-function getLabelClasses(visualState: ScenarioHotspotVisualState): string {
+function getButtonClasses(visualState: ScenarioHotspotVisualState): string {
   switch (visualState) {
+    case "completed":
+      return [
+        "border-white",
+        "bg-[#0b9c72]",
+        "text-white",
+        "shadow-[0_12px_32px_rgba(11,156,114,0.34)]",
+      ].join(" ");
+
     case "active":
-      return "border-white/45 bg-[#17243a]/94 text-white";
-
-    case "completed":
-      return "border-[#0b9c72]/25 bg-[#ecf8f4]/95 text-[#087658]";
-
-    case "available":
-      return "border-[#0d7fc2]/20 bg-white/95 text-[#31425a]";
-
-    case "locked":
-      return "border-[#cfd7e0] bg-[#eef1f4]/95 text-[#6f7b89]";
-  }
-}
-
-function getLabelPositionClasses(
-  labelSide: ResolvedChallenge["hotspot"]["labelSide"] | undefined,
-): string {
-  switch (labelSide) {
-    case "top":
-      return ["bottom-full", "left-1/2", "mb-3", "-translate-x-1/2"].join(" ");
-
-    case "right":
-      return ["left-full", "top-1/2", "ml-3", "-translate-y-1/2"].join(" ");
-
-    case "left":
-      return ["right-full", "top-1/2", "mr-3", "-translate-y-1/2"].join(" ");
-
-    case "bottom":
-    default:
-      return ["left-1/2", "top-full", "mt-3", "-translate-x-1/2"].join(" ");
-  }
-}
-
-function getStatusIcon(status: ChallengeProgressStatus, order: number): ReactNode {
-  switch (status) {
-    case "completed":
-      return <Check aria-hidden="true" size={22} strokeWidth={3} />;
-
-    case "in_progress":
-      return <Play aria-hidden="true" size={19} fill="currentColor" />;
-
-    case "locked":
-      return <LockKeyhole aria-hidden="true" size={19} />;
+      return [
+        "border-white",
+        "bg-[#0d6fe8]",
+        "text-white",
+        "shadow-[0_14px_36px_rgba(13,111,232,0.42)]",
+        "ring-4",
+        "ring-[#0d6fe8]/22",
+      ].join(" ");
 
     case "available":
-      return order;
+      return [
+        "border-white",
+        "bg-white",
+        "text-[#0d6fe8]",
+        "shadow-[0_12px_30px_rgba(23,36,58,0.24)]",
+      ].join(" ");
+
+    case "locked":
+      return [
+        "border-white",
+        "bg-[#7e8792]",
+        "text-white",
+        "shadow-[0_10px_26px_rgba(23,36,58,0.22)]",
+      ].join(" ");
   }
 }
 
@@ -182,6 +114,7 @@ export function ScenarioHotspot({
   status,
   isCurrentObjective = false,
   labels: customLabels,
+  onPreviewChange,
   onSelect,
 }: ScenarioHotspotProps) {
   const labels = {
@@ -193,63 +126,70 @@ export function ScenarioHotspot({
 
   const visualState = getVisualState(status, isCurrentObjective);
 
-  const isLocked = status === "locked";
+  const isOpenable = isChallengeOpenable(status);
 
-  const shouldPulse = visualState === "active" && status !== "completed";
+  const shouldPulse = visualState === "active" && isOpenable;
 
   return (
     <div
       data-testid={`scenario-hotspot-${challenge.id}`}
       data-hotspot-state={visualState}
       data-challenge-status={status}
-      className="group absolute z-20 hidden -translate-x-1/2 -translate-y-1/2 md:block"
+      className="absolute z-20 hidden -translate-x-1/2 -translate-y-1/2 md:block"
       style={{
         left: `${challenge.hotspot.x}%`,
         top: `${challenge.hotspot.y}%`,
       }}
+      onMouseEnter={() => {
+        onPreviewChange?.(true);
+      }}
+      onMouseLeave={() => {
+        onPreviewChange?.(false);
+      }}
     >
-      <div className="relative h-14 w-14">
+      <div className="relative h-15 w-15">
         {shouldPulse ? (
           <span
             aria-hidden="true"
-            className={[
-              "pointer-events-none absolute inset-0 rounded-full opacity-40 motion-safe:animate-ping",
-              status === "in_progress" ? "bg-[#0d7fc2]" : "bg-[#ef6c23]",
-            ].join(" ")}
+            className="pointer-events-none absolute inset-0 rounded-full bg-[#0d6fe8] opacity-35 motion-safe:animate-ping"
           />
         ) : null}
 
         <button
           type="button"
           data-testid={`scenario-board-hotspot-${challenge.id}`}
-          disabled={isLocked}
-          aria-current={isCurrentObjective ? "step" : undefined}
+          disabled={!isOpenable}
+          aria-current={isCurrentObjective && isOpenable ? "step" : undefined}
           aria-label={`${labels.mapPoint}: ${challenge.shortTitle}. ${statusLabel}.`}
           className={[
-            "relative flex h-14 w-14 items-center justify-center rounded-full border-4 border-white text-base font-bold transition",
-            "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d7fc2]",
-            getButtonClasses(status, visualState),
-            isLocked ? "cursor-not-allowed" : "hover:scale-110 active:scale-95",
+            "relative flex h-15 w-15 items-center justify-center rounded-full border-4 text-xl font-semibold transition",
+            "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-white/85 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d6fe8]",
+            getButtonClasses(visualState),
+            isOpenable ? "cursor-pointer hover:scale-105 active:scale-95" : "cursor-default",
           ].join(" ")}
+          onFocus={() => {
+            onPreviewChange?.(true);
+          }}
+          onBlur={() => {
+            onPreviewChange?.(false);
+          }}
           onClick={onSelect}
         >
-          {getStatusIcon(status, challenge.order)}
+          {status === "completed" ? (
+            <Check aria-hidden="true" size={25} strokeWidth={3} />
+          ) : (
+            challenge.order
+          )}
         </button>
-      </div>
 
-      <div
-        aria-hidden="true"
-        className={[
-          "pointer-events-none absolute z-30 w-max max-w-56 rounded-[0.9rem] border px-3 py-2 shadow-[0_12px_30px_rgba(23,36,58,0.26)] backdrop-blur-md transition",
-          getLabelClasses(visualState),
-          getLabelPositionClasses(challenge.hotspot.labelSide),
-        ].join(" ")}
-      >
-        <p className="text-sm font-semibold leading-5">{challenge.shortTitle}</p>
-
-        <p className="mt-0.5 text-[0.68rem] font-semibold uppercase tracking-[0.09em] opacity-75">
-          {statusLabel}
-        </p>
+        {status === "locked" ? (
+          <span
+            aria-hidden="true"
+            className="absolute -right-1 -top-1 flex h-7 w-7 items-center justify-center rounded-full border-2 border-white bg-[#7e8792] text-white shadow-md"
+          >
+            <LockKeyhole size={14} strokeWidth={2.4} />
+          </span>
+        ) : null}
       </div>
     </div>
   );

@@ -1,8 +1,7 @@
 "use client";
 
-import { Check, LockKeyhole, Play } from "lucide-react";
 import Image from "next/image";
-import type { ReactNode } from "react";
+import { useState } from "react";
 
 import { ScenarioHotspot } from "@/components/scenarios/simulator/scenario-hotspot";
 import type { ChallengeProgressStatus, ResolvedChallenge } from "@/lib/scenarios/simulator/types";
@@ -43,7 +42,6 @@ export type ScenarioBoardProps = {
   readonly boardAlt: string;
   readonly scenarioTitle: string;
   readonly items: readonly ScenarioBoardItem[];
-
   readonly labels?: Partial<ScenarioBoardLabels>;
 
   readonly onSelectChallenge: (challenge: ResolvedChallenge, challengeIndex: number) => void;
@@ -65,41 +63,60 @@ function getStatusLabel(status: ChallengeProgressStatus, labels: ScenarioBoardLa
   }
 }
 
-function getCardClasses(status: ChallengeProgressStatus): string {
-  switch (status) {
-    case "completed":
-      return ["border-[#0b9c72]/25", "bg-[#ecf8f4]", "text-[#087658]"].join(" ");
-
-    case "in_progress":
-      return [
-        "border-[#0d7fc2]/30",
-        "bg-[#eef7fd]",
-        "text-[#0d6fa7]",
-        "shadow-[0_10px_28px_rgba(13,127,194,0.14)]",
-      ].join(" ");
-
-    case "available":
-      return ["border-[#ef6c23]/30", "bg-[#fff5ed]", "text-[#c95417]"].join(" ");
-
-    case "locked":
-      return ["border-[#d9e1ea]", "bg-[#f4f6f8]", "text-[#7a8594]"].join(" ");
-  }
+function isChallengeOpenable(status: ChallengeProgressStatus): boolean {
+  return status === "available" || status === "in_progress";
 }
 
-function getStatusIcon(status: ChallengeProgressStatus, order: number): ReactNode {
-  switch (status) {
-    case "completed":
-      return <Check aria-hidden="true" size={22} strokeWidth={3} />;
-
-    case "in_progress":
-      return <Play aria-hidden="true" size={20} fill="currentColor" />;
-
-    case "locked":
-      return <LockKeyhole aria-hidden="true" size={19} />;
-
-    case "available":
-      return order;
+function getCardClasses(status: ChallengeProgressStatus, isCurrentObjective: boolean): string {
+  if (status === "completed") {
+    return [
+      "border-[#0b9c72]/30",
+      "bg-white/97",
+      "text-[#31425a]",
+      "shadow-[0_16px_40px_rgba(23,36,58,0.16)]",
+    ].join(" ");
   }
+
+  if (isCurrentObjective || status === "in_progress") {
+    return [
+      "border-[#0d6fe8]/40",
+      "bg-white/98",
+      "text-[#31425a]",
+      "shadow-[0_18px_44px_rgba(13,111,232,0.22)]",
+    ].join(" ");
+  }
+
+  if (status === "available") {
+    return [
+      "border-[#d8e0ea]",
+      "bg-white/97",
+      "text-[#31425a]",
+      "shadow-[0_16px_40px_rgba(23,36,58,0.16)]",
+    ].join(" ");
+  }
+
+  return [
+    "border-[#dfe5ec]",
+    "bg-white/95",
+    "text-[#7a8594]",
+    "shadow-[0_14px_36px_rgba(23,36,58,0.14)]",
+  ].join(" ");
+}
+
+function getNumberClasses(status: ChallengeProgressStatus, isCurrentObjective: boolean): string {
+  if (status === "completed") {
+    return "border-[#0b9c72] bg-[#0b9c72] text-white";
+  }
+
+  if (isCurrentObjective || status === "in_progress") {
+    return "border-[#0d6fe8] bg-[#0d6fe8] text-white";
+  }
+
+  if (status === "locked") {
+    return "border-[#8b949e] bg-[#7e8792] text-white";
+  }
+
+  return "border-[#d3dbe5] bg-[#eef2f6] text-[#596170]";
 }
 
 export function ScenarioBoard({
@@ -110,25 +127,112 @@ export function ScenarioBoard({
   labels: customLabels,
   onSelectChallenge,
 }: ScenarioBoardProps) {
+  const [previewedChallengeIndex, setPreviewedChallengeIndex] = useState<number | null>(null);
+
   const labels = {
     ...DEFAULT_SCENARIO_BOARD_LABELS,
     ...customLabels,
   };
 
-  const currentObjective =
-    items.find(({ status }) => status === "in_progress") ??
-    items.find(({ status }) => status === "available") ??
-    null;
+  const inProgressIndex = items.findIndex(({ status }) => status === "in_progress");
 
-  const allCompleted = items.length > 0 && items.every(({ status }) => status === "completed");
+  const firstAvailableIndex = items.findIndex(({ status }) => status === "available");
+
+  const effectiveCurrentObjectiveIndex =
+    inProgressIndex >= 0 ? inProgressIndex : firstAvailableIndex;
+
+  const mobileChallengeIndex =
+    effectiveCurrentObjectiveIndex >= 0
+      ? effectiveCurrentObjectiveIndex
+      : items.findIndex(({ status }) => status === "completed");
+
+  function openChallenge(
+    challenge: ResolvedChallenge,
+    challengeIndex: number,
+    status: ChallengeProgressStatus,
+  ) {
+    if (!isChallengeOpenable(status)) {
+      return;
+    }
+
+    onSelectChallenge(challenge, challengeIndex);
+  }
+
+  function renderChallengeCard(item: ScenarioBoardItem, challengeIndex: number, mobile = false) {
+    const { challenge, status } = item;
+
+    const isOpenable = isChallengeOpenable(status);
+
+    const isCurrentObjective =
+      effectiveCurrentObjectiveIndex === challengeIndex && status !== "completed";
+
+    const statusLabel = getStatusLabel(status, labels);
+
+    return (
+      <button
+        type="button"
+        data-testid={`scenario-board-card-${challenge.id}`}
+        disabled={!isOpenable}
+        aria-current={isCurrentObjective ? "step" : undefined}
+        aria-label={
+          isOpenable
+            ? `${labels.openChallenge}: ${challenge.shortTitle}. ${statusLabel}.`
+            : `${challenge.shortTitle}. ${statusLabel}.`
+        }
+        className={[
+          "flex w-full items-start gap-3 rounded-[1.15rem] border px-4 py-3 text-left backdrop-blur-md transition",
+          mobile ? "min-h-18" : "min-h-20",
+          "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#0d6fe8]/25",
+          getCardClasses(status, isCurrentObjective),
+          isOpenable
+            ? "cursor-pointer hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0"
+            : "cursor-default",
+        ].join(" ")}
+        onFocus={() => {
+          setPreviewedChallengeIndex(challengeIndex);
+        }}
+        onClick={() => {
+          openChallenge(challenge, challengeIndex, status);
+        }}
+      >
+        <span
+          aria-hidden="true"
+          className={[
+            "mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border text-xs font-bold",
+            getNumberClasses(status, isCurrentObjective),
+          ].join(" ")}
+        >
+          {challenge.order}
+        </span>
+
+        <span className="min-w-0">
+          <span className="block text-sm font-semibold leading-5">{challenge.shortTitle}</span>
+
+          <span
+            className={[
+              "mt-1 block text-xs leading-5",
+              isCurrentObjective
+                ? "font-medium text-[#0d6fe8]"
+                : status === "completed"
+                  ? "font-medium text-[#087658]"
+                  : "text-[#7a8594]",
+            ].join(" ")}
+          >
+            {statusLabel}
+          </span>
+        </span>
+      </button>
+    );
+  }
 
   return (
     <section
       data-testid="scenario-board"
       data-background-image={backgroundImage}
       aria-label={labels.title}
+      className="h-full min-h-0 bg-[#eef2f6]"
     >
-      <div className="relative aspect-video min-h-90 overflow-hidden bg-[#eef2f6] sm:min-h-0">
+      <div className="relative h-full min-h-0 overflow-hidden">
         <Image
           src={backgroundImage}
           alt=""
@@ -139,24 +243,68 @@ export function ScenarioBoard({
         />
 
         <p className="sr-only">{boardAlt}</p>
+        <h2 className="sr-only">{scenarioTitle}</h2>
 
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-linear-to-t from-[#17243a]/35 via-transparent to-[#17243a]/10"
+          className="pointer-events-none absolute inset-0 bg-linear-to-t from-[#17243a]/18 via-transparent to-white/5"
         />
 
-        <div className="absolute left-4 top-4 z-10 max-w-sm rounded-2xl border border-white/40 bg-white/92 px-4 py-3 shadow-[0_12px_32px_rgba(23,36,58,0.18)] backdrop-blur-md sm:left-6 sm:top-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#0d7fc2]">
-            {labels.title}
-          </p>
+        {/*
+         * Niewidoczne strefy podglądu.
+         * Każdy challenge zajmuje równą część szerokości planszy.
+         * Najechanie pokazuje kartę, ale nie otwiera challenge'u.
+         */}
+        <div
+          className="absolute inset-0 z-10 hidden md:grid"
+          style={{
+            gridTemplateColumns: `repeat(${Math.max(items.length, 1)}, minmax(0, 1fr))`,
+          }}
+          onMouseLeave={() => {
+            setPreviewedChallengeIndex(null);
+          }}
+        >
+          {items.map((item, challengeIndex) => {
+            const isPreviewed = previewedChallengeIndex === challengeIndex;
 
-          <h2 className="mt-1 text-base font-semibold leading-6 text-[#31425a] sm:text-lg">
-            {scenarioTitle}
-          </h2>
+            const zoneWidth = 100 / Math.max(items.length, 1);
+            const zoneStart = challengeIndex * zoneWidth;
 
-          <p className="mt-1 hidden text-xs leading-5 text-[#667180] sm:block">
-            {labels.description}
-          </p>
+            const cardPositionInZone = ((item.challenge.hotspot.x - zoneStart) / zoneWidth) * 100;
+
+            return (
+              <div
+                key={item.challenge.id}
+                data-testid={`scenario-board-preview-zone-${item.challenge.id}`}
+                className="relative min-w-0"
+                onMouseEnter={() => {
+                  setPreviewedChallengeIndex(challengeIndex);
+                }}
+              >
+                <div
+                  aria-hidden="true"
+                  className={[
+                    "pointer-events-none absolute inset-0 transition-colors duration-200",
+                    isPreviewed ? "bg-white/2.5" : "bg-transparent",
+                  ].join(" ")}
+                />
+
+                <div
+                  className={[
+                    "pointer-events-none absolute bottom-10 z-30 w-[min(24rem,calc(100vw-2rem))] -translate-x-1/2 transition-all duration-200 ease-out",
+                    isPreviewed ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0",
+                  ].join(" ")}
+                  style={{
+                    left: `${cardPositionInZone}%`,
+                  }}
+                >
+                  <div className="pointer-events-auto w-full">
+                    {renderChallengeCard(item, challengeIndex)}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
         {items.map(({ challenge, status }, challengeIndex) => (
@@ -165,7 +313,7 @@ export function ScenarioBoard({
             challenge={challenge}
             status={status}
             isCurrentObjective={
-              currentObjective?.challenge.id === challenge.id && status !== "completed"
+              effectiveCurrentObjectiveIndex === challengeIndex && status !== "completed"
             }
             labels={{
               mapPoint: labels.mapPoint,
@@ -174,80 +322,24 @@ export function ScenarioBoard({
               inProgress: labels.inProgress,
               locked: labels.locked,
             }}
+            onPreviewChange={(isPreviewed) => {
+              setPreviewedChallengeIndex(isPreviewed ? challengeIndex : null);
+            }}
             onSelect={() => {
-              onSelectChallenge(challenge, challengeIndex);
+              openChallenge(challenge, challengeIndex, status);
             }}
           />
         ))}
 
-        <div className="absolute bottom-4 left-4 right-4 z-10 hidden justify-end md:flex">
-          <div className="rounded-full border border-white/35 bg-[#17243a]/80 px-4 py-2 text-xs font-medium text-white shadow-lg backdrop-blur-md">
-            {allCompleted
-              ? labels.allCompleted
-              : currentObjective
-                ? `${labels.currentObjective}: ${currentObjective.challenge.shortTitle}`
-                : labels.description}
+        {/*
+         * Na urządzeniach dotykowych nie ma hovera.
+         * Pokazujemy więc wyłącznie kartę aktualnego challenge'u.
+         */}
+        {mobileChallengeIndex >= 0 && items[mobileChallengeIndex] ? (
+          <div className="absolute inset-x-4 bottom-4 z-30 md:hidden">
+            {renderChallengeCard(items[mobileChallengeIndex], mobileChallengeIndex, true)}
           </div>
-        </div>
-      </div>
-
-      <div className="border-t border-[#e7ebf0] bg-white p-4 sm:p-6">
-        <div className="mb-4 md:hidden">
-          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#0d7fc2]">
-            {labels.title}
-          </p>
-
-          <p className="mt-1 text-sm leading-6 text-[#667180]">
-            {allCompleted
-              ? labels.allCompleted
-              : currentObjective
-                ? `${labels.currentObjective}: ${currentObjective.challenge.shortTitle}`
-                : labels.description}
-          </p>
-        </div>
-
-        <div className="grid gap-3 md:grid-cols-3">
-          {items.map(({ challenge, status }, challengeIndex) => {
-            const isLocked = status === "locked";
-
-            const statusLabel = getStatusLabel(status, labels);
-
-            return (
-              <button
-                key={challenge.id}
-                type="button"
-                data-testid={`scenario-board-card-${challenge.id}`}
-                disabled={isLocked}
-                aria-label={`${labels.openChallenge}: ${challenge.shortTitle}. ${statusLabel}.`}
-                className={[
-                  "flex min-h-24 items-center gap-4 rounded-[1.15rem] border p-4 text-left transition",
-                  "focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#0d7fc2]/25",
-                  getCardClasses(status),
-                  isLocked
-                    ? "cursor-not-allowed opacity-90"
-                    : "hover:-translate-y-0.5 hover:shadow-md active:translate-y-0",
-                ].join(" ")}
-                onClick={() => {
-                  onSelectChallenge(challenge, challengeIndex);
-                }}
-              >
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-current/20 bg-white/75 text-sm font-bold">
-                  {getStatusIcon(status, challenge.order)}
-                </span>
-
-                <span className="min-w-0">
-                  <span className="block text-sm font-semibold leading-5">
-                    {challenge.shortTitle}
-                  </span>
-
-                  <span className="mt-1 block text-xs font-medium uppercase tracking-[0.08em] opacity-75">
-                    {statusLabel}
-                  </span>
-                </span>
-              </button>
-            );
-          })}
-        </div>
+        ) : null}
       </div>
     </section>
   );

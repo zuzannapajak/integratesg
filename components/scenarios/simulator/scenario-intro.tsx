@@ -44,15 +44,10 @@ export const DEFAULT_SCENARIO_INTRO_LABELS: ScenarioIntroLabels = {
 
 export type ScenarioIntroProps = {
   readonly scenario: ResolvedScenario;
-
   readonly labels?: Partial<ScenarioIntroLabels>;
-
   readonly isStarting?: boolean;
-
   readonly errorMessage?: string | null;
-
   readonly onStart: () => void | Promise<void>;
-
   readonly onExit?: () => void;
 };
 
@@ -62,15 +57,12 @@ function MarkdownContent({ children }: { readonly children: string }) {
       <ReactMarkdown
         components={{
           p: ({ children: paragraphChildren }) => <p>{paragraphChildren}</p>,
-
           ul: ({ children: listChildren }) => (
             <ul className="list-disc space-y-2 pl-5">{listChildren}</ul>
           ),
-
           ol: ({ children: listChildren }) => (
             <ol className="list-decimal space-y-2 pl-5">{listChildren}</ol>
           ),
-
           strong: ({ children: strongChildren }) => (
             <strong className="font-semibold text-[#31425a]">{strongChildren}</strong>
           ),
@@ -97,12 +89,12 @@ function IntroProgress({
 
       <div className="flex items-center gap-3">
         <div aria-hidden="true" className="flex items-center gap-1.5">
-          <span className="h-2 w-7 rounded-full bg-[#0d7fc2]" />
+          <span className="h-2 w-7 rounded-full bg-[#0d6fe8]" />
 
           <span
             className={[
               "h-2 w-7 rounded-full transition-colors",
-              step === 2 ? "bg-[#0d7fc2]" : "bg-[#d9e1ea]",
+              step === 2 ? "bg-[#0d6fe8]" : "bg-[#d9e1ea]",
             ].join(" ")}
           />
         </div>
@@ -138,29 +130,21 @@ function ScenarioIntroContent({
 
   const challengeCount = scenario.challenges.length;
 
-  function showObjectives() {
-    setStep(2);
-  }
-
-  function showContext() {
-    setStep(1);
-  }
-
   return (
     <div
       data-testid="scenario-intro"
       data-intro-step={step}
       aria-busy={isStarting}
-      className="absolute inset-0 bg-linear-to-t from-[#17243a]/90 via-[#17243a]/35 to-[#17243a]/5"
+      className="absolute inset-0 bg-linear-to-t from-[#17243a]/86 via-[#17243a]/28 to-[#17243a]/4"
     >
-      <div className="flex min-h-full items-center justify-center p-3 sm:p-5 lg:p-7">
-        <article className="w-full max-w-4xl rounded-3xl border border-white/35 bg-white/95 p-5 shadow-[0_24px_70px_rgba(23,36,58,0.3)] backdrop-blur-md sm:p-6 lg:p-7">
+      <div className="flex h-full min-h-0 items-center justify-center p-3 sm:p-4 lg:p-5">
+        <article className="max-h-full w-full max-w-4xl overflow-y-auto rounded-3xl border border-white/35 bg-white/96 p-5 shadow-[0_24px_70px_rgba(23,36,58,0.3)] backdrop-blur-md sm:p-6 lg:p-7">
           <IntroProgress step={step} labels={labels} />
 
           {step === 1 ? (
             <>
               <header className="mt-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#0d7fc2]">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#0d6fe8]">
                   Scenario {scenario.order}
                 </p>
 
@@ -183,7 +167,7 @@ function ScenarioIntroContent({
                   <div className="flex items-center gap-3">
                     <span
                       aria-hidden="true"
-                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eef7fd] text-[#0d7fc2]"
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eef5ff] text-[#0d6fe8]"
                     >
                       <Target size={18} />
                     </span>
@@ -254,11 +238,10 @@ function ScenarioIntroContent({
                 {onExit ? (
                   <button
                     type="button"
-                    className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-[#d9e1ea] bg-white px-5 text-sm font-semibold text-[#31425a] transition hover:bg-[#f4f8fc] sm:w-auto"
+                    className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-[#d9e1ea] bg-white px-5 text-sm font-semibold text-[#31425a] transition hover:bg-[#f4f8fc] sm:w-auto"
                     onClick={onExit}
                   >
                     <ArrowLeft aria-hidden="true" size={17} />
-
                     {labels.backToScenarios}
                   </button>
                 ) : (
@@ -267,11 +250,12 @@ function ScenarioIntroContent({
 
                 <button
                   type="button"
-                  className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[#31425a] px-6 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(49,66,90,0.2)] transition hover:-translate-y-0.5 hover:bg-[#243246] sm:w-auto"
-                  onClick={showObjectives}
+                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[#0d6fe8] px-6 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,111,232,0.22)] transition hover:-translate-y-0.5 hover:bg-[#095fc8] sm:w-auto"
+                  onClick={() => {
+                    setStep(2);
+                  }}
                 >
                   {labels.continue}
-
                   <ArrowRight aria-hidden="true" size={17} />
                 </button>
               </footer>
@@ -279,7 +263,7 @@ function ScenarioIntroContent({
           ) : (
             <>
               <header className="mt-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#0d7fc2]">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#0d6fe8]">
                   Scenario {scenario.order}
                 </p>
 
@@ -299,7 +283,7 @@ function ScenarioIntroContent({
                   {scenario.objectives.map((objective, index) => (
                     <li
                       key={`${index}-${objective}`}
-                      className="flex min-h-32 flex-col rounded-[1.1rem] border border-[#e2e8ef] bg-[#f8fafc] p-4"
+                      className="flex min-h-30 flex-col rounded-[1.1rem] border border-[#e2e8ef] bg-[#f8fafc] p-4"
                     >
                       <span
                         aria-hidden="true"
@@ -319,7 +303,7 @@ function ScenarioIntroContent({
               <section aria-label="Scenario information" className="mt-5 flex flex-wrap gap-3">
                 {scenario.estimatedDurationMinutes !== null ? (
                   <div className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[#dfe5ec] bg-white px-4 text-sm font-medium text-[#596170]">
-                    <Clock3 aria-hidden="true" size={16} className="text-[#0d7fc2]" />
+                    <Clock3 aria-hidden="true" size={16} className="text-[#0d6fe8]" />
 
                     <span>
                       {labels.estimatedDuration}:{" "}
@@ -332,9 +316,7 @@ function ScenarioIntroContent({
 
                 <div className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[#dfe5ec] bg-white px-4 text-sm font-medium text-[#596170]">
                   <Target aria-hidden="true" size={16} className="text-[#ef6c23]" />
-
                   <strong className="font-semibold text-[#31425a]">{challengeCount}</strong>
-
                   <span>{labels.challenges}</span>
                 </div>
               </section>
@@ -352,22 +334,22 @@ function ScenarioIntroContent({
                 <button
                   type="button"
                   disabled={isStarting}
-                  className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full border border-[#d9e1ea] bg-white px-5 text-sm font-semibold text-[#31425a] transition hover:bg-[#f4f8fc] disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
-                  onClick={showContext}
+                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-[#d9e1ea] bg-white px-5 text-sm font-semibold text-[#31425a] transition hover:bg-[#f4f8fc] disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+                  onClick={() => {
+                    setStep(1);
+                  }}
                 >
                   <ArrowLeft aria-hidden="true" size={17} />
-
                   {labels.back}
                 </button>
 
                 <button
                   type="button"
                   disabled={isStarting}
-                  className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[#31425a] px-6 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(49,66,90,0.2)] transition hover:-translate-y-0.5 hover:bg-[#243246] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:w-auto"
+                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[#0d6fe8] px-6 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,111,232,0.22)] transition hover:-translate-y-0.5 hover:bg-[#095fc8] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:w-auto"
                   onClick={() => void onStart()}
                 >
                   {isStarting ? labels.starting : labels.startScenario}
-
                   {!isStarting ? <ArrowRight aria-hidden="true" size={17} /> : null}
                 </button>
               </footer>

@@ -1,5 +1,6 @@
 "use client";
 
+import { Leaf } from "lucide-react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
@@ -46,6 +47,7 @@ export type ScenarioCompletedEvent = {
 export type ScenarioPlayerLabels = {
   readonly startScenario: string;
   readonly viewChallenges: string;
+  readonly openChallenge: string;
   readonly backToBoard: string;
   readonly confirmDecision: string;
   readonly tryAgain: string;
@@ -66,6 +68,7 @@ export type ScenarioPlayerLabels = {
 const DEFAULT_LABELS: ScenarioPlayerLabels = {
   startScenario: "Start scenario",
   viewChallenges: "View challenges",
+  openChallenge: "Open challenge",
   backToBoard: "Back to challenges",
   confirmDecision: "Confirm decision",
   tryAgain: "Try again",
@@ -85,25 +88,15 @@ const DEFAULT_LABELS: ScenarioPlayerLabels = {
 
 export type ScenarioPlayerProps = {
   readonly scenario: ResolvedScenario;
-
   readonly mode?: ScenarioPlayerMode;
-
   readonly initialView?: ScenarioPlayerView;
-
   readonly initialChallengeId?: ChallengeId | null;
-
   readonly initialCompletedChallengeIds?: readonly ChallengeId[];
-
   readonly labels?: Partial<ScenarioPlayerLabels>;
-
   readonly onScenarioStarted?: (event: ScenarioStartedEvent) => void | Promise<void>;
-
   readonly onChoiceConfirmed?: (event: ScenarioChoiceConfirmedEvent) => void | Promise<void>;
-
   readonly onChallengeCompleted?: (event: ScenarioChallengeCompletedEvent) => void | Promise<void>;
-
   readonly onScenarioCompleted?: (event: ScenarioCompletedEvent) => void | Promise<void>;
-
   readonly onExit?: () => void;
 };
 
@@ -121,15 +114,12 @@ function MarkdownContent({
       <ReactMarkdown
         components={{
           p: ({ children: paragraphChildren }) => <p>{paragraphChildren}</p>,
-
           ul: ({ children: listChildren }) => (
             <ul className="list-disc space-y-2 pl-5">{listChildren}</ul>
           ),
-
           ol: ({ children: listChildren }) => (
             <ol className="list-decimal space-y-2 pl-5">{listChildren}</ol>
           ),
-
           strong: ({ children: strongChildren }) => (
             <strong className="font-semibold text-[#31425a]">{strongChildren}</strong>
           ),
@@ -185,34 +175,26 @@ export function ScenarioPlayer({
   );
 
   const [view, setView] = useState<ScenarioPlayerView>(initialView);
-
   const [currentChallengeId, setCurrentChallengeId] = useState<ChallengeId | null>(
     initialChallengeId && validChallengeIds.has(initialChallengeId) ? initialChallengeId : null,
   );
-
   const [selectedChoiceId, setSelectedChoiceId] = useState<ChoiceId | null>(null);
-
   const [attemptCounts, setAttemptCounts] = useState<ChallengeAttemptCountMap>({});
-
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const currentChallenge =
     orderedChallenges.find((challenge) => challenge.id === currentChallengeId) ?? null;
-
   const selectedChoice =
     currentChallenge?.choices.find((choice) => choice.id === selectedChoiceId) ?? null;
-
   const usesPreStartBackground = view === "intro" || view === "board";
-
   const backgroundImage = usesPreStartBackground
     ? scenario.assets.preStartBackground
     : scenario.assets.inProgressBackground;
-
   const completedCount = completedChallengeIds.size;
-
   const totalChallenges = orderedChallenges.length;
+  const completionPercentage =
+    totalChallenges > 0 ? Math.min(100, (completedCount / totalChallenges) * 100) : 0;
 
   function getChallengeStatus(
     challenge: ResolvedChallenge,
@@ -342,7 +324,6 @@ export function ScenarioPlayer({
     }
 
     const nextCompletedChallengeIds = new Set(completedChallengeIds);
-
     nextCompletedChallengeIds.add(currentChallenge.id);
 
     setIsSubmitting(true);
@@ -358,7 +339,6 @@ export function ScenarioPlayer({
       }
 
       setCompletedChallengeIds(nextCompletedChallengeIds);
-
       setSelectedChoiceId(null);
       setCurrentChallengeId(null);
 
@@ -404,11 +384,11 @@ export function ScenarioPlayer({
     }
 
     return (
-      <div className="absolute inset-0 flex items-end justify-end bg-[#17243a]/35 p-3 sm:p-5 lg:p-8">
-        <div className="max-h-[92%] w-full overflow-y-auto rounded-3xl border border-white/40 bg-white/97 p-5 shadow-[0_24px_70px_rgba(23,36,58,0.28)] backdrop-blur-md sm:max-w-2xl sm:p-7">
+      <div className="absolute inset-0 flex items-end justify-end bg-[#17243a]/34 p-3 sm:p-4 lg:p-5">
+        <div className="max-h-full w-full overflow-y-auto rounded-3xl border border-white/40 bg-white/97 p-5 shadow-[0_24px_70px_rgba(23,36,58,0.28)] backdrop-blur-md sm:max-w-2xl sm:p-6">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#0d7fc2]">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#0d6fe8]">
                 Challenge {currentChallenge.order}
               </p>
 
@@ -444,7 +424,7 @@ export function ScenarioPlayer({
                   className={[
                     "block cursor-pointer rounded-[1.1rem] border p-4 transition",
                     isSelected
-                      ? "border-[#0d7fc2] bg-[#eef7fd] shadow-[0_8px_24px_rgba(13,127,194,0.12)]"
+                      ? "border-[#0d6fe8] bg-[#eef5ff] shadow-[0_8px_24px_rgba(13,111,232,0.12)]"
                       : "border-[#dfe5ec] bg-white hover:border-[#b8c8d8] hover:bg-[#fbfcfd]",
                   ].join(" ")}
                 >
@@ -454,7 +434,7 @@ export function ScenarioPlayer({
                       name={`${currentChallenge.id}-choice`}
                       value={choice.id}
                       checked={isSelected}
-                      className="mt-1 h-4 w-4 accent-[#0d7fc2]"
+                      className="mt-1 h-4 w-4 accent-[#0d6fe8]"
                       onChange={() => {
                         setSelectedChoiceId(choice.id);
                       }}
@@ -489,7 +469,7 @@ export function ScenarioPlayer({
           <button
             type="button"
             disabled={!selectedChoice || isSubmitting}
-            className="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#31425a] px-6 text-sm font-semibold text-white transition hover:bg-[#243246] disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-[#0d6fe8] px-6 text-sm font-semibold text-white transition hover:bg-[#095fc8] disabled:cursor-not-allowed disabled:opacity-50"
             onClick={() => void confirmDecision()}
           >
             {isSubmitting ? labels.loading : labels.confirmDecision}
@@ -507,8 +487,8 @@ export function ScenarioPlayer({
     const feedback = selectedChoice.feedback;
 
     return (
-      <div className="absolute inset-0 flex items-end justify-end bg-[#17243a]/45 p-3 sm:p-5 lg:p-8">
-        <div className="max-h-[92%] w-full overflow-y-auto rounded-3xl border border-white/40 bg-white/97 p-5 shadow-[0_24px_70px_rgba(23,36,58,0.3)] backdrop-blur-md sm:max-w-2xl sm:p-7">
+      <div className="absolute inset-0 flex items-end justify-end bg-[#17243a]/44 p-3 sm:p-4 lg:p-5">
+        <div className="max-h-full w-full overflow-y-auto rounded-3xl border border-white/40 bg-white/97 p-5 shadow-[0_24px_70px_rgba(23,36,58,0.3)] backdrop-blur-md sm:max-w-2xl sm:p-6">
           <div
             className={[
               "inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em]",
@@ -527,17 +507,15 @@ export function ScenarioPlayer({
           <MarkdownContent className="mt-4">{feedback.body}</MarkdownContent>
 
           {feedback.consequence ? (
-            <div className="mt-5 rounded-2xlrder border-[#dfe5ec] bg-[#f8fafc] p-4">
+            <div className="mt-5 rounded-2xl border border-[#dfe5ec] bg-[#f8fafc] p-4">
               <h3 className="text-sm font-semibold text-[#31425a]">Consequence</h3>
-
               <MarkdownContent className="mt-2">{feedback.consequence}</MarkdownContent>
             </div>
           ) : null}
 
           {feedback.takeaway ? (
-            <div className="mt-4 rounded-2xl border border-[#0d7fc2]/15 bg-[#eef7fd] p-4">
-              <h3 className="text-sm font-semibold text-[#0d6fa7]">Key takeaway</h3>
-
+            <div className="mt-4 rounded-2xl border border-[#0d6fe8]/15 bg-[#eef5ff] p-4">
+              <h3 className="text-sm font-semibold text-[#0d5dbf]">Key takeaway</h3>
               <MarkdownContent className="mt-2">{feedback.takeaway}</MarkdownContent>
             </div>
           ) : null}
@@ -554,7 +532,7 @@ export function ScenarioPlayer({
           <button
             type="button"
             disabled={isSubmitting}
-            className="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#31425a] px-6 text-sm font-semibold text-white transition hover:bg-[#243246] disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-5 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-[#0d6fe8] px-6 text-sm font-semibold text-white transition hover:bg-[#095fc8] disabled:cursor-not-allowed disabled:opacity-50"
             onClick={() => void continueAfterFeedback()}
           >
             {isSubmitting
@@ -570,8 +548,8 @@ export function ScenarioPlayer({
 
   function renderSummary() {
     return (
-      <div className="absolute inset-0 flex items-end justify-center bg-[#17243a]/45 p-3 sm:p-5 lg:p-8">
-        <div className="max-h-[92%] w-full max-w-2xl overflow-y-auto rounded-3xl border border-white/40 bg-white/97 p-5 shadow-[0_24px_70px_rgba(23,36,58,0.3)] backdrop-blur-md sm:p-7">
+      <div className="absolute inset-0 flex items-end justify-center bg-[#17243a]/44 p-3 sm:p-4 lg:p-5">
+        <div className="max-h-full w-full max-w-2xl overflow-y-auto rounded-3xl border border-white/40 bg-white/97 p-5 shadow-[0_24px_70px_rgba(23,36,58,0.3)] backdrop-blur-md sm:p-6">
           <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#0b9c72]">
             {completedCount} / {totalChallenges} {labels.completed}
           </p>
@@ -596,7 +574,6 @@ export function ScenarioPlayer({
                 >
                   ✓
                 </span>
-
                 <span>{takeaway}</span>
               </li>
             ))}
@@ -614,7 +591,7 @@ export function ScenarioPlayer({
           <button
             type="button"
             disabled={isSubmitting}
-            className="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#0b9c72] px-6 text-sm font-semibold text-white transition hover:bg-[#087658] disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-[#0b9c72] px-6 text-sm font-semibold text-white transition hover:bg-[#087658] disabled:cursor-not-allowed disabled:opacity-50"
             onClick={() => void completeScenario()}
           >
             {isSubmitting ? labels.loading : labels.completeScenario}
@@ -627,7 +604,7 @@ export function ScenarioPlayer({
   function renderCompletion() {
     return (
       <div className="absolute inset-0 flex items-center justify-center bg-[#17243a]/50 p-4">
-        <div className="w-full max-w-xl rounded-[1.75rem] border border-white/40 bg-white/97 p-7 text-center shadow-[0_24px_70px_rgba(23,36,58,0.32)] backdrop-blur-md">
+        <div className="max-h-full w-full max-w-xl overflow-y-auto rounded-[1.75rem] border border-white/40 bg-white/97 p-7 text-center shadow-[0_24px_70px_rgba(23,36,58,0.32)] backdrop-blur-md">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#0b9c72] text-2xl font-bold text-white">
             ✓
           </div>
@@ -643,7 +620,7 @@ export function ScenarioPlayer({
           {onExit ? (
             <button
               type="button"
-              className="mt-6 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#31425a] px-6 text-sm font-semibold text-white transition hover:bg-[#243246]"
+              className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-[#0d6fe8] px-6 text-sm font-semibold text-white transition hover:bg-[#095fc8]"
               onClick={onExit}
             >
               {labels.leaveScenario}
@@ -662,72 +639,79 @@ export function ScenarioPlayer({
       data-view={view}
       data-mode={mode}
       data-background-image={backgroundImage}
-      className="overflow-hidden rounded-[1.75rem] border border-[#dfe5ec] bg-white shadow-[0_18px_50px_rgba(49,66,90,0.1)]"
+      className="flex min-h-0 flex-col overflow-hidden rounded-[1.65rem] border border-[#dfe5ec] bg-white shadow-[0_18px_50px_rgba(49,66,90,0.11)]"
+      style={{
+        height: "calc(100dvh - var(--app-topbar-height, 64px) - var(--scenario-player-gap, 16px))",
+      }}
     >
-      <header className="flex flex-col gap-4 border-b border-[#e7ebf0] px-5 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-7">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#0d7fc2]">
-            Scenario {scenario.order}
-          </p>
+      <header className="flex shrink-0 items-center justify-between gap-5 border-b border-[#e7ebf0] px-4 py-3.5 sm:px-6">
+        <div className="flex min-w-0 items-center gap-3.5">
+          <span
+            aria-hidden="true"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#eef5ff] text-[#0d6fe8] sm:h-12 sm:w-12"
+          >
+            <Leaf size={23} strokeWidth={2} />
+          </span>
 
-          <h1 className="mt-1 text-xl font-semibold tracking-[-0.03em] text-[#31425a] sm:text-2xl">
-            {scenario.title}
-          </h1>
+          <div className="min-w-0">
+            <p className="text-lg font-semibold tracking-[-0.03em] text-[#17243a] sm:text-2xl">
+              Scenario {scenario.order}
+            </p>
+
+            <h1 className="mt-0.5 truncate text-sm font-medium text-[#596170] sm:text-base">
+              {scenario.title}
+            </h1>
+          </div>
         </div>
 
-        <div className="min-w-48">
-          <div className="flex items-center justify-between gap-4 text-sm">
-            <span className="font-medium text-[#667180]">{labels.progress}</span>
-
-            <span className="font-semibold text-[#31425a]">
-              {completedCount} / {totalChallenges}
-            </span>
-          </div>
-
+        <div className="flex shrink-0 items-center gap-3">
           <div
-            className="mt-2 h-2 overflow-hidden rounded-full bg-[#e7ebf0]"
+            className="relative h-11 w-11 rounded-full sm:h-12 sm:w-12"
+            style={{
+              background: `conic-gradient(#0d6fe8 ${completionPercentage}%, #dfe5ec ${completionPercentage}% 100%)`,
+            }}
             role="progressbar"
             aria-valuemin={0}
             aria-valuemax={totalChallenges}
             aria-valuenow={completedCount}
             aria-label={`${labels.progress}: ${completedCount} / ${totalChallenges}`}
           >
-            <div
-              className="h-full rounded-full bg-[#0b9c72] transition-[width] duration-300"
-              style={{
-                width: totalChallenges > 0 ? `${(completedCount / totalChallenges) * 100}%` : "0%",
-              }}
-            />
+            <span className="absolute inset-1 rounded-full bg-white" />
           </div>
+
+          <p className="hidden whitespace-nowrap text-sm font-medium text-[#31425a] sm:block">
+            <strong className="font-semibold">
+              {completedCount} / {totalChallenges}
+            </strong>{" "}
+            {labels.completed.toLowerCase()}
+          </p>
         </div>
       </header>
 
       {view === "board" ? (
-        <ScenarioBoard
-          backgroundImage={scenario.assets.preStartBackground}
-          boardAlt={scenario.boardAlt}
-          scenarioTitle={scenario.title}
-          items={orderedChallenges.map((challenge, challengeIndex) => ({
-            challenge,
-            status: getChallengeStatus(challenge, challengeIndex),
-          }))}
-          labels={{
-            title: labels.viewChallenges,
-
-            currentObjective: labels.currentObjective,
-
-            completed: labels.completed,
-
-            available: labels.available,
-
-            inProgress: labels.inProgress,
-
-            locked: labels.locked,
-          }}
-          onSelectChallenge={openChallenge}
-        />
+        <div className="min-h-0 flex-1">
+          <ScenarioBoard
+            backgroundImage={scenario.assets.preStartBackground}
+            boardAlt={scenario.boardAlt}
+            scenarioTitle={scenario.title}
+            items={orderedChallenges.map((challenge, challengeIndex) => ({
+              challenge,
+              status: getChallengeStatus(challenge, challengeIndex),
+            }))}
+            labels={{
+              title: labels.viewChallenges,
+              currentObjective: labels.currentObjective,
+              openChallenge: labels.openChallenge,
+              completed: labels.completed,
+              available: labels.available,
+              inProgress: labels.inProgress,
+              locked: labels.locked,
+            }}
+            onSelectChallenge={openChallenge}
+          />
+        </div>
       ) : (
-        <div className="relative min-h-170 overflow-hidden bg-[#eef2f6] sm:min-h-155 lg:aspect-video lg:min-h-0">
+        <div className="relative min-h-0 flex-1 overflow-hidden bg-[#eef2f6]">
           <Image
             src={backgroundImage}
             alt=""
@@ -746,9 +730,7 @@ export function ScenarioPlayer({
               errorMessage={errorMessage}
               labels={{
                 startScenario: labels.startScenario,
-
                 backToScenarios: labels.leaveScenario,
-
                 starting: labels.loading,
               }}
               onStart={() => void startScenario()}
@@ -757,11 +739,8 @@ export function ScenarioPlayer({
           ) : null}
 
           {view === "challenge" ? renderChallenge() : null}
-
           {view === "feedback" ? renderFeedback() : null}
-
           {view === "summary" ? renderSummary() : null}
-
           {view === "completion" ? renderCompletion() : null}
         </div>
       )}

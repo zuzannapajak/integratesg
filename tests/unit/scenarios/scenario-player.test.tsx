@@ -100,7 +100,7 @@ const testScenario = {
 } satisfies ResolvedScenario;
 
 function getAvailableChallengeButton() {
-  return screen.getByTestId("scenario-board-card-scenario-02-challenge-01");
+  return screen.getByTestId("scenario-board-hotspot-scenario-02-challenge-01");
 }
 
 describe("ScenarioPlayer", () => {
