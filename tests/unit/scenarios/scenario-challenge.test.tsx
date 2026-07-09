@@ -64,12 +64,20 @@ const testChallenge = {
 
 type ChallengeHarnessProps = {
   readonly initialStep?: ScenarioChallengeStep;
+
+  readonly attemptNumber?: number;
+
+  readonly previouslyTriedChoiceIds?: readonly ChoiceId[];
+
   readonly onConfirm?: () => void;
+
   readonly onBackToBoard?: () => void;
 };
 
 function ChallengeHarness({
   initialStep = "context",
+  attemptNumber = 1,
+  previouslyTriedChoiceIds = [],
   onConfirm = vi.fn(),
   onBackToBoard = vi.fn(),
 }: ChallengeHarnessProps) {
@@ -83,6 +91,8 @@ function ChallengeHarness({
       onSelectChoice={setSelectedChoiceId}
       onConfirm={onConfirm}
       onBackToBoard={onBackToBoard}
+      attemptNumber={attemptNumber}
+      previouslyTriedChoiceIds={previouslyTriedChoiceIds}
     />
   );
 }
@@ -230,4 +240,24 @@ it("marks the selected decision card", async () => {
   expect(
     screen.getByTestId("scenario-decision-choice-scenario-02-challenge-01-choice-02"),
   ).toHaveAttribute("data-selected", "true");
+});
+
+it("shows the next attempt and previously tried decision", () => {
+  render(
+    <ChallengeHarness
+      initialStep="decision"
+      attemptNumber={2}
+      previouslyTriedChoiceIds={["scenario-02-challenge-01-choice-01"]}
+    />,
+  );
+
+  expect(screen.getByText("Attempt 2")).toBeVisible();
+
+  expect(
+    screen.getByTestId("scenario-decision-choice-scenario-02-challenge-01-choice-01"),
+  ).toHaveAttribute("data-previously-tried", "true");
+
+  expect(
+    screen.getByTestId("scenario-decision-choice-scenario-02-challenge-01-choice-02"),
+  ).toHaveAttribute("data-previously-tried", "false");
 });

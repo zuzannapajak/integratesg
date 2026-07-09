@@ -58,6 +58,8 @@ export type ScenarioPlayerLabels = {
 
   readonly challengeContext: string;
   readonly decision: string;
+  readonly attempt: string;
+  readonly previouslyTried: string;
   readonly continueToDecision: string;
   readonly back: string;
   readonly selectOneOption: string;
@@ -95,6 +97,8 @@ const DEFAULT_LABELS: ScenarioPlayerLabels = {
 
   challengeContext: "Challenge context",
   decision: "Decision",
+  attempt: "Attempt",
+  previouslyTried: "Previously tried",
   continueToDecision: "Continue to decision",
   back: "Back",
   selectOneOption: "Select one option",
@@ -138,6 +142,7 @@ export type ScenarioPlayerProps = {
 };
 
 type ChallengeAttemptCountMap = Partial<Record<ChallengeId, number>>;
+type ChallengeRejectedChoiceMap = Partial<Record<ChallengeId, readonly ChoiceId[]>>;
 
 function MarkdownContent({
   children,
@@ -219,6 +224,8 @@ export function ScenarioPlayer({
   const [challengeInitialStep, setChallengeInitialStep] =
     useState<ScenarioChallengeStep>("context");
   const [attemptCounts, setAttemptCounts] = useState<ChallengeAttemptCountMap>({});
+  const [rejectedChoiceIdsByChallenge, setRejectedChoiceIdsByChallenge] =
+    useState<ChallengeRejectedChoiceMap>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -226,6 +233,10 @@ export function ScenarioPlayer({
     orderedChallenges.find((challenge) => challenge.id === currentChallengeId) ?? null;
   const selectedChoice =
     currentChallenge?.choices.find((choice) => choice.id === selectedChoiceId) ?? null;
+  const currentAttemptNumber = currentChallenge ? (attemptCounts[currentChallenge.id] ?? 0) + 1 : 1;
+  const currentRejectedChoiceIds = currentChallenge
+    ? (rejectedChoiceIdsByChallenge[currentChallenge.id] ?? [])
+    : [];
   const usesPreStartBackground = view === "intro" || view === "board";
   const backgroundImage = usesPreStartBackground
     ? scenario.assets.preStartBackground
@@ -341,6 +352,22 @@ export function ScenarioPlayer({
         [currentChallenge.id]: attemptNumber,
       }));
 
+      if (!selectedChoice.isOptimal) {
+        setRejectedChoiceIdsByChallenge((currentChoices) => {
+          const rejectedChoiceIds = currentChoices[currentChallenge.id] ?? [];
+
+          if (rejectedChoiceIds.includes(selectedChoice.id)) {
+            return currentChoices;
+          }
+
+          return {
+            ...currentChoices,
+
+            [currentChallenge.id]: [...rejectedChoiceIds, selectedChoice.id],
+          };
+        });
+      }
+
       setView("feedback");
     } catch (error) {
       setErrorMessage(getErrorMessage(error));
@@ -350,12 +377,21 @@ export function ScenarioPlayer({
   }
 
   function tryAgain() {
+    if (isSubmitting || !currentChallenge || !selectedChoice || selectedChoice.isOptimal) {
+      return;
+    }
+
     setErrorMessage(null);
+
+    /*
+     * Previous selection is cleared, but the submitted
+     * incorrect choice remains recorded as previously tried.
+     */
     setSelectedChoiceId(null);
 
     /*
-     * The learner has already read the context.
-     * A retry returns directly to the decision step.
+     * The context has already been reviewed. Retry starts
+     * directly from the decision step.
      */
     setChallengeInitialStep("decision");
     setView("challenge");
@@ -387,6 +423,15 @@ export function ScenarioPlayer({
       }
 
       setCompletedChallengeIds(nextCompletedChallengeIds);
+      setRejectedChoiceIdsByChallenge((currentChoices) => {
+        const nextChoices = {
+          ...currentChoices,
+        };
+
+        Reflect.deleteProperty(nextChoices, currentChallenge.id);
+
+        return nextChoices;
+      });
       setSelectedChoiceId(null);
       setCurrentChallengeId(null);
       setChallengeInitialStep("context");
@@ -680,12 +725,18 @@ export function ScenarioPlayer({
               challenge={currentChallenge}
               selectedChoiceId={selectedChoiceId}
               initialStep={challengeInitialStep}
+              attemptNumber={currentAttemptNumber}
+              previouslyTriedChoiceIds={currentRejectedChoiceIds}
               isSubmitting={isSubmitting}
               errorMessage={errorMessage}
               labels={{
                 context: labels.challengeContext,
 
                 decision: labels.decision,
+
+                attempt: labels.attempt,
+
+                previouslyTried: labels.previouslyTried,
 
                 backToBoard: labels.backToBoard,
 

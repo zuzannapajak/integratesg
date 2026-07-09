@@ -139,3 +139,46 @@ describe("ScenarioDecisionChoice", () => {
     expect(screen.queryByText(/optimal/i)).not.toBeInTheDocument();
   });
 });
+
+it("marks a decision that was tried previously", () => {
+  render(
+    <ScenarioDecisionChoice
+      choice={testChoice}
+      groupName="test-decision"
+      isSelected={false}
+      wasPreviouslyTried
+      onSelect={vi.fn()}
+    />,
+  );
+
+  expect(
+    screen.getByTestId("scenario-decision-choice-scenario-02-challenge-01-choice-02"),
+  ).toHaveAttribute("data-previously-tried", "true");
+
+  expect(screen.getByText("Previously tried")).toBeVisible();
+});
+
+it("allows selecting a previously tried decision again", async () => {
+  const user = userEvent.setup();
+  const onSelect = vi.fn();
+
+  render(
+    <ScenarioDecisionChoice
+      choice={testChoice}
+      groupName="test-decision"
+      isSelected={false}
+      wasPreviouslyTried
+      onSelect={onSelect}
+    />,
+  );
+
+  const radio = screen.getByRole("radio", {
+    name: /Material priorities/i,
+  });
+
+  expect(radio).toBeEnabled();
+
+  await user.click(radio);
+
+  expect(onSelect).toHaveBeenCalledWith(testChoice.id);
+});

@@ -14,6 +14,8 @@ export type ScenarioChallengeLabels = {
   readonly context: string;
   readonly decision: string;
   readonly of: string;
+  readonly attempt: string;
+  readonly previouslyTried: string;
   readonly backToBoard: string;
   readonly continueToDecision: string;
   readonly back: string;
@@ -27,6 +29,8 @@ export const DEFAULT_SCENARIO_CHALLENGE_LABELS: ScenarioChallengeLabels = {
   context: "Challenge context",
   decision: "Decision",
   of: "of",
+  attempt: "Attempt",
+  previouslyTried: "Previously tried",
   backToBoard: "Back to challenges",
   continueToDecision: "Continue to decision",
   back: "Back",
@@ -41,6 +45,10 @@ export type ScenarioChallengeProps = {
   readonly selectedChoiceId: ChoiceId | null;
 
   readonly initialStep?: ScenarioChallengeStep;
+
+  readonly attemptNumber?: number;
+
+  readonly previouslyTriedChoiceIds?: readonly ChoiceId[];
 
   readonly labels?: Partial<ScenarioChallengeLabels>;
 
@@ -136,6 +144,8 @@ function ScenarioChallengeContent({
   challenge,
   selectedChoiceId,
   initialStep = "context",
+  attemptNumber = 1,
+  previouslyTriedChoiceIds = [],
   labels: customLabels,
   isSubmitting = false,
   errorMessage = null,
@@ -166,9 +176,17 @@ function ScenarioChallengeContent({
 
           <header className="mt-5 flex items-start justify-between gap-4">
             <div className="min-w-0">
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#0d6fe8]">
-                {labels.challenge} {challenge.order}
-              </p>
+              <div className="flex flex-wrap items-center gap-2">
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#0d6fe8]">
+                  {labels.challenge} {challenge.order}
+                </p>
+
+                {step === "decision" ? (
+                  <span className="inline-flex rounded-full border border-[#dbe7f5] bg-[#f4f8fd] px-2.5 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.08em] text-[#0d5dbf]">
+                    {labels.attempt} {attemptNumber}
+                  </span>
+                ) : null}
+              </div>
 
               <h2 className="mt-2 text-xl font-semibold tracking-[-0.03em] text-[#31425a] sm:text-2xl lg:text-3xl">
                 {challenge.title}
@@ -263,6 +281,8 @@ function ScenarioChallengeContent({
                       groupName={`${challenge.id}-choice`}
                       isSelected={selectedChoiceId === choice.id}
                       disabled={isSubmitting}
+                      wasPreviouslyTried={previouslyTriedChoiceIds.includes(choice.id)}
+                      previouslyTriedLabel={labels.previouslyTried}
                       onSelect={onSelectChoice}
                     />
                   ))}

@@ -7,15 +7,15 @@ import type { ChoiceId, ResolvedChoice } from "@/lib/scenarios/simulator/types";
 export type ScenarioDecisionChoiceProps = {
   readonly choice: ResolvedChoice;
 
-  /**
-   * Shared radio group name for all choices
-   * belonging to the same challenge.
-   */
   readonly groupName: string;
 
   readonly isSelected: boolean;
 
   readonly disabled?: boolean;
+
+  readonly wasPreviouslyTried?: boolean;
+
+  readonly previouslyTriedLabel?: string;
 
   readonly onSelect: (choiceId: ChoiceId) => void;
 };
@@ -25,6 +25,8 @@ export function ScenarioDecisionChoice({
   groupName,
   isSelected,
   disabled = false,
+  wasPreviouslyTried = false,
+  previouslyTriedLabel = "Previously tried",
   onSelect,
 }: ScenarioDecisionChoiceProps) {
   const textId = `${choice.id}-decision-text`;
@@ -36,6 +38,7 @@ export function ScenarioDecisionChoice({
       data-testid={`scenario-decision-choice-${choice.id}`}
       data-selected={isSelected}
       data-disabled={disabled}
+      data-previously-tried={wasPreviouslyTried}
       className={["block rounded-2xl", disabled ? "cursor-not-allowed" : "cursor-pointer"].join(
         " ",
       )}
@@ -85,6 +88,12 @@ export function ScenarioDecisionChoice({
         </span>
 
         <span className="min-w-0 flex-1">
+          {wasPreviouslyTried ? (
+            <span className="mb-2 inline-flex rounded-full border border-[#efc6b2] bg-[#fff6f1] px-2.5 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.08em] text-[#b94c18]">
+              {previouslyTriedLabel}
+            </span>
+          ) : null}
+
           {choice.label ? (
             <span id={labelId} className="block text-sm font-semibold leading-6 text-[#31425a]">
               {choice.label}

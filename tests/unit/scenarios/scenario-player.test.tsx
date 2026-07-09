@@ -361,6 +361,16 @@ describe("ScenarioPlayer", () => {
       "decision",
     );
 
+    expect(screen.getByText("Attempt 2")).toBeVisible();
+
+    expect(
+      screen.getByTestId("scenario-decision-choice-scenario-02-challenge-01-choice-01"),
+    ).toHaveAttribute("data-previously-tried", "true");
+
+    expect(
+      screen.getByTestId("scenario-decision-choice-scenario-02-challenge-01-choice-02"),
+    ).toHaveAttribute("data-previously-tried", "false");
+
     expect(
       screen.getByRole("button", {
         name: "Confirm decision",
@@ -473,4 +483,78 @@ it("increments the attempt number after retrying", async () => {
     isOptimal: true,
     attemptNumber: 2,
   });
+});
+
+it("supports multiple retries without completing the challenge", async () => {
+  const user = userEvent.setup();
+
+  const onChoiceConfirmed = vi.fn();
+  const onChallengeCompleted = vi.fn();
+
+  render(
+    <ScenarioPlayer
+      scenario={testScenario}
+      initialView="board"
+      onChoiceConfirmed={onChoiceConfirmed}
+      onChallengeCompleted={onChallengeCompleted}
+    />,
+  );
+
+  await openChallengeDecision(user);
+
+  await user.click(
+    screen.getByRole("radio", {
+      name: /^Non-optimal choice/,
+    }),
+  );
+
+  await user.click(
+    screen.getByRole("button", {
+      name: "Confirm decision",
+    }),
+  );
+
+  await screen.findByTestId("scenario-incorrect-feedback");
+
+  await user.click(
+    screen.getByRole("button", {
+      name: "Try again",
+    }),
+  );
+
+  expect(screen.getByText("Attempt 2")).toBeVisible();
+
+  await user.click(
+    screen.getByRole("radio", {
+      name: /^Alternative non-optimal choice/,
+    }),
+  );
+
+  await user.click(
+    screen.getByRole("button", {
+      name: "Confirm decision",
+    }),
+  );
+
+  await screen.findByTestId("scenario-incorrect-feedback");
+
+  await user.click(
+    screen.getByRole("button", {
+      name: "Try again",
+    }),
+  );
+
+  expect(screen.getByText("Attempt 3")).toBeVisible();
+
+  expect(onChoiceConfirmed).toHaveBeenCalledTimes(2);
+
+  expect(onChallengeCompleted).not.toHaveBeenCalled();
+
+  expect(
+    screen.getByTestId("scenario-decision-choice-scenario-02-challenge-01-choice-01"),
+  ).toHaveAttribute("data-previously-tried", "true");
+
+  expect(
+    screen.getByTestId("scenario-decision-choice-scenario-02-challenge-01-choice-03"),
+  ).toHaveAttribute("data-previously-tried", "true");
 });
