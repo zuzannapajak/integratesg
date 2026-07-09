@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, BookOpen, ListChecks } from "lucide-react";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
+import { ScenarioDecisionChoice } from "@/components/scenarios/simulator/scenario-decision-choice";
 import type { ChoiceId, ResolvedChallenge } from "@/lib/scenarios/simulator/types";
 
 export type ScenarioChallengeStep = "context" | "decision";
@@ -252,56 +253,19 @@ function ScenarioChallengeContent({
                   </div>
                 </div>
 
-                <fieldset className="mt-5 space-y-3">
+                <fieldset className="mt-5 space-y-3" disabled={isSubmitting}>
                   <legend className="sr-only">{challenge.question}</legend>
 
-                  {challenge.choices.map((choice) => {
-                    const isSelected = selectedChoiceId === choice.id;
-
-                    return (
-                      <label
-                        key={choice.id}
-                        className={[
-                          "block rounded-2xl border p-4 transition",
-                          isSubmitting ? "cursor-not-allowed opacity-70" : "cursor-pointer",
-                          isSelected
-                            ? "border-[#0d6fe8] bg-[#eef5ff] shadow-[0_10px_28px_rgba(13,111,232,0.14)]"
-                            : "border-[#dfe5ec] bg-white hover:border-[#b8c8d8] hover:bg-[#fbfcfd]",
-                        ].join(" ")}
-                      >
-                        <span className="flex items-start gap-3">
-                          <input
-                            type="radio"
-                            name={`${challenge.id}-choice`}
-                            value={choice.id}
-                            checked={isSelected}
-                            disabled={isSubmitting}
-                            className="mt-1 h-4 w-4 shrink-0 accent-[#0d6fe8]"
-                            onChange={() => {
-                              onSelectChoice(choice.id);
-                            }}
-                          />
-
-                          <span className="min-w-0">
-                            {choice.label ? (
-                              <span className="block text-sm font-semibold leading-6 text-[#31425a]">
-                                {choice.label}
-                              </span>
-                            ) : null}
-
-                            <span
-                              className={[
-                                "block text-sm leading-6 text-[#596170]",
-                                choice.label ? "mt-1" : "",
-                              ].join(" ")}
-                            >
-                              {choice.text}
-                            </span>
-                          </span>
-                        </span>
-                      </label>
-                    );
-                  })}
+                  {challenge.choices.map((choice) => (
+                    <ScenarioDecisionChoice
+                      key={choice.id}
+                      choice={choice}
+                      groupName={`${challenge.id}-choice`}
+                      isSelected={selectedChoiceId === choice.id}
+                      disabled={isSubmitting}
+                      onSelect={onSelectChoice}
+                    />
+                  ))}
                 </fieldset>
               </section>
 

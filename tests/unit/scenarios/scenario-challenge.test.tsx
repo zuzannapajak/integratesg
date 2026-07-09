@@ -215,3 +215,19 @@ describe("ScenarioChallenge", () => {
     expect(screen.getAllByRole("radio")).toHaveLength(3);
   });
 });
+
+it("marks the selected decision card", async () => {
+  const user = userEvent.setup();
+
+  render(<ChallengeHarness initialStep="decision" />);
+
+  await user.click(
+    screen.getByRole("radio", {
+      name: /Material priorities/i,
+    }),
+  );
+
+  expect(
+    screen.getByTestId("scenario-decision-choice-scenario-02-challenge-01-choice-02"),
+  ).toHaveAttribute("data-selected", "true");
+});
