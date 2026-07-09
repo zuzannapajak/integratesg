@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
+import { ScenarioBoard } from "@/components/scenarios/simulator/scenario-board";
 import { ScenarioIntro } from "@/components/scenarios/simulator/scenario-intro";
 import type {
   ChallengeId,
@@ -146,41 +147,6 @@ function getErrorMessage(error: unknown): string {
   }
 
   return "An unexpected error occurred.";
-}
-
-function getChallengeStatusLabel(
-  status: ChallengeProgressStatus,
-  labels: ScenarioPlayerLabels,
-): string {
-  switch (status) {
-    case "completed":
-      return labels.completed;
-
-    case "in_progress":
-      return labels.inProgress;
-
-    case "available":
-      return labels.available;
-
-    case "locked":
-      return labels.locked;
-  }
-}
-
-function getChallengeStatusClasses(status: ChallengeProgressStatus): string {
-  switch (status) {
-    case "completed":
-      return "border-[#0b9c72]/25 bg-[#ecf8f4] text-[#087658]";
-
-    case "in_progress":
-      return "border-[#0d7fc2]/30 bg-[#eef7fd] text-[#0d6fa7] shadow-[0_10px_28px_rgba(13,127,194,0.18)]";
-
-    case "available":
-      return "border-[#ef6c23]/30 bg-[#fff5ed] text-[#c95417]";
-
-    case "locked":
-      return "border-[#d9e1ea] bg-[#f4f6f8] text-[#7a8594]";
-  }
 }
 
 export function ScenarioPlayer({
@@ -430,43 +396,6 @@ export function ScenarioPlayer({
     } finally {
       setIsSubmitting(false);
     }
-  }
-
-  function renderBoardHotspots() {
-    return (
-      <>
-        {orderedChallenges.map((challenge, challengeIndex) => {
-          const status = getChallengeStatus(challenge, challengeIndex);
-
-          const statusLabel = getChallengeStatusLabel(status, labels);
-
-          const isLocked = status === "locked";
-
-          return (
-            <button
-              key={challenge.id}
-              type="button"
-              disabled={isLocked}
-              aria-label={`${challenge.shortTitle}: ${statusLabel}`}
-              className={[
-                "absolute hidden min-h-12 min-w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-4 border-white text-sm font-bold transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#0d7fc2]/35 md:flex",
-                getChallengeStatusClasses(status),
-                isLocked ? "cursor-not-allowed opacity-85" : "hover:scale-105",
-              ].join(" ")}
-              style={{
-                left: `${challenge.hotspot.x}%`,
-                top: `${challenge.hotspot.y}%`,
-              }}
-              onClick={() => {
-                openChallenge(challenge, challengeIndex);
-              }}
-            >
-              {status === "completed" ? "✓" : challenge.order}
-            </button>
-          );
-        })}
-      </>
-    );
   }
 
   function renderChallenge() {
@@ -773,85 +702,69 @@ export function ScenarioPlayer({
         </div>
       </header>
 
-      <div className="relative aspect-video min-h-107.5 overflow-hidden bg-[#eef2f6] sm:min-h-0">
-        <Image
-          src={backgroundImage}
-          alt=""
-          fill
-          priority
-          sizes="(max-width: 768px) 100vw, 1400px"
-          className="object-cover"
-        />
-
-        <p className="sr-only">{scenario.boardAlt}</p>
-
-        {view === "intro" ? (
-          <ScenarioIntro
-            scenario={scenario}
-            isStarting={isSubmitting}
-            errorMessage={errorMessage}
-            labels={{
-              startScenario: labels.startScenario,
-
-              backToScenarios: labels.leaveScenario,
-
-              starting: labels.loading,
-            }}
-            onStart={() => void startScenario()}
-            onExit={onExit}
-          />
-        ) : null}
-
-        {view === "board" ? renderBoardHotspots() : null}
-
-        {view === "challenge" ? renderChallenge() : null}
-
-        {view === "feedback" ? renderFeedback() : null}
-
-        {view === "summary" ? renderSummary() : null}
-
-        {view === "completion" ? renderCompletion() : null}
-      </div>
-
       {view === "board" ? (
-        <div className="border-t border-[#e7ebf0] p-4 sm:p-6">
-          <div className="grid gap-3 md:grid-cols-3">
-            {orderedChallenges.map((challenge, challengeIndex) => {
-              const status = getChallengeStatus(challenge, challengeIndex);
+        <ScenarioBoard
+          backgroundImage={scenario.assets.preStartBackground}
+          boardAlt={scenario.boardAlt}
+          scenarioTitle={scenario.title}
+          items={orderedChallenges.map((challenge, challengeIndex) => ({
+            challenge,
+            status: getChallengeStatus(challenge, challengeIndex),
+          }))}
+          labels={{
+            title: labels.viewChallenges,
 
-              const statusLabel = getChallengeStatusLabel(status, labels);
+            currentObjective: labels.currentObjective,
 
-              const isLocked = status === "locked";
+            completed: labels.completed,
 
-              return (
-                <button
-                  key={challenge.id}
-                  type="button"
-                  disabled={isLocked}
-                  className={[
-                    "flex min-h-24 items-center gap-4 rounded-[1.15rem] border p-4 text-left transition focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-[#0d7fc2]/25",
-                    getChallengeStatusClasses(status),
-                    isLocked ? "cursor-not-allowed" : "hover:-translate-y-0.5",
-                  ].join(" ")}
-                  onClick={() => {
-                    openChallenge(challenge, challengeIndex);
-                  }}
-                >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-current/20 bg-white/70 text-sm font-bold">
-                    {status === "completed" ? "✓" : challenge.order}
-                  </span>
+            available: labels.available,
 
-                  <span>
-                    <span className="block text-sm font-semibold">{challenge.shortTitle}</span>
+            inProgress: labels.inProgress,
 
-                    <span className="mt-1 block text-xs font-medium opacity-80">{statusLabel}</span>
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+            locked: labels.locked,
+          }}
+          onSelectChallenge={openChallenge}
+        />
+      ) : (
+        <div className="relative min-h-170 overflow-hidden bg-[#eef2f6] sm:min-h-155 lg:aspect-video lg:min-h-0">
+          <Image
+            src={backgroundImage}
+            alt=""
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 1400px"
+            className="object-cover"
+          />
+
+          <p className="sr-only">{scenario.boardAlt}</p>
+
+          {view === "intro" ? (
+            <ScenarioIntro
+              scenario={scenario}
+              isStarting={isSubmitting}
+              errorMessage={errorMessage}
+              labels={{
+                startScenario: labels.startScenario,
+
+                backToScenarios: labels.leaveScenario,
+
+                starting: labels.loading,
+              }}
+              onStart={() => void startScenario()}
+              onExit={onExit}
+            />
+          ) : null}
+
+          {view === "challenge" ? renderChallenge() : null}
+
+          {view === "feedback" ? renderFeedback() : null}
+
+          {view === "summary" ? renderSummary() : null}
+
+          {view === "completion" ? renderCompletion() : null}
         </div>
-      ) : null}
+      )}
     </section>
   );
 }

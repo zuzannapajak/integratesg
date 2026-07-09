@@ -100,9 +100,7 @@ const testScenario = {
 } satisfies ResolvedScenario;
 
 function getAvailableChallengeButton() {
-  return screen.getByRole("button", {
-    name: "Test challenge: Available",
-  });
+  return screen.getByTestId("scenario-board-card-scenario-02-challenge-01");
 }
 
 describe("ScenarioPlayer", () => {
