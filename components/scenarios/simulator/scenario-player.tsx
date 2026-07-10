@@ -3,7 +3,6 @@
 import { Leaf } from "lucide-react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import ReactMarkdown from "react-markdown";
 
 import { ScenarioBoard } from "@/components/scenarios/simulator/scenario-board";
 import {
@@ -14,6 +13,7 @@ import { ScenarioCorrectFeedback } from "@/components/scenarios/simulator/scenar
 import { ScenarioIncorrectFeedback } from "@/components/scenarios/simulator/scenario-incorrect-feedback";
 import { ScenarioIntro } from "@/components/scenarios/simulator/scenario-intro";
 import { ScenarioProgress } from "@/components/scenarios/simulator/scenario-progress";
+import { ScenarioSummary } from "@/components/scenarios/simulator/scenario-summary";
 import type {
   ChallengeId,
   ChallengeProgressStatus,
@@ -73,6 +73,11 @@ export type ScenarioPlayerLabels = {
   readonly likelyConsequence: string;
   readonly keyTakeaway: string;
 
+  readonly summary: string;
+  readonly allChallengesCompleted: string;
+  readonly completedChallenges: string;
+  readonly keyTakeaways: string;
+
   readonly confirmDecision: string;
   readonly tryAgain: string;
   readonly continue: string;
@@ -112,6 +117,11 @@ const DEFAULT_LABELS: ScenarioPlayerLabels = {
   likelyConsequence: "Likely consequence",
   keyTakeaway: "Key takeaway",
 
+  summary: "Scenario summary",
+  allChallengesCompleted: "All challenges completed",
+  completedChallenges: "Challenges completed",
+  keyTakeaways: "Key takeaways",
+
   confirmDecision: "Confirm decision",
   tryAgain: "Try again",
   continue: "Continue",
@@ -144,35 +154,6 @@ export type ScenarioPlayerProps = {
 
 type ChallengeAttemptCountMap = Partial<Record<ChallengeId, number>>;
 type ChallengeRejectedChoiceMap = Partial<Record<ChallengeId, readonly ChoiceId[]>>;
-
-function MarkdownContent({
-  children,
-  className = "",
-}: {
-  readonly children: string;
-  readonly className?: string;
-}) {
-  return (
-    <div className={["space-y-3 text-[0.96rem] leading-7 text-[#596170]", className].join(" ")}>
-      <ReactMarkdown
-        components={{
-          p: ({ children: paragraphChildren }) => <p>{paragraphChildren}</p>,
-          ul: ({ children: listChildren }) => (
-            <ul className="list-disc space-y-2 pl-5">{listChildren}</ul>
-          ),
-          ol: ({ children: listChildren }) => (
-            <ol className="list-decimal space-y-2 pl-5">{listChildren}</ol>
-          ),
-          strong: ({ children: strongChildren }) => (
-            <strong className="font-semibold text-[#31425a]">{strongChildren}</strong>
-          ),
-        }}
-      >
-        {children}
-      </ReactMarkdown>
-    </div>
-  );
-}
 
 function getErrorMessage(error: unknown): string {
   if (error instanceof Error) {
@@ -547,61 +528,6 @@ export function ScenarioPlayer({
     );
   }
 
-  function renderSummary() {
-    return (
-      <div className="absolute inset-0 flex items-end justify-center bg-[#17243a]/44 p-3 sm:p-4 lg:p-5">
-        <div className="max-h-full w-full max-w-2xl overflow-y-auto rounded-3xl border border-white/40 bg-white/97 p-5 shadow-[0_24px_70px_rgba(23,36,58,0.3)] backdrop-blur-md sm:p-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#0b9c72]">
-            {completedCount} / {totalChallenges} {labels.completed}
-          </p>
-
-          <h2 className="mt-3 text-2xl font-semibold tracking-[-0.03em] text-[#31425a]">
-            {scenario.summary.title}
-          </h2>
-
-          {scenario.summary.body ? (
-            <MarkdownContent className="mt-4">{scenario.summary.body}</MarkdownContent>
-          ) : null}
-
-          <ul className="mt-6 space-y-3">
-            {scenario.summary.takeaways.map((takeaway) => (
-              <li
-                key={takeaway}
-                className="flex gap-3 rounded-2xl border border-[#dfe5ec] bg-[#f8fafc] p-4 text-sm leading-6 text-[#596170]"
-              >
-                <span
-                  aria-hidden="true"
-                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#0b9c72] text-xs font-bold text-white"
-                >
-                  ✓
-                </span>
-                <span>{takeaway}</span>
-              </li>
-            ))}
-          </ul>
-
-          {errorMessage ? (
-            <div
-              role="alert"
-              className="mt-4 rounded-xl border border-[#f1c9c9] bg-[#fff6f6] px-4 py-3 text-sm leading-6 text-[#9f3c3c]"
-            >
-              {errorMessage}
-            </div>
-          ) : null}
-
-          <button
-            type="button"
-            disabled={isSubmitting}
-            className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-[#0b9c72] px-6 text-sm font-semibold text-white transition hover:bg-[#087658] disabled:cursor-not-allowed disabled:opacity-50"
-            onClick={() => void completeScenario()}
-          >
-            {isSubmitting ? labels.loading : labels.completeScenario}
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   function renderCompletion() {
     return (
       <div className="absolute inset-0 flex items-center justify-center bg-[#17243a]/50 p-4">
@@ -764,7 +690,32 @@ export function ScenarioPlayer({
           ) : null}
 
           {view === "feedback" ? renderFeedback() : null}
-          {view === "summary" ? renderSummary() : null}
+
+          {view === "summary" ? (
+            <ScenarioSummary
+              scenarioTitle={scenario.title}
+              summary={scenario.summary}
+              completedCount={completedCount}
+              totalCount={totalChallenges}
+              isSubmitting={isSubmitting}
+              errorMessage={errorMessage}
+              labels={{
+                summary: labels.summary,
+
+                allChallengesCompleted: labels.allChallengesCompleted,
+
+                completedChallenges: labels.completedChallenges,
+
+                keyTakeaways: labels.keyTakeaways,
+
+                completeScenario: labels.completeScenario,
+
+                loading: labels.loading,
+              }}
+              onComplete={completeScenario}
+            />
+          ) : null}
+
           {view === "completion" ? renderCompletion() : null}
         </div>
       )}

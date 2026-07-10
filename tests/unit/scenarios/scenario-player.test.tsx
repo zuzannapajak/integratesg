@@ -283,6 +283,19 @@ describe("ScenarioPlayer", () => {
       }),
     );
 
+    expect(await screen.findByTestId("scenario-summary")).toHaveAttribute(
+      "data-all-completed",
+      "true",
+    );
+
+    expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "summary");
+
+    expect(
+      screen.getByRole("button", {
+        name: "Complete scenario",
+      }),
+    ).toBeEnabled();
+
     expect(await screen.findByText("Test scenario summary")).toBeVisible();
 
     await waitFor(() => {
@@ -633,4 +646,121 @@ it("does not mark the challenge as completed when completion persistence fails",
   expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-completed-count", "0");
 
   expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "feedback");
+});
+
+it("completes the scenario only after confirming the summary", async () => {
+  const user = userEvent.setup();
+
+  const onScenarioCompleted = vi.fn();
+
+  render(
+    <ScenarioPlayer
+      scenario={testScenario}
+      initialView="board"
+      onScenarioCompleted={onScenarioCompleted}
+    />,
+  );
+
+  await openChallengeDecision(user);
+
+  await user.click(
+    screen.getByRole("radio", {
+      name: /^Optimal choice/,
+    }),
+  );
+
+  await user.click(
+    screen.getByRole("button", {
+      name: "Confirm decision",
+    }),
+  );
+
+  await screen.findByTestId("scenario-correct-feedback");
+
+  await user.click(
+    screen.getByRole("button", {
+      name: "Continue",
+    }),
+  );
+
+  expect(await screen.findByTestId("scenario-summary")).toBeVisible();
+
+  expect(onScenarioCompleted).not.toHaveBeenCalled();
+
+  await user.click(
+    screen.getByRole("button", {
+      name: "Complete scenario",
+    }),
+  );
+
+  await waitFor(() => {
+    expect(onScenarioCompleted).toHaveBeenCalledWith({
+      scenarioId: "scenario-02",
+      scenarioVersion: 1,
+    });
+  });
+
+  expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "completion");
+
+  expect(
+    screen.getByRole("heading", {
+      name: "Scenario completed",
+    }),
+  ).toBeVisible();
+});
+
+it("stays on the summary when scenario completion fails", async () => {
+  const user = userEvent.setup();
+
+  const onScenarioCompleted = vi
+    .fn()
+    .mockRejectedValue(new Error("The scenario could not be saved."));
+
+  render(
+    <ScenarioPlayer
+      scenario={testScenario}
+      initialView="board"
+      onScenarioCompleted={onScenarioCompleted}
+    />,
+  );
+
+  await openChallengeDecision(user);
+
+  await user.click(
+    screen.getByRole("radio", {
+      name: /^Optimal choice/,
+    }),
+  );
+
+  await user.click(
+    screen.getByRole("button", {
+      name: "Confirm decision",
+    }),
+  );
+
+  await screen.findByTestId("scenario-correct-feedback");
+
+  await user.click(
+    screen.getByRole("button", {
+      name: "Continue",
+    }),
+  );
+
+  await screen.findByTestId("scenario-summary");
+
+  await user.click(
+    screen.getByRole("button", {
+      name: "Complete scenario",
+    }),
+  );
+
+  expect(await screen.findByRole("alert")).toHaveTextContent("The scenario could not be saved.");
+
+  expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "summary");
+
+  expect(
+    screen.getByRole("button", {
+      name: "Complete scenario",
+    }),
+  ).toBeEnabled();
 });
