@@ -13,7 +13,6 @@ export const DEFAULT_SCENARIO_PROGRESS_LABELS: ScenarioProgressLabels = {
 export type ScenarioProgressProps = {
   readonly completedCount: number;
   readonly totalCount: number;
-
   readonly labels?: Partial<ScenarioProgressLabels>;
 };
 

@@ -1,18 +1,12 @@
 "use client";
 
-import { Leaf } from "lucide-react";
-import Image from "next/image";
-import { useMemo, useState } from "react";
-
+import { ScenarioProgress } from "@/components/scenarios/common/scenario-progress";
 import { ScenarioBoard } from "@/components/scenarios/simulator/scenario-board";
-import {
-  ScenarioChallenge,
-  ScenarioChallengeStep,
-} from "@/components/scenarios/simulator/scenario-challenge";
+import type { ScenarioChallengeStep } from "@/components/scenarios/simulator/scenario-challenge";
+import { ScenarioChallenge } from "@/components/scenarios/simulator/scenario-challenge";
 import { ScenarioCorrectFeedback } from "@/components/scenarios/simulator/scenario-correct-feedback";
 import { ScenarioIncorrectFeedback } from "@/components/scenarios/simulator/scenario-incorrect-feedback";
 import { ScenarioIntro } from "@/components/scenarios/simulator/scenario-intro";
-import { ScenarioProgress } from "@/components/scenarios/simulator/scenario-progress";
 import { ScenarioSummary } from "@/components/scenarios/simulator/scenario-summary";
 import type {
   ChallengeId,
@@ -24,6 +18,9 @@ import type {
   ScenarioPlayerMode,
   ScenarioPlayerView,
 } from "@/lib/scenarios/simulator/types";
+import { Leaf } from "lucide-react";
+import Image from "next/image";
+import { useMemo, useState } from "react";
 
 export type ScenarioStartedEvent = {
   readonly scenarioId: ScenarioId;
@@ -342,7 +339,6 @@ export function ScenarioPlayer({
 
           return {
             ...currentChoices,
-
             [currentChallenge.id]: [...rejectedChoiceIds, selectedChoice.id],
           };
         });
@@ -486,15 +482,10 @@ export function ScenarioPlayer({
           errorMessage={errorMessage}
           labels={{
             correctDecision: labels.correctDecision,
-
             yourDecision: labels.yourDecision,
-
             expectedImpact: labels.expectedImpact,
-
             keyTakeaway: labels.keyTakeaway,
-
             continue: labels.continue,
-
             loading: labels.loading,
           }}
           onContinue={continueAfterFeedback}
@@ -510,17 +501,11 @@ export function ScenarioPlayer({
         errorMessage={errorMessage}
         labels={{
           incorrectDecision: labels.incorrectDecision,
-
           yourDecision: labels.yourDecision,
-
           whyItFallsShort: labels.whyItFallsShort,
-
           likelyConsequence: labels.likelyConsequence,
-
           keyTakeaway: labels.keyTakeaway,
-
           tryAgain: labels.tryAgain,
-
           loading: labels.loading,
         }}
         onTryAgain={tryAgain}
@@ -664,23 +649,14 @@ export function ScenarioPlayer({
               errorMessage={errorMessage}
               labels={{
                 context: labels.challengeContext,
-
                 decision: labels.decision,
-
                 attempt: labels.attempt,
-
                 previouslyTried: labels.previouslyTried,
-
                 backToBoard: labels.backToBoard,
-
                 continueToDecision: labels.continueToDecision,
-
                 back: labels.back,
-
                 selectOneOption: labels.selectOneOption,
-
                 confirmDecision: labels.confirmDecision,
-
                 loading: labels.loading,
               }}
               onSelectChoice={setSelectedChoiceId}
