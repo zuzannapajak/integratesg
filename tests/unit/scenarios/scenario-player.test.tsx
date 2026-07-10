@@ -764,3 +764,43 @@ it("stays on the summary when scenario completion fails", async () => {
     }),
   ).toBeEnabled();
 });
+
+it("uses a forward transition when opening a challenge", async () => {
+  const user = userEvent.setup();
+
+  render(<ScenarioPlayer scenario={testScenario} initialView="board" />);
+
+  await user.click(getAvailableChallengeButton());
+
+  await waitFor(() => {
+    expect(screen.getByTestId("scenario-view-transition")).toHaveAttribute(
+      "data-transition-direction",
+      "forward",
+    );
+  });
+
+  expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "challenge");
+});
+
+it("uses a backward transition when returning to the board", async () => {
+  const user = userEvent.setup();
+
+  render(<ScenarioPlayer scenario={testScenario} initialView="board" />);
+
+  await user.click(getAvailableChallengeButton());
+
+  await user.click(
+    screen.getByRole("button", {
+      name: "Back to challenges",
+    }),
+  );
+
+  await waitFor(() => {
+    expect(screen.getByTestId("scenario-view-transition")).toHaveAttribute(
+      "data-transition-direction",
+      "backward",
+    );
+  });
+
+  expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "board");
+});

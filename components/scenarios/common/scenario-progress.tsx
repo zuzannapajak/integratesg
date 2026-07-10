@@ -62,12 +62,13 @@ export function ScenarioProgress({
         aria-valuemax={safeTotalCount}
         aria-valuenow={safeCompletedCount}
         aria-valuetext={`${safeCompletedCount} / ${safeTotalCount} ${labels.completed}`}
-        className="relative h-12 w-12 shrink-0 rounded-full"
+        className={[
+          "relative h-12 w-12 shrink-0 rounded-full",
+          "transition-transform duration-300 ease-out",
+          isComplete ? "scale-105" : "scale-100",
+        ].join(" ")}
         style={{
-          background: `conic-gradient(
-            ${progressColour} ${completionPercentage}%,
-            #dfe5ec ${completionPercentage}% 100%
-          )`,
+          background: `conic-gradient(${progressColour} ${completionPercentage}%, #dfe5ec ${completionPercentage}% 100%)`,
         }}
       >
         <span aria-hidden="true" className="absolute inset-1 rounded-full bg-white" />

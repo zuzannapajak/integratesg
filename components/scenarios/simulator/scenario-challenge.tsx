@@ -4,8 +4,10 @@ import { ArrowLeft, ArrowRight, BookOpen, ListChecks } from "lucide-react";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 
+import { ScenarioScreenTransition } from "@/components/scenarios/common/scenario-screen-transition";
 import { ScenarioDecisionChoice } from "@/components/scenarios/simulator/scenario-decision-choice";
 import type { ChoiceId, ResolvedChallenge } from "@/lib/scenarios/simulator/types";
+import { AnimatePresence } from "framer-motion";
 
 export type ScenarioChallengeStep = "context" | "decision";
 
@@ -205,126 +207,135 @@ function ScenarioChallengeContent({
             </button>
           </header>
 
-          {step === "context" ? (
-            <>
-              <section
-                aria-labelledby="challenge-context-heading"
-                className="mt-6 rounded-2xl border border-[#dfe5ec] bg-[#f8fafc] p-4 sm:p-5"
-              >
-                <div className="flex items-center gap-3">
-                  <span
-                    aria-hidden="true"
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#eef5ff] text-[#0d6fe8]"
+          <AnimatePresence initial={false} mode="wait">
+            <ScenarioScreenTransition
+              key={step}
+              direction={step === "decision" ? "forward" : "backward"}
+              testId="scenario-challenge-step-transition"
+              className="min-w-0"
+            >
+              {step === "context" ? (
+                <>
+                  <section
+                    aria-labelledby="challenge-context-heading"
+                    className="mt-6 rounded-2xl border border-[#dfe5ec] bg-[#f8fafc] p-4 sm:p-5"
                   >
-                    <BookOpen size={19} />
-                  </span>
+                    <div className="flex items-center gap-3">
+                      <span
+                        aria-hidden="true"
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#eef5ff] text-[#0d6fe8]"
+                      >
+                        <BookOpen size={19} />
+                      </span>
 
-                  <h3
-                    id="challenge-context-heading"
-                    className="text-base font-semibold text-[#31425a]"
-                  >
-                    {labels.context}
-                  </h3>
-                </div>
+                      <h3
+                        id="challenge-context-heading"
+                        className="text-base font-semibold text-[#31425a]"
+                      >
+                        {labels.context}
+                      </h3>
+                    </div>
 
-                <div className="mt-4">
-                  <MarkdownContent>{challenge.context}</MarkdownContent>
-                </div>
-              </section>
+                    <div className="mt-4">
+                      <MarkdownContent>{challenge.context}</MarkdownContent>
+                    </div>
+                  </section>
 
-              <footer className="mt-6 flex justify-end">
-                <button
-                  type="button"
-                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[#0d6fe8] px-6 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,111,232,0.22)] transition hover:-translate-y-0.5 hover:bg-[#095fc8] sm:w-auto"
-                  onClick={() => {
-                    setStep("decision");
-                  }}
-                >
-                  {labels.continueToDecision}
-
-                  <ArrowRight aria-hidden="true" size={17} />
-                </button>
-              </footer>
-            </>
-          ) : (
-            <>
-              <section aria-labelledby="challenge-decision-heading" className="mt-6">
-                <div className="flex items-start gap-3">
-                  <span
-                    aria-hidden="true"
-                    className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#eef5ff] text-[#0d6fe8]"
-                  >
-                    <ListChecks size={19} />
-                  </span>
-
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#0d6fe8]">
-                      {labels.selectOneOption}
-                    </p>
-
-                    <h3
-                      id="challenge-decision-heading"
-                      className="mt-1 text-base font-semibold leading-7 text-[#31425a] sm:text-lg"
+                  <footer className="mt-6 flex justify-end">
+                    <button
+                      type="button"
+                      className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[#0d6fe8] px-6 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,111,232,0.22)] transition hover:-translate-y-0.5 hover:bg-[#095fc8] sm:w-auto"
+                      onClick={() => {
+                        setStep("decision");
+                      }}
                     >
-                      {challenge.question}
-                    </h3>
-                  </div>
-                </div>
+                      {labels.continueToDecision}
 
-                <fieldset className="mt-5 space-y-3" disabled={isSubmitting}>
-                  <legend className="sr-only">{challenge.question}</legend>
+                      <ArrowRight aria-hidden="true" size={17} />
+                    </button>
+                  </footer>
+                </>
+              ) : (
+                <>
+                  <section aria-labelledby="challenge-decision-heading" className="mt-6">
+                    <div className="flex items-start gap-3">
+                      <span
+                        aria-hidden="true"
+                        className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#eef5ff] text-[#0d6fe8]"
+                      >
+                        <ListChecks size={19} />
+                      </span>
 
-                  {challenge.choices.map((choice) => (
-                    <ScenarioDecisionChoice
-                      key={choice.id}
-                      choice={choice}
-                      groupName={`${challenge.id}-choice`}
-                      isSelected={selectedChoiceId === choice.id}
+                      <div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#0d6fe8]">
+                          {labels.selectOneOption}
+                        </p>
+
+                        <h3
+                          id="challenge-decision-heading"
+                          className="mt-1 text-base font-semibold leading-7 text-[#31425a] sm:text-lg"
+                        >
+                          {challenge.question}
+                        </h3>
+                      </div>
+                    </div>
+
+                    <fieldset className="mt-5 space-y-3" disabled={isSubmitting}>
+                      <legend className="sr-only">{challenge.question}</legend>
+
+                      {challenge.choices.map((choice) => (
+                        <ScenarioDecisionChoice
+                          key={choice.id}
+                          choice={choice}
+                          groupName={`${challenge.id}-choice`}
+                          isSelected={selectedChoiceId === choice.id}
+                          disabled={isSubmitting}
+                          wasPreviouslyTried={previouslyTriedChoiceIds.includes(choice.id)}
+                          previouslyTriedLabel={labels.previouslyTried}
+                          onSelect={onSelectChoice}
+                        />
+                      ))}
+                    </fieldset>
+                  </section>
+
+                  {errorMessage ? (
+                    <div
+                      role="alert"
+                      className="mt-4 rounded-2xl border border-[#f1c9c9] bg-[#fff6f6] px-4 py-3 text-sm leading-6 text-[#9f3c3c]"
+                    >
+                      {errorMessage}
+                    </div>
+                  ) : null}
+
+                  <footer className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <button
+                      type="button"
                       disabled={isSubmitting}
-                      wasPreviouslyTried={previouslyTriedChoiceIds.includes(choice.id)}
-                      previouslyTriedLabel={labels.previouslyTried}
-                      onSelect={onSelectChoice}
-                    />
-                  ))}
-                </fieldset>
-              </section>
+                      className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-[#d9e1ea] bg-white px-5 text-sm font-semibold text-[#31425a] transition hover:bg-[#f4f8fc] disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
+                      onClick={() => {
+                        setStep("context");
+                      }}
+                    >
+                      <ArrowLeft aria-hidden="true" size={17} />
 
-              {errorMessage ? (
-                <div
-                  role="alert"
-                  className="mt-4 rounded-2xl border border-[#f1c9c9] bg-[#fff6f6] px-4 py-3 text-sm leading-6 text-[#9f3c3c]"
-                >
-                  {errorMessage}
-                </div>
-              ) : null}
+                      {labels.back}
+                    </button>
 
-              <footer className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <button
-                  type="button"
-                  disabled={isSubmitting}
-                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full border border-[#d9e1ea] bg-white px-5 text-sm font-semibold text-[#31425a] transition hover:bg-[#f4f8fc] disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
-                  onClick={() => {
-                    setStep("context");
-                  }}
-                >
-                  <ArrowLeft aria-hidden="true" size={17} />
+                    <button
+                      type="button"
+                      disabled={!selectedChoice || isSubmitting}
+                      className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[#0d6fe8] px-6 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,111,232,0.22)] transition hover:-translate-y-0.5 hover:bg-[#095fc8] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 sm:w-auto"
+                      onClick={() => void onConfirm()}
+                    >
+                      {isSubmitting ? labels.loading : labels.confirmDecision}
 
-                  {labels.back}
-                </button>
-
-                <button
-                  type="button"
-                  disabled={!selectedChoice || isSubmitting}
-                  className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[#0d6fe8] px-6 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,111,232,0.22)] transition hover:-translate-y-0.5 hover:bg-[#095fc8] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 sm:w-auto"
-                  onClick={() => void onConfirm()}
-                >
-                  {isSubmitting ? labels.loading : labels.confirmDecision}
-
-                  {!isSubmitting ? <ArrowRight aria-hidden="true" size={17} /> : null}
-                </button>
-              </footer>
-            </>
-          )}
+                      {!isSubmitting ? <ArrowRight aria-hidden="true" size={17} /> : null}
+                    </button>
+                  </footer>
+                </>
+              )}
+            </ScenarioScreenTransition>
+          </AnimatePresence>
         </article>
       </div>
     </div>

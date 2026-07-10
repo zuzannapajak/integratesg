@@ -1,6 +1,10 @@
 "use client";
 
 import { ScenarioProgress } from "@/components/scenarios/common/scenario-progress";
+import {
+  ScenarioScreenTransition,
+  ScenarioTransitionDirection,
+} from "@/components/scenarios/common/scenario-screen-transition";
 import { ScenarioBoard } from "@/components/scenarios/simulator/scenario-board";
 import type { ScenarioChallengeStep } from "@/components/scenarios/simulator/scenario-challenge";
 import { ScenarioChallenge } from "@/components/scenarios/simulator/scenario-challenge";
@@ -18,6 +22,7 @@ import type {
   ScenarioPlayerMode,
   ScenarioPlayerView,
 } from "@/lib/scenarios/simulator/types";
+import { AnimatePresence } from "framer-motion";
 import { Leaf } from "lucide-react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
@@ -196,32 +201,52 @@ export function ScenarioPlayer({
   );
 
   const [view, setView] = useState<ScenarioPlayerView>(initialView);
+
+  const [transitionDirection, setTransitionDirection] =
+    useState<ScenarioTransitionDirection>("neutral");
+
   const [currentChallengeId, setCurrentChallengeId] = useState<ChallengeId | null>(
     initialChallengeId && validChallengeIds.has(initialChallengeId) ? initialChallengeId : null,
   );
+
   const [selectedChoiceId, setSelectedChoiceId] = useState<ChoiceId | null>(null);
+
   const [challengeInitialStep, setChallengeInitialStep] =
     useState<ScenarioChallengeStep>("context");
+
   const [attemptCounts, setAttemptCounts] = useState<ChallengeAttemptCountMap>({});
+
   const [rejectedChoiceIdsByChallenge, setRejectedChoiceIdsByChallenge] =
     useState<ChallengeRejectedChoiceMap>({});
+
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const currentChallenge =
     orderedChallenges.find((challenge) => challenge.id === currentChallengeId) ?? null;
+
   const selectedChoice =
     currentChallenge?.choices.find((choice) => choice.id === selectedChoiceId) ?? null;
+
   const currentAttemptNumber = currentChallenge ? (attemptCounts[currentChallenge.id] ?? 0) + 1 : 1;
+
   const currentRejectedChoiceIds = currentChallenge
     ? (rejectedChoiceIdsByChallenge[currentChallenge.id] ?? [])
     : [];
+
   const usesPreStartBackground = view === "intro" || view === "board";
+
   const backgroundImage = usesPreStartBackground
     ? scenario.assets.preStartBackground
     : scenario.assets.inProgressBackground;
+
   const completedCount = completedChallengeIds.size;
+
   const totalChallenges = orderedChallenges.length;
+
+  const activeScreenKey =
+    view === "challenge" || view === "feedback" ? `${view}:${currentChallengeId ?? "none"}` : view;
 
   function getChallengeStatus(
     challenge: ResolvedChallenge,
@@ -252,6 +277,11 @@ export function ScenarioPlayer({
     return "locked";
   }
 
+  function navigateToView(nextView: ScenarioPlayerView, direction: ScenarioTransitionDirection) {
+    setTransitionDirection(direction);
+    setView(nextView);
+  }
+
   async function startScenario() {
     if (isSubmitting) {
       return;
@@ -272,7 +302,7 @@ export function ScenarioPlayer({
       setCurrentChallengeId(null);
       setSelectedChoiceId(null);
       setChallengeInitialStep("context");
-      setView("board");
+      navigateToView("board", "forward");
     } catch (error) {
       setErrorMessage(getErrorMessage(error));
     } finally {
@@ -291,7 +321,7 @@ export function ScenarioPlayer({
     setCurrentChallengeId(challenge.id);
     setSelectedChoiceId(null);
     setChallengeInitialStep("context");
-    setView("challenge");
+    navigateToView("challenge", "forward");
   }
 
   function returnToBoard() {
@@ -299,7 +329,7 @@ export function ScenarioPlayer({
     setSelectedChoiceId(null);
     setCurrentChallengeId(null);
     setChallengeInitialStep("context");
-    setView("board");
+    navigateToView("board", "backward");
   }
 
   async function confirmDecision() {
@@ -344,7 +374,7 @@ export function ScenarioPlayer({
         });
       }
 
-      setView("feedback");
+      navigateToView("feedback", "forward");
     } catch (error) {
       setErrorMessage(getErrorMessage(error));
     } finally {
@@ -370,7 +400,7 @@ export function ScenarioPlayer({
      * directly from the decision step.
      */
     setChallengeInitialStep("decision");
-    setView("challenge");
+    navigateToView("challenge", "forward");
   }
 
   async function continueAfterFeedback() {
@@ -433,9 +463,9 @@ export function ScenarioPlayer({
       setChallengeInitialStep("context");
 
       if (nextCompletedChallengeIds.size >= totalChallenges) {
-        setView("summary");
+        navigateToView("summary", "forward");
       } else {
-        setView("board");
+        navigateToView("board", "forward");
       }
     } catch (error) {
       setErrorMessage(getErrorMessage(error));
@@ -460,7 +490,7 @@ export function ScenarioPlayer({
         });
       }
 
-      setView("completion");
+      navigateToView("completion", "forward");
     } catch (error) {
       setErrorMessage(getErrorMessage(error));
     } finally {
@@ -588,113 +618,139 @@ export function ScenarioPlayer({
         />
       </header>
 
-      {view === "board" ? (
-        <div className="min-h-0 flex-1">
-          <ScenarioBoard
-            backgroundImage={scenario.assets.preStartBackground}
-            boardAlt={scenario.boardAlt}
-            scenarioTitle={scenario.title}
-            items={orderedChallenges.map((challenge, challengeIndex) => ({
-              challenge,
-              status: getChallengeStatus(challenge, challengeIndex),
-            }))}
-            labels={{
-              title: labels.viewChallenges,
-              currentObjective: labels.currentObjective,
-              openChallenge: labels.openChallenge,
-              completed: labels.completed,
-              available: labels.available,
-              inProgress: labels.inProgress,
-              locked: labels.locked,
-            }}
-            onSelectChallenge={openChallenge}
-          />
-        </div>
-      ) : (
-        <div className="relative min-h-0 flex-1 overflow-hidden bg-[#eef2f6]">
-          <Image
-            src={backgroundImage}
-            alt=""
-            fill
-            priority
-            sizes="(max-width: 768px) 100vw, 1400px"
-            className="object-cover"
-          />
+      <div className="relative min-h-0 flex-1 overflow-hidden bg-[#eef2f6]">
+        <AnimatePresence initial={false} mode="wait">
+          <ScenarioScreenTransition
+            key={activeScreenKey}
+            direction={transitionDirection}
+            testId="scenario-view-transition"
+            className="absolute inset-0 overflow-hidden"
+          >
+            {view === "board" ? (
+              <ScenarioBoard
+                backgroundImage={scenario.assets.preStartBackground}
+                boardAlt={scenario.boardAlt}
+                scenarioTitle={scenario.title}
+                items={orderedChallenges.map((challenge, challengeIndex) => ({
+                  challenge,
+                  status: getChallengeStatus(challenge, challengeIndex),
+                }))}
+                labels={{
+                  title: labels.viewChallenges,
 
-          <p className="sr-only">{scenario.boardAlt}</p>
+                  currentObjective: labels.currentObjective,
 
-          {view === "intro" ? (
-            <ScenarioIntro
-              scenario={scenario}
-              isStarting={isSubmitting}
-              errorMessage={errorMessage}
-              labels={{
-                startScenario: labels.startScenario,
-                backToScenarios: labels.leaveScenario,
-                starting: labels.loading,
-              }}
-              onStart={() => void startScenario()}
-              onExit={onExit}
-            />
-          ) : null}
+                  openChallenge: labels.openChallenge,
 
-          {view === "challenge" && currentChallenge ? (
-            <ScenarioChallenge
-              challenge={currentChallenge}
-              selectedChoiceId={selectedChoiceId}
-              initialStep={challengeInitialStep}
-              attemptNumber={currentAttemptNumber}
-              previouslyTriedChoiceIds={currentRejectedChoiceIds}
-              isSubmitting={isSubmitting}
-              errorMessage={errorMessage}
-              labels={{
-                context: labels.challengeContext,
-                decision: labels.decision,
-                attempt: labels.attempt,
-                previouslyTried: labels.previouslyTried,
-                backToBoard: labels.backToBoard,
-                continueToDecision: labels.continueToDecision,
-                back: labels.back,
-                selectOneOption: labels.selectOneOption,
-                confirmDecision: labels.confirmDecision,
-                loading: labels.loading,
-              }}
-              onSelectChoice={setSelectedChoiceId}
-              onConfirm={() => void confirmDecision()}
-              onBackToBoard={returnToBoard}
-            />
-          ) : null}
+                  completed: labels.completed,
 
-          {view === "feedback" ? renderFeedback() : null}
+                  available: labels.available,
 
-          {view === "summary" ? (
-            <ScenarioSummary
-              scenarioTitle={scenario.title}
-              summary={scenario.summary}
-              completedCount={completedCount}
-              totalCount={totalChallenges}
-              isSubmitting={isSubmitting}
-              errorMessage={errorMessage}
-              labels={{
-                summary: labels.summary,
+                  inProgress: labels.inProgress,
 
-                allChallengesCompleted: labels.allChallengesCompleted,
+                  locked: labels.locked,
+                }}
+                onSelectChallenge={openChallenge}
+              />
+            ) : (
+              <>
+                <Image
+                  src={backgroundImage}
+                  alt=""
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, 1400px"
+                  className="object-cover"
+                />
 
-                completedChallenges: labels.completedChallenges,
+                <p className="sr-only">{scenario.boardAlt}</p>
 
-                keyTakeaways: labels.keyTakeaways,
+                {view === "intro" ? (
+                  <ScenarioIntro
+                    scenario={scenario}
+                    isStarting={isSubmitting}
+                    errorMessage={errorMessage}
+                    labels={{
+                      startScenario: labels.startScenario,
 
-                completeScenario: labels.completeScenario,
+                      backToScenarios: labels.leaveScenario,
 
-                loading: labels.loading,
-              }}
-              onComplete={completeScenario}
-            />
-          ) : null}
+                      starting: labels.loading,
+                    }}
+                    onStart={() => void startScenario()}
+                    onExit={onExit}
+                  />
+                ) : null}
 
-          {view === "completion" ? renderCompletion() : null}
-        </div>
-      )}
+                {view === "challenge" && currentChallenge ? (
+                  <ScenarioChallenge
+                    challenge={currentChallenge}
+                    selectedChoiceId={selectedChoiceId}
+                    initialStep={challengeInitialStep}
+                    attemptNumber={currentAttemptNumber}
+                    previouslyTriedChoiceIds={currentRejectedChoiceIds}
+                    isSubmitting={isSubmitting}
+                    errorMessage={errorMessage}
+                    labels={{
+                      context: labels.challengeContext,
+
+                      decision: labels.decision,
+
+                      attempt: labels.attempt,
+
+                      previouslyTried: labels.previouslyTried,
+
+                      backToBoard: labels.backToBoard,
+
+                      continueToDecision: labels.continueToDecision,
+
+                      back: labels.back,
+
+                      selectOneOption: labels.selectOneOption,
+
+                      confirmDecision: labels.confirmDecision,
+
+                      loading: labels.loading,
+                    }}
+                    onSelectChoice={setSelectedChoiceId}
+                    onConfirm={() => void confirmDecision()}
+                    onBackToBoard={returnToBoard}
+                  />
+                ) : null}
+
+                {view === "feedback" ? renderFeedback() : null}
+
+                {view === "summary" ? (
+                  <ScenarioSummary
+                    scenarioTitle={scenario.title}
+                    summary={scenario.summary}
+                    completedCount={completedCount}
+                    totalCount={totalChallenges}
+                    isSubmitting={isSubmitting}
+                    errorMessage={errorMessage}
+                    labels={{
+                      summary: labels.summary,
+
+                      allChallengesCompleted: labels.allChallengesCompleted,
+
+                      completedChallenges: labels.completedChallenges,
+
+                      keyTakeaways: labels.keyTakeaways,
+
+                      completeScenario: labels.completeScenario,
+
+                      loading: labels.loading,
+                    }}
+                    onComplete={completeScenario}
+                  />
+                ) : null}
+
+                {view === "completion" ? renderCompletion() : null}
+              </>
+            )}
+          </ScenarioScreenTransition>
+        </AnimatePresence>
+      </div>
     </section>
   );
 }
