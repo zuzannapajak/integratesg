@@ -1,5 +1,6 @@
 "use server";
 
+import { requireAuthenticatedUserId } from "@/lib/auth/require-authenticated-user-id";
 import {
   completeScenarioChallengeProgress,
   completeScenarioProgress,
@@ -13,7 +14,6 @@ import type {
   ScenarioId,
   ScenarioPlayerMode,
 } from "@/lib/scenarios/simulator/types";
-import { createClient } from "@/lib/supabase/server";
 
 type ScenarioActionIdentity = {
   readonly scenarioId: ScenarioId;
@@ -35,22 +35,8 @@ type CompleteScenarioChallengeActionInput = ScenarioActionIdentity & {
   readonly challengeId: ChallengeId;
 };
 
-async function getAuthedUserId() {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    throw new Error("Unauthorized");
-  }
-
-  return user.id;
-}
-
 export async function getScenarioRuntimeStateAction(input: GetScenarioRuntimeStateActionInput) {
-  const userId = await getAuthedUserId();
+  const userId = await requireAuthenticatedUserId();
 
   return getScenarioRuntimeState({
     userId,
@@ -62,7 +48,7 @@ export async function getScenarioRuntimeStateAction(input: GetScenarioRuntimeSta
 }
 
 export async function startScenarioAction(input: ScenarioActionIdentity) {
-  const userId = await getAuthedUserId();
+  const userId = await requireAuthenticatedUserId();
 
   return startScenarioProgress({
     userId,
@@ -73,7 +59,7 @@ export async function startScenarioAction(input: ScenarioActionIdentity) {
 }
 
 export async function recordScenarioChoiceAction(input: RecordScenarioChoiceActionInput) {
-  const userId = await getAuthedUserId();
+  const userId = await requireAuthenticatedUserId();
 
   return recordScenarioChoiceProgress({
     userId,
@@ -87,7 +73,7 @@ export async function recordScenarioChoiceAction(input: RecordScenarioChoiceActi
 }
 
 export async function completeScenarioChallengeAction(input: CompleteScenarioChallengeActionInput) {
-  const userId = await getAuthedUserId();
+  const userId = await requireAuthenticatedUserId();
 
   return completeScenarioChallengeProgress({
     userId,
@@ -99,7 +85,7 @@ export async function completeScenarioChallengeAction(input: CompleteScenarioCha
 }
 
 export async function completeScenarioAction(input: ScenarioActionIdentity) {
-  const userId = await getAuthedUserId();
+  const userId = await requireAuthenticatedUserId();
 
   return completeScenarioProgress({
     userId,
