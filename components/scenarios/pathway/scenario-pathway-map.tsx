@@ -174,7 +174,7 @@ export function ScenarioPathwayMap({
               key={item.id}
               item={item}
               labels={labels}
-              isCurrent={index === currentIndex}
+              isCurrent={index === currentIndex && item.status !== "locked"}
               onOpenScenario={onOpenScenario}
             />
           ))}

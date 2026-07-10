@@ -46,6 +46,10 @@ function getCardClasses(status: ScenarioPathwayStatus, isCurrent: boolean): stri
     return ["border-[#0b9c72]/25", "bg-[#ecf8f4]", "text-[#31425a]"].join(" ");
   }
 
+  if (status === "locked") {
+    return ["border-[#dfe5ec]", "bg-[#f4f6f8]", "text-[#7a8594]"].join(" ");
+  }
+
   if (status === "in_progress" || isCurrent) {
     return [
       "border-[#0d6fe8]/35",
@@ -55,11 +59,7 @@ function getCardClasses(status: ScenarioPathwayStatus, isCurrent: boolean): stri
     ].join(" ");
   }
 
-  if (status === "available") {
-    return ["border-[#0d6fe8]/20", "bg-white", "text-[#31425a]"].join(" ");
-  }
-
-  return ["border-[#dfe5ec]", "bg-[#f4f6f8]", "text-[#7a8594]"].join(" ");
+  return ["border-[#0d6fe8]/20", "bg-white", "text-[#31425a]"].join(" ");
 }
 
 function getNumberClasses(status: ScenarioPathwayStatus): string {

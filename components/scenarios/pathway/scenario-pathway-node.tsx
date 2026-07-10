@@ -52,6 +52,15 @@ function getNodeClasses(status: ScenarioPathwayStatus, isCurrent: boolean): stri
     ].join(" ");
   }
 
+  if (status === "locked") {
+    return [
+      "border-white",
+      "bg-[#7e8792]",
+      "text-white",
+      "shadow-[0_12px_30px_rgba(23,36,58,0.24)]",
+    ].join(" ");
+  }
+
   if (status === "in_progress" || isCurrent) {
     return [
       "border-white",
@@ -63,20 +72,11 @@ function getNodeClasses(status: ScenarioPathwayStatus, isCurrent: boolean): stri
     ].join(" ");
   }
 
-  if (status === "available") {
-    return [
-      "border-white",
-      "bg-[#0d6fe8]",
-      "text-white",
-      "shadow-[0_14px_36px_rgba(13,111,232,0.34)]",
-    ].join(" ");
-  }
-
   return [
     "border-white",
-    "bg-[#7e8792]",
+    "bg-[#0d6fe8]",
     "text-white",
-    "shadow-[0_12px_30px_rgba(23,36,58,0.24)]",
+    "shadow-[0_14px_36px_rgba(13,111,232,0.34)]",
   ].join(" ");
 }
 
