@@ -15,9 +15,7 @@ export const scenario02En = defineScenarioLocale<"scenario-02">({
   subtitle: "Embedding ESG priorities in business strategy and organisational practice",
 
   introduction: `
-NordForm Components is a medium-sized manufacturing company facing growing expectations from customers, employees and business partners.
-
-The organisation has already undertaken several sustainability-related activities, but they remain fragmented and are not yet connected to one coherent ESG strategy.
+NordForm Components is a medium-sized manufacturing company facing growing expectations from customers, employees and business partners. The organisation has already undertaken several sustainability-related activities, but they remain fragmented and are not yet connected to one coherent ESG strategy.
 
 You have been asked to support the management team in defining priorities, responding to financial pressure and creating organisational ownership for ESG.
     `.trim(),
@@ -291,7 +289,7 @@ Communication is important, but employees also need clear responsibilities, prac
   },
 
   summary: {
-    title: "Scenario 2 completed",
+    title: "You have built the foundations of an aligned ESG strategy",
 
     body: `
 You helped NordForm Components move from a general ESG ambition to a focused and implementable organisational strategy.
