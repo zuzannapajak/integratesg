@@ -146,6 +146,10 @@ export type ScenarioPlayerProps = {
   readonly initialView?: ScenarioPlayerView;
   readonly initialChallengeId?: ChallengeId | null;
   readonly initialCompletedChallengeIds?: readonly ChallengeId[];
+  readonly initialAttemptCounts?: Readonly<Partial<Record<ChallengeId, number>>>;
+  readonly initialRejectedChoiceIdsByChallenge?: Readonly<
+    Partial<Record<ChallengeId, readonly ChoiceId[]>>
+  >;
   readonly labels?: Partial<ScenarioPlayerLabels>;
   readonly onScenarioStarted?: (event: ScenarioStartedEvent) => void | Promise<void>;
   readonly onChoiceConfirmed?: (event: ScenarioChoiceConfirmedEvent) => void | Promise<void>;
@@ -171,6 +175,8 @@ export function ScenarioPlayer({
   initialView = "intro",
   initialChallengeId = null,
   initialCompletedChallengeIds = [],
+  initialAttemptCounts = {},
+  initialRejectedChoiceIdsByChallenge = {},
   labels: customLabels,
   onScenarioStarted,
   onChoiceConfirmed,
@@ -214,10 +220,14 @@ export function ScenarioPlayer({
   const [challengeInitialStep, setChallengeInitialStep] =
     useState<ScenarioChallengeStep>("context");
 
-  const [attemptCounts, setAttemptCounts] = useState<ChallengeAttemptCountMap>({});
+  const [attemptCounts, setAttemptCounts] = useState<ChallengeAttemptCountMap>(() => ({
+    ...initialAttemptCounts,
+  }));
 
   const [rejectedChoiceIdsByChallenge, setRejectedChoiceIdsByChallenge] =
-    useState<ChallengeRejectedChoiceMap>({});
+    useState<ChallengeRejectedChoiceMap>(() => ({
+      ...initialRejectedChoiceIdsByChallenge,
+    }));
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 

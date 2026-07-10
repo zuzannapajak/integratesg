@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 
-import { ScenarioPlayClient } from "./scenario-play-client";
-
+import { getScenarioRuntimeStateAction } from "@/features/scenarios/actions";
 import { resolveScenarioBySlug } from "@/lib/scenarios/simulator/resolve-scenario";
 import type { ScenarioPlayerMode } from "@/lib/scenarios/simulator/types";
+import { ScenarioPlayClient } from "./scenario-play-client";
 
 export type ScenarioPlayPageProps = {
   readonly params: Promise<{
@@ -11,7 +11,7 @@ export type ScenarioPlayPageProps = {
     readonly slug: string;
   }>;
 
-  readonly searchParams?: Promise<{
+  readonly searchParams: Promise<{
     readonly mode?: string | readonly string[];
   }>;
 };
@@ -20,13 +20,12 @@ function getSearchParam(value: string | readonly string[] | undefined): string |
   return typeof value === "string" ? value : value?.[0];
 }
 
-function resolveMode(value: string | readonly string[] | undefined): ScenarioPlayerMode {
-  return getSearchParam(value) === "review" ? "review" : "play";
-}
-
 export default async function ScenarioPlayPage({ params, searchParams }: ScenarioPlayPageProps) {
   const { locale, slug } = await params;
-  const resolvedSearchParams = (await searchParams) ?? {};
+  const resolvedSearchParams = await searchParams;
+
+  const mode: ScenarioPlayerMode =
+    getSearchParam(resolvedSearchParams.mode) === "review" ? "review" : "play";
 
   const scenario = resolveScenarioBySlug(slug, locale);
 
@@ -34,15 +33,19 @@ export default async function ScenarioPlayPage({ params, searchParams }: Scenari
     notFound();
   }
 
+  const runtimeState = await getScenarioRuntimeStateAction({
+    scenarioId: scenario.id,
+    scenarioVersion: scenario.version,
+    locale: scenario.locale,
+    mode,
+  });
+
   return (
-    <main className="min-h-screen bg-[#f3f6f9] p-3 sm:p-5 lg:p-6">
-      <div className="mx-auto w-full max-w-375">
-        <ScenarioPlayClient
-          locale={locale}
-          scenario={scenario}
-          mode={resolveMode(resolvedSearchParams.mode)}
-        />
-      </div>
-    </main>
+    <ScenarioPlayClient
+      locale={locale}
+      scenario={scenario}
+      mode={mode}
+      runtimeState={runtimeState}
+    />
   );
 }

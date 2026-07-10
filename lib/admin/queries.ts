@@ -1,3 +1,4 @@
+import { getNativeScenarioAdminData } from "@/lib/admin/native-scenario-stats";
 import type {
   AdminCourseStat,
   AdminLanguageStat,
@@ -372,10 +373,12 @@ function formatDateTimeLabel(date: Date | null, locale: string) {
   }).format(date);
 }
 
-function normalizeArea(area: string): "environmental" | "social" | "governance" | "cross-cutting" {
+function normalizeArea(area: string): DashboardScenarioAttemptRow["area"] {
   if (area === "environmental") return "environmental";
   if (area === "social") return "social";
   if (area === "governance") return "governance";
+  if (area === "strategy") return "strategy";
+  if (area === "reporting") return "reporting";
   return "cross-cutting";
 }
 
@@ -431,14 +434,26 @@ async function getBasicAdminStatsUncached(
 
       const intlLocale = toIntlLocale(locale);
 
-      const hourFormatter24h = new Intl.DateTimeFormat(intlLocale, { hour: "numeric" });
-      const dayFormatter7d = new Intl.DateTimeFormat(intlLocale, { weekday: "short" });
+      const hourFormatter24h = new Intl.DateTimeFormat(intlLocale, {
+        hour: "numeric",
+      });
+      const dayFormatter7d = new Intl.DateTimeFormat(intlLocale, {
+        weekday: "short",
+      });
       const dayFormatter30d = new Intl.DateTimeFormat(intlLocale, {
         day: "numeric",
         month: "short",
       });
 
       const recentActivityWhere = buildRecentActivityWhere(last30dStart);
+
+      const nativeScenarioData = await getNativeScenarioAdminData({
+        locale,
+        since: last30dStart,
+        includeBreakdowns,
+        includeRows,
+        rowsLimit: DASHBOARD_ROWS_LIMIT,
+      });
 
       const [
         totalUsers,
@@ -490,18 +505,9 @@ async function getBasicAdminStatsUncached(
           where: { status: "published" },
         }),
 
-        prisma.scenario.count({
-          where: { status: "published" },
-        }),
+        Promise.resolve(nativeScenarioData.publishedScenarios),
 
-        prisma.scenarioVariant.count({
-          where: {
-            availabilityStatus: "available",
-            scenario: {
-              status: "published",
-            },
-          },
-        }),
+        Promise.resolve(nativeScenarioData.availableScenarioVariants),
 
         includeBreakdowns
           ? prisma.course.findMany({
@@ -538,62 +544,17 @@ async function getBasicAdminStatsUncached(
             })
           : Promise.resolve([]),
 
-        includeBreakdowns
-          ? prisma.scenario.findMany({
-              where: { status: "published" },
-              select: {
-                id: true,
-                slug: true,
-                area: true,
-                variants: {
-                  select: {
-                    id: true,
-                    language: true,
-                    title: true,
-                    availabilityStatus: true,
-                  },
-                },
-              },
-              orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
-            })
-          : Promise.resolve([]),
+        Promise.resolve(nativeScenarioData.publishedScenariosWithVariants),
 
-        prisma.userScenarioAttempt.aggregate({
-          _count: { _all: true },
-          _avg: { score: true },
-        }),
+        Promise.resolve(nativeScenarioData.scenarioAttemptsAggregate),
 
-        prisma.userScenarioAttempt.groupBy({
-          by: ["status"],
-          _count: { _all: true },
-        }),
+        Promise.resolve(nativeScenarioData.scenarioAttemptsByStatus),
 
-        prisma.userScenarioAttempt.findMany({
-          where: recentActivityWhere,
-          select: {
-            userId: true,
-            status: true,
-            score: true,
-            startedAt: true,
-            lastOpenedAt: true,
-            completedAt: true,
-          },
-        }),
+        Promise.resolve(nativeScenarioData.scenarioAttemptsRecent),
 
-        includeBreakdowns
-          ? prisma.userScenarioAttempt.groupBy({
-              by: ["scenarioId"],
-              _count: { _all: true },
-              _avg: { score: true },
-            })
-          : Promise.resolve([]),
+        Promise.resolve(nativeScenarioData.scenarioAttemptsByScenario),
 
-        includeBreakdowns
-          ? prisma.userScenarioAttempt.groupBy({
-              by: ["scenarioId", "status"],
-              _count: { _all: true },
-            })
-          : Promise.resolve([]),
+        Promise.resolve(nativeScenarioData.scenarioAttemptsByScenarioStatus),
 
         prisma.userCourseAttempt.aggregate({
           _count: { _all: true },
@@ -660,39 +621,7 @@ async function getBasicAdminStatsUncached(
           },
         }),
 
-        includeRows
-          ? prisma.userScenarioAttempt.findMany({
-              take: DASHBOARD_ROWS_LIMIT,
-              orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }],
-              select: {
-                id: true,
-                attemptNumber: true,
-                status: true,
-                score: true,
-                startedAt: true,
-                lastOpenedAt: true,
-                completedAt: true,
-                user: {
-                  select: {
-                    fullName: true,
-                    email: true,
-                  },
-                },
-                scenario: {
-                  select: {
-                    slug: true,
-                    area: true,
-                  },
-                },
-                scenarioVariant: {
-                  select: {
-                    language: true,
-                    title: true,
-                  },
-                },
-              },
-            })
-          : Promise.resolve([]),
+        Promise.resolve(nativeScenarioData.scenarioAttemptRowsRaw),
 
         includeRows
           ? prisma.userCourseAttempt.findMany({
@@ -842,7 +771,6 @@ async function getBasicAdminStatsUncached(
       if (includeBreakdowns) {
         for (const scenario of publishedScenariosWithVariants) {
           for (const variant of scenario.variants) {
-            if (variant.availabilityStatus !== "available") continue;
             incrementMapCount(availableScenarioVariantsByLanguage, variant.language);
           }
         }
@@ -1059,7 +987,7 @@ async function getBasicAdminStatsUncached(
                 language: variant.language,
                 title: variant.title,
               });
-              if (variant.availabilityStatus === "available") availableVariants += 1;
+              availableVariants += 1;
             }
 
             const aggregate = scenarioAttemptsByScenarioId?.get(scenario.id) ?? {

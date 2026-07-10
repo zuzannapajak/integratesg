@@ -99,6 +99,63 @@ const testScenario = {
   },
 } satisfies ResolvedScenario;
 
+const secondTestChallenge = {
+  id: "scenario-02-challenge-02",
+  order: 2,
+
+  hotspot: {
+    x: 70,
+    y: 50,
+    labelSide: "bottom",
+  },
+
+  title: "Second test challenge",
+  shortTitle: "Second challenge",
+  context: "This is the context of the second test challenge.",
+  question: "Which second decision should be selected?",
+
+  choices: [
+    {
+      id: "scenario-02-challenge-02-choice-01",
+      order: 1,
+      isOptimal: false,
+      label: "Second non-optimal choice",
+      text: "This second decision is not optimal.",
+      feedback: {
+        title: "Try another second approach",
+        body: "This choice does not complete the second challenge.",
+      },
+    },
+    {
+      id: "scenario-02-challenge-02-choice-02",
+      order: 2,
+      isOptimal: true,
+      label: "Second optimal choice",
+      text: "This second decision is optimal.",
+      feedback: {
+        title: "Correct second approach",
+        body: "This choice completes the second challenge.",
+      },
+    },
+    {
+      id: "scenario-02-challenge-02-choice-03",
+      order: 3,
+      isOptimal: false,
+      label: "Second alternative choice",
+      text: "This second alternative is not optimal.",
+      feedback: {
+        title: "Consider another consequence",
+        body: "This choice does not complete the second challenge.",
+      },
+    },
+  ],
+} satisfies ResolvedScenario["challenges"][number];
+
+const twoChallengeTestScenario = {
+  ...testScenario,
+  challenges: [testScenario.challenges[0], secondTestChallenge],
+} satisfies ResolvedScenario;
+
 type TestUser = ReturnType<typeof userEvent.setup>;
 
 function getAvailableChallengeButton() {
@@ -803,4 +860,47 @@ it("uses a backward transition when returning to the board", async () => {
   });
 
   expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "board");
+});
+
+it("restores completed challenges and retry history", async () => {
+  const user = userEvent.setup();
+
+  const [firstChallenge, secondChallenge] = twoChallengeTestScenario.challenges;
+
+  const rejectedChoice = secondChallenge.choices[0];
+
+  render(
+    <ScenarioPlayer
+      scenario={twoChallengeTestScenario}
+      initialView="board"
+      initialCompletedChallengeIds={[firstChallenge.id]}
+      initialAttemptCounts={{
+        [secondChallenge.id]: 1,
+      }}
+      initialRejectedChoiceIdsByChallenge={{
+        [secondChallenge.id]: [rejectedChoice.id],
+      }}
+    />,
+  );
+
+  expect(screen.getByTestId("scenario-progress")).toHaveAttribute("data-completed-count", "1");
+
+  expect(screen.getByTestId(`scenario-board-hotspot-${firstChallenge.id}`)).toBeDisabled();
+
+  await user.click(screen.getByTestId(`scenario-board-hotspot-${secondChallenge.id}`));
+
+  await user.click(
+    screen.getByRole("button", {
+      name: "Continue to decision",
+    }),
+  );
+
+  expect(screen.getByText("Attempt 2")).toBeVisible();
+
+  expect(screen.getByText("Previously tried")).toBeVisible();
+
+  expect(screen.getByTestId(`scenario-decision-choice-${rejectedChoice.id}`)).toHaveAttribute(
+    "data-previously-tried",
+    "true",
+  );
 });
