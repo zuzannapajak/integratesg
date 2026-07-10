@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { ScenarioPlayer } from "@/components/scenarios/simulator/scenario-player";
-import type { ResolvedScenario } from "@/lib/scenarios/simulator/types";
+import type { ChoiceId, ResolvedScenario } from "@/lib/scenarios/simulator/types";
 
 const testScenario = {
   id: "scenario-02",
@@ -903,4 +903,93 @@ it("restores completed challenges and retry history", async () => {
     "data-previously-tried",
     "true",
   );
+});
+
+it("resumes from the decision step after a previously rejected choice", () => {
+  const challenge = testScenario.challenges[0];
+
+  const incorrectChoice = challenge.choices.find((choice) => !choice.isOptimal);
+
+  if (!incorrectChoice) {
+    throw new Error("The test requires an incorrect choice.");
+  }
+
+  render(
+    <ScenarioPlayer
+      scenario={testScenario}
+      initialView="challenge"
+      initialChallengeId={challenge.id}
+      initialChallengeStep="decision"
+      initialAttemptCounts={{
+        [challenge.id]: 1,
+      }}
+      initialRejectedChoiceIdsByChallenge={{
+        [challenge.id]: [incorrectChoice.id],
+      }}
+    />,
+  );
+
+  expect(screen.getByText("Attempt 2")).toBeVisible();
+
+  expect(screen.getByText("Previously tried")).toBeVisible();
+
+  expect(
+    screen.queryByRole("button", {
+      name: "Continue to decision",
+    }),
+  ).not.toBeInTheDocument();
+
+  expect(
+    screen.getByRole("button", {
+      name: "Confirm decision",
+    }),
+  ).toBeDisabled();
+});
+
+it("restores correct feedback after an optimal choice was saved", () => {
+  const challenge = testScenario.challenges[0];
+
+  const optimalChoice = challenge.choices.find((choice) => choice.isOptimal);
+
+  if (!optimalChoice) {
+    throw new Error("The test requires an optimal choice.");
+  }
+
+  render(
+    <ScenarioPlayer
+      scenario={testScenario}
+      initialView="feedback"
+      initialChallengeId={challenge.id}
+      initialChallengeStep="decision"
+      initialSelectedChoiceId={optimalChoice.id}
+      initialAttemptCounts={{
+        [challenge.id]: 1,
+      }}
+    />,
+  );
+
+  expect(screen.getByTestId("scenario-correct-feedback")).toBeVisible();
+
+  expect(
+    screen.getByRole("button", {
+      name: "Continue",
+    }),
+  ).toBeEnabled();
+});
+
+it("ignores an invalid initial selected choice", () => {
+  const challenge = testScenario.challenges[0];
+
+  render(
+    <ScenarioPlayer
+      scenario={testScenario}
+      initialView="feedback"
+      initialChallengeId={challenge.id}
+      initialSelectedChoiceId={"invalid-choice" as ChoiceId}
+    />,
+  );
+
+  expect(screen.queryByTestId("scenario-correct-feedback")).not.toBeInTheDocument();
+
+  expect(screen.queryByTestId("scenario-incorrect-feedback")).not.toBeInTheDocument();
 });

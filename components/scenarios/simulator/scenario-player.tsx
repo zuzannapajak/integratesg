@@ -145,6 +145,8 @@ export type ScenarioPlayerProps = {
   readonly mode?: ScenarioPlayerMode;
   readonly initialView?: ScenarioPlayerView;
   readonly initialChallengeId?: ChallengeId | null;
+  readonly initialChallengeStep?: ScenarioChallengeStep;
+  readonly initialSelectedChoiceId?: ChoiceId | null;
   readonly initialCompletedChallengeIds?: readonly ChallengeId[];
   readonly initialAttemptCounts?: Readonly<Partial<Record<ChallengeId, number>>>;
   readonly initialRejectedChoiceIdsByChallenge?: Readonly<
@@ -174,6 +176,8 @@ export function ScenarioPlayer({
   mode = "play",
   initialView = "intro",
   initialChallengeId = null,
+  initialChallengeStep = "context",
+  initialSelectedChoiceId = null,
   initialCompletedChallengeIds = [],
   initialAttemptCounts = {},
   initialRejectedChoiceIdsByChallenge = {},
@@ -199,6 +203,17 @@ export function ScenarioPlayer({
     [orderedChallenges],
   );
 
+  const validInitialChallenge = initialChallengeId
+    ? (orderedChallenges.find((challenge) => challenge.id === initialChallengeId) ?? null)
+    : null;
+
+  const validInitialSelectedChoiceId =
+    validInitialChallenge &&
+    initialSelectedChoiceId &&
+    validInitialChallenge.choices.some((choice) => choice.id === initialSelectedChoiceId)
+      ? initialSelectedChoiceId
+      : null;
+
   const [completedChallengeIds, setCompletedChallengeIds] = useState<Set<ChallengeId>>(
     () =>
       new Set(
@@ -212,13 +227,15 @@ export function ScenarioPlayer({
     useState<ScenarioTransitionDirection>("neutral");
 
   const [currentChallengeId, setCurrentChallengeId] = useState<ChallengeId | null>(
-    initialChallengeId && validChallengeIds.has(initialChallengeId) ? initialChallengeId : null,
+    validInitialChallenge?.id ?? null,
   );
 
-  const [selectedChoiceId, setSelectedChoiceId] = useState<ChoiceId | null>(null);
+  const [selectedChoiceId, setSelectedChoiceId] = useState<ChoiceId | null>(
+    validInitialSelectedChoiceId,
+  );
 
   const [challengeInitialStep, setChallengeInitialStep] =
-    useState<ScenarioChallengeStep>("context");
+    useState<ScenarioChallengeStep>(initialChallengeStep);
 
   const [attemptCounts, setAttemptCounts] = useState<ChallengeAttemptCountMap>(() => ({
     ...initialAttemptCounts,

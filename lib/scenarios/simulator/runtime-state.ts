@@ -6,6 +6,8 @@ export type ScenarioAttemptCounts = Partial<Record<ChallengeId, number>>;
 
 export type ScenarioRejectedChoices = Partial<Record<ChallengeId, readonly ChoiceId[]>>;
 
+export type ScenarioRuntimeChallengeStep = "context" | "decision";
+
 export type ScenarioRuntimeState = {
   readonly attemptId: string | null;
   readonly attemptNumber: number | null;
@@ -13,6 +15,8 @@ export type ScenarioRuntimeState = {
 
   readonly initialView: ScenarioPlayerView;
   readonly initialChallengeId: ChallengeId | null;
+  readonly initialChallengeStep: ScenarioRuntimeChallengeStep;
+  readonly initialSelectedChoiceId: ChoiceId | null;
 
   readonly initialCompletedChallengeIds: readonly ChallengeId[];
 

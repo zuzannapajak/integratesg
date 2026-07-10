@@ -402,6 +402,7 @@ export async function getScenarioRuntimeState(
           choiceId: true,
           attemptNumber: true,
           isOptimal: true,
+          confirmedAt: true,
         },
       },
     },
@@ -415,6 +416,8 @@ export async function getScenarioRuntimeState(
 
       initialView: "intro",
       initialChallengeId: null,
+      initialChallengeStep: "context",
+      initialSelectedChoiceId: null,
 
       initialCompletedChallengeIds: [],
 
@@ -492,28 +495,78 @@ export async function getScenarioRuntimeState(
     .filter((challenge) => completedChallengeIdSet.has(challenge.id))
     .map((challenge) => challenge.id);
 
+  const firstIncompleteChallenge =
+    scenario.challenges.find((challenge) => !completedChallengeIdSet.has(challenge.id)) ?? null;
+
   const initialRejectedChoiceIdsByChallenge: ScenarioRejectedChoices = mutableRejectedChoices;
 
   const allChallengesCompleted =
     scenario.challenges.length > 0 &&
     initialCompletedChallengeIds.length === scenario.challenges.length;
 
+  const currentChallengeChoiceAttempts = firstIncompleteChallenge
+    ? attempt.choiceAttempts.filter(
+        (choiceAttempt) => choiceAttempt.challengeId === firstIncompleteChallenge.id,
+      )
+    : [];
+
+  const latestChoiceAttempt = currentChallengeChoiceAttempts.at(-1) ?? null;
+
+  const latestSelectedChoice =
+    firstIncompleteChallenge && latestChoiceAttempt
+      ? (firstIncompleteChallenge.choices.find(
+          (choice) => choice.id === latestChoiceAttempt.choiceId,
+        ) ?? null)
+      : null;
+
   let initialView: ScenarioPlayerView;
+  let initialChallengeId: ChallengeId | null = null;
+  let initialChallengeStep: "context" | "decision" = "context";
+  let initialSelectedChoiceId: ChoiceId | null = null;
 
   if (attempt.status === "completed") {
+    /*
+     * Ukończony scenariusz nie jest ponownie
+     * modyfikowany. W review pokazujemy planszę.
+     */
     initialView = input.mode === "review" ? "board" : "completion";
   } else if (allChallengesCompleted) {
     /*
-     * Użytkownik ukończył wszystkie
-     * challenge’e, ale nie kliknął jeszcze
-     * Complete scenario.
+     * Wszystkie challenge’e zostały ukończone,
+     * ale użytkownik nie zatwierdził jeszcze
+     * całego scenariusza.
      */
     initialView = "summary";
+  } else if (firstIncompleteChallenge) {
+    initialChallengeId = firstIncompleteChallenge.id;
+
+    if (!latestChoiceAttempt) {
+      /*
+       * Użytkownik nie zatwierdził jeszcze
+       * żadnej decyzji w tym challenge’u.
+       */
+      initialView = "challenge";
+      initialChallengeStep = "context";
+    } else if (latestSelectedChoice?.isOptimal) {
+      /*
+       * Poprawna decyzja została zapisana,
+       * ale challenge nie został jeszcze
+       * ukończony przyciskiem Continue.
+       */
+      initialView = "feedback";
+      initialChallengeStep = "decision";
+      initialSelectedChoiceId = latestSelectedChoice.id;
+    } else {
+      /*
+       * Ostatnia zapisana decyzja była błędna.
+       * Wznawiamy bezpośrednio od kolejnej próby.
+       */
+      initialView = "challenge";
+      initialChallengeStep = "decision";
+    }
   } else {
     /*
-     * Nie zgadujemy, czy użytkownik opuścił
-     * kontekst, decyzję albo feedback.
-     * Wznawiamy bezpiecznie od planszy.
+     * Stan awaryjny dla niespójnych danych.
      */
     initialView = "board";
   }
@@ -537,7 +590,9 @@ export async function getScenarioRuntimeState(
     status: attempt.status,
 
     initialView,
-    initialChallengeId: null,
+    initialChallengeId,
+    initialChallengeStep,
+    initialSelectedChoiceId,
 
     initialCompletedChallengeIds,
 

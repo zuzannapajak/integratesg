@@ -36,6 +36,8 @@ export function ScenarioPlayClient({
       mode={mode}
       initialView={runtimeState.initialView}
       initialChallengeId={runtimeState.initialChallengeId}
+      initialChallengeStep={runtimeState.initialChallengeStep}
+      initialSelectedChoiceId={runtimeState.initialSelectedChoiceId}
       initialCompletedChallengeIds={runtimeState.initialCompletedChallengeIds}
       initialAttemptCounts={runtimeState.initialAttemptCounts}
       initialRejectedChoiceIdsByChallenge={runtimeState.initialRejectedChoiceIdsByChallenge}
