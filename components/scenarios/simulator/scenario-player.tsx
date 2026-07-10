@@ -13,6 +13,7 @@ import {
 import { ScenarioCorrectFeedback } from "@/components/scenarios/simulator/scenario-correct-feedback";
 import { ScenarioIncorrectFeedback } from "@/components/scenarios/simulator/scenario-incorrect-feedback";
 import { ScenarioIntro } from "@/components/scenarios/simulator/scenario-intro";
+import { ScenarioProgress } from "@/components/scenarios/simulator/scenario-progress";
 import type {
   ChallengeId,
   ChallengeProgressStatus,
@@ -243,8 +244,6 @@ export function ScenarioPlayer({
     : scenario.assets.inProgressBackground;
   const completedCount = completedChallengeIds.size;
   const totalChallenges = orderedChallenges.length;
-  const completionPercentage =
-    totalChallenges > 0 ? Math.min(100, (completedCount / totalChallenges) * 100) : 0;
 
   function getChallengeStatus(
     challenge: ResolvedChallenge,
@@ -668,28 +667,14 @@ export function ScenarioPlayer({
           </div>
         </div>
 
-        <div className="flex shrink-0 items-center gap-3">
-          <div
-            className="relative h-11 w-11 rounded-full sm:h-12 sm:w-12"
-            style={{
-              background: `conic-gradient(#0d6fe8 ${completionPercentage}%, #dfe5ec ${completionPercentage}% 100%)`,
-            }}
-            role="progressbar"
-            aria-valuemin={0}
-            aria-valuemax={totalChallenges}
-            aria-valuenow={completedCount}
-            aria-label={`${labels.progress}: ${completedCount} / ${totalChallenges}`}
-          >
-            <span className="absolute inset-1 rounded-full bg-white" />
-          </div>
-
-          <p className="hidden whitespace-nowrap text-sm font-medium text-[#31425a] sm:block">
-            <strong className="font-semibold">
-              {completedCount} / {totalChallenges}
-            </strong>{" "}
-            {labels.completed.toLowerCase()}
-          </p>
-        </div>
+        <ScenarioProgress
+          completedCount={completedCount}
+          totalCount={totalChallenges}
+          labels={{
+            progress: labels.progress,
+            completed: labels.completed,
+          }}
+        />
       </header>
 
       {view === "board" ? (

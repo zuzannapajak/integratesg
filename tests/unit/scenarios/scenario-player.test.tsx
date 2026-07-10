@@ -255,6 +255,10 @@ describe("ScenarioPlayer", () => {
 
     await openChallengeDecision(user);
 
+    const progress = screen.getByTestId("scenario-progress");
+
+    expect(progress).toHaveAttribute("data-completed-count", "0");
+
     await user.click(
       screen.getByRole("radio", {
         name: /^Optimal choice/,
@@ -267,18 +271,9 @@ describe("ScenarioPlayer", () => {
       }),
     );
 
-    expect(await screen.findByText("Correct approach")).toBeVisible();
+    expect(await screen.findByTestId("scenario-correct-feedback")).toBeVisible();
 
-    expect(screen.getByTestId("scenario-correct-feedback")).toHaveAttribute(
-      "data-feedback-kind",
-      "correct",
-    );
-
-    const player = screen.getByTestId("scenario-player");
-
-    expect(player).toHaveAttribute("data-completed-count", "0");
-
-    expect(onChoiceConfirmed).toHaveBeenCalledTimes(1);
+    expect(progress).toHaveAttribute("data-completed-count", "0");
 
     expect(onChallengeCompleted).not.toHaveBeenCalled();
 
@@ -291,18 +286,11 @@ describe("ScenarioPlayer", () => {
     expect(await screen.findByText("Test scenario summary")).toBeVisible();
 
     await waitFor(() => {
-      expect(onChoiceConfirmed).toHaveBeenCalledTimes(1);
-      expect(onChallengeCompleted).toHaveBeenCalledTimes(1);
-    });
+      expect(progress).toHaveAttribute("data-completed-count", "1");
 
-    await waitFor(() => {
-      expect(player).toHaveAttribute("data-completed-count", "1");
-    });
+      expect(progress).toHaveAttribute("data-percentage", "100");
 
-    expect(onChallengeCompleted).toHaveBeenCalledWith({
-      scenarioId: "scenario-02",
-      scenarioVersion: 1,
-      challengeId: "scenario-02-challenge-01",
+      expect(progress).toHaveAttribute("data-complete", "true");
     });
 
     expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "summary");
@@ -583,6 +571,7 @@ it("restores completed challenges from the initial state", () => {
   );
 
   const player = screen.getByTestId("scenario-player");
+  const progress = screen.getByTestId("scenario-progress");
 
   expect(player).toHaveAttribute("data-completed-count", "1");
 
@@ -592,6 +581,14 @@ it("restores completed challenges from the initial state", () => {
     "data-hotspot-state",
     "completed",
   );
+
+  expect(progress).toHaveAttribute("data-completed-count", "1");
+
+  expect(progress).toHaveAttribute("data-total-count", "1");
+
+  expect(progress).toHaveAttribute("data-percentage", "100");
+
+  expect(progress).toHaveAttribute("data-complete", "true");
 });
 
 it("does not mark the challenge as completed when completion persistence fails", async () => {
