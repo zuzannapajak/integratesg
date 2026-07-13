@@ -32,22 +32,27 @@ function toIntlLocale(locale: string) {
   if (locale === "de") return "de-DE";
   if (locale === "el") return "el-GR";
   if (locale === "bg") return "bg-BG";
+
   return "en-GB";
 }
 
 function toPercent(part: number, total: number) {
   if (total <= 0) return 0;
+
   return Math.round((part / total) * 100);
 }
 
 function averageFromSumAndCount(sum: number, count: number) {
   if (count <= 0) return null;
+
   return Math.round(sum / count);
 }
 
 function formatScore(value: number | null) {
   if (value === null) return "—";
+
   const rounded = Number.isInteger(value) ? value : Math.round(value * 10) / 10;
+
   return `${rounded}%`;
 }
 
@@ -62,12 +67,14 @@ function startOfHour(date: Date) {
 function addDays(date: Date, days: number) {
   const next = new Date(date);
   next.setDate(next.getDate() + days);
+
   return next;
 }
 
 function addHours(date: Date, hours: number) {
   const next = new Date(date);
   next.setHours(next.getHours() + hours);
+
   return next;
 }
 
@@ -84,6 +91,7 @@ function addDateToBucketMap(
   if (date === null || date < since) return;
 
   const bucketStart = mode === "hour" ? startOfHour(date).getTime() : startOfDay(date).getTime();
+
   incrementMapCount(map, bucketStart);
 }
 
@@ -126,6 +134,7 @@ function pickLocalizedTitle(items: LocalizedTitleItem[], locale: string, fallbac
 
   for (const item of items) {
     const title = item.title.trim();
+
     if (!title) continue;
 
     firstTitle ??= title;
@@ -255,9 +264,17 @@ function updateScenarioWindowAggregate(
   aggregate.total += 1;
   aggregate.activeUsers.add(attempt.userId);
 
-  if (attempt.status === "passed") aggregate.passed += 1;
-  if (attempt.status === "completed") aggregate.completed += 1;
-  if (attempt.status === "failed") aggregate.failed += 1;
+  if (attempt.status === "passed") {
+    aggregate.passed += 1;
+  }
+
+  if (attempt.status === "completed") {
+    aggregate.completed += 1;
+  }
+
+  if (attempt.status === "failed") {
+    aggregate.failed += 1;
+  }
 
   if (attempt.score !== null) {
     aggregate.scoreSum += attempt.score;
@@ -265,8 +282,11 @@ function updateScenarioWindowAggregate(
   }
 
   const bucketMap = bucketMode === "hour" ? aggregate.hourBuckets : aggregate.dayBuckets;
+
   addDateToBucketMap(bucketMap, attempt.startedAt, bucketMode, since);
+
   addDateToBucketMap(bucketMap, attempt.lastOpenedAt, bucketMode, since);
+
   addDateToBucketMap(bucketMap, attempt.completedAt, bucketMode, since);
 }
 
@@ -289,8 +309,13 @@ function updateCurriculumWindowAggregate(
   aggregate.total += 1;
   aggregate.activeUsers.add(attempt.userId);
 
-  if (attempt.status === "completed") aggregate.completed += 1;
-  if (attempt.status === "in_progress") aggregate.inProgress += 1;
+  if (attempt.status === "completed") {
+    aggregate.completed += 1;
+  }
+
+  if (attempt.status === "in_progress") {
+    aggregate.inProgress += 1;
+  }
 
   if (attempt.preQuizScore !== null) {
     aggregate.preQuizScoreSum += attempt.preQuizScore;
@@ -303,23 +328,31 @@ function updateCurriculumWindowAggregate(
   }
 
   const bucketMap = bucketMode === "hour" ? aggregate.hourBuckets : aggregate.dayBuckets;
+
   addDateToBucketMap(bucketMap, attempt.startedAt, bucketMode, since);
+
   addDateToBucketMap(bucketMap, attempt.lastOpenedAt, bucketMode, since);
+
   addDateToBucketMap(bucketMap, attempt.completedAt, bucketMode, since);
 }
 
 function updateEportfolioWindowAggregate(
   aggregate: EportfolioWindowAggregate,
-  record: { completedAt: Date | null },
+  record: {
+    completedAt: Date | null;
+  },
   since: Date,
   bucketMode: "day" | "hour",
 ) {
-  if (record.completedAt === null || record.completedAt < since) return;
+  if (record.completedAt === null || record.completedAt < since) {
+    return;
+  }
 
   aggregate.total += 1;
   aggregate.completed += 1;
 
   const bucketMap = bucketMode === "hour" ? aggregate.hourBuckets : aggregate.dayBuckets;
+
   addDateToBucketMap(bucketMap, record.completedAt, bucketMode, since);
 }
 
@@ -328,7 +361,9 @@ function buildScenarioWindowStats(aggregate: ScenarioWindowAggregate) {
 
   return {
     completionRate: toPercent(completedLikeTotal, aggregate.total),
+
     averageScore: averageFromSumAndCount(aggregate.scoreSum, aggregate.scoreCount),
+
     completedLikeTotal,
     failed: aggregate.failed,
   };
@@ -337,14 +372,17 @@ function buildScenarioWindowStats(aggregate: ScenarioWindowAggregate) {
 function buildCurriculumWindowStats(aggregate: CurriculumWindowAggregate) {
   return {
     completionRate: toPercent(aggregate.completed, aggregate.total),
+
     averagePreQuizScore: averageFromSumAndCount(
       aggregate.preQuizScoreSum,
       aggregate.preQuizScoreCount,
     ),
+
     averagePostQuizScore: averageFromSumAndCount(
       aggregate.postQuizScoreSum,
       aggregate.postQuizScoreCount,
     ),
+
     inProgress: aggregate.inProgress,
   };
 }
@@ -356,6 +394,7 @@ function buildEportfolioWindowStats(params: {
 }) {
   return {
     completionRate: toPercent(params.aggregate.completed, params.aggregate.total),
+
     published: params.published,
     activeUsers: params.activeUsers,
   };
@@ -379,28 +418,47 @@ function normalizeArea(area: string): DashboardScenarioAttemptRow["area"] {
   if (area === "governance") return "governance";
   if (area === "strategy") return "strategy";
   if (area === "reporting") return "reporting";
+
   return "cross-cutting";
 }
 
-function countCourseTranslations(courses: Array<{ translations: Array<{ language: string }> }>) {
+function countCourseTranslations(
+  courses: Array<{
+    translations: Array<{
+      language: string;
+    }>;
+  }>,
+) {
   return courses.reduce((sum, course) => sum + course.translations.length, 0);
 }
 
 function countCaseStudyTranslations(
-  caseStudies: Array<{ translations: Array<{ language: string }> }>,
+  caseStudies: Array<{
+    translations: Array<{
+      language: string;
+    }>;
+  }>,
 ) {
   return caseStudies.reduce((sum, caseStudy) => sum + caseStudy.translations.length, 0);
 }
 
-function countScenarioVariants(scenarios: Array<{ variants: unknown[] }>) {
+function countScenarioVariants(
+  scenarios: Array<{
+    variants: unknown[];
+  }>,
+) {
   return scenarios.reduce((sum, scenario) => sum + scenario.variants.length, 0);
 }
 
-function getGroupedCount<T extends { _count: { _all: number } }>(
-  rows: T[],
-  predicate: (row: T) => boolean,
-) {
+function getGroupedCount<
+  T extends {
+    _count: {
+      _all: number;
+    };
+  },
+>(rows: T[], predicate: (row: T) => boolean) {
   const match = rows.find(predicate);
+
   return match?._count._all ?? 0;
 }
 
@@ -414,14 +472,17 @@ async function getBasicAdminStatsUncached(
   options: GetBasicAdminStatsOptions = {},
 ): Promise<BasicAdminStats> {
   const includeBreakdowns = options.includeBreakdowns ?? true;
+
   const includeRows = options.includeRows ?? true;
 
   return measureAsyncOperation({
     operation: "admin.getBasicAdminStats",
+
     getRecords: (stats) =>
       stats.scenarioAttemptRows.length +
       stats.curriculumAttemptRows.length +
       stats.eportfolioProgressRows.length,
+
     execute: async () => {
       const queryStartedAt = Date.now();
 
@@ -437,9 +498,11 @@ async function getBasicAdminStatsUncached(
       const hourFormatter24h = new Intl.DateTimeFormat(intlLocale, {
         hour: "numeric",
       });
+
       const dayFormatter7d = new Intl.DateTimeFormat(intlLocale, {
         weekday: "short",
       });
+
       const dayFormatter30d = new Intl.DateTimeFormat(intlLocale, {
         day: "numeric",
         month: "short",
@@ -487,22 +550,30 @@ async function getBasicAdminStatsUncached(
 
         prisma.profile.groupBy({
           by: ["role"],
-          _count: { _all: true },
+          _count: {
+            _all: true,
+          },
         }),
 
         includeBreakdowns
           ? prisma.profile.groupBy({
               by: ["preferredLanguage"],
-              _count: { _all: true },
+              _count: {
+                _all: true,
+              },
             })
           : Promise.resolve([]),
 
         prisma.course.count({
-          where: { status: "published" },
+          where: {
+            status: "published",
+          },
         }),
 
         prisma.caseStudy.count({
-          where: { status: "published" },
+          where: {
+            status: "published",
+          },
         }),
 
         Promise.resolve(nativeScenarioData.publishedScenarios),
@@ -511,12 +582,16 @@ async function getBasicAdminStatsUncached(
 
         includeBreakdowns
           ? prisma.course.findMany({
-              where: { status: "published" },
+              where: {
+                status: "published",
+              },
+
               select: {
                 id: true,
                 slug: true,
                 area: true,
                 difficulty: true,
+
                 translations: {
                   select: {
                     language: true,
@@ -524,16 +599,28 @@ async function getBasicAdminStatsUncached(
                   },
                 },
               },
-              orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+
+              orderBy: [
+                {
+                  sortOrder: "asc",
+                },
+                {
+                  createdAt: "desc",
+                },
+              ],
             })
           : Promise.resolve([]),
 
         includeBreakdowns
           ? prisma.caseStudy.findMany({
-              where: { status: "published" },
+              where: {
+                status: "published",
+              },
+
               select: {
                 id: true,
                 slug: true,
+
                 translations: {
                   select: {
                     language: true,
@@ -557,7 +644,10 @@ async function getBasicAdminStatsUncached(
         Promise.resolve(nativeScenarioData.scenarioAttemptsByScenarioStatus),
 
         prisma.userCourseAttempt.aggregate({
-          _count: { _all: true },
+          _count: {
+            _all: true,
+          },
+
           _avg: {
             preQuizScore: true,
             postQuizScore: true,
@@ -566,11 +656,14 @@ async function getBasicAdminStatsUncached(
 
         prisma.userCourseAttempt.groupBy({
           by: ["status"],
-          _count: { _all: true },
+          _count: {
+            _all: true,
+          },
         }),
 
         prisma.userCourseAttempt.findMany({
           where: recentActivityWhere,
+
           select: {
             userId: true,
             status: true,
@@ -585,7 +678,11 @@ async function getBasicAdminStatsUncached(
         includeBreakdowns
           ? prisma.userCourseAttempt.groupBy({
               by: ["courseId"],
-              _count: { _all: true },
+
+              _count: {
+                _all: true,
+              },
+
               _avg: {
                 preQuizScore: true,
                 postQuizScore: true,
@@ -596,7 +693,10 @@ async function getBasicAdminStatsUncached(
         includeBreakdowns
           ? prisma.userCourseAttempt.groupBy({
               by: ["courseId", "status"],
-              _count: { _all: true },
+
+              _count: {
+                _all: true,
+              },
             })
           : Promise.resolve([]),
 
@@ -616,6 +716,7 @@ async function getBasicAdminStatsUncached(
               gte: last30dStart,
             },
           },
+
           select: {
             completedAt: true,
           },
@@ -626,7 +727,16 @@ async function getBasicAdminStatsUncached(
         includeRows
           ? prisma.userCourseAttempt.findMany({
               take: DASHBOARD_ROWS_LIMIT,
-              orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }],
+
+              orderBy: [
+                {
+                  lastOpenedAt: "desc",
+                },
+                {
+                  startedAt: "desc",
+                },
+              ],
+
               select: {
                 id: true,
                 status: true,
@@ -635,16 +745,19 @@ async function getBasicAdminStatsUncached(
                 startedAt: true,
                 lastOpenedAt: true,
                 completedAt: true,
+
                 user: {
                   select: {
                     fullName: true,
                     email: true,
                   },
                 },
+
                 course: {
                   select: {
                     slug: true,
                     area: true,
+
                     translations: {
                       select: {
                         language: true,
@@ -660,12 +773,25 @@ async function getBasicAdminStatsUncached(
         includeRows
           ? prisma.userCaseStudyProgress.findMany({
               take: DASHBOARD_ROWS_LIMIT,
-              orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }, { completedAt: "desc" }],
+
+              orderBy: [
+                {
+                  lastOpenedAt: "desc",
+                },
+                {
+                  startedAt: "desc",
+                },
+                {
+                  completedAt: "desc",
+                },
+              ],
+
               select: {
                 id: true,
                 startedAt: true,
                 lastOpenedAt: true,
                 completedAt: true,
+
                 user: {
                   select: {
                     fullName: true,
@@ -673,9 +799,11 @@ async function getBasicAdminStatsUncached(
                     preferredLanguage: true,
                   },
                 },
+
                 caseStudy: {
                   select: {
                     slug: true,
+
                     translations: {
                       select: {
                         language: true,
@@ -692,6 +820,7 @@ async function getBasicAdminStatsUncached(
       logMeasuredOperation({
         operation: "admin.getBasicAdminStats.fetch",
         durationMs: Date.now() - queryStartedAt,
+
         records:
           profilesByRole.length +
           usersByLanguageRaw.length +
@@ -710,13 +839,20 @@ async function getBasicAdminStatsUncached(
           scenarioAttemptRowsRaw.length +
           curriculumAttemptRowsRaw.length +
           eportfolioProgressRowsRaw.length,
+
         meta: {
           courseTranslations: countCourseTranslations(publishedCoursesWithTranslations),
+
           caseStudyTranslations: countCaseStudyTranslations(publishedCaseStudiesWithTranslations),
+
           scenarioVariants: countScenarioVariants(publishedScenariosWithVariants),
+
           scenarioRecentAttempts: scenarioAttemptsRecent.length,
+
           courseRecentAttempts: courseAttemptsRecent.length,
+
           eportfolioRecentRecords: caseStudyProgressRecords.length,
+
           nodeElements:
             profilesByRole.length +
             usersByLanguageRaw.length +
@@ -735,10 +871,13 @@ async function getBasicAdminStatsUncached(
       const mappingStartedAt = Date.now();
 
       const totalLearners = getGroupedCount(profilesByRole, (row) => row.role === "learner");
+
       const totalEducators = getGroupedCount(profilesByRole, (row) => row.role === "educator");
+
       const totalAdmins = getGroupedCount(profilesByRole, (row) => row.role === "admin");
 
       const usersByLanguage = new Map<string, number>();
+
       if (includeBreakdowns) {
         for (const row of usersByLanguageRaw) {
           incrementMapCount(usersByLanguage, row.preferredLanguage, row._count._all);
@@ -746,9 +885,11 @@ async function getBasicAdminStatsUncached(
       }
 
       const publishedCoursesByLanguage = new Map<string, number>();
+
       if (includeBreakdowns) {
         for (const course of publishedCoursesWithTranslations) {
           const languages = new Set(course.translations.map((translation) => translation.language));
+
           for (const language of languages) {
             incrementMapCount(publishedCoursesByLanguage, language);
           }
@@ -756,11 +897,13 @@ async function getBasicAdminStatsUncached(
       }
 
       const publishedCaseStudiesByLanguage = new Map<string, number>();
+
       if (includeBreakdowns) {
         for (const caseStudy of publishedCaseStudiesWithTranslations) {
           const languages = new Set(
             caseStudy.translations.map((translation) => translation.language),
           );
+
           for (const language of languages) {
             incrementMapCount(publishedCaseStudiesByLanguage, language);
           }
@@ -768,6 +911,7 @@ async function getBasicAdminStatsUncached(
       }
 
       const availableScenarioVariantsByLanguage = new Map<string, number>();
+
       if (includeBreakdowns) {
         for (const scenario of publishedScenariosWithVariants) {
           for (const variant of scenario.variants) {
@@ -780,30 +924,38 @@ async function getBasicAdminStatsUncached(
         scenarioAttemptsByStatus,
         (row) => row.status === "passed",
       );
+
       const completedScenarioAttempts = getGroupedCount(
         scenarioAttemptsByStatus,
         (row) => row.status === "completed",
       );
+
       const failedScenarioAttempts = getGroupedCount(
         scenarioAttemptsByStatus,
         (row) => row.status === "failed",
       );
+
       const incompleteScenarioAttempts = getGroupedCount(
         scenarioAttemptsByStatus,
         (row) => row.status === "incomplete",
       );
+
       const browsedScenarioAttempts = getGroupedCount(
         scenarioAttemptsByStatus,
         (row) => row.status === "browsed",
       );
 
       const scenarioWindow24h = createScenarioWindowAggregate();
+
       const scenarioWindow7d = createScenarioWindowAggregate();
+
       const scenarioWindow30d = createScenarioWindowAggregate();
 
       for (const attempt of scenarioAttemptsRecent) {
         updateScenarioWindowAggregate(scenarioWindow24h, attempt, last24hStart, "hour");
+
         updateScenarioWindowAggregate(scenarioWindow7d, attempt, last7dStart, "day");
+
         updateScenarioWindowAggregate(scenarioWindow30d, attempt, last30dStart, "day");
       }
 
@@ -813,32 +965,42 @@ async function getBasicAdminStatsUncached(
         courseAttemptsByStatus,
         (row) => row.status === "completed",
       );
+
       const inProgressCourseAttempts = getGroupedCount(
         courseAttemptsByStatus,
         (row) => row.status === "in_progress",
       );
+
       const failedCourseAttempts = getGroupedCount(
         courseAttemptsByStatus,
         (row) => row.status === "failed",
       );
 
       const curriculumWindow24h = createCurriculumWindowAggregate();
+
       const curriculumWindow7d = createCurriculumWindowAggregate();
+
       const curriculumWindow30d = createCurriculumWindowAggregate();
 
       for (const attempt of courseAttemptsRecent) {
         updateCurriculumWindowAggregate(curriculumWindow24h, attempt, last24hStart, "hour");
+
         updateCurriculumWindowAggregate(curriculumWindow7d, attempt, last7dStart, "day");
+
         updateCurriculumWindowAggregate(curriculumWindow30d, attempt, last30dStart, "day");
       }
 
       const eportfolioWindow24h = createEportfolioWindowAggregate();
+
       const eportfolioWindow7d = createEportfolioWindowAggregate();
+
       const eportfolioWindow30d = createEportfolioWindowAggregate();
 
       for (const item of caseStudyProgressRecords) {
         updateEportfolioWindowAggregate(eportfolioWindow24h, item, last24hStart, "hour");
+
         updateEportfolioWindowAggregate(eportfolioWindow7d, item, last7dStart, "day");
+
         updateEportfolioWindowAggregate(eportfolioWindow30d, item, last30dStart, "day");
       }
 
@@ -858,11 +1020,15 @@ async function getBasicAdminStatsUncached(
       ]).size;
 
       const scenarioStats24h = buildScenarioWindowStats(scenarioWindow24h);
+
       const scenarioStats7d = buildScenarioWindowStats(scenarioWindow7d);
+
       const scenarioStats30d = buildScenarioWindowStats(scenarioWindow30d);
 
       const curriculumStats24h = buildCurriculumWindowStats(curriculumWindow24h);
+
       const curriculumStats7d = buildCurriculumWindowStats(curriculumWindow7d);
+
       const curriculumStats30d = buildCurriculumWindowStats(curriculumWindow30d);
 
       const eportfolioStats24h = buildEportfolioWindowStats({
@@ -888,8 +1054,11 @@ async function getBasicAdminStatsUncached(
             code,
             label: LOCALE_META[code].label,
             users: usersByLanguage.get(code) ?? 0,
+
             publishedCourses: publishedCoursesByLanguage.get(code) ?? 0,
+
             publishedCaseStudies: publishedCaseStudiesByLanguage.get(code) ?? 0,
+
             availableScenarioVariants: availableScenarioVariantsByLanguage.get(code) ?? 0,
           }))
         : [];
@@ -924,8 +1093,13 @@ async function getBasicAdminStatsUncached(
             averageScore: null,
           };
 
-          if (row.status === "passed") aggregate.passed = row._count._all;
-          if (row.status === "completed") aggregate.completed = row._count._all;
+          if (row.status === "passed") {
+            aggregate.passed = row._count._all;
+          }
+
+          if (row.status === "completed") {
+            aggregate.completed = row._count._all;
+          }
 
           scenarioAttemptsByScenarioId.set(row.scenarioId, aggregate);
         }
@@ -967,9 +1141,17 @@ async function getBasicAdminStatsUncached(
             averagePostQuizScore: null,
           };
 
-          if (row.status === "completed") aggregate.completed = row._count._all;
-          if (row.status === "in_progress") aggregate.inProgress = row._count._all;
-          if (row.status === "failed") aggregate.failed = row._count._all;
+          if (row.status === "completed") {
+            aggregate.completed = row._count._all;
+          }
+
+          if (row.status === "in_progress") {
+            aggregate.inProgress = row._count._all;
+          }
+
+          if (row.status === "failed") {
+            aggregate.failed = row._count._all;
+          }
 
           courseAttemptsByCourseId.set(row.courseId, aggregate);
         }
@@ -978,15 +1160,19 @@ async function getBasicAdminStatsUncached(
       const scenarioBreakdown: AdminScenarioStat[] = includeBreakdowns
         ? publishedScenariosWithVariants.map((scenario) => {
             let availableVariants = 0;
+
             const languages = new Set<string>();
+
             const localizedVariants: LocalizedTitleItem[] = [];
 
             for (const variant of scenario.variants) {
               languages.add(variant.language);
+
               localizedVariants.push({
                 language: variant.language,
                 title: variant.title,
               });
+
               availableVariants += 1;
             }
 
@@ -996,18 +1182,26 @@ async function getBasicAdminStatsUncached(
               completed: 0,
               averageScore: null,
             };
+
             const completedLikeTotal = aggregate.passed + aggregate.completed;
 
             return {
               id: scenario.id,
               slug: scenario.slug,
+
               title: pickLocalizedTitle(localizedVariants, locale, scenario.slug),
+
               area: scenario.area,
+
               languages: [...languages].sort(),
+
               availableVariants,
               totalAttempts: aggregate.totalAttempts,
+
               completedLikeTotal,
+
               completionRate: toPercent(completedLikeTotal, aggregate.totalAttempts),
+
               averageScore: aggregate.averageScore,
             };
           })
@@ -1027,15 +1221,24 @@ async function getBasicAdminStatsUncached(
             return {
               id: course.id,
               slug: course.slug,
+
               title: pickLocalizedTitle(course.translations, locale, course.slug),
+
               area: course.area,
               difficulty: course.difficulty,
+
               totalAttempts: aggregate.totalAttempts,
+
               completed: aggregate.completed,
+
               inProgress: aggregate.inProgress,
+
               failed: aggregate.failed,
+
               completionRate: toPercent(aggregate.completed, aggregate.totalAttempts),
+
               averagePreQuizScore: aggregate.averagePreQuizScore,
+
               averagePostQuizScore: aggregate.averagePostQuizScore,
             };
           })
@@ -1044,17 +1247,29 @@ async function getBasicAdminStatsUncached(
       const scenarioAttemptRows: DashboardScenarioAttemptRow[] = includeRows
         ? scenarioAttemptRowsRaw.map((attempt) => ({
             id: attempt.id,
+
             learnerName: attempt.user.fullName ?? attempt.user.email.split("@")[0],
+
             learnerEmail: attempt.user.email,
+
             scenarioTitle: attempt.scenarioVariant.title,
+
             scenarioSlug: attempt.scenario.slug,
+
             area: normalizeArea(attempt.scenario.area),
+
             language: attempt.scenarioVariant.language.toUpperCase(),
+
             attemptNumber: attempt.attemptNumber,
+
             status: attempt.status,
+
             scoreLabel: formatScore(attempt.score),
+
             startedAtLabel: formatDateTimeLabel(attempt.startedAt, locale),
+
             lastOpenedAtLabel: formatDateTimeLabel(attempt.lastOpenedAt, locale),
+
             completedAtLabel: formatDateTimeLabel(attempt.completedAt, locale),
           }))
         : [];
@@ -1062,21 +1277,33 @@ async function getBasicAdminStatsUncached(
       const curriculumAttemptRows: DashboardCurriculumAttemptRow[] = includeRows
         ? curriculumAttemptRowsRaw.map((attempt, index) => ({
             id: attempt.id,
+
             learnerName: attempt.user.fullName ?? attempt.user.email.split("@")[0],
+
             learnerEmail: attempt.user.email,
+
             courseTitle: pickLocalizedTitle(
               attempt.course.translations,
               locale,
               attempt.course.slug,
             ),
+
             courseSlug: attempt.course.slug,
+
             area: normalizeArea(attempt.course.area),
+
             attemptNumber: index + 1,
+
             status: attempt.status as DashboardCurriculumAttemptRow["status"],
+
             preQuizScoreLabel: formatScore(attempt.preQuizScore),
+
             postQuizScoreLabel: formatScore(attempt.postQuizScore),
+
             startedAtLabel: formatDateTimeLabel(attempt.startedAt, locale),
+
             lastOpenedAtLabel: formatDateTimeLabel(attempt.lastOpenedAt, locale),
+
             completedAtLabel: formatDateTimeLabel(attempt.completedAt, locale),
           }))
         : [];
@@ -1084,18 +1311,27 @@ async function getBasicAdminStatsUncached(
       const eportfolioProgressRows: DashboardEportfolioProgressRow[] = includeRows
         ? eportfolioProgressRowsRaw.map((progress) => ({
             id: progress.id,
+
             learnerName: progress.user.fullName ?? progress.user.email.split("@")[0],
+
             learnerEmail: progress.user.email,
+
             caseStudyTitle: pickLocalizedTitle(
               progress.caseStudy.translations,
               locale,
               progress.caseStudy.slug,
             ),
+
             caseStudySlug: progress.caseStudy.slug,
+
             language: progress.user.preferredLanguage.toUpperCase(),
+
             isCompleted: progress.completedAt !== null,
+
             startedAtLabel: formatDateTimeLabel(progress.startedAt, locale),
+
             lastOpenedAtLabel: formatDateTimeLabel(progress.lastOpenedAt, locale),
+
             completedAtLabel: formatDateTimeLabel(progress.completedAt, locale),
           }))
         : [];
@@ -1103,10 +1339,12 @@ async function getBasicAdminStatsUncached(
       logMeasuredOperation({
         operation: "admin.getBasicAdminStats.map",
         durationMs: Date.now() - mappingStartedAt,
+
         records:
           scenarioAttemptRowsRaw.length +
           curriculumAttemptRowsRaw.length +
           eportfolioProgressRowsRaw.length,
+
         meta: {
           nodeElements:
             profilesByRole.length +
@@ -1120,89 +1358,128 @@ async function getBasicAdminStatsUncached(
             scenarioAttemptRowsRaw.length +
             curriculumAttemptRowsRaw.length +
             eportfolioProgressRowsRaw.length,
+
           scenarioRows: scenarioAttemptRowsRaw.length,
+
           curriculumRows: curriculumAttemptRowsRaw.length,
+
           eportfolioRows: eportfolioProgressRowsRaw.length,
         },
       });
 
       return measureSyncOperation({
         operation: "admin.getBasicAdminStats.responseShape",
+
         records:
           scenarioAttemptRows.length + curriculumAttemptRows.length + eportfolioProgressRows.length,
+
         meta: {
           nodeElements:
             scenarioBreakdown.length + courseBreakdown.length + languageBreakdown.length,
+
           responseBytes: estimateJsonBytes({
             languageBreakdown,
             scenarioBreakdown,
+
+            scenarioResponseBreakdown: nativeScenarioData.scenarioResponseBreakdown,
+
             courseBreakdown,
             scenarioAttemptRows,
             curriculumAttemptRows,
             eportfolioProgressRows,
           }),
         },
+
         execute: () => ({
           generatedAt: new Date().toISOString(),
+
           users: {
             total: totalUsers,
             learners: totalLearners,
             educators: totalEducators,
             admins: totalAdmins,
           },
+
           content: {
             publishedCourses,
             publishedCaseStudies,
             publishedScenarios,
             availableScenarioVariants,
           },
+
           scenarioAttempts: {
             total: scenarioAttemptsAggregate._count._all,
+
             passed: passedScenarioAttempts,
+
             completed: completedScenarioAttempts,
+
             failed: failedScenarioAttempts,
+
             incomplete: incompleteScenarioAttempts,
+
             browsed: browsedScenarioAttempts,
+
             completedLikeTotal: scenarioCompletedLike,
+
             completionRate: toPercent(scenarioCompletedLike, scenarioAttemptsAggregate._count._all),
+
             averageScore: scenarioAttemptsAggregate._avg.score ?? null,
           },
+
           curriculum: {
             totalAttempts: courseAttemptsAggregate._count._all,
+
             completed: completedCourseAttempts,
+
             inProgress: inProgressCourseAttempts,
+
             failed: failedCourseAttempts,
+
             completionRate: toPercent(completedCourseAttempts, courseAttemptsAggregate._count._all),
+
             averagePreQuizScore: courseAttemptsAggregate._avg.preQuizScore ?? null,
+
             averagePostQuizScore: courseAttemptsAggregate._avg.postQuizScore ?? null,
           },
+
           eportfolio: {
             totalProgressRecords,
             completedCaseStudies,
+
             completionRate: toPercent(completedCaseStudies, totalProgressRecords),
           },
+
           activity: {
             activeUsersLast24h,
             activeUsersLast7Days,
             activeUsersLast30Days,
 
             recentScenarioAttempts24h: scenarioWindow24h.total,
+
             recentScenarioAttempts: scenarioWindow7d.total,
+
             recentScenarioAttempts30d: scenarioWindow30d.total,
 
             recentCourseAttempts24h: curriculumWindow24h.total,
+
             recentCourseAttempts: curriculumWindow7d.total,
+
             recentCourseAttempts30d: curriculumWindow30d.total,
 
             recentEportfolioEvents24h: eportfolioWindow24h.total,
+
             recentEportfolioEvents: eportfolioWindow7d.total,
+
             recentEportfolioEvents30d: eportfolioWindow30d.total,
 
             scenarioSeries24h: buildLast24HoursSeries(
               scenarioWindow24h.hourBuckets,
               hourFormatter24h,
             ),
+
             scenarioSeries: buildLastDaysSeries(scenarioWindow7d.dayBuckets, 7, dayFormatter7d),
+
             scenarioSeries30d: buildLastDaysSeries(
               scenarioWindow30d.dayBuckets,
               30,
@@ -1213,7 +1490,9 @@ async function getBasicAdminStatsUncached(
               curriculumWindow24h.hourBuckets,
               hourFormatter24h,
             ),
+
             curriculumSeries: buildLastDaysSeries(curriculumWindow7d.dayBuckets, 7, dayFormatter7d),
+
             curriculumSeries30d: buildLastDaysSeries(
               curriculumWindow30d.dayBuckets,
               30,
@@ -1224,7 +1503,9 @@ async function getBasicAdminStatsUncached(
               eportfolioWindow24h.hourBuckets,
               hourFormatter24h,
             ),
+
             eportfolioSeries: buildLastDaysSeries(eportfolioWindow7d.dayBuckets, 7, dayFormatter7d),
+
             eportfolioSeries30d: buildLastDaysSeries(
               eportfolioWindow30d.dayBuckets,
               30,
@@ -1243,8 +1524,12 @@ async function getBasicAdminStatsUncached(
             eportfolioStats7d,
             eportfolioStats30d,
           },
+
           languageBreakdown,
           scenarioBreakdown,
+
+          scenarioResponseBreakdown: nativeScenarioData.scenarioResponseBreakdown,
+
           courseBreakdown,
           scenarioAttemptRows,
           curriculumAttemptRows,
@@ -1261,7 +1546,9 @@ const getBasicAdminStatsCached = unstable_cache(
       includeBreakdowns,
       includeRows,
     }),
+
   ["admin.getBasicAdminStats"],
+
   {
     revalidate: 60,
   },
@@ -1272,6 +1559,7 @@ export async function getBasicAdminStats(
   options: GetBasicAdminStatsOptions = {},
 ): Promise<BasicAdminStats> {
   const includeBreakdowns = options.includeBreakdowns ?? true;
+
   const includeRows = options.includeRows ?? true;
 
   return getBasicAdminStatsCached(locale, includeBreakdowns, includeRows);

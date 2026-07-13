@@ -1,5 +1,5 @@
 import { scenarioPathwayItems } from "@/content/scenarios/pathway";
-import type { DashboardScenarioAttemptRow } from "@/lib/admin/types";
+import type { AdminScenarioResponseStat, DashboardScenarioAttemptRow } from "@/lib/admin/types";
 import type { AppLocale } from "@/lib/i18n/locales";
 import { APP_LOCALES } from "@/lib/i18n/locales";
 import { prisma } from "@/lib/prisma";
@@ -65,6 +65,37 @@ function average(values: readonly number[]): number | null {
   const sum = values.reduce((current, value) => current + value, 0);
 
   return Math.round(sum / values.length);
+}
+
+function toPercent(part: number, total: number): number {
+  if (total <= 0) {
+    return 0;
+  }
+
+  return Math.round((part / total) * 100);
+}
+
+function averageWithOneDecimal(part: number, total: number): number {
+  if (total <= 0) {
+    return 0;
+  }
+
+  return Math.round((part / total) * 10) / 10;
+}
+
+function createStatsKey(...parts: readonly string[]): string {
+  return parts.join("\u001f");
+}
+
+function addValueToSetMap(map: Map<string, Set<string>>, key: string, value: string): void {
+  const values = map.get(key);
+
+  if (values) {
+    values.add(value);
+    return;
+  }
+
+  map.set(key, new Set([value]));
 }
 
 function buildNativeScenarioCatalog(locale: AppLocale): NativeScenarioCatalogItem[] {
@@ -187,13 +218,24 @@ export async function getNativeScenarioAdminData({
     prisma.userScenarioChoiceAttempt.findMany({
       select: {
         attemptId: true,
+        challengeId: true,
+        choiceId: true,
+        attemptNumber: true,
         isOptimal: true,
+
         attempt: {
           select: {
             scenarioId: true,
+            scenarioVersion: true,
           },
         },
       },
+
+      orderBy: [
+        {
+          confirmedAt: "asc",
+        },
+      ],
     }),
 
     includeRows
@@ -281,6 +323,92 @@ export async function getNativeScenarioAdminData({
   }
 
   const allAttemptScores = [...scoreByAttemptId.values()];
+
+  const choiceSelectionCounts = new Map<string, number>();
+  const challengeDecisionTotals = new Map<string, number>();
+  const challengeRetryDecisionCounts = new Map<string, number>();
+
+  const challengeRunIds = new Map<string, Set<string>>();
+  const challengeRetryRunIds = new Map<string, Set<string>>();
+
+  for (const choiceAttempt of choiceAttemptsRaw) {
+    const scenarioId = choiceAttempt.attempt.scenarioId;
+
+    const challengeKey = createStatsKey(scenarioId, choiceAttempt.challengeId);
+
+    const choiceKey = createStatsKey(scenarioId, choiceAttempt.challengeId, choiceAttempt.choiceId);
+
+    const challengeRunId = createStatsKey(choiceAttempt.attemptId, choiceAttempt.challengeId);
+
+    choiceSelectionCounts.set(choiceKey, (choiceSelectionCounts.get(choiceKey) ?? 0) + 1);
+
+    challengeDecisionTotals.set(challengeKey, (challengeDecisionTotals.get(challengeKey) ?? 0) + 1);
+
+    addValueToSetMap(challengeRunIds, challengeKey, challengeRunId);
+
+    if (choiceAttempt.attemptNumber > 1) {
+      challengeRetryDecisionCounts.set(
+        challengeKey,
+        (challengeRetryDecisionCounts.get(challengeKey) ?? 0) + 1,
+      );
+
+      addValueToSetMap(challengeRetryRunIds, challengeKey, challengeRunId);
+    }
+  }
+
+  const scenarioResponseBreakdown: AdminScenarioResponseStat[] = includeBreakdowns
+    ? scenarioCatalog.flatMap((catalogScenario) => {
+        const resolvedScenario = resolveScenarioBySlug(catalogScenario.slug, locale);
+
+        if (!resolvedScenario) {
+          return [];
+        }
+
+        return resolvedScenario.challenges.map((challenge) => {
+          const challengeKey = createStatsKey(catalogScenario.id, challenge.id);
+
+          const totalDecisions = challengeDecisionTotals.get(challengeKey) ?? 0;
+
+          const challengeRuns = challengeRunIds.get(challengeKey)?.size ?? 0;
+
+          const runsWithRetry = challengeRetryRunIds.get(challengeKey)?.size ?? 0;
+
+          const retryDecisions = challengeRetryDecisionCounts.get(challengeKey) ?? 0;
+
+          return {
+            scenarioId: catalogScenario.id,
+            scenarioTitle: resolvedScenario.title,
+
+            challengeId: challenge.id,
+            challengeTitle: challenge.title,
+
+            challengeRuns,
+            totalDecisions,
+            runsWithRetry,
+            retryDecisions,
+
+            retryRate: toPercent(runsWithRetry, challengeRuns),
+
+            averageRetriesPerRun: averageWithOneDecimal(retryDecisions, challengeRuns),
+
+            choices: challenge.choices.map((choice) => {
+              const choiceKey = createStatsKey(catalogScenario.id, challenge.id, choice.id);
+
+              const selections = choiceSelectionCounts.get(choiceKey) ?? 0;
+
+              return {
+                choiceId: choice.id,
+                choiceLabel: choice.label ?? choice.text,
+                isOptimal: choice.isOptimal,
+                selections,
+
+                sharePercent: toPercent(selections, totalDecisions),
+              };
+            }),
+          };
+        });
+      })
+    : [];
 
   const publishedScenariosWithVariants = scenarioCatalog;
 
@@ -373,6 +501,7 @@ export async function getNativeScenarioAdminData({
     scenarioAttemptsRecent,
     scenarioAttemptsByScenario,
     scenarioAttemptsByScenarioStatus,
+    scenarioResponseBreakdown,
     scenarioAttemptRowsRaw,
   };
 }

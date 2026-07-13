@@ -30,6 +30,28 @@ export type AdminScenarioStat = {
   averageScore: number | null;
 };
 
+export type AdminScenarioChoiceShare = {
+  readonly choiceId: string;
+  readonly choiceLabel: string;
+  readonly isOptimal: boolean;
+  readonly selections: number;
+  readonly sharePercent: number;
+};
+
+export type AdminScenarioResponseStat = {
+  readonly scenarioId: string;
+  readonly scenarioTitle: string;
+  readonly challengeId: string;
+  readonly challengeTitle: string;
+  readonly challengeRuns: number;
+  readonly totalDecisions: number;
+  readonly runsWithRetry: number;
+  readonly retryDecisions: number;
+  readonly retryRate: number;
+  readonly averageRetriesPerRun: number;
+  readonly choices: readonly AdminScenarioChoiceShare[];
+};
+
 export type AdminCourseStat = {
   id: string;
   slug: string;
@@ -47,18 +69,21 @@ export type AdminCourseStat = {
 
 export type BasicAdminStats = {
   generatedAt: string;
+
   users: {
     total: number;
     learners: number;
     educators: number;
     admins: number;
   };
+
   content: {
     publishedCourses: number;
     publishedCaseStudies: number;
     publishedScenarios: number;
     availableScenarioVariants: number;
   };
+
   scenarioAttempts: {
     total: number;
     passed: number;
@@ -70,6 +95,7 @@ export type BasicAdminStats = {
     completionRate: number;
     averageScore: number | null;
   };
+
   curriculum: {
     totalAttempts: number;
     completed: number;
@@ -79,11 +105,13 @@ export type BasicAdminStats = {
     averagePreQuizScore: number | null;
     averagePostQuizScore: number | null;
   };
+
   eportfolio: {
     totalProgressRecords: number;
     completedCaseStudies: number;
     completionRate: number;
   };
+
   activity: {
     activeUsersLast24h: number;
     activeUsersLast7Days: number;
@@ -119,12 +147,14 @@ export type BasicAdminStats = {
       completedLikeTotal: number;
       failed: number;
     };
+
     scenarioStats7d: {
       completionRate: number;
       averageScore: number | null;
       completedLikeTotal: number;
       failed: number;
     };
+
     scenarioStats30d: {
       completionRate: number;
       averageScore: number | null;
@@ -138,12 +168,14 @@ export type BasicAdminStats = {
       averagePostQuizScore: number | null;
       inProgress: number;
     };
+
     curriculumStats7d: {
       completionRate: number;
       averagePreQuizScore: number | null;
       averagePostQuizScore: number | null;
       inProgress: number;
     };
+
     curriculumStats30d: {
       completionRate: number;
       averagePreQuizScore: number | null;
@@ -156,19 +188,23 @@ export type BasicAdminStats = {
       published: number;
       activeUsers: number;
     };
+
     eportfolioStats7d: {
       completionRate: number;
       published: number;
       activeUsers: number;
     };
+
     eportfolioStats30d: {
       completionRate: number;
       published: number;
       activeUsers: number;
     };
   };
+
   languageBreakdown: AdminLanguageStat[];
   scenarioBreakdown: AdminScenarioStat[];
+  readonly scenarioResponseBreakdown: AdminScenarioResponseStat[];
   courseBreakdown: AdminCourseStat[];
 
   scenarioAttemptRows: DashboardScenarioAttemptRow[];
