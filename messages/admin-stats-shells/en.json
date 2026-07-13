@@ -161,6 +161,29 @@
           "variants": "Variants"
         }
       },
+      "scenarioResponses": {
+        "title": "Scenario response statistics",
+        "subtitle": "Analyse decision shares and retries for every challenge in the scenario simulator.",
+        "records": "{count} challenges",
+        "summary": {
+          "challengeRuns": "Challenge runs",
+          "decisions": "Decisions",
+          "retryRate": "Runs with retry",
+          "averageRetries": "Avg retries / run"
+        },
+        "metrics": {
+          "runs": "Runs",
+          "decisions": "Decisions",
+          "retryRate": "Retry rate",
+          "averageRetries": "Avg retries"
+        },
+        "optimal": "Optimal choice",
+        "selections": "Selections: {count}",
+        "empty": {
+          "title": "No response statistics available",
+          "subtitle": "Decision and retry statistics will appear after learners start answering scenario challenges."
+        }
+      },
       "coursePerformance": {
         "title": "Curriculum performance",
         "subtitle": "Search, compare, and sort curriculum modules by engagement and learning outcomes.",
