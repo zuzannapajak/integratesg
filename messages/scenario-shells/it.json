@@ -80,8 +80,29 @@
         "description": "Lo scenario è stato completato con successo.",
         "leaveScenario": "Torna agli scenari"
       },
+      "loading": {
+        "title": "Caricamento dello scenario",
+        "description": "Caricamento dei contenuti dello scenario e dei progressi salvati."
+      },
+      "saving": {
+        "default": "Salvataggio dei progressi…",
+        "start": "Avvio dello scenario e salvataggio dei progressi…",
+        "choice": "Salvataggio della tua decisione…",
+        "challenge": "Salvataggio del completamento della sfida…",
+        "scenario": "Salvataggio del completamento dello scenario…"
+      },
       "errors": {
-        "unexpected": "Si è verificato un errore imprevisto."
+        "unexpected": "Si è verificato un errore imprevisto.",
+        "contentTitle": "Impossibile caricare lo scenario",
+        "contentDescription": "Si è verificato un problema durante il caricamento dei contenuti dello scenario o dei progressi salvati. Controlla la connessione e riprova.",
+        "retry": "Riprova",
+        "backToScenarios": "Torna agli scenari",
+        "progress": {
+          "start": "Non è stato possibile avviare lo scenario o salvare i progressi. Riprova.",
+          "choice": "Non è stato possibile salvare la tua decisione. Nessun progresso è andato perso. Riprova.",
+          "challenge": "Non è stato possibile salvare il completamento della sfida. Riprova prima di continuare.",
+          "scenario": "Non è stato possibile salvare il completamento dello scenario. Riprova."
+        }
       }
     }
   }

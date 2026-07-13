@@ -80,8 +80,29 @@
         "description": "Your progress has been completed successfully.",
         "leaveScenario": "Back to scenarios"
       },
+      "loading": {
+        "title": "Loading scenario",
+        "description": "Loading the scenario content and your saved progress."
+      },
+      "saving": {
+        "default": "Saving progress…",
+        "start": "Starting the scenario and saving progress…",
+        "choice": "Saving your decision…",
+        "challenge": "Saving challenge completion…",
+        "scenario": "Saving scenario completion…"
+      },
       "errors": {
-        "unexpected": "An unexpected error occurred."
+        "unexpected": "An unexpected error occurred.",
+        "contentTitle": "The scenario could not be loaded",
+        "contentDescription": "There was a problem loading the scenario content or your saved progress. Check your connection and try again.",
+        "retry": "Try again",
+        "backToScenarios": "Back to scenarios",
+        "progress": {
+          "start": "The scenario could not be started or your progress could not be saved. Try again.",
+          "choice": "Your decision could not be saved. No progress was lost. Try again.",
+          "challenge": "Challenge completion could not be saved. Try again before continuing.",
+          "scenario": "Scenario completion could not be saved. Try again."
+        }
       }
     }
   }

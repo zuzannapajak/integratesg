@@ -80,8 +80,29 @@
         "description": "Das Szenario wurde erfolgreich abgeschlossen.",
         "leaveScenario": "Zurück zu den Szenarien"
       },
+      "loading": {
+        "title": "Szenario wird geladen",
+        "description": "Szenarioinhalte und Ihr gespeicherter Fortschritt werden geladen."
+      },
+      "saving": {
+        "default": "Fortschritt wird gespeichert…",
+        "start": "Szenario wird gestartet und der Fortschritt gespeichert…",
+        "choice": "Ihre Entscheidung wird gespeichert…",
+        "challenge": "Der Abschluss der Herausforderung wird gespeichert…",
+        "scenario": "Der Abschluss des Szenarios wird gespeichert…"
+      },
       "errors": {
-        "unexpected": "Ein unerwarteter Fehler ist aufgetreten."
+        "unexpected": "Ein unerwarteter Fehler ist aufgetreten.",
+        "contentTitle": "Das Szenario konnte nicht geladen werden",
+        "contentDescription": "Beim Laden der Szenarioinhalte oder Ihres gespeicherten Fortschritts ist ein Problem aufgetreten. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
+        "retry": "Erneut versuchen",
+        "backToScenarios": "Zurück zu den Szenarien",
+        "progress": {
+          "start": "Das Szenario konnte nicht gestartet oder der Fortschritt nicht gespeichert werden. Versuchen Sie es erneut.",
+          "choice": "Ihre Entscheidung konnte nicht gespeichert werden. Es ging kein Fortschritt verloren. Versuchen Sie es erneut.",
+          "challenge": "Der Abschluss der Herausforderung konnte nicht gespeichert werden. Versuchen Sie es erneut, bevor Sie fortfahren.",
+          "scenario": "Der Abschluss des Szenarios konnte nicht gespeichert werden. Versuchen Sie es erneut."
+        }
       }
     }
   }

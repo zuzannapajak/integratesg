@@ -80,8 +80,29 @@
         "description": "Scenariusz został pomyślnie ukończony.",
         "leaveScenario": "Wróć do scenariuszy"
       },
+      "loading": {
+        "title": "Ładowanie scenariusza",
+        "description": "Pobieramy treść scenariusza i zapisany postęp."
+      },
+      "saving": {
+        "default": "Zapisywanie postępu…",
+        "start": "Uruchamianie scenariusza i zapisywanie postępu…",
+        "choice": "Zapisywanie Twojej decyzji…",
+        "challenge": "Zapisywanie ukończenia wyzwania…",
+        "scenario": "Zapisywanie ukończenia scenariusza…"
+      },
       "errors": {
-        "unexpected": "Wystąpił nieoczekiwany błąd."
+        "unexpected": "Wystąpił nieoczekiwany błąd.",
+        "contentTitle": "Nie udało się załadować scenariusza",
+        "contentDescription": "Wystąpił problem podczas pobierania treści scenariusza lub zapisanego postępu. Sprawdź połączenie i spróbuj ponownie.",
+        "retry": "Spróbuj ponownie",
+        "backToScenarios": "Wróć do scenariuszy",
+        "progress": {
+          "start": "Nie udało się uruchomić scenariusza ani zapisać postępu. Spróbuj ponownie.",
+          "choice": "Nie udało się zapisać Twojej decyzji. Postęp nie został utracony. Spróbuj ponownie.",
+          "challenge": "Nie udało się zapisać ukończenia wyzwania. Spróbuj ponownie przed przejściem dalej.",
+          "scenario": "Nie udało się zapisać ukończenia scenariusza. Spróbuj ponownie."
+        }
       }
     }
   }
