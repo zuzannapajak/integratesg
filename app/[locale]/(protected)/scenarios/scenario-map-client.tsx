@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 import { ScenarioPathwayMap } from "@/components/scenarios/pathway/scenario-pathway-map";
@@ -13,12 +14,24 @@ export type ScenarioMapClientProps = {
 
 export function ScenarioMapClient({ locale, preview = false }: ScenarioMapClientProps) {
   const router = useRouter();
+  const t = useTranslations("Protected.ScenarioPathway");
 
   return (
     <ScenarioPathwayMap
       backgroundImage={scenarioPathwayAssets.backgroundImage}
-      backgroundAlt="An illustrated ESG learning pathway connecting six organisational scenarios."
+      backgroundAlt={t("backgroundAlt")}
       items={scenarioPathwayItems}
+      labels={{
+        title: t("title"),
+        subtitle: t("subtitle"),
+        progress: t("progress"),
+        completed: t("completed"),
+        available: t("available"),
+        inProgress: t("inProgress"),
+        locked: t("locked"),
+        openScenario: t("openScenario"),
+        reviewScenario: t("reviewScenario"),
+      }}
       onOpenScenario={(scenario, mode) => {
         const baseUrl = preview
           ? `/${locale}/scenario-preview/${scenario.slug}`

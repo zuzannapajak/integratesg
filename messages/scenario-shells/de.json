@@ -1,0 +1,88 @@
+{
+  "Protected": {
+    "ScenarioPathway": {
+      "backgroundAlt": "Ein illustrierter ESG-Lernpfad, der sechs organisatorische Szenarien miteinander verbindet.",
+      "title": "Szenarien",
+      "subtitle": "Entdecken Sie den vollständigen Lernpfad für Ihre gesamte Organisation.",
+      "progress": "Fortschritt",
+      "completed": "Abgeschlossen",
+      "available": "Verfügbar",
+      "inProgress": "In Bearbeitung",
+      "locked": "Gesperrt",
+      "openScenario": "Szenario öffnen",
+      "reviewScenario": "Szenario überprüfen"
+    },
+    "ScenarioSimulator": {
+      "common": {
+        "scenario": "Szenario",
+        "challenge": "Herausforderung",
+        "of": "von",
+        "back": "Zurück",
+        "continue": "Fortsetzen",
+        "loading": "Wird gespeichert…",
+        "progress": "Fortschritt",
+        "completed": "Abgeschlossen"
+      },
+      "intro": {
+        "introduction": "Einführung",
+        "context": "Szenariokontext",
+        "organisation": "Organisation",
+        "yourRole": "Ihre Rolle",
+        "yourObjectives": "Ihre Ziele",
+        "estimatedDuration": "Geschätzte Dauer",
+        "minutes": "Minuten",
+        "challenges": "Herausforderungen",
+        "scenarioInformation": "Szenarioinformationen",
+        "startScenario": "Szenario starten",
+        "backToScenarios": "Zurück zu den Szenarien",
+        "starting": "Wird gestartet…"
+      },
+      "board": {
+        "title": "Herausforderungen anzeigen",
+        "description": "Schließen Sie die drei Herausforderungen der Reihe nach ab.",
+        "currentObjective": "Aktuelles Ziel",
+        "allCompleted": "Alle Herausforderungen abgeschlossen",
+        "openChallenge": "Herausforderung öffnen",
+        "mapPoint": "Herausforderungspunkt",
+        "available": "Verfügbar",
+        "inProgress": "In Bearbeitung",
+        "locked": "Gesperrt"
+      },
+      "challenge": {
+        "context": "Kontext der Herausforderung",
+        "decision": "Entscheidung",
+        "attempt": "Versuch",
+        "previouslyTried": "Zuvor ausprobiert",
+        "backToBoard": "Zurück zu den Herausforderungen",
+        "continueToDecision": "Weiter zur Entscheidung",
+        "selectOneOption": "Wählen Sie eine Option",
+        "confirmDecision": "Entscheidung bestätigen"
+      },
+      "feedback": {
+        "correctDecision": "Richtige Entscheidung",
+        "incorrectDecision": "Versuchen Sie einen anderen Ansatz",
+        "yourDecision": "Ihre Entscheidung",
+        "whyItFallsShort": "Warum dieser Ansatz nicht ausreicht",
+        "expectedImpact": "Erwartete Auswirkung",
+        "likelyConsequence": "Wahrscheinliche Folge",
+        "keyTakeaway": "Wichtigste Erkenntnis",
+        "tryAgain": "Erneut versuchen"
+      },
+      "summary": {
+        "title": "Szenario-Zusammenfassung",
+        "allChallengesCompleted": "Alle Herausforderungen abgeschlossen",
+        "completedChallenges": "Abgeschlossene Herausforderungen",
+        "keyTakeaways": "Wichtigste Erkenntnisse",
+        "completeScenario": "Szenario abschließen"
+      },
+      "completion": {
+        "title": "Szenario abgeschlossen",
+        "description": "Das Szenario wurde erfolgreich abgeschlossen.",
+        "leaveScenario": "Zurück zu den Szenarien"
+      },
+      "errors": {
+        "unexpected": "Ein unerwarteter Fehler ist aufgetreten."
+      }
+    }
+  }
+}

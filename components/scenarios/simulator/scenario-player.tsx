@@ -54,8 +54,25 @@ export type ScenarioCompletedEvent = {
 };
 
 export type ScenarioPlayerLabels = {
+  readonly scenario: string;
+  readonly challenge: string;
+  readonly of: string;
+
+  readonly introduction: string;
+  readonly scenarioContext: string;
+  readonly organisation: string;
+  readonly yourRole: string;
+  readonly yourObjectives: string;
+  readonly estimatedDuration: string;
+  readonly minutes: string;
+  readonly challenges: string;
+  readonly scenarioInformation: string;
+
   readonly startScenario: string;
+  readonly backToScenarios: string;
   readonly viewChallenges: string;
+  readonly boardDescription: string;
+  readonly boardAllCompleted: string;
   readonly openChallenge: string;
   readonly backToBoard: string;
 
@@ -87,6 +104,7 @@ export type ScenarioPlayerLabels = {
   readonly completeScenario: string;
   readonly leaveScenario: string;
   readonly currentObjective: string;
+  readonly mapPoint: string;
   readonly completed: string;
   readonly available: string;
   readonly inProgress: string;
@@ -95,11 +113,30 @@ export type ScenarioPlayerLabels = {
   readonly scenarioCompletedDescription: string;
   readonly progress: string;
   readonly loading: string;
+  readonly starting: string;
+  readonly unexpectedError: string;
 };
 
 const DEFAULT_LABELS: ScenarioPlayerLabels = {
+  scenario: "Scenario",
+  challenge: "Challenge",
+  of: "of",
+
+  introduction: "Introduction",
+  scenarioContext: "Scenario context",
+  organisation: "Organisation",
+  yourRole: "Your role",
+  yourObjectives: "Your objectives",
+  estimatedDuration: "Estimated duration",
+  minutes: "minutes",
+  challenges: "challenges",
+  scenarioInformation: "Scenario information",
+
   startScenario: "Start scenario",
+  backToScenarios: "Back to scenarios",
   viewChallenges: "View challenges",
+  boardDescription: "Complete the three challenges in order.",
+  boardAllCompleted: "All challenges completed",
   openChallenge: "Open challenge",
   backToBoard: "Back to challenges",
 
@@ -130,6 +167,7 @@ const DEFAULT_LABELS: ScenarioPlayerLabels = {
   completeScenario: "Complete scenario",
   leaveScenario: "Back to scenarios",
   currentObjective: "Current objective",
+  mapPoint: "Challenge point",
   completed: "Completed",
   available: "Available",
   inProgress: "In progress",
@@ -138,6 +176,8 @@ const DEFAULT_LABELS: ScenarioPlayerLabels = {
   scenarioCompletedDescription: "Your progress has been completed successfully.",
   progress: "Progress",
   loading: "Saving…",
+  starting: "Starting…",
+  unexpectedError: "An unexpected error occurred.",
 };
 
 export type ScenarioPlayerProps = {
@@ -163,12 +203,12 @@ export type ScenarioPlayerProps = {
 type ChallengeAttemptCountMap = Partial<Record<ChallengeId, number>>;
 type ChallengeRejectedChoiceMap = Partial<Record<ChallengeId, readonly ChoiceId[]>>;
 
-function getErrorMessage(error: unknown): string {
+function getErrorMessage(error: unknown, fallback: string): string {
   if (error instanceof Error) {
     return error.message;
   }
 
-  return "An unexpected error occurred.";
+  return fallback;
 }
 
 export function ScenarioPlayer({
@@ -331,7 +371,7 @@ export function ScenarioPlayer({
       setChallengeInitialStep("context");
       navigateToView("board", "forward");
     } catch (error) {
-      setErrorMessage(getErrorMessage(error));
+      setErrorMessage(getErrorMessage(error, labels.unexpectedError));
     } finally {
       setIsSubmitting(false);
     }
@@ -403,7 +443,7 @@ export function ScenarioPlayer({
 
       navigateToView("feedback", "forward");
     } catch (error) {
-      setErrorMessage(getErrorMessage(error));
+      setErrorMessage(getErrorMessage(error, labels.unexpectedError));
     } finally {
       setIsSubmitting(false);
     }
@@ -495,7 +535,7 @@ export function ScenarioPlayer({
         navigateToView("board", "forward");
       }
     } catch (error) {
-      setErrorMessage(getErrorMessage(error));
+      setErrorMessage(getErrorMessage(error, labels.unexpectedError));
     } finally {
       setIsSubmitting(false);
     }
@@ -519,7 +559,7 @@ export function ScenarioPlayer({
 
       navigateToView("completion", "forward");
     } catch (error) {
-      setErrorMessage(getErrorMessage(error));
+      setErrorMessage(getErrorMessage(error, labels.unexpectedError));
     } finally {
       setIsSubmitting(false);
     }
@@ -538,6 +578,7 @@ export function ScenarioPlayer({
           isSubmitting={isSubmitting}
           errorMessage={errorMessage}
           labels={{
+            challenge: labels.challenge,
             correctDecision: labels.correctDecision,
             yourDecision: labels.yourDecision,
             expectedImpact: labels.expectedImpact,
@@ -557,6 +598,7 @@ export function ScenarioPlayer({
         isSubmitting={isSubmitting}
         errorMessage={errorMessage}
         labels={{
+          challenge: labels.challenge,
           incorrectDecision: labels.incorrectDecision,
           yourDecision: labels.yourDecision,
           whyItFallsShort: labels.whyItFallsShort,
@@ -626,7 +668,7 @@ export function ScenarioPlayer({
 
           <div className="min-w-0">
             <p className="text-lg font-semibold tracking-[-0.03em] text-[#17243a] sm:text-2xl">
-              Scenario {scenario.order}
+              {labels.scenario} {scenario.order}
             </p>
 
             <h1 className="mt-0.5 truncate text-sm font-medium text-[#596170] sm:text-base">
@@ -665,9 +707,15 @@ export function ScenarioPlayer({
                 labels={{
                   title: labels.viewChallenges,
 
+                  description: labels.boardDescription,
+
                   currentObjective: labels.currentObjective,
 
+                  allCompleted: labels.boardAllCompleted,
+
                   openChallenge: labels.openChallenge,
+
+                  mapPoint: labels.mapPoint,
 
                   completed: labels.completed,
 
@@ -698,11 +746,37 @@ export function ScenarioPlayer({
                     isStarting={isSubmitting}
                     errorMessage={errorMessage}
                     labels={{
+                      scenario: labels.scenario,
+
+                      introduction: labels.introduction,
+
+                      of: labels.of,
+
+                      context: labels.scenarioContext,
+
+                      organisation: labels.organisation,
+
+                      yourRole: labels.yourRole,
+
+                      yourObjectives: labels.yourObjectives,
+
+                      estimatedDuration: labels.estimatedDuration,
+
+                      minutes: labels.minutes,
+
+                      challenges: labels.challenges,
+
+                      scenarioInformation: labels.scenarioInformation,
+
+                      continue: labels.continue,
+
+                      back: labels.back,
+
                       startScenario: labels.startScenario,
 
-                      backToScenarios: labels.leaveScenario,
+                      backToScenarios: labels.backToScenarios,
 
-                      starting: labels.loading,
+                      starting: labels.starting,
                     }}
                     onStart={() => void startScenario()}
                     onExit={onExit}
@@ -719,9 +793,13 @@ export function ScenarioPlayer({
                     isSubmitting={isSubmitting}
                     errorMessage={errorMessage}
                     labels={{
+                      challenge: labels.challenge,
+
                       context: labels.challengeContext,
 
                       decision: labels.decision,
+
+                      of: labels.of,
 
                       attempt: labels.attempt,
 

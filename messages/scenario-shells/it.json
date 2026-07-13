@@ -1,0 +1,88 @@
+{
+  "Protected": {
+    "ScenarioPathway": {
+      "backgroundAlt": "Un percorso formativo ESG illustrato che collega sei scenari organizzativi.",
+      "title": "Scenari",
+      "subtitle": "Esplora l'intero percorso formativo nella tua organizzazione.",
+      "progress": "Progresso",
+      "completed": "Completato",
+      "available": "Disponibile",
+      "inProgress": "In corso",
+      "locked": "Bloccato",
+      "openScenario": "Apri scenario",
+      "reviewScenario": "Rivedi scenario"
+    },
+    "ScenarioSimulator": {
+      "common": {
+        "scenario": "Scenario",
+        "challenge": "Sfida",
+        "of": "di",
+        "back": "Indietro",
+        "continue": "Continua",
+        "loading": "Salvataggio…",
+        "progress": "Progresso",
+        "completed": "Completato"
+      },
+      "intro": {
+        "introduction": "Introduzione",
+        "context": "Contesto dello scenario",
+        "organisation": "Organizzazione",
+        "yourRole": "Il tuo ruolo",
+        "yourObjectives": "I tuoi obiettivi",
+        "estimatedDuration": "Durata stimata",
+        "minutes": "minuti",
+        "challenges": "sfide",
+        "scenarioInformation": "Informazioni sullo scenario",
+        "startScenario": "Avvia scenario",
+        "backToScenarios": "Torna agli scenari",
+        "starting": "Avvio…"
+      },
+      "board": {
+        "title": "Visualizza le sfide",
+        "description": "Completa le tre sfide nell'ordine indicato.",
+        "currentObjective": "Obiettivo attuale",
+        "allCompleted": "Tutte le sfide completate",
+        "openChallenge": "Apri sfida",
+        "mapPoint": "Punto della sfida",
+        "available": "Disponibile",
+        "inProgress": "In corso",
+        "locked": "Bloccata"
+      },
+      "challenge": {
+        "context": "Contesto della sfida",
+        "decision": "Decisione",
+        "attempt": "Tentativo",
+        "previouslyTried": "Già provato",
+        "backToBoard": "Torna alle sfide",
+        "continueToDecision": "Continua alla decisione",
+        "selectOneOption": "Seleziona un'opzione",
+        "confirmDecision": "Conferma decisione"
+      },
+      "feedback": {
+        "correctDecision": "Decisione corretta",
+        "incorrectDecision": "Prova un altro approccio",
+        "yourDecision": "La tua decisione",
+        "whyItFallsShort": "Perché questo approccio non è sufficiente",
+        "expectedImpact": "Impatto previsto",
+        "likelyConsequence": "Conseguenza probabile",
+        "keyTakeaway": "Punto chiave",
+        "tryAgain": "Riprova"
+      },
+      "summary": {
+        "title": "Riepilogo dello scenario",
+        "allChallengesCompleted": "Tutte le sfide completate",
+        "completedChallenges": "Sfide completate",
+        "keyTakeaways": "Conclusioni chiave",
+        "completeScenario": "Completa scenario"
+      },
+      "completion": {
+        "title": "Scenario completato",
+        "description": "Lo scenario è stato completato con successo.",
+        "leaveScenario": "Torna agli scenari"
+      },
+      "errors": {
+        "unexpected": "Si è verificato un errore imprevisto."
+      }
+    }
+  }
+}

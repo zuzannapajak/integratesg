@@ -24,6 +24,7 @@ export type {
 export const DEFAULT_SCENARIO_PATHWAY_MAP_LABELS: ScenarioPathwayMapLabels = {
   title: "Scenarios",
   subtitle: "Explore the full learning pathway across your organisation.",
+  progress: "Progress",
   completed: "Completed",
   available: "Available",
   inProgress: "In progress",
@@ -108,6 +109,7 @@ export function ScenarioPathwayMap({
           completedCount={completedCount}
           totalCount={orderedItems.length}
           labels={{
+            progress: labels.progress,
             completed: labels.completed,
           }}
         />

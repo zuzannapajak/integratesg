@@ -1,0 +1,88 @@
+{
+  "Protected": {
+    "ScenarioPathway": {
+      "backgroundAlt": "Μια εικονογραφημένη μαθησιακή διαδρομή ESG που συνδέει έξι οργανωτικά σενάρια.",
+      "title": "Σενάρια",
+      "subtitle": "Εξερευνήστε ολόκληρη τη μαθησιακή διαδρομή στον οργανισμό σας.",
+      "progress": "Πρόοδος",
+      "completed": "Ολοκληρώθηκε",
+      "available": "Διαθέσιμο",
+      "inProgress": "Σε εξέλιξη",
+      "locked": "Κλειδωμένο",
+      "openScenario": "Άνοιγμα σεναρίου",
+      "reviewScenario": "Ανασκόπηση σεναρίου"
+    },
+    "ScenarioSimulator": {
+      "common": {
+        "scenario": "Σενάριο",
+        "challenge": "Πρόκληση",
+        "of": "από",
+        "back": "Πίσω",
+        "continue": "Συνέχεια",
+        "loading": "Αποθήκευση…",
+        "progress": "Πρόοδος",
+        "completed": "Ολοκληρώθηκε"
+      },
+      "intro": {
+        "introduction": "Εισαγωγή",
+        "context": "Πλαίσιο σεναρίου",
+        "organisation": "Οργανισμός",
+        "yourRole": "Ο ρόλος σας",
+        "yourObjectives": "Οι στόχοι σας",
+        "estimatedDuration": "Εκτιμώμενη διάρκεια",
+        "minutes": "λεπτά",
+        "challenges": "προκλήσεις",
+        "scenarioInformation": "Πληροφορίες σεναρίου",
+        "startScenario": "Έναρξη σεναρίου",
+        "backToScenarios": "Επιστροφή στα σενάρια",
+        "starting": "Εκκίνηση…"
+      },
+      "board": {
+        "title": "Προβολή προκλήσεων",
+        "description": "Ολοκληρώστε τις τρεις προκλήσεις με τη σειρά.",
+        "currentObjective": "Τρέχων στόχος",
+        "allCompleted": "Όλες οι προκλήσεις ολοκληρώθηκαν",
+        "openChallenge": "Άνοιγμα πρόκλησης",
+        "mapPoint": "Σημείο πρόκλησης",
+        "available": "Διαθέσιμο",
+        "inProgress": "Σε εξέλιξη",
+        "locked": "Κλειδωμένο"
+      },
+      "challenge": {
+        "context": "Πλαίσιο πρόκλησης",
+        "decision": "Απόφαση",
+        "attempt": "Προσπάθεια",
+        "previouslyTried": "Δοκιμάστηκε προηγουμένως",
+        "backToBoard": "Επιστροφή στις προκλήσεις",
+        "continueToDecision": "Συνέχεια στην απόφαση",
+        "selectOneOption": "Επιλέξτε μία επιλογή",
+        "confirmDecision": "Επιβεβαίωση απόφασης"
+      },
+      "feedback": {
+        "correctDecision": "Σωστή απόφαση",
+        "incorrectDecision": "Δοκιμάστε διαφορετική προσέγγιση",
+        "yourDecision": "Η απόφασή σας",
+        "whyItFallsShort": "Γιατί αυτή η προσέγγιση δεν επαρκεί",
+        "expectedImpact": "Αναμενόμενος αντίκτυπος",
+        "likelyConsequence": "Πιθανή συνέπεια",
+        "keyTakeaway": "Βασικό συμπέρασμα",
+        "tryAgain": "Δοκιμάστε ξανά"
+      },
+      "summary": {
+        "title": "Σύνοψη σεναρίου",
+        "allChallengesCompleted": "Όλες οι προκλήσεις ολοκληρώθηκαν",
+        "completedChallenges": "Ολοκληρωμένες προκλήσεις",
+        "keyTakeaways": "Βασικά συμπεράσματα",
+        "completeScenario": "Ολοκλήρωση σεναρίου"
+      },
+      "completion": {
+        "title": "Το σενάριο ολοκληρώθηκε",
+        "description": "Το σενάριο ολοκληρώθηκε με επιτυχία.",
+        "leaveScenario": "Επιστροφή στα σενάρια"
+      },
+      "errors": {
+        "unexpected": "Παρουσιάστηκε ένα απρόσμενο σφάλμα."
+      }
+    }
+  }
+}

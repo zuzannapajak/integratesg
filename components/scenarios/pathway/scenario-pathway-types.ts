@@ -26,6 +26,7 @@ export type ScenarioPathwayOpenMode = "play" | "review";
 export type ScenarioPathwayMapLabels = {
   readonly title: string;
   readonly subtitle: string;
+  readonly progress: string;
   readonly completed: string;
   readonly available: string;
   readonly inProgress: string;

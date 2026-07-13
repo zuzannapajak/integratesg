@@ -11,6 +11,7 @@ import { ArrowLeft, ArrowRight, Building2, Clock3, Target, UserRound } from "luc
 type IntroStep = 1 | 2;
 
 export type ScenarioIntroLabels = {
+  readonly scenario: string;
   readonly introduction: string;
   readonly of: string;
   readonly context: string;
@@ -20,6 +21,7 @@ export type ScenarioIntroLabels = {
   readonly estimatedDuration: string;
   readonly minutes: string;
   readonly challenges: string;
+  readonly scenarioInformation: string;
   readonly continue: string;
   readonly back: string;
   readonly startScenario: string;
@@ -28,6 +30,7 @@ export type ScenarioIntroLabels = {
 };
 
 export const DEFAULT_SCENARIO_INTRO_LABELS: ScenarioIntroLabels = {
+  scenario: "Scenario",
   introduction: "Introduction",
   of: "of",
   context: "Scenario context",
@@ -37,6 +40,7 @@ export const DEFAULT_SCENARIO_INTRO_LABELS: ScenarioIntroLabels = {
   estimatedDuration: "Estimated duration",
   minutes: "minutes",
   challenges: "challenges",
+  scenarioInformation: "Scenario information",
   continue: "Continue",
   back: "Back",
   startScenario: "Start scenario",
@@ -152,7 +156,7 @@ function ScenarioIntroContent({
                 <>
                   <header className="mt-5">
                     <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#0d6fe8]">
-                      Scenario {scenario.order}
+                      {labels.scenario} {scenario.order}
                     </p>
 
                     <h2 className="mt-2 max-w-3xl text-2xl font-semibold tracking-[-0.035em] text-[#31425a] sm:text-3xl">
@@ -271,7 +275,7 @@ function ScenarioIntroContent({
                 <>
                   <header className="mt-5">
                     <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#0d6fe8]">
-                      Scenario {scenario.order}
+                      {labels.scenario} {scenario.order}
                     </p>
 
                     <h2 className="mt-2 text-2xl font-semibold tracking-[-0.035em] text-[#31425a] sm:text-3xl">
@@ -307,7 +311,10 @@ function ScenarioIntroContent({
                     </ol>
                   </section>
 
-                  <section aria-label="Scenario information" className="mt-5 flex flex-wrap gap-3">
+                  <section
+                    aria-label={labels.scenarioInformation}
+                    className="mt-5 flex flex-wrap gap-3"
+                  >
                     {scenario.estimatedDurationMinutes !== null ? (
                       <div className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[#dfe5ec] bg-white px-4 text-sm font-medium text-[#596170]">
                         <Clock3 aria-hidden="true" size={16} className="text-[#0d6fe8]" />

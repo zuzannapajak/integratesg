@@ -1,0 +1,88 @@
+{
+  "Protected": {
+    "ScenarioPathway": {
+      "backgroundAlt": "An illustrated ESG learning pathway connecting six organisational scenarios.",
+      "title": "Scenarios",
+      "subtitle": "Explore the full learning pathway across your organisation.",
+      "progress": "Progress",
+      "completed": "Completed",
+      "available": "Available",
+      "inProgress": "In progress",
+      "locked": "Locked",
+      "openScenario": "Open scenario",
+      "reviewScenario": "Review scenario"
+    },
+    "ScenarioSimulator": {
+      "common": {
+        "scenario": "Scenario",
+        "challenge": "Challenge",
+        "of": "of",
+        "back": "Back",
+        "continue": "Continue",
+        "loading": "Saving…",
+        "progress": "Progress",
+        "completed": "Completed"
+      },
+      "intro": {
+        "introduction": "Introduction",
+        "context": "Scenario context",
+        "organisation": "Organisation",
+        "yourRole": "Your role",
+        "yourObjectives": "Your objectives",
+        "estimatedDuration": "Estimated duration",
+        "minutes": "minutes",
+        "challenges": "challenges",
+        "scenarioInformation": "Scenario information",
+        "startScenario": "Start scenario",
+        "backToScenarios": "Back to scenarios",
+        "starting": "Starting…"
+      },
+      "board": {
+        "title": "View challenges",
+        "description": "Complete the three challenges in order.",
+        "currentObjective": "Current objective",
+        "allCompleted": "All challenges completed",
+        "openChallenge": "Open challenge",
+        "mapPoint": "Challenge point",
+        "available": "Available",
+        "inProgress": "In progress",
+        "locked": "Locked"
+      },
+      "challenge": {
+        "context": "Challenge context",
+        "decision": "Decision",
+        "attempt": "Attempt",
+        "previouslyTried": "Previously tried",
+        "backToBoard": "Back to challenges",
+        "continueToDecision": "Continue to decision",
+        "selectOneOption": "Select one option",
+        "confirmDecision": "Confirm decision"
+      },
+      "feedback": {
+        "correctDecision": "Correct decision",
+        "incorrectDecision": "Try another approach",
+        "yourDecision": "Your decision",
+        "whyItFallsShort": "Why this approach falls short",
+        "expectedImpact": "Expected impact",
+        "likelyConsequence": "Likely consequence",
+        "keyTakeaway": "Key takeaway",
+        "tryAgain": "Try again"
+      },
+      "summary": {
+        "title": "Scenario summary",
+        "allChallengesCompleted": "All challenges completed",
+        "completedChallenges": "Challenges completed",
+        "keyTakeaways": "Key takeaways",
+        "completeScenario": "Complete scenario"
+      },
+      "completion": {
+        "title": "Scenario completed",
+        "description": "Your progress has been completed successfully.",
+        "leaveScenario": "Back to scenarios"
+      },
+      "errors": {
+        "unexpected": "An unexpected error occurred."
+      }
+    }
+  }
+}

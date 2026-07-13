@@ -15,7 +15,7 @@ const messageScopes = [
   "platform-feedback-shells",
   "protected-list-shells",
   "public-content-shells",
-  // "scenario-shells",
+  "scenario-shells",
   "settings-shells",
 ] as const;
 

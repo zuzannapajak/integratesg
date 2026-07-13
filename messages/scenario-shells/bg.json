@@ -1,0 +1,88 @@
+{
+  "Protected": {
+    "ScenarioPathway": {
+      "backgroundAlt": "Илюстрирана ESG учебна пътека, която свързва шест организационни сценария.",
+      "title": "Сценарии",
+      "subtitle": "Разгледайте цялата учебна пътека във вашата организация.",
+      "progress": "Напредък",
+      "completed": "Завършено",
+      "available": "Достъпно",
+      "inProgress": "В процес",
+      "locked": "Заключено",
+      "openScenario": "Отвори сценария",
+      "reviewScenario": "Прегледай сценария"
+    },
+    "ScenarioSimulator": {
+      "common": {
+        "scenario": "Сценарий",
+        "challenge": "Предизвикателство",
+        "of": "от",
+        "back": "Назад",
+        "continue": "Продължи",
+        "loading": "Запазване…",
+        "progress": "Напредък",
+        "completed": "Завършено"
+      },
+      "intro": {
+        "introduction": "Въведение",
+        "context": "Контекст на сценария",
+        "organisation": "Организация",
+        "yourRole": "Вашата роля",
+        "yourObjectives": "Вашите цели",
+        "estimatedDuration": "Очаквана продължителност",
+        "minutes": "минути",
+        "challenges": "предизвикателства",
+        "scenarioInformation": "Информация за сценария",
+        "startScenario": "Стартирай сценария",
+        "backToScenarios": "Назад към сценариите",
+        "starting": "Стартиране…"
+      },
+      "board": {
+        "title": "Преглед на предизвикателствата",
+        "description": "Завършете трите предизвикателства последователно.",
+        "currentObjective": "Текуща цел",
+        "allCompleted": "Всички предизвикателства са завършени",
+        "openChallenge": "Отвори предизвикателството",
+        "mapPoint": "Точка на предизвикателството",
+        "available": "Достъпно",
+        "inProgress": "В процес",
+        "locked": "Заключено"
+      },
+      "challenge": {
+        "context": "Контекст на предизвикателството",
+        "decision": "Решение",
+        "attempt": "Опит",
+        "previouslyTried": "Опитвано по-рано",
+        "backToBoard": "Назад към предизвикателствата",
+        "continueToDecision": "Продължи към решението",
+        "selectOneOption": "Изберете една опция",
+        "confirmDecision": "Потвърди решението"
+      },
+      "feedback": {
+        "correctDecision": "Правилно решение",
+        "incorrectDecision": "Опитайте друг подход",
+        "yourDecision": "Вашето решение",
+        "whyItFallsShort": "Защо този подход не е достатъчен",
+        "expectedImpact": "Очаквано въздействие",
+        "likelyConsequence": "Вероятна последица",
+        "keyTakeaway": "Основен извод",
+        "tryAgain": "Опитайте отново"
+      },
+      "summary": {
+        "title": "Обобщение на сценария",
+        "allChallengesCompleted": "Всички предизвикателства са завършени",
+        "completedChallenges": "Завършени предизвикателства",
+        "keyTakeaways": "Основни изводи",
+        "completeScenario": "Завърши сценария"
+      },
+      "completion": {
+        "title": "Сценарият е завършен",
+        "description": "Сценарият беше завършен успешно.",
+        "leaveScenario": "Назад към сценариите"
+      },
+      "errors": {
+        "unexpected": "Възникна неочаквана грешка."
+      }
+    }
+  }
+}
