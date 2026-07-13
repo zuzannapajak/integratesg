@@ -26,6 +26,8 @@ export type ScenarioHotspotProps = {
   readonly challenge: ResolvedChallenge;
   readonly status: ChallengeProgressStatus;
   readonly isCurrentObjective?: boolean;
+  readonly tabIndex?: number;
+  readonly keyboardIndex?: number;
   readonly labels?: Partial<ScenarioHotspotLabels>;
 
   readonly onPreviewChange?: (isPreviewed: boolean) => void;
@@ -113,6 +115,8 @@ export function ScenarioHotspot({
   challenge,
   status,
   isCurrentObjective = false,
+  tabIndex,
+  keyboardIndex,
   labels: customLabels,
   onPreviewChange,
   onSelect,
@@ -159,6 +163,8 @@ export function ScenarioHotspot({
           type="button"
           data-testid={`scenario-board-hotspot-${challenge.id}`}
           disabled={!isOpenable}
+          tabIndex={isOpenable ? tabIndex : undefined}
+          data-scenario-hotspot-index={keyboardIndex}
           aria-current={isCurrentObjective && isOpenable ? "step" : undefined}
           aria-label={`${labels.mapPoint}: ${challenge.shortTitle}. ${statusLabel}.`}
           className={[

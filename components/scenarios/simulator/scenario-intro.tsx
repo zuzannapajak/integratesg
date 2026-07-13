@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 
 import { ScenarioScreenTransition } from "@/components/scenarios/common/scenario-screen-transition";
@@ -129,12 +129,33 @@ function ScenarioIntroContent({
 }: ScenarioIntroProps) {
   const [step, setStep] = useState<IntroStep>(1);
 
+  const contentRef = useRef<HTMLElement>(null);
+
+  const hasRenderedStepRef = useRef(false);
+
   const labels = {
     ...DEFAULT_SCENARIO_INTRO_LABELS,
     ...customLabels,
   };
 
   const challengeCount = scenario.challenges.length;
+
+  useEffect(() => {
+    if (!hasRenderedStepRef.current) {
+      hasRenderedStepRef.current = true;
+      return;
+    }
+
+    const frame = window.requestAnimationFrame(() => {
+      contentRef.current
+        ?.querySelector<HTMLButtonElement>("[data-scenario-intro-primary-action]")
+        ?.focus();
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+    };
+  }, [step]);
 
   return (
     <div
@@ -144,7 +165,10 @@ function ScenarioIntroContent({
       className="absolute inset-0 bg-linear-to-t from-[#17243a]/86 via-[#17243a]/28 to-[#17243a]/4"
     >
       <div className="flex h-full min-h-0 items-center justify-center p-3 sm:p-4 lg:p-5">
-        <article className="max-h-full w-full max-w-4xl overflow-y-auto rounded-3xl border border-white/35 bg-white/96 p-5 shadow-[0_24px_70px_rgba(23,36,58,0.3)] backdrop-blur-md sm:p-6 lg:p-7">
+        <article
+          ref={contentRef}
+          className="max-h-full w-full max-w-4xl overflow-y-auto rounded-3xl border border-white/35 bg-white/96 p-5 shadow-[0_24px_70px_rgba(23,36,58,0.3)] backdrop-blur-md sm:p-6 lg:p-7"
+        >
           <AnimatePresence initial={false} mode="wait">
             <ScenarioScreenTransition
               key={step}
@@ -261,6 +285,7 @@ function ScenarioIntroContent({
 
                     <button
                       type="button"
+                      data-scenario-context-action
                       className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[#0d6fe8] px-6 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,111,232,0.22)] transition hover:-translate-y-0.5 hover:bg-[#095fc8] sm:w-auto"
                       onClick={() => {
                         setStep(2);
@@ -359,6 +384,7 @@ function ScenarioIntroContent({
 
                     <button
                       type="button"
+                      data-scenario-intro-primary-action
                       disabled={isStarting}
                       className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[#0d6fe8] px-6 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,111,232,0.22)] transition hover:-translate-y-0.5 hover:bg-[#095fc8] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:w-auto"
                       onClick={() => void onStart()}

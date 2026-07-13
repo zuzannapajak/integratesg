@@ -25,7 +25,7 @@ import type {
 import { AnimatePresence } from "framer-motion";
 import { Leaf } from "lucide-react";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 
 export type ScenarioStartedEvent = {
   readonly scenarioId: ScenarioId;
@@ -211,6 +211,21 @@ function getErrorMessage(error: unknown, fallback: string): string {
   return fallback;
 }
 
+const FOCUSABLE_SELECTOR = [
+  "a[href]",
+  "button:not(:disabled)",
+  "input:not(:disabled)",
+  "select:not(:disabled)",
+  "textarea:not(:disabled)",
+  '[tabindex]:not([tabindex="-1"])',
+].join(",");
+
+function getFocusableElements(container: HTMLElement): HTMLElement[] {
+  return Array.from(container.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)).filter(
+    (element) => element.getAttribute("aria-hidden") !== "true",
+  );
+}
+
 export function ScenarioPlayer({
   scenario,
   mode = "play",
@@ -290,6 +305,10 @@ export function ScenarioPlayer({
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  const playerRef = useRef<HTMLElement>(null);
+
+  const dialogRef = useRef<HTMLDivElement>(null);
+
   const currentChallenge =
     orderedChallenges.find((challenge) => challenge.id === currentChallengeId) ?? null;
 
@@ -314,6 +333,39 @@ export function ScenarioPlayer({
 
   const activeScreenKey =
     view === "challenge" || view === "feedback" ? `${view}:${currentChallengeId ?? "none"}` : view;
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      if (view === "board") {
+        const useDesktopControls = window.matchMedia("(min-width: 768px)").matches;
+
+        const currentControl = playerRef.current?.querySelector<HTMLElement>(
+          useDesktopControls
+            ? 'button[data-scenario-hotspot-index][tabindex="0"]:not(:disabled)'
+            : "button[data-scenario-mobile-card]:not(:disabled)",
+        );
+
+        const board = playerRef.current?.querySelector<HTMLElement>(
+          '[data-testid="scenario-board"]',
+        );
+
+        (currentControl ?? board)?.focus();
+        return;
+      }
+
+      const preferredControl =
+        dialogRef.current?.querySelector<HTMLInputElement>(
+          'input[type="radio"]:checked:not(:disabled)',
+        ) ??
+        dialogRef.current?.querySelector<HTMLInputElement>('input[type="radio"]:not(:disabled)');
+
+      (preferredControl ?? dialogRef.current)?.focus();
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+    };
+  }, [activeScreenKey, view]);
 
   function getChallengeStatus(
     challenge: ResolvedChallenge,
@@ -565,6 +617,84 @@ export function ScenarioPlayer({
     }
   }
 
+  function handleDialogKeyDown(event: KeyboardEvent<HTMLDivElement>) {
+    if (event.key === "Escape" && !isSubmitting) {
+      if (view === "challenge") {
+        event.preventDefault();
+        returnToBoard();
+        return;
+      }
+
+      if (view === "feedback" && selectedChoice && !selectedChoice.isOptimal) {
+        event.preventDefault();
+        tryAgain();
+        return;
+      }
+
+      if ((view === "intro" || view === "completion") && onExit) {
+        event.preventDefault();
+        onExit();
+        return;
+      }
+    }
+
+    if (event.key !== "Tab" || !dialogRef.current) {
+      return;
+    }
+
+    const focusableElements = getFocusableElements(dialogRef.current);
+
+    if (focusableElements.length === 0) {
+      event.preventDefault();
+      dialogRef.current.focus();
+      return;
+    }
+
+    const firstElement = focusableElements.at(0);
+    const lastElement = focusableElements.at(-1);
+
+    if (!firstElement || !lastElement) {
+      return;
+    }
+
+    const activeElement = document.activeElement;
+
+    if (event.shiftKey && (activeElement === firstElement || activeElement === dialogRef.current)) {
+      event.preventDefault();
+      lastElement.focus();
+      return;
+    }
+
+    if (!event.shiftKey && activeElement === lastElement) {
+      event.preventDefault();
+      firstElement.focus();
+    }
+  }
+
+  function getDialogLabel(): string {
+    switch (view) {
+      case "intro":
+        return scenario.title;
+
+      case "challenge":
+        return currentChallenge
+          ? `${currentChallenge.title}. ${labels.challengeContext}`
+          : scenario.title;
+
+      case "feedback":
+        return selectedChoice?.isOptimal ? labels.correctDecision : labels.incorrectDecision;
+
+      case "summary":
+        return labels.summary;
+
+      case "completion":
+        return labels.scenarioCompleted;
+
+      case "board":
+        return labels.viewChallenges;
+    }
+  }
+
   function renderFeedback() {
     if (!currentChallenge || !selectedChoice) {
       return null;
@@ -644,6 +774,7 @@ export function ScenarioPlayer({
 
   return (
     <section
+      ref={playerRef}
       data-testid="scenario-player"
       data-scenario-player
       data-scenario-id={scenario.id}
@@ -728,7 +859,16 @@ export function ScenarioPlayer({
                 onSelectChallenge={openChallenge}
               />
             ) : (
-              <>
+              <div
+                ref={dialogRef}
+                role="dialog"
+                aria-modal="true"
+                aria-label={getDialogLabel()}
+                tabIndex={-1}
+                data-scenario-dialog
+                className="absolute inset-0 outline-none"
+                onKeyDown={handleDialogKeyDown}
+              >
                 <Image
                   src={backgroundImage}
                   alt=""
@@ -851,7 +991,7 @@ export function ScenarioPlayer({
                 ) : null}
 
                 {view === "completion" ? renderCompletion() : null}
-              </>
+              </div>
             )}
           </ScenarioScreenTransition>
         </AnimatePresence>

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, type KeyboardEvent } from "react";
 
 import { ScenarioHotspot } from "@/components/scenarios/simulator/scenario-hotspot";
 import type { ChallengeProgressStatus, ResolvedChallenge } from "@/lib/scenarios/simulator/types";
@@ -159,6 +159,81 @@ export function ScenarioBoard({
     onSelectChallenge(challenge, challengeIndex);
   }
 
+  function handleHotspotKeyDown(event: KeyboardEvent<HTMLElement>) {
+    if (!(event.target instanceof HTMLButtonElement)) {
+      return;
+    }
+
+    const currentIndexValue = event.target.dataset.scenarioHotspotIndex;
+
+    if (currentIndexValue === undefined) {
+      return;
+    }
+
+    const navigationKeys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"];
+
+    if (!navigationKeys.includes(event.key)) {
+      return;
+    }
+
+    const controls = Array.from(
+      event.currentTarget.querySelectorAll<HTMLButtonElement>(
+        "button[data-scenario-hotspot-index]:not(:disabled)",
+      ),
+    ).sort(
+      (first, second) =>
+        Number(first.dataset.scenarioHotspotIndex) - Number(second.dataset.scenarioHotspotIndex),
+    );
+
+    if (controls.length === 0) {
+      return;
+    }
+
+    const currentPosition = controls.indexOf(event.target);
+
+    if (currentPosition < 0) {
+      return;
+    }
+
+    let nextPosition = currentPosition;
+
+    switch (event.key) {
+      case "ArrowRight":
+      case "ArrowDown":
+        nextPosition = (currentPosition + 1) % controls.length;
+        break;
+
+      case "ArrowLeft":
+      case "ArrowUp":
+        nextPosition = (currentPosition - 1 + controls.length) % controls.length;
+        break;
+
+      case "Home":
+        nextPosition = 0;
+        break;
+
+      case "End":
+        nextPosition = controls.length - 1;
+        break;
+    }
+
+    const nextControl = controls.at(nextPosition);
+
+    if (!nextControl) {
+      return;
+    }
+
+    event.preventDefault();
+
+    controls.forEach((control) => {
+      control.tabIndex = control === nextControl ? 0 : -1;
+    });
+
+    setPreviewedChallengeIndex(Number(nextControl.dataset.scenarioHotspotIndex));
+
+    nextControl.focus();
+  }
+
   function renderChallengeCard(item: ScenarioBoardItem, challengeIndex: number, mobile = false) {
     const { challenge, status } = item;
 
@@ -175,7 +250,9 @@ export function ScenarioBoard({
         data-testid={`scenario-board-card-${challenge.id}`}
         data-challenge-status={status}
         data-completed={status === "completed"}
+        data-scenario-mobile-card={mobile ? challengeIndex : undefined}
         disabled={!isOpenable}
+        tabIndex={mobile && isOpenable ? 0 : -1}
         aria-current={isCurrentObjective ? "step" : undefined}
         className={[
           "flex w-full items-start gap-3 rounded-[1.15rem] border px-4 py-3 text-left backdrop-blur-md transition",
@@ -236,7 +313,9 @@ export function ScenarioBoard({
       data-testid="scenario-board"
       data-background-image={backgroundImage}
       aria-label={labels.title}
+      tabIndex={-1}
       className="h-full min-h-0 bg-[#eef2f6]"
+      onKeyDown={handleHotspotKeyDown}
     >
       <div className="relative h-full min-h-0 overflow-hidden">
         <Image
@@ -318,6 +397,12 @@ export function ScenarioBoard({
             key={challenge.id}
             challenge={challenge}
             status={status}
+            keyboardIndex={challengeIndex}
+            tabIndex={
+              effectiveCurrentObjectiveIndex === challengeIndex && isChallengeOpenable(status)
+                ? 0
+                : -1
+            }
             isCurrentObjective={
               effectiveCurrentObjectiveIndex === challengeIndex && status !== "completed"
             }

@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowLeft, ArrowRight, BookOpen, ListChecks } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import ReactMarkdown from "react-markdown";
 
 import { ScenarioScreenTransition } from "@/components/scenarios/common/scenario-screen-transition";
@@ -157,12 +157,113 @@ function ScenarioChallengeContent({
 }: ScenarioChallengeProps) {
   const [step, setStep] = useState<ScenarioChallengeStep>(initialStep);
 
+  const contentRef = useRef<HTMLElement>(null);
+
+  const hasRenderedStepRef = useRef(false);
+
   const labels = {
     ...DEFAULT_SCENARIO_CHALLENGE_LABELS,
     ...customLabels,
   };
 
   const selectedChoice = challenge.choices.find((choice) => choice.id === selectedChoiceId) ?? null;
+
+  useEffect(() => {
+    const shouldMoveFocus = hasRenderedStepRef.current || step === "decision";
+
+    hasRenderedStepRef.current = true;
+
+    if (!shouldMoveFocus) {
+      return;
+    }
+
+    const frame = window.requestAnimationFrame(() => {
+      if (step === "decision") {
+        const selectedInput = contentRef.current?.querySelector<HTMLInputElement>(
+          'input[type="radio"]:checked:not(:disabled)',
+        );
+
+        const firstInput = contentRef.current?.querySelector<HTMLInputElement>(
+          'input[type="radio"]:not(:disabled)',
+        );
+
+        (selectedInput ?? firstInput)?.focus();
+        return;
+      }
+
+      contentRef.current
+        ?.querySelector<HTMLButtonElement>("[data-scenario-context-action]")
+        ?.focus();
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+    };
+  }, [step]);
+
+  function handleDecisionKeyDown(event: KeyboardEvent<HTMLFieldSetElement>) {
+    if (!(event.target instanceof HTMLInputElement) || event.target.type !== "radio") {
+      return;
+    }
+
+    if (event.key === "Enter") {
+      if (selectedChoice && !isSubmitting) {
+        event.preventDefault();
+        void onConfirm();
+      }
+
+      return;
+    }
+
+    const navigationKeys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"];
+
+    if (!navigationKeys.includes(event.key)) {
+      return;
+    }
+
+    const inputs = Array.from(
+      event.currentTarget.querySelectorAll<HTMLInputElement>('input[type="radio"]:not(:disabled)'),
+    );
+
+    const currentIndex = inputs.indexOf(event.target);
+
+    if (currentIndex < 0 || inputs.length === 0) {
+      return;
+    }
+
+    let nextIndex = currentIndex;
+
+    switch (event.key) {
+      case "ArrowRight":
+      case "ArrowDown":
+        nextIndex = (currentIndex + 1) % inputs.length;
+        break;
+
+      case "ArrowLeft":
+      case "ArrowUp":
+        nextIndex = (currentIndex - 1 + inputs.length) % inputs.length;
+        break;
+
+      case "Home":
+        nextIndex = 0;
+        break;
+
+      case "End":
+        nextIndex = inputs.length - 1;
+        break;
+    }
+
+    const nextInput = inputs.at(nextIndex);
+
+    if (!nextInput) {
+      return;
+    }
+
+    event.preventDefault();
+
+    onSelectChoice(nextInput.value as ChoiceId);
+    nextInput.focus();
+  }
 
   return (
     <div
@@ -173,7 +274,10 @@ function ScenarioChallengeContent({
       className="absolute inset-0 bg-linear-to-t from-[#17243a]/78 via-[#17243a]/25 to-[#17243a]/4"
     >
       <div className="flex h-full min-h-0 items-center justify-end p-3 sm:p-4 lg:p-5">
-        <article className="max-h-full w-full overflow-y-auto rounded-3xl border border-white/40 bg-white/97 p-5 shadow-[0_24px_70px_rgba(23,36,58,0.3)] backdrop-blur-md sm:max-w-3xl sm:p-6 lg:p-7">
+        <article
+          ref={contentRef}
+          className="max-h-full w-full overflow-y-auto rounded-3xl border border-white/40 bg-white/97 p-5 shadow-[0_24px_70px_rgba(23,36,58,0.3)] backdrop-blur-md sm:max-w-3xl sm:p-6 lg:p-7"
+        >
           <ChallengeProgress step={step} labels={labels} />
 
           <header className="mt-5 flex items-start justify-between gap-4">
@@ -244,6 +348,7 @@ function ScenarioChallengeContent({
                   <footer className="mt-6 flex justify-end">
                     <button
                       type="button"
+                      data-scenario-context-action
                       className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[#0d6fe8] px-6 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(13,111,232,0.22)] transition hover:-translate-y-0.5 hover:bg-[#095fc8] sm:w-auto"
                       onClick={() => {
                         setStep("decision");
@@ -280,9 +385,12 @@ function ScenarioChallengeContent({
                       </div>
                     </div>
 
-                    <fieldset className="mt-5 space-y-3" disabled={isSubmitting}>
+                    <fieldset
+                      className="mt-5 space-y-3"
+                      disabled={isSubmitting}
+                      onKeyDown={handleDecisionKeyDown}
+                    >
                       <legend className="sr-only">{challenge.question}</legend>
-
                       {challenge.choices.map((choice) => (
                         <ScenarioDecisionChoice
                           key={choice.id}
