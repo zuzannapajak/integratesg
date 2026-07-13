@@ -1,4 +1,5 @@
 import { scenario02Data } from "@/content/scenarios/scenario-02";
+import { applyEnglishFallback } from "@/lib/i18n/english-fallback";
 import type { ResolvedScenario } from "@/lib/scenarios/simulator/types";
 
 type ResolvedChallenge = ResolvedScenario["challenges"][number];
@@ -20,7 +21,11 @@ function resolveScenario02(locale: string): ResolvedScenario {
   const { definition, locales } = scenario02Data;
 
   const localeKey = locale as keyof typeof locales;
-  const content = locales[localeKey] ?? locales.en;
+  const localizedContent = locales[localeKey];
+
+  const content = localizedContent
+    ? applyEnglishFallback(locales.en, localizedContent)
+    : locales.en;
 
   const technicalChallenges = Object.values(definition.challenges) as TechnicalChallenge[];
 
