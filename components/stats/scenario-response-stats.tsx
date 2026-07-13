@@ -173,7 +173,7 @@ export default function ScenarioResponseStats({ rows, query = "" }: Props) {
                       <div className="rounded-xl border border-slate-200 bg-slate-50 px-3 py-2">
                         <div className="flex items-center gap-1.5 text-slate-500">
                           <Target className="h-3.5 w-3.5" />
-                          <span className="text-[10px] font-semibold uppercase tracking-[0.1em]">
+                          <span className="text-[10px] font-semibold uppercase tracking-widest">
                             {t("metrics.runs")}
                           </span>
                         </div>
@@ -185,7 +185,7 @@ export default function ScenarioResponseStats({ rows, query = "" }: Props) {
                       <div className="rounded-xl border border-sky-200 bg-sky-50 px-3 py-2">
                         <div className="flex items-center gap-1.5 text-sky-600">
                           <MousePointerClick className="h-3.5 w-3.5" />
-                          <span className="text-[10px] font-semibold uppercase tracking-[0.1em]">
+                          <span className="text-[10px] font-semibold uppercase tracking-widest">
                             {t("metrics.decisions")}
                           </span>
                         </div>
@@ -197,7 +197,7 @@ export default function ScenarioResponseStats({ rows, query = "" }: Props) {
                       <div className="rounded-xl border border-orange-200 bg-orange-50 px-3 py-2">
                         <div className="flex items-center gap-1.5 text-orange-600">
                           <RotateCcw className="h-3.5 w-3.5" />
-                          <span className="text-[10px] font-semibold uppercase tracking-[0.1em]">
+                          <span className="text-[10px] font-semibold uppercase tracking-widest">
                             {t("metrics.retryRate")}
                           </span>
                         </div>
@@ -209,7 +209,7 @@ export default function ScenarioResponseStats({ rows, query = "" }: Props) {
                       <div className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2">
                         <div className="flex items-center gap-1.5 text-amber-600">
                           <RotateCcw className="h-3.5 w-3.5" />
-                          <span className="text-[10px] font-semibold uppercase tracking-[0.1em]">
+                          <span className="text-[10px] font-semibold uppercase tracking-widest">
                             {t("metrics.averageRetries")}
                           </span>
                         </div>
@@ -234,7 +234,7 @@ export default function ScenarioResponseStats({ rows, query = "" }: Props) {
                               </p>
 
                               {choice.isOptimal ? (
-                                <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-emerald-700">
+                                <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-emerald-700">
                                   <CheckCircle2 className="h-3 w-3" />
                                   {t("optimal")}
                                 </span>

@@ -215,7 +215,9 @@
       "scenarioAttempts": {
         "title": "Tentativi scenario degli utenti",
         "subtitle": "Attività recente degli studenti nel simulatore di scenari, inclusi stato, punteggio e tempi.",
-        "records": "{count} record"
+        "records": "{count} record",
+        "exportCsv": "Esporta CSV",
+        "exportExcel": "Esporta Excel"
       },
       "curriculumAttempts": {
         "title": "Tentativi curriculum degli utenti",

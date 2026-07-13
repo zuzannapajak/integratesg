@@ -215,7 +215,9 @@
       "scenarioAttempts": {
         "title": "Szenario-Versuche der Nutzer",
         "subtitle": "Aktuelle Lernaktivität im Szenario-Simulator, einschließlich Status, Bewertung und Zeitpunkt.",
-        "records": "{count} Datensätze"
+        "records": "{count} Datensätze",
+        "exportCsv": "CSV exportieren",
+        "exportExcel": "Excel exportieren"
       },
       "curriculumAttempts": {
         "title": "Curriculum-Versuche der Nutzer",

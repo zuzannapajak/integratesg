@@ -215,7 +215,9 @@
       "scenarioAttempts": {
         "title": "Потребителски опити по сценарии",
         "subtitle": "Последна активност на обучаемите в симулатора на сценарии, включително статус, резултат и време.",
-        "records": "{count} записа"
+        "records": "{count} записа",
+        "exportCsv": "Експорт CSV",
+        "exportExcel": "Експорт Excel"
       },
       "curriculumAttempts": {
         "title": "Потребителски опити по curriculum",

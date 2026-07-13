@@ -215,7 +215,9 @@
       "scenarioAttempts": {
         "title": "User scenario attempts",
         "subtitle": "Latest learner activity across the scenario simulator, including status, score, and timing.",
-        "records": "{count} records"
+        "records": "{count} records",
+        "exportCsv": "Export CSV",
+        "exportExcel": "Export Excel"
       },
       "curriculumAttempts": {
         "title": "User curriculum attempts",

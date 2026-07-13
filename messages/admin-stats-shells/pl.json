@@ -215,7 +215,9 @@
       "scenarioAttempts": {
         "title": "Próby scenariuszy użytkowników",
         "subtitle": "Najnowsza aktywność uczestników w symulatorze scenariuszy, wraz ze statusem, wynikiem i czasem.",
-        "records": "{count} rekordów"
+        "records": "{count} rekordów",
+        "exportCsv": "Eksport CSV",
+        "exportExcel": "Eksport Excel"
       },
       "curriculumAttempts": {
         "title": "Próby curriculum użytkowników",

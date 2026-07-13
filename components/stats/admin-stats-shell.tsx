@@ -21,6 +21,7 @@ import {
   CheckCircle2,
   ChevronDown,
   ClipboardCheck,
+  Download,
   Filter,
   FolderOpen,
   Globe2,
@@ -1491,8 +1492,26 @@ export default function AdminStatsShell({ locale, stats, pilotStats, feedbackSta
                 title={t("scenarioAttempts.title")}
                 subtitle={t("scenarioAttempts.subtitle")}
                 right={
-                  <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm">
-                    {t("scenarioAttempts.records", { count: stats.scenarioAttemptRows.length })}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm">
+                      {t("scenarioAttempts.records", { count: stats.scenarioAttemptRows.length })}
+                    </div>
+
+                    <a
+                      href={`/${locale}/admin/scenarios/export?format=csv`}
+                      className="inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 shadow-sm transition hover:border-emerald-200 hover:bg-emerald-100"
+                    >
+                      <Download className="h-3.5 w-3.5" />
+                      {t("scenarioAttempts.exportCsv")}
+                    </a>
+
+                    <a
+                      href={`/${locale}/admin/scenarios/export?format=xls`}
+                      className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs font-semibold text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+                    >
+                      <Download className="h-3.5 w-3.5" />
+                      {t("scenarioAttempts.exportExcel")}
+                    </a>
                   </div>
                 }
               />

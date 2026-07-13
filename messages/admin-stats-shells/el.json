@@ -215,7 +215,9 @@
       "scenarioAttempts": {
         "title": "Προσπάθειες σεναρίων χρηστών",
         "subtitle": "Πρόσφατη δραστηριότητα εκπαιδευόμενων στον προσομοιωτή σεναρίων, συμπεριλαμβανομένων κατάστασης, βαθμολογίας και χρόνου.",
-        "records": "{count} εγγραφές"
+        "records": "{count} εγγραφές",
+        "exportCsv": "Εξαγωγή CSV",
+        "exportExcel": "Εξαγωγή Excel"
       },
       "curriculumAttempts": {
         "title": "Προσπάθειες curriculum χρηστών",
