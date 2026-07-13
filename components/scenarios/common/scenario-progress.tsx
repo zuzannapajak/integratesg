@@ -44,7 +44,7 @@ export function ScenarioProgress({
 
   const isComplete = safeTotalCount > 0 && safeCompletedCount === safeTotalCount;
 
-  const progressColour = isComplete ? "#0b9c72" : "#0d6fe8";
+  const progressColour = isComplete ? "#087658" : "#0d6fe8";
 
   return (
     <div
@@ -63,19 +63,19 @@ export function ScenarioProgress({
         aria-valuenow={safeCompletedCount}
         aria-valuetext={`${safeCompletedCount} / ${safeTotalCount} ${labels.completed}`}
         className={[
-          "relative h-12 w-12 shrink-0 rounded-full",
+          "relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full",
           "transition-transform duration-300 ease-out",
           isComplete ? "scale-105" : "scale-100",
         ].join(" ")}
         style={{
-          background: `conic-gradient(${progressColour} ${completionPercentage}%, #dfe5ec ${completionPercentage}% 100%)`,
+          background: `conic-gradient(${progressColour} ${completionPercentage}%, #8b949e ${completionPercentage}% 100%)`,
         }}
       >
         <span aria-hidden="true" className="absolute inset-1 rounded-full bg-white" />
       </div>
 
       <div className="hidden sm:block">
-        <p className="text-xs font-semibold uppercase tracking-widest text-[#7a8594]">
+        <p className="text-xs font-semibold uppercase tracking-widest text-[#596170]">
           {labels.progress}
         </p>
 
