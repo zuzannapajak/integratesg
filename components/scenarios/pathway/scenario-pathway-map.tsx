@@ -21,6 +21,13 @@ export type {
   ScenarioPathwayStatus,
 } from "@/components/scenarios/pathway/scenario-pathway-types";
 
+const SCENARIO_PATHWAY_IMAGE_SIZES = [
+  "(max-width: 639px) calc(100vw - 24px)",
+  "(max-width: 1023px) calc(100vw - 40px)",
+  "(min-width: 1648px) 1600px",
+  "calc(100vw - 48px)",
+].join(", ");
+
 export const DEFAULT_SCENARIO_PATHWAY_MAP_LABELS: ScenarioPathwayMapLabels = {
   title: "Scenarios",
   subtitle: "Explore the full learning pathway across your organisation.",
@@ -49,8 +56,8 @@ export function ScenarioPathwayMap({
   backgroundAlt,
   items,
   labels: customLabels,
-  backgroundWidth = 1536,
-  backgroundHeight = 768,
+  backgroundWidth = 1672,
+  backgroundHeight = 941,
   onOpenScenario,
 }: ScenarioPathwayMapProps) {
   const labels = {
@@ -128,7 +135,7 @@ export function ScenarioPathwayMap({
           alt=""
           fill
           priority
-          sizes="100vw"
+          sizes={SCENARIO_PATHWAY_IMAGE_SIZES}
           className="object-contain object-center"
         />
 
@@ -160,7 +167,7 @@ export function ScenarioPathwayMap({
             alt=""
             fill
             priority
-            sizes="100vw"
+            sizes={SCENARIO_PATHWAY_IMAGE_SIZES}
             className="object-contain object-center"
           />
 
