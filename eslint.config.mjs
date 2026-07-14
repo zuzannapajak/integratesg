@@ -15,6 +15,10 @@ export default defineConfig([
       "node_modules/**",
       "next-env.d.ts",
       "prisma/migrations/**",
+      "playwright-report/**",
+      "test-results/**",
+      "coverage/**",
+      "dist/**",
     ],
   },
 
