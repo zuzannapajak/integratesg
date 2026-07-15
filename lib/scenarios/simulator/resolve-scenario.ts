@@ -1,6 +1,27 @@
-import { scenario02Data } from "@/content/scenarios/scenario-02";
+import {
+  scenario01Data,
+  scenario02Data,
+  scenario03Data,
+  scenario04Data,
+  scenario05Data,
+  scenario06Data,
+} from "@/content/scenarios";
 import { applyEnglishFallback } from "@/lib/i18n/english-fallback";
-import type { ResolvedScenario } from "@/lib/scenarios/simulator/types";
+import type { ScenarioData } from "@/lib/scenarios/simulator/format";
+import type {
+  ResolvedScenario,
+  ScenarioId,
+  ScenarioLocaleContent,
+} from "@/lib/scenarios/simulator/types";
+
+const scenarioDataById = {
+  "scenario-01": scenario01Data,
+  "scenario-02": scenario02Data,
+  "scenario-03": scenario03Data,
+  "scenario-04": scenario04Data,
+  "scenario-05": scenario05Data,
+  "scenario-06": scenario06Data,
+} as const;
 
 type ResolvedChallenge = ResolvedScenario["challenges"][number];
 type ResolvedChoice = ResolvedChallenge["choices"][number];
@@ -17,13 +38,16 @@ type LocalizedChallenge = Omit<ResolvedChallenge, "id" | "order" | "hotspot" | "
   readonly choices: Readonly<Partial<Record<string, LocalizedChoice>>>;
 };
 
-function resolveScenario02(locale: string): ResolvedScenario {
-  const { definition, locales } = scenario02Data;
+function isScenarioId(value: string): value is ScenarioId {
+  return Object.hasOwn(scenarioDataById, value);
+}
 
-  const localeKey = locale as keyof typeof locales;
-  const localizedContent = locales[localeKey];
+function resolveScenarioData(data: ScenarioData, locale: string): ResolvedScenario {
+  const { definition, locales } = data;
 
-  const content = localizedContent
+  const localizedContent = locales[locale as keyof typeof locales];
+
+  const content: ScenarioLocaleContent = localizedContent
     ? applyEnglishFallback(locales.en, localizedContent)
     : locales.en;
 
@@ -90,11 +114,9 @@ function resolveScenario02(locale: string): ResolvedScenario {
 }
 
 export function resolveScenarioBySlug(slug: string, locale: string): ResolvedScenario | null {
-  switch (slug) {
-    case "scenario-02":
-      return resolveScenario02(locale);
-
-    default:
-      return null;
+  if (!isScenarioId(slug)) {
+    return null;
   }
+
+  return resolveScenarioData(scenarioDataById[slug] as ScenarioData, locale);
 }
