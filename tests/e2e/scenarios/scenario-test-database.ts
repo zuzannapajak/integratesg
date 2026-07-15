@@ -4,6 +4,13 @@ import { PrismaClient } from "@prisma/client";
 const SCENARIO_ID = "scenario-02";
 const SCENARIO_VERSION = 1;
 
+const REQUIRED_COMPLETED_SCENARIOS = [
+  {
+    scenarioId: "scenario-01",
+    scenarioVersion: 1,
+  },
+] as const;
+
 let prisma: PrismaClient | null = null;
 
 function requireEnvironmentVariable(name: string): string {
@@ -82,13 +89,47 @@ export async function resetScenarioTestProgress(): Promise<string> {
     );
   }
 
-  await database.userScenarioAttempt.deleteMany({
-    where: {
-      userId: profile.id,
-      scenarioId: SCENARIO_ID,
-      scenarioVersion: SCENARIO_VERSION,
-    },
-  });
+  const now = new Date();
+
+  await database.$transaction([
+    database.userScenarioAttempt.deleteMany({
+      where: {
+        userId: profile.id,
+        scenarioId: SCENARIO_ID,
+        scenarioVersion: SCENARIO_VERSION,
+      },
+    }),
+
+    ...REQUIRED_COMPLETED_SCENARIOS.map(({ scenarioId, scenarioVersion }) =>
+      database.userScenarioAttempt.upsert({
+        where: {
+          userId_scenarioId_scenarioVersion_attemptNumber: {
+            userId: profile.id,
+            scenarioId,
+            scenarioVersion,
+            attemptNumber: 1,
+          },
+        },
+        update: {
+          locale: "en",
+          status: "completed",
+          lastOpenedAt: now,
+          completedAt: now,
+        },
+        create: {
+          userId: profile.id,
+          scenarioId,
+          scenarioVersion,
+          locale: "en",
+          attemptNumber: 1,
+          status: "completed",
+          startedAt: now,
+          lastOpenedAt: now,
+          completedAt: now,
+        },
+      }),
+    ),
+  ]);
 
   return profile.id;
 }

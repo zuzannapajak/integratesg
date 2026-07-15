@@ -12,6 +12,8 @@ const mocks = vi.hoisted(() => ({
   completeScenarioChallengeProgress: vi.fn(),
 
   completeScenarioProgress: vi.fn(),
+
+  assertScenarioCanStartForUser: vi.fn(),
 }));
 
 vi.mock("@/lib/auth/require-authenticated-user-id", () => ({
@@ -28,6 +30,10 @@ vi.mock("@/lib/scenarios/simulator/server/scenario-progress", () => ({
   completeScenarioChallengeProgress: mocks.completeScenarioChallengeProgress,
 
   completeScenarioProgress: mocks.completeScenarioProgress,
+}));
+
+vi.mock("@/lib/scenarios/simulator/server/scenario-pathway", () => ({
+  assertScenarioCanStartForUser: mocks.assertScenarioCanStartForUser,
 }));
 
 import {
@@ -47,6 +53,8 @@ const identity = {
 
 beforeEach(() => {
   mocks.requireAuthenticatedUserId.mockResolvedValue(authenticatedUserId);
+
+  mocks.assertScenarioCanStartForUser.mockResolvedValue(undefined);
 
   mocks.startScenarioProgress.mockResolvedValue({
     attemptId: "attempt-id",
@@ -73,6 +81,7 @@ describe("scenario action security boundary", () => {
 
     await expect(startScenarioAction(identity)).rejects.toThrow("Unauthorized");
 
+    expect(mocks.assertScenarioCanStartForUser).not.toHaveBeenCalled();
     expect(mocks.startScenarioProgress).not.toHaveBeenCalled();
   });
 
@@ -124,6 +133,14 @@ describe("scenario action security boundary", () => {
     });
   });
 
+  it("does not start a scenario rejected by the server-side pathway guard", async () => {
+    mocks.assertScenarioCanStartForUser.mockRejectedValueOnce(new Error("Scenario is locked."));
+
+    await expect(startScenarioAction(identity)).rejects.toThrow("Scenario is locked.");
+
+    expect(mocks.startScenarioProgress).not.toHaveBeenCalled();
+  });
+
   it("derives the session user for every write operation", async () => {
     await startScenarioAction(identity);
 
@@ -134,6 +151,11 @@ describe("scenario action security boundary", () => {
     });
 
     await completeScenarioAction(identity);
+
+    expect(mocks.assertScenarioCanStartForUser).toHaveBeenCalledWith(
+      authenticatedUserId,
+      identity.scenarioId,
+    );
 
     expect(mocks.startScenarioProgress).toHaveBeenCalledWith({
       userId: authenticatedUserId,

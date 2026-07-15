@@ -4,7 +4,7 @@ export type ScenarioPathwayStatus = "completed" | "available" | "in_progress" | 
 
 export type ScenarioPathwayLabelSide = "top" | "right" | "bottom" | "left";
 
-export type ScenarioPathwayItem = {
+export type ScenarioPathwayDefinition = {
   readonly id: ScenarioId;
   readonly slug: ScenarioSlug;
   readonly order: number;
@@ -16,7 +16,9 @@ export type ScenarioPathwayItem = {
     readonly y: number;
     readonly labelSide?: ScenarioPathwayLabelSide;
   };
+};
 
+export type ScenarioPathwayItem = ScenarioPathwayDefinition & {
   readonly status: ScenarioPathwayStatus;
   readonly isRecommended?: boolean;
 };

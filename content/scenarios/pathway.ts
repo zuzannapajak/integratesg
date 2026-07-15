@@ -1,11 +1,17 @@
-import type { ScenarioPathwayItem } from "@/components/scenarios/pathway/scenario-pathway-types";
+import type { ScenarioPathwayDefinition } from "@/components/scenarios/pathway/scenario-pathway-types";
 import type { ScenarioPathwayAssets } from "@/lib/scenarios/simulator/types";
 
 export const scenarioPathwayAssets = {
   backgroundImage: "/scenarios/pathway/pathway.png",
 } satisfies ScenarioPathwayAssets;
 
-export const scenarioPathwayItems = [
+/**
+ * Static pathway metadata only.
+ *
+ * User-specific statuses are resolved on the server from UserScenarioAttempt
+ * records and must not be stored in this content file.
+ */
+export const scenarioPathwayDefinitions = [
   {
     id: "scenario-01",
     slug: "scenario-01",
@@ -18,8 +24,6 @@ export const scenarioPathwayItems = [
       y: 54,
       labelSide: "bottom",
     },
-
-    status: "completed",
   },
 
   {
@@ -34,8 +38,6 @@ export const scenarioPathwayItems = [
       y: 40,
       labelSide: "bottom",
     },
-
-    status: "completed",
   },
 
   {
@@ -50,9 +52,6 @@ export const scenarioPathwayItems = [
       y: 74,
       labelSide: "bottom",
     },
-
-    status: "in_progress",
-    isRecommended: true,
   },
 
   {
@@ -67,8 +66,6 @@ export const scenarioPathwayItems = [
       y: 35,
       labelSide: "bottom",
     },
-
-    status: "locked",
   },
 
   {
@@ -83,8 +80,6 @@ export const scenarioPathwayItems = [
       y: 58,
       labelSide: "bottom",
     },
-
-    status: "locked",
   },
 
   {
@@ -99,7 +94,11 @@ export const scenarioPathwayItems = [
       y: 74,
       labelSide: "bottom",
     },
-
-    status: "locked",
   },
-] satisfies readonly ScenarioPathwayItem[];
+] satisfies readonly ScenarioPathwayDefinition[];
+
+/**
+ * Backward-compatible metadata alias used by dashboard and admin reporting.
+ * It intentionally contains no user progress status.
+ */
+export const scenarioPathwayItems = scenarioPathwayDefinitions;

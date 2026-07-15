@@ -1,6 +1,7 @@
 "use server";
 
 import { requireAuthenticatedUserId } from "@/lib/auth/require-authenticated-user-id";
+import { assertScenarioCanStartForUser } from "@/lib/scenarios/simulator/server/scenario-pathway";
 import {
   completeScenarioChallengeProgress,
   completeScenarioProgress,
@@ -49,6 +50,8 @@ export async function getScenarioRuntimeStateAction(input: GetScenarioRuntimeSta
 
 export async function startScenarioAction(input: ScenarioActionIdentity) {
   const userId = await requireAuthenticatedUserId();
+
+  await assertScenarioCanStartForUser(userId, input.scenarioId);
 
   return startScenarioProgress({
     userId,

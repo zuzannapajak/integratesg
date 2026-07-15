@@ -4,15 +4,16 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 import { ScenarioPathwayMap } from "@/components/scenarios/pathway/scenario-pathway-map";
+import type { ScenarioPathwayItem } from "@/components/scenarios/pathway/scenario-pathway-types";
 import { scenarioPathwayAssets } from "@/content/scenarios";
-import { scenarioPathwayItems } from "@/content/scenarios/pathway";
 
 export type ScenarioMapClientProps = {
   readonly locale: string;
+  readonly items: readonly ScenarioPathwayItem[];
   readonly preview?: boolean;
 };
 
-export function ScenarioMapClient({ locale, preview = false }: ScenarioMapClientProps) {
+export function ScenarioMapClient({ locale, items, preview = false }: ScenarioMapClientProps) {
   const router = useRouter();
   const t = useTranslations("Protected.ScenarioPathway");
 
@@ -20,7 +21,7 @@ export function ScenarioMapClient({ locale, preview = false }: ScenarioMapClient
     <ScenarioPathwayMap
       backgroundImage={scenarioPathwayAssets.backgroundImage}
       backgroundAlt={t("backgroundAlt")}
-      items={scenarioPathwayItems}
+      items={items}
       labels={{
         title: t("title"),
         subtitle: t("subtitle"),
