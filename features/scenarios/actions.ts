@@ -1,44 +1,99 @@
 "use server";
 
-import { completeScenarioAttempt, getScenarioLaunch } from "@/lib/scenarios/queries";
-import { createClient } from "@/lib/supabase/server";
+import { requireAuthenticatedUserId } from "@/lib/auth/require-authenticated-user-id";
+import { assertScenarioCanStartForUser } from "@/lib/scenarios/simulator/server/scenario-pathway";
+import {
+  completeScenarioChallengeProgress,
+  completeScenarioProgress,
+  getScenarioRuntimeState,
+  recordScenarioChoiceProgress,
+  startScenarioProgress,
+} from "@/lib/scenarios/simulator/server/scenario-progress";
+import type {
+  ChallengeId,
+  ChoiceId,
+  ScenarioId,
+  ScenarioPlayerMode,
+} from "@/lib/scenarios/simulator/types";
 
-type MarkScenarioCompletedInput = {
-  locale: string;
-  scenarioSlug: string;
+type ScenarioActionIdentity = {
+  readonly scenarioId: ScenarioId;
+  readonly scenarioVersion: number;
+  readonly locale: string;
 };
 
-async function getAuthedUserId() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+type GetScenarioRuntimeStateActionInput = ScenarioActionIdentity & {
+  readonly mode: ScenarioPlayerMode;
+};
 
-  if (!user) {
-    throw new Error("Unauthorized");
-  }
+type RecordScenarioChoiceActionInput = ScenarioActionIdentity & {
+  readonly challengeId: ChallengeId;
+  readonly choiceId: ChoiceId;
+  readonly attemptNumber: number;
+};
 
-  return user.id;
+type CompleteScenarioChallengeActionInput = ScenarioActionIdentity & {
+  readonly challengeId: ChallengeId;
+};
+
+export async function getScenarioRuntimeStateAction(input: GetScenarioRuntimeStateActionInput) {
+  const userId = await requireAuthenticatedUserId();
+
+  return getScenarioRuntimeState({
+    userId,
+    scenarioId: input.scenarioId,
+    scenarioVersion: input.scenarioVersion,
+    locale: input.locale,
+    mode: input.mode,
+  });
 }
 
-export async function markScenarioCompletedAction(input: MarkScenarioCompletedInput) {
-  const userId = await getAuthedUserId();
+export async function startScenarioAction(input: ScenarioActionIdentity) {
+  const userId = await requireAuthenticatedUserId();
 
-  await completeScenarioAttempt({
-    locale: input.locale,
+  await assertScenarioCanStartForUser(userId, input.scenarioId);
+
+  return startScenarioProgress({
     userId,
-    slug: input.scenarioSlug,
-  });
-
-  const scenario = await getScenarioLaunch({
+    scenarioId: input.scenarioId,
+    scenarioVersion: input.scenarioVersion,
     locale: input.locale,
-    userId,
-    slug: input.scenarioSlug,
   });
+}
 
-  if (!scenario) {
-    throw new Error("Scenario not found.");
-  }
+export async function recordScenarioChoiceAction(input: RecordScenarioChoiceActionInput) {
+  const userId = await requireAuthenticatedUserId();
 
-  return { scenario };
+  return recordScenarioChoiceProgress({
+    userId,
+    scenarioId: input.scenarioId,
+    scenarioVersion: input.scenarioVersion,
+    locale: input.locale,
+    challengeId: input.challengeId,
+    choiceId: input.choiceId,
+    attemptNumber: input.attemptNumber,
+  });
+}
+
+export async function completeScenarioChallengeAction(input: CompleteScenarioChallengeActionInput) {
+  const userId = await requireAuthenticatedUserId();
+
+  return completeScenarioChallengeProgress({
+    userId,
+    scenarioId: input.scenarioId,
+    scenarioVersion: input.scenarioVersion,
+    locale: input.locale,
+    challengeId: input.challengeId,
+  });
+}
+
+export async function completeScenarioAction(input: ScenarioActionIdentity) {
+  const userId = await requireAuthenticatedUserId();
+
+  return completeScenarioProgress({
+    userId,
+    scenarioId: input.scenarioId,
+    scenarioVersion: input.scenarioVersion,
+    locale: input.locale,
+  });
 }

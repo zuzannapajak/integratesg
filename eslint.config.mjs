@@ -15,23 +15,28 @@ export default defineConfig([
       "node_modules/**",
       "next-env.d.ts",
       "prisma/migrations/**",
+      "playwright-report/**",
+      "test-results/**",
+      "coverage/**",
+      "dist/**",
     ],
   },
 
   ...nextVitals,
   ...nextTs,
 
-  ...tseslint.configs.recommendedTypeChecked,
-  ...tseslint.configs.strictTypeChecked,
-
   {
-    files: ["**/*.{ts,tsx}"],
+    files: ["**/*.{ts,tsx,mts,cts}"],
+
+    extends: [tseslint.configs.strictTypeChecked],
+
     languageOptions: {
       parserOptions: {
         projectService: true,
         tsconfigRootDir: import.meta.dirname,
       },
     },
+
     rules: {
       "@typescript-eslint/await-thenable": "error",
       "@typescript-eslint/no-confusing-void-expression": "error",
@@ -63,6 +68,7 @@ export default defineConfig([
         },
       ],
       "@typescript-eslint/require-await": "warn",
+
       "no-console": ["warn", { allow: ["warn", "error"] }],
       "@next/next/no-img-element": "warn",
     },

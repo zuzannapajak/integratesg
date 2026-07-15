@@ -161,6 +161,29 @@
           "variants": "Warianty"
         }
       },
+      "scenarioResponses": {
+        "title": "Statystyki odpowiedzi w scenariuszach",
+        "subtitle": "Analizuj udział poszczególnych decyzji i ponowne próby dla każdego wyzwania w symulatorze.",
+        "records": "{count} wyzwań",
+        "summary": {
+          "challengeRuns": "Uruchomienia wyzwań",
+          "decisions": "Decyzje",
+          "retryRate": "Próby z ponowieniem",
+          "averageRetries": "Śr. ponowień / uruchomienie"
+        },
+        "metrics": {
+          "runs": "Uruchomienia",
+          "decisions": "Decyzje",
+          "retryRate": "Odsetek ponowień",
+          "averageRetries": "Śr. ponowień"
+        },
+        "optimal": "Wybór optymalny",
+        "selections": "Liczba wyborów: {count}",
+        "empty": {
+          "title": "Brak statystyk odpowiedzi",
+          "subtitle": "Statystyki decyzji i ponownych prób pojawią się, gdy uczestnicy zaczną odpowiadać na wyzwania."
+        }
+      },
       "coursePerformance": {
         "title": "Efektywność curriculum",
         "subtitle": "Wyszukuj, porównuj i sortuj moduły curriculum według zaangażowania i efektów nauki.",
@@ -192,7 +215,9 @@
       "scenarioAttempts": {
         "title": "Próby scenariuszy użytkowników",
         "subtitle": "Najnowsza aktywność uczestników w symulatorze scenariuszy, wraz ze statusem, wynikiem i czasem.",
-        "records": "{count} rekordów"
+        "records": "{count} rekordów",
+        "exportCsv": "Eksport CSV",
+        "exportExcel": "Eksport Excel"
       },
       "curriculumAttempts": {
         "title": "Próby curriculum użytkowników",

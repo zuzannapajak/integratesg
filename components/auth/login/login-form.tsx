@@ -19,22 +19,30 @@ export default function LoginForm() {
 
   const handleLogin = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     setMessage(null);
     setIsSubmitting(true);
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    if (error) {
-      setMessage(error.message);
+      if (error) {
+        setMessage(error.message);
+        return;
+      }
+
+      router.push(`/${locale}/dashboard`);
+      router.refresh();
+    } catch (error) {
+      console.error("[auth/login] Sign in failed", error);
+
+      setMessage(error instanceof Error ? error.message : "Sign in failed. Please try again.");
+    } finally {
       setIsSubmitting(false);
-      return;
     }
-
-    router.push(`/${locale}/dashboard`);
-    router.refresh();
   };
 
   return (
@@ -92,11 +100,15 @@ export default function LoginForm() {
         </div>
       </div>
 
-      {message && (
-        <div className="rounded-2xl border border-[#ef6c23]/20 bg-[#ef6c23]/8 px-4 py-3 text-[0.92rem] leading-6 text-[#8a4a25]">
+      {message ? (
+        <div
+          role="alert"
+          aria-live="assertive"
+          className="rounded-2xl border border-[#ef6c23]/20 bg-[#ef6c23]/8 px-4 py-3 text-[0.92rem] leading-6 text-[#8a4a25]"
+        >
           {message}
         </div>
-      )}
+      ) : null}
 
       <button
         type="submit"

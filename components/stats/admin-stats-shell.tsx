@@ -1,6 +1,7 @@
 "use client";
 
 import StatsChart from "@/components/dashboard/stats-chart";
+import ScenarioResponseStats from "@/components/stats/scenario-response-stats";
 import UserCurriculumAttemptsTable from "@/components/stats/user-curriculum-attempts-table";
 import UserEportfolioProgressTable from "@/components/stats/user-eportfolio-progress-table";
 import UserScenarioAttemptsTable from "@/components/stats/user-scenario-attempts-table";
@@ -20,6 +21,7 @@ import {
   CheckCircle2,
   ChevronDown,
   ClipboardCheck,
+  Download,
   Filter,
   FolderOpen,
   Globe2,
@@ -1471,11 +1473,45 @@ export default function AdminStatsShell({ locale, stats, pilotStats, feedbackSta
 
             <Surface className="mt-8 p-4 sm:p-6">
               <SectionHeader
+                title={t("scenarioResponses.title")}
+                subtitle={t("scenarioResponses.subtitle")}
+                right={
+                  <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm">
+                    {t("scenarioResponses.records", {
+                      count: stats.scenarioResponseBreakdown.length,
+                    })}
+                  </div>
+                }
+              />
+
+              <ScenarioResponseStats rows={stats.scenarioResponseBreakdown} query={query} />
+            </Surface>
+
+            <Surface className="mt-8 p-4 sm:p-6">
+              <SectionHeader
                 title={t("scenarioAttempts.title")}
                 subtitle={t("scenarioAttempts.subtitle")}
                 right={
-                  <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm">
-                    {t("scenarioAttempts.records", { count: stats.scenarioAttemptRows.length })}
+                  <div className="flex flex-wrap items-center gap-2">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs font-semibold text-slate-500 shadow-sm">
+                      {t("scenarioAttempts.records", { count: stats.scenarioAttemptRows.length })}
+                    </div>
+
+                    <a
+                      href={`/${locale}/admin/scenarios/export?format=csv`}
+                      className="inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-700 shadow-sm transition hover:border-emerald-200 hover:bg-emerald-100"
+                    >
+                      <Download className="h-3.5 w-3.5" />
+                      {t("scenarioAttempts.exportCsv")}
+                    </a>
+
+                    <a
+                      href={`/${locale}/admin/scenarios/export?format=xls`}
+                      className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/85 px-3 py-1.5 text-xs font-semibold text-slate-600 shadow-sm transition hover:border-slate-300 hover:bg-slate-50"
+                    >
+                      <Download className="h-3.5 w-3.5" />
+                      {t("scenarioAttempts.exportExcel")}
+                    </a>
                   </div>
                 }
               />
@@ -1753,12 +1789,16 @@ export default function AdminStatsShell({ locale, stats, pilotStats, feedbackSta
                     <thead>
                       <tr className="text-xs font-bold uppercase tracking-[0.12em] text-[#8a97a6]">
                         <th className="px-4 py-2">{pilotT("questionAnalysis.columns.question")}</th>
-                        <th className="px-4 py-2">{pilotT("questionAnalysis.columns.preAverage")}</th>
+                        <th className="px-4 py-2">
+                          {pilotT("questionAnalysis.columns.preAverage")}
+                        </th>
                         <th className="px-4 py-2">
                           {pilotT("questionAnalysis.columns.postAverage")}
                         </th>
                         <th className="px-4 py-2">{pilotT("questionAnalysis.columns.delta")}</th>
-                        <th className="px-4 py-2">{pilotT("questionAnalysis.columns.preAnswers")}</th>
+                        <th className="px-4 py-2">
+                          {pilotT("questionAnalysis.columns.preAnswers")}
+                        </th>
                         <th className="px-4 py-2">
                           {pilotT("questionAnalysis.columns.postAnswers")}
                         </th>
@@ -1768,9 +1808,7 @@ export default function AdminStatsShell({ locale, stats, pilotStats, feedbackSta
                     <tbody>
                       {pilotStats.questionStats.map((question) => (
                         <tr key={question.questionId} className="bg-[#f8fafc] text-[#31425a]">
-                          <td className="rounded-l-2xl px-4 py-3 font-medium">
-                            {question.prompt}
-                          </td>
+                          <td className="rounded-l-2xl px-4 py-3 font-medium">{question.prompt}</td>
                           <td className="px-4 py-3">{formatDecimal(question.preAverage)}</td>
                           <td className="px-4 py-3">{formatDecimal(question.postAverage)}</td>
                           <td className="px-4 py-3">{formatDecimal(question.delta)}</td>

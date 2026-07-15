@@ -1,0 +1,240 @@
+"use client";
+
+import { ArrowRight, Check, CheckCircle2, Lightbulb, TrendingUp } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+
+import type { ResolvedChallenge, ResolvedChoice } from "@/lib/scenarios/simulator/types";
+
+export type ScenarioCorrectFeedbackLabels = {
+  readonly challenge: string;
+  readonly correctDecision: string;
+  readonly yourDecision: string;
+  readonly expectedImpact: string;
+  readonly keyTakeaway: string;
+  readonly continue: string;
+  readonly loading: string;
+};
+
+export const DEFAULT_SCENARIO_CORRECT_FEEDBACK_LABELS: ScenarioCorrectFeedbackLabels = {
+  challenge: "Challenge",
+  correctDecision: "Correct decision",
+  yourDecision: "Your decision",
+  expectedImpact: "Expected impact",
+  keyTakeaway: "Key takeaway",
+  continue: "Continue",
+  loading: "Saving…",
+};
+
+export type ScenarioCorrectFeedbackProps = {
+  readonly challenge: ResolvedChallenge;
+  readonly choice: ResolvedChoice;
+
+  readonly labels?: Partial<ScenarioCorrectFeedbackLabels>;
+
+  readonly isSubmitting?: boolean;
+  readonly errorMessage?: string | null;
+
+  readonly onContinue: () => void | Promise<void>;
+};
+
+function MarkdownContent({ children }: { readonly children: string }) {
+  return (
+    <div className="space-y-3 text-[0.96rem] leading-7 text-[#596170]">
+      <ReactMarkdown
+        components={{
+          p: ({ children: paragraphChildren }) => <p>{paragraphChildren}</p>,
+
+          ul: ({ children: listChildren }) => (
+            <ul className="list-disc space-y-2 pl-5">{listChildren}</ul>
+          ),
+
+          ol: ({ children: listChildren }) => (
+            <ol className="list-decimal space-y-2 pl-5">{listChildren}</ol>
+          ),
+
+          strong: ({ children: strongChildren }) => (
+            <strong className="font-semibold text-[#31425a]">{strongChildren}</strong>
+          ),
+        }}
+      >
+        {children}
+      </ReactMarkdown>
+    </div>
+  );
+}
+
+export function ScenarioCorrectFeedback({
+  challenge,
+  choice,
+  labels: customLabels,
+  isSubmitting = false,
+  errorMessage = null,
+  onContinue,
+}: ScenarioCorrectFeedbackProps) {
+  const labels = {
+    ...DEFAULT_SCENARIO_CORRECT_FEEDBACK_LABELS,
+    ...customLabels,
+  };
+
+  const feedback = choice.feedback;
+
+  return (
+    <div
+      data-testid="scenario-correct-feedback"
+      data-feedback-kind="correct"
+      data-challenge-id={challenge.id}
+      data-choice-id={choice.id}
+      aria-busy={isSubmitting}
+      className="absolute inset-0 bg-linear-to-t from-[#17243a]/82 via-[#17243a]/28 to-[#17243a]/4"
+    >
+      <div className="flex h-full min-h-0 items-center justify-center p-3 sm:p-4 lg:p-5">
+        <article
+          role="status"
+          aria-live="polite"
+          className="max-h-full w-full overflow-y-auto rounded-3xl border border-white/40 bg-white/97 p-4 shadow-[0_24px_70px_rgba(23,36,58,0.32)] backdrop-blur-md sm:max-w-4xl sm:p-5 lg:max-w-5xl lg:p-6 2xl:max-w-6xl"
+        >
+          <div className="flex items-start gap-4">
+            <span
+              aria-hidden="true"
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#0b9c72] text-white shadow-[0_10px_28px_rgba(11,156,114,0.26)]"
+            >
+              <CheckCircle2 size={27} strokeWidth={2.4} />
+            </span>
+
+            <div className="min-w-0">
+              <p className="text-xs font-semibold uppercase tracking-[0.13em] text-[#087658]">
+                {labels.correctDecision}
+              </p>
+
+              <p className="mt-1 text-xs font-medium text-[#7a8594]">
+                {labels.challenge} {challenge.order}
+              </p>
+
+              <h2 className="mt-2 text-xl font-semibold tracking-[-0.03em] text-[#31425a] sm:text-2xl lg:text-3xl">
+                {feedback.title ?? labels.correctDecision}
+              </h2>
+            </div>
+          </div>
+
+          <section
+            aria-labelledby="correct-feedback-decision-heading"
+            className="mt-6 rounded-2xl border border-[#0b9c72]/25 bg-[#ecf8f4] p-4 sm:p-5"
+          >
+            <div className="flex items-start gap-3">
+              <span
+                aria-hidden="true"
+                className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0b9c72] text-white"
+              >
+                <Check size={17} strokeWidth={3} />
+              </span>
+
+              <div className="min-w-0">
+                <h3
+                  id="correct-feedback-decision-heading"
+                  className="text-xs font-semibold uppercase tracking-[0.11em] text-[#087658]"
+                >
+                  {labels.yourDecision}
+                </h3>
+
+                {choice.label ? (
+                  <p className="mt-2 text-sm font-semibold leading-6 text-[#31425a]">
+                    {choice.label}
+                  </p>
+                ) : null}
+
+                <p
+                  className={[
+                    "text-sm leading-6 text-[#596170]",
+                    choice.label ? "mt-1" : "mt-2",
+                  ].join(" ")}
+                >
+                  {choice.text}
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section aria-label={labels.correctDecision} className="mt-6">
+            <MarkdownContent>{feedback.body}</MarkdownContent>
+          </section>
+
+          {feedback.consequence ? (
+            <section
+              aria-labelledby="correct-feedback-impact-heading"
+              className="mt-5 rounded-2xl border border-[#dbe7f5] bg-[#f4f8fd] p-4 sm:p-5"
+            >
+              <div className="flex items-center gap-3">
+                <span
+                  aria-hidden="true"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#e7f0ff] text-[#0d6fe8]"
+                >
+                  <TrendingUp size={18} />
+                </span>
+
+                <h3
+                  id="correct-feedback-impact-heading"
+                  className="text-sm font-semibold text-[#31425a]"
+                >
+                  {labels.expectedImpact}
+                </h3>
+              </div>
+
+              <div className="mt-3">
+                <MarkdownContent>{feedback.consequence}</MarkdownContent>
+              </div>
+            </section>
+          ) : null}
+
+          {feedback.takeaway ? (
+            <section
+              aria-labelledby="correct-feedback-takeaway-heading"
+              className="mt-4 rounded-2xl border border-[#f0dfb5] bg-[#fffaf0] p-4 sm:p-5"
+            >
+              <div className="flex items-center gap-3">
+                <span
+                  aria-hidden="true"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#fff1c9] text-[#a76500]"
+                >
+                  <Lightbulb size={18} />
+                </span>
+
+                <h3
+                  id="correct-feedback-takeaway-heading"
+                  className="text-sm font-semibold text-[#31425a]"
+                >
+                  {labels.keyTakeaway}
+                </h3>
+              </div>
+
+              <div className="mt-3">
+                <MarkdownContent>{feedback.takeaway}</MarkdownContent>
+              </div>
+            </section>
+          ) : null}
+
+          {errorMessage ? (
+            <div
+              role="alert"
+              className="mt-5 rounded-2xl border border-[#f1c9c9] bg-[#fff6f6] px-4 py-3 text-sm leading-6 text-[#9f3c3c]"
+            >
+              {errorMessage}
+            </div>
+          ) : null}
+
+          <footer className="mt-6 flex justify-end">
+            <button
+              type="button"
+              disabled={isSubmitting}
+              className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-[#0b9c72] px-6 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(11,156,114,0.24)] transition hover:-translate-y-0.5 hover:bg-[#087658] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:w-auto"
+              onClick={() => void onContinue()}
+            >
+              {isSubmitting ? labels.loading : labels.continue}
+
+              {!isSubmitting ? <ArrowRight aria-hidden="true" size={17} /> : null}
+            </button>
+          </footer>
+        </article>
+      </div>
+    </div>
+  );
+}

@@ -1,3 +1,4 @@
+import { applyEnglishFallback } from "@/lib/i18n/english-fallback";
 import { isAppLocale } from "@/lib/i18n/locales";
 import { getRequestConfig } from "next-intl/server";
 import { routing } from "./routing";
@@ -42,32 +43,60 @@ function deepMerge(base: Messages, override: Messages): Messages {
   return result;
 }
 
-async function loadRootMessages(locale: string): Promise<Messages> {
+async function importRootMessages(locale: string): Promise<Messages | null> {
   try {
     const messagesModule = (await import(`../messages/${locale}.json`)) as {
       default: Messages;
     };
+
     return messagesModule.default;
   } catch {
-    const fallback = (await import(`../messages/en.json`)) as {
-      default: Messages;
-    };
-    return fallback.default;
+    return null;
   }
 }
 
-async function loadScopedMessages(scope: string, locale: string): Promise<Messages> {
+async function importScopedMessages(scope: string, locale: string): Promise<Messages | null> {
   try {
     const messagesModule = (await import(`../messages/${scope}/${locale}.json`)) as {
       default: Messages;
     };
+
     return messagesModule.default;
   } catch {
-    const fallback = (await import(`../messages/${scope}/en.json`)) as {
-      default: Messages;
-    };
-    return fallback.default;
+    return null;
   }
+}
+
+async function loadRootMessages(locale: string): Promise<Messages> {
+  const englishMessages = await importRootMessages("en");
+
+  if (!englishMessages) {
+    throw new Error("Missing required English root translation file: messages/en.json.");
+  }
+
+  if (locale === "en") {
+    return englishMessages;
+  }
+
+  const localizedMessages = await importRootMessages(locale);
+
+  return applyEnglishFallback(englishMessages, localizedMessages);
+}
+
+async function loadScopedMessages(scope: string, locale: string): Promise<Messages> {
+  const englishMessages = await importScopedMessages(scope, "en");
+
+  if (!englishMessages) {
+    throw new Error(`Missing required English translation file: messages/${scope}/en.json.`);
+  }
+
+  if (locale === "en") {
+    return englishMessages;
+  }
+
+  const localizedMessages = await importScopedMessages(scope, locale);
+
+  return applyEnglishFallback(englishMessages, localizedMessages);
 }
 
 export default getRequestConfig(async ({ requestLocale }) => {

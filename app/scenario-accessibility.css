@@ -1,0 +1,73 @@
+/*
+ * Contrast and readability corrections shared by the scenario pathway
+ * and the scenario simulator. The selectors are intentionally scoped to
+ * scenario roots so that the palette of the remaining platform is unchanged.
+ */
+:is([data-testid="scenario-player"], [data-testid="scenario-pathway-map"]) {
+  --scenario-readable-muted: #596170;
+  --scenario-readable-blue: #095fc8;
+  --scenario-readable-green: #087658;
+  --scenario-readable-locked: #596170;
+  --scenario-readable-control-border: #6f7b89;
+  --scenario-readable-orange: #b94c18;
+  --scenario-readable-amber: #8a5400;
+}
+
+:is([data-testid="scenario-player"], [data-testid="scenario-pathway-map"])
+  :where([class~="text-[#7a8594]"], [class~="text-[#6f7b89]"]) {
+  color: var(--scenario-readable-muted) !important;
+}
+
+:is([data-testid="scenario-player"], [data-testid="scenario-pathway-map"])
+  :where([class~="text-[#0d6fe8]"]) {
+  color: var(--scenario-readable-blue) !important;
+}
+
+:is([data-testid="scenario-player"], [data-testid="scenario-pathway-map"])
+  :where([class~="text-[#0b9c72]"]) {
+  color: var(--scenario-readable-green) !important;
+}
+
+:is([data-testid="scenario-player"], [data-testid="scenario-pathway-map"])
+  :where([class~="bg-[#0b9c72]"]) {
+  background-color: var(--scenario-readable-green) !important;
+}
+
+:is([data-testid="scenario-player"], [data-testid="scenario-pathway-map"])
+  :where([class~="bg-[#7e8792]"]) {
+  background-color: var(--scenario-readable-locked) !important;
+}
+
+:is([data-testid="scenario-player"], [data-testid="scenario-pathway-map"])
+  :where([class~="border-[#b8c2ce]"]) {
+  border-color: var(--scenario-readable-control-border) !important;
+}
+
+:is([data-testid="scenario-player"], [data-testid="scenario-pathway-map"])
+  :where([class~="text-[#d85c1b]"], [class~="text-[#ef6c23]"]) {
+  color: var(--scenario-readable-orange) !important;
+}
+
+:is([data-testid="scenario-player"], [data-testid="scenario-pathway-map"])
+  :where([class~="text-[#a76500]"]) {
+  color: var(--scenario-readable-amber) !important;
+}
+
+:is([data-testid="scenario-player"], [data-testid="scenario-pathway-map"])
+  :where([class~="text-[0.68rem]"]) {
+  font-size: 0.75rem !important;
+  line-height: 1rem !important;
+}
+
+:is([data-testid="scenario-player"], [data-testid="scenario-pathway-map"])
+  :where([class~="hover:bg-[#087658]"]):hover {
+  background-color: #065f46 !important;
+}
+
+@media (forced-colors: active) {
+  :is([data-testid="scenario-player"], [data-testid="scenario-pathway-map"])
+    :where(button, a, input, select, textarea, [tabindex]):focus-visible {
+    outline: 2px solid CanvasText;
+    outline-offset: 3px;
+  }
+}

@@ -1,126 +1,108 @@
 {
   "Protected": {
-    "ScenarioDetailShell": {
-      "back": "Back to scenarios",
-      "area": {
-        "environmental": "Environmental",
-        "social": "Social",
-        "governance": "Governance",
-        "crossCutting": "Cross-cutting"
+    "ScenarioPathway": {
+      "backgroundAlt": "An illustrated ESG learning pathway connecting six organisational scenarios.",
+      "title": "Scenarios",
+      "subtitle": "Explore the full learning pathway across your organisation.",
+      "progress": "Progress",
+      "completed": "Completed",
+      "available": "Available",
+      "inProgress": "In progress",
+      "locked": "Locked",
+      "openScenario": "Open scenario",
+      "reviewScenario": "Review scenario"
+    },
+    "ScenarioSimulator": {
+      "common": {
+        "scenario": "Scenario",
+        "challenge": "Challenge",
+        "of": "of",
+        "back": "Back",
+        "continue": "Continue",
+        "loading": "Saving…",
+        "progress": "Progress",
+        "completed": "Completed"
       },
-      "status": {
-        "completed": "Completed",
+      "intro": {
+        "introduction": "Introduction",
+        "context": "Scenario context",
+        "organisation": "Organisation",
+        "yourRole": "Your role",
+        "yourObjectives": "Your objectives",
+        "estimatedDuration": "Estimated duration",
+        "minutes": "minutes",
+        "challenges": "challenges",
+        "scenarioInformation": "Scenario information",
+        "startScenario": "Start scenario",
+        "backToScenarios": "Back to scenarios",
+        "starting": "Starting…"
+      },
+      "board": {
+        "title": "View challenges",
+        "description": "Complete the three challenges in order.",
+        "currentObjective": "Current objective",
+        "allCompleted": "All challenges completed",
+        "openChallenge": "Open challenge",
+        "mapPoint": "Challenge point",
+        "available": "Available",
         "inProgress": "In progress",
-        "readyToStart": "Ready to start"
+        "locked": "Locked"
       },
-      "featured": "Featured",
-      "eyebrow": "Scenario launcher",
-      "heroIntro": {
-        "completed": "You have already completed this scenario. Start a new run whenever you want to practice the flow again and compare your decisions.",
-        "resumeFromPause": "Your last session can be resumed from the point where you paused.",
-        "resumeNextDecision": "You have already started this scenario. Continue with the next decision point.",
-        "default": "Explore the context, understand the challenge, and launch the experience when you are ready."
+      "challenge": {
+        "context": "Challenge context",
+        "decision": "Decision",
+        "attempt": "Attempt",
+        "previouslyTried": "Previously tried",
+        "backToBoard": "Back to challenges",
+        "continueToDecision": "Continue to decision",
+        "selectOneOption": "Select one option",
+        "confirmDecision": "Confirm decision"
       },
-      "metrics": {
-        "duration": "Duration",
-        "focus": "Focus",
-        "latestScore": "Latest score",
-        "lastOpened": "Last opened",
-        "decisionMaking": "Decision-making",
-        "notYet": "Not yet"
+      "feedback": {
+        "correctDecision": "Correct decision",
+        "incorrectDecision": "Try another approach",
+        "yourDecision": "Your decision",
+        "whyItFallsShort": "Why this approach falls short",
+        "expectedImpact": "Expected impact",
+        "likelyConsequence": "Likely consequence",
+        "keyTakeaway": "Key takeaway",
+        "tryAgain": "Try again"
       },
-      "progress": {
-        "completed": "Completed",
-        "finishedWithScore": "Finished with a score of {score}%",
-        "completedNoScore": "Scenario completed successfully",
-        "resumeFrom": "Resume from {location}",
-        "continueLatest": "Continue from your latest checkpoint",
-        "ready": "Ready for a first attempt"
+      "summary": {
+        "title": "Scenario summary",
+        "allChallengesCompleted": "All challenges completed",
+        "completedChallenges": "Challenges completed",
+        "keyTakeaways": "Key takeaways",
+        "completeScenario": "Complete scenario"
       },
-      "nextAction": {
-        "title": "Next action",
-        "completedDescription": "Launch a fresh attempt to go through the scenario again and compare how a new run unfolds.",
-        "inProgressDescription": "Continue from your latest checkpoint and keep building momentum.",
-        "defaultDescription": "Launch the scenario to begin the guided experience.",
-        "restart": "Restart scenario",
-        "resume": "Resume scenario",
-        "launch": "Launch scenario",
-        "exploreJourney": "Explore journey"
+      "completion": {
+        "title": "Scenario completed",
+        "description": "Your progress has been completed successfully.",
+        "leaveScenario": "Back to scenarios"
       },
-      "tabs": {
-        "overview": "Overview",
-        "practice": "What you will practice",
-        "prepare": "Before you start",
-        "related": "Related"
+      "loading": {
+        "title": "Loading scenario",
+        "description": "Loading the scenario content and your saved progress."
       },
-      "overview": {
-        "title": "Scenario overview",
-        "highlightsTitle": "Experience highlights",
-        "highlights": [
-          "A guided flow that unfolds step by step.",
-          "Feedback after key choices to keep the learning loop active.",
-          "A clear structure designed for focused practice rather than passive reading."
-        ]
+      "saving": {
+        "default": "Saving progress…",
+        "start": "Starting the scenario and saving progress…",
+        "choice": "Saving your decision…",
+        "challenge": "Saving challenge completion…",
+        "scenario": "Saving scenario completion…"
       },
-      "practice": {
-        "cardTitle": "Applied practice",
-        "points": {
-          "environmental": [
-            "Balance sustainability goals with operational trade-offs.",
-            "Interpret signals related to efficiency, risk, and impact.",
-            "Choose actions that improve long-term environmental outcomes."
-          ],
-          "social": [
-            "Respond to stakeholder tension with empathy and clarity.",
-            "Assess people-focused consequences across competing priorities.",
-            "Practice inclusive decision-making under real-world pressure."
-          ],
-          "governance": [
-            "Evaluate accountability pathways and escalation choices.",
-            "Strengthen judgment around transparency and policy alignment.",
-            "Understand how governance design shapes implementation quality."
-          ],
-          "crossCutting": [
-            "Connect ESG dimensions through one coherent decision flow.",
-            "Recognise interdependencies between people, process, and impact.",
-            "Apply structured thinking in complex practical situations."
-          ]
+      "errors": {
+        "unexpected": "An unexpected error occurred.",
+        "contentTitle": "The scenario could not be loaded",
+        "contentDescription": "There was a problem loading the scenario content or your saved progress. Check your connection and try again.",
+        "retry": "Try again",
+        "backToScenarios": "Back to scenarios",
+        "progress": {
+          "start": "The scenario could not be started or your progress could not be saved. Try again.",
+          "choice": "Your decision could not be saved. No progress was lost. Try again.",
+          "challenge": "Challenge completion could not be saved. Try again before continuing.",
+          "scenario": "Scenario completion could not be saved. Try again."
         }
-      },
-      "prepare": {
-        "title": "Before you launch",
-        "quickTipTitle": "Quick tip",
-        "quickTipText": "This page is a calm staging point before the interactive experience. Review the context, then launch when you are ready for a focused run.",
-        "checklist": {
-          "time": "Set aside around {duration} for a focused run.",
-          "flow": "Expect staged choices, immediate feedback, and practical trade-offs.",
-          "revisit": "Revisit the scenario later to compare how different decisions may shape the outcome."
-        }
-      },
-      "relatedPanel": {
-        "openLauncher": "Open launcher",
-        "emptyTitle": "No related scenarios yet",
-        "emptyDescription": "Additional recommendations will appear here as the scenario library grows."
-      }
-    },
-    "ScenarioLaunchShell": {
-      "area": {
-        "environmental": "Environmental",
-        "social": "Social",
-        "governance": "Governance",
-        "crossCutting": "Cross-cutting"
-      }
-    },
-    "ScenarioSwitcher": {
-      "tabs": {
-        "mine": "My scenarios",
-        "all": "All scenarios"
-      },
-      "empty": {
-        "mineTitle": "No tracked scenarios yet",
-        "mineDescription": "Start a scenario to build your personal scenario library and return to it later.",
-        "allTitle": "No scenarios found",
-        "allDescription": "Try adjusting the ESG area filter or search phrase to explore scenario metadata."
       }
     }
   }

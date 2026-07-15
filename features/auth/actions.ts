@@ -118,18 +118,32 @@ async function upsertProfileByUserOrEmail({
 }
 
 export async function createProfile({
-  userId,
-  email,
   role,
   fullName,
   preferredLanguage,
 }: {
-  userId: string;
-  email: string;
   role: PublicRole;
-  fullName?: string | null;
-  preferredLanguage?: string;
+  fullName: string | null;
+  preferredLanguage: string;
 }) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
+
+  if (userError || !user) {
+    throw new Error("Unauthorized");
+  }
+
+  const email = user.email?.trim().toLowerCase();
+
+  if (!email) {
+    throw new Error("Authenticated user does not have an email address.");
+  }
+
+  const userId = user.id;
   const finalRole = resolveRole(email, role);
   const normalizedLanguage = resolvePreferredLanguage(preferredLanguage);
 

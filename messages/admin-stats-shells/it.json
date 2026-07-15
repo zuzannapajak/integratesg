@@ -161,6 +161,29 @@
           "variants": "Varianti"
         }
       },
+      "scenarioResponses": {
+        "title": "Statistiche delle risposte agli scenari",
+        "subtitle": "Analizza la distribuzione delle decisioni e i nuovi tentativi per ogni sfida del simulatore.",
+        "records": "{count} sfide",
+        "summary": {
+          "challengeRuns": "Esecuzioni delle sfide",
+          "decisions": "Decisioni",
+          "retryRate": "Esecuzioni con nuovo tentativo",
+          "averageRetries": "Media tentativi / esecuzione"
+        },
+        "metrics": {
+          "runs": "Esecuzioni",
+          "decisions": "Decisioni",
+          "retryRate": "Tasso di nuovi tentativi",
+          "averageRetries": "Media tentativi"
+        },
+        "optimal": "Scelta ottimale",
+        "selections": "Selezioni: {count}",
+        "empty": {
+          "title": "Nessuna statistica delle risposte disponibile",
+          "subtitle": "Le statistiche su decisioni e nuovi tentativi appariranno quando gli utenti inizieranno a rispondere alle sfide."
+        }
+      },
       "coursePerformance": {
         "title": "Prestazioni curriculum",
         "subtitle": "Cerca, confronta e ordina i moduli curriculum per coinvolgimento e risultati di apprendimento.",
@@ -192,7 +215,9 @@
       "scenarioAttempts": {
         "title": "Tentativi scenario degli utenti",
         "subtitle": "Attività recente degli studenti nel simulatore di scenari, inclusi stato, punteggio e tempi.",
-        "records": "{count} record"
+        "records": "{count} record",
+        "exportCsv": "Esporta CSV",
+        "exportExcel": "Esporta Excel"
       },
       "curriculumAttempts": {
         "title": "Tentativi curriculum degli utenti",

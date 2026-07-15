@@ -73,11 +73,9 @@ export default function RegisterDetailsStep({
       return;
     }
 
-    if (data.user?.id && data.user.email) {
+    if (data.session) {
       try {
         await createProfile({
-          userId: data.user.id,
-          email: data.user.email,
           role,
           fullName: fullName || null,
           preferredLanguage: locale,

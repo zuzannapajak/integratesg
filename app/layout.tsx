@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
+
 import "./globals.css";
+import "./scenario-accessibility.css";
 
 export const metadata: Metadata = {
   applicationName: "IntegratESG",

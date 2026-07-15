@@ -1,4 +1,5 @@
 import DashboardShell from "@/components/dashboard/dashboard-shell";
+import { scenarioPathwayItems } from "@/content/scenarios/pathway";
 import {
   DashboardChartPoint,
   DashboardGamificationStat,
@@ -8,8 +9,8 @@ import {
 } from "@/lib/dashboard/types";
 import { logMeasuredOperation } from "@/lib/observability/performance";
 import { prisma } from "@/lib/prisma";
+import { resolveScenarioBySlug } from "@/lib/scenarios/simulator/resolve-scenario";
 import { createClient } from "@/lib/supabase/server";
-import { Prisma } from "@prisma/client";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
@@ -39,60 +40,109 @@ type AttemptWithCourse = {
   };
 };
 
-type ScenarioAttemptForContinueLearning = {
+type ScenarioAttemptForDashboard = {
   id: string;
+  scenarioId: string;
+  scenarioSlug: string;
+  scenarioTitle: string;
   status: string;
+  score: number | null;
   startedAt: Date | null;
   lastOpenedAt: Date | null;
   completedAt: Date | null;
-  scenario: {
-    slug: string;
-  };
-  scenarioVariant: {
-    title: string;
-    language: string;
-  } | null;
 };
 
-const scenarioAttemptWithRelations = Prisma.validator<Prisma.UserScenarioAttemptDefaultArgs>()({
-  include: {
-    user: {
-      select: {
-        email: true,
-        fullName: true,
-      },
-    },
-    scenario: {
-      select: {
-        slug: true,
-        area: true,
-      },
-    },
-    scenarioVariant: {
-      select: {
-        title: true,
-        language: true,
-      },
-    },
-  },
-});
+type LearnerScenarioAttempt = {
+  id: string;
+  scenarioId: string;
+  status: string;
+  startedAt: Date;
+  lastOpenedAt: Date;
+  completedAt: Date | null;
+  choiceAttempts: Array<{
+    isOptimal: boolean;
+  }>;
+};
 
-type ScenarioAttemptWithRelations = Prisma.UserScenarioAttemptGetPayload<
-  typeof scenarioAttemptWithRelations
->;
+type AdminScenarioAttempt = LearnerScenarioAttempt & {
+  user: {
+    email: string;
+    fullName: string | null;
+  };
+};
+
+type AdminScenarioAttemptForDashboard = AdminScenarioAttempt & {
+  score: number | null;
+};
 
 function pickTranslation(translations: TranslationRecord[], locale: string) {
   const exactMatch = translations.find((translation) => translation.language === locale);
-  if (exactMatch) return exactMatch;
+
+  if (exactMatch) {
+    return exactMatch;
+  }
 
   const englishMatch = translations.find((translation) => translation.language === "en");
-  if (englishMatch) return englishMatch;
+
+  if (englishMatch) {
+    return englishMatch;
+  }
 
   return translations.length > 0 ? translations[0] : null;
 }
 
+function calculateOptimalChoiceRate(
+  choices: ReadonlyArray<{
+    isOptimal: boolean;
+  }>,
+): number | null {
+  if (choices.length === 0) {
+    return null;
+  }
+
+  const optimalChoices = choices.reduce((sum, choice) => sum + (choice.isOptimal ? 1 : 0), 0);
+
+  return Math.round((optimalChoices / choices.length) * 100);
+}
+
+function getScenarioPresentation(scenarioId: string, locale: string) {
+  const pathwayItem = scenarioPathwayItems.find((item) => item.id === scenarioId);
+
+  const slug = pathwayItem?.slug ?? scenarioId;
+
+  const localizedScenario =
+    resolveScenarioBySlug(slug, locale) ?? resolveScenarioBySlug(slug, "en");
+
+  return {
+    slug,
+
+    title: localizedScenario?.title ?? pathwayItem?.title ?? scenarioId,
+  };
+}
+
+function mapScenarioAttempt(
+  attempt: LearnerScenarioAttempt,
+  locale: string,
+): ScenarioAttemptForDashboard {
+  const presentation = getScenarioPresentation(attempt.scenarioId, locale);
+
+  return {
+    id: attempt.id,
+    scenarioId: attempt.scenarioId,
+    scenarioSlug: presentation.slug,
+    scenarioTitle: presentation.title,
+    status: attempt.status,
+    score: calculateOptimalChoiceRate(attempt.choiceAttempts),
+    startedAt: attempt.startedAt,
+    lastOpenedAt: attempt.lastOpenedAt,
+    completedAt: attempt.completedAt,
+  };
+}
+
 function buildWeeklyActivityChart(
-  attempts: { startedAt: Date | null }[],
+  attempts: {
+    startedAt: Date | null;
+  }[],
   locale: string,
 ): DashboardChartPoint[] {
   const today = new Date();
@@ -100,19 +150,27 @@ function buildWeeklyActivityChart(
 
   for (let offset = 6; offset >= 0; offset -= 1) {
     const day = new Date(today);
+
     day.setHours(0, 0, 0, 0);
     day.setDate(today.getDate() - offset);
 
     const nextDay = new Date(day);
+
     nextDay.setDate(day.getDate() + 1);
 
     const count = attempts.filter((attempt) => {
-      if (!attempt.startedAt) return false;
+      if (!attempt.startedAt) {
+        return false;
+      }
+
       return attempt.startedAt >= day && attempt.startedAt < nextDay;
     }).length;
 
     points.push({
-      label: day.toLocaleDateString(locale, { weekday: "short" }),
+      label: day.toLocaleDateString(locale, {
+        weekday: "short",
+      }),
+
       value: count,
     });
   }
@@ -132,13 +190,18 @@ function buildTrendLabel(
   }
 
   if (previousTotal === 0) {
-    return t("fallback.vsPreviousWeek", { value: `+${currentTotal}` });
+    return t("fallback.vsPreviousWeek", {
+      value: `+${currentTotal}`,
+    });
   }
 
   const diff = ((currentTotal - previousTotal) / previousTotal) * 100;
+
   const rounded = Math.round(diff * 10) / 10;
 
-  if (rounded === 0) return t("fallback.noChange");
+  if (rounded === 0) {
+    return t("fallback.noChange");
+  }
 
   return t("fallback.vsPreviousWeek", {
     value: `${rounded > 0 ? "+" : ""}${rounded}%`,
@@ -146,22 +209,29 @@ function buildTrendLabel(
 }
 
 function buildWeeklyAttempts(
-  attempts: { startedAt: Date | null }[],
+  attempts: {
+    startedAt: Date | null;
+  }[],
   startOffsetDays: number,
   endOffsetDays: number,
 ) {
   const today = new Date();
 
   const start = new Date(today);
+
   start.setHours(0, 0, 0, 0);
   start.setDate(today.getDate() - startOffsetDays);
 
   const end = new Date(today);
+
   end.setHours(0, 0, 0, 0);
   end.setDate(today.getDate() - endOffsetDays);
 
   return attempts.filter((attempt) => {
-    if (!attempt.startedAt) return false;
+    if (!attempt.startedAt) {
+      return false;
+    }
+
     return attempt.startedAt >= start && attempt.startedAt < end;
   });
 }
@@ -169,7 +239,7 @@ function buildWeeklyAttempts(
 function buildContinueLearningItem(
   params: {
     curriculumAttempts: AttemptWithCourse[];
-    scenarioAttempts: ScenarioAttemptForContinueLearning[];
+    scenarioAttempts: ScenarioAttemptForDashboard[];
     locale: string;
   },
   t: Awaited<ReturnType<typeof getTranslations>>,
@@ -228,33 +298,44 @@ function buildContinueLearningItem(
 
   if (latestCurriculum && latestCurriculumTimestamp >= latestScenarioTimestamp) {
     const translation = pickTranslation(latestCurriculum.course.translations, params.locale);
+
     const isCompleted = latestCurriculum.status === "completed";
 
     return {
       title: translation?.title ?? t("fallback.untitledModule"),
+
       description: translation?.description ?? t("fallback.continueDescription"),
+
       href: isCompleted
         ? `/${params.locale}/curriculum/${latestCurriculum.course.slug}`
         : `/${params.locale}/curriculum/${latestCurriculum.course.slug}/learn`,
+
       badge: t("fallback.curriculumBadge"),
+
       ctaLabel: isCompleted ? t("fallback.reviewModule") : t("fallback.continueModule"),
+
       kindLabel: isCompleted ? t("fallback.lastCompleted") : t("fallback.lastOpened"),
     };
   }
 
   if (latestScenario) {
-    const isCompleted = ["completed", "passed"].includes(latestScenario.status);
+    const isCompleted = latestScenario.status === "completed";
+
+    const playHref = `/${params.locale}/scenarios/` + `${latestScenario.scenarioSlug}/play`;
 
     return {
-      title: latestScenario.scenarioVariant?.title ?? t("fallback.untitledModule"),
+      title: latestScenario.scenarioTitle,
+
       description: isCompleted
         ? t("fallback.reviewScenarioDescription")
         : t("fallback.continueScenarioDescription"),
-      href: isCompleted
-        ? `/${params.locale}/scenarios/${latestScenario.scenario.slug}`
-        : `/${params.locale}/scenarios/${latestScenario.scenario.slug}/launch`,
+
+      href: isCompleted ? `${playHref}?mode=review` : playHref,
+
       badge: t("fallback.scenarioBadge"),
+
       ctaLabel: isCompleted ? t("fallback.reviewScenario") : t("fallback.continueScenario"),
+
       kindLabel: isCompleted ? t("fallback.lastCompleted") : t("fallback.lastOpened"),
     };
   }
@@ -265,16 +346,19 @@ function buildContinueLearningItem(
 function buildLearnerSummaryMetrics(
   role: DashboardRole,
   curriculumAttempts: AttemptWithCourse[],
-  scenarioAttempts: {
+  scenarioAttempts: Array<{
     status: string;
     score: number | null;
-  }[],
+  }>,
   t: Awaited<ReturnType<typeof getTranslations>>,
 ): DashboardMetric[] {
   if (role === "educator") {
     const attemptsWithPostQuizScore = curriculumAttempts.filter(
-      (attempt): attempt is AttemptWithCourse & { postQuizScore: number } =>
-        attempt.postQuizScore !== null,
+      (
+        attempt,
+      ): attempt is AttemptWithCourse & {
+        postQuizScore: number;
+      } => attempt.postQuizScore !== null,
     );
 
     const averagePostQuiz =
@@ -289,25 +373,32 @@ function buildLearnerSummaryMetrics(
     return [
       {
         label: t("metrics.averagePostQuiz"),
+
         value: `${Math.round(averagePostQuiz)}%`,
       },
+
       {
         label: t("metrics.modulesInProgress"),
+
         value: String(modulesInProgress),
       },
     ];
   }
 
-  const completedCount = scenarioAttempts.filter((attempt) =>
-    ["completed", "passed"].includes(attempt.status),
+  const completedCount = scenarioAttempts.filter(
+    (attempt) => attempt.status === "completed",
   ).length;
 
-  const completionRate = scenarioAttempts.length
-    ? Math.round((completedCount / scenarioAttempts.length) * 100)
-    : 0;
+  const completionRate =
+    scenarioAttempts.length > 0 ? Math.round((completedCount / scenarioAttempts.length) * 100) : 0;
 
   const attemptsWithScore = scenarioAttempts.filter(
-    (attempt): attempt is { status: string; score: number } => attempt.score !== null,
+    (
+      attempt,
+    ): attempt is {
+      status: string;
+      score: number;
+    } => attempt.score !== null,
   );
 
   const averageScore =
@@ -318,10 +409,13 @@ function buildLearnerSummaryMetrics(
   return [
     {
       label: t("metrics.completionRate"),
+
       value: `${completionRate}%`,
     },
+
     {
       label: t("metrics.averageScore"),
+
       value: `${Math.round(averageScore)}%`,
     },
   ];
@@ -329,7 +423,10 @@ function buildLearnerSummaryMetrics(
 
 function buildGamificationStats(
   role: DashboardRole,
-  learnerAttempts: { startedAt: Date | null; completedAt?: Date | null }[],
+  learnerAttempts: Array<{
+    startedAt: Date | null;
+    completedAt?: Date | null;
+  }>,
   t: Awaited<ReturnType<typeof getTranslations>>,
 ): DashboardGamificationStat[] {
   if (role !== "learner" && role !== "educator") {
@@ -339,10 +436,15 @@ function buildGamificationStats(
   const sortedDays = learnerAttempts
     .map((attempt) => {
       const sourceDate = attempt.completedAt ?? attempt.startedAt;
-      if (!sourceDate) return null;
+
+      if (!sourceDate) {
+        return null;
+      }
 
       const normalized = new Date(sourceDate);
+
       normalized.setHours(0, 0, 0, 0);
+
       return normalized.getTime();
     })
     .filter((value): value is number => value !== null)
@@ -355,9 +457,11 @@ function buildGamificationStats(
   if (uniqueDays.length > 0) {
     streak = 1;
 
-    for (let i = uniqueDays.length - 1; i > 0; i -= 1) {
-      const current = uniqueDays[i];
-      const previous = uniqueDays[i - 1];
+    for (let index = uniqueDays.length - 1; index > 0; index -= 1) {
+      const current = uniqueDays[index];
+
+      const previous = uniqueDays[index - 1];
+
       const diffDays = (current - previous) / (1000 * 60 * 60 * 24);
 
       if (diffDays === 1) {
@@ -371,6 +475,7 @@ function buildGamificationStats(
   return [
     {
       label: t("gamification.learningStreak"),
+
       value: String(streak),
     },
   ];
@@ -378,18 +483,20 @@ function buildGamificationStats(
 
 function buildAdminKpis(
   totalUsers: number,
-  attempts: ScenarioAttemptWithRelations[],
+  attempts: AdminScenarioAttemptForDashboard[],
   t: Awaited<ReturnType<typeof getTranslations>>,
 ): DashboardKpi[] {
-  const completedCount = attempts.filter((attempt) =>
-    ["completed", "passed"].includes(attempt.status),
-  ).length;
+  const completedCount = attempts.filter((attempt) => attempt.status === "completed").length;
 
-  const completionRate = attempts.length ? Math.round((completedCount / attempts.length) * 100) : 0;
+  const completionRate =
+    attempts.length > 0 ? Math.round((completedCount / attempts.length) * 100) : 0;
 
   const attemptsWithScore = attempts.filter(
-    (attempt): attempt is ScenarioAttemptWithRelations & { score: number } =>
-      attempt.score !== null,
+    (
+      attempt,
+    ): attempt is AdminScenarioAttemptForDashboard & {
+      score: number;
+    } => attempt.score !== null,
   );
 
   const averageScore =
@@ -402,37 +509,56 @@ function buildAdminKpis(
   return [
     {
       label: t("adminKpis.users"),
+
       value: String(totalUsers),
+
       hint: t("adminKpis.usersHint"),
     },
+
     {
       label: t("adminKpis.attempts"),
+
       value: String(attempts.length),
+
       hint: t("adminKpis.attemptsHint"),
     },
+
     {
       label: t("adminKpis.completionRate"),
+
       value: `${completionRate}%`,
+
       hint: t("adminKpis.completionRateHint"),
     },
+
     {
       label: t("adminKpis.averageScore"),
+
       value: `${Math.round(averageScore)}%`,
-      hint: t("adminKpis.averageScoreHint", { count: activeUsers }),
+
+      hint: t("adminKpis.averageScoreHint", {
+        count: activeUsers,
+      }),
     },
   ];
 }
 
 async function getDashboardPageData({ params }: Props) {
   const startedAt = Date.now();
+
   let records = 0;
+
   let status: "ok" | "error" = "ok";
 
   try {
     const { locale } = await params;
 
     const [t, supabase] = await Promise.all([
-      getTranslations({ locale, namespace: "Protected.DashboardPage" }),
+      getTranslations({
+        locale,
+        namespace: "Protected.DashboardPage",
+      }),
+
       createClient(),
     ]);
 
@@ -445,7 +571,10 @@ async function getDashboardPageData({ params }: Props) {
     }
 
     const profile = await prisma.profile.findUnique({
-      where: { id: user.id },
+      where: {
+        id: user.id,
+      },
+
       select: {
         id: true,
         email: true,
@@ -463,16 +592,31 @@ async function getDashboardPageData({ params }: Props) {
     const curriculumAttemptsPromise =
       role === "educator"
         ? prisma.userCourseAttempt.findMany({
-            where: { userId: profile.id },
-            orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }],
+            where: {
+              userId: profile.id,
+            },
+
+            orderBy: [
+              {
+                lastOpenedAt: "desc",
+              },
+
+              {
+                startedAt: "desc",
+              },
+            ],
+
             include: {
               course: {
                 select: {
                   slug: true,
+
                   translations: {
                     select: {
                       language: true,
+
                       title: true,
+
                       description: true,
                     },
                   },
@@ -485,18 +629,31 @@ async function getDashboardPageData({ params }: Props) {
     const scenarioAttemptsPromise =
       role === "learner" || role === "educator"
         ? prisma.userScenarioAttempt.findMany({
-            where: { userId: profile.id },
-            orderBy: [{ lastOpenedAt: "desc" }, { startedAt: "desc" }],
-            include: {
-              scenario: {
-                select: {
-                  slug: true,
-                },
+            where: {
+              userId: profile.id,
+            },
+
+            orderBy: [
+              {
+                lastOpenedAt: "desc",
               },
-              scenarioVariant: {
+
+              {
+                startedAt: "desc",
+              },
+            ],
+
+            select: {
+              id: true,
+              scenarioId: true,
+              status: true,
+              startedAt: true,
+              lastOpenedAt: true,
+              completedAt: true,
+
+              choiceAttempts: {
                 select: {
-                  title: true,
-                  language: true,
+                  isOptimal: true,
                 },
               },
             },
@@ -506,9 +663,35 @@ async function getDashboardPageData({ params }: Props) {
     const adminScenarioAttemptsPromise =
       role === "admin"
         ? prisma.userScenarioAttempt.findMany({
-            orderBy: [{ startedAt: "desc" }],
+            orderBy: [
+              {
+                startedAt: "desc",
+              },
+            ],
+
             take: 90,
-            ...scenarioAttemptWithRelations,
+
+            select: {
+              id: true,
+              scenarioId: true,
+              status: true,
+              startedAt: true,
+              lastOpenedAt: true,
+              completedAt: true,
+
+              user: {
+                select: {
+                  email: true,
+                  fullName: true,
+                },
+              },
+
+              choiceAttempts: {
+                select: {
+                  isOptimal: true,
+                },
+              },
+            },
           })
         : Promise.resolve([]);
 
@@ -525,8 +708,8 @@ async function getDashboardPageData({ params }: Props) {
 
     const [
       curriculumAttempts,
-      scenarioAttempts,
-      adminScenarioAttempts,
+      rawScenarioAttempts,
+      rawAdminScenarioAttempts,
       totalUsers,
       publishedCoursesCount,
     ] = await Promise.all([
@@ -536,6 +719,16 @@ async function getDashboardPageData({ params }: Props) {
       totalUsersPromise,
       publishedCoursesCountPromise,
     ]);
+
+    const scenarioAttempts = rawScenarioAttempts.map((attempt) =>
+      mapScenarioAttempt(attempt, locale),
+    );
+
+    const adminScenarioAttempts = rawAdminScenarioAttempts.map((attempt) => ({
+      ...attempt,
+
+      score: calculateOptimalChoiceRate(attempt.choiceAttempts),
+    }));
 
     records =
       curriculumAttempts.length +
@@ -554,9 +747,11 @@ async function getDashboardPageData({ params }: Props) {
           }));
 
     const learnerCurrentWeekAttempts = buildWeeklyAttempts(learnerAttemptsForActivity, 6, -1);
+
     const learnerPreviousWeekAttempts = buildWeeklyAttempts(learnerAttemptsForActivity, 13, 6);
 
     const learnerActivityData = buildWeeklyActivityChart(learnerCurrentWeekAttempts, locale);
+
     const learnerTrendLabel = buildTrendLabel(
       learnerActivityData,
       learnerPreviousWeekAttempts.length,
@@ -568,9 +763,11 @@ async function getDashboardPageData({ params }: Props) {
     }));
 
     const adminCurrentWeekAttempts = buildWeeklyAttempts(adminActivitySource, 6, -1);
+
     const adminPreviousWeekAttempts = buildWeeklyAttempts(adminActivitySource, 13, 6);
 
     const adminActivityData = buildWeeklyActivityChart(adminCurrentWeekAttempts, locale);
+
     const adminTrendLabel = buildTrendLabel(adminActivityData, adminPreviousWeekAttempts.length, t);
 
     const continueLearning =
@@ -581,6 +778,7 @@ async function getDashboardPageData({ params }: Props) {
               scenarioAttempts,
               locale,
             },
+
             t,
           )
         : null;
@@ -594,15 +792,19 @@ async function getDashboardPageData({ params }: Props) {
 
     const gamificationStats = buildGamificationStats(
       role,
+
       role === "educator"
         ? curriculumAttempts.map((attempt) => ({
             startedAt: attempt.startedAt,
+
             completedAt: attempt.completedAt,
           }))
         : scenarioAttempts.map((attempt) => ({
             startedAt: attempt.startedAt,
-            completedAt: attempt.completedAt ?? null,
+
+            completedAt: attempt.completedAt,
           })),
+
       t,
     );
 
@@ -611,26 +813,41 @@ async function getDashboardPageData({ params }: Props) {
     return {
       locale,
       role,
+
       displayName: profile.fullName ?? profile.email.split("@")[0],
+
       heroStats: role === "admin" ? adminKpis : learnerSummaryMetrics,
+
       continueLearning: role === "learner" || role === "educator" ? continueLearning : null,
+
       gamificationStats: role === "learner" || role === "educator" ? gamificationStats : [],
+
       publishedCoursesCount: role === "educator" ? publishedCoursesCount : 0,
+
       learnerSummaryMetrics: role === "learner" || role === "educator" ? learnerSummaryMetrics : [],
+
       learnerActivityData: role === "learner" || role === "educator" ? learnerActivityData : [],
+
       learnerTrendLabel: role === "learner" || role === "educator" ? learnerTrendLabel : "",
+
       adminActivityData: role === "admin" ? adminActivityData : [],
+
       adminTrendLabel: role === "admin" ? adminTrendLabel : "",
+
       adminKpis: role === "admin" ? adminKpis : [],
     };
   } catch (error) {
     status = "error";
+
     throw error;
   } finally {
     logMeasuredOperation({
       operation: "page.dashboard.data",
+
       durationMs: Date.now() - startedAt,
+
       records,
+
       status,
     });
   }

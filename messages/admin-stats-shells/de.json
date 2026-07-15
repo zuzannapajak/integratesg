@@ -161,6 +161,29 @@
           "variants": "Varianten"
         }
       },
+      "scenarioResponses": {
+        "title": "Antwortstatistiken der Szenarien",
+        "subtitle": "Analysieren Sie Entscheidungsanteile und Wiederholungsversuche für jede Herausforderung im Simulator.",
+        "records": "{count} Herausforderungen",
+        "summary": {
+          "challengeRuns": "Durchläufe",
+          "decisions": "Entscheidungen",
+          "retryRate": "Durchläufe mit Wiederholung",
+          "averageRetries": "Ø Wiederholungen / Durchlauf"
+        },
+        "metrics": {
+          "runs": "Durchläufe",
+          "decisions": "Entscheidungen",
+          "retryRate": "Wiederholungsrate",
+          "averageRetries": "Ø Wiederholungen"
+        },
+        "optimal": "Optimale Wahl",
+        "selections": "Auswahlen: {count}",
+        "empty": {
+          "title": "Keine Antwortstatistiken verfügbar",
+          "subtitle": "Entscheidungs- und Wiederholungsstatistiken erscheinen, sobald Lernende Herausforderungen beantworten."
+        }
+      },
       "coursePerformance": {
         "title": "Curriculum-Leistung",
         "subtitle": "Suchen, vergleichen und sortieren Sie Curriculum-Module nach Beteiligung und Lernergebnissen.",
@@ -192,7 +215,9 @@
       "scenarioAttempts": {
         "title": "Szenario-Versuche der Nutzer",
         "subtitle": "Aktuelle Lernaktivität im Szenario-Simulator, einschließlich Status, Bewertung und Zeitpunkt.",
-        "records": "{count} Datensätze"
+        "records": "{count} Datensätze",
+        "exportCsv": "CSV exportieren",
+        "exportExcel": "Excel exportieren"
       },
       "curriculumAttempts": {
         "title": "Curriculum-Versuche der Nutzer",

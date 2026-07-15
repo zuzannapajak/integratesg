@@ -3,13 +3,23 @@
 import { MessageSquareHeart } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 type Props = {
   locale: string;
 };
 
+function isScenarioModulePath(pathname: string): boolean {
+  return /^\/[^/]+\/scenarios(?:\/|$)/.test(pathname);
+}
+
 export default function PlatformFeedbackBubble({ locale }: Props) {
+  const pathname = usePathname();
   const t = useTranslations("Protected.PlatformFeedbackBubble");
+
+  if (isScenarioModulePath(pathname)) {
+    return null;
+  }
 
   return (
     <Link

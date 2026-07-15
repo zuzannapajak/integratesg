@@ -15,29 +15,17 @@ const FALLBACK_STATS: PlatformStats = {
 
 export async function getPlatformStats(): Promise<PlatformStats> {
   try {
-    const [caseStudiesCount, distinctScenarioAreas] = await Promise.all([
-      prisma.caseStudy.count({
-        where: {
-          status: "published",
-        },
-      }),
-      prisma.scenario.findMany({
-        where: {
-          status: "published",
-        },
-        select: {
-          area: true,
-        },
-        distinct: ["area"],
-      }),
-    ]);
+    const caseStudiesCount = await prisma.caseStudy.count({
+      where: {
+        status: "published",
+      },
+    });
 
     return {
       caseStudies: caseStudiesCount > 0 ? caseStudiesCount : FALLBACK_STATS.caseStudies,
-      scenarioAreas:
-        distinctScenarioAreas.length > 0
-          ? distinctScenarioAreas.length
-          : FALLBACK_STATS.scenarioAreas,
+
+      scenarioAreas: FALLBACK_STATS.scenarioAreas,
+
       partnerLanguages: APP_LOCALES.length,
     };
   } catch {

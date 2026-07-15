@@ -1,126 +1,108 @@
 {
   "Protected": {
-    "ScenarioDetailShell": {
-      "back": "Zurück zu den Szenarien",
-      "area": {
-        "environmental": "Umwelt",
-        "social": "Soziales",
-        "governance": "Unternehmensführung",
-        "crossCutting": "Übergreifend"
+    "ScenarioPathway": {
+      "backgroundAlt": "Ein illustrierter ESG-Lernpfad, der sechs organisatorische Szenarien miteinander verbindet.",
+      "title": "Szenarien",
+      "subtitle": "Entdecken Sie den vollständigen Lernpfad für Ihre gesamte Organisation.",
+      "progress": "Fortschritt",
+      "completed": "Abgeschlossen",
+      "available": "Verfügbar",
+      "inProgress": "In Bearbeitung",
+      "locked": "Gesperrt",
+      "openScenario": "Szenario öffnen",
+      "reviewScenario": "Szenario überprüfen"
+    },
+    "ScenarioSimulator": {
+      "common": {
+        "scenario": "Szenario",
+        "challenge": "Herausforderung",
+        "of": "von",
+        "back": "Zurück",
+        "continue": "Fortsetzen",
+        "loading": "Wird gespeichert…",
+        "progress": "Fortschritt",
+        "completed": "Abgeschlossen"
       },
-      "status": {
-        "completed": "Abgeschlossen",
+      "intro": {
+        "introduction": "Einführung",
+        "context": "Szenariokontext",
+        "organisation": "Organisation",
+        "yourRole": "Ihre Rolle",
+        "yourObjectives": "Ihre Ziele",
+        "estimatedDuration": "Geschätzte Dauer",
+        "minutes": "Minuten",
+        "challenges": "Herausforderungen",
+        "scenarioInformation": "Szenarioinformationen",
+        "startScenario": "Szenario starten",
+        "backToScenarios": "Zurück zu den Szenarien",
+        "starting": "Wird gestartet…"
+      },
+      "board": {
+        "title": "Herausforderungen anzeigen",
+        "description": "Schließen Sie die drei Herausforderungen der Reihe nach ab.",
+        "currentObjective": "Aktuelles Ziel",
+        "allCompleted": "Alle Herausforderungen abgeschlossen",
+        "openChallenge": "Herausforderung öffnen",
+        "mapPoint": "Herausforderungspunkt",
+        "available": "Verfügbar",
         "inProgress": "In Bearbeitung",
-        "readyToStart": "Bereit zum Start"
+        "locked": "Gesperrt"
       },
-      "featured": "Hervorgehoben",
-      "eyebrow": "Szenario-Launcher",
-      "heroIntro": {
-        "completed": "Sie haben dieses Szenario bereits abgeschlossen. Starten Sie jederzeit einen neuen Durchlauf, um den Ablauf erneut zu üben und Ihre Entscheidungen zu vergleichen.",
-        "resumeFromPause": "Ihre letzte Sitzung kann an dem Punkt fortgesetzt werden, an dem Sie pausiert haben.",
-        "resumeNextDecision": "Sie haben dieses Szenario bereits gestartet. Fahren Sie mit dem nächsten Entscheidungspunkt fort.",
-        "default": "Erkunden Sie den Kontext, verstehen Sie die Herausforderung und starten Sie die Erfahrung, wenn Sie bereit sind."
+      "challenge": {
+        "context": "Kontext der Herausforderung",
+        "decision": "Entscheidung",
+        "attempt": "Versuch",
+        "previouslyTried": "Zuvor ausprobiert",
+        "backToBoard": "Zurück zu den Herausforderungen",
+        "continueToDecision": "Weiter zur Entscheidung",
+        "selectOneOption": "Wählen Sie eine Option",
+        "confirmDecision": "Entscheidung bestätigen"
       },
-      "metrics": {
-        "duration": "Dauer",
-        "focus": "Fokus",
-        "latestScore": "Letzte Punktzahl",
-        "lastOpened": "Zuletzt geöffnet",
-        "decisionMaking": "Entscheidungsfindung",
-        "notYet": "Noch nicht"
+      "feedback": {
+        "correctDecision": "Richtige Entscheidung",
+        "incorrectDecision": "Versuchen Sie einen anderen Ansatz",
+        "yourDecision": "Ihre Entscheidung",
+        "whyItFallsShort": "Warum dieser Ansatz nicht ausreicht",
+        "expectedImpact": "Erwartete Auswirkung",
+        "likelyConsequence": "Wahrscheinliche Folge",
+        "keyTakeaway": "Wichtigste Erkenntnis",
+        "tryAgain": "Erneut versuchen"
       },
-      "progress": {
-        "completed": "Abgeschlossen",
-        "finishedWithScore": "Abgeschlossen mit {score}%",
-        "completedNoScore": "Szenario erfolgreich abgeschlossen",
-        "resumeFrom": "Fortsetzen bei {location}",
-        "continueLatest": "Vom letzten Checkpoint fortfahren",
-        "ready": "Bereit für den ersten Versuch"
+      "summary": {
+        "title": "Szenario-Zusammenfassung",
+        "allChallengesCompleted": "Alle Herausforderungen abgeschlossen",
+        "completedChallenges": "Abgeschlossene Herausforderungen",
+        "keyTakeaways": "Wichtigste Erkenntnisse",
+        "completeScenario": "Szenario abschließen"
       },
-      "nextAction": {
-        "title": "Nächste Aktion",
-        "completedDescription": "Starten Sie einen neuen Versuch, um das Szenario erneut zu durchlaufen und zu sehen, wie sich ein neuer Durchgang entwickelt.",
-        "inProgressDescription": "Fahren Sie an Ihrem letzten Checkpoint fort und bleiben Sie am Ball.",
-        "defaultDescription": "Starten Sie das Szenario, um die geführte Erfahrung zu beginnen.",
-        "restart": "Szenario neu starten",
-        "resume": "Szenario fortsetzen",
-        "launch": "Szenario starten",
-        "exploreJourney": "Reise erkunden"
+      "completion": {
+        "title": "Szenario abgeschlossen",
+        "description": "Das Szenario wurde erfolgreich abgeschlossen.",
+        "leaveScenario": "Zurück zu den Szenarien"
       },
-      "tabs": {
-        "overview": "Übersicht",
-        "practice": "Was Sie üben werden",
-        "prepare": "Bevor Sie starten",
-        "related": "Ähnliche"
+      "loading": {
+        "title": "Szenario wird geladen",
+        "description": "Szenarioinhalte und Ihr gespeicherter Fortschritt werden geladen."
       },
-      "overview": {
-        "title": "Szenario-Übersicht",
-        "highlightsTitle": "Highlights der Erfahrung",
-        "highlights": [
-          "Ein geführter Ablauf, der sich Schritt für Schritt entfaltet.",
-          "Feedback nach Schlüsselentscheidungen, um den Lernprozess aktiv zu halten.",
-          "Eine klare Struktur, die auf gezielte Praxis statt auf passives Lesen ausgelegt ist."
-        ]
+      "saving": {
+        "default": "Fortschritt wird gespeichert…",
+        "start": "Szenario wird gestartet und der Fortschritt gespeichert…",
+        "choice": "Ihre Entscheidung wird gespeichert…",
+        "challenge": "Der Abschluss der Herausforderung wird gespeichert…",
+        "scenario": "Der Abschluss des Szenarios wird gespeichert…"
       },
-      "practice": {
-        "cardTitle": "Angewandte Praxis",
-        "points": {
-          "environmental": [
-            "Nachhaltigkeitsziele mit betrieblichen Kompromissen abwägen.",
-            "Signale in Bezug auf Effizienz, Risiko und Auswirkungen interpretieren.",
-            "Maßnahmen wählen, die langfristige Umweltergebnisse verbessern."
-          ],
-          "social": [
-            "Auf Spannungen zwischen Stakeholdern mit Empathie und Klarheit reagieren.",
-            "Personenbezogene Konsequenzen bei konkurrierenden Prioritäten abwägen.",
-            "Inklusive Entscheidungsfindung unter realem Druck üben."
-          ],
-          "governance": [
-            "Verantwortlichkeitswege und Eskalationsmöglichkeiten bewerten.",
-            "Urteilsvermögen in Bezug auf Transparenz und Richtlinienkonformität stärken.",
-            "Verstehen, wie Governance-Design die Qualität der Umsetzung beeinflusst."
-          ],
-          "crossCutting": [
-            "ESG-Dimensionen in einem kohärenten Entscheidungsfluss verbinden.",
-            "Interdependenzen zwischen Menschen, Prozessen und Auswirkungen erkennen.",
-            "Strukturiertes Denken in komplexen praktischen Situationen anwenden."
-          ]
+      "errors": {
+        "unexpected": "Ein unerwarteter Fehler ist aufgetreten.",
+        "contentTitle": "Das Szenario konnte nicht geladen werden",
+        "contentDescription": "Beim Laden der Szenarioinhalte oder Ihres gespeicherten Fortschritts ist ein Problem aufgetreten. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.",
+        "retry": "Erneut versuchen",
+        "backToScenarios": "Zurück zu den Szenarien",
+        "progress": {
+          "start": "Das Szenario konnte nicht gestartet oder der Fortschritt nicht gespeichert werden. Versuchen Sie es erneut.",
+          "choice": "Ihre Entscheidung konnte nicht gespeichert werden. Es ging kein Fortschritt verloren. Versuchen Sie es erneut.",
+          "challenge": "Der Abschluss der Herausforderung konnte nicht gespeichert werden. Versuchen Sie es erneut, bevor Sie fortfahren.",
+          "scenario": "Der Abschluss des Szenarios konnte nicht gespeichert werden. Versuchen Sie es erneut."
         }
-      },
-      "prepare": {
-        "title": "Vor dem Start",
-        "quickTipTitle": "Kurzer Tipp",
-        "quickTipText": "Diese Seite ist ein Ruhepunkt vor dem interaktiven Erlebnis. Überprüfen Sie den Kontext und starten Sie, wenn Sie bereit sind.",
-        "checklist": {
-          "time": "Planen Sie etwa {duration} für einen konzentrierten Durchlauf ein.",
-          "flow": "Erwarten Sie gestufte Entscheidungen, sofortiges Feedback und praktische Kompromisse.",
-          "revisit": "Kehren Sie später zum Szenario zurück, um zu vergleichen, wie verschiedene Entscheidungen das Ergebnis beeinflussen."
-        }
-      },
-      "relatedPanel": {
-        "openLauncher": "Launcher öffnen",
-        "emptyTitle": "Noch keine ähnlichen Szenarien",
-        "emptyDescription": "Weitere Empfehlungen erscheinen hier, sobald die Bibliothek wächst."
-      }
-    },
-    "ScenarioLaunchShell": {
-      "area": {
-        "environmental": "Umwelt",
-        "social": "Soziales",
-        "governance": "Unternehmensführung",
-        "crossCutting": "Übergreifend"
-      }
-    },
-    "ScenarioSwitcher": {
-      "tabs": {
-        "mine": "Meine Szenarien",
-        "all": "Alle Szenarien"
-      },
-      "empty": {
-        "mineTitle": "Noch keine verfolgten Szenarien",
-        "mineDescription": "Starten Sie ein Szenario, um Ihre persönliche Bibliothek aufzubauen.",
-        "allTitle": "Keine Szenarien gefunden",
-        "allDescription": "Versuchen Sie, den ESG-Filter oder den Suchbegriff anzupassen."
       }
     }
   }

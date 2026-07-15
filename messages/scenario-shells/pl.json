@@ -1,126 +1,108 @@
 {
   "Protected": {
-    "ScenarioDetailShell": {
-      "back": "Powrót do scenariuszy",
-      "area": {
-        "environmental": "Environmental",
-        "social": "Social",
-        "governance": "Governance",
-        "crossCutting": "Cross-cutting"
+    "ScenarioPathway": {
+      "backgroundAlt": "Ilustrowana ścieżka edukacyjna ESG łącząca sześć scenariuszy organizacyjnych.",
+      "title": "Scenariusze",
+      "subtitle": "Poznaj pełną ścieżkę edukacyjną obejmującą całą organizację.",
+      "progress": "Postęp",
+      "completed": "Ukończono",
+      "available": "Dostępny",
+      "inProgress": "W trakcie",
+      "locked": "Zablokowany",
+      "openScenario": "Otwórz scenariusz",
+      "reviewScenario": "Przejrzyj scenariusz"
+    },
+    "ScenarioSimulator": {
+      "common": {
+        "scenario": "Scenariusz",
+        "challenge": "Wyzwanie",
+        "of": "z",
+        "back": "Wstecz",
+        "continue": "Kontynuuj",
+        "loading": "Zapisywanie…",
+        "progress": "Postęp",
+        "completed": "Ukończono"
       },
-      "status": {
-        "completed": "Ukończono",
+      "intro": {
+        "introduction": "Wprowadzenie",
+        "context": "Kontekst scenariusza",
+        "organisation": "Organizacja",
+        "yourRole": "Twoja rola",
+        "yourObjectives": "Twoje cele",
+        "estimatedDuration": "Szacowany czas",
+        "minutes": "minuty",
+        "challenges": "wyzwania",
+        "scenarioInformation": "Informacje o scenariuszu",
+        "startScenario": "Rozpocznij scenariusz",
+        "backToScenarios": "Wróć do scenariuszy",
+        "starting": "Uruchamianie…"
+      },
+      "board": {
+        "title": "Zobacz wyzwania",
+        "description": "Ukończ trzy wyzwania w podanej kolejności.",
+        "currentObjective": "Bieżący cel",
+        "allCompleted": "Wszystkie wyzwania ukończone",
+        "openChallenge": "Otwórz wyzwanie",
+        "mapPoint": "Punkt wyzwania",
+        "available": "Dostępne",
         "inProgress": "W trakcie",
-        "readyToStart": "Gotowe do rozpoczęcia"
+        "locked": "Zablokowane"
       },
-      "featured": "Wyróżnione",
-      "eyebrow": "Launcher scenariusza",
-      "heroIntro": {
-        "completed": "Ten scenariusz został już ukończony. Możesz uruchomić nowy przebieg w dowolnym momencie, aby ponownie przećwiczyć jego przebieg i porównać swoje decyzje.",
-        "resumeFromPause": "Ostatnią sesję można wznowić od miejsca, w którym została przerwana.",
-        "resumeNextDecision": "Ten scenariusz został już rozpoczęty. Kontynuuj od kolejnego punktu decyzyjnego.",
-        "default": "Zapoznaj się z kontekstem, zrozum wyzwanie i uruchom doświadczenie, gdy będziesz gotowy."
+      "challenge": {
+        "context": "Kontekst wyzwania",
+        "decision": "Decyzja",
+        "attempt": "Próba",
+        "previouslyTried": "Wcześniej wypróbowane",
+        "backToBoard": "Wróć do wyzwań",
+        "continueToDecision": "Przejdź do decyzji",
+        "selectOneOption": "Wybierz jedną opcję",
+        "confirmDecision": "Potwierdź decyzję"
       },
-      "metrics": {
-        "duration": "Czas trwania",
-        "focus": "Cel",
-        "latestScore": "Ostatni wynik",
-        "lastOpened": "Ostatnio otwarto",
-        "decisionMaking": "Podejmowanie decyzji",
-        "notYet": "Jeszcze nie"
+      "feedback": {
+        "correctDecision": "Prawidłowa decyzja",
+        "incorrectDecision": "Spróbuj innego podejścia",
+        "yourDecision": "Twoja decyzja",
+        "whyItFallsShort": "Dlaczego to podejście jest niewystarczające",
+        "expectedImpact": "Oczekiwany wpływ",
+        "likelyConsequence": "Prawdopodobna konsekwencja",
+        "keyTakeaway": "Najważniejszy wniosek",
+        "tryAgain": "Spróbuj ponownie"
       },
-      "progress": {
-        "completed": "Ukończono",
-        "finishedWithScore": "Zakończono z wynikiem {score}%",
-        "completedNoScore": "Scenariusz ukończony pomyślnie",
-        "resumeFrom": "Wznów od {location}",
-        "continueLatest": "Kontynuuj od ostatniego checkpointu",
-        "ready": "Gotowe do pierwszej próby"
+      "summary": {
+        "title": "Podsumowanie scenariusza",
+        "allChallengesCompleted": "Wszystkie wyzwania ukończone",
+        "completedChallenges": "Ukończone wyzwania",
+        "keyTakeaways": "Najważniejsze wnioski",
+        "completeScenario": "Zakończ scenariusz"
       },
-      "nextAction": {
-        "title": "Następne działanie",
-        "completedDescription": "Uruchom nową próbę, aby ponownie przejść przez scenariusz i porównać, jak może wyglądać kolejny przebieg.",
-        "inProgressDescription": "Kontynuuj od ostatniego checkpointu i utrzymaj tempo pracy.",
-        "defaultDescription": "Uruchom scenariusz, aby rozpocząć prowadzone doświadczenie.",
-        "restart": "Uruchom scenariusz ponownie",
-        "resume": "Wznów scenariusz",
-        "launch": "Uruchom scenariusz",
-        "exploreJourney": "Poznaj przebieg"
+      "completion": {
+        "title": "Scenariusz ukończony",
+        "description": "Scenariusz został pomyślnie ukończony.",
+        "leaveScenario": "Wróć do scenariuszy"
       },
-      "tabs": {
-        "overview": "Overview",
-        "practice": "Co będziesz ćwiczyć",
-        "prepare": "Przed rozpoczęciem",
-        "related": "Powiązane"
+      "loading": {
+        "title": "Ładowanie scenariusza",
+        "description": "Pobieramy treść scenariusza i zapisany postęp."
       },
-      "overview": {
-        "title": "Overview scenariusza",
-        "highlightsTitle": "Najważniejsze cechy doświadczenia",
-        "highlights": [
-          "Prowadzony przebieg, który rozwija się krok po kroku.",
-          "Feedback po kluczowych decyzjach, aby utrzymać aktywną pętlę nauki.",
-          "Jasna struktura zaprojektowana do skupionej praktyki zamiast pasywnego czytania."
-        ]
+      "saving": {
+        "default": "Zapisywanie postępu…",
+        "start": "Uruchamianie scenariusza i zapisywanie postępu…",
+        "choice": "Zapisywanie Twojej decyzji…",
+        "challenge": "Zapisywanie ukończenia wyzwania…",
+        "scenario": "Zapisywanie ukończenia scenariusza…"
       },
-      "practice": {
-        "cardTitle": "Praktyka zastosowana",
-        "points": {
-          "environmental": [
-            "Równoważ cele zrównoważonego rozwoju z kompromisami operacyjnymi.",
-            "Interpretuj sygnały związane z efektywnością, ryzykiem i wpływem.",
-            "Wybieraj działania poprawiające długoterminowe efekty środowiskowe."
-          ],
-          "social": [
-            "Reaguj na napięcia interesariuszy z empatią i klarownością.",
-            "Oceniaj konsekwencje skoncentrowane na ludziach przy konkurujących priorytetach.",
-            "Ćwicz inkluzywne podejmowanie decyzji pod presją realnych sytuacji."
-          ],
-          "governance": [
-            "Oceniaj ścieżki odpowiedzialności i wybory eskalacyjne.",
-            "Wzmacniaj osąd dotyczący transparentności i zgodności z politykami.",
-            "Zrozum, jak projekt governance wpływa na jakość wdrożenia."
-          ],
-          "crossCutting": [
-            "Łącz wymiary ESG w jeden spójny przebieg decyzyjny.",
-            "Rozpoznawaj współzależności między ludźmi, procesem i wpływem.",
-            "Stosuj uporządkowane myślenie w złożonych sytuacjach praktycznych."
-          ]
+      "errors": {
+        "unexpected": "Wystąpił nieoczekiwany błąd.",
+        "contentTitle": "Nie udało się załadować scenariusza",
+        "contentDescription": "Wystąpił problem podczas pobierania treści scenariusza lub zapisanego postępu. Sprawdź połączenie i spróbuj ponownie.",
+        "retry": "Spróbuj ponownie",
+        "backToScenarios": "Wróć do scenariuszy",
+        "progress": {
+          "start": "Nie udało się uruchomić scenariusza ani zapisać postępu. Spróbuj ponownie.",
+          "choice": "Nie udało się zapisać Twojej decyzji. Postęp nie został utracony. Spróbuj ponownie.",
+          "challenge": "Nie udało się zapisać ukończenia wyzwania. Spróbuj ponownie przed przejściem dalej.",
+          "scenario": "Nie udało się zapisać ukończenia scenariusza. Spróbuj ponownie."
         }
-      },
-      "prepare": {
-        "title": "Przed uruchomieniem",
-        "quickTipTitle": "Szybka wskazówka",
-        "quickTipText": "Ta strona jest spokojnym punktem przygotowania przed interaktywnym doświadczeniem. Przejrzyj kontekst, a potem uruchom scenariusz, gdy będziesz gotowy na skupioną sesję.",
-        "checklist": {
-          "time": "Zarezerwuj około {duration} na skupione przejście.",
-          "flow": "Spodziewaj się etapowych wyborów, natychmiastowego feedbacku i praktycznych kompromisów.",
-          "revisit": "Wróć do scenariusza później, aby porównać, jak różne decyzje mogą wpłynąć na wynik."
-        }
-      },
-      "relatedPanel": {
-        "openLauncher": "Otwórz launcher",
-        "emptyTitle": "Brak powiązanych scenariuszy",
-        "emptyDescription": "Dodatkowe rekomendacje pojawią się tutaj wraz z rozwojem biblioteki scenariuszy."
-      }
-    },
-    "ScenarioLaunchShell": {
-      "area": {
-        "environmental": "Environmental",
-        "social": "Social",
-        "governance": "Governance",
-        "crossCutting": "Cross-cutting"
-      }
-    },
-    "ScenarioSwitcher": {
-      "tabs": {
-        "mine": "Moje scenariusze",
-        "all": "Wszystkie scenariusze"
-      },
-      "empty": {
-        "mineTitle": "Brak śledzonych scenariuszy",
-        "mineDescription": "Uruchom scenariusz, aby zbudować swoją osobistą bibliotekę scenariuszy i wrócić do niej później.",
-        "allTitle": "Nie znaleziono scenariuszy",
-        "allDescription": "Spróbuj zmienić filtr obszaru ESG lub frazę wyszukiwania, aby przeglądać metadane scenariuszy."
       }
     }
   }
