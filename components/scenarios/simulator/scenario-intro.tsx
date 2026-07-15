@@ -59,7 +59,7 @@ export type ScenarioIntroProps = {
 
 function MarkdownContent({ children }: { readonly children: string }) {
   return (
-    <div className="space-y-3 text-[0.95rem] leading-7 text-[#596170]">
+    <div className="space-y-2 text-sm leading-6 text-[#596170] sm:text-[0.95rem] sm:leading-7">
       <ReactMarkdown
         components={{
           p: ({ children: paragraphChildren }) => <p>{paragraphChildren}</p>,
@@ -167,8 +167,10 @@ function ScenarioIntroContent({
       <div className="flex h-full min-h-0 items-center justify-center p-3 sm:p-4 lg:p-5">
         <article
           ref={contentRef}
-          className="max-h-full w-full max-w-4xl overflow-y-auto rounded-3xl border border-white/35 bg-white/96 p-5 shadow-[0_24px_70px_rgba(23,36,58,0.3)] backdrop-blur-md sm:p-6 lg:p-7"
+          className="max-h-full w-full max-w-5xl overflow-y-auto rounded-3xl border border-white/35 bg-white/96 p-4 shadow-[0_24px_70px_rgba(23,36,58,0.3)] backdrop-blur-md sm:p-5 lg:p-6"
         >
+          <IntroProgress step={step} labels={labels} />
+
           <AnimatePresence initial={false} mode="wait">
             <ScenarioScreenTransition
               key={step}
@@ -178,7 +180,7 @@ function ScenarioIntroContent({
             >
               {step === 1 ? (
                 <>
-                  <header className="mt-5">
+                  <header className="mt-4">
                     <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#0d6fe8]">
                       {labels.scenario} {scenario.order}
                     </p>
@@ -194,82 +196,83 @@ function ScenarioIntroContent({
                     ) : null}
                   </header>
 
-                  <div className="mt-5 grid gap-4 lg:grid-cols-[1.6fr_1fr]">
-                    <section
-                      aria-labelledby="scenario-context-heading"
-                      className="rounded-[1.15rem] border border-[#e2e8ef] bg-[#f8fafc] p-4 sm:p-5"
-                    >
-                      <div className="flex items-center gap-3">
-                        <span
-                          aria-hidden="true"
-                          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eef5ff] text-[#0d6fe8]"
-                        >
-                          <Target size={18} />
-                        </span>
+                  <section
+                    aria-label={labels.scenarioInformation}
+                    className="mt-4 grid gap-3 sm:grid-cols-2"
+                  >
+                    {scenario.organisation ? (
+                      <div className="rounded-[1.1rem] border border-[#e2e8ef] bg-white p-3.5">
+                        <div className="flex items-center gap-3">
+                          <span
+                            aria-hidden="true"
+                            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eef3f8] text-[#31425a]"
+                          >
+                            <Building2 size={18} />
+                          </span>
 
-                        <h3
-                          id="scenario-context-heading"
-                          className="text-base font-semibold text-[#31425a]"
-                        >
-                          {labels.context}
-                        </h3>
-                      </div>
+                          <div className="min-w-0">
+                            <p className="text-xs font-semibold uppercase tracking-widest text-[#7a8594]">
+                              {labels.organisation}
+                            </p>
 
-                      <div className="mt-3">
-                        <MarkdownContent>{scenario.introduction}</MarkdownContent>
-                      </div>
-                    </section>
-
-                    <section className="grid content-start gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                      {scenario.organisation ? (
-                        <div className="rounded-[1.1rem] border border-[#e2e8ef] bg-white p-4">
-                          <div className="flex items-start gap-3">
-                            <span
-                              aria-hidden="true"
-                              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eef3f8] text-[#31425a]"
-                            >
-                              <Building2 size={18} />
-                            </span>
-
-                            <div>
-                              <p className="text-xs font-semibold uppercase tracking-widest text-[#7a8594]">
-                                {labels.organisation}
-                              </p>
-
-                              <p className="mt-1 text-sm font-semibold leading-6 text-[#31425a]">
-                                {scenario.organisation}
-                              </p>
-                            </div>
+                            <p className="mt-0.5 text-sm font-semibold leading-5 text-[#31425a]">
+                              {scenario.organisation}
+                            </p>
                           </div>
                         </div>
-                      ) : null}
+                      </div>
+                    ) : null}
 
-                      {scenario.role ? (
-                        <div className="rounded-[1.1rem] border border-[#e2e8ef] bg-white p-4">
-                          <div className="flex items-start gap-3">
-                            <span
-                              aria-hidden="true"
-                              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#fff3ea] text-[#d85c1b]"
-                            >
-                              <UserRound size={18} />
-                            </span>
+                    {scenario.role ? (
+                      <div className="rounded-[1.1rem] border border-[#e2e8ef] bg-white p-3.5">
+                        <div className="flex items-center gap-3">
+                          <span
+                            aria-hidden="true"
+                            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#fff3ea] text-[#d85c1b]"
+                          >
+                            <UserRound size={18} />
+                          </span>
 
-                            <div>
-                              <p className="text-xs font-semibold uppercase tracking-widest text-[#7a8594]">
-                                {labels.yourRole}
-                              </p>
+                          <div className="min-w-0">
+                            <p className="text-xs font-semibold uppercase tracking-widest text-[#7a8594]">
+                              {labels.yourRole}
+                            </p>
 
-                              <p className="mt-1 text-sm font-semibold leading-6 text-[#31425a]">
-                                {scenario.role}
-                              </p>
-                            </div>
+                            <p className="mt-0.5 text-sm font-semibold leading-5 text-[#31425a]">
+                              {scenario.role}
+                            </p>
                           </div>
                         </div>
-                      ) : null}
-                    </section>
-                  </div>
+                      </div>
+                    ) : null}
+                  </section>
 
-                  <footer className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <section
+                    aria-labelledby="scenario-context-heading"
+                    className="mt-3 rounded-[1.15rem] border border-[#e2e8ef] bg-[#f8fafc] p-4"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span
+                        aria-hidden="true"
+                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eef5ff] text-[#0d6fe8]"
+                      >
+                        <Target size={18} />
+                      </span>
+
+                      <h3
+                        id="scenario-context-heading"
+                        className="text-base font-semibold text-[#31425a]"
+                      >
+                        {labels.context}
+                      </h3>
+                    </div>
+
+                    <div className="mt-3">
+                      <MarkdownContent>{scenario.introduction}</MarkdownContent>
+                    </div>
+                  </section>
+
+                  <footer className="mt-5 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
                     {onExit ? (
                       <button
                         type="button"
@@ -397,8 +400,6 @@ function ScenarioIntroContent({
               )}
             </ScenarioScreenTransition>
           </AnimatePresence>
-
-          <IntroProgress step={step} labels={labels} />
         </article>
       </div>
     </div>

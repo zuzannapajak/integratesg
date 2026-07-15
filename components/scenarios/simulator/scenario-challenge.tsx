@@ -273,14 +273,14 @@ function ScenarioChallengeContent({
       aria-busy={isSubmitting}
       className="absolute inset-0 bg-linear-to-t from-[#17243a]/78 via-[#17243a]/25 to-[#17243a]/4"
     >
-      <div className="flex h-full min-h-0 items-center justify-end p-3 sm:p-4 lg:p-5">
+      <div className="flex h-full min-h-0 items-center justify-center p-3 sm:p-4 lg:p-5">
         <article
           ref={contentRef}
-          className="max-h-full w-full overflow-y-auto rounded-3xl border border-white/40 bg-white/97 p-5 shadow-[0_24px_70px_rgba(23,36,58,0.3)] backdrop-blur-md sm:max-w-3xl sm:p-6 lg:p-7"
+          className="max-h-full w-full overflow-y-auto rounded-3xl border border-white/40 bg-white/97 p-4 shadow-[0_24px_70px_rgba(23,36,58,0.3)] backdrop-blur-md sm:max-w-4xl sm:p-5 lg:max-w-5xl lg:p-6 2xl:max-w-6xl"
         >
           <ChallengeProgress step={step} labels={labels} />
 
-          <header className="mt-5 flex items-start justify-between gap-4">
+          <header className="mt-4 flex items-start justify-between gap-4">
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2">
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#0d6fe8]">
@@ -322,7 +322,7 @@ function ScenarioChallengeContent({
                 <>
                   <section
                     aria-labelledby="challenge-context-heading"
-                    className="mt-6 rounded-2xl border border-[#dfe5ec] bg-[#f8fafc] p-4 sm:p-5"
+                    className="mt-4 rounded-2xl border border-[#dfe5ec] bg-[#f8fafc] p-4 sm:p-5"
                   >
                     <div className="flex items-center gap-3">
                       <span
@@ -345,7 +345,7 @@ function ScenarioChallengeContent({
                     </div>
                   </section>
 
-                  <footer className="mt-6 flex justify-end">
+                  <footer className="mt-4 flex justify-end">
                     <button
                       type="button"
                       data-scenario-context-action
@@ -362,7 +362,7 @@ function ScenarioChallengeContent({
                 </>
               ) : (
                 <>
-                  <section aria-labelledby="challenge-decision-heading" className="mt-6">
+                  <section aria-labelledby="challenge-decision-heading" className="mt-4">
                     <div className="flex items-start gap-3">
                       <span
                         aria-hidden="true"
@@ -386,7 +386,7 @@ function ScenarioChallengeContent({
                     </div>
 
                     <fieldset
-                      className="mt-5 space-y-3"
+                      className="mt-4 space-y-2.5"
                       disabled={isSubmitting}
                       onKeyDown={handleDecisionKeyDown}
                     >
@@ -415,7 +415,7 @@ function ScenarioChallengeContent({
                     </div>
                   ) : null}
 
-                  <footer className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <footer className="mt-4 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <button
                       type="button"
                       disabled={isSubmitting}

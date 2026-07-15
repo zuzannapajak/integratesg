@@ -13,8 +13,8 @@ export default async function ScenariosPage({ params }: ScenariosPageProps) {
   const items = await getScenarioPathwayItemsForUser(userId);
 
   return (
-    <main className="min-h-screen bg-[#f3f6f9] p-3 sm:p-5 lg:p-6">
-      <div className="mx-auto w-full max-w-400">
+    <main className="min-h-full bg-[#f3f6f9] p-3 sm:p-5 md:h-full md:min-h-0 md:overflow-hidden lg:p-6">
+      <div className="mx-auto w-full max-w-400 md:h-full md:min-h-0">
         <ScenarioMapClient locale={locale} items={items} />
       </div>
     </main>

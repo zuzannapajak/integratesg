@@ -87,11 +87,11 @@ export function ScenarioCorrectFeedback({
       aria-busy={isSubmitting}
       className="absolute inset-0 bg-linear-to-t from-[#17243a]/82 via-[#17243a]/28 to-[#17243a]/4"
     >
-      <div className="flex h-full min-h-0 items-center justify-end p-3 sm:p-4 lg:p-5">
+      <div className="flex h-full min-h-0 items-center justify-center p-3 sm:p-4 lg:p-5">
         <article
           role="status"
           aria-live="polite"
-          className="max-h-full w-full overflow-y-auto rounded-3xl border border-white/40 bg-white/97 p-5 shadow-[0_24px_70px_rgba(23,36,58,0.32)] backdrop-blur-md sm:max-w-3xl sm:p-6 lg:p-7"
+          className="max-h-full w-full overflow-y-auto rounded-3xl border border-white/40 bg-white/97 p-4 shadow-[0_24px_70px_rgba(23,36,58,0.32)] backdrop-blur-md sm:max-w-4xl sm:p-5 lg:max-w-5xl lg:p-6 2xl:max-w-6xl"
         >
           <div className="flex items-start gap-4">
             <span

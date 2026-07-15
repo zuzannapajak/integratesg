@@ -7,7 +7,7 @@ export default function ScenarioPlayLoading() {
   const t = useTranslations("Protected.ScenarioSimulator.loading");
 
   return (
-    <main className="min-h-full bg-[#f3f6f9] p-3 sm:p-5 lg:p-6">
+    <main className="min-h-full bg-[#f3f6f9] p-3 [--app-topbar-height:78px] [--scenario-player-gap:24px] sm:p-5 sm:[--scenario-player-gap:40px] md:h-full md:min-h-0 md:overflow-hidden lg:p-6 lg:[--scenario-player-gap:48px]">
       <section
         data-testid="scenario-route-loading"
         role="status"
