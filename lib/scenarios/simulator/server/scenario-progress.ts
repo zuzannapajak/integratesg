@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 
+import { isAppLocale } from "@/lib/i18n/locales";
 import { prisma } from "@/lib/prisma";
 import { resolveScenarioBySlug } from "@/lib/scenarios/simulator/resolve-scenario";
 import {
@@ -40,6 +41,10 @@ type GetScenarioRuntimeStateInput = ScenarioProgressIdentity & {
 function resolveValidatedScenario(
   input: Pick<ScenarioProgressIdentity, "scenarioId" | "scenarioVersion" | "locale">,
 ): ResolvedScenario {
+  if (!isAppLocale(input.locale)) {
+    throw new Error("Unsupported scenario locale.");
+  }
+
   const scenario = resolveScenarioBySlug(input.scenarioId, input.locale);
 
   if (!scenario) {
@@ -53,6 +58,66 @@ function resolveValidatedScenario(
   return scenario;
 }
 
+function getChallengeIndexOrThrow(scenario: ResolvedScenario, challengeId: ChallengeId): number {
+  const challengeIndex = scenario.challenges.findIndex((challenge) => challenge.id === challengeId);
+
+  if (challengeIndex < 0) {
+    throw new Error("Challenge not found.");
+  }
+
+  return challengeIndex;
+}
+
+async function assertPreviousChallengesCompleted(
+  attemptId: string,
+  scenario: ResolvedScenario,
+  challengeIndex: number,
+): Promise<void> {
+  const previousChallengeIds = scenario.challenges
+    .slice(0, challengeIndex)
+    .map((challenge) => challenge.id);
+
+  if (previousChallengeIds.length === 0) {
+    return;
+  }
+
+  const completedPreviousChallenges = await prisma.userScenarioChallengeCompletion.count({
+    where: {
+      attemptId,
+
+      challengeId: {
+        in: previousChallengeIds,
+      },
+    },
+  });
+
+  if (completedPreviousChallenges !== previousChallengeIds.length) {
+    throw new Error("Previous challenges must be completed before this challenge.");
+  }
+}
+
+async function assertChallengeAcceptsChoices(
+  attemptId: string,
+  challengeId: ChallengeId,
+): Promise<void> {
+  const completion = await prisma.userScenarioChallengeCompletion.findUnique({
+    where: {
+      attemptId_challengeId: {
+        attemptId,
+        challengeId,
+      },
+    },
+
+    select: {
+      id: true,
+    },
+  });
+
+  if (completion) {
+    throw new Error("A completed challenge cannot accept additional choices.");
+  }
+}
+
 async function findActiveAttempt(input: ScenarioProgressIdentity) {
   return prisma.userScenarioAttempt.findFirst({
     where: {
@@ -61,7 +126,16 @@ async function findActiveAttempt(input: ScenarioProgressIdentity) {
       scenarioVersion: input.scenarioVersion,
       status: "incomplete",
     },
-    orderBy: [{ attemptNumber: "desc" }, { createdAt: "desc" }],
+
+    orderBy: [
+      {
+        attemptNumber: "desc",
+      },
+      {
+        createdAt: "desc",
+      },
+    ],
+
     select: {
       id: true,
       attemptNumber: true,
@@ -93,7 +167,16 @@ export async function startScenarioProgress(input: ScenarioProgressIdentity) {
           scenarioVersion: input.scenarioVersion,
           status: "incomplete",
         },
-        orderBy: [{ attemptNumber: "desc" }, { createdAt: "desc" }],
+
+        orderBy: [
+          {
+            attemptNumber: "desc",
+          },
+          {
+            createdAt: "desc",
+          },
+        ],
+
         select: {
           id: true,
           attemptNumber: true,
@@ -105,6 +188,7 @@ export async function startScenarioProgress(input: ScenarioProgressIdentity) {
           where: {
             id: activeAttempt.id,
           },
+
           data: {
             locale: input.locale,
             lastOpenedAt: now,
@@ -123,7 +207,16 @@ export async function startScenarioProgress(input: ScenarioProgressIdentity) {
           scenarioId: input.scenarioId,
           scenarioVersion: input.scenarioVersion,
         },
-        orderBy: [{ attemptNumber: "desc" }, { createdAt: "desc" }],
+
+        orderBy: [
+          {
+            attemptNumber: "desc",
+          },
+          {
+            createdAt: "desc",
+          },
+        ],
+
         select: {
           attemptNumber: true,
         },
@@ -142,6 +235,7 @@ export async function startScenarioProgress(input: ScenarioProgressIdentity) {
           startedAt: now,
           lastOpenedAt: now,
         },
+
         select: {
           id: true,
           attemptNumber: true,
@@ -155,8 +249,8 @@ export async function startScenarioProgress(input: ScenarioProgressIdentity) {
     });
   } catch (error) {
     /*
-     * Chroni przed sytuacją, w której dwa równoległe żądania
-     * próbują utworzyć ten sam numer podejścia.
+     * Chroni przed sytuacją, w której dwa równoległe
+     * żądania próbują utworzyć ten sam numer podejścia.
      */
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
       const existingAttempt = await findActiveAttempt(input);
@@ -164,6 +258,7 @@ export async function startScenarioProgress(input: ScenarioProgressIdentity) {
       if (existingAttempt) {
         return {
           attemptId: existingAttempt.id,
+
           attemptNumber: existingAttempt.attemptNumber,
         };
       }
@@ -176,11 +271,9 @@ export async function startScenarioProgress(input: ScenarioProgressIdentity) {
 export async function recordScenarioChoiceProgress(input: RecordScenarioChoiceInput) {
   const scenario = resolveValidatedScenario(input);
 
-  const challenge = scenario.challenges.find((item) => item.id === input.challengeId);
+  const challengeIndex = getChallengeIndexOrThrow(scenario, input.challengeId);
 
-  if (!challenge) {
-    throw new Error("Challenge not found.");
-  }
+  const challenge = scenario.challenges[challengeIndex];
 
   const choice = challenge.choices.find((item) => item.id === input.choiceId);
 
@@ -193,6 +286,69 @@ export async function recordScenarioChoiceProgress(input: RecordScenarioChoiceIn
   }
 
   const attempt = await getActiveAttemptOrThrow(input);
+
+  await assertPreviousChallengesCompleted(attempt.id, scenario, challengeIndex);
+
+  await assertChallengeAcceptsChoices(attempt.id, input.challengeId);
+
+  /*
+   * Powtórne dostarczenie już zapisanego żądania
+   * jest dozwolone, ale nie może zmienić decyzji
+   * ani jej poprawności.
+   */
+  const existingChoiceAttempt = await prisma.userScenarioChoiceAttempt.findUnique({
+    where: {
+      attemptId_challengeId_attemptNumber: {
+        attemptId: attempt.id,
+        challengeId: input.challengeId,
+        attemptNumber: input.attemptNumber,
+      },
+    },
+
+    select: {
+      isOptimal: true,
+    },
+  });
+
+  if (existingChoiceAttempt) {
+    await prisma.userScenarioAttempt.update({
+      where: {
+        id: attempt.id,
+      },
+
+      data: {
+        locale: input.locale,
+        lastOpenedAt: new Date(),
+      },
+    });
+
+    return {
+      attemptId: attempt.id,
+      isOptimal: existingChoiceAttempt.isOptimal,
+    };
+  }
+
+  const latestChoiceAttempt = await prisma.userScenarioChoiceAttempt.findFirst({
+    where: {
+      attemptId: attempt.id,
+      challengeId: input.challengeId,
+    },
+
+    orderBy: {
+      attemptNumber: "desc",
+    },
+
+    select: {
+      attemptNumber: true,
+    },
+  });
+
+  const expectedAttemptNumber = (latestChoiceAttempt?.attemptNumber ?? 0) + 1;
+
+  if (input.attemptNumber !== expectedAttemptNumber) {
+    throw new Error("Choice attempt number must be sequential.");
+  }
+
   const now = new Date();
 
   const [recordedChoiceAttempt] = await prisma.$transaction([
@@ -204,21 +360,25 @@ export async function recordScenarioChoiceProgress(input: RecordScenarioChoiceIn
           attemptNumber: input.attemptNumber,
         },
       },
+
       create: {
         attemptId: attempt.id,
         challengeId: input.challengeId,
         choiceId: input.choiceId,
         attemptNumber: input.attemptNumber,
 
-        // Optimality is always resolved from trusted server-side content.
+        /*
+         * Poprawność jest zawsze ustalana na podstawie
+         * zaufanej treści po stronie serwera.
+         */
         isOptimal: choice.isOptimal,
 
         confirmedAt: now,
       },
 
       /*
-       * Repeated delivery of the same request must not modify
-       * an already recorded decision.
+       * Powtórne dostarczenie tego samego numeru
+       * próby nie może nadpisać decyzji.
        */
       update: {},
 
@@ -231,6 +391,7 @@ export async function recordScenarioChoiceProgress(input: RecordScenarioChoiceIn
       where: {
         id: attempt.id,
       },
+
       data: {
         locale: input.locale,
         lastOpenedAt: now,
@@ -247,15 +408,11 @@ export async function recordScenarioChoiceProgress(input: RecordScenarioChoiceIn
 export async function completeScenarioChallengeProgress(input: CompleteScenarioChallengeInput) {
   const scenario = resolveValidatedScenario(input);
 
-  const challengeExists = scenario.challenges.some(
-    (challenge) => challenge.id === input.challengeId,
-  );
-
-  if (!challengeExists) {
-    throw new Error("Challenge not found.");
-  }
+  const challengeIndex = getChallengeIndexOrThrow(scenario, input.challengeId);
 
   const attempt = await getActiveAttemptOrThrow(input);
+
+  await assertPreviousChallengesCompleted(attempt.id, scenario, challengeIndex);
 
   const optimalChoiceAttempt = await prisma.userScenarioChoiceAttempt.findFirst({
     where: {
@@ -263,6 +420,7 @@ export async function completeScenarioChallengeProgress(input: CompleteScenarioC
       challengeId: input.challengeId,
       isOptimal: true,
     },
+
     select: {
       id: true,
     },
@@ -282,6 +440,7 @@ export async function completeScenarioChallengeProgress(input: CompleteScenarioC
           challengeId: input.challengeId,
         },
       },
+
       create: {
         attemptId: attempt.id,
         challengeId: input.challengeId,
@@ -289,8 +448,8 @@ export async function completeScenarioChallengeProgress(input: CompleteScenarioC
       },
 
       /*
-       * Preserve the original completion timestamp when
-       * the same request is delivered again.
+       * Ponowne dostarczenie żądania zachowuje
+       * pierwotny czas ukończenia.
        */
       update: {},
     }),
@@ -299,6 +458,7 @@ export async function completeScenarioChallengeProgress(input: CompleteScenarioC
       where: {
         id: attempt.id,
       },
+
       data: {
         locale: input.locale,
         lastOpenedAt: now,
@@ -313,6 +473,7 @@ export async function completeScenarioChallengeProgress(input: CompleteScenarioC
 
 export async function completeScenarioProgress(input: ScenarioProgressIdentity) {
   const scenario = resolveValidatedScenario(input);
+
   const attempt = await getActiveAttemptOrThrow(input);
 
   const expectedChallengeIds = scenario.challenges.map((challenge) => challenge.id);
@@ -320,6 +481,7 @@ export async function completeScenarioProgress(input: ScenarioProgressIdentity) 
   const completedChallenges = await prisma.userScenarioChallengeCompletion.count({
     where: {
       attemptId: attempt.id,
+
       challengeId: {
         in: expectedChallengeIds,
       },
@@ -336,6 +498,7 @@ export async function completeScenarioProgress(input: ScenarioProgressIdentity) 
     where: {
       id: attempt.id,
     },
+
     data: {
       locale: input.locale,
       status: "completed",
@@ -467,16 +630,15 @@ export async function getScenarioRuntimeState(
 
     /*
      * Nie pokazujemy historii odrzuconych
-     * odpowiedzi dla ukończonego challenge’u.
+     * odpowiedzi dla ukończonego wyzwania.
      */
     if (completedChallengeIdSet.has(challenge.id)) {
       continue;
     }
 
     /*
-     * Poprawność ponownie sprawdzamy na
-     * aktualnej, zweryfikowanej treści
-     * scenariusza.
+     * Poprawność ponownie sprawdzamy na aktualnej,
+     * zweryfikowanej treści scenariusza.
      */
     if (choice.isOptimal) {
       continue;
@@ -520,8 +682,11 @@ export async function getScenarioRuntimeState(
       : null;
 
   let initialView: ScenarioPlayerView;
+
   let initialChallengeId: ChallengeId | null = null;
+
   let initialChallengeStep: "context" | "decision" = "context";
+
   let initialSelectedChoiceId: ChoiceId | null = null;
 
   if (attempt.status === "completed") {
@@ -532,7 +697,7 @@ export async function getScenarioRuntimeState(
     initialView = input.mode === "review" ? "board" : "completion";
   } else if (allChallengesCompleted) {
     /*
-     * Wszystkie challenge’e zostały ukończone,
+     * Wszystkie wyzwania zostały ukończone,
      * ale użytkownik nie zatwierdził jeszcze
      * całego scenariusza.
      */
@@ -543,15 +708,15 @@ export async function getScenarioRuntimeState(
     if (!latestChoiceAttempt) {
       /*
        * Użytkownik nie zatwierdził jeszcze
-       * żadnej decyzji w tym challenge’u.
+       * żadnej decyzji w tym wyzwaniu.
        */
       initialView = "challenge";
       initialChallengeStep = "context";
     } else if (latestSelectedChoice?.isOptimal) {
       /*
        * Poprawna decyzja została zapisana,
-       * ale challenge nie został jeszcze
-       * ukończony przyciskiem Continue.
+       * ale wyzwanie nie zostało jeszcze
+       * ukończone przyciskiem Continue.
        */
       initialView = "feedback";
       initialChallengeStep = "decision";
