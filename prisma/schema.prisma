@@ -23,21 +23,25 @@ model Profile {
 }
 
 model CaseStudy {
-  id           String                  @id @default(cuid())
-  slug         String                  @unique
-  area         CourseArea
-  status       PublicationStatus       @default(draft)
-  sortOrder    Int                     @default(0)
-  isFeatured   Boolean                 @default(false)
-  createdAt    DateTime                @default(now())
-  updatedAt    DateTime                @updatedAt
-  translations CaseStudyTranslation[]
-  userProgress UserCaseStudyProgress[]
+  id              String                  @id @default(cuid())
+  slug            String                  @unique
+  area            CourseArea
+  status          PublicationStatus       @default(draft)
+  sortOrder       Int                     @default(0)
+  isFeatured      Boolean                 @default(false)
+  countryCode     String
+  reportingPeriod String?
+  sourcePartner   String?
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
+  translations    CaseStudyTranslation[]
+  userProgress    UserCaseStudyProgress[]
 
   @@index([status])
   @@index([area])
   @@index([sortOrder])
   @@index([isFeatured])
+  @@index([countryCode])
 }
 
 model CaseStudyTranslation {
