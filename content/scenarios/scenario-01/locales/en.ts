@@ -12,12 +12,10 @@ export const scenario01En = defineScenarioLocale<"scenario-01">({
 
   shortTitle: "Foundations of ESG",
 
-  subtitle: "The Supplier's Dilemma: integrating ESG pillars into a credible business roadmap",
+  subtitle: "The Supplier's Dilemma – Integrating the Pillars",
 
   introduction: `
-You are the manager of GreenTech Solutions, an SME that manufactures high-efficiency components. A major international corporation is interested in signing a multi-year supply contract, but first requires an ESG Integration Roadmap that goes beyond the company's existing charitable donations.
-
-To secure the opportunity, you must demonstrate a practical understanding of the Environmental, Social and Governance pillars, explain the difference between traditional CSR and integrated ESG management, and connect the company's actions with relevant Sustainable Development Goals.
+You are the manager of "GreenTech Solutions," an SME that manufactures high-efficiency components. A major international corporation has reached out, interested in a multi-year contract. However, before signing, they require you to submit an "ESG Integration Roadmap" that goes beyond your current charitable donations.
     `.trim(),
 
   organisation: "GreenTech Solutions",
@@ -25,257 +23,180 @@ To secure the opportunity, you must demonstrate a practical understanding of the
   role: "Company Manager",
 
   objectives: [
-    "Define and differentiate the Environmental, Social and Governance pillars in a business context.",
-    "Apply ESG principles to strengthen risk management and gain access to corporate supply chains.",
-    "Connect specific business actions with relevant Sustainable Development Goals.",
+    "Define and differentiate the three core pillars of ESG (Environmental, Social, Governance) within a business context.",
+    "Apply ESG principles to secure a strategic advantage, specifically for gaining access to large corporate supply chains.",
   ],
 
   boardAlt:
-    "Three connected business discussions about ESG pillars, the difference between CSR and ESG integration, and links between company actions and the Sustainable Development Goals.",
+    "Three connected business situations about defining ESG pillars, moving from CSR to ESG integration, and linking company actions to the Sustainable Development Goals.",
 
   challenges: {
     [challenges.pillars]: {
-      title: "Defining the ESG pillars for the client",
+      title: "Defining the Pillars for the Client",
 
       shortTitle: "Define the ESG pillars",
 
       context: `
-The client's procurement officer asks how GreenTech Solutions manages non-financial risks across the Environmental, Social and Governance pillars.
-
-You need to categorise the company's current activities correctly. The examples include energy efficiency, fair pay and diversity policies, transparent board decision-making, anti-corruption measures, employee safety and waste management.
+The client’s procurement officer asks you to explain how your company manages "Non-Financial Risks" specifically across the E, S, and G pillars. You must categorize your current activities correctly to show you understand the framework.
         `.trim(),
 
-      question: "How should the company classify its activities across the three ESG pillars?",
+      question:
+        "How should GreenTech Solutions categorize its current activities across the Environmental, Social and Governance pillars?",
 
       choices: {
         [choices.pillars.accurateCategorisation]: {
-          label: "Categorise each activity by its actual ESG impact",
+          label: "Categorize operations by their actual ESG impact",
 
           text: `
-Present energy efficiency and waste management as Environmental matters, fair pay, diversity and employee safety as Social matters, and transparent decision-making and anti-corruption controls as Governance matters.
+Categorize operations accurately by highlighting your energy efficiency (E), your fair pay and diversity policies (S), and your transparent board decision-making and anti-corruption measures (G).
             `.trim(),
 
           feedback: {
-            title: "A clear and technically accurate ESG structure",
-
             body: `
-This classification demonstrates that the company understands ESG as a structured framework for managing non-financial risks rather than as a collection of buzzwords. It shows the client how different activities contribute to long-term business value.
+Excellent work. By correctly identifying that energy efficiency belongs to Environmental, fair pay to Social, and anti-corruption to Governance, you demonstrate that ESG is a "scorecard" for risk management. This clarity proves to the client that you aren't just using buzzwords, but are managing non-financial factors to create long-term value.
               `.trim(),
-
-            consequence:
-              "The procurement team receives a credible overview that can be evaluated against the client's supplier requirements.",
-
-            takeaway:
-              "Environmental concerns relate to impacts on the natural world, Social concerns focus on people, and Governance concerns address how the organisation is directed and controlled.",
           },
         },
 
         [choices.pillars.rulesConfusion]: {
-          label: "Treat employee policies as Governance",
+          label: "Treat employee policies as Governance because they are rules",
 
           text: `
-Place employee safety, fair pay and diversity under Governance because they are controlled through company policies and internal rules.
+Categorizing Employee Safety or Diversity under Governance because they are "company rules" rather than seeing them as part of the Social pillar.
             `.trim(),
 
           feedback: {
-            title: "Company rules do not automatically belong to Governance",
-
             body: `
-Although these topics are managed through policies, they concern how the company treats employees and other people. Their primary impact is therefore Social rather than Governance.
+While policies are "rules," Social (S) is specifically about how a company treats people—including employees and the communities it operates in. Categorizing DEI or safety under Governance ignores the human-centric focus of the Social pillar.
               `.trim(),
-
-            consequence:
-              "The roadmap understates the human-centred purpose of the Social pillar and may suggest weak ESG literacy.",
-
-            takeaway:
-              "Classify an issue by the impact it addresses, not only by the internal mechanism used to manage it.",
           },
         },
 
         [choices.pillars.benefitConfusion]: {
-          label: "Treat environmental actions as Social",
+          label: "Treat waste and circularity as Social because they benefit the community",
 
           text: `
-Place waste reduction and circular economy activities under the Social pillar because cleaner operations also benefit the local community.
+Categorizing Waste Management or Circular Economy efforts under the Social pillar because they "benefit the community".
             `.trim(),
 
           feedback: {
-            title: "Community benefits do not change the primary category",
-
             body: `
-Waste management and resource efficiency directly concern the company's impact on the natural environment. They remain Environmental topics even when they also create benefits for people and communities.
+It is a mistake to place waste management under "Social" just because it helps the community. The Environmental (E) pillar is strictly defined by the company's impact on the natural world and resource efficiency. For a client, seeing this in the wrong category suggests a lack of technical ESG literacy.
               `.trim(),
-
-            consequence:
-              "The client may question whether the company can report ESG risks and actions consistently.",
-
-            takeaway:
-              "Some actions have effects across several pillars, but their primary ESG category should reflect the main impact being managed.",
           },
         },
       },
     },
 
     [challenges.csrToEsg]: {
-      title: "Moving from CSR to ESG integration",
+      title: "Moving from CSR to ESG Integration",
 
-      shortTitle: "Move beyond CSR",
+      shortTitle: "Move from CSR to ESG",
 
       context: `
-GreenTech Solutions has donated two percent of its profits to a local children's hospital for many years. The CEO proposes making this charitable programme the centrepiece of the ESG roadmap.
-
-You need to explain why philanthropy alone is not sufficient for a large corporate customer that assesses environmental, social and governance risks throughout its supply chain.
+Your CEO suggests that your long history of donating 2% of profits to a local children's hospital (CSR) should be the centerpiece of the roadmap. You must explain why this is no longer sufficient for a large corporate partner.
         `.trim(),
 
-      question: "How should the roadmap explain the move from traditional CSR to ESG integration?",
+      question:
+        "How should the roadmap explain why traditional CSR is no longer sufficient for the corporate client?",
 
       choices: {
         [choices.csrToEsg.integrationEra]: {
-          label: "Embed ESG in business risk and strategy",
+          label: "Explain the shift from CSR to integrated ESG risk management",
 
           text: `
-Explain that charitable activity can remain valuable, but the roadmap must also show how Environmental, Social and Governance factors are integrated into operations, decision-making and supply-chain risk management.
+Explain the shift to the "Integration Era," where the client views E, S, and G factors as financial risks to their own supply chain rather than just voluntary philanthropy.
             `.trim(),
 
           feedback: {
-            title: "ESG becomes a core business process",
-
             body: `
-This approach reflects the shift from voluntary philanthropy toward integrated management of risks and opportunities. It shows that sustainability is connected with how the company operates and creates long-term value.
+Spot on. You have successfully navigated the "Integration Era". By explaining that ESG is "being smart" rather than just "being nice," you align with the reality that investors and large corporations now treat these factors as financial risks and opportunities. You’ve shown that sustainability is a business process, not a side project.
               `.trim(),
-
-            consequence:
-              "The client can see that ESG commitments will continue even when financial pressure makes optional activities harder to maintain.",
-
-            takeaway:
-              "CSR may focus on voluntary good deeds, while ESG requires environmental, social and governance considerations to be embedded in core business decisions.",
           },
         },
 
         [choices.csrToEsg.relabelCsr]: {
-          label: "Rename the existing CSR programme",
+          label: "Treat ESG as simply a new name for CSR",
 
           text: `
-Present the hospital donations as the company's ESG programme and update the terminology without changing how sustainability is managed internally.
+Treating ESG as simply a new name for CSR and assuming that charitable giving is the same as integrated risk management.
             `.trim(),
 
           feedback: {
-            title: "A new label does not create ESG integration",
-
             body: `
-Traditional CSR initiatives are often voluntary and separate from operational management. Renaming them does not demonstrate how the company controls material environmental, social or governance risks.
+Simply renaming your old CSR program won't work because CSR was often voluntary, philanthropic, and the first thing cut when profits dropped. Large clients need to see that your sustainability efforts are "non-negotiable" and embedded in your core strategy.
               `.trim(),
-
-            consequence:
-              "The roadmap remains disconnected from the evidence and processes required by the corporate buyer.",
-
-            takeaway:
-              "ESG integration requires changes to strategy, responsibilities and operations, not only updated communication.",
           },
         },
 
         [choices.csrToEsg.imageOnly]: {
-          label: "Focus on the positive company image",
+          label: "Rely on CSR because it creates a positive image",
 
           text: `
-Use the charitable programme to demonstrate that GreenTech Solutions is a responsible company and avoid adding more complex operational ESG commitments.
+Believing that CSR is enough because it creates a "nice" image, failing to see that ESG is now a business necessity for supply chain access.
             `.trim(),
 
           feedback: {
-            title: "A positive image cannot replace operational evidence",
-
             body: `
-Charitable giving may support reputation, but it does not address possible harms or risks in the company's own activities. Emphasising good deeds while ignoring operational impacts can create greenwashing concerns.
+Focusing only on a "nice" image can lead to "greenwashing"—where a company does good deeds (like charity) while ignoring core operational harms (like pollution). Modern ESG requires a structured, financially relevant framework that is harder to ignore than traditional CSR.
               `.trim(),
-
-            consequence:
-              "The customer may conclude that the company is not prepared for modern supply-chain ESG requirements.",
-
-            takeaway:
-              "Credible ESG claims must be supported by structured actions and evidence from the core business.",
           },
         },
       },
     },
 
     [challenges.sdgAlignment]: {
-      title: "Linking company actions to global goals",
+      title: "Linking Actions to Global Goals (SDGs)",
 
-      shortTitle: "Connect actions with SDGs",
+      shortTitle: "Link actions to the SDGs",
 
       context: `
-To complete the roadmap, you want to show how the company's operational improvements contribute to the wider sustainable development agenda.
-
-GreenTech Solutions is reducing energy waste and improving resource efficiency. The challenge is to connect these specific actions with the most relevant Sustainable Development Goals and communicate the link accurately.
+To finalize the roadmap, you want to show how your manufacturing SME contributes to the "Bigger Picture." You need to link your specific action of reducing energy waste to the correct Global Goal.
         `.trim(),
 
       question:
-        "How should the company connect its ESG actions with the Sustainable Development Goals?",
+        "How should GreenTech Solutions connect its energy and resource-efficiency actions with the Sustainable Development Goals?",
 
       choices: {
         [choices.sdgAlignment.preciseMapping]: {
-          label: "Map each action to the most relevant SDG",
+          label: "Map each ESG action to the most relevant SDG",
 
           text: `
-Link energy and resource efficiency to specific goals such as SDG 7: Affordable and Clean Energy and SDG 12: Responsible Consumption and Production, and explain how the action contributes to each selected goal.
+Map the specific ESG action to its corresponding SDG, specifically linking energy and resource efficiency to SDG 12: Responsible Consumption and Production or SDG 7: Affordable and Clean Energy.
             `.trim(),
 
           feedback: {
-            title: "A precise and credible global connection",
-
             body: `
-Mapping the company's ESG actions to relevant SDGs provides a shared international language. It demonstrates how practical improvements by an SME contribute to wider sustainable development objectives.
+Perfectly executed. Mapping your ESG "How" (the framework) to the SDG "What" (the global objectives) gives your SME a universal language. Specifically, linking resource efficiency to SDG 12 or SDG 7 shows a sophisticated understanding of how small actions contribute to the global blueprint.
               `.trim(),
-
-            consequence:
-              "The roadmap aligns with concepts already recognised by the international client and strengthens the company's strategic narrative.",
-
-            takeaway:
-              "ESG explains how the company manages sustainability, while the SDGs help communicate which wider outcomes those actions support.",
           },
         },
 
         [choices.sdgAlignment.allClimateAction]: {
-          label: "Link every environmental action to SDG 13",
+          label: "Treat every green action as SDG 13: Climate Action",
 
           text: `
-Describe all environmentally beneficial activities as contributions to SDG 13: Climate Action without distinguishing energy, materials, waste or other specific impacts.
+Claiming that all green actions support SDG 13 (Climate Action) without distinguishing between energy efficiency and carbon footprint reduction.
             `.trim(),
 
           feedback: {
-            title: "A broad claim loses useful precision",
-
             body: `
-Many environmental actions can contribute to climate objectives, but using the same goal for every action creates a vague account of impact. Resource efficiency and clean energy may have more direct links to other SDGs.
+While all green actions are good, claiming everything is "Climate Action" (SDG 13) can seem vague. Precision matters; for example, showing how you reduce barriers for underrepresented groups directly supports SDG 10 (Reduced Inequalities), which provides a much stronger narrative for your "Social" pillar.
               `.trim(),
-
-            consequence:
-              "The roadmap provides less meaningful information and may appear designed for communication rather than accurate impact mapping.",
-
-            takeaway:
-              "Choose SDGs according to the specific outcome of an action instead of using one general label for all sustainability activity.",
           },
         },
 
         [choices.sdgAlignment.noStakeholderLink]: {
-          label: "Keep the SDG connection internal",
+          label: "Do not communicate the SDG link to stakeholders",
 
           text: `
-Improve energy and resource efficiency but omit the SDG links from the roadmap because the operational results should speak for themselves.
+Failing to communicate the link to stakeholders, missing the opportunity to use a universal language that builds trust with international clients.
             `.trim(),
 
           feedback: {
-            title: "A strategic communication opportunity is missed",
-
             body: `
-The operational action remains useful, but failing to explain its connection with recognised global objectives makes it harder for international stakeholders to understand how the company aligns with their sustainability priorities.
+Failing to communicate these links is a missed strategic advantage. For an SME, using the SDGs helps you win contracts because it proves you are aligned with the same global standards as your large corporate clients.
               `.trim(),
-
-            consequence:
-              "GreenTech Solutions loses an opportunity to build trust and demonstrate alignment with the language used by larger corporate customers.",
-
-            takeaway:
-              "Clear stakeholder communication can turn well-designed ESG actions into a stronger strategic advantage.",
           },
         },
       },
@@ -283,16 +204,12 @@ The operational action remains useful, but failing to explain its connection wit
   },
 
   summary: {
-    title: "You have created a credible foundation for ESG integration",
-
-    body: `
-You helped GreenTech Solutions move from isolated charitable activity toward a structured ESG roadmap that can support risk management, stakeholder trust and access to an international supply chain.
-      `.trim(),
+    title: "You have completed the Supplier's Dilemma",
 
     takeaways: [
-      "The three ESG pillars should be differentiated according to environmental impacts, treatment of people and organisational direction and control.",
-      "ESG goes beyond traditional CSR by embedding sustainability risks and opportunities in strategy and everyday operations.",
-      "Specific links between business actions and relevant SDGs provide a credible international language for communicating impact.",
+      "Environmental, Social and Governance activities should be categorized according to the primary impact or risk being managed.",
+      "ESG integration embeds non-financial risks and opportunities in core business strategy rather than treating sustainability as voluntary philanthropy.",
+      "Specific ESG actions can be linked to relevant SDGs to communicate their contribution using a shared international language.",
     ],
   },
 });

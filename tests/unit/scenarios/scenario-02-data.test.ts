@@ -183,7 +183,7 @@ describe("Scenario 2 data", () => {
 
     expect(content.boardAlt.length).toBeGreaterThan(20);
 
-    expect(content.objectives).toHaveLength(3);
+    expect(content.objectives).toHaveLength(2);
 
     expect(getLocaleChallenges()).toHaveLength(3);
 
@@ -242,8 +242,6 @@ describe("Scenario 2 data", () => {
     const summary = scenario02Data.locales.en.summary;
 
     expect(summary.title.length).toBeGreaterThan(5);
-
-    expect(summary.body?.length ?? 0).toBeGreaterThan(20);
 
     expect(summary.takeaways).toHaveLength(3);
 

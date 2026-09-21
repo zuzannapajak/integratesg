@@ -12,225 +12,162 @@ export const scenario05En = defineScenarioLocale<"scenario-05">({
 
   shortTitle: "Cross-Functional Practice",
 
-  subtitle: "Coordinating people, data and partnerships to turn ESG into shared practice",
+  subtitle: "Embedding ESG into organisational structures, data practice and partnerships",
 
   introduction: `
-A medium-sized Bulgarian utility company is facing increasing regulatory pressure and stakeholder expectations related to ESG. The organisation already has some sustainability activities, including energy-efficiency measures and health and safety procedures, but these actions are fragmented and departments often assume that ESG is someone else's responsibility.
+You are the newly appointed ESG/Sustainability Coordinator at BalkanUtil EAD, a medium-sized Bulgarian utility company providing water and energy-related services to municipal and industrial clients across three regions. Increasing regulatory pressure and stakeholder expectations have pushed ESG onto senior management's agenda. Some sustainability-related practices already exist – such as energy efficiency measures and health and safety procedures – but they are uncoordinated, and different departments assume ESG is “someone else's responsibility.”
 
-You have been asked to help the company organise cross-functional ownership, build a realistic data foundation and assess a proposed energy-efficiency partnership with a municipality. Your decisions must balance operational knowledge, reliable evidence, shared governance and long-term impact.
+Data on environmental, social and governance performance is scattered across systems, and the company has limited budget for new technology or external consultancy. Senior management wants a practical way to organise ESG internally, build a credible data foundation, and evaluate emerging partnership opportunities – without turning ESG into an additional reporting burden disconnected from daily operations.
     `.trim(),
 
-  organisation: "Bulgarian Utility Company",
+  organisation: "BalkanUtil EAD",
 
-  role: "ESG Implementation Lead",
+  role: "ESG/Sustainability Coordinator",
 
   objectives: [
     "Apply systems and process thinking to embed ESG across different business functions.",
-    "Build data literacy through a focused and relevant ESG measurement process.",
-    "Structure external collaboration around clear roles, risks, governance and measurable outcomes.",
+    "Make informed ESG-related decisions using data, stakeholder input, and long-term impact considerations.",
   ],
 
   boardAlt:
-    "Three connected work areas showing a cross-functional ESG meeting, data analysis and a public-private partnership discussion at a utility company.",
+    "Three connected situations showing cross-functional ESG responsibility, practical ESG data collection and a public-private energy-efficiency partnership.",
 
   challenges: {
     [challenges.crossFunctionalOwnership]: {
-      title: "Creating cross-functional ESG ownership",
+      title: "Organising ESG responsibility internally",
 
-      shortTitle: "Organise ESG ownership",
+      shortTitle: "Organise ESG responsibility",
 
       context: `
-Senior management wants to avoid confusion and duplicated effort. Operations understands environmental impacts, HR manages workforce and social matters, and finance is responsible for budgeting, compliance and reporting.
-
-The company needs an internal structure that coordinates these perspectives while ensuring that ESG becomes part of normal business decisions rather than a separate reporting exercise.
+ESG has started appearing more frequently in senior management discussions, driven by regulatory pressure and stakeholder expectations. Some sustainability-related actions already exist, such as energy efficiency measures and health and safety procedures, but they are not coordinated, and different departments assume ESG is someone else's responsibility. Senior management asks how ESG should be organised internally to avoid confusion and duplication of effort.
         `.trim(),
 
-      question: "How should the company organise responsibility for ESG?",
+      question: "How should BalkanUtil EAD organise ESG responsibility internally?",
 
       choices: {
         [choices.crossFunctionalOwnership.workingGroup]: {
-          label: "Create a management-coordinated cross-functional working group",
+          label: "Create a management-coordinated cross-functional ESG working group",
 
           text: `
-Establish an ESG working group with representatives from operations, HR, finance and other relevant functions. Give each member defined responsibilities and coordinate the group at management level so that ESG objectives, actions, data and budgets remain aligned with business strategy.
+Establish a cross-functional ESG working group coordinated at management level, including representatives from key functions such as operations, human resources and finance. Each function brings a different perspective: operations understand environmental impacts, HR manages social aspects, and finance links ESG to budgeting and reporting. Coordinating ESG in this way ensures that sustainability considerations are embedded into everyday decisions and aligned with business strategy rather than treated as isolated initiatives.
             `.trim(),
 
           feedback: {
-            title: "Shared ownership is combined with strategic coordination",
-
             body: `
-This structure brings together the operational, social and financial knowledge needed for ESG implementation. It distributes responsibility without allowing individual initiatives to become disconnected or inconsistent.
+Correct. This approach creates shared ownership while maintaining coordination and strategic alignment. ESG requires operational integration across departments, not only financial reporting expertise.
               `.trim(),
-
-            consequence:
-              "Departments can integrate sustainability into everyday decisions while management maintains a coherent direction and reporting process.",
-
-            takeaway:
-              "ESG requires cross-functional ownership supported by clear coordination, accountability and strategic alignment.",
           },
         },
 
         [choices.crossFunctionalOwnership.financeOnly]: {
-          label: "Assign ESG leadership to finance",
+          label: "Assign ESG coordination to the finance department",
 
           text: `
-Place ESG coordination entirely within the finance department because future disclosures and investor requirements are closely connected with compliance, budgeting and reporting systems.
+Assign ESG coordination to the finance department, because ESG reporting is expected to become a regulatory and investor requirement, and finance already manages compliance and reporting systems.
             `.trim(),
 
           feedback: {
-            title: "Reporting expertise is only one part of ESG implementation",
-
             body: `
-Finance plays an important role in controls, investment decisions and disclosure, but it does not manage most environmental and social impacts. Limiting ownership to finance can turn ESG into a compliance exercise disconnected from operations and employees.
+While finance plays an important role in ESG disclosure, limiting ESG leadership to compliance risks turning sustainability into a reporting exercise rather than a business transformation process.
               `.trim(),
-
-            consequence:
-              "Operational changes may remain fragmented, and the company may report activity without achieving meaningful business transformation.",
-
-            takeaway:
-              "A coordinating function cannot replace the knowledge and accountability held across operational departments.",
           },
         },
 
         [choices.crossFunctionalOwnership.independentDepartments]: {
-          label: "Let every department manage ESG independently",
+          label: "Let each department manage ESG independently",
 
           text: `
-Ask each function to develop and manage its own sustainability activities so that teams remain flexible and central bureaucracy is kept to a minimum.
+Decide that each department should manage its own ESG activities independently, in order to encourage flexibility and reduce bureaucracy.
             `.trim(),
 
           feedback: {
-            title: "Flexibility without coordination creates fragmentation",
-
             body: `
-Departments may develop useful initiatives, but without shared goals, definitions and governance they are likely to duplicate effort, measure results differently and communicate inconsistent progress.
+Fully decentralised ESG management may appear flexible, but without coordination organisations struggle to align goals, measure impact consistently, and communicate progress credibly.
               `.trim(),
-
-            consequence:
-              "The organisation struggles to compare impact, allocate resources and present a credible overall ESG direction.",
-
-            takeaway:
-              "Decentralised action needs common objectives, data standards and coordination to become an integrated ESG process.",
           },
         },
       },
     },
 
     [challenges.dataFoundation]: {
-      title: "Building the company's ESG data foundation",
+      title: "Building a practical ESG data foundation",
 
-      shortTitle: "Build data capability",
+      shortTitle: "Build the ESG data foundation",
 
       context: `
-Once responsibilities are clearer, the working group discovers that ESG information is incomplete and inconsistent. Energy consumption is tracked, but social and governance data is scattered across HR, safety, operational and financial systems.
-
-Management is considering whether to begin with the information already available or wait until a dedicated ESG software solution can be purchased.
+Once ESG responsibilities are clarified, the company realises that its ESG data is inconsistent and incomplete. Energy consumption is tracked reasonably well, but social and governance data are scattered across different systems. Management debates whether to begin ESG data collection immediately using existing sources, or wait until a dedicated ESG software solution is purchased.
         `.trim(),
 
-      question: "How should the company begin collecting and using ESG data?",
+      question: "How should BalkanUtil EAD begin building its ESG data foundation?",
 
       choices: {
         [choices.dataFoundation.existingSources]: {
           label: "Start with existing sources and a focused indicator set",
 
           text: `
-Use information already available in energy bills, HR records, safety reports and financial systems. Define a small set of relevant indicators, assign owners and review the data regularly so that employees learn how ESG performance is measured before the company invests in more advanced tools.
+Start collecting ESG data using existing sources such as energy bills, HR records, safety reports, and financial data. Define a small number of clear indicators and review them regularly. This builds internal data literacy and helps employees understand how ESG performance is measured before investing in more advanced digital tools.
             `.trim(),
 
           feedback: {
-            title: "The organisation learns while improving data reliability",
-
             body: `
-Starting with manageable indicators allows teams to understand definitions, identify gaps and establish consistent routines. Technology can later support a process that the organisation already understands.
+Correct. This approach focuses on relevance, consistency, and learning rather than volume. Beginning with a manageable set of indicators helps organisations build internal understanding and data reliability over time.
               `.trim(),
-
-            consequence:
-              "Data literacy and confidence improve, while early information becomes available for operational and strategic decisions.",
-
-            takeaway:
-              "Relevant and consistent data collected through a clear process is more valuable than a large technology investment made before the process is understood.",
           },
         },
 
         [choices.dataFoundation.multinationalBenchmark]: {
-          label: "Replicate the systems of multinational ESG leaders",
+          label: "Immediately copy the indicator systems of multinational ESG leaders",
 
           text: `
-Benchmark leading international companies and immediately begin tracking dozens of indicators across every environmental, social and governance category.
+Benchmark the company against large multinational ESG leaders and immediately attempt to track dozens of indicators across all ESG categories.
             `.trim(),
 
           feedback: {
-            title: "The measurement system exceeds current capacity",
-
             body: `
-Large organisations usually have specialist teams, mature systems and broader reporting obligations. Copying their full indicator sets can overwhelm employees and reduce the quality of the information collected.
+Attempting to replicate complex multinational ESG systems too early often overwhelms teams and reduces data quality.
               `.trim(),
-
-            consequence:
-              "Teams spend more time completing templates, while inconsistent data weakens decision-making and trust in the ESG process.",
-
-            takeaway:
-              "Benchmarking can inspire improvement, but indicators must remain proportionate to material impacts and organisational maturity.",
           },
         },
 
         [choices.dataFoundation.communicationFirst]: {
-          label: "Collect the data that is easiest to communicate",
+          label: "Collect first the ESG data that is easiest to communicate externally",
 
           text: `
-Prioritise indicators that already produce attractive results for external communication, even when other data would be more relevant to operational impact, risk or long-term decisions.
+Prioritise collecting ESG data that is easiest to communicate externally, rather than data that is most relevant to operational impact and decision-making.
             `.trim(),
 
           feedback: {
-            title: "Visibility is replacing decision relevance",
-
             body: `
-Easy-to-present information may support short-term communication, but it can divert attention from material issues. This creates a reporting-driven ESG programme in which appearance matters more than operational improvement.
+Focusing mainly on externally attractive indicators risks creating a communication-driven ESG approach, where reporting visibility becomes more important than operational improvement and long-term impact.
               `.trim(),
-
-            consequence:
-              "Management receives an incomplete view of performance and external claims may appear selective or superficial.",
-
-            takeaway:
-              "ESG data should first support material decisions and long-term impact, with communication built on that reliable foundation.",
           },
         },
       },
     },
 
     [challenges.partnershipGovernance]: {
-      title: "Structuring an ESG-focused public-private partnership",
+      title: "Structuring an ESG partnership with a municipality",
 
       shortTitle: "Structure the partnership",
 
       context: `
-A municipality proposes a joint energy-efficiency project for public buildings. The initiative supports the utility company's ESG ambitions, but management is concerned about unclear responsibilities, financial exposure and reputational risk if the expected results are not achieved.
-
-Before committing, the company must decide how to define governance, risks, incentives, stakeholder roles and measurable environmental and social outcomes.
+The company is approached by a municipality proposing a joint energy-efficiency project for public buildings. The initiative aligns well with the company's ESG ambitions, but management is concerned about unclear responsibilities, financial risks, and reputational exposure if results are not achieved.
         `.trim(),
 
-      question: "How should the company prepare the proposed partnership?",
+      question: "How should the company structure the proposed partnership with the municipality?",
 
       choices: {
         [choices.partnershipGovernance.pppCanvas]: {
-          label: "Use a Public-Private Partnership Canvas",
+          label: "Use a Public–Private Partnership Canvas",
 
           text: `
-Work with the municipality to map the purpose, stakeholder roles, responsibilities, financial and operational risks, incentives, decision-making process, accountability mechanisms and expected ESG outcomes before the project is approved.
+Use a Public–Private Partnership (PPP) Canvas to structure the collaboration. This tool helps clarify roles, responsibilities, risks, incentives, governance mechanisms, and expected ESG outcomes for both parties before committing. A structured approach reduces uncertainty and builds trust.
             `.trim(),
 
           feedback: {
-            title: "The collaboration is built on transparent shared governance",
-
             body: `
-A structured partnership canvas makes assumptions visible and helps both parties agree how decisions, risks and benefits will be managed. It connects the project's ESG ambition with practical accountability and measurable outcomes.
+Correct. Effective ESG collaboration depends on shared governance, transparency, and clearly defined outcomes.
               `.trim(),
-
-            consequence:
-              "Uncertainty is reduced, trust improves and the partners can evaluate progress against responsibilities agreed from the beginning.",
-
-            takeaway:
-              "Effective ESG partnerships require shared governance, clear risk allocation and measurable outcomes, not only a common intention.",
           },
         },
 
@@ -238,43 +175,27 @@ A structured partnership canvas makes assumptions visible and helps both parties
           label: "Participate only as a technology provider",
 
           text: `
-Limit the company's role to supplying technical equipment and services, and avoid involvement in partnership governance or stakeholder coordination to reduce reputational exposure.
+Agree to participate in the partnership only as a technology provider, avoiding involvement in governance or stakeholder coordination in order to minimise reputational exposure.
             `.trim(),
 
           feedback: {
-            title: "A narrow role also limits influence and learning",
-
             body: `
-Operational delivery is important, but the company's results still depend on decisions made across the partnership. Avoiding governance may reduce direct responsibility while leaving the company unable to shape risks, standards and outcomes that affect its reputation.
+Participating only at operational level may reduce short-term risk, but it limits influence, learning opportunities, and stakeholder trust.
               `.trim(),
-
-            consequence:
-              "The company gains less stakeholder trust and has limited ability to correct problems or learn from the collaboration.",
-
-            takeaway:
-              "Participation in an ESG partnership should include an appropriate voice in the governance of shared risks and outcomes.",
           },
         },
 
         [choices.partnershipGovernance.visibilityFirst]: {
-          label: "Prioritise branding and public visibility",
+          label: "Prioritise short-term visibility and branding",
 
           text: `
-Approve the partnership quickly because it offers strong communication and branding opportunities, and define detailed ESG objectives and accountability arrangements after the public launch.
+Prioritise short-term visibility and branding opportunities from the partnership over establishing measurable ESG objectives and accountability mechanisms.
             `.trim(),
 
           feedback: {
-            title: "Publicity is preceding credible project design",
-
             body: `
-Visibility may be valuable, but without measurable objectives and clear accountability the partnership can generate attention without delivering meaningful environmental or social improvement.
+Focusing primarily on visibility rather than measurable outcomes increases the risk of superficial ESG partnerships that generate publicity without delivering meaningful environmental or social impact.
               `.trim(),
-
-            consequence:
-              "Unmet expectations may create financial disputes, stakeholder disappointment and accusations that the project is superficial.",
-
-            takeaway:
-              "Communication should reflect a well-governed partnership with defined outcomes, not substitute for one.",
           },
         },
       },
@@ -282,16 +203,12 @@ Visibility may be valuable, but without measurable objectives and clear accounta
   },
 
   summary: {
-    title: "You have turned ESG into coordinated organisational practice",
-
-    body: `
-You helped the utility company create shared internal ownership, develop data capability through a focused process and structure an external collaboration around transparent governance and measurable ESG outcomes.
-      `.trim(),
+    title: "You have embedded ESG into organisational practice and collaboration",
 
     takeaways: [
-      "Cross-functional ESG groups combine operational, people and financial knowledge while maintaining shared goals and management coordination.",
-      "A manageable set of relevant indicators and existing data sources can build literacy and reliability before advanced digital tools are introduced.",
-      "Public-private ESG projects need clearly defined roles, risks, incentives, decision rights and measurable outcomes before communication begins.",
+      "Cross-functional ESG ownership combines operational knowledge with management-level coordination and strategic alignment.",
+      "A small set of relevant indicators built from existing data sources creates a stronger foundation than an oversized measurement system.",
+      "ESG partnerships need clear roles, shared governance, transparent risk allocation and measurable outcomes before public visibility.",
     ],
   },
 });

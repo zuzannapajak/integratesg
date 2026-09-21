@@ -12,105 +12,81 @@ export const scenario03En = defineScenarioLocale<"scenario-03">({
 
   shortTitle: "Reporting Standards",
 
-  subtitle: "Selecting the right framework approach and operationalising it through credible data",
+  subtitle: "Mapping existing sustainability practice to EU stakeholder expectations",
 
   introduction: `
-You support SONNENTOR in preparing ESG information for two urgent stakeholder requests. A key EU buyer that reports under the CSRD asks for ESRS-style datapoints as part of its supplier assessment. At the same time, the company's bank requests a concise ESG overview to support financing decisions.
+You are the sustainability and reporting lead at SONNENTOR, an Austrian organic food producer based in Sprögnitz (Lower Austria) that exports teas, spices and organic products to more than 40 countries. SONNENTOR already reports through the Gemeinwohl-Bilanz (Economy for the Common Good, GWÖ), a values-based framework in which the company scores well (755 out of 1,000) and which is externally audited on a two-year cycle.
 
-SONNENTOR already uses the Gemeinwohl-Bilanz, also known as the Common Good Report, and has many sustainability practices in place. The new information must nevertheless be comparable, evidence-based and consistent across years. Your task is to select a proportionate framework approach, identify priority indicators and create a practical data-governance process that reduces reporting burden and greenwashing risk.
+Two urgent requests have now arrived at the same time. A key EU buyer, which is itself in scope of the Corporate Sustainability Reporting Directive (CSRD), asks SONNENTOR to provide ESRS-style ESG datapoints for its supplier assessment. In parallel, the company’s bank requests a concise, comparable ESG overview to inform a financing decision. Both stakeholders expect information that is comparable, evidence-based and consistent from year to year.
+
+The problem is that GWÖ tells a rich story about values and stakeholder relationships, but it is not structured like the ESRS datapoints the buyer and bank are asking for. SONNENTOR’s ESG information is currently spread across purchasing, operations, HR and finance, mostly in spreadsheets, and the company has limited budget for new software or consultancy. Senior management is proud of the GWÖ approach and is worried that responding will create a heavy new reporting burden. You must decide which framework approach SONNENTOR should use to meet EU expectations, and design a practical data-collection process for a small set of priority indicators – so the company can respond quickly, keep the workload proportionate and avoid greenwashing risks.
     `.trim(),
 
   organisation: "SONNENTOR",
 
-  role: "ESG Reporting Advisor",
+  role: "Sustainability and Reporting Lead",
 
   objectives: [
-    "Choose ESG frameworks that align the organisation's internal strategy with EU stakeholder expectations.",
-    "Select a manageable set of priority ESG indicators using materiality and stakeholder needs.",
-    "Design a repeatable data collection and quality-control process that supports credible reporting.",
+    "Choose appropriate ESG frameworks that align internal strategy with EU stakeholder expectations.",
+    "Produce a data collection approach for priority ESG indicators to ensure quality and reduce greenwashing.",
   ],
 
   boardAlt:
-    "Three connected ESG reporting work areas showing framework selection, indicator analysis and data quality controls for an Austrian company.",
+    "Three connected ESG reporting situations showing framework selection, priority indicator selection and data governance for SONNENTOR.",
 
   challenges: {
     [challenges.frameworkSelection]: {
-      title: "Selecting frameworks for EU stakeholder expectations",
+      title: "Choosing the right framework approach for EU stakeholders",
 
-      shortTitle: "Select the framework approach",
+      shortTitle: "Choose the framework approach",
 
       context: `
-A major EU buyer asks SONNENTOR for ESRS-style data to support its supplier evaluation. The company already prepares a Gemeinwohl-Bilanz that reflects its culture, governance and stakeholder approach.
-
-The reporting team must decide whether the existing framework is sufficient, whether every major ESG framework should be adopted, or whether the company should connect its current system with the specific language and methods expected by external stakeholders.
+The buyer’s questionnaire is written in ESRS terminology and the bank wants standardised figures it can compare with other borrowers. Neither stakeholder is familiar with the GWÖ matrix. Management values the GWÖ identity and is reluctant to take on a second full reporting system. Your first decision is how SONNENTOR should position its frameworks in response.
         `.trim(),
 
-      question: "Which framework approach should SONNENTOR use?",
+      question:
+        "Which framework approach should SONNENTOR use to respond to the buyer and the bank?",
 
       choices: {
         [choices.frameworkSelection.layeredApproach]: {
-          label: "Use a layered and proportionate framework approach",
+          label: "Keep GWÖ and add a lightweight mapping layer to EU expectations",
 
           text: `
-Keep the Gemeinwohl-Bilanz as the internal core, map relevant content to the ESRS-style datapoints requested by the buyer, use a recognised technical method such as the GHG Protocol for emissions, and add EU Taxonomy information only when a customer or financier requires it.
+Keep GWÖ as the core internal framework for culture, governance and stakeholder logic, and add a lightweight “mapping layer” to EU expectations. Map the ESG content SONNENTOR already has onto the small set of ESRS-style datapoints the buyer actually needs, use the GHG Protocol as the technical method for emissions to ensure comparability, and add EU Taxonomy elements only if the bank or buyer explicitly requires them.
             `.trim(),
 
           feedback: {
-            title: "Internal coherence and external comparability are both preserved",
-
             body: `
-This approach allows SONNENTOR to retain a framework that supports its organisational culture while translating relevant information into the language expected by EU buyers and banks. Technical methods improve the comparability of individual datapoints without creating unnecessary reporting layers.
+Correct. A layered approach speaks the EU stakeholders’ language while keeping SONNENTOR’s internal coherence. It reuses existing information instead of building a parallel system, reduces repeated questionnaires, improves comparability, and is proportionate for an SME with limited resources.
               `.trim(),
-
-            consequence:
-              "The company can respond faster to stakeholder requests, reduce duplicated questionnaires and maintain a manageable reporting process.",
-
-            takeaway:
-              "A layered framework approach can combine an organisation's internal sustainability model with targeted external reporting requirements.",
           },
         },
 
         [choices.frameworkSelection.gwoOnly]: {
-          label: "Use only the existing Common Good Report",
+          label: "Use GWÖ alone and decline ESRS-style datapoints",
 
           text: `
-Provide the Gemeinwohl-Bilanz as the complete response and decline to map its content to ESRS-style datapoints because the company already has a recognised sustainability framework.
+Reply that GWÖ is sufficient and decline to provide ESRS-style datapoints, on the grounds that SONNENTOR reports transparently already and is not itself directly in scope of the CSRD.
             `.trim(),
 
           feedback: {
-            title: "The existing framework may not answer the stakeholder's question",
-
             body: `
-The Common Good Report contains valuable information, but buyers and banks may not understand its categories or be able to transfer them directly into their own reporting systems. They are likely to request the missing datapoints again.
+Buyers and banks generally cannot interpret GWÖ categories and will keep asking for ESRS-style datapoints regardless. Refusing to map leads to duplicated back-and-forth, slower responses, and a real risk of losing the contract or the financing.
               `.trim(),
-
-            consequence:
-              "Responses become slower and more repetitive, and the company may face higher transaction costs or lose market opportunities.",
-
-            takeaway:
-              "A strong internal framework still needs a clear mapping to the terminology and datapoints required by external stakeholders.",
           },
         },
 
         [choices.frameworkSelection.allFrameworks]: {
-          label: "Adopt every major ESG framework",
+          label: "Adopt every major ESG framework at once",
 
           text: `
-Implement ESRS, GRI, SASB, the EU Taxonomy and several external ESG ratings at the same time so that the company can answer every possible stakeholder request.
+Adopt every major framework at once – ESRS, GRI, SASB and several additional ratings – so that SONNENTOR looks comprehensive and is ready for any request that might come.
             `.trim(),
 
           feedback: {
-            title: "More frameworks do not automatically create better reporting",
-
             body: `
-Simultaneous implementation of multiple systems can overwhelm the organisation, introduce conflicting definitions and weaken data quality. The additional workload can make reporting less consistent rather than more credible.
+Adopting every framework simultaneously overloads a small team. Conflicting definitions and too many datapoints cause data quality to drop and staff to disengage, which raises rather than lowers greenwashing risk.
               `.trim(),
-
-            consequence:
-              "Employees disengage, numbers become difficult to reproduce and the risk of inaccurate or greenwashing-prone claims increases.",
-
-            takeaway:
-              "Frameworks should be selected according to material stakeholder needs and organisational capacity, not accumulated without a clear purpose.",
           },
         },
       },
@@ -119,162 +95,111 @@ Simultaneous implementation of multiple systems can overwhelm the organisation, 
     [challenges.priorityIndicators]: {
       title: "Selecting and justifying priority ESG indicators",
 
-      shortTitle: "Choose priority indicators",
+      shortTitle: "Select priority indicators",
 
       context: `
-The buyer and the bank both need ESG information, but SONNENTOR cannot collect every possible indicator at once.
-
-The company must choose a small set of datapoints that reflects material impacts and risks, supports its strategy and can be defined and evidenced consistently. Relevant areas may include emissions and energy, packaging and materials, supply-chain practices, health and safety, training and employee turnover.
+The buyer’s template lists dozens of possible datapoints. SONNENTOR cannot produce all of them credibly in the time available, and some (for example full value-chain emissions) are not yet well measured. You need to choose a small, defensible set of priority indicators and be able to justify the selection to both the buyer and the bank.
         `.trim(),
 
-      question: "How should SONNENTOR select its priority ESG indicators?",
+      question: "How should SONNENTOR select and justify its initial set of ESG indicators?",
 
       choices: {
         [choices.priorityIndicators.materialitySet]: {
-          label: "Select a material and evidence-ready indicator set",
+          label: "Use materiality and stakeholder expectations to select a focused KPI set",
 
           text: `
-Run a lightweight materiality and stakeholder expectation check involving the buyer, bank, consumers, employees and key suppliers. Choose a small set of indicators that is strategically relevant, clearly defined, comparable and supported by accessible evidence, and document why each indicator was selected.
+Run a lightweight materiality and stakeholder-expectation check across the buyer, bank, consumers, employees and key suppliers, and select a small set of priority indicators that are material and linked to strategy (e.g. “Mission Null-Emission”, packaging, supply chain), comparable and clearly definable, and evidence-ready. An example set could be: Scope 1–2 emissions and energy consumption with a documented plan to improve Scope 3 data; packaging mix and plastic-reduction metric with method notes; share of suppliers with organic/sustainability verification; and people metrics such as health-and-safety incidents, training hours and turnover.
             `.trim(),
 
           feedback: {
-            title: "The indicator set is defensible and manageable",
-
             body: `
-This method connects reporting choices with actual impacts, risks and stakeholder needs. Clear definitions and available evidence make the selected indicators more reliable and easier to improve over time.
+Correct. A materiality-informed, small KPI set with a documented rationale is defensible, meets EU stakeholder expectations, keeps the workload manageable and supports higher data quality.
               `.trim(),
-
-            consequence:
-              "SONNENTOR can meet priority EU stakeholder expectations without creating reporting overload or sacrificing data quality.",
-
-            takeaway:
-              "A small, material and documented KPI set is more credible than a long catalogue of indicators with weak relevance or evidence.",
           },
         },
 
         [choices.priorityIndicators.positiveOnly]: {
-          label: "Choose indicators that tell the best story",
+          label: "Report only the indicators that show the company in the best light",
 
           text: `
-Prioritise datapoints that already show strong performance and can be communicated positively, while postponing more difficult areas such as value-chain emissions or supplier risk.
+Report only the indicators that show SONNENTOR in the best light – for example the GWÖ categories already scoring 100% and the headline claim of around 400 tonnes of plastic saved – and leave out weaker areas such as Scope 3.
             `.trim(),
 
           feedback: {
-            title: "Marketing value is not a materiality assessment",
-
             body: `
-Stakeholders are likely to notice significant omissions, especially where the missing topics relate directly to supply-chain or financing risk. Selective reporting can make otherwise positive claims appear incomplete.
+A marketing-first selection is quickly spotted by informed stakeholders, who notice the gaps (such as missing value-chain emissions or supplier risk). The picture looks selective and invites greenwashing suspicion.
               `.trim(),
-
-            consequence:
-              "The company may face stakeholder pushback, failed supplier assessments and increased suspicion of greenwashing.",
-
-            takeaway:
-              "Priority indicators should reflect material impacts and risks, including areas where performance is still developing.",
           },
         },
 
         [choices.priorityIndicators.copyCorporate]: {
-          label: "Copy a large corporation's KPI catalogue",
+          label: "Copy a large corporation’s full KPI catalogue",
 
           text: `
-Use the full indicator set published by a large multinational company so that SONNENTOR's reporting appears equally comprehensive and professional.
+Copy a large corporation’s full KPI catalogue so that SONNENTOR appears thorough and directly comparable with much bigger players.
             `.trim(),
 
           feedback: {
-            title: "The indicator set does not match the organisation",
-
             body: `
-Large corporations usually have more complex operations, specialist teams and mature systems. Their KPI catalogue may include datapoints that are not relevant or realistically collectable for SONNENTOR.
+A big-company KPI catalogue does not fit SME systems. Data collection becomes unrealistic, numbers turn out inconsistent from year to year, and staff become frustrated – undermining exactly the credibility the exercise is meant to build.
               `.trim(),
-
-            consequence:
-              "Reporting effort increases, data becomes inconsistent and employees lose confidence in a process they cannot sustain.",
-
-            takeaway:
-              "Indicators must fit the organisation's material topics, operating model and current data capacity.",
           },
         },
       },
     },
 
     [challenges.dataGovernance]: {
-      title: "Operationalising data collection and quality control",
+      title: "Operationalising data collection to ensure quality and reduce greenwashing",
 
-      shortTitle: "Build credible data governance",
+      shortTitle: "Build credible data collection",
 
       context: `
-After selecting priority indicators, SONNENTOR needs a collection process that produces comparable and auditable information every reporting period.
-
-The required data comes from several functions, including operations, logistics, purchasing, HR and finance. Without common definitions, clear ownership and evidence controls, the same indicator may be calculated differently or become impossible to reproduce.
+You now have a priority set of indicators. The remaining task is to make the numbers credible and reproducible – the same figure should be defensible if a buyer, bank or auditor asks how it was produced – and to do this without a large software budget and without a once-a-year scramble.
         `.trim(),
 
-      question: "How should the company organise ESG data collection and quality control?",
+      question:
+        "How should SONNENTOR organise ESG data collection so that the figures are credible and reproducible?",
 
       choices: {
         [choices.dataGovernance.governedWorkflow]: {
-          label: "Create a simple, repeatable ESG data-governance system",
+          label: "Create a simple, governed and auditable ESG data process",
 
           text: `
-Prepare a KPI dictionary covering definitions, boundaries, units, calculation methods, frequency and acceptable evidence. Assign one owner per indicator, establish a monthly or quarterly workflow, retain source documents and version history, perform plausibility checks and require sign-off before external disclosure. Label data quality as estimated, supplier-provided or verified and plan improvements over time.
+Build a simple ESG data-governance system that produces repeatable, auditable outputs: a KPI dictionary for each indicator (definition, scope/boundary, unit, calculation method, frequency and what counts as evidence); one data owner per KPI across Operations/Logistics, Purchasing, HR and Finance/Controlling; a monthly or quarterly collection rhythm rather than annual panic reporting; minimum quality controls (documented sources such as invoices, meter data and supplier certificates, plausibility and outlier checks, and a sign-off step before external sharing); and data-quality tiers that label each datapoint as estimated, supplier-provided or verified, with a plan to upgrade over time – especially for Scope 3.
             `.trim(),
 
           feedback: {
-            title: "The data becomes traceable and capable of improvement",
-
             body: `
-This system creates consistent responsibilities and a clear evidence trail without requiring an overly complex platform. Quality levels make current limitations transparent while supporting gradual upgrades, particularly for value-chain data.
+Correct. A KPI dictionary with clear owners, evidence, controls and quality tiers creates traceability, comparability and continuous improvement. Stakeholders can trust the numbers, and greenwashing risk falls because every figure can be reproduced.
               `.trim(),
-
-            consequence:
-              "Reports can be reproduced, compared across periods and shared with buyers and banks with greater confidence.",
-
-            takeaway:
-              "Credible ESG reporting depends on definitions, ownership, evidence, controls and transparent data-quality levels.",
           },
         },
 
         [choices.dataGovernance.annualExcel]: {
-          label: "Compile one spreadsheet at year end",
+          label: "Pull the figures together once a year in a spreadsheet",
 
           text: `
-Ask each department to submit figures once a year, combine them in a central spreadsheet and rely on the final numbers without maintaining detailed source evidence or regular controls.
+Keep it simple by pulling the figures together once a year in a spreadsheet whenever a request comes in, without an evidence trail, since SONNENTOR is a small company and staff time is scarce.
             `.trim(),
 
           feedback: {
-            title: "A spreadsheet alone does not provide governance",
-
             body: `
-Annual collection makes it difficult to identify errors early, understand changing definitions or reconstruct how a figure was produced. Without evidence and version control, the resulting datapoints may not withstand external review.
+An annual, Excel-only approach with no evidence trail produces low-credibility numbers that cannot be reproduced. Errors persist, results are inconsistent between years, and the company is exposed if a claim is challenged.
               `.trim(),
-
-            consequence:
-              "Error rates and last-minute corrections increase, while stakeholders may reject information that cannot be reproduced.",
-
-            takeaway:
-              "The tool used to store data is less important than the regular process, controls and evidence surrounding it.",
           },
         },
 
         [choices.dataGovernance.outsourceEverything]: {
-          label: "Outsource the entire process",
+          label: "Outsource ESG data completely to an external consultant",
 
           text: `
-Hire an external consultant to collect, calculate and report all ESG information so that internal teams do not need to develop their own data responsibilities.
+Outsource the whole task to an external consultant and treat ESG data as their responsibility, so that internal staff are not burdened with it.
             `.trim(),
 
           feedback: {
-            title: "External support cannot replace internal ownership",
-
             body: `
-Consultants still depend on operational information held inside the company. Without internal data owners and routines, requests are delayed, evidence is incomplete and the organisation does not build lasting reporting capability.
+Fully outsourcing without internal governance creates dependency and slow responses to buyers and banks. Consultants still need internal data, and the company loses the learning and long-term capability that the project is meant to build.
               `.trim(),
-
-            consequence:
-              "SONNENTOR becomes dependent on external support and remains slow when buyers or banks request new information.",
-
-            takeaway:
-              "Specialists can support ESG reporting, but accountability and data knowledge must remain embedded in the organisation.",
           },
         },
       },
@@ -282,16 +207,12 @@ Consultants still depend on operational information held inside the company. Wit
   },
 
   summary: {
-    title: "You have built a proportionate and credible reporting approach",
-
-    body: `
-You helped SONNENTOR connect its existing sustainability system with EU stakeholder expectations, select defensible priority indicators and establish a repeatable process for producing evidence-based ESG information.
-      `.trim(),
+    title: "You have built a proportionate EU-facing ESG reporting approach",
 
     takeaways: [
-      "A layered framework approach preserves internal coherence while mapping relevant information to the terminology and datapoints expected by buyers and financiers.",
-      "Priority indicators should be material, clearly defined, evidence-ready and proportionate to the organisation's reporting capacity.",
-      "Data dictionaries, ownership, regular workflows, evidence controls and transparent quality levels reduce errors and greenwashing risk.",
+      "Existing sustainability frameworks can be retained internally while relevant information is mapped to the terminology and datapoints expected by external stakeholders.",
+      "A small, material and evidence-ready KPI set is more credible than selective positive reporting or an oversized corporate catalogue.",
+      "Clear definitions, data owners, evidence, quality controls and regular collection make ESG figures reproducible and reduce greenwashing risk.",
     ],
   },
 });

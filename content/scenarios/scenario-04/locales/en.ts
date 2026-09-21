@@ -12,12 +12,12 @@ export const scenario04En = defineScenarioLocale<"scenario-04">({
 
   shortTitle: "ESG in Operations",
 
-  subtitle: "Building proportionate data, supplier and improvement processes for an SME",
+  subtitle: "Turning ESG data, supplier evidence and reporting into operational improvement",
 
   introduction: `
-You are the operations and compliance lead at EcoPart Manufacturing, a 120-employee SME supplying components to two large EU customers. Both customers are beginning to request ESG-related information from suppliers, including data on energy use, waste, recycled content, labour practices, supplier standards and evidence of circularity.
+You are the operations and compliance lead at EcoPart Manufacturing, a 120-employee SME supplying components to two large EU customers. Both customers are beginning to request ESG-related information from suppliers, including data on energy use, waste, recycled content, basic labour practices, supplier standards and evidence of circularity. The company’s ESG data is currently fragmented across finance, HR, environment/health/safety, production and purchasing. Most information is stored in spreadsheets and the company has limited budget for new technology or consultancy support.
 
-The company's information is fragmented across finance, HR, environment, health and safety, production and purchasing. Most records are stored in spreadsheets, and the budget for new technology or consultancy support is limited. Senior management wants a practical roadmap that meets customer expectations and improves operations rather than creating an additional reporting burden.
+Senior management wants a practical roadmap that meets customer expectations while also improving operations. You must decide how to integrate ESG into daily business processes in a way that is credible, proportionate and useful for the company – not simply an additional reporting burden.
     `.trim(),
 
   organisation: "EcoPart Manufacturing",
@@ -25,48 +25,37 @@ The company's information is fragmented across finance, HR, environment, health 
   role: "Operations and Compliance Lead",
 
   objectives: [
-    "Build a proportionate ESG data process that supports customer requests and operational management.",
-    "Apply circular economy and ESG criteria to priority suppliers and materials.",
-    "Use ESG indicators to drive focused improvements in production and working practices.",
+    "Reconstruct supply chain and operational workflows using circular economy criteria to minimize waste.",
+    "Implement ethical social practices within daily services to align operational governance with values.",
   ],
 
   boardAlt:
-    "Three connected operational work areas showing ESG data management, circular supplier engagement and production improvement in a manufacturing company.",
+    "Three connected operational situations showing ESG data management, supplier circularity and continuous improvement at EcoPart Manufacturing.",
 
   challenges: {
     [challenges.dataSystem]: {
       title: "Building a practical ESG data system",
 
-      shortTitle: "Build the data system",
+      shortTitle: "Build the ESG data system",
 
       context: `
-Your first task is to organise ESG information so the company can answer customer requests and identify opportunities for improvement.
-
-The Managing Director wants the company to be ready for ESG reporting, but IT capacity is limited and department managers are concerned about additional administrative work. The solution must create reliable structure without exceeding the organisation's current resources.
+Your first task is to organise ESG information so the company can respond to customer requests and identify operational improvements. The Managing Director wants the company to be “ready for ESG reporting” but IT capacity is limited and department managers are worried about extra administrative work.
         `.trim(),
 
       question: "How should EcoPart Manufacturing organise its initial ESG data system?",
 
       choices: {
         [choices.dataSystem.simpleRegister]: {
-          label: "Create a simple ESG data register",
+          label: "Create a simple ESG data register with clear ownership",
 
           text: `
-Identify a limited set of high-value indicators, such as energy use per unit, waste rate, recycled content, health and safety incidents and employee turnover. Assign owners in relevant departments, define data-quality rules, collect the information monthly using existing tools and review it in regular meetings.
+Create a simple ESG data register that identifies the most relevant operational indicators, assigns data owners in each department and establishes a monthly data collection rhythm. Begin with a limited set of high-value indicators such as energy use per unit, waste rate, recycled content, health and safety incidents, and employee turnover. Use existing tools at first, but define clear data quality rules, responsibilities and review meetings.
             `.trim(),
 
           feedback: {
-            title: "A proportionate foundation for reliable data",
-
             body: `
-This approach gives the SME clear indicators, responsibilities and routines without overcomplicating the process. Starting with material information makes it easier to improve quality and expand the system as organisational capability grows.
+Correct. This approach is proportionate for an SME because it creates structure without overcomplicating the process. By starting with material indicators, assigning ownership, and improving data quality step by step, the company can answer customer requests more reliably and use the same information to improve operations.
               `.trim(),
-
-            consequence:
-              "Customer requests can be answered more consistently, and the same information can support decisions about cost, waste, safety and workforce stability.",
-
-            takeaway:
-              "A useful ESG data system starts with material indicators, ownership and quality controls rather than advanced technology.",
           },
         },
 
@@ -74,43 +63,27 @@ This approach gives the SME clear indicators, responsibilities and routines with
           label: "Purchase a comprehensive ESG platform immediately",
 
           text: `
-Buy an all-in-one reporting and dashboard platform before defining the indicators, owners and internal collection process so that the system can centralise every future request from the start.
+Purchase a comprehensive ESG software platform immediately so that all reporting, dashboards and customer requests can be managed in one central system from the start. This should reduce manual work and show customers that the company is taking ESG seriously.
             `.trim(),
 
           feedback: {
-            title: "Software cannot repair an undefined process",
-
             body: `
-A platform may help once the organisation understands what it needs to collect and who is responsible. Purchased too early, it can simply centralise incomplete and inconsistent information while creating additional cost.
+This may sound professional, but software alone does not solve poor data ownership or unclear processes. If the company buys a platform before defining indicators, responsibilities and quality rules, it may create cost without improving reliability. The result can be an expensive system filled with incomplete or inconsistent data.
               `.trim(),
-
-            consequence:
-              "The company risks paying for a complex system that does not improve data reliability or reduce departmental confusion.",
-
-            takeaway:
-              "Define the process, responsibilities and data standards before selecting technology to support them.",
           },
         },
 
         [choices.dataSystem.requestOnly]: {
-          label: "Collect data only when customers ask",
+          label: "Collect ESG data only when customers request it",
 
           text: `
-Continue gathering ESG information on demand because the company is not required to prepare a complete sustainability report and departments need to prioritise production work.
+Continue collecting ESG data only when customers request it, because the company is not legally required to produce full sustainability reports. This avoids unnecessary internal workload and allows teams to focus on production priorities.
             `.trim(),
 
           feedback: {
-            title: "Reactive collection creates recurring pressure",
-
             body: `
-Information gathered only when requested is often rushed, inconsistent and difficult to verify. The company also loses the ability to observe trends and use the data for its own operational decisions.
+This seems efficient in the short term, but it keeps the company reactive. Data collected only when requested is often rushed, inconsistent and hard to verify. Over time, this can damage customer confidence and prevent the company from seeing trends that could reduce cost, waste or risk.
               `.trim(),
-
-            consequence:
-              "Customer confidence may weaken, and opportunities to reduce energy use, waste, risk or employee turnover remain hidden.",
-
-            takeaway:
-              "Regular collection creates more value and less disruption than repeated last-minute reporting exercises.",
           },
         },
       },
@@ -119,81 +92,55 @@ Information gathered only when requested is often rushed, inconsistent and diffi
     [challenges.supplierCircularity]: {
       title: "Working with suppliers on circularity and ESG evidence",
 
-      shortTitle: "Engage priority suppliers",
+      shortTitle: "Engage suppliers on circularity",
 
       context: `
-One of EcoPart Manufacturing's largest customers requests evidence that circularity is improving in the supply chain.
-
-Purchasing currently selects suppliers mainly according to price, delivery reliability and quality. Some suppliers are small businesses with limited ESG knowledge, and the purchasing team is concerned that new requirements could increase cost or reduce flexibility.
+One of your largest customers asks for evidence that your company is improving circularity in the supply chain. Purchasing currently selects suppliers mainly by price, delivery reliability and quality. Some suppliers are small businesses with limited ESG knowledge and your purchasing team is concerned that additional requirements could increase costs or reduce flexibility.
         `.trim(),
 
       question:
-        "How should the company engage suppliers and collect credible circularity evidence?",
+        "How should the company collect credible circularity and ESG evidence from its suppliers?",
 
       choices: {
         [choices.supplierCircularity.focusHighImpact]: {
-          label: "Focus on high-impact suppliers and practical evidence",
+          label: "Focus first on the highest-impact suppliers and materials",
 
           text: `
-Prioritise the suppliers and materials with the greatest operational or ESG impact. Request a small set of information on recycled content, packaging reduction, waste handling and basic labour standards. Accept reasonable proxies or improvement plans where detailed data is unavailable, and use the results to launch one or two practical pilots.
+Focus first on the highest-impact suppliers and materials. Ask for a small, practical set of ESG and circularity information, such as recycled content, packaging reduction, waste handling and basic labour standards. Where suppliers lack detailed data, allow reasonable proxies or improvement plans. Use the results to identify one or two pilot opportunities, such as switching packaging, reducing scrap or increasing recycled material content.
             `.trim(),
 
           feedback: {
-            title: "Ambition is balanced with supplier capacity",
-
             body: `
-This approach concentrates effort where it can create the greatest effect and keeps participation realistic for smaller suppliers. Practical pilots can generate evidence while strengthening rather than damaging supplier relationships.
+Correct. This option balances ambition and practicality. It focuses effort where the greatest operational and ESG impact is likely to occur, while keeping supplier engagement realistic. This improves response rates, protects supplier relationships and creates credible circularity evidence.
               `.trim(),
-
-            consequence:
-              "Response rates and data usefulness improve, and the company can demonstrate credible progress in areas such as packaging, scrap reduction or recycled materials.",
-
-            takeaway:
-              "Proportionate requirements and impact-based prioritisation often produce better supply-chain evidence than universal complexity.",
           },
         },
 
         [choices.supplierCircularity.fullQuestionnaire]: {
-          label: "Require the same detailed questionnaire from every supplier",
+          label: "Require the same detailed ESG questionnaire from every supplier",
 
           text: `
-Ask all suppliers to provide a complete ESG questionnaire and full life-cycle assessment data immediately so that the company applies one consistent standard across the entire supply base.
+Ask all suppliers to complete the same detailed ESG questionnaire and provide full life-cycle assessment data immediately. This creates a consistent standard and ensures the company does not overlook risks in smaller or lower-spend suppliers.
             `.trim(),
 
           feedback: {
-            title: "A uniform requirement may be disproportionate",
-
             body: `
-The method appears rigorous, but smaller suppliers may lack the knowledge, systems or resources to provide complex information. Excessive requirements can reduce cooperation without producing reliable evidence.
+This approach appears rigorous, but it can overwhelm smaller suppliers and reduce cooperation. If suppliers cannot provide complex data, the company may end up with low response rates and little usable information. A proportionate approach usually delivers better evidence than an excessive one.
               `.trim(),
-
-            consequence:
-              "The company may receive few complete responses and spend significant time chasing information that cannot be used consistently.",
-
-            takeaway:
-              "Consistency should come from clear minimum requirements and definitions, not necessarily from imposing the same level of complexity on every supplier.",
           },
         },
 
         [choices.supplierCircularity.polishedDocuments]: {
-          label: "Prioritise suppliers with polished ESG documents",
+          label: "Prioritise suppliers that already have polished ESG documents",
 
           text: `
-Work first with suppliers that already publish professional sustainability material, even when they are not the most important suppliers in terms of spend, materials or operational impact.
+Prioritise suppliers that can already provide polished ESG documents, even if they are not the most important suppliers operationally. This allows the company to show quick evidence to customers while gradually improving the rest of the supplier base later.
             `.trim(),
 
           feedback: {
-            title: "Easy-to-report suppliers may not represent the main impact",
-
             body: `
-This option can produce quick documents for customer communication, but it directs attention toward presentation rather than the parts of the supply chain that matter most.
+This option may produce quick documents for customer communication, but it risks focusing on the suppliers that are easiest to report on rather than those that matter most. This can create a misleading picture of progress and leave major ESG impacts untouched.
               `.trim(),
-
-            consequence:
-              "The resulting evidence may provide a misleading picture of progress while significant circularity and ESG risks remain untouched.",
-
-            takeaway:
-              "Supplier engagement should be prioritised according to material impact and risk, not only according to reporting maturity.",
           },
         },
       },
@@ -202,80 +149,54 @@ This option can produce quick documents for customer communication, but it direc
     [challenges.operationalImprovement]: {
       title: "Turning ESG reporting into operational improvement",
 
-      shortTitle: "Use data for improvement",
+      shortTitle: "Use ESG data for improvement",
 
       context: `
-Initial data shows that scrap rates and energy use vary significantly between production lines. HR information also reveals higher employee turnover in one shift team.
-
-The leadership team must decide whether ESG should remain primarily a compliance and reporting activity or become part of the company's continuous-improvement process.
+After collecting initial ESG data, you notice that scrap rates and energy use vary significantly between production lines. HR data also shows higher turnover in one shift team. The leadership team asks whether ESG should remain mainly a reporting activity or become part of continuous improvement.
         `.trim(),
 
-      question: "How should EcoPart Manufacturing use the new ESG information?",
+      question: "How should EcoPart Manufacturing use its ESG data in daily operations?",
 
       choices: {
         [choices.operationalImprovement.focusedProjects]: {
-          label: "Connect selected indicators with focused improvement projects",
+          label: "Link selected ESG indicators to focused improvement projects",
 
           text: `
-Use scrap and energy data to launch targeted Kaizen activities, and use turnover and near-miss information to improve team routines, supervision and working conditions. Keep the indicator set manageable and review progress in normal operational meetings.
+Link selected ESG indicators to practical operational improvement projects. For example, use scrap and energy data to launch targeted Kaizen activities and use turnover and near-miss data to improve team routines, supervision and working conditions. Keep the number of indicators manageable and review them in regular operational meetings so ESG becomes part of daily management.
             `.trim(),
 
           feedback: {
-            title: "ESG data becomes a source of operational value",
-
             body: `
-This approach embeds ESG in everyday management and uses evidence to address specific production and workforce issues. Focused projects create visible learning without overwhelming the organisation.
+Correct. This approach turns ESG into a source of operational value. By connecting indicators to improvement projects, the company can reduce costs, improve safety and working conditions and show customers that ESG is embedded in daily operations rather than treated as paperwork.
               `.trim(),
-
-            consequence:
-              "The company can reduce cost and waste, improve safety and working conditions, and show customers that ESG is integrated into operations.",
-
-            takeaway:
-              "ESG creates lasting value when indicators are linked to decisions, accountable actions and continuous improvement.",
           },
         },
 
         [choices.operationalImprovement.separateReporting]: {
-          label: "Keep ESG reporting separate from production",
+          label: "Keep ESG reporting separate from production improvement",
 
           text: `
-Let compliance staff prepare ESG reports while production teams continue to focus exclusively on productivity, quality and delivery targets.
+Keep ESG reporting separate from production improvement activities so that operational teams are not distracted. ESG data can be prepared by compliance staff, while production teams focus on productivity, quality and delivery targets.
             `.trim(),
 
           feedback: {
-            title: "Separation prevents the data from improving the business",
-
             body: `
-Protecting operational teams from additional reporting may appear efficient, but it also keeps the people who control energy, waste, safety and working practices outside the improvement process.
+This may seem efficient because it protects production teams from extra tasks. However, it prevents ESG data from being used to solve real operational problems. Staff may begin to see ESG as bureaucracy and the company may miss cost savings, safety improvements and engagement benefits.
               `.trim(),
-
-            consequence:
-              "Employees may see ESG as bureaucracy, while cost savings, risk reduction and engagement opportunities are missed.",
-
-            takeaway:
-              "Operational functions must use ESG information, not only supply it to a separate reporting team.",
           },
         },
 
         [choices.operationalImprovement.transformAllAtOnce]: {
-          label: "Launch a company-wide transformation at once",
+          label: "Launch a company-wide ESG transformation across every area at once",
 
           text: `
-Introduce new targets and projects for energy, waste, labour practices, supplier standards and governance across every department simultaneously to demonstrate strong leadership and rapid cultural change.
+Launch a company-wide ESG transformation programme covering all departments at once, with new targets for energy, waste, labour practices, supplier standards and governance. This demonstrates strong leadership and accelerates cultural change.
             `.trim(),
 
           feedback: {
-            title: "Excessive scope can weaken implementation",
-
             body: `
-The ambition is positive, but an SME with limited resources may struggle to manage many new priorities at the same time. Teams can become confused or fatigued before useful routines are established.
+This option shows ambition, but it may overload the organisation. For an SME with limited resources, too many simultaneous ESG actions can create confusion, fatigue and weak implementation. Focused pilots often create faster learning and stronger long-term commitment.
               `.trim(),
-
-            consequence:
-              "Implementation quality declines and early setbacks may reduce long-term support for ESG integration.",
-
-            takeaway:
-              "Focused pilots create evidence, learning and organisational confidence that can support broader transformation later.",
           },
         },
       },
@@ -283,16 +204,12 @@ The ambition is positive, but an SME with limited resources may struggle to mana
   },
 
   summary: {
-    title: "You have embedded ESG in practical business operations",
-
-    body: `
-You helped EcoPart Manufacturing create a manageable data process, engage suppliers according to material impact and turn ESG information into focused improvements that support both customer credibility and operational performance.
-      `.trim(),
+    title: "You have integrated ESG into business operations",
 
     takeaways: [
-      "A proportionate ESG data system begins with material indicators, accountable owners, regular collection and clear quality rules.",
-      "Supplier requirements should focus first on high-impact areas and allow realistic evidence or improvement plans where maturity is limited.",
-      "ESG indicators should be reviewed in operational management and connected with targeted projects that reduce cost, waste and social risk.",
+      "A practical SME data system begins with a limited set of relevant indicators, clear owners, quality rules and regular review.",
+      "Supplier ESG and circularity requirements should be proportionate and focused first on the materials and suppliers with the greatest impact.",
+      "ESG data creates operational value when it is linked to focused improvement projects and reviewed as part of normal management routines.",
     ],
   },
 });
