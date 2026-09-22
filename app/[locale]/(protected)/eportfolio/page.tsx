@@ -40,7 +40,7 @@ export default async function EportfolioPage({ params }: Props) {
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_8%,rgba(11,156,114,0.08),transparent_24%),radial-gradient(circle_at_86%_10%,rgba(13,127,194,0.06),transparent_22%),linear-gradient(180deg,rgba(255,255,255,0.72)_0%,rgba(245,245,243,1)_100%)]" />
 
       <div className="relative mx-auto max-w-360 px-4 pt-8 sm:px-6 sm:pt-10 lg:px-8">
-        <section className="overflow-hidden rounded-[32px] border border-white/70 bg-[#243346] px-5 py-7 text-white shadow-[0_18px_50px_rgba(35,45,62,0.13)] sm:px-8 sm:py-9 lg:px-10">
+        <section className="overflow-hidden rounded-4xl border border-white/70 bg-[#243346] px-5 py-7 text-white shadow-[0_18px_50px_rgba(35,45,62,0.13)] sm:px-8 sm:py-9 lg:px-10">
           <div className="grid gap-7 lg:grid-cols-[minmax(0,1.5fr)_minmax(340px,0.8fr)] lg:items-end">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-[0.72rem] font-bold uppercase tracking-[0.14em] text-white/78">

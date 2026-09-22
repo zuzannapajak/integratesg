@@ -243,7 +243,7 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
         <span className="text-[#31425a]">{caseStudy.title}</span>
       </nav>
 
-      <header className="overflow-hidden rounded-[32px] border border-white/70 bg-[#243346] text-white shadow-[0_18px_50px_rgba(35,45,62,0.13)]">
+      <header className="overflow-hidden rounded-4xl border border-white/70 bg-[#243346] text-white shadow-[0_18px_50px_rgba(35,45,62,0.13)]">
         <div className="relative px-5 py-7 sm:px-8 sm:py-9 lg:px-10">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_10%,rgba(52,211,153,0.15),transparent_30%),radial-gradient(circle_at_92%_15%,rgba(56,189,248,0.12),transparent_28%)]" />
 
