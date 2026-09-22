@@ -5,6 +5,7 @@ import { randomUUID } from "node:crypto";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 
+import { EPORTFOLIO_LOCALES } from "../content/eportfolio/helpers.js";
 import { caseStudies } from "../content/eportfolio/index.js";
 import { seedEportfolio } from "./seed-data/eportfolio/seed.js";
 
@@ -14,21 +15,58 @@ if (!connectionString) {
   throw new Error("Missing DIRECT_URL or DATABASE_URL environment variable.");
 }
 
-const adapter = new PrismaPg({ connectionString });
-const prisma = new PrismaClient({ adapter });
+const adapter = new PrismaPg({
+  connectionString,
+});
+
+const prisma = new PrismaClient({
+  adapter,
+});
+
+const supportedLocaleSet = new Set(EPORTFOLIO_LOCALES);
+
+function validateSourceTranslations() {
+  for (const caseStudy of caseStudies) {
+    const languages = caseStudy.translations.map((translation) => translation.language);
+
+    const uniqueLanguages = new Set(languages);
+
+    if (!uniqueLanguages.has("en")) {
+      throw new Error(`Missing English translation for ${caseStudy.slug}.`);
+    }
+
+    if (uniqueLanguages.size !== languages.length) {
+      throw new Error(`Duplicate translation language for ${caseStudy.slug}.`);
+    }
+
+    for (const language of uniqueLanguages) {
+      if (!supportedLocaleSet.has(language)) {
+        throw new Error(`Unsupported translation language ${language} for ${caseStudy.slug}.`);
+      }
+    }
+  }
+}
 
 async function main() {
+  validateSourceTranslations();
+
   await seedEportfolio(prisma);
 
   const expectedSlugs = caseStudies.map((caseStudy) => caseStudy.slug);
+
   const seeded = await prisma.caseStudy.findMany({
-    where: { slug: { in: expectedSlugs } },
+    where: {
+      slug: {
+        in: expectedSlugs,
+      },
+    },
     select: {
       id: true,
       slug: true,
       translations: {
-        where: { language: "en" },
-        select: { id: true },
+        select: {
+          language: true,
+        },
       },
     },
   });
@@ -37,18 +75,36 @@ async function main() {
     throw new Error(`Expected ${expectedSlugs.length} ePortfolio cases, found ${seeded.length}.`);
   }
 
-  for (const item of seeded) {
-    if (item.translations.length !== 1) {
-      throw new Error(`Expected exactly one English translation for ${item.slug}.`);
+  for (const caseStudy of caseStudies) {
+    const seededCaseStudy = seeded.find((item) => item.slug === caseStudy.slug);
+
+    if (!seededCaseStudy) {
+      throw new Error(`Missing seeded case study ${caseStudy.slug}.`);
+    }
+
+    const expectedLanguages = new Set(
+      caseStudy.translations.map((translation) => translation.language),
+    );
+
+    const actualLanguages = new Set(
+      seededCaseStudy.translations.map((translation) => translation.language),
+    );
+
+    for (const language of expectedLanguages) {
+      if (!actualLanguages.has(language)) {
+        throw new Error(`Missing ${language} translation in database for ${caseStudy.slug}.`);
+      }
     }
   }
 
   const barilla = seeded.find((item) => item.slug === "barilla");
+
   if (!barilla) {
     throw new Error("Barilla case study was not created.");
   }
 
   const verificationUserId = `eportfolio-seed-${randomUUID()}`;
+
   const verificationEmail = `${verificationUserId}@example.test`;
 
   try {
@@ -61,6 +117,7 @@ async function main() {
     });
 
     const startedAt = new Date("2026-09-21T12:00:00.000Z");
+
     const lastOpenedAt = new Date("2026-09-21T12:30:00.000Z");
 
     const progress = await prisma.userCaseStudyProgress.create({
@@ -90,12 +147,19 @@ async function main() {
     }
 
     console.log("ePortfolio seed verification passed.");
+
     console.log(`Case studies verified: ${expectedSlugs.length}`);
-    console.log("English translations verified: yes");
+
+    console.log("Source translation structure verified: yes");
+
+    console.log("Seeded translations verified: yes");
+
     console.log("UserCaseStudyProgress preserved: yes");
   } finally {
     await prisma.profile.deleteMany({
-      where: { id: verificationUserId },
+      where: {
+        id: verificationUserId,
+      },
     });
   }
 }
@@ -103,7 +167,9 @@ async function main() {
 main()
   .catch((error) => {
     console.error("ePortfolio seed verification failed.");
+
     console.error(error);
+
     process.exitCode = 1;
   })
   .finally(async () => {
