@@ -270,14 +270,14 @@ export default function EportfolioLibrary({ locale, items }: Props) {
 
                     <div className="flex flex-wrap justify-end gap-2">
                       {item.isFeatured ? (
-                        <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-100 bg-amber-50 px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-[0.1em] text-amber-700">
+                        <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-100 bg-amber-50 px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-widest text-amber-700">
                           <Sparkles className="h-3.5 w-3.5" />
                           Featured
                         </span>
                       ) : null}
 
                       <span
-                        className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-[0.1em] ${progressMeta.className}`}
+                        className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-widest ${progressMeta.className}`}
                       >
                         {progressMeta.icon}
                         {progressMeta.label}
