@@ -1,3 +1,1 @@
-import { barillaCaseStudy } from "./barilla.js";
-
-export const caseStudies = [barillaCaseStudy];
+export { caseStudies } from "../../../content/eportfolio/index.js";

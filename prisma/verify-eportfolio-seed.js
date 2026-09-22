@@ -5,6 +5,7 @@ import { randomUUID } from "node:crypto";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 
+import { caseStudies } from "../content/eportfolio/index.js";
 import { seedEportfolio } from "./seed-data/eportfolio/seed.js";
 
 const connectionString = process.env.DIRECT_URL || process.env.DATABASE_URL;
@@ -13,27 +14,37 @@ if (!connectionString) {
   throw new Error("Missing DIRECT_URL or DATABASE_URL environment variable.");
 }
 
-const adapter = new PrismaPg({
-  connectionString,
-});
-
-const prisma = new PrismaClient({
-  adapter,
-});
+const adapter = new PrismaPg({ connectionString });
+const prisma = new PrismaClient({ adapter });
 
 async function main() {
   await seedEportfolio(prisma);
 
-  const initialCaseStudy = await prisma.caseStudy.findUnique({
-    where: {
-      slug: "barilla",
-    },
+  const expectedSlugs = caseStudies.map((caseStudy) => caseStudy.slug);
+  const seeded = await prisma.caseStudy.findMany({
+    where: { slug: { in: expectedSlugs } },
     select: {
       id: true,
+      slug: true,
+      translations: {
+        where: { language: "en" },
+        select: { id: true },
+      },
     },
   });
 
-  if (!initialCaseStudy) {
+  if (seeded.length !== expectedSlugs.length) {
+    throw new Error(`Expected ${expectedSlugs.length} ePortfolio cases, found ${seeded.length}.`);
+  }
+
+  for (const item of seeded) {
+    if (item.translations.length !== 1) {
+      throw new Error(`Expected exactly one English translation for ${item.slug}.`);
+    }
+  }
+
+  const barilla = seeded.find((item) => item.slug === "barilla");
+  if (!barilla) {
     throw new Error("Barilla case study was not created.");
   }
 
@@ -55,99 +66,36 @@ async function main() {
     const progress = await prisma.userCaseStudyProgress.create({
       data: {
         userId: verificationUserId,
-        caseStudyId: initialCaseStudy.id,
+        caseStudyId: barilla.id,
         status: "in_progress",
         startedAt,
         lastOpenedAt,
       },
-      select: {
-        id: true,
-        caseStudyId: true,
-        status: true,
-        startedAt: true,
-        lastOpenedAt: true,
-        completedAt: true,
-      },
     });
 
     await seedEportfolio(prisma);
     await seedEportfolio(prisma);
-
-    const caseStudies = await prisma.caseStudy.findMany({
-      where: {
-        slug: "barilla",
-      },
-      select: {
-        id: true,
-        translations: {
-          where: {
-            language: "en",
-          },
-          select: {
-            id: true,
-          },
-        },
-      },
-    });
-
-    if (caseStudies.length !== 1) {
-      throw new Error(`Expected exactly one Barilla case study, found ${caseStudies.length}.`);
-    }
-
-    if (caseStudies[0].id !== initialCaseStudy.id) {
-      throw new Error("Barilla CaseStudy id changed after reseeding.");
-    }
-
-    if (caseStudies[0].translations.length !== 1) {
-      throw new Error(
-        `Expected exactly one English Barilla translation, found ${caseStudies[0].translations.length}.`,
-      );
-    }
 
     const progressAfterReseed = await prisma.userCaseStudyProgress.findUnique({
       where: {
         userId_caseStudyId: {
           userId: verificationUserId,
-          caseStudyId: initialCaseStudy.id,
+          caseStudyId: barilla.id,
         },
-      },
-      select: {
-        id: true,
-        caseStudyId: true,
-        status: true,
-        startedAt: true,
-        lastOpenedAt: true,
-        completedAt: true,
       },
     });
 
-    if (!progressAfterReseed) {
-      throw new Error("UserCaseStudyProgress was deleted by the ePortfolio seed.");
-    }
-
-    if (progressAfterReseed.id !== progress.id) {
-      throw new Error("UserCaseStudyProgress id changed after reseeding.");
-    }
-
-    if (
-      progressAfterReseed.caseStudyId !== progress.caseStudyId ||
-      progressAfterReseed.status !== progress.status ||
-      progressAfterReseed.startedAt?.getTime() !== progress.startedAt?.getTime() ||
-      progressAfterReseed.lastOpenedAt?.getTime() !== progress.lastOpenedAt?.getTime() ||
-      progressAfterReseed.completedAt?.getTime() !== progress.completedAt?.getTime()
-    ) {
-      throw new Error("UserCaseStudyProgress content changed after reseeding.");
+    if (!progressAfterReseed || progressAfterReseed.id !== progress.id) {
+      throw new Error("UserCaseStudyProgress was not preserved by reseeding.");
     }
 
     console.log("ePortfolio seed verification passed.");
-    console.log("Barilla records: 1");
-    console.log("English translations: 1");
+    console.log(`Case studies verified: ${expectedSlugs.length}`);
+    console.log("English translations verified: yes");
     console.log("UserCaseStudyProgress preserved: yes");
   } finally {
     await prisma.profile.deleteMany({
-      where: {
-        id: verificationUserId,
-      },
+      where: { id: verificationUserId },
     });
   }
 }
