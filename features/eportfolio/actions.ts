@@ -1,8 +1,7 @@
 "use server";
 
 import { requireAuthenticatedUserId } from "@/lib/auth/require-authenticated-user-id";
-import { markCaseStudyCompleted, touchCaseStudyProgress } from "@/lib/eportfolio/queries";
-import { prisma } from "@/lib/prisma";
+import { completeEportfolioProgress, touchEportfolioProgress } from "@/lib/eportfolio/progress";
 import { revalidatePath } from "next/cache";
 
 type CaseStudyActionInput = {
@@ -29,27 +28,23 @@ function validateLocale(locale: string) {
   }
 }
 
-async function getPublishedCaseStudy(slug: string) {
-  const caseStudy = await prisma.caseStudy.findFirst({
-    where: {
-      slug,
-      status: "published",
-    },
-    select: {
-      id: true,
-    },
-  });
-
-  if (!caseStudy) {
-    throw new Error("Case study not found.");
-  }
-
-  return caseStudy;
-}
-
 function revalidateEportfolioPaths(locale: string, slug: string) {
   revalidatePath(`/${locale}/eportfolio`);
   revalidatePath(`/${locale}/eportfolio/${slug}`);
+}
+
+function serializeProgress(progress: {
+  status: "not_started" | "in_progress" | "completed";
+  startedAt: Date | null;
+  lastOpenedAt: Date | null;
+  completedAt: Date | null;
+}) {
+  return {
+    status: progress.status,
+    startedAt: progress.startedAt?.toISOString() ?? null,
+    lastOpenedAt: progress.lastOpenedAt?.toISOString() ?? null,
+    completedAt: progress.completedAt?.toISOString() ?? null,
+  };
 }
 
 export async function touchCaseStudyProgressAction(input: CaseStudyActionInput) {
@@ -58,14 +53,14 @@ export async function touchCaseStudyProgressAction(input: CaseStudyActionInput) 
 
   const userId = await requireAuthenticatedUserId();
 
-  await getPublishedCaseStudy(input.slug);
-
-  await touchCaseStudyProgress({
+  const progress = await touchEportfolioProgress({
     userId,
     slug: input.slug,
   });
 
   revalidateEportfolioPaths(input.locale, input.slug);
+
+  return serializeProgress(progress);
 }
 
 export async function completeCaseStudyAction(input: CaseStudyActionInput) {
@@ -74,21 +69,19 @@ export async function completeCaseStudyAction(input: CaseStudyActionInput) {
 
   const userId = await requireAuthenticatedUserId();
 
-  await getPublishedCaseStudy(input.slug);
-
-  await markCaseStudyCompleted({
+  const progress = await completeEportfolioProgress({
     userId,
     slug: input.slug,
   });
 
   revalidateEportfolioPaths(input.locale, input.slug);
+
+  return serializeProgress(progress);
 }
 
 /**
- * Backwards-compatible action used by the older
+ * Compatibility with the older
  * CaseStudyCompletionButton component.
- *
- * New code should use completeCaseStudyAction().
  */
 export async function markCaseStudyCompletedAction(
   input: LegacyCompleteCaseStudyInput,
@@ -106,34 +99,14 @@ export async function markCaseStudyCompletedAction(
 
   const userId = await requireAuthenticatedUserId();
 
-  const caseStudy = await getPublishedCaseStudy(slug);
-
-  await markCaseStudyCompleted({
+  const progress = await completeEportfolioProgress({
     userId,
     slug,
   });
-
-  const progress = await prisma.userCaseStudyProgress.findUnique({
-    where: {
-      userId_caseStudyId: {
-        userId,
-        caseStudyId: caseStudy.id,
-      },
-    },
-    select: {
-      completedAt: true,
-    },
-  });
-
-  if (!progress?.completedAt) {
-    throw new Error("Case study completion was not saved.");
-  }
 
   if (resolvedLocale) {
     revalidateEportfolioPaths(resolvedLocale, slug);
   }
 
-  return {
-    completedAt: progress.completedAt.toISOString(),
-  };
+  return serializeProgress(progress);
 }

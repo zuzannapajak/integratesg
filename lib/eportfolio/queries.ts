@@ -12,6 +12,7 @@ import { prisma } from "@/lib/prisma";
 
 function normalizeOptionalText(value: string | null | undefined) {
   const trimmed = value?.trim();
+
   return trimmed && trimmed.length > 0 ? trimmed : null;
 }
 
@@ -20,26 +21,31 @@ function pickTranslation(
   locale: string,
 ): CaseStudyTranslationRecord | null {
   const localeTranslation = translations.find((translation) => translation.language === locale);
+
   if (localeTranslation) {
     return localeTranslation;
   }
 
   const englishTranslation = translations.find((translation) => translation.language === "en");
+
   if (englishTranslation) {
     return englishTranslation;
   }
 
-  return translations[0] ?? null;
+  return translations.at(0) ?? null;
 }
 
 function mapArea(area: string): CaseStudyArea {
   switch (area) {
     case "environmental":
       return "environmental";
+
     case "social":
       return "social";
+
     case "governance":
       return "governance";
+
     default:
       return "cross-cutting";
   }
@@ -55,11 +61,13 @@ function parseKeyTakeaways(value: unknown): string[] {
 
 function buildSummary(translation: CaseStudyTranslationRecord | null): string | null {
   const summary = normalizeOptionalText(translation?.summary);
+
   if (summary) {
     return summary;
   }
 
   const content = normalizeOptionalText(translation?.content);
+
   if (content) {
     return content.slice(0, 180);
   }
@@ -97,6 +105,7 @@ function mapCaseStudyToListItem(
   locale: string,
 ): CaseStudyListItemViewModel {
   const translation = pickTranslation(caseStudy.translations, locale);
+
   const progress = getProgressState(caseStudy.userProgress);
 
   return {
@@ -120,6 +129,7 @@ function mapCaseStudyToDetail(
   locale: string,
 ): CaseStudyDetailViewModel {
   const translation = pickTranslation(caseStudy.translations, locale);
+
   const progress = getProgressState(caseStudy.userProgress);
 
   return {
@@ -176,11 +186,25 @@ export async function getAllCaseStudies(params: { locale: string; userId: string
           lastOpenedAt: true,
           completedAt: true,
         },
-        orderBy: [{ updatedAt: "desc" }],
+        orderBy: [
+          {
+            updatedAt: "desc",
+          },
+        ],
         take: 1,
       },
     },
-    orderBy: [{ isFeatured: "desc" }, { sortOrder: "asc" }, { createdAt: "desc" }],
+    orderBy: [
+      {
+        isFeatured: "desc",
+      },
+      {
+        sortOrder: "asc",
+      },
+      {
+        createdAt: "desc",
+      },
+    ],
   });
 
   return caseStudies.map((caseStudy) => mapCaseStudyToListItem(caseStudy, params.locale));
@@ -223,7 +247,11 @@ export async function getCaseStudyDetail(params: { locale: string; userId: strin
           lastOpenedAt: true,
           completedAt: true,
         },
-        orderBy: [{ updatedAt: "desc" }],
+        orderBy: [
+          {
+            updatedAt: "desc",
+          },
+        ],
         take: 1,
       },
     },
@@ -234,122 +262,4 @@ export async function getCaseStudyDetail(params: { locale: string; userId: strin
   }
 
   return mapCaseStudyToDetail(caseStudy, params.locale);
-}
-
-export async function touchCaseStudyProgress(params: { userId: string; slug: string }) {
-  const caseStudy = await prisma.caseStudy.findUnique({
-    where: {
-      slug: params.slug,
-    },
-    select: {
-      id: true,
-      status: true,
-    },
-  });
-
-  if (caseStudy?.status !== "published") {
-    return null;
-  }
-
-  const now = new Date();
-  const existing = await prisma.userCaseStudyProgress.findUnique({
-    where: {
-      userId_caseStudyId: {
-        userId: params.userId,
-        caseStudyId: caseStudy.id,
-      },
-    },
-    select: {
-      status: true,
-      startedAt: true,
-      completedAt: true,
-    },
-  });
-
-  if (!existing) {
-    await prisma.userCaseStudyProgress.create({
-      data: {
-        userId: params.userId,
-        caseStudyId: caseStudy.id,
-        status: "in_progress",
-        startedAt: now,
-        lastOpenedAt: now,
-      },
-    });
-  } else {
-    await prisma.userCaseStudyProgress.update({
-      where: {
-        userId_caseStudyId: {
-          userId: params.userId,
-          caseStudyId: caseStudy.id,
-        },
-      },
-      data: {
-        status: existing.status === "completed" ? "completed" : "in_progress",
-        startedAt: existing.startedAt ?? now,
-        lastOpenedAt: now,
-      },
-    });
-  }
-
-  return { lastOpenedAt: now.toISOString() };
-}
-
-export async function markCaseStudyCompleted(params: { userId: string; slug: string }) {
-  const caseStudy = await prisma.caseStudy.findUnique({
-    where: {
-      slug: params.slug,
-    },
-    select: {
-      id: true,
-      status: true,
-    },
-  });
-
-  if (caseStudy?.status !== "published") {
-    return null;
-  }
-
-  const existing = await prisma.userCaseStudyProgress.findUnique({
-    where: {
-      userId_caseStudyId: {
-        userId: params.userId,
-        caseStudyId: caseStudy.id,
-      },
-    },
-    select: {
-      startedAt: true,
-    },
-  });
-
-  const now = new Date();
-
-  await prisma.userCaseStudyProgress.upsert({
-    where: {
-      userId_caseStudyId: {
-        userId: params.userId,
-        caseStudyId: caseStudy.id,
-      },
-    },
-    update: {
-      status: "completed",
-      startedAt: existing?.startedAt ?? now,
-      lastOpenedAt: now,
-      completedAt: now,
-    },
-    create: {
-      userId: params.userId,
-      caseStudyId: caseStudy.id,
-      status: "completed",
-      startedAt: now,
-      lastOpenedAt: now,
-      completedAt: now,
-    },
-  });
-
-  return {
-    status: "completed" as const,
-    completedAt: now.toISOString(),
-    lastOpenedAt: now.toISOString(),
-  };
 }

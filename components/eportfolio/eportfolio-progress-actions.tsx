@@ -27,38 +27,51 @@ export default function EportfolioProgressActions({
   nextCaseStudy,
 }: Props) {
   const router = useRouter();
+
   const [progress, setProgress] = useState<EportfolioProgress>(initialProgress);
+
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const [isPending, startTransition] = useTransition();
 
   useEffect(() => {
-    if (initialProgress !== "not_started") {
-      return;
-    }
+    let isActive = true;
 
-    startTransition(async () => {
+    async function recordOpen() {
       try {
-        await touchCaseStudyProgressAction({
+        const result = await touchCaseStudyProgressAction({
           locale,
           slug,
         });
-        setProgress("in_progress");
+
+        if (isActive) {
+          setProgress(result.status);
+        }
       } catch {
-        // Opening the case study should remain usable even if progress tracking fails.
+        // Reading the case study must remain possible
+        // even if progress tracking temporarily fails.
       }
-    });
-  }, [initialProgress, locale, slug]);
+    }
+
+    void recordOpen();
+
+    return () => {
+      isActive = false;
+    };
+  }, [locale, slug]);
 
   function handleComplete() {
     setErrorMessage(null);
 
     startTransition(async () => {
       try {
-        await completeCaseStudyAction({
+        const result = await completeCaseStudyAction({
           locale,
           slug,
         });
-        setProgress("completed");
+
+        setProgress(result.status);
+
         router.refresh();
       } catch {
         setErrorMessage("We could not save your progress. Please try again.");
