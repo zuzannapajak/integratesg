@@ -3,7 +3,8 @@ import { config as loadEnv } from "dotenv";
 
 loadEnv({
   path: ".env.test",
-  override: true,
+  // W CI wartości z GitHub Secrets mają pierwszeństwo przed lokalnym .env.test.
+  override: !process.env.CI,
   quiet: true,
 });
 
@@ -11,13 +12,20 @@ function requireEnvironmentVariable(name: string): string {
   const value = process.env[name]?.trim();
 
   if (!value) {
-    throw new Error(`Missing ${name} in .env.test.`);
+    throw new Error(`Missing ${name}. Configure it in .env.test locally or as a CI secret.`);
   }
 
   return value;
 }
 
 const baseURL = "http://127.0.0.1:3000";
+
+const configuredWebServerCommand = process.env.PLAYWRIGHT_SERVER_COMMAND?.trim();
+
+const webServerCommand =
+  configuredWebServerCommand && configuredWebServerCommand.length > 0
+    ? configuredWebServerCommand
+    : "npm run dev";
 
 const databaseUrl =
   process.env.PLAYWRIGHT_DATABASE_URL?.trim() ?? process.env.TEST_DATABASE_URL?.trim();
@@ -148,7 +156,7 @@ export default defineConfig({
     ? {}
     : {
         webServer: {
-          command: "npm run dev",
+          command: webServerCommand,
           url: baseURL,
           reuseExistingServer: false,
           timeout: 120_000,

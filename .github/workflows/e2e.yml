@@ -1,0 +1,94 @@
+name: E2E
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  e2e:
+    name: e2e
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+
+    env:
+      HUSKY: "0"
+      DATABASE_URL: ${{ secrets.E2E_TEST_DATABASE_URL }}
+      DIRECT_URL: ${{ secrets.E2E_TEST_DATABASE_URL }}
+      TEST_DATABASE_URL: ${{ secrets.E2E_TEST_DATABASE_URL }}
+      PLAYWRIGHT_DATABASE_URL: ${{ secrets.E2E_TEST_DATABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.E2E_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.E2E_SUPABASE_ANON_KEY }}
+      PLAYWRIGHT_TEST_EMAIL: ${{ secrets.E2E_TEST_EMAIL }}
+      PLAYWRIGHT_TEST_PASSWORD: ${{ secrets.E2E_TEST_PASSWORD }}
+      PLAYWRIGHT_ALLOW_DATABASE_RESET: "true"
+      PLAYWRIGHT_SERVER_COMMAND: npm run start
+      NEXT_PUBLIC_SITE_URL: http://127.0.0.1:3000
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      - name: Validate required E2E secrets
+        shell: bash
+        run: |
+          missing=0
+          for name in DATABASE_URL NEXT_PUBLIC_SUPABASE_URL NEXT_PUBLIC_SUPABASE_ANON_KEY PLAYWRIGHT_TEST_EMAIL PLAYWRIGHT_TEST_PASSWORD; do
+            if [ -z "${!name:-}" ]; then
+              echo "::error::Missing required GitHub Actions secret for $name"
+              missing=1
+            fi
+          done
+          exit "$missing"
+
+      - name: Apply migrations to dedicated E2E database
+        run: npx prisma migrate deploy
+
+      - name: Seed E2E database
+        run: npm run db:seed
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Build production app
+        run: npm run build
+
+      - name: PR smoke tests on production build
+        if: github.event_name == 'pull_request'
+        run: npm run test:e2e:smoke
+
+      - name: Full E2E on main or manual run
+        if: github.event_name != 'pull_request'
+        run: npm run test:e2e
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report-${{ github.run_id }}
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 14
