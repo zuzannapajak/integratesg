@@ -41,6 +41,8 @@ if (!process.env.PLAYWRIGHT_BASE_URL && e2eDatabaseUrl) {
 }
 
 const scenarioTestPattern = "**/scenarios/**/*.spec.ts";
+const eportfolioTestPattern = "**/eportfolio/**/*.spec.ts";
+const statefulTestPatterns = [scenarioTestPattern, eportfolioTestPattern];
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -88,7 +90,7 @@ export default defineConfig({
     {
       name: "chromium-desktop",
 
-      testIgnore: scenarioTestPattern,
+      testIgnore: statefulTestPatterns,
 
       use: {
         ...devices["Desktop Chrome"],
@@ -98,7 +100,7 @@ export default defineConfig({
     {
       name: "chromium-mobile",
 
-      testIgnore: scenarioTestPattern,
+      testIgnore: statefulTestPatterns,
 
       use: {
         ...devices["Pixel 7"],
@@ -106,14 +108,28 @@ export default defineConfig({
     },
 
     /*
-     * Pełny test scenariusza zapisuje postęp w bazie.
-     * Jest uruchamiany tylko raz, aby kilka projektów
-     * Playwright nie używało równocześnie tego samego konta.
+     * Testy scenariusza zapisują postęp w bazie.
+     * Są uruchamiane osobno i jednym workerem.
      */
     {
       name: "scenario-chromium",
 
       testMatch: scenarioTestPattern,
+
+      use: {
+        ...devices["Desktop Chrome"],
+      },
+    },
+
+    /*
+     * ePortfolio również zapisuje postęp użytkownika.
+     * Osobny projekt zapobiega uruchamianiu tego samego flow
+     * równolegle w projektach smoke desktop/mobile.
+     */
+    {
+      name: "eportfolio-chromium",
+
+      testMatch: eportfolioTestPattern,
 
       use: {
         ...devices["Desktop Chrome"],
