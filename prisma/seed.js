@@ -4,6 +4,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 
 import { courses, curriculumPilotQuestions } from "./seed-data/curriculum/index.js";
+import { seedEportfolio } from "./seed-data/eportfolio/seed.js";
 
 const connectionString = process.env.DIRECT_URL || process.env.DATABASE_URL;
 
@@ -939,7 +940,7 @@ async function seedCourseAttempts(courseMap) {
 }
 
 async function main() {
-  console.log("Seeding curriculum and scenario data...");
+  console.log("Seeding curriculum, scenario and ePortfolio data...");
   await upsertCurriculumPilotQuestions();
 
   const scenarioMap = new Map();
@@ -967,18 +968,20 @@ async function main() {
     courseMap.set(course.slug, course);
   }
 
+  await seedEportfolio(prisma);
+
   await seedScenarioAttempts(scenarioMap);
 
   if (process.env.SEED_DEMO_PROGRESS === "true") {
     await seedCourseAttempts(courseMap);
   }
 
-  console.log("Curriculum and scenario seed completed.");
+  console.log("Curriculum, scenario and ePortfolio seed completed.");
 }
 
 main()
   .catch((error) => {
-    console.error("Curriculum and scenario seed failed.");
+    console.error("Curriculum, scenario and ePortfolio seed failed.");
     console.error(error);
     process.exit(1);
   })
