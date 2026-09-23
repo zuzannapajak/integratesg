@@ -1,25 +1,22 @@
+"use client";
+
 import MarkdownContent from "@/components/ui/markdown-content";
+import { touchCaseStudyProgressAction } from "@/features/eportfolio/actions";
 import type { EportfolioCaseStudyDetail } from "@/lib/eportfolio/detail";
 import {
+  ArrowLeft,
+  ArrowRight,
   Award,
+  BookMarked,
   BookOpen,
-  Building2,
-  CheckCircle2,
   ChevronDown,
+  ChevronLeft,
   FileCheck2,
-  Globe2,
-  Leaf,
   Lightbulb,
-  List,
   Scale,
-  ShieldCheck,
-  Sparkles,
-  Users,
 } from "lucide-react";
 import Link from "next/link";
-import type { ReactNode } from "react";
-
-import EportfolioProgressActions from "./eportfolio-progress-actions";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 type Props = {
   locale: string;
@@ -42,65 +39,15 @@ type SectionKey =
   | "recommendations"
   | "sources";
 
-const SURFACE =
-  "rounded-[28px] border border-white/70 bg-white/90 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";
+type StageKey = "overview" | "environmental" | "social" | "governance" | "evidence" | "lessons";
 
-const NAV_ITEMS: Array<{
-  key: SectionKey | "lessons";
+type StageDefinition = {
+  key: StageKey;
   label: string;
-  id: string;
-}> = [
-  {
-    key: "company",
-    label: "Company overview",
-    id: "company-overview",
-  },
-  {
-    key: "integration",
-    label: "ESG integration",
-    id: "esg-integration",
-  },
-  {
-    key: "environmental",
-    label: "Environmental",
-    id: "environmental",
-  },
-  {
-    key: "social",
-    label: "Social",
-    id: "social",
-  },
-  {
-    key: "governance",
-    label: "Governance",
-    id: "governance",
-  },
-  {
-    key: "ratings",
-    label: "Ratings / evidence",
-    id: "ratings-evidence",
-  },
-  {
-    key: "compliance",
-    label: "Regulatory compliance",
-    id: "regulatory-compliance",
-  },
-  {
-    key: "recommendations",
-    label: "Recommendations",
-    id: "recommendations",
-  },
-  {
-    key: "lessons",
-    label: "Key lessons",
-    id: "key-lessons",
-  },
-  {
-    key: "sources",
-    label: "Sources",
-    id: "sources",
-  },
-];
+};
+
+const SURFACE =
+  "rounded-[30px] border border-white/70 bg-white/88 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";
 
 function parseMarkdownSections(content: string): MarkdownSection[] {
   const matches = Array.from(content.matchAll(/^##\s+(.+?)\s*$/gm));
@@ -116,8 +63,10 @@ function parseMarkdownSections(content: string): MarkdownSection[] {
 
   return matches.map((match, index) => {
     const start = match.index + match[0].length;
+
     const nextMatch = matches.at(index + 1);
-    const end = nextMatch ? nextMatch.index : content.length;
+
+    const end = nextMatch?.index ?? content.length;
 
     return {
       heading: match[1].trim(),
@@ -181,6 +130,10 @@ function classifySection(section: MarkdownSection): SectionKey | null {
   return null;
 }
 
+function getSection(sections: MarkdownSection[], key: SectionKey) {
+  return sections.find((section) => classifySection(section) === key) ?? null;
+}
+
 function getCountryName(countryCode: string, locale: string) {
   try {
     return (
@@ -193,509 +146,554 @@ function getCountryName(countryCode: string, locale: string) {
   }
 }
 
-function getSection(sections: MarkdownSection[], key: SectionKey): MarkdownSection | null {
-  return sections.find((section) => classifySection(section) === key) ?? null;
+function normaliseComparableText(value: string) {
+  return value.replace(/\*\*/g, "").replace(/\s+/g, " ").trim().toLocaleLowerCase();
+}
+
+function splitSentences(value: string) {
+  return value
+    .trim()
+    .split(/(?<=[.!?])\s+(?=[A-ZÀ-Ž0-9])/u)
+    .map((sentence) => sentence.trim())
+    .filter(Boolean);
+}
+
+function removeSummaryOverlap(content: string, summary: string | null) {
+  if (!summary) {
+    return content;
+  }
+
+  const summarySentences = new Set(splitSentences(summary).map(normaliseComparableText));
+
+  return content
+    .split(/\n\s*\n/)
+    .map((block) => {
+      const trimmed = block.trim();
+
+      if (!trimmed) {
+        return "";
+      }
+
+      const isMarkdownStructure = /^(?:#{1,6}\s|[-*+]\s|\d+\.\s|>|```|\|)/.test(trimmed);
+
+      const isMetadataLine = /^\*\*[^*]+:\*\*/.test(trimmed);
+
+      if (isMarkdownStructure || isMetadataLine) {
+        return block;
+      }
+
+      const remainingSentences = splitSentences(trimmed).filter(
+        (sentence) => !summarySentences.has(normaliseComparableText(sentence)),
+      );
+
+      return remainingSentences.join(" ");
+    })
+    .filter((block) => block.trim().length > 0)
+    .join("\n\n");
+}
+
+function normaliseSourcesMarkdown(content: string) {
+  let itemNumber = 0;
+
+  return content
+    .split("\n")
+    .map((line) => {
+      if (/^\s*\d+\.\s+/.test(line)) {
+        itemNumber += 1;
+        return line;
+      }
+
+      if (/^\s*[-*]\s+/.test(line)) {
+        itemNumber += 1;
+
+        return line.replace(/^(\s*)[-*]\s+/, `$1${itemNumber}. `);
+      }
+
+      return line;
+    })
+    .join("\n");
 }
 
 export default function EportfolioDetail({ locale, caseStudy }: Props) {
   const sections = parseMarkdownSections(caseStudy.content);
 
   const company = getSection(sections, "company");
-  const integration = getSection(sections, "integration");
-  const environmental = getSection(sections, "environmental");
-  const social = getSection(sections, "social");
-  const governance = getSection(sections, "governance");
-  const ratings = getSection(sections, "ratings");
-  const compliance = getSection(sections, "compliance");
-  const recommendations = getSection(sections, "recommendations");
-  const sources = getSection(sections, "sources");
 
-  const classifiedSections = new Set(
-    sections
-      .map((section) => classifySection(section))
-      .filter((key): key is SectionKey => key !== null),
-  );
+  const integration = getSection(sections, "integration");
+
+  const environmental = getSection(sections, "environmental");
+
+  const social = getSection(sections, "social");
+
+  const governance = getSection(sections, "governance");
+
+  const ratings = getSection(sections, "ratings");
+
+  const compliance = getSection(sections, "compliance");
+
+  const recommendations = getSection(sections, "recommendations");
+
+  const sources = getSection(sections, "sources");
 
   const additionalSections = sections.filter((section) => classifySection(section) === null);
 
-  const countryName = getCountryName(caseStudy.countryCode, locale);
+  const companyOverviewContent = company
+    ? removeSummaryOverlap(company.content, caseStudy.summary)
+    : null;
 
-  const visibleNavItems = NAV_ITEMS.filter((item) => {
-    if (item.key === "lessons") {
-      return caseStudy.keyTakeaways.length > 0;
+  const [activeStageIndex, setActiveStageIndex] = useState(0);
+
+  const stageTopRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    async function recordOpen() {
+      try {
+        await touchCaseStudyProgressAction({
+          locale,
+          slug: caseStudy.slug,
+        });
+      } catch {
+        // Reading must stay available even if
+        // progress tracking temporarily fails.
+      }
     }
 
-    return classifiedSections.has(item.key);
-  });
+    void recordOpen();
+  }, [caseStudy.slug, locale]);
 
-  return (
-    <div className="space-y-7">
-      <nav aria-label="Breadcrumb" className="text-sm text-[#6b7788]">
-        <Link
-          href={`/${locale}/eportfolio`}
-          className="font-medium transition hover:text-[#0b7f61]"
-        >
-          ePortfolio
-        </Link>
+  const stages: StageDefinition[] = [];
 
-        <span className="mx-2 text-[#a1aab5]">/</span>
+  if (company || integration) {
+    stages.push({
+      key: "overview",
+      label: "Overview",
+    });
+  }
 
-        <span className="text-[#31425a]">{caseStudy.title}</span>
-      </nav>
+  if (environmental) {
+    stages.push({
+      key: "environmental",
+      label: "Environmental",
+    });
+  }
 
-      <header className="overflow-hidden rounded-4xl border border-white/70 bg-[#243346] text-white shadow-[0_18px_50px_rgba(35,45,62,0.13)]">
-        <div className="relative px-5 py-7 sm:px-8 sm:py-9 lg:px-10">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_12%_10%,rgba(52,211,153,0.15),transparent_30%),radial-gradient(circle_at_92%_15%,rgba(56,189,248,0.12),transparent_28%)]" />
+  if (social) {
+    stages.push({
+      key: "social",
+      label: "Social",
+    });
+  }
 
-          <div className="relative grid gap-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(300px,0.75fr)] lg:items-end">
-            <div>
-              <div className="flex flex-wrap gap-2">
-                <span className="inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/8 px-3 py-1.5 text-[0.7rem] font-bold uppercase tracking-[0.13em] text-white/75">
-                  <BookOpen className="h-4 w-4 text-emerald-300" />
-                  ESG case study
-                </span>
+  if (governance) {
+    stages.push({
+      key: "governance",
+      label: "Governance",
+    });
+  }
 
-                {caseStudy.isFeatured ? (
-                  <span className="inline-flex items-center gap-2 rounded-full border border-amber-300/20 bg-amber-300/10 px-3 py-1.5 text-[0.7rem] font-bold uppercase tracking-[0.13em] text-amber-200">
-                    <Sparkles className="h-4 w-4" />
-                    Featured
-                  </span>
-                ) : null}
-              </div>
+  if (ratings || compliance || recommendations || additionalSections.length > 0) {
+    stages.push({
+      key: "evidence",
+      label: "Evidence & compliance",
+    });
+  }
 
-              <h1 className="mt-5 max-w-4xl text-3xl font-semibold tracking-tight sm:text-4xl lg:text-[2.75rem] lg:leading-[1.08]">
-                {caseStudy.title}
-              </h1>
+  if (caseStudy.keyTakeaways.length > 0 || sources) {
+    stages.push({
+      key: "lessons",
+      label: "Lessons & sources",
+    });
+  }
 
-              {caseStudy.organization && caseStudy.organization !== caseStudy.title ? (
-                <p className="mt-2 text-base font-medium text-white/72">{caseStudy.organization}</p>
-              ) : null}
+  if (stages.length === 0) {
+    stages.push({
+      key: "overview",
+      label: "Case study",
+    });
+  }
 
-              {caseStudy.summary ? (
-                <p className="mt-5 max-w-3xl text-sm leading-7 text-white/68 sm:text-base">
-                  {caseStudy.summary}
-                </p>
-              ) : null}
-            </div>
+  const safeStageIndex = Math.min(activeStageIndex, stages.length - 1);
 
-            <div className="grid grid-cols-2 gap-3">
-              <ProfileMetric icon={<Globe2 />} label="Country" value={countryName} />
+  const activeStage = stages[safeStageIndex];
 
-              <ProfileMetric
-                icon={<Building2 />}
-                label="Industry"
-                value={caseStudy.industry ?? "Not specified"}
-              />
+  const countryName = getCountryName(caseStudy.countryCode, locale);
 
-              <ProfileMetric
-                icon={<FileCheck2 />}
-                label="Reporting period"
-                value={caseStudy.reportingPeriod ?? "Not specified"}
-              />
+  const isFirstStage = safeStageIndex === 0;
 
-              <ProfileMetric
-                icon={<Users />}
-                label="Source partner"
-                value={caseStudy.sourcePartner ?? "Not specified"}
-              />
-            </div>
-          </div>
-        </div>
-      </header>
+  const isLastStage = safeStageIndex === stages.length - 1;
 
-      {visibleNavItems.length > 0 ? (
-        <div className={`${SURFACE} sticky top-3 z-20 p-2 sm:p-3`}>
-          <div className="flex items-center gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <span className="hidden shrink-0 items-center gap-2 px-2 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-[#8a97a6] sm:inline-flex">
-              <List className="h-4 w-4" />
-              On this page
-            </span>
+  function changeStage(nextIndex: number) {
+    const clampedIndex = Math.min(Math.max(nextIndex, 0), stages.length - 1);
 
-            {visibleNavItems.map((item) => (
-              <a
-                key={item.id}
-                href={`#${item.id}`}
-                className="shrink-0 rounded-full px-3 py-2 text-sm font-medium text-[#536174] transition hover:bg-[#eef7f4] hover:text-[#0b7f61]"
-              >
-                {item.label}
-              </a>
-            ))}
-          </div>
-        </div>
-      ) : null}
+    setActiveStageIndex(clampedIndex);
 
-      <div className="grid gap-7 xl:grid-cols-[minmax(0,1fr)_300px] xl:items-start">
-        <div className="space-y-7">
-          {company ? (
-            <ContentSection
-              id="company-overview"
-              eyebrow="Profile"
-              title="Company overview"
-              icon={<Building2 />}
-            >
-              <MarkdownContent content={company.content} />
-            </ContentSection>
-          ) : null}
+    requestAnimationFrame(() => {
+      stageTopRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  }
 
-          {integration ? (
-            <ContentSection
-              id="esg-integration"
-              eyebrow="Approach"
-              title="ESG integration"
-              icon={<Scale />}
-            >
-              <MarkdownContent content={integration.content} />
-            </ContentSection>
-          ) : null}
+  function renderStageContent() {
+    switch (activeStage.key) {
+      case "overview":
+        return (
+          <StagePanel
+            title="Overview"
+            description="How the organisation approaches ESG and integrates it into its activities."
+            stepIndex={safeStageIndex}
+            stepTotal={stages.length}
+          >
+            {companyOverviewContent ? (
+              <SectionBlock icon={<BookOpen />} title="Company overview">
+                <MarkdownFrame>
+                  <MarkdownContent content={companyOverviewContent} />
+                </MarkdownFrame>
+              </SectionBlock>
+            ) : null}
 
-          <div className="grid gap-5">
+            {integration ? (
+              <SectionBlock icon={<Scale />} title="ESG integration">
+                <MarkdownFrame>
+                  <MarkdownContent content={integration.content} />
+                </MarkdownFrame>
+              </SectionBlock>
+            ) : null}
+
+            {!companyOverviewContent && !integration ? (
+              <MarkdownFrame>
+                <MarkdownContent content={caseStudy.content} />
+              </MarkdownFrame>
+            ) : null}
+          </StagePanel>
+        );
+
+      case "environmental":
+        return (
+          <StagePanel
+            title="Environmental"
+            description="Environmental priorities, actions and supporting evidence."
+            stepIndex={safeStageIndex}
+            stepTotal={stages.length}
+          >
             {environmental ? (
-              <EsgSection
-                id="environmental"
-                letter="E"
-                label="Environmental"
-                icon={<Leaf />}
-                accentClass="border-emerald-200 bg-emerald-50/55"
-                badgeClass="bg-emerald-100 text-emerald-700"
-                content={environmental.content}
-              />
+              <MarkdownFrame>
+                <MarkdownContent content={environmental.content} />
+              </MarkdownFrame>
             ) : null}
+          </StagePanel>
+        );
 
+      case "social":
+        return (
+          <StagePanel
+            title="Social"
+            description="People, stakeholders, communities and the social aspects of the case."
+            stepIndex={safeStageIndex}
+            stepTotal={stages.length}
+          >
             {social ? (
-              <EsgSection
-                id="social"
-                letter="S"
-                label="Social"
-                icon={<Users />}
-                accentClass="border-sky-200 bg-sky-50/55"
-                badgeClass="bg-sky-100 text-sky-700"
-                content={social.content}
-              />
+              <MarkdownFrame>
+                <MarkdownContent content={social.content} />
+              </MarkdownFrame>
             ) : null}
+          </StagePanel>
+        );
 
+      case "governance":
+        return (
+          <StagePanel
+            title="Governance"
+            description="Governance structures, oversight and accountability."
+            stepIndex={safeStageIndex}
+            stepTotal={stages.length}
+          >
             {governance ? (
-              <EsgSection
-                id="governance"
-                letter="G"
-                label="Governance"
-                icon={<ShieldCheck />}
-                accentClass="border-violet-200 bg-violet-50/55"
-                badgeClass="bg-violet-100 text-violet-700"
-                content={governance.content}
-              />
+              <MarkdownFrame>
+                <MarkdownContent content={governance.content} />
+              </MarkdownFrame>
             ) : null}
-          </div>
+          </StagePanel>
+        );
 
-          {additionalSections.map((section) => (
-            <ContentSection
-              key={section.heading}
-              id={`additional-${normaliseHeading(section.heading).replace(/\s+/g, "-")}`}
-              eyebrow="Case study"
-              title={section.heading}
-              icon={<BookOpen />}
-            >
-              <MarkdownContent content={section.content} />
-            </ContentSection>
-          ))}
+      case "evidence":
+        return (
+          <StagePanel
+            title="Evidence & compliance"
+            description="External evidence, regulatory context and recommendations from the source case."
+            stepIndex={safeStageIndex}
+            stepTotal={stages.length}
+          >
+            {ratings ? (
+              <SectionBlock icon={<Award />} title="Ratings and external evidence">
+                <MarkdownFrame>
+                  <MarkdownContent content={ratings.content} />
+                </MarkdownFrame>
+              </SectionBlock>
+            ) : null}
 
-          {ratings ? (
-            <SpecialSection
-              id="ratings-evidence"
-              eyebrow="Evidence"
-              title="Ratings and external evidence"
-              icon={<Award />}
-              className="border-violet-100 bg-[linear-gradient(145deg,#ffffff_0%,#faf7ff_100%)]"
-              iconClassName="bg-violet-100 text-violet-700"
-            >
-              <MarkdownContent content={ratings.content} />
-            </SpecialSection>
-          ) : null}
+            {compliance ? (
+              <SectionBlock icon={<FileCheck2 />} title="Regulatory compliance">
+                <MarkdownFrame>
+                  <MarkdownContent content={compliance.content} />
+                </MarkdownFrame>
+              </SectionBlock>
+            ) : null}
 
-          {compliance ? (
-            <SpecialSection
-              id="regulatory-compliance"
-              eyebrow="Compliance"
-              title="Regulatory compliance"
-              icon={<FileCheck2 />}
-              className="border-blue-100 bg-[linear-gradient(145deg,#ffffff_0%,#f5faff_100%)]"
-              iconClassName="bg-blue-100 text-blue-700"
-            >
-              <MarkdownContent content={compliance.content} />
-            </SpecialSection>
-          ) : null}
+            {additionalSections.map((section) => (
+              <SectionBlock key={section.heading} icon={<BookOpen />} title={section.heading}>
+                <MarkdownFrame>
+                  <MarkdownContent content={section.content} />
+                </MarkdownFrame>
+              </SectionBlock>
+            ))}
 
-          {recommendations ? (
-            <SpecialSection
-              id="recommendations"
-              eyebrow="Next steps"
-              title="Recommendations"
-              icon={<Lightbulb />}
-              className="border-amber-100 bg-[linear-gradient(145deg,#ffffff_0%,#fffbeb_100%)]"
-              iconClassName="bg-amber-100 text-amber-700"
-            >
-              <MarkdownContent content={recommendations.content} />
-            </SpecialSection>
-          ) : null}
+            {recommendations ? (
+              <SectionBlock icon={<Lightbulb />} title="Recommendations">
+                <MarkdownFrame>
+                  <MarkdownContent content={recommendations.content} />
+                </MarkdownFrame>
+              </SectionBlock>
+            ) : null}
+          </StagePanel>
+        );
 
-          {caseStudy.keyTakeaways.length > 0 ? (
-            <section id="key-lessons" className={`${SURFACE} scroll-mt-28 p-5 sm:p-7`}>
-              <SectionHeading eyebrow="Takeaways" title="Key lessons" icon={<CheckCircle2 />} />
+      case "lessons":
+        return (
+          <StagePanel
+            title="Key lessons & sources"
+            description="The main lessons from the case and the references supporting it."
+            stepIndex={safeStageIndex}
+            stepTotal={stages.length}
+          >
+            {caseStudy.keyTakeaways.length > 0 ? (
+              <SectionBlock icon={<BookMarked />} title="Key lessons">
+                <ol className="grid gap-3">
+                  {caseStudy.keyTakeaways.map((lesson, index) => (
+                    <li
+                      key={`${index}-${lesson}`}
+                      className="flex gap-4 rounded-2xl border border-[#e8edf3] bg-[#f8fafc] p-4"
+                    >
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white text-sm font-bold text-[#31425a] shadow-sm">
+                        {index + 1}
+                      </span>
 
-              <ol className="mt-6 grid gap-3">
-                {caseStudy.keyTakeaways.map((lesson, index) => (
-                  <li
-                    key={`${index}-${lesson}`}
-                    className="flex gap-4 rounded-2xl border border-[#e8edf3] bg-[#f8fafb] p-4"
-                  >
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#dff3ec] text-sm font-bold text-[#0b7f61]">
-                      {index + 1}
-                    </span>
+                      <p className="min-w-0 flex-1 pt-1 text-sm leading-6 text-[#536174]">
+                        {lesson}
+                      </p>
+                    </li>
+                  ))}
+                </ol>
+              </SectionBlock>
+            ) : null}
 
-                    <p className="pt-1 text-sm leading-6 text-[#536174]">{lesson}</p>
-                  </li>
-                ))}
-              </ol>
-            </section>
-          ) : null}
-
-          {sources ? (
-            <section id="sources" className="scroll-mt-28">
-              <details className={`${SURFACE} group overflow-hidden`}>
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-7 [&::-webkit-details-marker]:hidden">
+            {sources ? (
+              <details className="group overflow-hidden rounded-2xl border border-[#e8edf3] bg-white">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6 [&::-webkit-details-marker]:hidden">
                   <div>
-                    <p className="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-[#0b8c69]">
-                      References
-                    </p>
-
-                    <h2 className="mt-1 text-xl font-semibold tracking-tight text-[#273548]">
+                    <h3 className="text-lg font-bold tracking-tight text-[#31425a]">
                       Sources and references
-                    </h2>
+                    </h3>
+
+                    <p className="mt-1 text-sm text-[#7b8794]">
+                      References used for this case study.
+                    </p>
                   </div>
 
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#eef3f7] text-[#536174] transition group-open:rotate-180">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#e8edf3] bg-[#f8fafc] text-[#536174] transition group-open:rotate-180">
                     <ChevronDown className="h-5 w-5" />
                   </span>
                 </summary>
 
-                <div className="border-t border-[#edf1f5] px-5 py-6 sm:px-7">
-                  <MarkdownContent content={sources.content} />
+                <div className="border-t border-[#edf1f5] p-5 sm:p-6">
+                  <MarkdownFrame>
+                    <MarkdownContent content={normaliseSourcesMarkdown(sources.content)} />
+                  </MarkdownFrame>
                 </div>
               </details>
-            </section>
-          ) : null}
+            ) : null}
+          </StagePanel>
+        );
+    }
+  }
 
-          <EportfolioProgressActions
-            locale={locale}
-            slug={caseStudy.slug}
-            initialProgress={caseStudy.progress}
-            nextCaseStudy={caseStudy.nextCaseStudy}
-          />
-        </div>
+  return (
+    <div className="space-y-6">
+      <div className="px-1">
+        <Link
+          href={`/${locale}/eportfolio`}
+          className="inline-flex items-center gap-2 text-[0.95rem] font-medium text-[#5f6977] transition hover:text-[#31425a]"
+        >
+          <ArrowLeft className="h-4.5 w-4.5" />
+          Back to ePortfolio
+        </Link>
+      </div>
 
-        <aside className="hidden xl:block">
-          <div className={`${SURFACE} sticky top-24 p-5`}>
-            <p className="text-[0.7rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-              Company profile
-            </p>
+      <div ref={stageTopRef} className="scroll-mt-24">
+        {isFirstStage ? (
+          <header className={`${SURFACE} p-5 sm:p-7 lg:p-8`}>
+            <h1 className="text-3xl font-bold tracking-tight text-[#31425a] sm:text-4xl">
+              {caseStudy.title}
+            </h1>
 
-            <div className="mt-4 space-y-4">
-              <ProfileRow label="Company" value={caseStudy.organization ?? caseStudy.title} />
+            {caseStudy.organization && caseStudy.organization !== caseStudy.title ? (
+              <p className="mt-2 text-base font-medium text-[#6b7788]">{caseStudy.organization}</p>
+            ) : null}
 
-              <ProfileRow label="Country" value={countryName} />
+            {caseStudy.summary ? (
+              <p className="mt-5 w-full max-w-none text-[0.98rem] leading-8 text-[#556274]">
+                {caseStudy.summary}
+              </p>
+            ) : null}
 
-              <ProfileRow label="Industry" value={caseStudy.industry ?? "Not specified"} />
+            <div className="mt-7 grid w-full gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              <MetadataItem label="Country" value={countryName} />
 
-              <ProfileRow
+              <MetadataItem label="Industry" value={caseStudy.industry ?? "Not specified"} />
+
+              <MetadataItem
                 label="Reporting period"
                 value={caseStudy.reportingPeriod ?? "Not specified"}
               />
 
-              <ProfileRow
+              <MetadataItem
                 label="Source partner"
                 value={caseStudy.sourcePartner ?? "Not specified"}
               />
-
-              <ProfileRow
-                label="Progress"
-                value={
-                  caseStudy.progress === "completed"
-                    ? "Completed"
-                    : caseStudy.progress === "in_progress"
-                      ? "In progress"
-                      : "Not started"
-                }
-              />
             </div>
-          </div>
-        </aside>
+          </header>
+        ) : null}
+
+        <div className={isFirstStage ? "mt-6" : ""}>{renderStageContent()}</div>
+      </div>
+
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <button
+          type="button"
+          disabled={safeStageIndex === 0}
+          onClick={() => {
+            changeStage(safeStageIndex - 1);
+          }}
+          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-[#d9e2ec] bg-white px-5 py-3 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc] disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          <ChevronLeft className="h-4 w-4" />
+          Previous
+        </button>
+
+        {isLastStage ? (
+          <Link
+            href={`/${locale}/eportfolio/${caseStudy.slug}/complete`}
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347]"
+          >
+            Next
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        ) : (
+          <button
+            type="button"
+            onClick={() => {
+              changeStage(safeStageIndex + 1);
+            }}
+            className="inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347]"
+          >
+            Next
+            <ArrowRight className="h-4 w-4" />
+          </button>
+        )}
       </div>
     </div>
   );
 }
 
-function ProfileMetric({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
+function MetadataItem({ label, value }: { label: string; value: string }) {
   return (
-    <div className="min-w-0 rounded-2xl border border-white/10 bg-white/8 p-4 backdrop-blur-sm">
-      <div className="flex items-center gap-2 text-emerald-300 [&_svg]:h-4 [&_svg]:w-4">
-        {icon}
-
-        <span className="text-[0.68rem] font-bold uppercase tracking-[0.12em] text-white/52">
-          {label}
-        </span>
-      </div>
-
-      <p className="mt-2 line-clamp-2 text-sm font-semibold leading-5 text-white/88">{value}</p>
-    </div>
-  );
-}
-
-function ProfileRow({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="border-b border-[#edf1f5] pb-3 last:border-b-0 last:pb-0">
+    <div className="min-w-0 rounded-2xl border border-[#e8edf3] bg-white px-4 py-4">
       <p className="text-[0.68rem] font-bold uppercase tracking-[0.12em] text-[#98a2b3]">{label}</p>
 
-      <p className="mt-1 text-sm font-medium leading-5 text-[#31425a]">{value}</p>
+      <p className="mt-1 wrap-break-word text-sm font-semibold leading-5 text-[#31425a]">{value}</p>
     </div>
   );
 }
 
-function SectionHeading({
-  eyebrow,
+function StagePanel({
   title,
-  icon,
-}: {
-  eyebrow: string;
-  title: string;
-  icon: ReactNode;
-}) {
-  return (
-    <div className="flex items-start gap-3">
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-[#e9f5f1] text-[#0b8c69] [&_svg]:h-5 [&_svg]:w-5">
-        {icon}
-      </span>
-
-      <div>
-        <p className="text-[0.68rem] font-bold uppercase tracking-[0.14em] text-[#0b8c69]">
-          {eyebrow}
-        </p>
-
-        <h2 className="mt-1 text-xl font-semibold tracking-tight text-[#273548] sm:text-2xl">
-          {title}
-        </h2>
-      </div>
-    </div>
-  );
-}
-
-function ContentSection({
-  id,
-  eyebrow,
-  title,
-  icon,
+  description,
+  stepIndex,
+  stepTotal,
   children,
 }: {
-  id: string;
-  eyebrow: string;
   title: string;
-  icon: ReactNode;
+  description: string;
+  stepIndex: number;
+  stepTotal: number;
   children: ReactNode;
 }) {
+  const progress = ((stepIndex + 1) / stepTotal) * 100;
+
   return (
-    <section id={id} className={`${SURFACE} scroll-mt-28 p-5 sm:p-7`}>
-      <SectionHeading eyebrow={eyebrow} title={title} icon={icon} />
+    <section className={`${SURFACE} p-5 sm:p-7 lg:p-8`}>
+      <div className="flex items-start justify-between gap-5">
+        <div className="min-w-0">
+          <h2 className="text-2xl font-bold tracking-tight text-[#31425a] sm:text-3xl">{title}</h2>
 
-      <div className="mt-6">{children}</div>
-    </section>
-  );
-}
-
-function EsgSection({
-  id,
-  letter,
-  label,
-  icon,
-  accentClass,
-  badgeClass,
-  content,
-}: {
-  id: string;
-  letter: string;
-  label: string;
-  icon: ReactNode;
-  accentClass: string;
-  badgeClass: string;
-  content: string;
-}) {
-  return (
-    <section
-      id={id}
-      className={`scroll-mt-28 rounded-[28px] border p-5 shadow-[0_12px_34px_rgba(35,45,62,0.05)] sm:p-7 ${accentClass}`}
-    >
-      <div className="flex items-start gap-4">
-        <span
-          className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-xl font-bold ${badgeClass}`}
-        >
-          {letter}
-        </span>
-
-        <div>
-          <div className="flex items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.14em] text-[#7b8794] [&_svg]:h-4 [&_svg]:w-4">
-            {icon}
-            ESG pillar
-          </div>
-
-          <h2 className="mt-1 text-2xl font-semibold tracking-tight text-[#273548]">{label}</h2>
+          <p className="mt-2 w-full text-sm leading-6 text-[#667180]">{description}</p>
         </div>
+
+        <span className="shrink-0 pt-1 text-sm font-semibold tabular-nums text-[#8a97a6]">
+          {stepIndex + 1} / {stepTotal}
+        </span>
       </div>
 
-      <div className="mt-6">
-        <MarkdownContent content={content} />
+      <div
+        className="mt-5 h-1 overflow-hidden rounded-full bg-[#e7ebef]"
+        role="progressbar"
+        aria-label="Case study reading progress"
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={Math.round(progress)}
+      >
+        <div
+          className="h-full rounded-full bg-[#0b9c72] transition-[width]"
+          style={{
+            width: `${progress}%`,
+          }}
+        />
       </div>
+
+      <div className="mt-8 space-y-7">{children}</div>
     </section>
   );
 }
 
-function SpecialSection({
-  id,
-  eyebrow,
-  title,
+function SectionBlock({
   icon,
-  className,
-  iconClassName,
+  title,
   children,
 }: {
-  id: string;
-  eyebrow: string;
-  title: string;
   icon: ReactNode;
-  className: string;
-  iconClassName: string;
+  title: string;
   children: ReactNode;
 }) {
   return (
-    <section
-      id={id}
-      className={`scroll-mt-28 rounded-[28px] border p-5 shadow-[0_12px_34px_rgba(35,45,62,0.05)] sm:p-7 ${className}`}
-    >
-      <div className="flex items-start gap-3">
-        <span
-          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl [&_svg]:h-5 [&_svg]:w-5 ${iconClassName}`}
-        >
+    <section className="border-t border-[#e8edf3] pt-6 first:border-t-0 first:pt-0">
+      <div className="flex items-center gap-3">
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#eef4f2] text-[#0b8c69] [&_svg]:h-4.5 [&_svg]:w-4.5">
           {icon}
         </span>
 
-        <div>
-          <p className="text-[0.68rem] font-bold uppercase tracking-[0.14em] text-[#7b8794]">
-            {eyebrow}
-          </p>
-
-          <h2 className="mt-1 text-xl font-semibold tracking-tight text-[#273548] sm:text-2xl">
-            {title}
-          </h2>
-        </div>
+        <h3 className="text-xl font-bold tracking-tight text-[#31425a]">{title}</h3>
       </div>
 
-      <div className="mt-6">{children}</div>
+      <div className="mt-5 w-full">{children}</div>
     </section>
+  );
+}
+
+function MarkdownFrame({ children }: { children: ReactNode }) {
+  return (
+    <div className="w-full min-w-0 overflow-x-auto wrap-anywhere [&_a]:wrap-break-word [&_table]:min-w-140">
+      {children}
+    </div>
   );
 }

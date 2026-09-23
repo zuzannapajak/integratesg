@@ -1,18 +1,16 @@
 "use client";
 
-import {
-  completeCaseStudyAction,
-  touchCaseStudyProgressAction,
-} from "@/features/eportfolio/actions";
+import { completeCaseStudyAction } from "@/features/eportfolio/actions";
 import type { EportfolioProgress } from "@/lib/eportfolio/library";
 import { ArrowRight, Check, CheckCircle2, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 
 type Props = {
   locale: string;
   slug: string;
+  caseStudyTitle: string;
   initialProgress: EportfolioProgress;
   nextCaseStudy: {
     slug: string;
@@ -23,6 +21,7 @@ type Props = {
 export default function EportfolioProgressActions({
   locale,
   slug,
+  caseStudyTitle,
   initialProgress,
   nextCaseStudy,
 }: Props) {
@@ -34,31 +33,7 @@ export default function EportfolioProgressActions({
 
   const [isPending, startTransition] = useTransition();
 
-  useEffect(() => {
-    let isActive = true;
-
-    async function recordOpen() {
-      try {
-        const result = await touchCaseStudyProgressAction({
-          locale,
-          slug,
-        });
-
-        if (isActive) {
-          setProgress(result.status);
-        }
-      } catch {
-        // Reading the case study must remain possible
-        // even if progress tracking temporarily fails.
-      }
-    }
-
-    void recordOpen();
-
-    return () => {
-      isActive = false;
-    };
-  }, [locale, slug]);
+  const isCompleted = progress === "completed";
 
   function handleComplete() {
     setErrorMessage(null);
@@ -80,78 +55,64 @@ export default function EportfolioProgressActions({
   }
 
   return (
-    <section className="rounded-[28px] border border-white/70 bg-[#243346] p-5 text-white shadow-[0_16px_42px_rgba(35,45,62,0.12)] sm:p-6">
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-        <div>
-          <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-emerald-300">
-            Case study progress
-          </p>
-
-          <div className="mt-2 flex items-center gap-2">
-            {progress === "completed" ? (
-              <CheckCircle2 className="h-5 w-5 text-emerald-300" />
-            ) : null}
-
-            <p className="text-lg font-semibold">
-              {progress === "completed"
-                ? "Case study completed"
-                : "Finished reading this case study?"}
-            </p>
+    <section className="rounded-[30px] border border-white/70 bg-white/88 px-5 py-10 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl sm:px-8 sm:py-12">
+      <div className="mx-auto max-w-2xl text-center">
+        {isCompleted ? (
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50 text-[#0b8c69]">
+            <CheckCircle2 className="h-7 w-7" />
           </div>
+        ) : null}
 
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-white/65">
-            {progress === "completed"
-              ? "Your completion has been saved. You can review this case again at any time."
-              : "Mark it as completed when you have reviewed the case, recommendations and key lessons."}
-          </p>
+        <h1
+          className={`text-2xl font-bold tracking-tight text-[#31425a] sm:text-3xl ${
+            isCompleted ? "mt-5" : ""
+          }`}
+        >
+          {isCompleted ? `${caseStudyTitle} completed` : "Complete case study"}
+        </h1>
 
-          {errorMessage ? (
-            <p className="mt-3 text-sm font-medium text-red-200">{errorMessage}</p>
-          ) : null}
-        </div>
+        <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-[#667180]">
+          {isCompleted
+            ? "Your progress has been saved."
+            : "Mark this case study as completed to save your progress."}
+        </p>
 
-        <div className="flex flex-col gap-3 sm:flex-row">
-          {progress !== "completed" ? (
+        {errorMessage ? (
+          <p className="mt-4 text-sm font-medium text-rose-600">{errorMessage}</p>
+        ) : null}
+
+        <div className="mt-8 flex justify-center">
+          {!isCompleted ? (
             <button
               type="button"
               onClick={handleComplete}
               disabled={isPending}
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-[#17382f] transition hover:-translate-y-0.5 hover:bg-emerald-300 disabled:cursor-not-allowed disabled:opacity-65"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isPending ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
                 <Check className="h-4 w-4" />
               )}
-              Mark case study as completed
+              Mark as completed
             </button>
-          ) : null}
-
-          {nextCaseStudy ? (
+          ) : nextCaseStudy ? (
             <Link
               href={`/${locale}/eportfolio/${nextCaseStudy.slug}`}
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/16 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/16"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347]"
             >
               Next case study
               <ArrowRight className="h-4 w-4" />
             </Link>
-          ) : (
-            <Link
-              href={`/${locale}/eportfolio`}
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/16 bg-white/10 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-white/16"
-            >
-              Back to library
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          )}
+          ) : null}
         </div>
-      </div>
 
-      {nextCaseStudy ? (
-        <p className="mt-4 border-t border-white/10 pt-4 text-sm text-white/55">
-          Up next: <span className="font-medium text-white/80">{nextCaseStudy.title}</span>
-        </p>
-      ) : null}
+        {isCompleted && nextCaseStudy ? (
+          <p className="mt-5 text-sm text-[#8a97a6]">
+            Up next: <span className="font-medium text-[#536174]">{nextCaseStudy.title}</span>
+          </p>
+        ) : null}
+      </div>
     </section>
   );
 }

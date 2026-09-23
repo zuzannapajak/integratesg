@@ -6,13 +6,11 @@ import {
   BookOpen,
   CheckCircle2,
   CircleDashed,
-  Filter,
-  Globe2,
   Search,
-  Sparkles,
+  SlidersHorizontal,
 } from "lucide-react";
 import Link from "next/link";
-import { ChangeEvent, useMemo, useState } from "react";
+import { type ChangeEvent, useMemo, useState } from "react";
 
 type Props = {
   locale: string;
@@ -20,7 +18,6 @@ type Props = {
 };
 
 type ProgressFilter = EportfolioProgress | "all";
-type FeaturedFilter = "all" | "featured";
 
 const SURFACE =
   "rounded-[28px] border border-white/70 bg-white/88 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";
@@ -45,12 +42,14 @@ function getProgressMeta(progress: EportfolioProgress) {
         icon: <CheckCircle2 className="h-4 w-4" />,
         className: "border-emerald-100 bg-emerald-50 text-emerald-700",
       };
+
     case "in_progress":
       return {
         label: "In progress",
         icon: <CircleDashed className="h-4 w-4" />,
         className: "border-amber-100 bg-amber-50 text-amber-700",
       };
+
     default:
       return {
         label: "Not started",
@@ -66,10 +65,10 @@ function normaliseSearchValue(value: string) {
 
 export default function EportfolioLibrary({ locale, items }: Props) {
   const [search, setSearch] = useState("");
+
   const [country, setCountry] = useState("all");
-  const [industry, setIndustry] = useState("all");
+
   const [progress, setProgress] = useState<ProgressFilter>("all");
-  const [featured, setFeatured] = useState<FeaturedFilter>("all");
 
   const countryOptions = useMemo(() => {
     return [...new Set(items.map((item) => item.countryCode))]
@@ -79,14 +78,6 @@ export default function EportfolioLibrary({ locale, items }: Props) {
         label: getCountryName(code, locale),
       }));
   }, [items, locale]);
-
-  const industryOptions = useMemo(() => {
-    return [...new Set(items.map((item) => item.industry).filter(Boolean) as string[])].sort(
-      (a, b) => a.localeCompare(b, locale),
-    );
-  }, [items, locale]);
-
-  const hasFeaturedItems = items.some((item) => item.isFeatured);
 
   const filteredItems = useMemo(() => {
     const query = normaliseSearchValue(search);
@@ -107,30 +98,21 @@ export default function EportfolioLibrary({ locale, items }: Props) {
         .toLocaleLowerCase();
 
       const matchesSearch = query.length === 0 || searchableValues.includes(query);
+
       const matchesCountry = country === "all" || item.countryCode === country;
-      const matchesIndustry = industry === "all" || item.industry === industry;
+
       const matchesProgress = progress === "all" || item.progress === progress;
-      const matchesFeatured = featured === "all" || item.isFeatured;
 
-      return (
-        matchesSearch && matchesCountry && matchesIndustry && matchesProgress && matchesFeatured
-      );
+      return matchesSearch && matchesCountry && matchesProgress;
     });
-  }, [country, featured, industry, items, locale, progress, search]);
+  }, [country, items, locale, progress, search]);
 
-  const hasActiveFilters =
-    search.trim().length > 0 ||
-    country !== "all" ||
-    industry !== "all" ||
-    progress !== "all" ||
-    featured !== "all";
+  const hasActiveFilters = search.trim().length > 0 || country !== "all" || progress !== "all";
 
   function clearFilters() {
     setSearch("");
     setCountry("all");
-    setIndustry("all");
     setProgress("all");
-    setFeatured("all");
   }
 
   return (
@@ -138,31 +120,28 @@ export default function EportfolioLibrary({ locale, items }: Props) {
       <section className={`${SURFACE} p-5 sm:p-6`}>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2 text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-[#7b8794]">
-            <Filter className="h-4 w-4" />
+            <SlidersHorizontal className="h-4 w-4" />
             Refine case studies
           </div>
 
           <p className="text-sm text-[#667180]">
-            {filteredItems.length} of {items.length} case {items.length === 1 ? "study" : "studies"}
+            {filteredItems.length} of {items.length}{" "}
+            {items.length === 1 ? "case study" : "case studies"}
           </p>
         </div>
 
-        <div
-          className={`mt-5 grid gap-3 ${
-            hasFeaturedItems
-              ? "md:grid-cols-2 xl:grid-cols-[minmax(0,1.55fr)_repeat(4,minmax(0,1fr))]"
-              : "md:grid-cols-2 xl:grid-cols-[minmax(0,1.55fr)_repeat(3,minmax(0,1fr))]"
-          }`}
-        >
+        <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-[minmax(0,1.55fr)_minmax(0,0.85fr)_minmax(0,0.85fr)]">
           <label className="flex min-w-0 items-center gap-3 rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 transition focus-within:border-[#0b9c72]/30 focus-within:shadow-[0_8px_24px_rgba(35,45,62,0.05)]">
-            <Search className="h-4.5 w-4.5 shrink-0 text-[#98a2b3]" />
+            <Search className="h-4 w-4 shrink-0 text-[#98a2b3]" />
+
             <span className="sr-only">Search case studies</span>
+
             <input
               value={search}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 setSearch(event.target.value);
               }}
-              placeholder="Search company, industry or country..."
+              placeholder="Search company, country or keyword..."
               className="w-full min-w-0 border-none bg-transparent text-[0.95rem] text-[#31425a] outline-none placeholder:text-[#9aa5b3]"
             />
           </label>
@@ -176,25 +155,10 @@ export default function EportfolioLibrary({ locale, items }: Props) {
             className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
           >
             <option value="all">All countries</option>
+
             {countryOptions.map((option) => (
               <option key={option.code} value={option.code}>
                 {option.label}
-              </option>
-            ))}
-          </select>
-
-          <select
-            aria-label="Filter by industry"
-            value={industry}
-            onChange={(event: ChangeEvent<HTMLSelectElement>) => {
-              setIndustry(event.target.value);
-            }}
-            className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
-          >
-            <option value="all">All industries</option>
-            {industryOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
               </option>
             ))}
           </select>
@@ -208,24 +172,13 @@ export default function EportfolioLibrary({ locale, items }: Props) {
             className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
           >
             <option value="all">All progress</option>
+
             <option value="not_started">Not started</option>
+
             <option value="in_progress">In progress</option>
+
             <option value="completed">Completed</option>
           </select>
-
-          {hasFeaturedItems ? (
-            <select
-              aria-label="Filter featured case studies"
-              value={featured}
-              onChange={(event: ChangeEvent<HTMLSelectElement>) => {
-                setFeatured(event.target.value as FeaturedFilter);
-              }}
-              className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
-            >
-              <option value="all">All case studies</option>
-              <option value="featured">Featured only</option>
-            </select>
-          ) : null}
         </div>
 
         {hasActiveFilters ? (
@@ -245,69 +198,47 @@ export default function EportfolioLibrary({ locale, items }: Props) {
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {filteredItems.map((item) => {
             const progressMeta = getProgressMeta(item.progress);
+
             const countryName = getCountryName(item.countryCode, locale);
-            const companyName = item.organization ?? item.title;
-            const initials = companyName
-              .split(/\s+/)
-              .filter(Boolean)
-              .slice(0, 2)
-              .map((part) => part[0])
-              .join("")
-              .toUpperCase();
 
             return (
               <article
                 key={item.slug}
-                className={`${SURFACE} group relative flex min-h-88 flex-col overflow-hidden p-5 transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_42px_rgba(35,45,62,0.09)] sm:p-6`}
+                className={`${SURFACE} group flex min-h-80 flex-col p-5 transition duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_42px_rgba(35,45,62,0.09)] sm:p-6`}
               >
-                <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(circle_at_top_left,rgba(11,156,114,0.10),transparent_62%)]" />
-
-                <div className="relative flex flex-1 flex-col">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-emerald-100 bg-emerald-50 text-sm font-bold tracking-[0.08em] text-[#0b7f61]">
-                      {initials || "ESG"}
-                    </div>
-
-                    <div className="flex flex-wrap justify-end gap-2">
-                      {item.isFeatured ? (
-                        <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-100 bg-amber-50 px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-widest text-amber-700">
-                          <Sparkles className="h-3.5 w-3.5" />
-                          Featured
-                        </span>
-                      ) : null}
-
-                      <span
-                        className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-widest ${progressMeta.className}`}
-                      >
-                        {progressMeta.icon}
-                        {progressMeta.label}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="mt-5">
-                    <p className="text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-[#8a97a6]">
+                <div className="flex flex-1 flex-col">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <p className="pt-1 text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-[#8a97a6]">
                       {countryName}
                       {item.reportingPeriod ? ` · ${item.reportingPeriod}` : ""}
                     </p>
 
-                    <h2 className="mt-1 text-xl font-semibold tracking-tight text-[#1f2a37]">
+                    <span
+                      className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-widest ${progressMeta.className}`}
+                    >
+                      {progressMeta.icon}
+
+                      {progressMeta.label}
+                    </span>
+                  </div>
+
+                  <div className="mt-5">
+                    <h2 className="text-xl font-bold tracking-tight text-[#31425a]">
                       {item.title}
                     </h2>
 
                     {item.organization && item.organization !== item.title ? (
-                      <p className="mt-1 text-sm text-[#7b8794]">{item.organization}</p>
+                      <p className="mt-1 text-sm leading-5 text-[#7b8794]">{item.organization}</p>
+                    ) : null}
+
+                    {item.industry ? (
+                      <p className="mt-3 text-sm font-medium leading-5 text-[#536174]">
+                        {item.industry}
+                      </p>
                     ) : null}
                   </div>
 
-                  <div className="mt-4 flex items-center gap-2 text-sm text-[#536174]">
-                    <Globe2 className="h-4 w-4 shrink-0 text-[#0b9c72]" />
-                    <span className="line-clamp-1">
-                      {item.industry ?? "Industry not specified"}
-                    </span>
-                  </div>
-
-                  <p className="mt-4 flex-1 text-sm leading-6 text-[#5f6c7b] line-clamp-4">
+                  <p className="mt-4 line-clamp-4 flex-1 text-sm leading-6 text-[#5f6c7b]">
                     {item.summary ??
                       "Open this case study to explore the organisation’s ESG approach and practical evidence."}
                   </p>
@@ -315,9 +246,10 @@ export default function EportfolioLibrary({ locale, items }: Props) {
                   <div className="mt-6 flex justify-end">
                     <Link
                       href={`/${locale}/eportfolio/${item.slug}`}
-                      className="inline-flex items-center gap-2 rounded-full bg-[#31425a] px-4 py-2.5 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#263548]"
+                      className="inline-flex items-center gap-2 rounded-2xl bg-[#31425a] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347]"
                     >
                       {item.progress === "completed" ? "Review case study" : "Open case study"}
+
                       <ArrowRight className="h-4 w-4" />
                     </Link>
                   </div>
@@ -337,7 +269,7 @@ export default function EportfolioLibrary({ locale, items }: Props) {
           </h2>
 
           <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[#667180]">
-            Try another company name, country, industry or progress status.
+            Try another company name, country or progress status.
           </p>
 
           {hasActiveFilters ? (

@@ -83,7 +83,7 @@ describe("ePortfolio library UI", () => {
     expect(screen.getByText("1 of 3 case studies")).toBeInTheDocument();
   });
 
-  it("filters by country, industry and progress", async () => {
+  it("filters by country and progress", async () => {
     const user = userEvent.setup();
 
     render(<EportfolioLibrary locale="en" items={items} />);
@@ -115,31 +115,6 @@ describe("ePortfolio library UI", () => {
 
     await user.selectOptions(
       screen.getByRole("combobox", {
-        name: "Filter by industry",
-      }),
-      "Food and Beverage Manufacturing",
-    );
-
-    expect(
-      screen.getByRole("heading", {
-        name: "Barilla S.p.A.",
-      }),
-    ).toBeInTheDocument();
-
-    expect(
-      screen.queryByRole("heading", {
-        name: "PZU S.A.",
-      }),
-    ).not.toBeInTheDocument();
-
-    await user.click(
-      screen.getByRole("button", {
-        name: "Clear filters",
-      }),
-    );
-
-    await user.selectOptions(
-      screen.getByRole("combobox", {
         name: "Filter by progress",
       }),
       "completed",
@@ -154,6 +129,12 @@ describe("ePortfolio library UI", () => {
     expect(
       screen.queryByRole("heading", {
         name: "PZU S.A.",
+      }),
+    ).not.toBeInTheDocument();
+
+    expect(
+      screen.queryByRole("heading", {
+        name: "Sofiyska Voda AD",
       }),
     ).not.toBeInTheDocument();
   });
@@ -172,7 +153,7 @@ describe("ePortfolio library UI", () => {
     ).toBeInTheDocument();
   });
 
-  it("keeps filter controls keyboard-addressable and labelled", () => {
+  it("keeps the simplified filter controls keyboard-addressable and labelled", () => {
     render(<EportfolioLibrary locale="en" items={items} />);
 
     expect(
@@ -189,15 +170,15 @@ describe("ePortfolio library UI", () => {
 
     expect(
       screen.getByRole("combobox", {
-        name: "Filter by industry",
+        name: "Filter by progress",
       }),
     ).toBeInTheDocument();
 
     expect(
-      screen.getByRole("combobox", {
-        name: "Filter by progress",
+      screen.queryByRole("combobox", {
+        name: "Filter by industry",
       }),
-    ).toBeInTheDocument();
+    ).not.toBeInTheDocument();
 
     const links = screen.getAllByRole("link");
 
@@ -206,7 +187,7 @@ describe("ePortfolio library UI", () => {
     for (const link of links) {
       expect(link).toHaveAttribute("href");
 
-      expect(link).toHaveTextContent(/\S/u);
+      expect(link.textContent.trim().length).toBeGreaterThan(0);
     }
   });
 });
