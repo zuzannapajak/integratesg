@@ -9,7 +9,9 @@ import {
 } from "./eportfolio-test-database";
 
 const libraryPath = "/en/eportfolio";
+
 const testCaseSlug = "sofiyska-voda";
+
 const testCaseTitle = "Sofiyska Voda AD";
 
 async function signIn(page: Page): Promise<void> {
@@ -18,6 +20,7 @@ async function signIn(page: Page): Promise<void> {
   await page.goto("/en/auth/login");
 
   await page.getByLabel("Email address").fill(email);
+
   await page.getByLabel("Password").fill(password);
 
   await Promise.all([
@@ -59,6 +62,7 @@ async function goToLastReadingStage(page: Page): Promise<void> {
 
     if ((await completionLink.count()) > 0) {
       await expect(completionLink).toBeVisible();
+
       return;
     }
 
@@ -68,6 +72,7 @@ async function goToLastReadingStage(page: Page): Promise<void> {
     });
 
     await expect(nextButton).toBeVisible();
+
     await nextButton.click();
   }
 
@@ -109,6 +114,7 @@ test.describe("ePortfolio", () => {
 
   test("supports library search and the simplified filters", async ({ page }) => {
     await resetEportfolioTestProgress();
+
     await signIn(page);
 
     await page.goto(libraryPath);
@@ -195,21 +201,25 @@ test.describe("ePortfolio", () => {
     ).toHaveCount(0);
   });
 
-  test("opens all published case studies and exposes valid external references", async ({ page }) => {
+  test("opens all published case studies and exposes valid external references", async ({
+    page,
+  }) => {
     test.setTimeout(180_000);
 
     await resetEportfolioTestProgress();
+
     await signIn(page);
 
     for (const slug of EPORTFOLIO_SLUGS) {
       const response = await page.goto(`/en/eportfolio/${slug}`);
 
-      expect(response, `No document response received for ${slug}.`).not.toBeNull();
+      if (!response) {
+        throw new Error(`No document response received for ${slug}.`);
+      }
 
-      expect(
-        response?.status(),
-        `The ePortfolio route for ${slug} returned HTTP ${response?.status()}.`,
-      ).toBeLessThan(400);
+      const status = response.status();
+
+      expect(status, `The ePortfolio route for ${slug} returned HTTP ${status}.`).toBeLessThan(400);
 
       await expect(
         page.getByRole("link", {
@@ -247,7 +257,9 @@ test.describe("ePortfolio", () => {
         const url = new URL(href);
 
         expect(["http:", "https:"]).toContain(url.protocol);
+
         expect(url.hostname).not.toBe("localhost");
+
         expect(url.hostname).not.toBe("127.0.0.1");
       }
     }
@@ -270,10 +282,29 @@ test.describe("ePortfolio", () => {
       }),
     ).toBeVisible();
 
-    await expect(page.getByText("Country", { exact: true })).toBeVisible();
-    await expect(page.getByText("Industry", { exact: true })).toBeVisible();
-    await expect(page.getByText("Reporting period", { exact: true })).toBeVisible();
-    await expect(page.getByText("Source partner", { exact: true })).toBeVisible();
+    await expect(
+      page.getByText("Country", {
+        exact: true,
+      }),
+    ).toBeVisible();
+
+    await expect(
+      page.getByText("Industry", {
+        exact: true,
+      }),
+    ).toBeVisible();
+
+    await expect(
+      page.getByText("Reporting period", {
+        exact: true,
+      }),
+    ).toBeVisible();
+
+    await expect(
+      page.getByText("Source partner", {
+        exact: true,
+      }),
+    ).toBeVisible();
 
     await expect(
       page.getByRole("heading", {
@@ -371,9 +402,13 @@ test.describe("ePortfolio", () => {
     const persisted = await readEportfolioProgress(userId, testCaseSlug);
 
     expect(persisted).not.toBeNull();
+
     expect(persisted?.status).toBe("completed");
+
     expect(persisted?.startedAt).not.toBeNull();
+
     expect(persisted?.lastOpenedAt).not.toBeNull();
+
     expect(persisted?.completedAt).not.toBeNull();
 
     await page.reload();
