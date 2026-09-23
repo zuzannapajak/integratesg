@@ -152,15 +152,10 @@ function createDeferred<T = void>() {
 }
 
 function getChallengeHotspot(challengeNumber: "01" | "02") {
-  return screen.getByTestId(
-    `scenario-board-hotspot-scenario-01-challenge-${challengeNumber}`,
-  );
+  return screen.getByTestId(`scenario-board-hotspot-scenario-01-challenge-${challengeNumber}`);
 }
 
-async function openChallengeDecision(
-  user: TestUser,
-  challengeNumber: "01" | "02" = "01",
-) {
+async function openChallengeDecision(user: TestUser, challengeNumber: "01" | "02" = "01") {
   await user.click(getChallengeHotspot(challengeNumber));
 
   await user.click(
@@ -186,12 +181,7 @@ describe("ScenarioPlayer state and persistence logic", () => {
       .mockRejectedValueOnce(new Error("Start persistence failed."))
       .mockResolvedValueOnce(undefined);
 
-    render(
-      <ScenarioPlayer
-        scenario={playerScenario}
-        onScenarioStarted={onScenarioStarted}
-      />,
-    );
+    render(<ScenarioPlayer scenario={playerScenario} onScenarioStarted={onScenarioStarted} />);
 
     await user.click(
       screen.getByRole("button", {
@@ -205,14 +195,9 @@ describe("ScenarioPlayer state and persistence logic", () => {
       }),
     );
 
-    expect(await screen.findByRole("alert")).toHaveTextContent(
-      "Start persistence failed.",
-    );
+    expect(await screen.findByRole("alert")).toHaveTextContent("Start persistence failed.");
 
-    expect(screen.getByTestId("scenario-player")).toHaveAttribute(
-      "data-view",
-      "intro",
-    );
+    expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "intro");
 
     const retryButton = screen.getByRole("button", {
       name: "Start scenario",
@@ -223,10 +208,7 @@ describe("ScenarioPlayer state and persistence logic", () => {
     await user.click(retryButton);
 
     await waitFor(() => {
-      expect(screen.getByTestId("scenario-player")).toHaveAttribute(
-        "data-view",
-        "board",
-      );
+      expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "board");
     });
 
     expect(onScenarioStarted).toHaveBeenCalledTimes(2);
@@ -262,21 +244,14 @@ describe("ScenarioPlayer state and persistence logic", () => {
       }),
     );
 
-    expect(await screen.findByRole("alert")).toHaveTextContent(
-      "Decision persistence failed.",
-    );
+    expect(await screen.findByRole("alert")).toHaveTextContent("Decision persistence failed.");
 
-    expect(screen.getByTestId("scenario-player")).toHaveAttribute(
-      "data-view",
-      "challenge",
-    );
+    expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "challenge");
 
     expect(screen.getByText("Attempt 1")).toBeVisible();
 
     expect(
-      screen.getByTestId(
-        "scenario-decision-choice-scenario-01-challenge-01-choice-01",
-      ),
+      screen.getByTestId("scenario-decision-choice-scenario-01-challenge-01-choice-01"),
     ).toHaveAttribute("data-previously-tried", "false");
 
     await user.click(
@@ -285,9 +260,7 @@ describe("ScenarioPlayer state and persistence logic", () => {
       }),
     );
 
-    expect(
-      await screen.findByTestId("scenario-incorrect-feedback"),
-    ).toBeVisible();
+    expect(await screen.findByTestId("scenario-incorrect-feedback")).toBeVisible();
 
     expect(onChoiceConfirmed).toHaveBeenNthCalledWith(1, {
       scenarioId: "scenario-01",
@@ -314,12 +287,7 @@ describe("ScenarioPlayer state and persistence logic", () => {
 
     const onScenarioStarted = vi.fn(() => deferredStart.promise);
 
-    render(
-      <ScenarioPlayer
-        scenario={playerScenario}
-        onScenarioStarted={onScenarioStarted}
-      />,
-    );
+    render(<ScenarioPlayer scenario={playerScenario} onScenarioStarted={onScenarioStarted} />);
 
     await user.click(
       screen.getByRole("button", {
@@ -346,22 +314,14 @@ describe("ScenarioPlayer state and persistence logic", () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByTestId("scenario-player")).toHaveAttribute(
-        "data-view",
-        "board",
-      );
+      expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "board");
     });
   });
 
   it("unlocks the next challenge only after the previous challenge is completed", async () => {
     const user = userEvent.setup();
 
-    render(
-      <ScenarioPlayer
-        scenario={playerScenario}
-        initialView="board"
-      />,
-    );
+    render(<ScenarioPlayer scenario={playerScenario} initialView="board" />);
 
     const firstHotspot = getChallengeHotspot("01");
     const secondHotspot = getChallengeHotspot("02");
@@ -390,19 +350,13 @@ describe("ScenarioPlayer state and persistence logic", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId("scenario-player")).toHaveAttribute(
-        "data-view",
-        "board",
-      );
+      expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "board");
     });
 
     expect(getChallengeHotspot("01")).toBeDisabled();
     expect(getChallengeHotspot("02")).toBeEnabled();
 
-    expect(screen.getByTestId("scenario-progress")).toHaveAttribute(
-      "data-completed-count",
-      "1",
-    );
+    expect(screen.getByTestId("scenario-progress")).toHaveAttribute("data-completed-count", "1");
   });
 
   it("runs the complete review flow without calling persistence callbacks", async () => {
@@ -436,10 +390,7 @@ describe("ScenarioPlayer state and persistence logic", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId("scenario-player")).toHaveAttribute(
-        "data-view",
-        "board",
-      );
+      expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "board");
     });
 
     expect(onScenarioStarted).not.toHaveBeenCalled();
@@ -467,10 +418,7 @@ describe("ScenarioPlayer state and persistence logic", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId("scenario-player")).toHaveAttribute(
-        "data-view",
-        "board",
-      );
+      expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "board");
     });
 
     await openChallengeDecision(user, "02");
@@ -502,19 +450,13 @@ describe("ScenarioPlayer state and persistence logic", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId("scenario-player")).toHaveAttribute(
-        "data-view",
-        "completion",
-      );
+      expect(screen.getByTestId("scenario-player")).toHaveAttribute("data-view", "completion");
     });
 
     expect(onChoiceConfirmed).not.toHaveBeenCalled();
     expect(onChallengeCompleted).not.toHaveBeenCalled();
     expect(onScenarioCompleted).not.toHaveBeenCalled();
 
-    expect(screen.getByTestId("scenario-progress")).toHaveAttribute(
-      "data-completed-count",
-      "2",
-    );
+    expect(screen.getByTestId("scenario-progress")).toHaveAttribute("data-completed-count", "2");
   });
 });

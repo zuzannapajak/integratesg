@@ -1,0 +1,122 @@
+name: Integration
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: integration-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  integration:
+    name: integration
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: integratesg_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres -d integratesg_test"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      HUSKY: "0"
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/integratesg_test?schema=public
+      DIRECT_URL: postgresql://postgres:postgres@127.0.0.1:5432/integratesg_test?schema=public
+      TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/integratesg_test?schema=public
+      NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ci-placeholder-anon-key
+      NEXT_PUBLIC_SITE_URL: http://127.0.0.1:3000
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      - name: Bootstrap Supabase compatibility objects
+        run: npx prisma db execute --file scripts/ci/bootstrap-supabase.sql
+
+      - name: Apply all migrations to a clean database
+        run: npx prisma migrate deploy
+
+      - name: Seed integration database
+        run: npm run db:seed
+
+      - name: Run integration tests
+        run: npm run test:integration
+
+  seed-idempotency:
+    name: seed-idempotency
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: integratesg_seed_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres -d integratesg_seed_test"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      HUSKY: "0"
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/integratesg_seed_test?schema=public
+      DIRECT_URL: postgresql://postgres:postgres@127.0.0.1:5432/integratesg_seed_test?schema=public
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
+      - name: Bootstrap Supabase compatibility objects
+        run: npx prisma db execute --file scripts/ci/bootstrap-supabase.sql
+
+      - name: Apply all migrations to a clean database
+        run: npx prisma migrate deploy
+
+      - name: Verify seed is idempotent
+        run: npm run test:seed:idempotency

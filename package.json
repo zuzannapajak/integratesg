@@ -8,9 +8,12 @@
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit",
     "test": "vitest",
     "test:unit": "vitest",
     "test:unit:run": "vitest run --passWithNoTests",
+    "test:coverage": "vitest run --coverage",
     "test:integration": "vitest run --config vitest.integration.config.mts",
     "test:integration:scenarios": "vitest run --config vitest.integration.config.mts tests/integration/scenarios/scenario-progress.integration.test.ts",
     "test:e2e": "npm run test:e2e:smoke && npm run test:e2e:eportfolio && npm run test:e2e:scenarios",
@@ -20,7 +23,8 @@
     "test:e2e:ui": "playwright test --ui --workers=1",
     "test:e2e:headed": "playwright test --headed --workers=1",
     "prepare": "husky",
-    "db:seed": "prisma db seed"
+    "db:seed": "prisma db seed",
+    "test:seed:idempotency": "node scripts/ci/verify-seed-idempotency.mjs"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
@@ -43,6 +47,7 @@
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.7.0",
     "next": "16.2.10",
+    "next-intl": "4.8.3",
     "pg": "^8.20.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
@@ -64,6 +69,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6.0.3",
+    "@vitest/coverage-v8": "4.1.10",
     "dotenv": "^17.3.1",
     "eslint": "^9.39.4",
     "eslint-config-next": "16.2.10",

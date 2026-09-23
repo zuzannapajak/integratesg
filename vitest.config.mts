@@ -7,7 +7,6 @@ export default defineConfig({
 
   test: {
     environment: "jsdom",
-
     setupFiles: ["./vitest.setup.ts"],
 
     include: ["tests/unit/**/*.{test,spec}.{js,jsx,ts,tsx}"],
@@ -22,5 +21,19 @@ export default defineConfig({
 
     clearMocks: true,
     restoreMocks: true,
+
+    coverage: {
+      provider: "v8",
+      reporter: ["text", "json-summary", "html"],
+      reportsDirectory: "coverage",
+      reportOnFailure: true,
+
+      thresholds: {
+        lines: 75,
+        statements: 75,
+        functions: 75,
+        branches: 70,
+      },
+    },
   },
 });
