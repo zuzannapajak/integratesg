@@ -48,7 +48,9 @@ export default function AnimatedStat({ value, suffix = "", label }: Props) {
 
     observer.observe(node);
 
-    return () => { observer.disconnect(); };
+    return () => {
+      observer.disconnect();
+    };
   }, [value, hasAnimated]);
 
   return (

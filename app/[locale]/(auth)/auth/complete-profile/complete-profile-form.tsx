@@ -60,7 +60,9 @@ export default function CompleteProfileForm({ locale, email }: Props) {
               <form onSubmit={handleSubmit} className="space-y-3">
                 <button
                   type="button"
-                  onClick={() => { setRole(APP_ROLES.learner); }}
+                  onClick={() => {
+                    setRole(APP_ROLES.learner);
+                  }}
                   aria-pressed={role === APP_ROLES.learner}
                   className={`w-full rounded-3xl border p-4 text-left transition-all duration-200 ${
                     role === APP_ROLES.learner
@@ -99,7 +101,9 @@ export default function CompleteProfileForm({ locale, email }: Props) {
 
                 <button
                   type="button"
-                  onClick={() => { setRole(APP_ROLES.educator); }}
+                  onClick={() => {
+                    setRole(APP_ROLES.educator);
+                  }}
                   aria-pressed={role === APP_ROLES.educator}
                   className={`w-full rounded-3xl border p-4 text-left transition-all duration-200 ${
                     role === APP_ROLES.educator
