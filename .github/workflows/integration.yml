@@ -112,6 +112,9 @@ jobs:
       - name: Generate Prisma Client
         run: npx prisma generate
 
+      - name: Bootstrap Supabase compatibility objects
+        run: npx prisma db execute --file scripts/ci/bootstrap-supabase.sql
+
       - name: Apply all migrations to a clean database
         run: npx prisma migrate deploy
 
