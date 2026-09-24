@@ -1,0 +1,15 @@
+{
+  "Protected": {
+    "CurriculumRouteState": {
+      "loading": {
+        "title": "Caricamento del curriculum",
+        "description": "Stiamo preparando i moduli didattici e i tuoi progressi."
+      },
+      "error": {
+        "title": "Impossibile caricare il curriculum",
+        "description": "Si è verificato un errore durante la preparazione della vista. Riprova.",
+        "retry": "Riprova"
+      }
+    }
+  }
+}
