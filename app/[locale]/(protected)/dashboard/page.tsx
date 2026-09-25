@@ -1,64 +1,65 @@
 import DashboardShell from "@/components/dashboard/dashboard-shell";
+
 import { scenarioPathwayItems } from "@/content/scenarios/pathway";
+
 import {
-  DashboardChartPoint,
-  DashboardGamificationStat,
-  DashboardKpi,
-  DashboardMetric,
-  DashboardRole,
-} from "@/lib/dashboard/types";
+  buildContinueLearningItem,
+  buildGamificationStats,
+  buildLearnerSummaryMetrics,
+  buildWeeklyActivityChart,
+} from "@/lib/dashboard/aggregation";
+
+import { DashboardChartPoint, DashboardKpi } from "@/lib/dashboard/types";
+
 import { logMeasuredOperation } from "@/lib/observability/performance";
+
 import { prisma } from "@/lib/prisma";
+
 import { resolveScenarioBySlug } from "@/lib/scenarios/simulator/resolve-scenario";
+
 import { createClient } from "@/lib/supabase/server";
+
 import { getTranslations } from "next-intl/server";
+
 import { redirect } from "next/navigation";
 
 type Props = {
   params: Promise<{ locale: string }>;
 };
 
-type TranslationRecord = {
-  language: string;
-  title: string;
-  description: string | null;
-};
-
-type AttemptWithCourse = {
-  id: string;
-  userId: string;
-  status: string;
-  progressPercent: number;
-  preQuizScore: number | null;
-  postQuizScore: number | null;
-  startedAt: Date | null;
-  lastOpenedAt: Date | null;
-  completedAt: Date | null;
-  course: {
-    slug: string;
-    translations: TranslationRecord[];
-  };
-};
-
 type ScenarioAttemptForDashboard = {
   id: string;
+
   scenarioId: string;
+
   scenarioSlug: string;
+
   scenarioTitle: string;
+
   status: string;
+
   score: number | null;
+
   startedAt: Date | null;
+
   lastOpenedAt: Date | null;
+
   completedAt: Date | null;
 };
 
 type LearnerScenarioAttempt = {
   id: string;
+
   scenarioId: string;
+
   status: string;
+
   startedAt: Date;
+
   lastOpenedAt: Date;
+
   completedAt: Date | null;
+
   choiceAttempts: Array<{
     isOptimal: boolean;
   }>;
@@ -67,6 +68,7 @@ type LearnerScenarioAttempt = {
 type AdminScenarioAttempt = LearnerScenarioAttempt & {
   user: {
     email: string;
+
     fullName: string | null;
   };
 };
@@ -74,22 +76,6 @@ type AdminScenarioAttempt = LearnerScenarioAttempt & {
 type AdminScenarioAttemptForDashboard = AdminScenarioAttempt & {
   score: number | null;
 };
-
-function pickTranslation(translations: TranslationRecord[], locale: string) {
-  const exactMatch = translations.find((translation) => translation.language === locale);
-
-  if (exactMatch) {
-    return exactMatch;
-  }
-
-  const englishMatch = translations.find((translation) => translation.language === "en");
-
-  if (englishMatch) {
-    return englishMatch;
-  }
-
-  return translations.length > 0 ? translations[0] : null;
-}
 
 function calculateOptimalChoiceRate(
   choices: ReadonlyArray<{
@@ -122,65 +108,37 @@ function getScenarioPresentation(scenarioId: string, locale: string) {
 
 function mapScenarioAttempt(
   attempt: LearnerScenarioAttempt,
+
   locale: string,
 ): ScenarioAttemptForDashboard {
   const presentation = getScenarioPresentation(attempt.scenarioId, locale);
 
   return {
     id: attempt.id,
+
     scenarioId: attempt.scenarioId,
+
     scenarioSlug: presentation.slug,
+
     scenarioTitle: presentation.title,
+
     status: attempt.status,
+
     score: calculateOptimalChoiceRate(attempt.choiceAttempts),
+
     startedAt: attempt.startedAt,
+
     lastOpenedAt: attempt.lastOpenedAt,
+
     completedAt: attempt.completedAt,
   };
 }
 
-function buildWeeklyActivityChart(
-  attempts: {
-    startedAt: Date | null;
-  }[],
-  locale: string,
-): DashboardChartPoint[] {
-  const today = new Date();
-  const points: DashboardChartPoint[] = [];
-
-  for (let offset = 6; offset >= 0; offset -= 1) {
-    const day = new Date(today);
-
-    day.setHours(0, 0, 0, 0);
-    day.setDate(today.getDate() - offset);
-
-    const nextDay = new Date(day);
-
-    nextDay.setDate(day.getDate() + 1);
-
-    const count = attempts.filter((attempt) => {
-      if (!attempt.startedAt) {
-        return false;
-      }
-
-      return attempt.startedAt >= day && attempt.startedAt < nextDay;
-    }).length;
-
-    points.push({
-      label: day.toLocaleDateString(locale, {
-        weekday: "short",
-      }),
-
-      value: count,
-    });
-  }
-
-  return points;
-}
-
 function buildTrendLabel(
   current: DashboardChartPoint[],
+
   previousTotal: number,
+
   t: Awaited<ReturnType<typeof getTranslations>>,
 ) {
   const currentTotal = current.reduce((sum, point) => sum + point.value, 0);
@@ -212,7 +170,9 @@ function buildWeeklyAttempts(
   attempts: {
     startedAt: Date | null;
   }[],
+
   startOffsetDays: number,
+
   endOffsetDays: number,
 ) {
   const today = new Date();
@@ -220,11 +180,13 @@ function buildWeeklyAttempts(
   const start = new Date(today);
 
   start.setHours(0, 0, 0, 0);
+
   start.setDate(today.getDate() - startOffsetDays);
 
   const end = new Date(today);
 
   end.setHours(0, 0, 0, 0);
+
   end.setDate(today.getDate() - endOffsetDays);
 
   return attempts.filter((attempt) => {
@@ -236,254 +198,11 @@ function buildWeeklyAttempts(
   });
 }
 
-function buildContinueLearningItem(
-  params: {
-    curriculumAttempts: AttemptWithCourse[];
-    scenarioAttempts: ScenarioAttemptForDashboard[];
-    locale: string;
-  },
-  t: Awaited<ReturnType<typeof getTranslations>>,
-) {
-  const latestCurriculum = [...params.curriculumAttempts]
-    .sort((a, b) => {
-      const left =
-        a.lastOpenedAt !== null
-          ? a.lastOpenedAt.getTime()
-          : a.startedAt !== null
-            ? a.startedAt.getTime()
-            : 0;
-
-      const right =
-        b.lastOpenedAt !== null
-          ? b.lastOpenedAt.getTime()
-          : b.startedAt !== null
-            ? b.startedAt.getTime()
-            : 0;
-
-      return right - left;
-    })
-    .at(0);
-
-  const latestScenario = [...params.scenarioAttempts]
-    .sort((a, b) => {
-      const left =
-        a.lastOpenedAt !== null
-          ? a.lastOpenedAt.getTime()
-          : a.startedAt !== null
-            ? a.startedAt.getTime()
-            : 0;
-
-      const right =
-        b.lastOpenedAt !== null
-          ? b.lastOpenedAt.getTime()
-          : b.startedAt !== null
-            ? b.startedAt.getTime()
-            : 0;
-
-      return right - left;
-    })
-    .at(0);
-
-  const latestCurriculumTimestamp = latestCurriculum
-    ? (latestCurriculum.lastOpenedAt?.getTime() ?? latestCurriculum.startedAt?.getTime() ?? 0)
-    : 0;
-
-  const latestScenarioTimestamp = latestScenario
-    ? (latestScenario.lastOpenedAt?.getTime() ?? latestScenario.startedAt?.getTime() ?? 0)
-    : 0;
-
-  if (!latestCurriculum && !latestScenario) {
-    return null;
-  }
-
-  if (latestCurriculum && latestCurriculumTimestamp >= latestScenarioTimestamp) {
-    const translation = pickTranslation(latestCurriculum.course.translations, params.locale);
-
-    const isCompleted = latestCurriculum.status === "completed";
-
-    return {
-      title: translation?.title ?? t("fallback.untitledModule"),
-
-      description: translation?.description ?? t("fallback.continueDescription"),
-
-      href: isCompleted
-        ? `/${params.locale}/curriculum/${latestCurriculum.course.slug}`
-        : `/${params.locale}/curriculum/${latestCurriculum.course.slug}/learn`,
-
-      badge: t("fallback.curriculumBadge"),
-
-      ctaLabel: isCompleted ? t("fallback.reviewModule") : t("fallback.continueModule"),
-
-      kindLabel: isCompleted ? t("fallback.lastCompleted") : t("fallback.lastOpened"),
-    };
-  }
-
-  if (latestScenario) {
-    const isCompleted = latestScenario.status === "completed";
-
-    const playHref = `/${params.locale}/scenarios/` + `${latestScenario.scenarioSlug}/play`;
-
-    return {
-      title: latestScenario.scenarioTitle,
-
-      description: isCompleted
-        ? t("fallback.reviewScenarioDescription")
-        : t("fallback.continueScenarioDescription"),
-
-      href: isCompleted ? `${playHref}?mode=review` : playHref,
-
-      badge: t("fallback.scenarioBadge"),
-
-      ctaLabel: isCompleted ? t("fallback.reviewScenario") : t("fallback.continueScenario"),
-
-      kindLabel: isCompleted ? t("fallback.lastCompleted") : t("fallback.lastOpened"),
-    };
-  }
-
-  return null;
-}
-
-function buildLearnerSummaryMetrics(
-  role: DashboardRole,
-  curriculumAttempts: AttemptWithCourse[],
-  scenarioAttempts: Array<{
-    status: string;
-    score: number | null;
-  }>,
-  t: Awaited<ReturnType<typeof getTranslations>>,
-): DashboardMetric[] {
-  if (role === "educator") {
-    const attemptsWithPostQuizScore = curriculumAttempts.filter(
-      (
-        attempt,
-      ): attempt is AttemptWithCourse & {
-        postQuizScore: number;
-      } => attempt.postQuizScore !== null,
-    );
-
-    const averagePostQuiz =
-      attemptsWithPostQuizScore.reduce((sum, attempt, _, array) => {
-        return sum + attempt.postQuizScore / array.length;
-      }, 0) || 0;
-
-    const modulesInProgress = curriculumAttempts.filter(
-      (attempt) => attempt.status !== "completed" && attempt.status !== "failed",
-    ).length;
-
-    return [
-      {
-        label: t("metrics.averagePostQuiz"),
-
-        value: `${Math.round(averagePostQuiz)}%`,
-      },
-
-      {
-        label: t("metrics.modulesInProgress"),
-
-        value: String(modulesInProgress),
-      },
-    ];
-  }
-
-  const completedCount = scenarioAttempts.filter(
-    (attempt) => attempt.status === "completed",
-  ).length;
-
-  const completionRate =
-    scenarioAttempts.length > 0 ? Math.round((completedCount / scenarioAttempts.length) * 100) : 0;
-
-  const attemptsWithScore = scenarioAttempts.filter(
-    (
-      attempt,
-    ): attempt is {
-      status: string;
-      score: number;
-    } => attempt.score !== null,
-  );
-
-  const averageScore =
-    attemptsWithScore.reduce((sum, attempt, _, array) => {
-      return sum + attempt.score / array.length;
-    }, 0) || 0;
-
-  return [
-    {
-      label: t("metrics.completionRate"),
-
-      value: `${completionRate}%`,
-    },
-
-    {
-      label: t("metrics.averageScore"),
-
-      value: `${Math.round(averageScore)}%`,
-    },
-  ];
-}
-
-function buildGamificationStats(
-  role: DashboardRole,
-  learnerAttempts: Array<{
-    startedAt: Date | null;
-    completedAt?: Date | null;
-  }>,
-  t: Awaited<ReturnType<typeof getTranslations>>,
-): DashboardGamificationStat[] {
-  if (role !== "learner" && role !== "educator") {
-    return [];
-  }
-
-  const sortedDays = learnerAttempts
-    .map((attempt) => {
-      const sourceDate = attempt.completedAt ?? attempt.startedAt;
-
-      if (!sourceDate) {
-        return null;
-      }
-
-      const normalized = new Date(sourceDate);
-
-      normalized.setHours(0, 0, 0, 0);
-
-      return normalized.getTime();
-    })
-    .filter((value): value is number => value !== null)
-    .sort((a, b) => a - b);
-
-  const uniqueDays = [...new Set(sortedDays)];
-
-  let streak = 0;
-
-  if (uniqueDays.length > 0) {
-    streak = 1;
-
-    for (let index = uniqueDays.length - 1; index > 0; index -= 1) {
-      const current = uniqueDays[index];
-
-      const previous = uniqueDays[index - 1];
-
-      const diffDays = (current - previous) / (1000 * 60 * 60 * 24);
-
-      if (diffDays === 1) {
-        streak += 1;
-      } else {
-        break;
-      }
-    }
-  }
-
-  return [
-    {
-      label: t("gamification.learningStreak"),
-
-      value: String(streak),
-    },
-  ];
-}
-
 function buildAdminKpis(
   totalUsers: number,
+
   attempts: AdminScenarioAttemptForDashboard[],
+
   t: Awaited<ReturnType<typeof getTranslations>>,
 ): DashboardKpi[] {
   const completedCount = attempts.filter((attempt) => attempt.status === "completed").length;
@@ -556,6 +275,7 @@ async function getDashboardPageData({ params }: Props) {
     const [t, supabase] = await Promise.all([
       getTranslations({
         locale,
+
         namespace: "Protected.DashboardPage",
       }),
 
@@ -577,8 +297,11 @@ async function getDashboardPageData({ params }: Props) {
 
       select: {
         id: true,
+
         email: true,
+
         fullName: true,
+
         role: true,
       },
     });
@@ -645,10 +368,15 @@ async function getDashboardPageData({ params }: Props) {
 
             select: {
               id: true,
+
               scenarioId: true,
+
               status: true,
+
               startedAt: true,
+
               lastOpenedAt: true,
+
               completedAt: true,
 
               choiceAttempts: {
@@ -673,15 +401,21 @@ async function getDashboardPageData({ params }: Props) {
 
             select: {
               id: true,
+
               scenarioId: true,
+
               status: true,
+
               startedAt: true,
+
               lastOpenedAt: true,
+
               completedAt: true,
 
               user: {
                 select: {
                   email: true,
+
                   fullName: true,
                 },
               },
@@ -708,15 +442,23 @@ async function getDashboardPageData({ params }: Props) {
 
     const [
       curriculumAttempts,
+
       rawScenarioAttempts,
+
       rawAdminScenarioAttempts,
+
       totalUsers,
+
       publishedCoursesCount,
     ] = await Promise.all([
       curriculumAttemptsPromise,
+
       scenarioAttemptsPromise,
+
       adminScenarioAttemptsPromise,
+
       totalUsersPromise,
+
       publishedCoursesCountPromise,
     ]);
 
@@ -754,7 +496,9 @@ async function getDashboardPageData({ params }: Props) {
 
     const learnerTrendLabel = buildTrendLabel(
       learnerActivityData,
+
       learnerPreviousWeekAttempts.length,
+
       t,
     );
 
@@ -775,7 +519,9 @@ async function getDashboardPageData({ params }: Props) {
         ? buildContinueLearningItem(
             {
               curriculumAttempts,
+
               scenarioAttempts,
+
               locale,
             },
 
@@ -785,8 +531,11 @@ async function getDashboardPageData({ params }: Props) {
 
     const learnerSummaryMetrics = buildLearnerSummaryMetrics(
       role,
+
       curriculumAttempts,
+
       scenarioAttempts,
+
       t,
     );
 
@@ -812,6 +561,7 @@ async function getDashboardPageData({ params }: Props) {
 
     return {
       locale,
+
       role,
 
       displayName: profile.fullName ?? profile.email.split("@")[0],
