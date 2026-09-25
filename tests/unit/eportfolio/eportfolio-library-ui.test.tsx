@@ -5,88 +5,138 @@ import { describe, expect, it } from "vitest";
 import EportfolioLibrary from "@/components/eportfolio/eportfolio-library";
 import type { EportfolioLibraryItem } from "@/lib/eportfolio/library";
 
-const items: EportfolioLibraryItem[] = [
+const ITEMS: EportfolioLibraryItem[] = [
   {
-    slug: "barilla",
-    title: "Barilla S.p.A.",
-    organization: "Barilla G. e R. Fratelli S.p.A.",
-    summary: "Food-sector sustainability and agricultural sourcing.",
-    industry: "Food and Beverage Manufacturing",
-    countryCode: "IT",
-    reportingPeriod: "2024",
+    slug: "alpha-energy",
+    title: "Alpha Energy",
+    organization: "Alpha Energy Group",
+    summary: "Wastewater efficiency and renewable energy programme.",
+    industry: "Energy",
+    countryCode: "PL",
+    reportingPeriod: "2026",
     isFeatured: false,
     progress: "completed",
   },
   {
-    slug: "pzu",
-    title: "PZU S.A.",
-    organization: "PZU S.A.",
-    summary: "Insurance, governance and responsible investment practices.",
-    industry: "Insurance and Financial Services",
-    countryCode: "PL",
-    reportingPeriod: "2023",
+    slug: "beta-water",
+    title: "Beta Water",
+    organization: "Beta Utilities",
+    summary: "Water infrastructure and community engagement.",
+    industry: "Utilities",
+    countryCode: "BG",
+    reportingPeriod: "2025",
     isFeatured: false,
     progress: "in_progress",
   },
   {
-    slug: "sofiyska-voda",
-    title: "Sofiyska Voda AD",
-    organization: "Sofiyska Voda AD",
-    summary: "Water supply and wastewater services in Sofia.",
-    industry: "Water supply and wastewater services",
-    countryCode: "BG",
-    reportingPeriod: "2023–2024",
+    slug: "gamma-tech",
+    title: "Gamma Tech",
+    organization: "Gamma Polska",
+    summary: "Responsible technology and supply-chain programme.",
+    industry: "Technology",
+    countryCode: "PL",
+    reportingPeriod: "2026",
+    isFeatured: false,
+    progress: "in_progress",
+  },
+  {
+    slug: "delta-tech",
+    title: "Delta Tech",
+    organization: null,
+    summary: null,
+    industry: "Technology",
+    countryCode: "DE",
+    reportingPeriod: null,
     isFeatured: false,
     progress: "not_started",
   },
 ];
 
-function getArticleForHeading(name: string) {
-  const heading = screen.getByRole("heading", {
-    name,
-  });
+function renderLibrary(items: EportfolioLibraryItem[] = ITEMS) {
+  return render(<EportfolioLibrary locale="en" items={items} />);
+}
 
-  const article = heading.closest("article");
+function expectVisibleCaseStudy(title: string) {
+  expect(
+    screen.getByRole("heading", {
+      name: title,
+    }),
+  ).toBeVisible();
+}
 
-  if (!article) {
-    throw new Error(`Missing article for ${name}`);
-  }
-
-  return article;
+function expectMissingCaseStudy(title: string) {
+  expect(
+    screen.queryByRole("heading", {
+      name: title,
+    }),
+  ).not.toBeInTheDocument();
 }
 
 describe("ePortfolio library UI", () => {
-  it("searches across case-study text", async () => {
+  it("searches across case-study text case-insensitively and trims whitespace", async () => {
     const user = userEvent.setup();
 
-    render(<EportfolioLibrary locale="en" items={items} />);
+    renderLibrary();
+
+    const search = screen.getByRole("textbox", {
+      name: "Search case studies",
+    });
+
+    await user.type(search, "   WASTEWATER   ");
+
+    expectVisibleCaseStudy("Alpha Energy");
+    expectMissingCaseStudy("Beta Water");
+    expectMissingCaseStudy("Gamma Tech");
+    expectMissingCaseStudy("Delta Tech");
+
+    expect(screen.getByText("1 of 4 case studies", { exact: true })).toBeVisible();
+  });
+
+  it("searches by industry as part of the free-text search", async () => {
+    const user = userEvent.setup();
+
+    renderLibrary();
 
     await user.type(
       screen.getByRole("textbox", {
         name: "Search case studies",
       }),
-      "wastewater",
+      "technology",
     );
 
-    expect(
-      screen.getByRole("heading", {
-        name: "Sofiyska Voda AD",
-      }),
-    ).toBeInTheDocument();
+    expectVisibleCaseStudy("Gamma Tech");
+    expectVisibleCaseStudy("Delta Tech");
+    expectMissingCaseStudy("Alpha Energy");
+    expectMissingCaseStudy("Beta Water");
 
-    expect(
-      screen.queryByRole("heading", {
-        name: "Barilla S.p.A.",
-      }),
-    ).not.toBeInTheDocument();
-
-    expect(screen.getByText("1 of 3 case studies")).toBeInTheDocument();
+    expect(screen.getByText("2 of 4 case studies", { exact: true })).toBeVisible();
   });
 
-  it("filters by country and progress", async () => {
+  it("filters by industry", async () => {
     const user = userEvent.setup();
 
-    render(<EportfolioLibrary locale="en" items={items} />);
+    renderLibrary();
+
+    const industryFilter = screen.getByRole("combobox", {
+      name: "Filter by industry",
+    });
+
+    expect(industryFilter).toHaveValue("all");
+
+    await user.selectOptions(industryFilter, "Technology");
+
+    expectVisibleCaseStudy("Gamma Tech");
+    expectVisibleCaseStudy("Delta Tech");
+    expectMissingCaseStudy("Alpha Energy");
+    expectMissingCaseStudy("Beta Water");
+
+    expect(screen.getByText("2 of 4 case studies", { exact: true })).toBeVisible();
+  });
+
+  it("combines country, industry and progress filters", async () => {
+    const user = userEvent.setup();
+
+    renderLibrary();
 
     await user.selectOptions(
       screen.getByRole("combobox", {
@@ -95,17 +145,54 @@ describe("ePortfolio library UI", () => {
       "PL",
     );
 
-    expect(
-      screen.getByRole("heading", {
-        name: "PZU S.A.",
+    await user.selectOptions(
+      screen.getByRole("combobox", {
+        name: "Filter by industry",
       }),
-    ).toBeInTheDocument();
+      "Technology",
+    );
+
+    await user.selectOptions(
+      screen.getByRole("combobox", {
+        name: "Filter by progress",
+      }),
+      "in_progress",
+    );
+
+    expectVisibleCaseStudy("Gamma Tech");
+    expectMissingCaseStudy("Alpha Energy");
+    expectMissingCaseStudy("Beta Water");
+    expectMissingCaseStudy("Delta Tech");
+
+    expect(screen.getByText("1 of 4 case studies", { exact: true })).toBeVisible();
+  });
+
+  it("shows the zero-results state and clear filters restores the library", async () => {
+    const user = userEvent.setup();
+
+    renderLibrary();
+
+    await user.selectOptions(
+      screen.getByRole("combobox", {
+        name: "Filter by country",
+      }),
+      "BG",
+    );
+
+    await user.selectOptions(
+      screen.getByRole("combobox", {
+        name: "Filter by industry",
+      }),
+      "Technology",
+    );
 
     expect(
-      screen.queryByRole("heading", {
-        name: "Barilla S.p.A.",
+      screen.getByRole("heading", {
+        name: "No case studies match your filters",
       }),
-    ).not.toBeInTheDocument();
+    ).toBeVisible();
+
+    expect(screen.getByText("0 of 4 case studies", { exact: true })).toBeVisible();
 
     await user.click(
       screen.getByRole("button", {
@@ -113,81 +200,140 @@ describe("ePortfolio library UI", () => {
       }),
     );
 
-    await user.selectOptions(
-      screen.getByRole("combobox", {
-        name: "Filter by progress",
-      }),
-      "completed",
-    );
-
-    expect(
-      screen.getByRole("heading", {
-        name: "Barilla S.p.A.",
-      }),
-    ).toBeInTheDocument();
+    expectVisibleCaseStudy("Alpha Energy");
+    expectVisibleCaseStudy("Beta Water");
+    expectVisibleCaseStudy("Gamma Tech");
+    expectVisibleCaseStudy("Delta Tech");
 
     expect(
       screen.queryByRole("heading", {
-        name: "PZU S.A.",
+        name: "No case studies match your filters",
       }),
     ).not.toBeInTheDocument();
 
+    expect(screen.getByText("4 of 4 case studies", { exact: true })).toBeVisible();
+  });
+
+  it("shows the persisted progress status on every case-study card", () => {
+    renderLibrary();
+
+    const cardByTitle = (title: string) => {
+      const heading = screen.getByRole("heading", {
+        name: title,
+      });
+
+      const card = heading.closest("article");
+
+      if (!card) {
+        throw new Error(`Missing case-study card for ${title}.`);
+      }
+
+      return card;
+    };
+
     expect(
-      screen.queryByRole("heading", {
-        name: "Sofiyska Voda AD",
+      within(cardByTitle("Alpha Energy")).getByText("Completed", {
+        exact: true,
       }),
-    ).not.toBeInTheDocument();
-  });
-
-  it("shows the persisted status on each case-study card", () => {
-    render(<EportfolioLibrary locale="en" items={items} />);
+    ).toBeVisible();
 
     expect(
-      within(getArticleForHeading("Barilla S.p.A.")).getByText("Completed"),
-    ).toBeInTheDocument();
-
-    expect(within(getArticleForHeading("PZU S.A.")).getByText("In progress")).toBeInTheDocument();
+      within(cardByTitle("Beta Water")).getByText("In progress", {
+        exact: true,
+      }),
+    ).toBeVisible();
 
     expect(
-      within(getArticleForHeading("Sofiyska Voda AD")).getByText("Not started"),
-    ).toBeInTheDocument();
+      within(cardByTitle("Gamma Tech")).getByText("In progress", {
+        exact: true,
+      }),
+    ).toBeVisible();
+
+    expect(
+      within(cardByTitle("Delta Tech")).getByText("Not started", {
+        exact: true,
+      }),
+    ).toBeVisible();
+
+    expect(
+      within(cardByTitle("Alpha Energy")).getByRole("link", {
+        name: "Review case study",
+      }),
+    ).toHaveAttribute("href", "/en/eportfolio/alpha-energy");
+
+    expect(screen.getAllByRole("article")).toHaveLength(4);
   });
 
-  it("keeps the simplified filter controls keyboard-addressable and labelled", () => {
-    render(<EportfolioLibrary locale="en" items={items} />);
+  it("keeps all search and filter controls accessible by label", () => {
+    renderLibrary();
 
     expect(
       screen.getByRole("textbox", {
         name: "Search case studies",
       }),
-    ).toBeInTheDocument();
+    ).toBeVisible();
 
     expect(
       screen.getByRole("combobox", {
         name: "Filter by country",
       }),
-    ).toBeInTheDocument();
+    ).toBeVisible();
+
+    expect(
+      screen.getByRole("combobox", {
+        name: "Filter by industry",
+      }),
+    ).toBeVisible();
 
     expect(
       screen.getByRole("combobox", {
         name: "Filter by progress",
       }),
-    ).toBeInTheDocument();
+    ).toBeVisible();
+  });
 
-    expect(
-      screen.queryByRole("combobox", {
-        name: "Filter by industry",
-      }),
-    ).not.toBeInTheDocument();
+  it("does not create an empty industry option for missing industry metadata", () => {
+    renderLibrary([
+      ...ITEMS,
+      {
+        slug: "missing-industry",
+        title: "Missing Industry",
+        organization: "Metadata Test",
+        summary: "Case study without industry metadata.",
+        industry: null,
+        countryCode: "FR",
+        reportingPeriod: "2026",
+        isFeatured: false,
+        progress: "not_started",
+      },
+    ]);
 
-    const links = screen.getAllByRole("link");
+    const industryFilter = screen.getByRole("combobox", {
+      name: "Filter by industry",
+    });
 
-    expect(links.length).toBe(items.length);
+    const options = Array.from(industryFilter.querySelectorAll("option")).map((option) => ({
+      value: option.value,
+      label: option.textContent,
+    }));
 
-    for (const link of links) {
-      expect(link).toHaveAttribute("href");
-
-      expect(link.textContent.trim().length).toBeGreaterThan(0);
-    }
+    expect(options).toEqual([
+      {
+        value: "all",
+        label: "All industries",
+      },
+      {
+        value: "Energy",
+        label: "Energy",
+      },
+      {
+        value: "Technology",
+        label: "Technology",
+      },
+      {
+        value: "Utilities",
+        label: "Utilities",
+      },
+    ]);
   });
 });
