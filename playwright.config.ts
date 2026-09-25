@@ -48,6 +48,7 @@ if (!process.env.PLAYWRIGHT_BASE_URL && e2eDatabaseUrl) {
   process.env.DATABASE_URL = e2eDatabaseUrl;
 }
 
+const smokeTestPattern = "**/smoke/**/*.spec.ts";
 const authTestPattern = "**/auth/**/*.spec.ts";
 const scenarioTestPattern = "**/scenarios/**/*.spec.ts";
 const scenarioCompletionTestPattern = "**/scenarios/scenario-completion.spec.ts";
@@ -63,7 +64,6 @@ const statefulTestPatterns = [
 
 export default defineConfig({
   testDir: "./tests/e2e",
-
   fullyParallel: true,
 
   forbidOnly: Boolean(process.env.CI),
@@ -99,7 +99,6 @@ export default defineConfig({
     trace: "on-first-retry",
 
     screenshot: "only-on-failure",
-
     video: "retain-on-failure",
   },
 
@@ -125,12 +124,38 @@ export default defineConfig({
     },
 
     /*
+     * Firefox i WebKit uruchamiają wyłącznie lekki publiczny smoke suite.
+     * Stateful flow pozostają na Chromium, żeby nie mnożyć kosztu E2E
+     * i nie wykonywać równoległych zapisów do współdzielonej bazy testowej.
+     */
+    {
+      name: "firefox-smoke",
+
+      testMatch: smokeTestPattern,
+
+      use: {
+        ...devices["Desktop Firefox"],
+        browserName: "firefox",
+      },
+    },
+
+    {
+      name: "webkit-smoke",
+
+      testMatch: smokeTestPattern,
+
+      use: {
+        ...devices["Desktop Safari"],
+        browserName: "webkit",
+      },
+    },
+
+    /*
      * Auth testuje prawdziwą sesję Supabase, więc uruchamiamy go
      * w osobnym projekcie i pojedynczym workerem.
      */
     {
       name: "auth-chromium",
-
       testMatch: authTestPattern,
 
       use: {
@@ -172,7 +197,6 @@ export default defineConfig({
      */
     {
       name: "eportfolio-chromium",
-
       testMatch: eportfolioTestPattern,
 
       use: {
@@ -198,7 +222,6 @@ export default defineConfig({
       name: "curriculum-chromium",
 
       testMatch: curriculumTestPattern,
-
       use: {
         ...devices["Desktop Chrome"],
       },
@@ -225,7 +248,6 @@ export default defineConfig({
           timeout: 120_000,
           stdout: "pipe",
           stderr: "pipe",
-
           env: {
             ...process.env,
 
@@ -240,7 +262,6 @@ export default defineConfig({
             ),
 
             PLAYWRIGHT_TEST_EMAIL: requireEnvironmentVariable("PLAYWRIGHT_TEST_EMAIL"),
-
             PLAYWRIGHT_TEST_PASSWORD: requireEnvironmentVariable("PLAYWRIGHT_TEST_PASSWORD"),
 
             NEXT_PUBLIC_SITE_URL: baseURL,
