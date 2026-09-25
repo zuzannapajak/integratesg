@@ -1,4 +1,4 @@
-import { expect, test, type Locator, type Page } from "@playwright/test";
+import { expect, test, type Locator, type Page, type TestInfo } from "@playwright/test";
 
 import {
   disconnectEportfolioTestDatabase,
@@ -43,6 +43,10 @@ function caseStudyCard(page: Page, title: string): Locator {
   });
 }
 
+function isMobileProject(testInfo: TestInfo) {
+  return testInfo.project.name === "eportfolio-mobile";
+}
+
 async function expectNoDocumentOverflow(page: Page): Promise<void> {
   const overflow = await page.evaluate(() => {
     const root = document.documentElement;
@@ -53,7 +57,15 @@ async function expectNoDocumentOverflow(page: Page): Promise<void> {
   expect(overflow).toBeLessThanOrEqual(1);
 }
 
-async function goToLastReadingStage(page: Page): Promise<void> {
+async function expectMobileSafe(page: Page, testInfo: TestInfo): Promise<void> {
+  if (!isMobileProject(testInfo)) {
+    return;
+  }
+
+  await expectNoDocumentOverflow(page);
+}
+
+async function goToLastReadingStage(page: Page, testInfo?: TestInfo): Promise<void> {
   for (let step = 0; step < 10; step += 1) {
     const completionLink = page.getByRole("link", {
       name: "Next",
@@ -62,6 +74,10 @@ async function goToLastReadingStage(page: Page): Promise<void> {
 
     if ((await completionLink.count()) > 0) {
       await expect(completionLink).toBeVisible();
+
+      if (testInfo) {
+        await expectMobileSafe(page, testInfo);
+      }
 
       return;
     }
@@ -74,6 +90,10 @@ async function goToLastReadingStage(page: Page): Promise<void> {
     await expect(nextButton).toBeVisible();
 
     await nextButton.click();
+
+    if (testInfo) {
+      await expectMobileSafe(page, testInfo);
+    }
   }
 
   throw new Error("The ePortfolio case study did not reach its final reading stage.");
@@ -112,7 +132,9 @@ test.describe("ePortfolio", () => {
     await expect(page).toHaveURL(/\/en\/auth\/login(?:\?.*)?$/);
   });
 
-  test("supports library search and the simplified filters", async ({ page }) => {
+  test("supports search and combined country, industry and progress filters", async ({
+    page,
+  }, testInfo) => {
     await resetEportfolioTestProgress();
 
     await signIn(page);
@@ -126,6 +148,8 @@ test.describe("ePortfolio", () => {
       }),
     ).toBeVisible();
 
+    await expectMobileSafe(page, testInfo);
+
     for (const slug of EPORTFOLIO_SLUGS) {
       await expect(page.locator(`a[href="/en/eportfolio/${slug}"]`).first()).toBeVisible();
     }
@@ -134,7 +158,7 @@ test.describe("ePortfolio", () => {
       name: "Search case studies",
     });
 
-    await search.fill("wastewater");
+    await search.fill("   WASTEWATER   ");
 
     await expect(
       page.getByRole("heading", {
@@ -155,11 +179,21 @@ test.describe("ePortfolio", () => {
       })
       .click();
 
-    await page
-      .getByRole("combobox", {
-        name: "Filter by country",
-      })
-      .selectOption("BG");
+    const countryFilter = page.getByRole("combobox", {
+      name: "Filter by country",
+    });
+
+    const industryFilter = page.getByRole("combobox", {
+      name: "Filter by industry",
+    });
+
+    const progressFilter = page.getByRole("combobox", {
+      name: "Filter by progress",
+    });
+
+    await expect(industryFilter).toBeVisible();
+
+    await countryFilter.selectOption("BG");
 
     await expect(
       page.getByRole("heading", {
@@ -181,29 +215,81 @@ test.describe("ePortfolio", () => {
       })
       .click();
 
-    await page
-      .getByRole("combobox", {
-        name: "Filter by progress",
-      })
-      .selectOption("not_started");
+    const targetCard = caseStudyCard(page, testCaseTitle);
+
+    await expect(targetCard).toBeVisible();
+
+    const targetCardText = await targetCard.innerText();
+
+    const industryOptions = await industryFilter.locator("option").evaluateAll((options) =>
+      options.map((option) => ({
+        value: (option as HTMLOptionElement).value,
+        label: option.textContent.trim(),
+      })),
+    );
+
+    const targetIndustry = industryOptions.find(
+      (option) =>
+        option.value !== "all" && option.label.length > 0 && targetCardText.includes(option.label),
+    );
+
+    if (!targetIndustry) {
+      throw new Error(`Could not determine the industry for ${testCaseTitle}.`);
+    }
+
+    await industryFilter.selectOption(targetIndustry.value);
+
+    await countryFilter.selectOption("BG");
+
+    await progressFilter.selectOption("not_started");
+
+    await expect(targetCard).toBeVisible();
 
     await expect(
       page.getByRole("heading", {
-        name: testCaseTitle,
+        name: "PZU S.A.",
+        exact: true,
+      }),
+    ).toHaveCount(0);
+
+    await expectMobileSafe(page, testInfo);
+
+    await search.fill("does-not-exist-in-eportfolio");
+
+    await expect(
+      page.getByRole("heading", {
+        name: "No case studies match your filters",
         exact: true,
       }),
     ).toBeVisible();
 
     await expect(
-      page.getByRole("combobox", {
-        name: "Filter by industry",
+      page.getByText("0 of 8 case studies", {
+        exact: true,
       }),
-    ).toHaveCount(0);
+    ).toBeVisible();
+
+    await page
+      .getByRole("button", {
+        name: "Clear filters",
+      })
+      .click();
+
+    for (const slug of EPORTFOLIO_SLUGS) {
+      await expect(page.locator(`a[href="/en/eportfolio/${slug}"]`).first()).toBeVisible();
+    }
+
+    await expectMobileSafe(page, testInfo);
   });
 
   test("opens all published case studies and exposes valid external references", async ({
     page,
-  }) => {
+  }, testInfo) => {
+    test.skip(
+      isMobileProject(testInfo),
+      "The exhaustive published-case/source-link sweep is covered by the desktop project.",
+    );
+
     test.setTimeout(180_000);
 
     await resetEportfolioTestProgress();
@@ -265,7 +351,7 @@ test.describe("ePortfolio", () => {
     }
   });
 
-  test("completes a case study and persists progress", async ({ page }) => {
+  test("completes a case study and persists progress after reload", async ({ page }, testInfo) => {
     test.setTimeout(120_000);
 
     const userId = await resetEportfolioTestProgress();
@@ -281,6 +367,8 @@ test.describe("ePortfolio", () => {
         level: 1,
       }),
     ).toBeVisible();
+
+    await expectMobileSafe(page, testInfo);
 
     await expect(
       page.getByText("Country", {
@@ -347,11 +435,15 @@ test.describe("ePortfolio", () => {
           level: 2,
         }),
       ).toBeVisible();
+
+      await expectMobileSafe(page, testInfo);
     }
 
     const sources = await openSources(page);
 
     await expect(sources.locator("ol").first()).toBeVisible();
+
+    await expectMobileSafe(page, testInfo);
 
     await page
       .getByRole("link", {
@@ -385,6 +477,8 @@ test.describe("ePortfolio", () => {
 
     await expect(page.getByText(/^Finish /i)).toHaveCount(0);
 
+    await expectMobileSafe(page, testInfo);
+
     await page
       .getByRole("button", {
         name: "Mark as completed",
@@ -411,6 +505,8 @@ test.describe("ePortfolio", () => {
 
     expect(persisted?.completedAt).not.toBeNull();
 
+    await expectMobileSafe(page, testInfo);
+
     await page.reload();
 
     await expect(
@@ -419,6 +515,14 @@ test.describe("ePortfolio", () => {
         exact: true,
       }),
     ).toBeVisible();
+
+    const afterReload = await readEportfolioProgress(userId, testCaseSlug);
+
+    expect(afterReload?.status).toBe("completed");
+
+    expect(afterReload?.completedAt?.toISOString()).toBe(persisted?.completedAt?.toISOString());
+
+    await expectMobileSafe(page, testInfo);
 
     await page
       .getByRole("link", {
@@ -439,6 +543,14 @@ test.describe("ePortfolio", () => {
       }),
     ).toBeVisible();
 
+    await expect(
+      card.getByRole("link", {
+        name: "Review case study",
+      }),
+    ).toBeVisible();
+
+    await expectMobileSafe(page, testInfo);
+
     await page.reload();
 
     await expect(
@@ -446,9 +558,15 @@ test.describe("ePortfolio", () => {
         exact: true,
       }),
     ).toBeVisible();
+
+    await expectMobileSafe(page, testInfo);
   });
 
-  test("keeps library and long case-study content within the mobile viewport", async ({ page }) => {
+  test("keeps library and long case-study content within the mobile viewport", async ({
+    page,
+  }, testInfo) => {
+    test.skip(!isMobileProject(testInfo), "This viewport regression is specific to mobile.");
+
     test.setTimeout(120_000);
 
     await resetEportfolioTestProgress();

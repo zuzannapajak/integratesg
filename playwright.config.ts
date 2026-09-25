@@ -5,7 +5,7 @@ loadEnv({
   path: ".env.test",
   // W CI wartości z GitHub Secrets mają pierwszeństwo przed lokalnym .env.test.
   override: !process.env.CI,
-  quiet: true,
+  quiet: true, 
 });
 
 function requireEnvironmentVariable(name: string): string {
@@ -51,6 +51,7 @@ if (!process.env.PLAYWRIGHT_BASE_URL && e2eDatabaseUrl) {
 const scenarioTestPattern = "**/scenarios/**/*.spec.ts";
 const eportfolioTestPattern = "**/eportfolio/**/*.spec.ts";
 const curriculumTestPattern = "**/curriculum/**/*.spec.ts";
+
 const statefulTestPatterns = [scenarioTestPattern, eportfolioTestPattern, curriculumTestPattern];
 
 export default defineConfig({
@@ -131,9 +132,8 @@ export default defineConfig({
     },
 
     /*
-     * ePortfolio również zapisuje postęp użytkownika.
-     * Osobny projekt zapobiega uruchamianiu tego samego flow
-     * równolegle w projektach smoke desktop/mobile.
+     * ePortfolio zapisuje postęp użytkownika.
+     * Osobne projekty wykonują stateful flow kolejno na desktopie i mobile.
      */
     {
       name: "eportfolio-chromium",
@@ -142,6 +142,16 @@ export default defineConfig({
 
       use: {
         ...devices["Desktop Chrome"],
+      },
+    },
+
+    {
+      name: "eportfolio-mobile",
+
+      testMatch: eportfolioTestPattern,
+
+      use: {
+        ...devices["Pixel 7"],
       },
     },
 
