@@ -10,12 +10,17 @@
         "continueDescription": "Continue your latest learning module and pick up from your current progress.",
         "continueScenarioDescription": "Continue from where you left off in your most recently opened scenario.",
         "reviewScenarioDescription": "Review the scenario you completed most recently.",
+        "continueEportfolioDescription": "Continue reading your most recently opened case study.",
+        "reviewEportfolioDescription": "Review the case study you completed most recently.",
         "curriculumBadge": "Curriculum",
         "scenarioBadge": "Scenario",
+        "eportfolioBadge": "ePortfolio",
         "reviewModule": "Review module",
         "continueModule": "Continue module",
         "continueScenario": "Continue scenario",
         "reviewScenario": "Review scenario",
+        "continueCaseStudy": "Continue case study",
+        "reviewCaseStudy": "Review case study",
         "lastCompleted": "Last completed",
         "lastOpened": "Last opened",
         "noChange": "No change vs previous week",
@@ -100,12 +105,12 @@
       "learner": {
         "activity": {
           "title": "Your activity",
-          "description": "Real events from your curriculum activity over the last 7 days.",
+          "description": "Real events from your learning activity over the last 7 days.",
           "valueLabel": "Events"
         },
         "summary": {
           "title": "Progress summary",
-          "description": "A compact overview built from your real curriculum data."
+          "description": "A compact overview built from your real learning progress data."
         }
       },
       "admin": {

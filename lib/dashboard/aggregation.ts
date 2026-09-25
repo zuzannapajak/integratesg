@@ -38,12 +38,27 @@ export type DashboardScenarioAttempt = {
   completedAt: Date | null;
 };
 
+export type DashboardEportfolioProgress = {
+  status: string;
+  startedAt: Date | null;
+  lastOpenedAt: Date | null;
+  completedAt: Date | null;
+  caseStudy: {
+    slug: string;
+    translations: Array<{
+      language: string;
+      title: string;
+      summary: string | null;
+    }>;
+  };
+};
+
 type Translator = (key: string, values?: Record<string, string | number | Date>) => string;
 
-function pickTranslation(
-  translations: DashboardCurriculumAttempt["course"]["translations"],
+function pickTranslation<T extends { language: string }>(
+  translations: T[],
   locale: string,
-) {
+): T | null {
   const exactMatch = translations.find((translation) => translation.language === locale);
 
   if (exactMatch) {
@@ -57,6 +72,31 @@ function pickTranslation(
   }
 
   return translations.length > 0 ? translations[0] : null;
+}
+
+function getLatestActivityTimestamp(attempt: {
+  startedAt: Date | null;
+  lastOpenedAt: Date | null;
+  completedAt: Date | null;
+}) {
+  return (
+    attempt.lastOpenedAt?.getTime() ??
+    attempt.completedAt?.getTime() ??
+    attempt.startedAt?.getTime() ??
+    0
+  );
+}
+
+function getLatestAttempt<
+  T extends {
+    startedAt: Date | null;
+    lastOpenedAt: Date | null;
+    completedAt: Date | null;
+  },
+>(attempts: T[]): T | undefined {
+  return [...attempts].sort(
+    (left, right) => getLatestActivityTimestamp(right) - getLatestActivityTimestamp(left),
+  )[0];
 }
 
 export function buildWeeklyActivityChart(
@@ -101,65 +141,33 @@ export function buildContinueLearningItem(
   params: {
     curriculumAttempts: DashboardCurriculumAttempt[];
     scenarioAttempts: DashboardScenarioAttempt[];
+    eportfolioProgress: DashboardEportfolioProgress[];
     locale: string;
   },
   t: Translator,
 ): DashboardContinueItem | null {
-  const latestCurriculum = [...params.curriculumAttempts]
-    .sort((a, b) => {
-      const left =
-        a.lastOpenedAt !== null
-          ? a.lastOpenedAt.getTime()
-          : a.startedAt !== null
-            ? a.startedAt.getTime()
-            : 0;
-
-      const right =
-        b.lastOpenedAt !== null
-          ? b.lastOpenedAt.getTime()
-          : b.startedAt !== null
-            ? b.startedAt.getTime()
-            : 0;
-
-      return right - left;
-    })
-    .at(0);
-
-  const latestScenario = [...params.scenarioAttempts]
-    .sort((a, b) => {
-      const left =
-        a.lastOpenedAt !== null
-          ? a.lastOpenedAt.getTime()
-          : a.startedAt !== null
-            ? a.startedAt.getTime()
-            : 0;
-
-      const right =
-        b.lastOpenedAt !== null
-          ? b.lastOpenedAt.getTime()
-          : b.startedAt !== null
-            ? b.startedAt.getTime()
-            : 0;
-
-      return right - left;
-    })
-    .at(0);
+  const latestCurriculum = getLatestAttempt(params.curriculumAttempts);
+  const latestScenario = getLatestAttempt(params.scenarioAttempts);
+  const latestEportfolio = getLatestAttempt(params.eportfolioProgress);
 
   const latestCurriculumTimestamp = latestCurriculum
-    ? (latestCurriculum.lastOpenedAt?.getTime() ?? latestCurriculum.startedAt?.getTime() ?? 0)
+    ? getLatestActivityTimestamp(latestCurriculum)
+    : 0;
+  const latestScenarioTimestamp = latestScenario ? getLatestActivityTimestamp(latestScenario) : 0;
+  const latestEportfolioTimestamp = latestEportfolio
+    ? getLatestActivityTimestamp(latestEportfolio)
     : 0;
 
-  const latestScenarioTimestamp = latestScenario
-    ? (latestScenario.lastOpenedAt?.getTime() ?? latestScenario.startedAt?.getTime() ?? 0)
-    : 0;
-
-  if (!latestCurriculum && !latestScenario) {
+  if (!latestCurriculum && !latestScenario && !latestEportfolio) {
     return null;
   }
 
-  if (latestCurriculum && latestCurriculumTimestamp >= latestScenarioTimestamp) {
+  if (
+    latestCurriculum &&
+    latestCurriculumTimestamp >= latestScenarioTimestamp &&
+    latestCurriculumTimestamp >= latestEportfolioTimestamp
+  ) {
     const translation = pickTranslation(latestCurriculum.course.translations, params.locale);
-
     const isCompleted = latestCurriculum.status === "completed";
 
     return {
@@ -174,10 +182,9 @@ export function buildContinueLearningItem(
     };
   }
 
-  if (latestScenario) {
+  if (latestScenario && latestScenarioTimestamp >= latestEportfolioTimestamp) {
     const isCompleted = latestScenario.status === "completed";
-
-    const playHref = `/${params.locale}/scenarios/` + `${latestScenario.scenarioSlug}/play`;
+    const playHref = `/${params.locale}/scenarios/${latestScenario.scenarioSlug}/play`;
 
     return {
       title: latestScenario.scenarioTitle,
@@ -191,6 +198,24 @@ export function buildContinueLearningItem(
     };
   }
 
+  if (latestEportfolio) {
+    const translation = pickTranslation(latestEportfolio.caseStudy.translations, params.locale);
+    const isCompleted = latestEportfolio.status === "completed";
+
+    return {
+      title: translation?.title ?? latestEportfolio.caseStudy.slug,
+      description:
+        translation?.summary ??
+        (isCompleted
+          ? t("fallback.reviewEportfolioDescription")
+          : t("fallback.continueEportfolioDescription")),
+      href: `/${params.locale}/eportfolio/${latestEportfolio.caseStudy.slug}`,
+      badge: t("fallback.eportfolioBadge"),
+      ctaLabel: isCompleted ? t("fallback.reviewCaseStudy") : t("fallback.continueCaseStudy"),
+      kindLabel: isCompleted ? t("fallback.lastCompleted") : t("fallback.lastOpened"),
+    };
+  }
+
   return null;
 }
 
@@ -200,6 +225,9 @@ export function buildLearnerSummaryMetrics(
   scenarioAttempts: Array<{
     status: string;
     score: number | null;
+  }>,
+  eportfolioProgress: Array<{
+    status: string;
   }>,
   t: Translator,
 ): DashboardMetric[] {
@@ -233,12 +261,19 @@ export function buildLearnerSummaryMetrics(
     ];
   }
 
-  const completedCount = scenarioAttempts.filter(
-    (attempt) => attempt.status === "completed",
+  const trackedActivities = [
+    ...scenarioAttempts.map((attempt) => ({ status: attempt.status })),
+    ...eportfolioProgress.map((progress) => ({ status: progress.status })),
+  ];
+
+  const completedCount = trackedActivities.filter(
+    (activity) => activity.status === "completed",
   ).length;
 
   const completionRate =
-    scenarioAttempts.length > 0 ? Math.round((completedCount / scenarioAttempts.length) * 100) : 0;
+    trackedActivities.length > 0
+      ? Math.round((completedCount / trackedActivities.length) * 100)
+      : 0;
 
   const attemptsWithScore = scenarioAttempts.filter(
     (

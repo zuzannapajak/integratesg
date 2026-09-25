@@ -10,12 +10,17 @@
         "continueDescription": "Continua il tuo ultimo modulo di apprendimento e riprendi dai tuoi progressi attuali.",
         "continueScenarioDescription": "Continua da dove avevi interrotto nel tuo scenario aperto più di recente.",
         "reviewScenarioDescription": "Rivedi lo scenario che hai completato più di recente.",
+        "continueEportfolioDescription": "Continua a leggere il caso di studio aperto più di recente.",
+        "reviewEportfolioDescription": "Rivedi il caso di studio completato più di recente.",
         "curriculumBadge": "Curriculum",
         "scenarioBadge": "Scenario",
+        "eportfolioBadge": "ePortfolio",
         "reviewModule": "Rivedi modulo",
         "continueModule": "Continua modulo",
         "continueScenario": "Continua scenario",
         "reviewScenario": "Rivedi scenario",
+        "continueCaseStudy": "Continua caso di studio",
+        "reviewCaseStudy": "Rivedi caso di studio",
         "lastCompleted": "Ultimo completato",
         "lastOpened": "Ultimo aperto",
         "noChange": "Nessuna variazione rispetto alla settimana precedente",
@@ -100,12 +105,12 @@
       "learner": {
         "activity": {
           "title": "La tua attività",
-          "description": "Eventi reali dalle tue attività del curriculum negli ultimi 7 giorni.",
+          "description": "Eventi reali dalle tue attività di apprendimento negli ultimi 7 giorni.",
           "valueLabel": "Eventi"
         },
         "summary": {
           "title": "Riepilogo progressi",
-          "description": "Una panoramica compatta basata sui tuoi dati reali del curriculum."
+          "description": "Una panoramica compatta basata sui dati reali dei tuoi progressi di apprendimento."
         }
       },
       "admin": {

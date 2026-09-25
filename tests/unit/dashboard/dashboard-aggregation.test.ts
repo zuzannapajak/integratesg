@@ -6,6 +6,7 @@ import {
   buildLearnerSummaryMetrics,
   buildWeeklyActivityChart,
   type DashboardCurriculumAttempt,
+  type DashboardEportfolioProgress,
   type DashboardScenarioAttempt,
 } from "@/lib/dashboard/aggregation";
 
@@ -43,6 +44,28 @@ function curriculumAttempt(
           language: "en",
           title: "Course 1",
           description: "Course description",
+        },
+      ],
+    },
+    ...overrides,
+  };
+}
+
+function eportfolioProgress(
+  overrides: Partial<DashboardEportfolioProgress> = {},
+): DashboardEportfolioProgress {
+  return {
+    status: "in_progress",
+    startedAt: new Date("2026-09-20T10:00:00.000Z"),
+    lastOpenedAt: new Date("2026-09-20T10:00:00.000Z"),
+    completedAt: null,
+    caseStudy: {
+      slug: "case-1",
+      translations: [
+        {
+          language: "en",
+          title: "Case study 1",
+          summary: "Case study summary",
         },
       ],
     },
@@ -99,6 +122,7 @@ describe("dashboard aggregation", () => {
           {
             curriculumAttempts: [],
             scenarioAttempts: [],
+            eportfolioProgress: [],
             locale: "en",
           },
           t,
@@ -121,6 +145,7 @@ describe("dashboard aggregation", () => {
               lastOpenedAt: new Date("2026-09-21T10:00:00.000Z"),
             }),
           ],
+          eportfolioProgress: [],
           locale: "en",
         },
         t,
@@ -136,6 +161,65 @@ describe("dashboard aggregation", () => {
       });
     });
 
+    it("returns the most recently opened ePortfolio case study", () => {
+      const result = buildContinueLearningItem(
+        {
+          curriculumAttempts: [],
+          scenarioAttempts: [
+            scenarioAttempt({
+              lastOpenedAt: new Date("2026-09-20T10:00:00.000Z"),
+            }),
+          ],
+          eportfolioProgress: [
+            eportfolioProgress({
+              lastOpenedAt: new Date("2026-09-22T10:00:00.000Z"),
+            }),
+          ],
+          locale: "en",
+        },
+        t,
+      );
+
+      expect(result).toEqual({
+        title: "Case study 1",
+        description: "Case study summary",
+        href: "/en/eportfolio/case-1",
+        badge: "fallback.eportfolioBadge",
+        ctaLabel: "fallback.continueCaseStudy",
+        kindLabel: "fallback.lastOpened",
+      });
+    });
+
+    it("uses the ePortfolio fallback copy when summary is missing", () => {
+      const result = buildContinueLearningItem(
+        {
+          curriculumAttempts: [],
+          scenarioAttempts: [],
+          eportfolioProgress: [
+            eportfolioProgress({
+              status: "completed",
+              caseStudy: {
+                slug: "case-1",
+                translations: [
+                  {
+                    language: "en",
+                    title: "Completed case",
+                    summary: null,
+                  },
+                ],
+              },
+            }),
+          ],
+          locale: "en",
+        },
+        t,
+      );
+
+      expect(result?.description).toBe("fallback.reviewEportfolioDescription");
+      expect(result?.ctaLabel).toBe("fallback.reviewCaseStudy");
+      expect(result?.kindLabel).toBe("fallback.lastCompleted");
+    });
+
     it("uses review mode for a completed scenario", () => {
       const result = buildContinueLearningItem(
         {
@@ -147,6 +231,7 @@ describe("dashboard aggregation", () => {
               status: "completed",
             }),
           ],
+          eportfolioProgress: [],
           locale: "en",
         },
         t,
@@ -175,6 +260,7 @@ describe("dashboard aggregation", () => {
             }),
           ],
           scenarioAttempts: [],
+          eportfolioProgress: [],
           locale: "pl",
         },
         t,
@@ -187,7 +273,7 @@ describe("dashboard aggregation", () => {
 
   describe("buildLearnerSummaryMetrics", () => {
     it("returns zero-state metrics for a new learner", () => {
-      const result = buildLearnerSummaryMetrics("learner", [], [], t);
+      const result = buildLearnerSummaryMetrics("learner", [], [], [], t);
 
       expect(result).toEqual([
         {
@@ -215,6 +301,7 @@ describe("dashboard aggregation", () => {
             score: 50,
           },
         ],
+        [],
         t,
       );
 
@@ -230,6 +317,28 @@ describe("dashboard aggregation", () => {
       ]);
     });
 
+    it("includes ePortfolio progress in the learner completion rate", () => {
+      const result = buildLearnerSummaryMetrics(
+        "learner",
+        [],
+        [],
+        [
+          {
+            status: "completed",
+          },
+          {
+            status: "in_progress",
+          },
+        ],
+        t,
+      );
+
+      expect(result[0]).toEqual({
+        label: "metrics.completionRate",
+        value: "50%",
+      });
+    });
+
     it("calculates 100 percent learner completion", () => {
       const result = buildLearnerSummaryMetrics(
         "learner",
@@ -242,6 +351,11 @@ describe("dashboard aggregation", () => {
           {
             status: "completed",
             score: 80,
+          },
+        ],
+        [
+          {
+            status: "completed",
           },
         ],
         t,
@@ -263,6 +377,7 @@ describe("dashboard aggregation", () => {
             score: null,
           },
         ],
+        [],
         t,
       );
 
@@ -279,7 +394,7 @@ describe("dashboard aggregation", () => {
     });
 
     it("returns zero-state metrics for a new educator", () => {
-      const result = buildLearnerSummaryMetrics("educator", [], [], t);
+      const result = buildLearnerSummaryMetrics("educator", [], [], [], t);
 
       expect(result).toEqual([
         {
@@ -310,6 +425,7 @@ describe("dashboard aggregation", () => {
             postQuizScore: null,
           }),
         ],
+        [],
         [],
         t,
       );

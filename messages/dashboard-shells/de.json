@@ -10,12 +10,17 @@
         "continueDescription": "Setzen Sie Ihr letztes Lernmodul fort und knüpfen Sie an Ihren aktuellen Fortschritt an.",
         "continueScenarioDescription": "Setzen Sie dort fort, wo Sie in Ihrem zuletzt geöffneten Szenario aufgehört haben.",
         "reviewScenarioDescription": "Überprüfen Sie das Szenario, das Sie zuletzt abgeschlossen haben.",
+        "continueEportfolioDescription": "Lesen Sie Ihre zuletzt geöffnete Fallstudie weiter.",
+        "reviewEportfolioDescription": "Sehen Sie sich die zuletzt abgeschlossene Fallstudie erneut an.",
         "curriculumBadge": "Lehrplan",
         "scenarioBadge": "Szenario",
+        "eportfolioBadge": "ePortfolio",
         "reviewModule": "Modul überprüfen",
         "continueModule": "Modul fortsetzen",
         "continueScenario": "Szenario fortsetzen",
         "reviewScenario": "Szenario überprüfen",
+        "continueCaseStudy": "Fallstudie fortsetzen",
+        "reviewCaseStudy": "Fallstudie überprüfen",
         "lastCompleted": "Zuletzt abgeschlossen",
         "lastOpened": "Zuletzt geöffnet",
         "noChange": "Keine Änderung gegenüber der Vorwoche",
@@ -100,12 +105,12 @@
       "learner": {
         "activity": {
           "title": "Ihre Aktivität",
-          "description": "Echte Ereignisse aus Ihrer Lehrplanaktivität der letzten 7 Tage.",
+          "description": "Echte Ereignisse aus Ihrer Lernaktivität der letzten 7 Tage.",
           "valueLabel": "Ereignisse"
         },
         "summary": {
           "title": "Fortschrittszusammenfassung",
-          "description": "Eine kompakte Übersicht, basierend auf Ihren realen Lehrplandaten."
+          "description": "Eine kompakte Übersicht, basierend auf Ihren realen Lernfortschrittsdaten."
         }
       },
       "admin": {
