@@ -51,9 +51,9 @@ describe("ePortfolio responsive and accessibility contract", () => {
   it("keeps accessible labels and completion navigation semantics", () => {
     expect(library).toContain('aria-label="Filter by country"');
 
-    expect(library).toContain('aria-label="Filter by progress"');
+    expect(library).toContain('aria-label="Filter by industry"');
 
-    expect(library).not.toContain('aria-label="Filter by industry"');
+    expect(library).toContain('aria-label="Filter by progress"');
 
     expect(detail).toContain("Back to ePortfolio");
 

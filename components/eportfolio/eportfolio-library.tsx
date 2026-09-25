@@ -65,9 +65,8 @@ function normaliseSearchValue(value: string) {
 
 export default function EportfolioLibrary({ locale, items }: Props) {
   const [search, setSearch] = useState("");
-
   const [country, setCountry] = useState("all");
-
+  const [industry, setIndustry] = useState("all");
   const [progress, setProgress] = useState<ProgressFilter>("all");
 
   const countryOptions = useMemo(() => {
@@ -77,6 +76,16 @@ export default function EportfolioLibrary({ locale, items }: Props) {
         code,
         label: getCountryName(code, locale),
       }));
+  }, [items, locale]);
+
+  const industryOptions = useMemo(() => {
+    return [
+      ...new Set(
+        items
+          .map((item) => item.industry?.trim())
+          .filter((value): value is string => Boolean(value)),
+      ),
+    ].sort((a, b) => a.localeCompare(b, locale));
   }, [items, locale]);
 
   const filteredItems = useMemo(() => {
@@ -98,20 +107,21 @@ export default function EportfolioLibrary({ locale, items }: Props) {
         .toLocaleLowerCase();
 
       const matchesSearch = query.length === 0 || searchableValues.includes(query);
-
       const matchesCountry = country === "all" || item.countryCode === country;
-
+      const matchesIndustry = industry === "all" || item.industry?.trim() === industry;
       const matchesProgress = progress === "all" || item.progress === progress;
 
-      return matchesSearch && matchesCountry && matchesProgress;
+      return matchesSearch && matchesCountry && matchesIndustry && matchesProgress;
     });
-  }, [country, items, locale, progress, search]);
+  }, [country, industry, items, locale, progress, search]);
 
-  const hasActiveFilters = search.trim().length > 0 || country !== "all" || progress !== "all";
+  const hasActiveFilters =
+    search.trim().length > 0 || country !== "all" || industry !== "all" || progress !== "all";
 
   function clearFilters() {
     setSearch("");
     setCountry("all");
+    setIndustry("all");
     setProgress("all");
   }
 
@@ -130,7 +140,7 @@ export default function EportfolioLibrary({ locale, items }: Props) {
           </p>
         </div>
 
-        <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-[minmax(0,1.55fr)_minmax(0,0.85fr)_minmax(0,0.85fr)]">
+        <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-[minmax(0,1.55fr)_repeat(3,minmax(0,0.85fr))]">
           <label className="flex min-w-0 items-center gap-3 rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 transition focus-within:border-[#0b9c72]/30 focus-within:shadow-[0_8px_24px_rgba(35,45,62,0.05)]">
             <Search className="h-4 w-4 shrink-0 text-[#98a2b3]" />
 
@@ -141,7 +151,7 @@ export default function EportfolioLibrary({ locale, items }: Props) {
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 setSearch(event.target.value);
               }}
-              placeholder="Search company, country or keyword..."
+              placeholder="Search company, industry, country or keyword..."
               className="w-full min-w-0 border-none bg-transparent text-[0.95rem] text-[#31425a] outline-none placeholder:text-[#9aa5b3]"
             />
           </label>
@@ -164,6 +174,23 @@ export default function EportfolioLibrary({ locale, items }: Props) {
           </select>
 
           <select
+            aria-label="Filter by industry"
+            value={industry}
+            onChange={(event: ChangeEvent<HTMLSelectElement>) => {
+              setIndustry(event.target.value);
+            }}
+            className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
+          >
+            <option value="all">All industries</option>
+
+            {industryOptions.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
+          </select>
+
+          <select
             aria-label="Filter by progress"
             value={progress}
             onChange={(event: ChangeEvent<HTMLSelectElement>) => {
@@ -172,16 +199,13 @@ export default function EportfolioLibrary({ locale, items }: Props) {
             className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
           >
             <option value="all">All progress</option>
-
             <option value="not_started">Not started</option>
-
             <option value="in_progress">In progress</option>
-
             <option value="completed">Completed</option>
           </select>
         </div>
 
-        {hasActiveFilters ? (
+        {hasActiveFilters && filteredItems.length > 0 ? (
           <div className="mt-4 flex justify-end">
             <button
               type="button"
@@ -198,7 +222,6 @@ export default function EportfolioLibrary({ locale, items }: Props) {
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {filteredItems.map((item) => {
             const progressMeta = getProgressMeta(item.progress);
-
             const countryName = getCountryName(item.countryCode, locale);
 
             return (
@@ -217,7 +240,6 @@ export default function EportfolioLibrary({ locale, items }: Props) {
                       className={`inline-flex shrink-0 items-center gap-1.5 rounded-full border px-2.5 py-1 text-[0.68rem] font-bold uppercase tracking-widest ${progressMeta.className}`}
                     >
                       {progressMeta.icon}
-
                       {progressMeta.label}
                     </span>
                   </div>
@@ -249,7 +271,6 @@ export default function EportfolioLibrary({ locale, items }: Props) {
                       className="inline-flex items-center gap-2 rounded-2xl bg-[#31425a] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347]"
                     >
                       {item.progress === "completed" ? "Review case study" : "Open case study"}
-
                       <ArrowRight className="h-4 w-4" />
                     </Link>
                   </div>
@@ -269,7 +290,7 @@ export default function EportfolioLibrary({ locale, items }: Props) {
           </h2>
 
           <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[#667180]">
-            Try another company name, country or progress status.
+            Try another company name, country, industry or progress status.
           </p>
 
           {hasActiveFilters ? (
