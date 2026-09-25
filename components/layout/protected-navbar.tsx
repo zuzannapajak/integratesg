@@ -33,41 +33,6 @@ export default function ProtectedNavbar({ locale, role, email, forceSolid = fals
   const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const scrollContainer = document.querySelector<HTMLElement>(
-      "[data-protected-scroll-container]",
-    );
-
-    if (!scrollContainer) return;
-
-    const onScroll = () => {
-      if (tickingRef.current) return;
-
-      tickingRef.current = true;
-
-      window.requestAnimationFrame(() => {
-        const y = scrollContainer.scrollTop;
-
-        if (!scrolledRef.current && y > 120) {
-          scrolledRef.current = true;
-          setIsScrolled(true);
-        } else if (scrolledRef.current && y < 28) {
-          scrolledRef.current = false;
-          setIsScrolled(false);
-        }
-
-        tickingRef.current = false;
-      });
-    };
-
-    onScroll();
-    scrollContainer.addEventListener("scroll", onScroll, { passive: true });
-
-    return () => {
-      scrollContainer.removeEventListener("scroll", onScroll);
-    };
-  }, []);
-
-  useEffect(() => {
     let cleanup: (() => void) | undefined;
     let rafId = 0;
 
@@ -82,7 +47,9 @@ export default function ProtectedNavbar({ locale, role, email, forceSolid = fals
       }
 
       const onScroll = () => {
-        if (tickingRef.current) return;
+        if (tickingRef.current) {
+          return;
+        }
 
         tickingRef.current = true;
 
@@ -115,6 +82,7 @@ export default function ProtectedNavbar({ locale, role, email, forceSolid = fals
       if (rafId) {
         window.cancelAnimationFrame(rafId);
       }
+
       cleanup?.();
     };
   }, []);
@@ -173,6 +141,7 @@ export default function ProtectedNavbar({ locale, role, email, forceSolid = fals
             <Link className="mock-topbar-link" href={`/${locale}`}>
               {t("about")}
             </Link>
+
             <Link className="mock-topbar-link" href={`/${locale}/dashboard`}>
               {t("dashboard")}
             </Link>
@@ -223,7 +192,9 @@ export default function ProtectedNavbar({ locale, role, email, forceSolid = fals
                   <p className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-white/45">
                     {common("signedIn")}
                   </p>
+
                   <p className="mt-1 truncate text-sm font-semibold text-white">{email}</p>
+
                   <p className="mt-1 text-xs text-white/55">{roleLabel}</p>
                 </div>
 
@@ -242,6 +213,7 @@ export default function ProtectedNavbar({ locale, role, email, forceSolid = fals
                         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/6 ring-1 ring-white/8">
                           <Icon className="h-4.5 w-4.5" />
                         </span>
+
                         <span>{link.label}</span>
                       </Link>
                     );
@@ -256,6 +228,7 @@ export default function ProtectedNavbar({ locale, role, email, forceSolid = fals
                     <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-red-500/12 ring-1 ring-red-300/15">
                       <LogOut className="h-4.5 w-4.5" />
                     </span>
+
                     <span>{t("logOut")}</span>
                   </LogoutButton>
                 </div>
