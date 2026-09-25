@@ -1,0 +1,15 @@
+{
+  "Protected": {
+    "CurriculumRouteState": {
+      "loading": {
+        "title": "Curriculum wird geladen",
+        "description": "Lernmodule und Lernfortschritt werden vorbereitet."
+      },
+      "error": {
+        "title": "Das Curriculum konnte nicht geladen werden",
+        "description": "Beim Vorbereiten dieser Ansicht ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+        "retry": "Erneut versuchen"
+      }
+    }
+  }
+}

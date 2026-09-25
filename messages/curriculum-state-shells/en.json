@@ -1,0 +1,15 @@
+{
+  "Protected": {
+    "CurriculumRouteState": {
+      "loading": {
+        "title": "Loading curriculum",
+        "description": "Preparing your learning modules and progress."
+      },
+      "error": {
+        "title": "The curriculum could not be loaded",
+        "description": "Something went wrong while preparing this view. Please try again.",
+        "retry": "Try again"
+      }
+    }
+  }
+}

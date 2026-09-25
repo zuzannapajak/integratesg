@@ -1,0 +1,15 @@
+{
+  "Protected": {
+    "CurriculumRouteState": {
+      "loading": {
+        "title": "Ładowanie programu",
+        "description": "Przygotowujemy moduły edukacyjne i Twój postęp."
+      },
+      "error": {
+        "title": "Nie udało się załadować programu",
+        "description": "Wystąpił błąd podczas przygotowywania widoku. Spróbuj ponownie.",
+        "retry": "Spróbuj ponownie"
+      }
+    }
+  }
+}
