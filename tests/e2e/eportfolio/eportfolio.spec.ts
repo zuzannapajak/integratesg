@@ -13,7 +13,6 @@ const libraryPath = "/en/eportfolio";
 const testCaseSlug = "sofiyska-voda";
 
 const testCaseTitle = "Sofiyska Voda AD";
-
 async function signIn(page: Page): Promise<void> {
   const { email, password } = getEportfolioTestCredentials();
 
@@ -33,7 +32,6 @@ async function signIn(page: Page): Promise<void> {
       .click(),
   ]);
 }
-
 function caseStudyCard(page: Page, title: string): Locator {
   return page.locator("article").filter({
     has: page.getByRole("heading", {
@@ -50,7 +48,6 @@ function isMobileProject(testInfo: TestInfo) {
 async function expectNoDocumentOverflow(page: Page): Promise<void> {
   const overflow = await page.evaluate(() => {
     const root = document.documentElement;
-
     return root.scrollWidth - root.clientWidth;
   });
 
@@ -71,7 +68,6 @@ async function goToLastReadingStage(page: Page, testInfo?: TestInfo): Promise<vo
       name: "Next",
       exact: true,
     });
-
     if ((await completionLink.count()) > 0) {
       await expect(completionLink).toBeVisible();
 
@@ -95,7 +91,6 @@ async function goToLastReadingStage(page: Page, testInfo?: TestInfo): Promise<vo
       await expectMobileSafe(page, testInfo);
     }
   }
-
   throw new Error("The ePortfolio case study did not reach its final reading stage.");
 }
 
@@ -116,7 +111,6 @@ async function openSources(page: Page): Promise<Locator> {
 test.describe.configure({
   mode: "serial",
 });
-
 test.describe("ePortfolio", () => {
   test.afterAll(async () => {
     try {
@@ -131,7 +125,6 @@ test.describe("ePortfolio", () => {
 
     await expect(page).toHaveURL(/\/en\/auth\/login(?:\?.*)?$/);
   });
-
   test("supports search and combined country, industry and progress filters", async ({
     page,
   }, testInfo) => {
@@ -149,7 +142,6 @@ test.describe("ePortfolio", () => {
     ).toBeVisible();
 
     await expectMobileSafe(page, testInfo);
-
     for (const slug of EPORTFOLIO_SLUGS) {
       await expect(page.locator(`a[href="/en/eportfolio/${slug}"]`).first()).toBeVisible();
     }
@@ -166,7 +158,6 @@ test.describe("ePortfolio", () => {
         exact: true,
       }),
     ).toBeVisible();
-
     await expect(
       page.getByText("1 of 8 case studies", {
         exact: true,
@@ -186,7 +177,6 @@ test.describe("ePortfolio", () => {
     const industryFilter = page.getByRole("combobox", {
       name: "Filter by industry",
     });
-
     const progressFilter = page.getByRole("combobox", {
       name: "Filter by progress",
     });
@@ -208,7 +198,6 @@ test.describe("ePortfolio", () => {
         exact: true,
       }),
     ).toHaveCount(0);
-
     await page
       .getByRole("button", {
         name: "Clear filters",
@@ -227,7 +216,6 @@ test.describe("ePortfolio", () => {
         label: option.textContent.trim(),
       })),
     );
-
     const targetIndustry = industryOptions.find(
       (option) =>
         option.value !== "all" && option.label.length > 0 && targetCardText.includes(option.label),
@@ -244,7 +232,6 @@ test.describe("ePortfolio", () => {
     await progressFilter.selectOption("not_started");
 
     await expect(targetCard).toBeVisible();
-
     await expect(
       page.getByRole("heading", {
         name: "PZU S.A.",
@@ -268,7 +255,6 @@ test.describe("ePortfolio", () => {
         exact: true,
       }),
     ).toBeVisible();
-
     await page
       .getByRole("button", {
         name: "Clear filters",
@@ -281,7 +267,6 @@ test.describe("ePortfolio", () => {
 
     await expectMobileSafe(page, testInfo);
   });
-
   test("opens all published case studies and exposes valid external references", async ({
     page,
   }, testInfo) => {
@@ -298,7 +283,6 @@ test.describe("ePortfolio", () => {
 
     for (const slug of EPORTFOLIO_SLUGS) {
       const response = await page.goto(`/en/eportfolio/${slug}`);
-
       if (!response) {
         throw new Error(`No document response received for ${slug}.`);
       }
@@ -313,7 +297,6 @@ test.describe("ePortfolio", () => {
           exact: true,
         }),
       ).toBeVisible();
-
       await expect(
         page.getByRole("progressbar", {
           name: "Case study reading progress",
@@ -329,7 +312,6 @@ test.describe("ePortfolio", () => {
       const sources = await openSources(page);
 
       const sourceLinks = sources.locator('a[href^="http://"], a[href^="https://"]');
-
       expect(
         await sourceLinks.count(),
         `Expected at least one external source link for ${slug}.`,
@@ -345,18 +327,27 @@ test.describe("ePortfolio", () => {
         expect(["http:", "https:"]).toContain(url.protocol);
 
         expect(url.hostname).not.toBe("localhost");
-
         expect(url.hostname).not.toBe("127.0.0.1");
       }
     }
   });
 
-  test("completes a case study and persists progress after reload", async ({ page }, testInfo) => {
+  test("completes a case study, persists progress and updates the dashboard", async ({
+    page,
+  }, testInfo) => {
     test.setTimeout(120_000);
 
     const userId = await resetEportfolioTestProgress();
 
     await signIn(page);
+
+    await expect(
+      page.getByRole("heading", {
+        name: testCaseTitle,
+        exact: true,
+        level: 2,
+      }),
+    ).toHaveCount(0);
 
     await page.goto(`${libraryPath}/${testCaseSlug}`);
 
@@ -367,7 +358,6 @@ test.describe("ePortfolio", () => {
         level: 1,
       }),
     ).toBeVisible();
-
     await expectMobileSafe(page, testInfo);
 
     await expect(
@@ -393,7 +383,6 @@ test.describe("ePortfolio", () => {
         exact: true,
       }),
     ).toBeVisible();
-
     await expect(
       page.getByRole("heading", {
         name: "Company overview",
@@ -411,7 +400,6 @@ test.describe("ePortfolio", () => {
     await expect(
       page.getByText(/Sofiyska Voda operates Bulgaria's only water public-private partnership/i),
     ).toHaveCount(1);
-
     const stages = [
       "Environmental",
       "Social",
@@ -435,7 +423,6 @@ test.describe("ePortfolio", () => {
           level: 2,
         }),
       ).toBeVisible();
-
       await expectMobileSafe(page, testInfo);
     }
 
@@ -453,7 +440,6 @@ test.describe("ePortfolio", () => {
       .click();
 
     await expect(page).toHaveURL(new RegExp(`/en/eportfolio/${testCaseSlug}/complete$`));
-
     await expect(
       page.getByRole("heading", {
         name: "Complete case study",
@@ -476,7 +462,6 @@ test.describe("ePortfolio", () => {
     ).toBeVisible();
 
     await expect(page.getByText(/^Finish /i)).toHaveCount(0);
-
     await expectMobileSafe(page, testInfo);
 
     await page
@@ -498,7 +483,6 @@ test.describe("ePortfolio", () => {
     expect(persisted).not.toBeNull();
 
     expect(persisted?.status).toBe("completed");
-
     expect(persisted?.startedAt).not.toBeNull();
 
     expect(persisted?.lastOpenedAt).not.toBeNull();
@@ -519,7 +503,6 @@ test.describe("ePortfolio", () => {
     const afterReload = await readEportfolioProgress(userId, testCaseSlug);
 
     expect(afterReload?.status).toBe("completed");
-
     expect(afterReload?.completedAt?.toISOString()).toBe(persisted?.completedAt?.toISOString());
 
     await expectMobileSafe(page, testInfo);
@@ -536,7 +519,6 @@ test.describe("ePortfolio", () => {
     const card = caseStudyCard(page, testCaseTitle);
 
     await expect(card).toBeVisible();
-
     await expect(
       card.getByText("Completed", {
         exact: true,
@@ -560,8 +542,21 @@ test.describe("ePortfolio", () => {
     ).toBeVisible();
 
     await expectMobileSafe(page, testInfo);
-  });
 
+    await page.goto("/en/dashboard");
+
+    await expect(
+      page.getByRole("heading", {
+        name: testCaseTitle,
+        exact: true,
+        level: 2,
+      }),
+    ).toBeVisible();
+
+    await expect(page.locator(`a[href="/en/eportfolio/${testCaseSlug}"]`)).toBeVisible();
+
+    await expectMobileSafe(page, testInfo);
+  });
   test("keeps library and long case-study content within the mobile viewport", async ({
     page,
   }, testInfo) => {
@@ -581,7 +576,6 @@ test.describe("ePortfolio", () => {
     await page.goto(libraryPath);
 
     await expectNoDocumentOverflow(page);
-
     await page.locator(`a[href="/en/eportfolio/${testCaseSlug}"]`).first().click();
 
     await expect(
@@ -600,7 +594,6 @@ test.describe("ePortfolio", () => {
     });
 
     await expectNoDocumentOverflow(page);
-
     for (let step = 0; step < 5; step += 1) {
       await page
         .getByRole("button", {

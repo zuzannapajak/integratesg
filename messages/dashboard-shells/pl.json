@@ -10,12 +10,17 @@
         "continueDescription": "Kontynuuj swój ostatni moduł nauki i zacznij od miejsca, w którym przerwałeś.",
         "continueScenarioDescription": "Kontynuuj od miejsca, w którym przerwałeś w ostatnio otwartym scenariuszu.",
         "reviewScenarioDescription": "Przejrzyj ostatnio ukończony scenariusz.",
+        "continueEportfolioDescription": "Kontynuuj czytanie ostatnio otwartego studium przypadku.",
+        "reviewEportfolioDescription": "Przejrzyj ostatnio ukończone studium przypadku.",
         "curriculumBadge": "Program nauczania",
         "scenarioBadge": "Scenariusz",
+        "eportfolioBadge": "ePortfolio",
         "reviewModule": "Przejrzyj moduł",
         "continueModule": "Kontynuuj moduł",
         "continueScenario": "Kontynuuj scenariusz",
         "reviewScenario": "Przejrzyj scenariusz",
+        "continueCaseStudy": "Kontynuuj studium przypadku",
+        "reviewCaseStudy": "Przejrzyj studium przypadku",
         "lastCompleted": "Ostatnio ukończone",
         "lastOpened": "Ostatnio otwarte",
         "noChange": "Brak zmian względem poprzedniego tygodnia",
@@ -100,12 +105,12 @@
       "learner": {
         "activity": {
           "title": "Twoja aktywność",
-          "description": "Rzeczywiste zdarzenia z Twojej aktywności curriculum z ostatnich 7 dni.",
+          "description": "Rzeczywiste zdarzenia z Twojej aktywności edukacyjnej z ostatnich 7 dni.",
           "valueLabel": "Zdarzenia"
         },
         "summary": {
           "title": "Podsumowanie postępu",
-          "description": "Kompaktowy przegląd zbudowany na podstawie rzeczywistych danych curriculum."
+          "description": "Kompaktowy przegląd zbudowany na podstawie rzeczywistych danych o Twoich postępach w nauce."
         }
       },
       "admin": {
