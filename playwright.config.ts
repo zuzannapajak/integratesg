@@ -48,11 +48,17 @@ if (!process.env.PLAYWRIGHT_BASE_URL && e2eDatabaseUrl) {
   process.env.DATABASE_URL = e2eDatabaseUrl;
 }
 
+const authTestPattern = "**/auth/**/*.spec.ts";
 const scenarioTestPattern = "**/scenarios/**/*.spec.ts";
 const eportfolioTestPattern = "**/eportfolio/**/*.spec.ts";
 const curriculumTestPattern = "**/curriculum/**/*.spec.ts";
 
-const statefulTestPatterns = [scenarioTestPattern, eportfolioTestPattern, curriculumTestPattern];
+const statefulTestPatterns = [
+  authTestPattern,
+  scenarioTestPattern,
+  eportfolioTestPattern,
+  curriculumTestPattern,
+];
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -114,6 +120,20 @@ export default defineConfig({
 
       use: {
         ...devices["Pixel 7"],
+      },
+    },
+
+    /*
+     * Auth testuje prawdziwą sesję Supabase, więc uruchamiamy go
+     * w osobnym projekcie i pojedynczym workerem.
+     */
+    {
+      name: "auth-chromium",
+
+      testMatch: authTestPattern,
+
+      use: {
+        ...devices["Desktop Chrome"],
       },
     },
 
@@ -180,13 +200,6 @@ export default defineConfig({
     },
   ],
 
-  /**
-   * Gdy PLAYWRIGHT_BASE_URL nie jest ustawione,
-   * Playwright sam uruchamia lokalną aplikację Next.js.
-   *
-   * Gdy zmienna jest ustawiona, test może działać
-   * na istniejącym środowisku testowym.
-   */
   ...(process.env.PLAYWRIGHT_BASE_URL
     ? {}
     : {
