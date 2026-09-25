@@ -351,58 +351,101 @@ export async function recordScenarioChoiceProgress(input: RecordScenarioChoiceIn
 
   const now = new Date();
 
-  const [recordedChoiceAttempt] = await prisma.$transaction([
-    prisma.userScenarioChoiceAttempt.upsert({
-      where: {
-        attemptId_challengeId_attemptNumber: {
+  try {
+    const [recordedChoiceAttempt] = await prisma.$transaction([
+      prisma.userScenarioChoiceAttempt.upsert({
+        where: {
+          attemptId_challengeId_attemptNumber: {
+            attemptId: attempt.id,
+            challengeId: input.challengeId,
+            attemptNumber: input.attemptNumber,
+          },
+        },
+
+        create: {
           attemptId: attempt.id,
           challengeId: input.challengeId,
+          choiceId: input.choiceId,
           attemptNumber: input.attemptNumber,
-        },
-      },
 
-      create: {
-        attemptId: attempt.id,
-        challengeId: input.challengeId,
-        choiceId: input.choiceId,
-        attemptNumber: input.attemptNumber,
+          /*
+           * Poprawność jest zawsze ustalana na podstawie
+           * zaufanej treści po stronie serwera.
+           */
+          isOptimal: choice.isOptimal,
+
+          confirmedAt: now,
+        },
 
         /*
-         * Poprawność jest zawsze ustalana na podstawie
-         * zaufanej treści po stronie serwera.
+         * Powtórne dostarczenie tego samego numeru
+         * próby nie może nadpisać decyzji.
          */
-        isOptimal: choice.isOptimal,
+        update: {},
 
-        confirmedAt: now,
-      },
+        select: {
+          isOptimal: true,
+        },
+      }),
 
-      /*
-       * Powtórne dostarczenie tego samego numeru
-       * próby nie może nadpisać decyzji.
-       */
-      update: {},
+      prisma.userScenarioAttempt.update({
+        where: {
+          id: attempt.id,
+        },
 
-      select: {
-        isOptimal: true,
-      },
-    }),
+        data: {
+          locale: input.locale,
+          lastOpenedAt: now,
+        },
+      }),
+    ]);
 
-    prisma.userScenarioAttempt.update({
-      where: {
-        id: attempt.id,
-      },
+    return {
+      attemptId: attempt.id,
+      isOptimal: recordedChoiceAttempt.isOptimal,
+    };
+  } catch (error) {
+    /*
+     * Prisma upsert może przegrać wyścig z równoległym żądaniem
+     * na tym samym kluczu unikalnym. W takim przypadku istniejący
+     * zapis jest źródłem prawdy i nie może zostać nadpisany.
+     */
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
+      const persistedChoiceAttempt = await prisma.userScenarioChoiceAttempt.findUnique({
+        where: {
+          attemptId_challengeId_attemptNumber: {
+            attemptId: attempt.id,
+            challengeId: input.challengeId,
+            attemptNumber: input.attemptNumber,
+          },
+        },
 
-      data: {
-        locale: input.locale,
-        lastOpenedAt: now,
-      },
-    }),
-  ]);
+        select: {
+          isOptimal: true,
+        },
+      });
 
-  return {
-    attemptId: attempt.id,
-    isOptimal: recordedChoiceAttempt.isOptimal,
-  };
+      if (persistedChoiceAttempt) {
+        await prisma.userScenarioAttempt.update({
+          where: {
+            id: attempt.id,
+          },
+
+          data: {
+            locale: input.locale,
+            lastOpenedAt: new Date(),
+          },
+        });
+
+        return {
+          attemptId: attempt.id,
+          isOptimal: persistedChoiceAttempt.isOptimal,
+        };
+      }
+    }
+
+    throw error;
+  }
 }
 
 export async function completeScenarioChallengeProgress(input: CompleteScenarioChallengeInput) {
@@ -433,25 +476,21 @@ export async function completeScenarioChallengeProgress(input: CompleteScenarioC
   const now = new Date();
 
   await prisma.$transaction([
-    prisma.userScenarioChallengeCompletion.upsert({
-      where: {
-        attemptId_challengeId: {
+    /*
+     * createMany + skipDuplicates sprawia, że równoległe
+     * dostarczenie tego samego ukończenia zbiega się do jednego
+     * rekordu bez wyjątku P2002. Pierwotny completedAt pozostaje
+     * niezmieniony przy kolejnych żądaniach.
+     */
+    prisma.userScenarioChallengeCompletion.createMany({
+      data: [
+        {
           attemptId: attempt.id,
           challengeId: input.challengeId,
+          completedAt: now,
         },
-      },
-
-      create: {
-        attemptId: attempt.id,
-        challengeId: input.challengeId,
-        completedAt: now,
-      },
-
-      /*
-       * Ponowne dostarczenie żądania zachowuje
-       * pierwotny czas ukończenia.
-       */
-      update: {},
+      ],
+      skipDuplicates: true,
     }),
 
     prisma.userScenarioAttempt.update({
@@ -474,7 +513,44 @@ export async function completeScenarioChallengeProgress(input: CompleteScenarioC
 export async function completeScenarioProgress(input: ScenarioProgressIdentity) {
   const scenario = resolveValidatedScenario(input);
 
-  const attempt = await getActiveAttemptOrThrow(input);
+  const attempt = await findActiveAttempt(input);
+
+  /*
+   * Repeated delivery after a successful completion is idempotent.
+   * If there is no active attempt, return the latest completed one
+   * instead of creating or modifying scenario state.
+   */
+  if (!attempt) {
+    const completedAttempt = await prisma.userScenarioAttempt.findFirst({
+      where: {
+        userId: input.userId,
+        scenarioId: input.scenarioId,
+        scenarioVersion: input.scenarioVersion,
+        status: "completed",
+      },
+
+      orderBy: [
+        {
+          attemptNumber: "desc",
+        },
+        {
+          createdAt: "desc",
+        },
+      ],
+
+      select: {
+        id: true,
+      },
+    });
+
+    if (completedAttempt) {
+      return {
+        attemptId: completedAttempt.id,
+      };
+    }
+
+    throw new Error("Active scenario attempt not found.");
+  }
 
   const expectedChallengeIds = scenario.challenges.map((challenge) => challenge.id);
 
@@ -494,9 +570,14 @@ export async function completeScenarioProgress(input: ScenarioProgressIdentity) 
 
   const now = new Date();
 
-  await prisma.userScenarioAttempt.update({
+  /*
+   * updateMany makes concurrent completion requests converge on one
+   * state transition. Only the first request changes completedAt.
+   */
+  const completion = await prisma.userScenarioAttempt.updateMany({
     where: {
       id: attempt.id,
+      status: "incomplete",
     },
 
     data: {
@@ -506,6 +587,27 @@ export async function completeScenarioProgress(input: ScenarioProgressIdentity) 
       lastOpenedAt: now,
     },
   });
+
+  if (completion.count === 0) {
+    const completedAttempt = await prisma.userScenarioAttempt.findUnique({
+      where: {
+        id: attempt.id,
+      },
+
+      select: {
+        id: true,
+        status: true,
+      },
+    });
+
+    if (completedAttempt?.status === "completed") {
+      return {
+        attemptId: completedAttempt.id,
+      };
+    }
+
+    throw new Error("Active scenario attempt not found.");
+  }
 
   return {
     attemptId: attempt.id,

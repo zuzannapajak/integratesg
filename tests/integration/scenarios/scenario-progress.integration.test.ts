@@ -88,6 +88,12 @@ async function recordOptimalChoiceAndCompleteChallenge(
   });
 }
 
+async function completeAllScenarioChallenges() {
+  for (const challenge of scenario.challenges) {
+    await recordOptimalChoiceAndCompleteChallenge(challenge);
+  }
+}
+
 beforeAll(async () => {
   await prisma.profile.create({
     data: {
@@ -145,6 +151,30 @@ describe("scenario progress persistence", () => {
 
     expect(attempts[0]?.startedAt).toBeInstanceOf(Date);
     expect(attempts[0]?.completedAt).toBeNull();
+  });
+
+  it("converges concurrent start requests on one active attempt", async () => {
+    const results = await Promise.all(
+      Array.from({ length: 5 }, () => startScenarioProgress(progressIdentity)),
+    );
+
+    expect(new Set(results.map((result) => result.attemptId)).size).toBe(1);
+    expect(results.map((result) => result.attemptNumber)).toEqual([1, 1, 1, 1, 1]);
+
+    const attempts = await prisma.userScenarioAttempt.findMany({
+      where: {
+        userId: testUserId,
+        scenarioId: scenario.id,
+        scenarioVersion: scenario.version,
+      },
+    });
+
+    expect(attempts).toHaveLength(1);
+    expect(attempts[0]).toMatchObject({
+      id: results[0]?.attemptId,
+      attemptNumber: 1,
+      status: "incomplete",
+    });
   });
 
   it("stores server-validated choice correctness and keeps repeated delivery idempotent", async () => {
@@ -208,6 +238,45 @@ describe("scenario progress persistence", () => {
     expect(runtimeState.initialRejectedChoiceIdsByChallenge[challenge.id]).toEqual([
       rejectedChoice.id,
     ]);
+  });
+
+  it("keeps concurrent delivery of the same decision idempotent", async () => {
+    const challenge = getChallenge(0);
+    const rejectedChoice = getRejectedChoice(challenge);
+
+    const attempt = await startScenarioProgress(progressIdentity);
+
+    const results = await Promise.all(
+      Array.from({ length: 5 }, () =>
+        recordScenarioChoiceProgress({
+          ...progressIdentity,
+          challengeId: challenge.id,
+          choiceId: rejectedChoice.id,
+          attemptNumber: 1,
+        }),
+      ),
+    );
+
+    expect(results).toEqual(
+      Array.from({ length: 5 }, () => ({
+        attemptId: attempt.attemptId,
+        isOptimal: false,
+      })),
+    );
+
+    const persistedChoices = await prisma.userScenarioChoiceAttempt.findMany({
+      where: {
+        attemptId: attempt.attemptId,
+        challengeId: challenge.id,
+      },
+    });
+
+    expect(persistedChoices).toHaveLength(1);
+    expect(persistedChoices[0]).toMatchObject({
+      choiceId: rejectedChoice.id,
+      attemptNumber: 1,
+      isOptimal: false,
+    });
   });
 
   it("requires an optimal decision before completing a challenge and stores completion once", async () => {
@@ -274,6 +343,44 @@ describe("scenario progress persistence", () => {
     expect(runtimeState.initialChallengeId).toBe(getChallenge(1).id);
   });
 
+  it("keeps concurrent challenge completion delivery idempotent", async () => {
+    const challenge = getChallenge(0);
+    const optimalChoice = getOptimalChoice(challenge);
+
+    const attempt = await startScenarioProgress(progressIdentity);
+
+    await recordScenarioChoiceProgress({
+      ...progressIdentity,
+      challengeId: challenge.id,
+      choiceId: optimalChoice.id,
+      attemptNumber: 1,
+    });
+
+    const results = await Promise.all(
+      Array.from({ length: 5 }, () =>
+        completeScenarioChallengeProgress({
+          ...progressIdentity,
+          challengeId: challenge.id,
+        }),
+      ),
+    );
+
+    expect(results).toEqual(
+      Array.from({ length: 5 }, () => ({
+        attemptId: attempt.attemptId,
+      })),
+    );
+
+    const completions = await prisma.userScenarioChallengeCompletion.findMany({
+      where: {
+        attemptId: attempt.attemptId,
+        challengeId: challenge.id,
+      },
+    });
+
+    expect(completions).toHaveLength(1);
+  });
+
   it("does not complete a scenario until every challenge is persisted as completed", async () => {
     await startScenarioProgress(progressIdentity);
 
@@ -293,6 +400,89 @@ describe("scenario progress persistence", () => {
 
     expect(persistedAttempt.status).toBe("incomplete");
     expect(persistedAttempt.completedAt).toBeNull();
+  });
+
+  it("keeps repeated scenario completion idempotent and preserves the original completion timestamp", async () => {
+    const attempt = await startScenarioProgress(progressIdentity);
+
+    await completeAllScenarioChallenges();
+
+    const firstCompletion = await completeScenarioProgress(progressIdentity);
+
+    const persistedAfterFirstCompletion = await prisma.userScenarioAttempt.findUniqueOrThrow({
+      where: {
+        id: attempt.attemptId,
+      },
+    });
+
+    expect(firstCompletion).toEqual({
+      attemptId: attempt.attemptId,
+    });
+
+    expect(persistedAfterFirstCompletion.status).toBe("completed");
+    expect(persistedAfterFirstCompletion.completedAt).toBeInstanceOf(Date);
+
+    await new Promise((resolve) => {
+      setTimeout(resolve, 25);
+    });
+
+    const repeatedCompletion = await completeScenarioProgress(progressIdentity);
+
+    const persistedAfterRepeatedCompletion = await prisma.userScenarioAttempt.findUniqueOrThrow({
+      where: {
+        id: attempt.attemptId,
+      },
+    });
+
+    expect(repeatedCompletion).toEqual(firstCompletion);
+
+    expect(persistedAfterRepeatedCompletion.completedAt?.getTime()).toBe(
+      persistedAfterFirstCompletion.completedAt?.getTime(),
+    );
+
+    const attempts = await prisma.userScenarioAttempt.findMany({
+      where: {
+        userId: testUserId,
+        scenarioId: scenario.id,
+        scenarioVersion: scenario.version,
+      },
+    });
+
+    expect(attempts).toHaveLength(1);
+  });
+
+  it("converges concurrent scenario completion requests on one completed attempt", async () => {
+    const attempt = await startScenarioProgress(progressIdentity);
+
+    await completeAllScenarioChallenges();
+
+    const results = await Promise.all(
+      Array.from({ length: 5 }, () => completeScenarioProgress(progressIdentity)),
+    );
+
+    expect(results).toEqual(
+      Array.from({ length: 5 }, () => ({
+        attemptId: attempt.attemptId,
+      })),
+    );
+
+    const attempts = await prisma.userScenarioAttempt.findMany({
+      where: {
+        userId: testUserId,
+        scenarioId: scenario.id,
+        scenarioVersion: scenario.version,
+      },
+    });
+
+    expect(attempts).toHaveLength(1);
+
+    expect(attempts[0]).toMatchObject({
+      id: attempt.attemptId,
+      attemptNumber: 1,
+      status: "completed",
+    });
+
+    expect(attempts[0]?.completedAt).toBeInstanceOf(Date);
   });
 
   it("persists the full flow, restores review state and starts the next attempt with number two", async () => {

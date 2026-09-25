@@ -20,7 +20,7 @@
     "test:e2e:smoke": "playwright test --project=chromium-desktop --project=chromium-mobile",
     "test:e2e:eportfolio": "playwright test --project=eportfolio-chromium --project=eportfolio-mobile --workers=1",
     "test:e2e:curriculum": "playwright test --project=curriculum-chromium --project=curriculum-mobile --workers=1",
-    "test:e2e:scenarios": "playwright test --project=scenario-chromium --workers=1",
+    "test:e2e:scenarios": "playwright test --project=scenario-chromium --project=scenario-mobile --workers=1",
     "test:e2e:ui": "playwright test --ui --workers=1",
     "test:e2e:headed": "playwright test --headed --workers=1",
     "prepare": "husky",

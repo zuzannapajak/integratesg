@@ -50,6 +50,7 @@ if (!process.env.PLAYWRIGHT_BASE_URL && e2eDatabaseUrl) {
 
 const authTestPattern = "**/auth/**/*.spec.ts";
 const scenarioTestPattern = "**/scenarios/**/*.spec.ts";
+const scenarioCompletionTestPattern = "**/scenarios/scenario-completion.spec.ts";
 const eportfolioTestPattern = "**/eportfolio/**/*.spec.ts";
 const curriculumTestPattern = "**/curriculum/**/*.spec.ts";
 
@@ -139,7 +140,7 @@ export default defineConfig({
 
     /*
      * Testy scenariusza zapisują postęp w bazie.
-     * Są uruchamiane osobno i jednym workerem.
+     * Desktopowy projekt obejmuje pełny zestaw testów scenariuszy.
      */
     {
       name: "scenario-chromium",
@@ -148,6 +149,20 @@ export default defineConfig({
 
       use: {
         ...devices["Desktop Chrome"],
+      },
+    },
+
+    /*
+     * Mobilny projekt uruchamia pełny stateful completion flow.
+     * Pozostałe testy responsywności i performance nie są dublowane.
+     */
+    {
+      name: "scenario-mobile",
+
+      testMatch: scenarioCompletionTestPattern,
+
+      use: {
+        ...devices["Pixel 7"],
       },
     },
 

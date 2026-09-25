@@ -66,12 +66,19 @@ async function continueToDecision(page: Page): Promise<void> {
 }
 
 async function openChallenge(page: Page, challengeId: string): Promise<void> {
-  const hotspot = page.getByTestId(`scenario-board-hotspot-${challengeId}`);
+  /*
+   * ScenarioBoard renders more than one card with the same test id:
+   * the desktop preview card and the mobile interaction card.
+   * Select the card that is actually visible in the current layout.
+   */
+  const challengeCard = page
+    .locator(`[data-testid="scenario-board-card-${challengeId}"]:visible`)
+    .first();
 
-  await expect(hotspot).toBeVisible();
-  await expect(hotspot).toBeEnabled();
+  await expect(challengeCard).toBeVisible();
+  await expect(challengeCard).toBeEnabled();
 
-  await hotspot.click();
+  await challengeCard.click();
 
   await expect(page.getByTestId("scenario-player")).toHaveAttribute("data-view", "challenge");
 
