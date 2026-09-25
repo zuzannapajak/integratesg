@@ -1,10 +1,120 @@
 "use client";
 
 import { AlertTriangle, LoaderCircle } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useMessages } from "next-intl";
+
+type RouteStateCopy = {
+  loading: {
+    title: string;
+    description: string;
+  };
+  error: {
+    title: string;
+    description: string;
+    retry: string;
+  };
+};
+
+const fallbackMessages: Record<string, RouteStateCopy> = {
+  en: {
+    loading: {
+      title: "Loading curriculum",
+      description: "Preparing your learning modules and progress.",
+    },
+    error: {
+      title: "The curriculum could not be loaded",
+      description: "Something went wrong while preparing this view. Please try again.",
+      retry: "Try again",
+    },
+  },
+  pl: {
+    loading: {
+      title: "Ładowanie programu",
+      description: "Przygotowujemy moduły edukacyjne i Twój postęp.",
+    },
+    error: {
+      title: "Nie udało się załadować programu",
+      description: "Wystąpił błąd podczas przygotowywania widoku. Spróbuj ponownie.",
+      retry: "Spróbuj ponownie",
+    },
+  },
+  de: {
+    loading: {
+      title: "Curriculum wird geladen",
+      description: "Lernmodule und Lernfortschritt werden vorbereitet.",
+    },
+    error: {
+      title: "Das Curriculum konnte nicht geladen werden",
+      description:
+        "Beim Vorbereiten dieser Ansicht ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+      retry: "Erneut versuchen",
+    },
+  },
+  it: {
+    loading: {
+      title: "Caricamento del curriculum",
+      description: "Stiamo preparando i moduli didattici e i tuoi progressi.",
+    },
+    error: {
+      title: "Impossibile caricare il curriculum",
+      description: "Si è verificato un errore durante la preparazione della vista. Riprova.",
+      retry: "Riprova",
+    },
+  },
+  el: {
+    loading: {
+      title: "Φόρτωση προγράμματος μάθησης",
+      description: "Προετοιμάζουμε τις εκπαιδευτικές ενότητες και την πρόοδό σας.",
+    },
+    error: {
+      title: "Δεν ήταν δυνατή η φόρτωση του προγράμματος",
+      description: "Παρουσιάστηκε σφάλμα κατά την προετοιμασία αυτής της προβολής. Δοκιμάστε ξανά.",
+      retry: "Δοκιμάστε ξανά",
+    },
+  },
+  bg: {
+    loading: {
+      title: "Зареждане на учебната програма",
+      description: "Подготвяме учебните модули и напредъка ви.",
+    },
+    error: {
+      title: "Учебната програма не можа да се зареди",
+      description: "Възникна грешка при подготовката на този изглед. Опитайте отново.",
+      retry: "Опитайте отново",
+    },
+  },
+};
+
+type ScopedMessages = {
+  Protected?: {
+    CurriculumRouteState?: Partial<{
+      loading: Partial<RouteStateCopy["loading"]>;
+      error: Partial<RouteStateCopy["error"]>;
+    }>;
+  };
+};
+
+function useCurriculumRouteStateMessages(): RouteStateCopy {
+  const locale = useLocale();
+  const messages = useMessages() as ScopedMessages;
+
+  const fallback = fallbackMessages[locale] ?? fallbackMessages.en;
+  const configured = messages.Protected?.CurriculumRouteState;
+
+  return {
+    loading: {
+      ...fallback.loading,
+      ...(configured?.loading ?? {}),
+    },
+    error: {
+      ...fallback.error,
+      ...(configured?.error ?? {}),
+    },
+  };
+}
 
 export function CurriculumLoadingState() {
-  const t = useTranslations("Protected.CurriculumRouteState");
+  const copy = useCurriculumRouteStateMessages();
 
   return (
     <main className="relative min-h-screen bg-[#f5f5f3] pb-20">
@@ -23,9 +133,10 @@ export function CurriculumLoadingState() {
 
             <div>
               <h1 className="text-xl font-bold tracking-tight text-[#31425a]">
-                {t("loading.title")}
+                {copy.loading.title}
               </h1>
-              <p className="mt-2 text-sm leading-6 text-[#667180]">{t("loading.description")}</p>
+
+              <p className="mt-2 text-sm leading-6 text-[#667180]">{copy.loading.description}</p>
             </div>
           </div>
 
@@ -44,7 +155,7 @@ export function CurriculumLoadingState() {
 }
 
 export function CurriculumErrorState({ onRetry }: { onRetry: () => void }) {
-  const t = useTranslations("Protected.CurriculumRouteState");
+  const copy = useCurriculumRouteStateMessages();
 
   return (
     <main className="relative min-h-screen bg-[#f5f5f3] pb-20">
@@ -62,16 +173,17 @@ export function CurriculumErrorState({ onRetry }: { onRetry: () => void }) {
 
             <div className="min-w-0 flex-1">
               <h1 className="text-xl font-bold tracking-tight text-[#31425a]">
-                {t("error.title")}
+                {copy.error.title}
               </h1>
-              <p className="mt-2 text-sm leading-6 text-[#667180]">{t("error.description")}</p>
+
+              <p className="mt-2 text-sm leading-6 text-[#667180]">{copy.error.description}</p>
 
               <button
                 type="button"
                 onClick={onRetry}
                 className="mt-6 inline-flex items-center justify-center rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#253347]"
               >
-                {t("error.retry")}
+                {copy.error.retry}
               </button>
             </div>
           </div>

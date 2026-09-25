@@ -50,7 +50,8 @@ if (!process.env.PLAYWRIGHT_BASE_URL && e2eDatabaseUrl) {
 
 const scenarioTestPattern = "**/scenarios/**/*.spec.ts";
 const eportfolioTestPattern = "**/eportfolio/**/*.spec.ts";
-const statefulTestPatterns = [scenarioTestPattern, eportfolioTestPattern];
+const curriculumTestPattern = "**/curriculum/**/*.spec.ts";
+const statefulTestPatterns = [scenarioTestPattern, eportfolioTestPattern, curriculumTestPattern];
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -141,6 +142,30 @@ export default defineConfig({
 
       use: {
         ...devices["Desktop Chrome"],
+      },
+    },
+
+    /*
+     * Curriculum zapisuje postęp w tej samej dedykowanej bazie E2E.
+     * Osobne projekty wykonują ten sam stateful flow na desktopie i mobile.
+     */
+    {
+      name: "curriculum-chromium",
+
+      testMatch: curriculumTestPattern,
+
+      use: {
+        ...devices["Desktop Chrome"],
+      },
+    },
+
+    {
+      name: "curriculum-mobile",
+
+      testMatch: curriculumTestPattern,
+
+      use: {
+        ...devices["Pixel 7"],
       },
     },
   ],

@@ -2,6 +2,26 @@ import { describe, expect, it } from "vitest";
 
 import { prisma } from "@/lib/prisma";
 
+const SEEDED_CURRICULUM_SLUGS = [
+  "module-1-introduction-to-esg-and-sustainable-development",
+  "module-2-strategy-vision-and-organisational-alignment",
+  "module-3-navigating-esg-frameworks-and-eu-reporting-standards",
+  "module-4-integrating-esg-into-business-operations",
+  "module-5-implementation-data-and-cross-functional-practice",
+  "module-6-monitoring-reporting-and-future-trends-of-esg",
+] as const;
+
+const SEEDED_EPORTFOLIO_SLUGS = [
+  "barilla",
+  "davines",
+  "pzu",
+  "pkn-orlen",
+  "sofiyska-voda",
+  "harmonica",
+  "sonnentor",
+  "verbund",
+] as const;
+
 function expectStrictlyAscending(values: readonly number[], label: string) {
   for (let index = 1; index < values.length; index += 1) {
     expect(values[index], label).toBeGreaterThan(values[index - 1]);
@@ -12,6 +32,9 @@ describe("seeded data contracts", () => {
   it("seeds complete published curriculum relations and content", async () => {
     const courses = await prisma.course.findMany({
       where: {
+        slug: {
+          in: [...SEEDED_CURRICULUM_SLUGS],
+        },
         status: "published",
       },
       orderBy: {
@@ -49,7 +72,10 @@ describe("seeded data contracts", () => {
       },
     });
 
-    expect(courses.length).toBeGreaterThan(0);
+    expect(courses).toHaveLength(SEEDED_CURRICULUM_SLUGS.length);
+
+    expect(new Set(courses.map((course) => course.slug))).toEqual(new Set(SEEDED_CURRICULUM_SLUGS));
+
     expectStrictlyAscending(
       courses.map((course) => course.sortOrder),
       "published course sortOrder",
@@ -67,6 +93,7 @@ describe("seeded data contracts", () => {
       expect(englishCourse.title.trim().length, `${course.slug} English title`).toBeGreaterThan(0);
       expect(course.sections.length, `${course.slug} sections`).toBeGreaterThan(0);
       expect(course.lessonsCount, `${course.slug} lessonsCount`).toBe(course.sections.length);
+
       expectStrictlyAscending(
         course.sections.map((section) => section.sortOrder),
         `${course.slug} section sortOrder`,
@@ -85,6 +112,7 @@ describe("seeded data contracts", () => {
           englishSection.title.trim().length,
           `${course.slug}/${section.slug} English title`,
         ).toBeGreaterThan(0);
+
         expect(
           englishSection.content.trim().length,
           `${course.slug}/${section.slug} English content`,
@@ -103,7 +131,9 @@ describe("seeded data contracts", () => {
           expect(question.prompt.trim().length, `${course.slug} question prompt`).toBeGreaterThan(
             0,
           );
+
           expect(question.answers.length, `${course.slug} question answers`).toBeGreaterThan(1);
+
           expect(
             question.answers.filter((answer) => answer.isCorrect),
             `${course.slug} correct answer count`,
@@ -116,6 +146,9 @@ describe("seeded data contracts", () => {
   it("seeds complete published ePortfolio metadata and English content", async () => {
     const caseStudies = await prisma.caseStudy.findMany({
       where: {
+        slug: {
+          in: [...SEEDED_EPORTFOLIO_SLUGS],
+        },
         status: "published",
       },
       orderBy: {
@@ -126,7 +159,12 @@ describe("seeded data contracts", () => {
       },
     });
 
-    expect(caseStudies.length).toBeGreaterThan(0);
+    expect(caseStudies).toHaveLength(SEEDED_EPORTFOLIO_SLUGS.length);
+
+    expect(new Set(caseStudies.map((caseStudy) => caseStudy.slug))).toEqual(
+      new Set(SEEDED_EPORTFOLIO_SLUGS),
+    );
+
     expectStrictlyAscending(
       caseStudies.map((caseStudy) => caseStudy.sortOrder),
       "published case-study sortOrder",
@@ -147,10 +185,12 @@ describe("seeded data contracts", () => {
       expect(english.title.trim().length, `${caseStudy.slug} title`).toBeGreaterThan(0);
       expect(english.summary?.trim().length ?? 0, `${caseStudy.slug} summary`).toBeGreaterThan(0);
       expect(english.content.trim().length, `${caseStudy.slug} content`).toBeGreaterThan(0);
+
       expect(
         english.organization?.trim().length ?? 0,
         `${caseStudy.slug} organization`,
       ).toBeGreaterThan(0);
+
       expect(english.industry?.trim().length ?? 0, `${caseStudy.slug} industry`).toBeGreaterThan(0);
       expect(Array.isArray(english.keyTakeaways), `${caseStudy.slug} keyTakeaways`).toBe(true);
 
