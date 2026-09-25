@@ -5,7 +5,7 @@ loadEnv({
   path: ".env.test",
   // W CI wartości z GitHub Secrets mają pierwszeństwo przed lokalnym .env.test.
   override: !process.env.CI,
-  quiet: true, 
+  quiet: true,
 });
 
 function requireEnvironmentVariable(name: string): string {
