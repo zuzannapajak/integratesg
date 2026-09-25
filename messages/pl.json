@@ -91,6 +91,42 @@
     "EportfolioPage": {
       "title": "ePortfolio",
       "subtitle": "Studia przypadków o praktycznym charakterze osadzone w realnym kontekście."
+    },
+    "CurriculumSwitcher": {
+      "segments": {
+        "my": "Moje moduły",
+        "all": "Wszystkie moduły"
+      },
+      "searchPlaceholder": "Szukaj modułów...",
+      "empty": {
+        "my": {
+          "title": "Nie rozpoczęto jeszcze żadnych modułów",
+          "description": "Twoja aktywność w curriculum pojawi się tutaj, gdy zaczniesz pracę z modułami."
+        },
+        "all": {
+          "title": "Brak dostępnych modułów",
+          "description": "W tym widoku nie ma obecnie żadnych opublikowanych modułów curriculum."
+        },
+        "filtered": "Żaden moduł nie pasuje do aktualnego wyszukiwania."
+      }
+    },
+    "ScenarioSwitcher": {
+      "segments": {
+        "my": "Moje scenariusze",
+        "all": "Wszystkie scenariusze"
+      },
+      "searchPlaceholder": "Szukaj scenariuszy...",
+      "empty": {
+        "my": {
+          "title": "Nie rozpoczęto jeszcze żadnych scenariuszy",
+          "description": "Twoja aktywność w scenariuszach pojawi się tutaj, gdy zaczniesz z nimi pracować."
+        },
+        "all": {
+          "title": "Brak dostępnych scenariuszy",
+          "description": "W tym widoku nie ma obecnie żadnych opublikowanych scenariuszy."
+        },
+        "filtered": "Żaden scenariusz nie pasuje do aktualnego wyszukiwania."
+      }
     }
   },
   "Layout": {

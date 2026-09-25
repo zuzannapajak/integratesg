@@ -30,11 +30,11 @@
       "fallbacks": {
         "summary": "Il riepilogo non è stato ancora aggiunto.",
         "content": "Il contenuto di questo caso di studio non è stato ancora aggiunto."
-      },
-      "CaseStudyListShell": {
-        "fallbacks": {
-          "summary": "Il riepilogo non è stato ancora aggiunto."
-        }
+      }
+    },
+    "CaseStudyListShell": {
+      "fallbacks": {
+        "summary": "Il riepilogo non è stato ancora aggiunto."
       }
     }
   }
