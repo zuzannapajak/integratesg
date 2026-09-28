@@ -10,6 +10,7 @@ const authMocks = vi.hoisted(() => ({
 
 const cacheMocks = vi.hoisted(() => ({
   revalidatePath: vi.fn(),
+  revalidateTag: vi.fn(),
 }));
 
 vi.mock("@/lib/auth/require-authenticated-user-id", () => ({
@@ -18,6 +19,7 @@ vi.mock("@/lib/auth/require-authenticated-user-id", () => ({
 
 vi.mock("next/cache", () => ({
   revalidatePath: cacheMocks.revalidatePath,
+  revalidateTag: cacheMocks.revalidateTag,
 }));
 
 import {
@@ -86,6 +88,7 @@ async function createCaseStudy(params: { label: string; status?: "draft" | "publ
 beforeEach(() => {
   authMocks.requireAuthenticatedUserId.mockReset();
   cacheMocks.revalidatePath.mockReset();
+  cacheMocks.revalidateTag.mockReset();
 });
 
 afterEach(async () => {
@@ -182,6 +185,7 @@ describe("ePortfolio progress actions", () => {
     expect(cacheMocks.revalidatePath).toHaveBeenCalledWith("/en/eportfolio");
 
     expect(cacheMocks.revalidatePath).toHaveBeenCalledWith(`/en/eportfolio/${caseStudy.slug}`);
+    expect(cacheMocks.revalidateTag).toHaveBeenCalledWith("admin-stats", { expire: 0 });
   });
 
   it("rejects invalid slug and locale input before creating progress", async () => {

@@ -128,8 +128,8 @@
       "eportfolioActivity": {
         "title": "Attività ePortfolio",
         "subtitle": "Visualizza il coinvolgimento nei casi studio, i completamenti e la partecipazione all’esperienza portfolio.",
-        "valueLabel": "Eventi ePortfolio",
-        "events": "Eventi",
+        "valueLabel": "Record di avanzamento attivi",
+        "events": "Progressi attivi",
         "completionRate": "Tasso di completamento",
         "published": "Pubblicato",
         "activeUsers": "Utenti attivi"
@@ -279,7 +279,7 @@
         "headers": {
           "learner": "Studente",
           "caseStudy": "Caso studio",
-          "language": "Lingua",
+          "language": "Lingua utente",
           "status": "Stato",
           "started": "Iniziato",
           "lastOpened": "Ultima apertura",
@@ -287,7 +287,8 @@
         },
         "status": {
           "completed": "Completato",
-          "inProgress": "In corso"
+          "inProgress": "In corso",
+          "notStarted": "Non iniziato"
         }
       }
     },

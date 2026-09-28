@@ -128,8 +128,8 @@
       "eportfolioActivity": {
         "title": "Δραστηριότητα ePortfolio",
         "subtitle": "Προβολή συμμετοχής σε μελέτες περίπτωσης, ολοκληρώσεων και εμπλοκής στην εμπειρία portfolio.",
-        "valueLabel": "Γεγονότα ePortfolio",
-        "events": "Γεγονότα",
+        "valueLabel": "Ενεργές εγγραφές προόδου",
+        "events": "Ενεργή πρόοδος",
         "completionRate": "Ποσοστό ολοκλήρωσης",
         "published": "Δημοσιευμένο",
         "activeUsers": "Ενεργοί χρήστες"
@@ -279,7 +279,7 @@
         "headers": {
           "learner": "Εκπαιδευόμενος",
           "caseStudy": "Μελέτη περίπτωσης",
-          "language": "Γλώσσα",
+          "language": "Γλώσσα χρήστη",
           "status": "Κατάσταση",
           "started": "Ξεκίνησε",
           "lastOpened": "Τελευταίο άνοιγμα",
@@ -287,7 +287,8 @@
         },
         "status": {
           "completed": "Ολοκληρώθηκε",
-          "inProgress": "Σε εξέλιξη"
+          "inProgress": "Σε εξέλιξη",
+          "notStarted": "Δεν ξεκίνησε"
         }
       }
     },

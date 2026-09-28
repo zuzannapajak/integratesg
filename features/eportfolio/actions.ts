@@ -1,8 +1,9 @@
 "use server";
 
+import { ADMIN_STATS_CACHE_TAG } from "@/lib/admin/cache";
 import { requireAuthenticatedUserId } from "@/lib/auth/require-authenticated-user-id";
 import { completeEportfolioProgress, touchEportfolioProgress } from "@/lib/eportfolio/progress";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 type CaseStudyActionInput = {
   slug: string;
@@ -33,6 +34,10 @@ function revalidateEportfolioPaths(locale: string, slug: string) {
   revalidatePath(`/${locale}/eportfolio/${slug}`);
 }
 
+function revalidateAdminStats() {
+  revalidateTag(ADMIN_STATS_CACHE_TAG, { expire: 0 });
+}
+
 function serializeProgress(progress: {
   status: "not_started" | "in_progress" | "completed";
   startedAt: Date | null;
@@ -59,6 +64,7 @@ export async function touchCaseStudyProgressAction(input: CaseStudyActionInput) 
   });
 
   revalidateEportfolioPaths(input.locale, input.slug);
+  revalidateAdminStats();
 
   return serializeProgress(progress);
 }
@@ -75,6 +81,7 @@ export async function completeCaseStudyAction(input: CaseStudyActionInput) {
   });
 
   revalidateEportfolioPaths(input.locale, input.slug);
+  revalidateAdminStats();
 
   return serializeProgress(progress);
 }
@@ -107,6 +114,8 @@ export async function markCaseStudyCompletedAction(
   if (resolvedLocale) {
     revalidateEportfolioPaths(resolvedLocale, slug);
   }
+
+  revalidateAdminStats();
 
   return serializeProgress(progress);
 }

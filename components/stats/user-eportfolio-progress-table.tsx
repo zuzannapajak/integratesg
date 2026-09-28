@@ -8,8 +8,11 @@ type Props = {
   rows: DashboardEportfolioProgressRow[];
 };
 
-function getStatusMeta(isCompleted: boolean, t: ReturnType<typeof useTranslations>) {
-  if (isCompleted) {
+function getStatusMeta(
+  status: DashboardEportfolioProgressRow["status"],
+  t: ReturnType<typeof useTranslations>,
+) {
+  if (status === "completed") {
     return {
       label: t("tableEportfolio.status.completed"),
       icon: <CheckCircle2 className="h-3.5 w-3.5" />,
@@ -17,10 +20,18 @@ function getStatusMeta(isCompleted: boolean, t: ReturnType<typeof useTranslation
     };
   }
 
+  if (status === "in_progress") {
+    return {
+      label: t("tableEportfolio.status.inProgress"),
+      icon: <CircleDashed className="h-3.5 w-3.5" />,
+      className: "border-orange-100 bg-orange-50 text-orange-700",
+    };
+  }
+
   return {
-    label: t("tableEportfolio.status.inProgress"),
+    label: t("tableEportfolio.status.notStarted"),
     icon: <CircleDashed className="h-3.5 w-3.5" />,
-    className: "border-orange-100 bg-orange-50 text-orange-700",
+    className: "border-slate-200 bg-slate-50 text-slate-600",
   };
 }
 
@@ -67,7 +78,7 @@ export default function UserEportfolioProgressTable({ rows }: Props) {
 
           <tbody>
             {rows.map((row) => {
-              const statusMeta = getStatusMeta(row.isCompleted, t);
+              const statusMeta = getStatusMeta(row.status, t);
 
               return (
                 <tr key={row.id} className="align-top">

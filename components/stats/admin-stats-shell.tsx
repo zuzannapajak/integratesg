@@ -1361,7 +1361,7 @@ export default function AdminStatsShell({ locale, stats, pilotStats, feedbackSta
                       },
                       {
                         label: t("learningQuality.active7d"),
-                        value: String(stats.activity.activeUsersLast7Days),
+                        value: String(stats.activity.eportfolioStats7d.activeUsers),
                       },
                     ]}
                   />

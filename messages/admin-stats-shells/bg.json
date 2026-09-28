@@ -128,8 +128,8 @@
       "eportfolioActivity": {
         "title": "Активност в ePortfolio",
         "subtitle": "Преглед на ангажираността с казуси, завършванията и участието в portfolio преживяването.",
-        "valueLabel": "ePortfolio събития",
-        "events": "Събития",
+        "valueLabel": "Активни записи за напредък",
+        "events": "Активен напредък",
         "completionRate": "Процент завършване",
         "published": "Публикувано",
         "activeUsers": "Активни потребители"
@@ -279,7 +279,7 @@
         "headers": {
           "learner": "Обучаем",
           "caseStudy": "Казус",
-          "language": "Език",
+          "language": "Език на потребителя",
           "status": "Статус",
           "started": "Започнато",
           "lastOpened": "Последно отворено",
@@ -287,7 +287,8 @@
         },
         "status": {
           "completed": "Завършено",
-          "inProgress": "В процес"
+          "inProgress": "В процес",
+          "notStarted": "Не е започнато"
         }
       }
     },
