@@ -87,6 +87,24 @@ export default function ProtectedNavbar({ locale, role, email, forceSolid = fals
     };
   }, []);
 
+  useEffect(() => {
+    if (!isMenuOpen) {
+      return;
+    }
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [isMenuOpen]);
+
   const links = useMemo<MenuLink[]>(
     () => [
       {
