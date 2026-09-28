@@ -251,7 +251,7 @@ export type DashboardEportfolioProgressRow = {
   caseStudyTitle: string;
   caseStudySlug: string;
   language: string;
-  isCompleted: boolean;
+  status: "not_started" | "in_progress" | "completed";
   startedAtLabel: string;
   lastOpenedAtLabel: string;
   completedAtLabel: string;

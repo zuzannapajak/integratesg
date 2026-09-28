@@ -5,6 +5,7 @@ const mocks = vi.hoisted(() => ({
   touchProgress: vi.fn(),
   completeProgress: vi.fn(),
   revalidatePath: vi.fn(),
+  revalidateTag: vi.fn(),
 }));
 
 vi.mock("@/lib/auth/require-authenticated-user-id", () => ({
@@ -18,6 +19,7 @@ vi.mock("@/lib/eportfolio/progress", () => ({
 
 vi.mock("next/cache", () => ({
   revalidatePath: mocks.revalidatePath,
+  revalidateTag: mocks.revalidateTag,
 }));
 
 import {
@@ -63,6 +65,7 @@ describe("ePortfolio Server Actions security", () => {
       userId: "session-user",
       slug: "barilla",
     });
+    expect(mocks.revalidateTag).toHaveBeenCalledWith("admin-stats", { expire: 0 });
   });
 
   it("derives userId from the authenticated session when completing a case", async () => {
@@ -76,6 +79,7 @@ describe("ePortfolio Server Actions security", () => {
       userId: "session-user",
       slug: "barilla",
     });
+    expect(mocks.revalidateTag).toHaveBeenCalledWith("admin-stats", { expire: 0 });
   });
 
   it("keeps the legacy completion action session-bound", async () => {
@@ -88,6 +92,7 @@ describe("ePortfolio Server Actions security", () => {
       userId: "session-user",
       slug: "barilla",
     });
+    expect(mocks.revalidateTag).toHaveBeenCalledWith("admin-stats", { expire: 0 });
   });
 
   it("does not mutate progress when authentication fails", async () => {

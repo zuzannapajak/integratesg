@@ -1,3 +1,9 @@
+import { ADMIN_STATS_CACHE_TAG } from "@/lib/admin/cache";
+import {
+  buildEportfolioWindowStats,
+  createEportfolioWindowAggregate,
+  updateEportfolioWindowAggregate,
+} from "@/lib/admin/eportfolio-activity";
 import { getNativeScenarioAdminData } from "@/lib/admin/native-scenario-stats";
 import type {
   AdminCourseStat,
@@ -201,13 +207,6 @@ type CurriculumWindowAggregate = {
   dayBuckets: Map<number, number>;
 };
 
-type EportfolioWindowAggregate = {
-  total: number;
-  completed: number;
-  hourBuckets: Map<number, number>;
-  dayBuckets: Map<number, number>;
-};
-
 function createScenarioWindowAggregate(): ScenarioWindowAggregate {
   return {
     total: 0,
@@ -232,15 +231,6 @@ function createCurriculumWindowAggregate(): CurriculumWindowAggregate {
     postQuizScoreSum: 0,
     postQuizScoreCount: 0,
     activeUsers: new Set<string>(),
-    hourBuckets: new Map<number, number>(),
-    dayBuckets: new Map<number, number>(),
-  };
-}
-
-function createEportfolioWindowAggregate(): EportfolioWindowAggregate {
-  return {
-    total: 0,
-    completed: 0,
     hourBuckets: new Map<number, number>(),
     dayBuckets: new Map<number, number>(),
   };
@@ -336,26 +326,6 @@ function updateCurriculumWindowAggregate(
   addDateToBucketMap(bucketMap, attempt.completedAt, bucketMode, since);
 }
 
-function updateEportfolioWindowAggregate(
-  aggregate: EportfolioWindowAggregate,
-  record: {
-    completedAt: Date | null;
-  },
-  since: Date,
-  bucketMode: "day" | "hour",
-) {
-  if (record.completedAt === null || record.completedAt < since) {
-    return;
-  }
-
-  aggregate.total += 1;
-  aggregate.completed += 1;
-
-  const bucketMap = bucketMode === "hour" ? aggregate.hourBuckets : aggregate.dayBuckets;
-
-  addDateToBucketMap(bucketMap, record.completedAt, bucketMode, since);
-}
-
 function buildScenarioWindowStats(aggregate: ScenarioWindowAggregate) {
   const completedLikeTotal = aggregate.passed + aggregate.completed;
 
@@ -384,19 +354,6 @@ function buildCurriculumWindowStats(aggregate: CurriculumWindowAggregate) {
     ),
 
     inProgress: aggregate.inProgress,
-  };
-}
-
-function buildEportfolioWindowStats(params: {
-  aggregate: EportfolioWindowAggregate;
-  published: number;
-  activeUsers: number;
-}) {
-  return {
-    completionRate: toPercent(params.aggregate.completed, params.aggregate.total),
-
-    published: params.published,
-    activeUsers: params.activeUsers,
   };
 }
 
@@ -704,20 +661,18 @@ async function getBasicAdminStatsUncached(
 
         prisma.userCaseStudyProgress.count({
           where: {
-            completedAt: {
-              not: null,
-            },
+            status: "completed",
           },
         }),
 
         prisma.userCaseStudyProgress.findMany({
-          where: {
-            completedAt: {
-              gte: last30dStart,
-            },
-          },
+          where: recentActivityWhere,
 
           select: {
+            userId: true,
+            status: true,
+            startedAt: true,
+            lastOpenedAt: true,
             completedAt: true,
           },
         }),
@@ -788,6 +743,7 @@ async function getBasicAdminStatsUncached(
 
               select: {
                 id: true,
+                status: true,
                 startedAt: true,
                 lastOpenedAt: true,
                 completedAt: true,
@@ -1007,16 +963,19 @@ async function getBasicAdminStatsUncached(
       const activeUsersLast24h = new Set([
         ...scenarioWindow24h.activeUsers,
         ...curriculumWindow24h.activeUsers,
+        ...eportfolioWindow24h.activeUsers,
       ]).size;
 
       const activeUsersLast7Days = new Set([
         ...scenarioWindow7d.activeUsers,
         ...curriculumWindow7d.activeUsers,
+        ...eportfolioWindow7d.activeUsers,
       ]).size;
 
       const activeUsersLast30Days = new Set([
         ...scenarioWindow30d.activeUsers,
         ...curriculumWindow30d.activeUsers,
+        ...eportfolioWindow30d.activeUsers,
       ]).size;
 
       const scenarioStats24h = buildScenarioWindowStats(scenarioWindow24h);
@@ -1034,19 +993,16 @@ async function getBasicAdminStatsUncached(
       const eportfolioStats24h = buildEportfolioWindowStats({
         aggregate: eportfolioWindow24h,
         published: publishedCaseStudies,
-        activeUsers: activeUsersLast24h,
       });
 
       const eportfolioStats7d = buildEportfolioWindowStats({
         aggregate: eportfolioWindow7d,
         published: publishedCaseStudies,
-        activeUsers: activeUsersLast7Days,
       });
 
       const eportfolioStats30d = buildEportfolioWindowStats({
         aggregate: eportfolioWindow30d,
         published: publishedCaseStudies,
-        activeUsers: activeUsersLast30Days,
       });
 
       const languageBreakdown: AdminLanguageStat[] = includeBreakdowns
@@ -1326,7 +1282,7 @@ async function getBasicAdminStatsUncached(
 
             language: progress.user.preferredLanguage.toUpperCase(),
 
-            isCompleted: progress.completedAt !== null,
+            status: progress.status,
 
             startedAtLabel: formatDateTimeLabel(progress.startedAt, locale),
 
@@ -1551,6 +1507,7 @@ const getBasicAdminStatsCached = unstable_cache(
 
   {
     revalidate: 60,
+    tags: [ADMIN_STATS_CACHE_TAG],
   },
 );
 
