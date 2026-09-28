@@ -30,11 +30,11 @@
       "fallbacks": {
         "summary": "Резюмето все още не е добавено.",
         "content": "Съдържанието на този казус все още не е добавено."
-      },
-      "CaseStudyListShell": {
-        "fallbacks": {
-          "summary": "Резюмето все още не е добавено."
-        }
+      }
+    },
+    "CaseStudyListShell": {
+      "fallbacks": {
+        "summary": "Резюмето все още не е добавено."
       }
     }
   }

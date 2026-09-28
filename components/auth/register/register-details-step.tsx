@@ -210,6 +210,8 @@ export default function RegisterDetailsStep({
                     placeholder={t("emailPlaceholder")}
                     className="min-h-[3.15rem] w-full rounded-2xl border border-[#d7dee8] bg-white px-4 text-[#31425a] outline-none transition focus:border-[#9fb4ca] focus:ring-4 focus:ring-[#dfeaf5]"
                     value={email}
+                    aria-invalid={Boolean(errorMessage)}
+                    aria-describedby={errorMessage ? "register-details-error" : undefined}
                     onChange={(event) => {
                       onEmailChange(event.target.value);
                     }}
@@ -228,6 +230,8 @@ export default function RegisterDetailsStep({
                     placeholder={t("passwordPlaceholder")}
                     className="min-h-[3.15rem] w-full rounded-2xl border border-[#d7dee8] bg-white px-4 text-[#31425a] outline-none transition focus:border-[#9fb4ca] focus:ring-4 focus:ring-[#dfeaf5]"
                     value={password}
+                    aria-invalid={Boolean(errorMessage)}
+                    aria-describedby={errorMessage ? "register-details-error" : undefined}
                     onChange={(event) => {
                       onPasswordChange(event.target.value);
                     }}
@@ -247,7 +251,12 @@ export default function RegisterDetailsStep({
                 </button>
 
                 {errorMessage ? (
-                  <div className="mt-4 rounded-2xl border border-[#ef6c23]/20 bg-[#ef6c23]/8 px-4 py-3 text-sm leading-6 text-[#8a4a25]">
+                  <div
+                    id="register-details-error"
+                    role="alert"
+                    aria-live="assertive"
+                    className="mt-4 rounded-2xl border border-[#ef6c23]/20 bg-[#ef6c23]/8 px-4 py-3 text-sm leading-6 text-[#8a4a25]"
+                  >
                     {errorMessage}
                   </div>
                 ) : null}

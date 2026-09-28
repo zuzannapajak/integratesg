@@ -30,11 +30,11 @@
       "fallbacks": {
         "summary": "Zusammenfassung wurde noch nicht hinzugefügt.",
         "content": "Der Inhalt dieser Fallstudie wurde noch nicht hinzugefügt."
-      },
-      "CaseStudyListShell": {
-        "fallbacks": {
-          "summary": "Zusammenfassung wurde noch nicht hinzugefügt."
-        }
+      }
+    },
+    "CaseStudyListShell": {
+      "fallbacks": {
+        "summary": "Zusammenfassung wurde noch nicht hinzugefügt."
       }
     }
   }
