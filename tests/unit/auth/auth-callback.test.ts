@@ -1,4 +1,4 @@
-// @vitest-environment node
+﻿// @vitest-environment node
 
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -12,6 +12,10 @@ const prismaMocks = vi.hoisted(() => ({
   findUnique: vi.fn(),
 }));
 
+const translationMocks = vi.hoisted(() => ({
+  getTranslations: vi.fn(),
+}));
+
 vi.mock("@/lib/supabase/server", () => ({
   createClient: supabaseMocks.createClient,
 }));
@@ -22,6 +26,10 @@ vi.mock("@/lib/prisma", () => ({
       findUnique: prismaMocks.findUnique,
     },
   },
+}));
+
+vi.mock("next-intl/server", () => ({
+  getTranslations: translationMocks.getTranslations,
 }));
 
 import { GET } from "@/app/[locale]/(auth)/auth/callback/route";
@@ -42,7 +50,12 @@ function expectHttpRedirect(response: Response, pathname: string) {
   expect(response.headers.get("cache-control")).toBe("no-store, max-age=0");
 }
 
-async function expectHtmlRedirect(response: Response, pathname: string) {
+async function expectHtmlRedirect(
+  response: Response,
+  pathname: string,
+  locale: string,
+  redirectingLabel: string,
+) {
   expect(response.status).toBe(200);
 
   expect(response.headers.get("location")).toBeNull();
@@ -55,6 +68,9 @@ async function expectHtmlRedirect(response: Response, pathname: string) {
 
   const targetUrl = new URL(pathname, "https://app.example");
 
+  expect(html).toContain(`<html lang="${locale}">`);
+  expect(html).toContain(`<title>${redirectingLabel}</title>`);
+  expect(html).toContain(`<p>${redirectingLabel}</p>`);
   expect(html).toContain(`<meta http-equiv="refresh" content="0;url=${targetUrl.toString()}" />`);
 
   expect(html).toContain(`window.location.replace(${JSON.stringify(targetUrl.toString())});`);
@@ -101,6 +117,27 @@ beforeEach(() => {
   supabaseMocks.exchangeCodeForSession.mockReset();
   supabaseMocks.getUser.mockReset();
   prismaMocks.findUnique.mockReset();
+  translationMocks.getTranslations.mockReset();
+  translationMocks.getTranslations.mockImplementation(
+    ({ locale }: { locale: string; namespace: string }) => {
+      const redirectingLabels: Record<string, string> = {
+        bg: "Пренасочване...",
+        de: "Weiterleitung...",
+        el: "Ανακατεύθυνση...",
+        en: "Redirecting...",
+        it: "Reindirizzamento...",
+        pl: "Przekierowanie...",
+      };
+
+      return (key: string) => {
+        if (key !== "redirecting") {
+          throw new Error(`Unexpected translation key: ${key}`);
+        }
+
+        return redirectingLabels[locale] ?? redirectingLabels.en;
+      };
+    },
+  );
 
   vi.spyOn(console, "warn").mockImplementation(() => {});
   vi.spyOn(console, "error").mockImplementation(() => {});
@@ -186,7 +223,7 @@ describe("Supabase auth callback", () => {
 
     const response = await GET(callbackRequest("/en/auth/callback?code=valid-code"));
 
-    await expectHtmlRedirect(response, "/pl/dashboard");
+    await expectHtmlRedirect(response, "/pl/dashboard", "pl", "Przekierowanie...");
   });
 
   it("redirects an existing educator to curriculum using the preferred locale", async () => {
@@ -200,7 +237,7 @@ describe("Supabase auth callback", () => {
 
     const response = await GET(callbackRequest("/en/auth/callback?code=valid-code"));
 
-    await expectHtmlRedirect(response, "/de/curriculum");
+    await expectHtmlRedirect(response, "/de/curriculum", "de", "Weiterleitung...");
   });
 
   it("honours a safe next path after successful authentication", async () => {
@@ -216,7 +253,7 @@ describe("Supabase auth callback", () => {
       callbackRequest("/en/auth/callback?code=valid-code&next=%2Fbg%2Feportfolio"),
     );
 
-    await expectHtmlRedirect(response, "/bg/eportfolio");
+    await expectHtmlRedirect(response, "/bg/eportfolio", "bg", "Пренасочване...");
   });
 
   it("rejects an external next destination and falls back to the role default", async () => {
@@ -232,7 +269,7 @@ describe("Supabase auth callback", () => {
       callbackRequest("/en/auth/callback?code=valid-code&next=https%3A%2F%2Fevil.example%2Fsteal"),
     );
 
-    await expectHtmlRedirect(response, "/pl/dashboard");
+    await expectHtmlRedirect(response, "/pl/dashboard", "pl", "Przekierowanie...");
   });
 
   it("falls back to English when the callback path contains an unsupported locale", async () => {

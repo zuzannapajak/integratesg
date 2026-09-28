@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+﻿import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { describe, expect, it, vi } from "vitest";
@@ -64,6 +64,18 @@ describe("scenario keyboard accessibility", () => {
           challenge,
           status: "available" as const,
         }))}
+        labels={{
+          title: "Choose a challenge",
+          description: "Complete the three challenges in order.",
+          currentObjective: "Current objective",
+          allCompleted: "All challenges completed",
+          openChallenge: "Open challenge",
+          mapPoint: "Challenge point",
+          completed: "Completed",
+          available: "Available",
+          inProgress: "In progress",
+          locked: "Locked",
+        }}
         onSelectChallenge={vi.fn()}
       />,
     );

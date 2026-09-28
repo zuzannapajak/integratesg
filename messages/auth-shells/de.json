@@ -9,7 +9,8 @@
     "ClientCallback": {
       "title": "Anmeldung",
       "signingYouIn": "Sie werden angemeldet...",
-      "signInFailed": "Anmeldung fehlgeschlagen. Weiterleitung zur Anmeldung..."
+      "signInFailed": "Anmeldung fehlgeschlagen. Weiterleitung zur Anmeldung...",
+      "redirecting": "Weiterleitung..."
     },
     "LoginForm": {
       "emailLabel": "E-Mail-Adresse",

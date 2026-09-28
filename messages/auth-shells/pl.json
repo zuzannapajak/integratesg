@@ -9,7 +9,8 @@
     "ClientCallback": {
       "title": "Logowanie",
       "signingYouIn": "Logowanie...",
-      "signInFailed": "Logowanie nie powiodło się. Przekierowanie do strony logowania..."
+      "signInFailed": "Logowanie nie powiodło się. Przekierowanie do strony logowania...",
+      "redirecting": "Przekierowanie..."
     },
     "LoginForm": {
       "emailLabel": "Adres e-mail",

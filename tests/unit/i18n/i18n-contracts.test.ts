@@ -174,7 +174,7 @@ describe("i18n message contracts", () => {
     expect(Object.keys(config.messages).length).toBeGreaterThan(0);
   });
 
-  it("keeps a supported request locale and loads scoped route-state messages", async () => {
+  it("keeps a supported request locale and loads scoped route-state and metadata messages", async () => {
     const config = await loadRequestConfig({
       requestLocale: Promise.resolve("pl"),
     });
@@ -185,8 +185,13 @@ describe("i18n message contracts", () => {
     const protectedMessages = config.messages.Protected as MessageObject;
     const curriculumRouteState = protectedMessages.CurriculumRouteState as MessageObject;
     const loading = curriculumRouteState.loading as MessageObject;
+    const metadata = config.messages.Metadata as MessageObject;
 
     expect(loading.title).toBe("Ładowanie programu");
+    expect(metadata.title).toBe("IntegratESG | Platforma e-learningowa");
+    expect(metadata.description).toBe(
+      "IntegratESG — platforma e-learningowa do edukacji w zakresie ESG.",
+    );
   });
 
   it("uses the default locale when the request locale is missing", async () => {

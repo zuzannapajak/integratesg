@@ -33,23 +33,11 @@ type PathwayCanvasSize = {
   readonly height: number;
 };
 
-export const DEFAULT_SCENARIO_PATHWAY_MAP_LABELS: ScenarioPathwayMapLabels = {
-  title: "Scenarios",
-  subtitle: "Explore the full learning pathway across your organisation.",
-  progress: "Progress",
-  completed: "Completed",
-  available: "Available",
-  inProgress: "In progress",
-  locked: "Locked",
-  openScenario: "Open scenario",
-  reviewScenario: "Review scenario",
-};
-
 export type ScenarioPathwayMapProps = {
   readonly backgroundImage: string;
   readonly backgroundAlt: string;
   readonly items: readonly ScenarioPathwayItem[];
-  readonly labels?: Partial<ScenarioPathwayMapLabels>;
+  readonly labels: ScenarioPathwayMapLabels;
   readonly backgroundWidth?: number;
   readonly backgroundHeight?: number;
 
@@ -81,7 +69,7 @@ export function ScenarioPathwayMap({
   backgroundImage,
   backgroundAlt,
   items,
-  labels: customLabels,
+  labels,
   backgroundWidth = 1672,
   backgroundHeight = 941,
   onOpenScenario,
@@ -91,11 +79,6 @@ export function ScenarioPathwayMap({
     width: 0,
     height: 0,
   });
-
-  const labels = {
-    ...DEFAULT_SCENARIO_PATHWAY_MAP_LABELS,
-    ...customLabels,
-  };
 
   const orderedItems = useMemo(
     () => [...items].sort((first, second) => first.order - second.order),

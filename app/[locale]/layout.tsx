@@ -1,7 +1,7 @@
 import "flag-icons/css/flag-icons.min.css";
 import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 import { routing } from "../../i18n/routing";
@@ -9,13 +9,8 @@ import { routing } from "../../i18n/routing";
 import "../globals.css";
 import "../scenario-accessibility.css";
 
-export const metadata: Metadata = {
+const sharedMetadata: Metadata = {
   applicationName: "IntegratESG",
-  title: {
-    default: "IntegratESG | E-Learning Platform",
-    template: "%s | IntegratESG",
-  },
-  description: "IntegratESG e-learning platform for ESG education.",
   manifest: "/manifest.webmanifest",
   icons: {
     icon: [
@@ -49,6 +44,32 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
   },
 };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+
+  const t = await getTranslations({
+    locale,
+    namespace: "Metadata",
+  });
+
+  return {
+    ...sharedMetadata,
+    title: {
+      default: t("title"),
+      template: "%s | IntegratESG",
+    },
+    description: t("description"),
+  };
+}
 
 export const viewport: Viewport = {
   width: "device-width",

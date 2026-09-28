@@ -9,7 +9,8 @@
     "ClientCallback": {
       "title": "Accesso",
       "signingYouIn": "Accesso in corso...",
-      "signInFailed": "Accesso non riuscito. Reindirizzamento alla pagina di accesso..."
+      "signInFailed": "Accesso non riuscito. Reindirizzamento alla pagina di accesso...",
+      "redirecting": "Reindirizzamento..."
     },
     "LoginForm": {
       "emailLabel": "Indirizzo email",

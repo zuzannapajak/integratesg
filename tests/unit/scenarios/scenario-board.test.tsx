@@ -5,8 +5,22 @@ import { describe, expect, it, vi } from "vitest";
 import {
   ScenarioBoard,
   type ScenarioBoardItem,
+  type ScenarioBoardLabels,
 } from "@/components/scenarios/simulator/scenario-board";
 import type { ResolvedChallenge } from "@/lib/scenarios/simulator/types";
+
+const scenarioBoardLabels = {
+  title: "Choose a challenge",
+  description: "Complete the three challenges in order.",
+  currentObjective: "Current objective",
+  allCompleted: "All challenges completed",
+  openChallenge: "Open challenge",
+  mapPoint: "Challenge point",
+  completed: "Completed",
+  available: "Available",
+  inProgress: "In progress",
+  locked: "Locked",
+} satisfies ScenarioBoardLabels;
 
 const challenges = [
   {
@@ -82,6 +96,7 @@ describe("ScenarioBoard", () => {
         boardAlt="A scenario illustration with three challenge areas."
         scenarioTitle="Strategy, Vision and Organisational Alignment"
         items={boardItems}
+        labels={scenarioBoardLabels}
         onSelectChallenge={vi.fn()}
       />,
     );
@@ -103,6 +118,7 @@ describe("ScenarioBoard", () => {
         boardAlt="Test board."
         scenarioTitle="Test scenario"
         items={boardItems}
+        labels={scenarioBoardLabels}
         onSelectChallenge={vi.fn()}
       />,
     );
@@ -130,6 +146,7 @@ describe("ScenarioBoard", () => {
         boardAlt="Test board."
         scenarioTitle="Test scenario"
         items={boardItems}
+        labels={scenarioBoardLabels}
         onSelectChallenge={onSelectChallenge}
       />,
     );
@@ -149,6 +166,7 @@ describe("ScenarioBoard", () => {
         boardAlt="Test board."
         scenarioTitle="Test scenario"
         items={boardItems}
+        labels={scenarioBoardLabels}
         onSelectChallenge={onSelectChallenge}
       />,
     );
@@ -169,6 +187,7 @@ describe("ScenarioBoard", () => {
         boardAlt="Test board."
         scenarioTitle="Test scenario"
         items={boardItems}
+        labels={scenarioBoardLabels}
         onSelectChallenge={vi.fn()}
       />,
     );
@@ -186,6 +205,7 @@ describe("ScenarioBoard", () => {
         boardAlt="Test board."
         scenarioTitle="Test scenario"
         items={boardItems}
+        labels={scenarioBoardLabels}
         onSelectChallenge={vi.fn()}
       />,
     );
@@ -202,6 +222,7 @@ describe("ScenarioBoard", () => {
         boardAlt="Test board."
         scenarioTitle="Test scenario"
         items={boardItems}
+        labels={scenarioBoardLabels}
         onSelectChallenge={vi.fn()}
       />,
     );
@@ -220,6 +241,7 @@ it("marks a completed challenge with a check icon", () => {
       boardAlt="Test board."
       scenarioTitle="Test scenario"
       items={boardItems}
+      labels={scenarioBoardLabels}
       onSelectChallenge={vi.fn()}
     />,
   );
@@ -244,6 +266,7 @@ it("keeps the next challenge available after the previous one is completed", () 
       boardAlt="Test board."
       scenarioTitle="Test scenario"
       items={boardItems}
+      labels={scenarioBoardLabels}
       onSelectChallenge={vi.fn()}
     />,
   );

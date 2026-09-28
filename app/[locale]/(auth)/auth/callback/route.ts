@@ -2,6 +2,7 @@ import { getDefaultProtectedRoute } from "@/lib/auth/roles";
 import { isAppLocale } from "@/lib/i18n/locales";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
+import { getTranslations } from "next-intl/server";
 import { NextResponse } from "next/server";
 
 function getPublicOrigin(request: Request) {
@@ -55,19 +56,21 @@ function escapeHtmlAttribute(value: string) {
     .replaceAll(">", "&gt;");
 }
 
-function createHtmlRedirect(url: URL) {
+function createHtmlRedirect(url: URL, locale: string, redirectingLabel: string) {
   const href = url.toString();
   const escapedHref = escapeHtmlAttribute(href);
+  const escapedLocale = escapeHtmlAttribute(locale);
+  const escapedRedirectingLabel = escapeHtmlAttribute(redirectingLabel);
 
   const html = `<!doctype html>
-<html lang="en">
+<html lang="${escapedLocale}">
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="refresh" content="0;url=${escapedHref}" />
-  <title>Redirecting...</title>
+  <title>${escapedRedirectingLabel}</title>
 </head>
 <body>
-  <p>Redirecting...</p>
+  <p>${escapedRedirectingLabel}</p>
   <script>
     window.location.replace(${JSON.stringify(href)});
   </script>
@@ -172,6 +175,14 @@ export async function GET(request: Request) {
 
     const target = next ?? getDefaultProtectedRoute(preferredLocale, profile.role);
     const redirectUrl = new URL(target, publicOrigin);
+    const targetLocaleFromPath = redirectUrl.pathname.split("/")[1];
+    const redirectLocale = isAppLocale(targetLocaleFromPath)
+      ? targetLocaleFromPath
+      : preferredLocale;
+    const t = await getTranslations({
+      locale: redirectLocale,
+      namespace: "Auth.ClientCallback",
+    });
 
     console.warn("[auth/callback] Login completed", {
       userId: user.id,
@@ -183,7 +194,7 @@ export async function GET(request: Request) {
       redirectUrl: redirectUrl.toString(),
     });
 
-    return createHtmlRedirect(redirectUrl);
+    return createHtmlRedirect(redirectUrl, redirectLocale, t("redirecting"));
   } catch (error) {
     console.error("[auth/callback] Unexpected callback error", error);
 

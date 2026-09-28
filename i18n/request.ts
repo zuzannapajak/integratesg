@@ -15,6 +15,7 @@ const messageScopes = [
   "eportfolio-ui-shells",
   "home-shells",
   "module-player-shells",
+  "metadata-shells",
   "platform-feedback-shells",
   "protected-list-shells",
   "public-content-shells",
