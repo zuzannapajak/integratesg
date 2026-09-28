@@ -3,6 +3,7 @@
 import { completeCaseStudyAction } from "@/features/eportfolio/actions";
 import type { EportfolioProgress } from "@/lib/eportfolio/library";
 import { ArrowRight, Check, CheckCircle2, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
@@ -25,12 +26,10 @@ export default function EportfolioProgressActions({
   initialProgress,
   nextCaseStudy,
 }: Props) {
+  const t = useTranslations("Protected.EportfolioProgressActions");
   const router = useRouter();
-
   const [progress, setProgress] = useState<EportfolioProgress>(initialProgress);
-
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
   const [isPending, startTransition] = useTransition();
 
   const isCompleted = progress === "completed";
@@ -46,10 +45,9 @@ export default function EportfolioProgressActions({
         });
 
         setProgress(result.status);
-
         router.refresh();
       } catch {
-        setErrorMessage("We could not save your progress. Please try again.");
+        setErrorMessage(t("error"));
       }
     });
   }
@@ -68,17 +66,17 @@ export default function EportfolioProgressActions({
             isCompleted ? "mt-5" : ""
           }`}
         >
-          {isCompleted ? `${caseStudyTitle} completed` : "Complete case study"}
+          {isCompleted ? t("completedTitle", { title: caseStudyTitle }) : t("title")}
         </h1>
 
         <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-[#667180]">
-          {isCompleted
-            ? "Your progress has been saved."
-            : "Mark this case study as completed to save your progress."}
+          {isCompleted ? t("completedDescription") : t("description")}
         </p>
 
         {errorMessage ? (
-          <p className="mt-4 text-sm font-medium text-rose-600">{errorMessage}</p>
+          <p className="mt-4 text-sm font-medium text-rose-600" role="alert" aria-live="assertive">
+            {errorMessage}
+          </p>
         ) : null}
 
         <div className="mt-8 flex justify-center">
@@ -94,14 +92,14 @@ export default function EportfolioProgressActions({
               ) : (
                 <Check className="h-4 w-4" />
               )}
-              Mark as completed
+              {isPending ? t("saving") : t("markCompleted")}
             </button>
           ) : nextCaseStudy ? (
             <Link
               href={`/${locale}/eportfolio/${nextCaseStudy.slug}`}
               className="inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347]"
             >
-              Next case study
+              {t("nextCaseStudy")}
               <ArrowRight className="h-4 w-4" />
             </Link>
           ) : null}
@@ -109,7 +107,7 @@ export default function EportfolioProgressActions({
 
         {isCompleted && nextCaseStudy ? (
           <p className="mt-5 text-sm text-[#8a97a6]">
-            Up next: <span className="font-medium text-[#536174]">{nextCaseStudy.title}</span>
+            {t("upNext")} <span className="font-medium text-[#536174]">{nextCaseStudy.title}</span>
           </p>
         ) : null}
       </div>

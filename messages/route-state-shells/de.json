@@ -1,0 +1,39 @@
+{
+  "Protected": {
+    "RouteState": {
+      "dashboard": {
+        "loading": {
+          "title": "Dashboard wird geladen",
+          "description": "Fortschritt, Aktivität und Lernübersicht werden vorbereitet."
+        },
+        "error": {
+          "title": "Das Dashboard konnte nicht geladen werden",
+          "description": "Beim Vorbereiten des Dashboards ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+          "retry": "Erneut versuchen"
+        }
+      },
+      "eportfolio": {
+        "loading": {
+          "title": "ePortfolio wird geladen",
+          "description": "Fallstudien und aktueller Fortschritt werden vorbereitet."
+        },
+        "error": {
+          "title": "Das ePortfolio konnte nicht geladen werden",
+          "description": "Beim Vorbereiten der Fallstudienbibliothek ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+          "retry": "Erneut versuchen"
+        }
+      },
+      "application": {
+        "loading": {
+          "title": "Wird geladen",
+          "description": "Diese Ansicht wird vorbereitet."
+        },
+        "error": {
+          "title": "Etwas ist schiefgelaufen",
+          "description": "Die Seite konnte nicht korrekt angezeigt werden. Bitte versuche es erneut.",
+          "retry": "Erneut versuchen"
+        }
+      }
+    }
+  }
+}

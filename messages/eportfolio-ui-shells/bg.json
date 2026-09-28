@@ -1,0 +1,122 @@
+{
+  "Protected": {
+    "CaseStudyLaunchShell": {
+      "area": {
+        "environmental": "Екологично",
+        "social": "Социално",
+        "governance": "Управление",
+        "crossCutting": "Междусекторно"
+      }
+    },
+    "EportfolioLibraryPage": {
+      "eyebrow": "ePortfolio",
+      "title": "Библиотека с ESG казуси",
+      "description": "Разгледайте реални организации и вижте как ESG принципите се прилагат чрез екологични действия, практики за хората, управление, отчетност и решения по веригата на стойността.",
+      "progress": {
+        "label": "Вашият напредък",
+        "completedCount": "{completed} от {total} завършени",
+        "ariaLabel": "Завършеност на ePortfolio"
+      },
+      "empty": {
+        "title": "Все още няма налични казуси",
+        "description": "Публикуваните казуси ще се появят тук, след като бъдат добавени в библиотеката ePortfolio."
+      }
+    },
+    "EportfolioLibrary": {
+      "refineTitle": "Филтриране на казусите",
+      "showingCount": {
+        "one": "{filtered} от {total} казус",
+        "other": "{filtered} от {total} казуса"
+      },
+      "searchLabel": "Търсене в казусите",
+      "searchPlaceholder": "Търсене по компания, индустрия, държава или ключова дума...",
+      "filters": {
+        "country": {
+          "label": "Филтриране по държава",
+          "all": "Всички държави"
+        },
+        "industry": {
+          "label": "Филтриране по индустрия",
+          "all": "Всички индустрии"
+        },
+        "progress": {
+          "label": "Филтриране по напредък",
+          "all": "Всички състояния на напредъка"
+        }
+      },
+      "progress": {
+        "notStarted": "Незапочнато",
+        "inProgress": "В процес",
+        "completed": "Завършено"
+      },
+      "clearFilters": "Изчисти филтрите",
+      "fallbackSummary": "Отворете този казус, за да разгледате ESG подхода на организацията и практическите доказателства.",
+      "actions": {
+        "open": "Отвори казуса",
+        "review": "Прегледай казуса"
+      },
+      "empty": {
+        "title": "Няма казуси, които да отговарят на филтрите",
+        "description": "Опитайте друга компания, държава, индустрия или състояние на напредъка."
+      }
+    },
+    "EportfolioDetail": {
+      "fallbackSectionTitle": "Казус",
+      "back": "Обратно към ePortfolio",
+      "stages": {
+        "overview": "Преглед",
+        "environmental": "Екологично",
+        "social": "Социално",
+        "governance": "Управление",
+        "evidence": "Доказателства и съответствие",
+        "lessons": "Изводи и източници",
+        "lessonsTitle": "Ключови изводи и източници",
+        "caseStudy": "Казус"
+      },
+      "descriptions": {
+        "overview": "Как организацията подхожда към ESG и го интегрира в дейността си.",
+        "environmental": "Екологични приоритети, действия и подкрепящи доказателства.",
+        "social": "Хора, заинтересовани страни, общности и социалните аспекти на казуса.",
+        "governance": "Структури за управление, надзор и отчетност.",
+        "evidence": "Външни доказателства, регулаторен контекст и препоръки от изходния казус.",
+        "lessons": "Основните изводи от казуса и източниците, които ги подкрепят."
+      },
+      "sections": {
+        "companyOverview": "Преглед на организацията",
+        "esgIntegration": "Интеграция на ESG",
+        "ratings": "Оценки и външни доказателства",
+        "compliance": "Регулаторно съответствие",
+        "recommendations": "Препоръки",
+        "keyLessons": "Ключови изводи",
+        "sources": "Източници и препратки",
+        "sourcesDescription": "Източници, използвани за този казус."
+      },
+      "metadata": {
+        "country": "Държава",
+        "industry": "Индустрия",
+        "reportingPeriod": "Отчетен период",
+        "sourcePartner": "Партньор източник",
+        "notSpecified": "Не е посочено"
+      },
+      "navigation": {
+        "previous": "Назад",
+        "next": "Напред"
+      },
+      "readingProgress": "Напредък при прочитане на казуса"
+    },
+    "EportfolioCompletionPage": {
+      "back": "Обратно към ePortfolio"
+    },
+    "EportfolioProgressActions": {
+      "title": "Завършване на казуса",
+      "completedTitle": "{title} е завършен",
+      "description": "Маркирайте този казус като завършен, за да запазите напредъка си.",
+      "completedDescription": "Напредъкът ви е запазен.",
+      "error": "Не успяхме да запазим напредъка ви. Опитайте отново.",
+      "saving": "Запазване...",
+      "markCompleted": "Маркирай като завършен",
+      "nextCaseStudy": "Следващ казус",
+      "upNext": "Следва:"
+    }
+  }
+}

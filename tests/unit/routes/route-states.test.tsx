@@ -6,13 +6,50 @@ const localeState = vi.hoisted(() => ({
   value: "en",
 }));
 
+const copy: Record<string, Record<string, string>> = {
+  en: {
+    "dashboard.loading.title": "Loading dashboard",
+    "dashboard.loading.description": "Preparing your progress, activity and learning summary.",
+    "dashboard.error.title": "The dashboard could not be loaded",
+    "dashboard.error.description":
+      "Something went wrong while preparing your dashboard. Please try again.",
+    "dashboard.error.retry": "Try again",
+    "eportfolio.error.title": "The ePortfolio could not be loaded",
+    "eportfolio.error.description":
+      "Something went wrong while preparing the case-study library. Please try again.",
+    "eportfolio.error.retry": "Try again",
+    "application.error.title": "Something went wrong",
+    "application.error.description": "The page could not be displayed correctly. Please try again.",
+    "application.error.retry": "Try again",
+  },
+  pl: {
+    "dashboard.loading.title": "Ładowanie panelu",
+    "dashboard.loading.description": "Przygotowujemy Twój postęp, aktywność i podsumowanie nauki.",
+    "dashboard.error.title": "Nie udało się załadować panelu",
+    "dashboard.error.description":
+      "Wystąpił błąd podczas przygotowywania panelu. Spróbuj ponownie.",
+    "dashboard.error.retry": "Spróbuj ponownie",
+    "eportfolio.error.title": "Nie udało się załadować ePortfolio",
+    "eportfolio.error.description":
+      "Wystąpił błąd podczas przygotowywania biblioteki studiów przypadków. Spróbuj ponownie.",
+    "eportfolio.error.retry": "Spróbuj ponownie",
+    "application.error.title": "Coś poszło nie tak",
+    "application.error.description": "Nie udało się poprawnie wyświetlić strony. Spróbuj ponownie.",
+    "application.error.retry": "Spróbuj ponownie",
+  },
+};
+
 vi.mock("next-intl", () => ({
-  useLocale: () => localeState.value,
+  useTranslations: () => (key: string) => {
+    const localeCopy = copy[localeState.value];
+
+    return Object.prototype.hasOwnProperty.call(localeCopy, key) ? localeCopy[key] : key;
+  },
 }));
 
-import LocalizedError from "@/app/[locale]/error";
 import DashboardLoading from "@/app/[locale]/(protected)/dashboard/loading";
 import EportfolioError from "@/app/[locale]/(protected)/eportfolio/error";
+import LocalizedError from "@/app/[locale]/error";
 
 describe("route states", () => {
   beforeEach(() => {

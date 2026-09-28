@@ -15,6 +15,7 @@ import {
   Lightbulb,
   Scale,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
@@ -49,13 +50,13 @@ type StageDefinition = {
 const SURFACE =
   "rounded-[30px] border border-white/70 bg-white/88 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";
 
-function parseMarkdownSections(content: string): MarkdownSection[] {
+function parseMarkdownSections(content: string, fallbackHeading: string): MarkdownSection[] {
   const matches = Array.from(content.matchAll(/^##\s+(.+?)\s*$/gm));
 
   if (matches.length === 0) {
     return [
       {
-        heading: "Case study",
+        heading: fallbackHeading,
         content,
       },
     ];
@@ -63,9 +64,7 @@ function parseMarkdownSections(content: string): MarkdownSection[] {
 
   return matches.map((match, index) => {
     const start = match.index + match[0].length;
-
     const nextMatch = matches.at(index + 1);
-
     const end = nextMatch?.index ?? content.length;
 
     return {
@@ -84,6 +83,10 @@ function normaliseHeading(heading: string) {
     .trim();
 }
 
+/*
+ * These markers classify headings inside the case-study source content.
+ * They are content parsing rules, not interface copy.
+ */
 function classifySection(section: MarkdownSection): SectionKey | null {
   const heading = normaliseHeading(section.heading);
 
@@ -175,7 +178,6 @@ function removeSummaryOverlap(content: string, summary: string | null) {
       }
 
       const isMarkdownStructure = /^(?:#{1,6}\s|[-*+]\s|\d+\.\s|>|```|\|)/.test(trimmed);
-
       const isMetadataLine = /^\*\*[^*]+:\*\*/.test(trimmed);
 
       if (isMarkdownStructure || isMetadataLine) {
@@ -205,7 +207,6 @@ function normaliseSourcesMarkdown(content: string) {
 
       if (/^\s*[-*]\s+/.test(line)) {
         itemNumber += 1;
-
         return line.replace(/^(\s*)[-*]\s+/, `$1${itemNumber}. `);
       }
 
@@ -215,34 +216,25 @@ function normaliseSourcesMarkdown(content: string) {
 }
 
 export default function EportfolioDetail({ locale, caseStudy }: Props) {
-  const sections = parseMarkdownSections(caseStudy.content);
+  const t = useTranslations("Protected.EportfolioDetail");
+  const sections = parseMarkdownSections(caseStudy.content, t("fallbackSectionTitle"));
 
   const company = getSection(sections, "company");
-
   const integration = getSection(sections, "integration");
-
   const environmental = getSection(sections, "environmental");
-
   const social = getSection(sections, "social");
-
   const governance = getSection(sections, "governance");
-
   const ratings = getSection(sections, "ratings");
-
   const compliance = getSection(sections, "compliance");
-
   const recommendations = getSection(sections, "recommendations");
-
   const sources = getSection(sections, "sources");
 
   const additionalSections = sections.filter((section) => classifySection(section) === null);
-
   const companyOverviewContent = company
     ? removeSummaryOverlap(company.content, caseStudy.summary)
     : null;
 
   const [activeStageIndex, setActiveStageIndex] = useState(0);
-
   const stageTopRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -253,8 +245,7 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
           slug: caseStudy.slug,
         });
       } catch {
-        // Reading must stay available even if
-        // progress tracking temporarily fails.
+        // Reading must stay available even if progress tracking temporarily fails.
       }
     }
 
@@ -266,60 +257,56 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
   if (company || integration) {
     stages.push({
       key: "overview",
-      label: "Overview",
+      label: t("stages.overview"),
     });
   }
 
   if (environmental) {
     stages.push({
       key: "environmental",
-      label: "Environmental",
+      label: t("stages.environmental"),
     });
   }
 
   if (social) {
     stages.push({
       key: "social",
-      label: "Social",
+      label: t("stages.social"),
     });
   }
 
   if (governance) {
     stages.push({
       key: "governance",
-      label: "Governance",
+      label: t("stages.governance"),
     });
   }
 
   if (ratings || compliance || recommendations || additionalSections.length > 0) {
     stages.push({
       key: "evidence",
-      label: "Evidence & compliance",
+      label: t("stages.evidence"),
     });
   }
 
   if (caseStudy.keyTakeaways.length > 0 || sources) {
     stages.push({
       key: "lessons",
-      label: "Lessons & sources",
+      label: t("stages.lessons"),
     });
   }
 
   if (stages.length === 0) {
     stages.push({
       key: "overview",
-      label: "Case study",
+      label: t("stages.caseStudy"),
     });
   }
 
   const safeStageIndex = Math.min(activeStageIndex, stages.length - 1);
-
   const activeStage = stages[safeStageIndex];
-
   const countryName = getCountryName(caseStudy.countryCode, locale);
-
   const isFirstStage = safeStageIndex === 0;
-
   const isLastStage = safeStageIndex === stages.length - 1;
 
   function changeStage(nextIndex: number) {
@@ -336,17 +323,20 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
   }
 
   function renderStageContent() {
+    const progressLabel = t("readingProgress");
+
     switch (activeStage.key) {
       case "overview":
         return (
           <StagePanel
-            title="Overview"
-            description="How the organisation approaches ESG and integrates it into its activities."
+            title={t("stages.overview")}
+            description={t("descriptions.overview")}
             stepIndex={safeStageIndex}
             stepTotal={stages.length}
+            progressLabel={progressLabel}
           >
             {companyOverviewContent ? (
-              <SectionBlock icon={<BookOpen />} title="Company overview">
+              <SectionBlock icon={<BookOpen />} title={t("sections.companyOverview")}>
                 <MarkdownFrame>
                   <MarkdownContent content={companyOverviewContent} />
                 </MarkdownFrame>
@@ -354,7 +344,7 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
             ) : null}
 
             {integration ? (
-              <SectionBlock icon={<Scale />} title="ESG integration">
+              <SectionBlock icon={<Scale />} title={t("sections.esgIntegration")}>
                 <MarkdownFrame>
                   <MarkdownContent content={integration.content} />
                 </MarkdownFrame>
@@ -372,10 +362,11 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
       case "environmental":
         return (
           <StagePanel
-            title="Environmental"
-            description="Environmental priorities, actions and supporting evidence."
+            title={t("stages.environmental")}
+            description={t("descriptions.environmental")}
             stepIndex={safeStageIndex}
             stepTotal={stages.length}
+            progressLabel={progressLabel}
           >
             {environmental ? (
               <MarkdownFrame>
@@ -388,10 +379,11 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
       case "social":
         return (
           <StagePanel
-            title="Social"
-            description="People, stakeholders, communities and the social aspects of the case."
+            title={t("stages.social")}
+            description={t("descriptions.social")}
             stepIndex={safeStageIndex}
             stepTotal={stages.length}
+            progressLabel={progressLabel}
           >
             {social ? (
               <MarkdownFrame>
@@ -404,10 +396,11 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
       case "governance":
         return (
           <StagePanel
-            title="Governance"
-            description="Governance structures, oversight and accountability."
+            title={t("stages.governance")}
+            description={t("descriptions.governance")}
             stepIndex={safeStageIndex}
             stepTotal={stages.length}
+            progressLabel={progressLabel}
           >
             {governance ? (
               <MarkdownFrame>
@@ -420,13 +413,14 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
       case "evidence":
         return (
           <StagePanel
-            title="Evidence & compliance"
-            description="External evidence, regulatory context and recommendations from the source case."
+            title={t("stages.evidence")}
+            description={t("descriptions.evidence")}
             stepIndex={safeStageIndex}
             stepTotal={stages.length}
+            progressLabel={progressLabel}
           >
             {ratings ? (
-              <SectionBlock icon={<Award />} title="Ratings and external evidence">
+              <SectionBlock icon={<Award />} title={t("sections.ratings")}>
                 <MarkdownFrame>
                   <MarkdownContent content={ratings.content} />
                 </MarkdownFrame>
@@ -434,7 +428,7 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
             ) : null}
 
             {compliance ? (
-              <SectionBlock icon={<FileCheck2 />} title="Regulatory compliance">
+              <SectionBlock icon={<FileCheck2 />} title={t("sections.compliance")}>
                 <MarkdownFrame>
                   <MarkdownContent content={compliance.content} />
                 </MarkdownFrame>
@@ -450,7 +444,7 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
             ))}
 
             {recommendations ? (
-              <SectionBlock icon={<Lightbulb />} title="Recommendations">
+              <SectionBlock icon={<Lightbulb />} title={t("sections.recommendations")}>
                 <MarkdownFrame>
                   <MarkdownContent content={recommendations.content} />
                 </MarkdownFrame>
@@ -462,13 +456,14 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
       case "lessons":
         return (
           <StagePanel
-            title="Key lessons & sources"
-            description="The main lessons from the case and the references supporting it."
+            title={t("stages.lessonsTitle")}
+            description={t("descriptions.lessons")}
             stepIndex={safeStageIndex}
             stepTotal={stages.length}
+            progressLabel={progressLabel}
           >
             {caseStudy.keyTakeaways.length > 0 ? (
-              <SectionBlock icon={<BookMarked />} title="Key lessons">
+              <SectionBlock icon={<BookMarked />} title={t("sections.keyLessons")}>
                 <ol className="grid gap-3">
                   {caseStudy.keyTakeaways.map((lesson, index) => (
                     <li
@@ -493,11 +488,11 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 sm:p-6 [&::-webkit-details-marker]:hidden">
                   <div>
                     <h3 className="text-lg font-bold tracking-tight text-[#31425a]">
-                      Sources and references
+                      {t("sections.sources")}
                     </h3>
 
                     <p className="mt-1 text-sm text-[#7b8794]">
-                      References used for this case study.
+                      {t("sections.sourcesDescription")}
                     </p>
                   </div>
 
@@ -526,7 +521,7 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
           className="inline-flex items-center gap-2 text-[0.95rem] font-medium text-[#5f6977] transition hover:text-[#31425a]"
         >
           <ArrowLeft className="h-4.5 w-4.5" />
-          Back to ePortfolio
+          {t("back")}
         </Link>
       </div>
 
@@ -548,18 +543,18 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
             ) : null}
 
             <div className="mt-7 grid w-full gap-3 sm:grid-cols-2 xl:grid-cols-4">
-              <MetadataItem label="Country" value={countryName} />
-
-              <MetadataItem label="Industry" value={caseStudy.industry ?? "Not specified"} />
-
+              <MetadataItem label={t("metadata.country")} value={countryName} />
               <MetadataItem
-                label="Reporting period"
-                value={caseStudy.reportingPeriod ?? "Not specified"}
+                label={t("metadata.industry")}
+                value={caseStudy.industry ?? t("metadata.notSpecified")}
               />
-
               <MetadataItem
-                label="Source partner"
-                value={caseStudy.sourcePartner ?? "Not specified"}
+                label={t("metadata.reportingPeriod")}
+                value={caseStudy.reportingPeriod ?? t("metadata.notSpecified")}
+              />
+              <MetadataItem
+                label={t("metadata.sourcePartner")}
+                value={caseStudy.sourcePartner ?? t("metadata.notSpecified")}
               />
             </div>
           </header>
@@ -578,7 +573,7 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
           className="inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl border border-[#d9e2ec] bg-white px-5 py-3 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc] disabled:cursor-not-allowed disabled:opacity-40"
         >
           <ChevronLeft className="h-4 w-4" />
-          Previous
+          {t("navigation.previous")}
         </button>
 
         {isLastStage ? (
@@ -586,7 +581,7 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
             href={`/${locale}/eportfolio/${caseStudy.slug}/complete`}
             className="inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347]"
           >
-            Next
+            {t("navigation.next")}
             <ArrowRight className="h-4 w-4" />
           </Link>
         ) : (
@@ -597,7 +592,7 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
             }}
             className="inline-flex min-h-11 items-center justify-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347]"
           >
-            Next
+            {t("navigation.next")}
             <ArrowRight className="h-4 w-4" />
           </button>
         )}
@@ -621,12 +616,14 @@ function StagePanel({
   description,
   stepIndex,
   stepTotal,
+  progressLabel,
   children,
 }: {
   title: string;
   description: string;
   stepIndex: number;
   stepTotal: number;
+  progressLabel: string;
   children: ReactNode;
 }) {
   const progress = ((stepIndex + 1) / stepTotal) * 100;
@@ -648,7 +645,7 @@ function StagePanel({
       <div
         className="mt-5 h-1 overflow-hidden rounded-full bg-[#e7ebef]"
         role="progressbar"
-        aria-label="Case study reading progress"
+        aria-label={progressLabel}
         aria-valuemin={0}
         aria-valuemax={100}
         aria-valuenow={Math.round(progress)}

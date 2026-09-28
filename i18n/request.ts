@@ -11,11 +11,13 @@ const messageScopes = [
   "curriculum-shells",
   "dashboard-shells",
   "eportfolio-shells",
+  "eportfolio-ui-shells",
   "home-shells",
   "module-player-shells",
   "platform-feedback-shells",
   "protected-list-shells",
   "public-content-shells",
+  "route-state-shells",
   "scenario-shells",
   "settings-shells",
 ] as const;

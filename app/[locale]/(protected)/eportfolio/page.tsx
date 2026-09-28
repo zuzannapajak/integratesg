@@ -3,6 +3,7 @@ import { requireRole } from "@/features/auth/requireRole";
 import { APP_ROLES } from "@/lib/auth/roles";
 import { getEportfolioLibrary } from "@/lib/eportfolio/library";
 import { CheckCircle2, LibraryBig } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 type Props = {
   params: Promise<{
@@ -12,8 +13,11 @@ type Props = {
 
 export default async function EportfolioPage({ params }: Props) {
   const { locale } = await params;
-
   const { user } = await requireRole(locale, [APP_ROLES.learner, APP_ROLES.educator]);
+  const t = await getTranslations({
+    locale,
+    namespace: "Protected.EportfolioLibraryPage",
+  });
 
   const caseStudies = await getEportfolioLibrary({
     locale,
@@ -39,17 +43,15 @@ export default async function EportfolioPage({ params }: Props) {
             <div>
               <div className="inline-flex items-center gap-2 text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#0b8c69]">
                 <LibraryBig className="h-4 w-4" />
-                ePortfolio
+                {t("eyebrow")}
               </div>
 
               <h1 className="mt-4 max-w-3xl text-3xl font-bold tracking-tight text-[#31425a] sm:text-4xl">
-                ESG case study library
+                {t("title")}
               </h1>
 
               <p className="mt-4 max-w-2xl text-sm leading-7 text-[#667180] sm:text-base">
-                Explore real organisations and see how ESG principles are applied through
-                environmental action, people practices, governance, reporting and value-chain
-                decisions.
+                {t("description")}
               </p>
             </div>
 
@@ -58,14 +60,16 @@ export default async function EportfolioPage({ params }: Props) {
                 <div>
                   <div className="flex items-center gap-2 text-[#0b8c69]">
                     <CheckCircle2 className="h-4 w-4" />
-
                     <span className="text-[0.7rem] font-bold uppercase tracking-[0.14em]">
-                      Your progress
+                      {t("progress.label")}
                     </span>
                   </div>
 
                   <p className="mt-2 text-lg font-bold text-[#31425a]">
-                    {completedCount} of {caseStudies.length} completed
+                    {t("progress.completedCount", {
+                      completed: completedCount,
+                      total: caseStudies.length,
+                    })}
                   </p>
                 </div>
 
@@ -75,7 +79,7 @@ export default async function EportfolioPage({ params }: Props) {
               <div
                 className="mt-4 h-2.5 overflow-hidden rounded-full bg-[#e8eef1]"
                 role="progressbar"
-                aria-label="ePortfolio completion"
+                aria-label={t("progress.ariaLabel")}
                 aria-valuemin={0}
                 aria-valuemax={100}
                 aria-valuenow={progressPercent}
@@ -96,13 +100,10 @@ export default async function EportfolioPage({ params }: Props) {
             <EportfolioLibrary locale={locale} items={caseStudies} />
           ) : (
             <div className="rounded-[28px] border border-white/70 bg-white/88 px-6 py-12 text-center shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl">
-              <h2 className="text-xl font-semibold text-[#31425a]">
-                No case studies are available yet
-              </h2>
+              <h2 className="text-xl font-semibold text-[#31425a]">{t("empty.title")}</h2>
 
               <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[#667180]">
-                Published case studies will appear here once they are added to the ePortfolio
-                library.
+                {t("empty.description")}
               </p>
             </div>
           )}

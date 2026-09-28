@@ -1,9 +1,12 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { NextIntlClientProvider } from "next-intl";
 import { describe, expect, it } from "vitest";
 
 import EportfolioLibrary from "@/components/eportfolio/eportfolio-library";
 import type { EportfolioLibraryItem } from "@/lib/eportfolio/library";
+import enMessages from "@/messages/eportfolio-ui-shells/en.json";
+import plMessages from "@/messages/eportfolio-ui-shells/pl.json";
 
 const ITEMS: EportfolioLibraryItem[] = [
   {
@@ -52,8 +55,14 @@ const ITEMS: EportfolioLibraryItem[] = [
   },
 ];
 
-function renderLibrary(items: EportfolioLibraryItem[] = ITEMS) {
-  return render(<EportfolioLibrary locale="en" items={items} />);
+function renderLibrary(items: EportfolioLibraryItem[] = ITEMS, locale: "en" | "pl" = "en") {
+  const messages = locale === "pl" ? plMessages : enMessages;
+
+  return render(
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <EportfolioLibrary locale={locale} items={items} />
+    </NextIntlClientProvider>,
+  );
 }
 
 function expectVisibleCaseStudy(title: string) {
@@ -88,7 +97,6 @@ describe("ePortfolio library UI", () => {
     expectMissingCaseStudy("Beta Water");
     expectMissingCaseStudy("Gamma Tech");
     expectMissingCaseStudy("Delta Tech");
-
     expect(screen.getByText("1 of 4 case studies", { exact: true })).toBeVisible();
   });
 
@@ -108,7 +116,6 @@ describe("ePortfolio library UI", () => {
     expectVisibleCaseStudy("Delta Tech");
     expectMissingCaseStudy("Alpha Energy");
     expectMissingCaseStudy("Beta Water");
-
     expect(screen.getByText("2 of 4 case studies", { exact: true })).toBeVisible();
   });
 
@@ -122,14 +129,12 @@ describe("ePortfolio library UI", () => {
     });
 
     expect(industryFilter).toHaveValue("all");
-
     await user.selectOptions(industryFilter, "Technology");
 
     expectVisibleCaseStudy("Gamma Tech");
     expectVisibleCaseStudy("Delta Tech");
     expectMissingCaseStudy("Alpha Energy");
     expectMissingCaseStudy("Beta Water");
-
     expect(screen.getByText("2 of 4 case studies", { exact: true })).toBeVisible();
   });
 
@@ -163,7 +168,6 @@ describe("ePortfolio library UI", () => {
     expectMissingCaseStudy("Alpha Energy");
     expectMissingCaseStudy("Beta Water");
     expectMissingCaseStudy("Delta Tech");
-
     expect(screen.getByText("1 of 4 case studies", { exact: true })).toBeVisible();
   });
 
@@ -335,5 +339,47 @@ describe("ePortfolio library UI", () => {
         label: "Utilities",
       },
     ]);
+  });
+
+  it("renders interface controls in the selected locale", () => {
+    renderLibrary(ITEMS, "pl");
+
+    expect(screen.getByText("Filtruj studia przypadków", { exact: true })).toBeVisible();
+
+    expect(
+      screen.getByRole("textbox", {
+        name: "Szukaj studiów przypadków",
+      }),
+    ).toHaveAttribute("placeholder", "Szukaj firmy, branży, kraju lub słowa kluczowego...");
+
+    expect(
+      screen.getByRole("combobox", {
+        name: "Filtruj według kraju",
+      }),
+    ).toBeVisible();
+
+    expect(
+      screen.getByRole("combobox", {
+        name: "Filtruj według branży",
+      }),
+    ).toBeVisible();
+
+    expect(
+      screen.getByRole("combobox", {
+        name: "Filtruj według postępu",
+      }),
+    ).toBeVisible();
+
+    expect(
+      screen.getByRole("option", {
+        name: "Ukończono",
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      screen.getByRole("link", {
+        name: "Przejrzyj studium przypadku",
+      }),
+    ).toHaveAttribute("href", "/pl/eportfolio/alpha-energy");
   });
 });

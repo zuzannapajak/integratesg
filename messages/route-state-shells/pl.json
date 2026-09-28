@@ -1,0 +1,39 @@
+{
+  "Protected": {
+    "RouteState": {
+      "dashboard": {
+        "loading": {
+          "title": "Ładowanie panelu",
+          "description": "Przygotowujemy Twój postęp, aktywność i podsumowanie nauki."
+        },
+        "error": {
+          "title": "Nie udało się załadować panelu",
+          "description": "Wystąpił błąd podczas przygotowywania panelu. Spróbuj ponownie.",
+          "retry": "Spróbuj ponownie"
+        }
+      },
+      "eportfolio": {
+        "loading": {
+          "title": "Ładowanie ePortfolio",
+          "description": "Przygotowujemy studia przypadków i Twój aktualny postęp."
+        },
+        "error": {
+          "title": "Nie udało się załadować ePortfolio",
+          "description": "Wystąpił błąd podczas przygotowywania biblioteki studiów przypadków. Spróbuj ponownie.",
+          "retry": "Spróbuj ponownie"
+        }
+      },
+      "application": {
+        "loading": {
+          "title": "Ładowanie",
+          "description": "Przygotowujemy ten widok."
+        },
+        "error": {
+          "title": "Coś poszło nie tak",
+          "description": "Nie udało się poprawnie wyświetlić strony. Spróbuj ponownie.",
+          "retry": "Spróbuj ponownie"
+        }
+      }
+    }
+  }
+}
