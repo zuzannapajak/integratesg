@@ -83,6 +83,13 @@ const SURFACE =
 
 const SOFT_INNER_BORDER = "border border-[#edf1f5]";
 
+const CTA_COLORS = {
+  green: "#087a5b",
+  orange: "#b84a08",
+  blue: "#2f65a7",
+  slate: "#31425a",
+} as const;
+
 export default function DashboardShell({
   locale,
   role,
@@ -303,6 +310,13 @@ function ContinueLearningHeroCard({
 }) {
   const t = useTranslations("Protected.DashboardShell");
 
+  const buttonColor =
+    roleConfig.accent === "#0b9c72"
+      ? CTA_COLORS.green
+      : roleConfig.accent === "#ef6c23"
+        ? CTA_COLORS.orange
+        : CTA_COLORS.slate;
+
   return (
     <motion.div
       variants={FADE_UP}
@@ -340,9 +354,9 @@ function ContinueLearningHeroCard({
         <div className="flex shrink-0 justify-end md:pb-1">
           <Link
             href={continueLearning.href}
-            className="inline-flex items-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold text-[#020617] transition-all duration-300 hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5"
             style={{
-              backgroundColor: roleConfig.accent,
+              backgroundColor: buttonColor,
               boxShadow: "0 12px 28px rgba(35,45,62,0.12)",
             }}
           >
@@ -383,16 +397,19 @@ function LearnerDashboard({
           meta: t("coreArea.educator.primary.meta", { count: publishedCoursesCount }),
           href: `/${locale}/curriculum`,
           accentColor: ESG_colors.BLUE,
+          buttonColor: CTA_COLORS.blue,
           buttonLabel: t("coreArea.buttons.openModule"),
           backgroundStyle: {
             background:
               "linear-gradient(180deg, rgba(244,248,255,0.98) 0%, rgba(255,255,255,0.96) 100%)",
             borderColor: "rgba(68,127,193,0.20)",
           },
+
           iconStyle: {
             backgroundColor: "rgba(68,127,193,0.14)",
             color: ESG_colors.BLUE,
           },
+
           metaStyle: {
             borderColor: "rgba(68,127,193,0.22)",
             backgroundColor: "rgba(68,127,193,0.10)",
@@ -406,16 +423,19 @@ function LearnerDashboard({
           meta: t("coreArea.learner.primary.meta"),
           href: `/${locale}/scenarios`,
           accentColor: ESG_colors.GREEN,
+          buttonColor: CTA_COLORS.green,
           buttonLabel: t("coreArea.buttons.openScenarios"),
           backgroundStyle: {
             background:
               "linear-gradient(180deg, rgba(243,251,247,0.98) 0%, rgba(255,255,255,0.96) 100%)",
             borderColor: "rgba(30,155,115,0.20)",
           },
+
           iconStyle: {
             backgroundColor: "rgba(30,155,115,0.14)",
             color: ESG_colors.GREEN,
           },
+
           metaStyle: {
             borderColor: "rgba(30,155,115,0.22)",
             backgroundColor: "rgba(30,155,115,0.10)",
@@ -432,6 +452,7 @@ function LearnerDashboard({
           meta: t("coreArea.educator.secondary.meta"),
           href: `/${locale}/eportfolio`,
           accentColor: ESG_colors.ORANGE,
+          buttonColor: CTA_COLORS.orange,
           buttonLabel: t("coreArea.buttons.openEportfolio"),
           backgroundStyle: {
             background:
@@ -455,6 +476,7 @@ function LearnerDashboard({
           meta: t("coreArea.learner.secondary.meta"),
           href: `/${locale}/eportfolio`,
           accentColor: ESG_colors.BLUE,
+          buttonColor: CTA_COLORS.blue,
           buttonLabel: t("coreArea.buttons.openEportfolio"),
           backgroundStyle: {
             background:
@@ -485,6 +507,7 @@ function LearnerDashboard({
           meta={primaryCard.meta}
           href={primaryCard.href}
           accentColor={primaryCard.accentColor}
+          buttonColor={primaryCard.buttonColor}
           buttonLabel={primaryCard.buttonLabel}
           backgroundStyle={primaryCard.backgroundStyle}
           iconStyle={primaryCard.iconStyle}
@@ -498,6 +521,7 @@ function LearnerDashboard({
           meta={secondaryCard.meta}
           href={secondaryCard.href}
           accentColor={secondaryCard.accentColor}
+          buttonColor={secondaryCard.buttonColor}
           buttonLabel={secondaryCard.buttonLabel}
           backgroundStyle={secondaryCard.backgroundStyle}
           iconStyle={secondaryCard.iconStyle}
@@ -604,6 +628,7 @@ function CoreAreaCard({
   meta,
   href,
   accentColor,
+  buttonColor,
   buttonLabel,
   backgroundStyle,
   iconStyle,
@@ -615,6 +640,7 @@ function CoreAreaCard({
   meta: string;
   href: string;
   accentColor: string;
+  buttonColor: string;
   buttonLabel: string;
   backgroundStyle?: React.CSSProperties;
   iconStyle?: React.CSSProperties;
@@ -657,9 +683,10 @@ function CoreAreaCard({
 
       <div className="mt-6">
         <div
-          className="inline-flex items-center gap-2 rounded-2xl px-4 py-2.5 text-sm font-semibold text-[#020617] transition-all duration-300 group-hover:-translate-y-0.5"
+          className="inline-flex items-center gap-2 rounded-2xl px-4 py-2.5 text-sm font-semibold text-white transition-all duration-300 group-hover:-translate-y-0.5"
           style={{
-            backgroundColor: accentColor,
+            backgroundColor: buttonColor,
+
             boxShadow: "0 10px 24px rgba(35,45,62,0.10)",
           }}
         >
