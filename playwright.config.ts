@@ -51,6 +51,7 @@ if (!process.env.PLAYWRIGHT_BASE_URL && e2eDatabaseUrl) {
 const smokeTestPattern = "**/smoke/**/*.spec.ts";
 const authTestPattern = "**/auth/auth.spec.ts";
 const accessibilityTestPattern = "**/auth/accessibility.spec.ts";
+const dashboardTestPattern = "**/dashboard/**/*.spec.ts";
 const scenarioTestPattern = "**/scenarios/**/*.spec.ts";
 const scenarioCompletionTestPattern = "**/scenarios/scenario-completion.spec.ts";
 const eportfolioTestPattern = "**/eportfolio/**/*.spec.ts";
@@ -59,6 +60,7 @@ const curriculumTestPattern = "**/curriculum/**/*.spec.ts";
 const statefulTestPatterns = [
   authTestPattern,
   accessibilityTestPattern,
+  dashboardTestPattern,
   scenarioTestPattern,
   eportfolioTestPattern,
   curriculumTestPattern,
@@ -172,6 +174,19 @@ export default defineConfig({
     {
       name: "a11y-chromium",
       testMatch: accessibilityTestPattern,
+
+      use: {
+        ...devices["Desktop Chrome"],
+      },
+    },
+
+    /*
+     * Dashboard ma własny projekt, bo wymaga zalogowanej sesji.
+     * Sam test przełącza viewport między desktopem, tabletem i mobile.
+     */
+    {
+      name: "dashboard-chromium",
+      testMatch: dashboardTestPattern,
 
       use: {
         ...devices["Desktop Chrome"],
