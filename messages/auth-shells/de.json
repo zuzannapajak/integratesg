@@ -9,7 +9,8 @@
     "ClientCallback": {
       "title": "Anmeldung",
       "signingYouIn": "Sie werden angemeldet...",
-      "signInFailed": "Anmeldung fehlgeschlagen. Weiterleitung zur Anmeldung..."
+      "signInFailed": "Anmeldung fehlgeschlagen. Weiterleitung zur Anmeldung...",
+      "redirecting": "Weiterleitung..."
     },
     "LoginForm": {
       "emailLabel": "E-Mail-Adresse",
@@ -18,7 +19,8 @@
       "passwordPlaceholder": "Geben Sie Ihr Passwort ein",
       "submit": "Anmelden",
       "submitting": "Anmeldung läuft...",
-      "forgotPassword": "Passwort vergessen?"
+      "forgotPassword": "Passwort vergessen?",
+      "fallbackError": "Die Anmeldung ist fehlgeschlagen. Bitte versuchen Sie es erneut."
     },
     "SocialLogin": {
       "continueWithGoogle": "Mit Google fortfahren"

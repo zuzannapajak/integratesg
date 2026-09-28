@@ -9,7 +9,8 @@
     "ClientCallback": {
       "title": "Logowanie",
       "signingYouIn": "Logowanie...",
-      "signInFailed": "Logowanie nie powiodło się. Przekierowanie do strony logowania..."
+      "signInFailed": "Logowanie nie powiodło się. Przekierowanie do strony logowania...",
+      "redirecting": "Przekierowanie..."
     },
     "LoginForm": {
       "emailLabel": "Adres e-mail",
@@ -18,7 +19,8 @@
       "passwordPlaceholder": "Wpisz hasło",
       "submit": "Zaloguj się",
       "submitting": "Logowanie...",
-      "forgotPassword": "Nie pamiętasz hasła?"
+      "forgotPassword": "Nie pamiętasz hasła?",
+      "fallbackError": "Logowanie nie powiodło się. Spróbuj ponownie."
     },
     "SocialLogin": {
       "continueWithGoogle": "Kontynuuj z Google"

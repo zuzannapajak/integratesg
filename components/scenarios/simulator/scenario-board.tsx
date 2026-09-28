@@ -25,25 +25,12 @@ export type ScenarioBoardLabels = {
   readonly locked: string;
 };
 
-export const DEFAULT_SCENARIO_BOARD_LABELS: ScenarioBoardLabels = {
-  title: "Choose a challenge",
-  description: "Complete the three challenges in order.",
-  currentObjective: "Current objective",
-  allCompleted: "All challenges completed",
-  openChallenge: "Open challenge",
-  mapPoint: "Challenge point",
-  completed: "Completed",
-  available: "Available",
-  inProgress: "In progress",
-  locked: "Locked",
-};
-
 export type ScenarioBoardProps = {
   readonly backgroundImage: string;
   readonly boardAlt: string;
   readonly scenarioTitle: string;
   readonly items: readonly ScenarioBoardItem[];
-  readonly labels?: Partial<ScenarioBoardLabels>;
+  readonly labels: ScenarioBoardLabels;
 
   readonly onSelectChallenge: (challenge: ResolvedChallenge, challengeIndex: number) => void;
 };
@@ -125,15 +112,10 @@ export function ScenarioBoard({
   boardAlt,
   scenarioTitle,
   items,
-  labels: customLabels,
+  labels,
   onSelectChallenge,
 }: ScenarioBoardProps) {
   const [previewedChallengeIndex, setPreviewedChallengeIndex] = useState<number | null>(null);
-
-  const labels = {
-    ...DEFAULT_SCENARIO_BOARD_LABELS,
-    ...customLabels,
-  };
 
   const inProgressIndex = items.findIndex(({ status }) => status === "in_progress");
 

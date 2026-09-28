@@ -9,7 +9,8 @@
     "ClientCallback": {
       "title": "Signing in",
       "signingYouIn": "Signing you in...",
-      "signInFailed": "Sign-in failed. Redirecting to login..."
+      "signInFailed": "Sign-in failed. Redirecting to login...",
+      "redirecting": "Redirecting..."
     },
     "LoginForm": {
       "emailLabel": "Email address",
@@ -18,7 +19,8 @@
       "passwordPlaceholder": "Enter your password",
       "submit": "Login",
       "submitting": "Signing in...",
-      "forgotPassword": "Forgot password?"
+      "forgotPassword": "Forgot password?",
+      "fallbackError": "Sign in failed. Please try again."
     },
     "SocialLogin": {
       "continueWithGoogle": "Continue with Google"

@@ -9,7 +9,8 @@
     "ClientCallback": {
       "title": "Σύνδεση",
       "signingYouIn": "Γίνεται σύνδεσή σας...",
-      "signInFailed": "Η σύνδεση απέτυχε. Ανακατεύθυνση στη σελίδα σύνδεσης..."
+      "signInFailed": "Η σύνδεση απέτυχε. Ανακατεύθυνση στη σελίδα σύνδεσης...",
+      "redirecting": "Ανακατεύθυνση..."
     },
     "LoginForm": {
       "emailLabel": "Διεύθυνση email",
@@ -18,7 +19,8 @@
       "passwordPlaceholder": "Εισαγάγετε τον κωδικό πρόσβασής σας",
       "submit": "Σύνδεση",
       "submitting": "Γίνεται σύνδεση...",
-      "forgotPassword": "Ξεχάσατε τον κωδικό;"
+      "forgotPassword": "Ξεχάσατε τον κωδικό;",
+      "fallbackError": "Η σύνδεση απέτυχε. Δοκιμάστε ξανά."
     },
     "SocialLogin": {
       "continueWithGoogle": "Συνέχεια με Google"

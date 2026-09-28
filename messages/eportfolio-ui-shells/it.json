@@ -1,0 +1,122 @@
+{
+  "Protected": {
+    "CaseStudyLaunchShell": {
+      "area": {
+        "environmental": "Ambientale",
+        "social": "Sociale",
+        "governance": "Governance",
+        "crossCutting": "Trasversale"
+      }
+    },
+    "EportfolioLibraryPage": {
+      "eyebrow": "ePortfolio",
+      "title": "Biblioteca di casi di studio ESG",
+      "description": "Esplora organizzazioni reali e scopri come i principi ESG vengono applicati attraverso azioni ambientali, pratiche relative alle persone, governance, rendicontazione e decisioni lungo la catena del valore.",
+      "progress": {
+        "label": "I tuoi progressi",
+        "completedCount": "{completed} di {total} completati",
+        "ariaLabel": "Completamento ePortfolio"
+      },
+      "empty": {
+        "title": "Non sono ancora disponibili casi di studio",
+        "description": "I casi di studio pubblicati appariranno qui quando verranno aggiunti alla biblioteca ePortfolio."
+      }
+    },
+    "EportfolioLibrary": {
+      "refineTitle": "Filtra i casi di studio",
+      "showingCount": {
+        "one": "{filtered} di {total} caso di studio",
+        "other": "{filtered} di {total} casi di studio"
+      },
+      "searchLabel": "Cerca casi di studio",
+      "searchPlaceholder": "Cerca azienda, settore, paese o parola chiave...",
+      "filters": {
+        "country": {
+          "label": "Filtra per paese",
+          "all": "Tutti i paesi"
+        },
+        "industry": {
+          "label": "Filtra per settore",
+          "all": "Tutti i settori"
+        },
+        "progress": {
+          "label": "Filtra per avanzamento",
+          "all": "Tutti gli stati di avanzamento"
+        }
+      },
+      "progress": {
+        "notStarted": "Non iniziato",
+        "inProgress": "In corso",
+        "completed": "Completato"
+      },
+      "clearFilters": "Cancella filtri",
+      "fallbackSummary": "Apri questo caso di studio per esplorare l'approccio ESG dell'organizzazione e le evidenze pratiche.",
+      "actions": {
+        "open": "Apri caso di studio",
+        "review": "Rivedi caso di studio"
+      },
+      "empty": {
+        "title": "Nessun caso di studio corrisponde ai filtri",
+        "description": "Prova un altro nome aziendale, paese, settore o stato di avanzamento."
+      }
+    },
+    "EportfolioDetail": {
+      "fallbackSectionTitle": "Caso di studio",
+      "back": "Torna all'ePortfolio",
+      "stages": {
+        "overview": "Panoramica",
+        "environmental": "Ambientale",
+        "social": "Sociale",
+        "governance": "Governance",
+        "evidence": "Evidenze e conformità",
+        "lessons": "Lezioni e fonti",
+        "lessonsTitle": "Lezioni chiave e fonti",
+        "caseStudy": "Caso di studio"
+      },
+      "descriptions": {
+        "overview": "Come l'organizzazione affronta l'ESG e lo integra nelle proprie attività.",
+        "environmental": "Priorità ambientali, azioni ed evidenze a supporto.",
+        "social": "Persone, stakeholder, comunità e aspetti sociali del caso.",
+        "governance": "Strutture di governance, supervisione e responsabilità.",
+        "evidence": "Evidenze esterne, contesto normativo e raccomandazioni tratte dal caso di origine.",
+        "lessons": "Le principali lezioni del caso e le fonti che le supportano."
+      },
+      "sections": {
+        "companyOverview": "Panoramica dell'organizzazione",
+        "esgIntegration": "Integrazione ESG",
+        "ratings": "Valutazioni ed evidenze esterne",
+        "compliance": "Conformità normativa",
+        "recommendations": "Raccomandazioni",
+        "keyLessons": "Lezioni chiave",
+        "sources": "Fonti e riferimenti",
+        "sourcesDescription": "Riferimenti utilizzati per questo caso di studio."
+      },
+      "metadata": {
+        "country": "Paese",
+        "industry": "Settore",
+        "reportingPeriod": "Periodo di rendicontazione",
+        "sourcePartner": "Partner fonte",
+        "notSpecified": "Non specificato"
+      },
+      "navigation": {
+        "previous": "Precedente",
+        "next": "Successivo"
+      },
+      "readingProgress": "Avanzamento nella lettura del caso di studio"
+    },
+    "EportfolioCompletionPage": {
+      "back": "Torna all'ePortfolio"
+    },
+    "EportfolioProgressActions": {
+      "title": "Completa il caso di studio",
+      "completedTitle": "{title} completato",
+      "description": "Contrassegna questo caso di studio come completato per salvare i tuoi progressi.",
+      "completedDescription": "I tuoi progressi sono stati salvati.",
+      "error": "Non è stato possibile salvare i tuoi progressi. Riprova.",
+      "saving": "Salvataggio...",
+      "markCompleted": "Contrassegna come completato",
+      "nextCaseStudy": "Caso di studio successivo",
+      "upNext": "Prossimo:"
+    }
+  }
+}

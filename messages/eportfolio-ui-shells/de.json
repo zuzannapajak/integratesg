@@ -1,0 +1,122 @@
+{
+  "Protected": {
+    "CaseStudyLaunchShell": {
+      "area": {
+        "environmental": "Umwelt",
+        "social": "Soziales",
+        "governance": "Unternehmensführung",
+        "crossCutting": "Übergreifend"
+      }
+    },
+    "EportfolioLibraryPage": {
+      "eyebrow": "ePortfolio",
+      "title": "ESG-Fallstudienbibliothek",
+      "description": "Entdecken Sie reale Organisationen und erfahren Sie, wie ESG-Grundsätze in Umweltmaßnahmen, Personalpraktiken, Unternehmensführung, Berichterstattung und Entscheidungen entlang der Wertschöpfungskette umgesetzt werden.",
+      "progress": {
+        "label": "Ihr Fortschritt",
+        "completedCount": "{completed} von {total} abgeschlossen",
+        "ariaLabel": "ePortfolio-Abschluss"
+      },
+      "empty": {
+        "title": "Noch keine Fallstudien verfügbar",
+        "description": "Veröffentlichte Fallstudien erscheinen hier, sobald sie der ePortfolio-Bibliothek hinzugefügt wurden."
+      }
+    },
+    "EportfolioLibrary": {
+      "refineTitle": "Fallstudien filtern",
+      "showingCount": {
+        "one": "{filtered} von {total} Fallstudie",
+        "other": "{filtered} von {total} Fallstudien"
+      },
+      "searchLabel": "Fallstudien durchsuchen",
+      "searchPlaceholder": "Unternehmen, Branche, Land oder Stichwort suchen...",
+      "filters": {
+        "country": {
+          "label": "Nach Land filtern",
+          "all": "Alle Länder"
+        },
+        "industry": {
+          "label": "Nach Branche filtern",
+          "all": "Alle Branchen"
+        },
+        "progress": {
+          "label": "Nach Fortschritt filtern",
+          "all": "Alle Fortschrittsstände"
+        }
+      },
+      "progress": {
+        "notStarted": "Nicht begonnen",
+        "inProgress": "In Bearbeitung",
+        "completed": "Abgeschlossen"
+      },
+      "clearFilters": "Filter zurücksetzen",
+      "fallbackSummary": "Öffnen Sie diese Fallstudie, um den ESG-Ansatz der Organisation und praktische Nachweise kennenzulernen.",
+      "actions": {
+        "open": "Fallstudie öffnen",
+        "review": "Fallstudie ansehen"
+      },
+      "empty": {
+        "title": "Keine Fallstudien entsprechen den Filtern",
+        "description": "Versuchen Sie einen anderen Unternehmensnamen, ein anderes Land, eine andere Branche oder einen anderen Fortschrittsstatus."
+      }
+    },
+    "EportfolioDetail": {
+      "fallbackSectionTitle": "Fallstudie",
+      "back": "Zurück zum ePortfolio",
+      "stages": {
+        "overview": "Überblick",
+        "environmental": "Umwelt",
+        "social": "Soziales",
+        "governance": "Unternehmensführung",
+        "evidence": "Nachweise & Compliance",
+        "lessons": "Erkenntnisse & Quellen",
+        "lessonsTitle": "Wichtigste Erkenntnisse & Quellen",
+        "caseStudy": "Fallstudie"
+      },
+      "descriptions": {
+        "overview": "Wie die Organisation ESG angeht und in ihre Aktivitäten integriert.",
+        "environmental": "Umweltprioritäten, Maßnahmen und unterstützende Nachweise.",
+        "social": "Menschen, Stakeholder, Gemeinschaften und soziale Aspekte der Fallstudie.",
+        "governance": "Governance-Strukturen, Aufsicht und Verantwortlichkeit.",
+        "evidence": "Externe Nachweise, regulatorischer Kontext und Empfehlungen aus der zugrunde liegenden Fallstudie.",
+        "lessons": "Die wichtigsten Erkenntnisse aus der Fallstudie und die sie stützenden Quellen."
+      },
+      "sections": {
+        "companyOverview": "Unternehmensüberblick",
+        "esgIntegration": "ESG-Integration",
+        "ratings": "Bewertungen und externe Nachweise",
+        "compliance": "Regulatorische Compliance",
+        "recommendations": "Empfehlungen",
+        "keyLessons": "Wichtigste Erkenntnisse",
+        "sources": "Quellen und Referenzen",
+        "sourcesDescription": "Für diese Fallstudie verwendete Referenzen."
+      },
+      "metadata": {
+        "country": "Land",
+        "industry": "Branche",
+        "reportingPeriod": "Berichtszeitraum",
+        "sourcePartner": "Quellenpartner",
+        "notSpecified": "Nicht angegeben"
+      },
+      "navigation": {
+        "previous": "Zurück",
+        "next": "Weiter"
+      },
+      "readingProgress": "Lesefortschritt der Fallstudie"
+    },
+    "EportfolioCompletionPage": {
+      "back": "Zurück zum ePortfolio"
+    },
+    "EportfolioProgressActions": {
+      "title": "Fallstudie abschließen",
+      "completedTitle": "{title} abgeschlossen",
+      "description": "Markieren Sie diese Fallstudie als abgeschlossen, um Ihren Fortschritt zu speichern.",
+      "completedDescription": "Ihr Fortschritt wurde gespeichert.",
+      "error": "Ihr Fortschritt konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
+      "saving": "Speichern...",
+      "markCompleted": "Als abgeschlossen markieren",
+      "nextCaseStudy": "Nächste Fallstudie",
+      "upNext": "Als Nächstes:"
+    }
+  }
+}

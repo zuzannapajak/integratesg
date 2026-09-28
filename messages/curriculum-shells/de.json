@@ -276,6 +276,37 @@
         "description": "Bitte schließen Sie zuerst mindestens ein Curriculum-Modul ab. Dadurch wird der Vorher/Nachher-Vergleich aussagekräftig.",
         "locked": "Abgeschlossene Module"
       }
+    },
+    "CertificateDownload": {
+      "generating": "PDF wird erstellt...",
+      "download": "Zertifikat herunterladen",
+      "errors": {
+        "timeout": "Die Erstellung des Zertifikats hat zu lange gedauert. Bitte versuchen Sie es erneut.",
+        "unavailable": "Das Zertifikat kann derzeit nicht erstellt werden."
+      }
+    },
+    "CurriculumPilotAssessment": {
+      "common": {
+        "answered": "Beantwortet",
+        "required": "Erforderlich",
+        "validationError": "Bitte beantworten Sie alle Fragen, bevor Sie fortfahren."
+      },
+      "pre": {
+        "eyebrow": "Pilot-Pre-Assessment",
+        "title": "Selbsteinschätzung vor Beginn der IntegratESG-Module",
+        "description": "Bevor Sie mit den IntegratESG-Modulen beginnen, geben Sie bitte an, wie sicher Sie sich derzeit bei den folgenden ESG-bezogenen Aufgaben fühlen. Es gibt keine richtigen oder falschen Antworten. Ihre Antworten helfen uns, den Lernfortschritt zu messen.",
+        "submit": "Pre-Assessment speichern und fortfahren",
+        "submitting": "Antworten werden gespeichert...",
+        "submitError": "Das Pre-Assessment konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+      },
+      "post": {
+        "eyebrow": "Pilot-Post-Assessment",
+        "title": "Selbsteinschätzung nach Nutzung der IntegratESG-Module",
+        "description": "Nachdem Sie die IntegratESG-Module abgeschlossen haben, geben Sie bitte an, wie sicher Sie sich jetzt bei den folgenden ESG-bezogenen Aufgaben fühlen. Beantworten Sie dieselben Fragen erneut, damit der Lernfortschritt gemessen werden kann.",
+        "submit": "Post-Assessment speichern und Pilotteilnahme abschließen",
+        "submitting": "Antworten werden gespeichert...",
+        "submitError": "Das Post-Assessment konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
+      }
     }
   }
 }

@@ -276,6 +276,37 @@
         "description": "Completa prima almeno un modulo del curriculum. Questo rende significativo il confronto pre/post.",
         "locked": "Moduli completati"
       }
+    },
+    "CertificateDownload": {
+      "generating": "Generazione PDF...",
+      "download": "Scarica certificato",
+      "errors": {
+        "timeout": "La generazione del certificato ha richiesto troppo tempo. Riprova.",
+        "unavailable": "Al momento non è possibile generare il certificato."
+      }
+    },
+    "CurriculumPilotAssessment": {
+      "common": {
+        "answered": "Risposte fornite",
+        "required": "Obbligatorio",
+        "validationError": "Rispondi a tutte le domande prima di continuare."
+      },
+      "pre": {
+        "eyebrow": "Pre-assessment pilota",
+        "title": "Autovalutazione prima di iniziare i moduli IntegratESG",
+        "description": "Prima di iniziare i moduli IntegratESG, indica quanto ti senti sicuro nello svolgere le seguenti attività relative all’ESG. Non ci sono risposte giuste o sbagliate. Le tue risposte ci aiuteranno a misurare i progressi di apprendimento.",
+        "submit": "Salva il pre-assessment e continua",
+        "submitting": "Salvataggio delle risposte...",
+        "submitError": "Non è stato possibile salvare il pre-assessment. Riprova."
+      },
+      "post": {
+        "eyebrow": "Post-assessment pilota",
+        "title": "Autovalutazione dopo l’utilizzo dei moduli IntegratESG",
+        "description": "Dopo aver completato i moduli IntegratESG, indica quanto ti senti sicuro nello svolgere ora le seguenti attività relative all’ESG. Rispondi nuovamente alle stesse domande per consentire la misurazione dei progressi di apprendimento.",
+        "submit": "Salva il post-assessment e termina la partecipazione al pilota",
+        "submitting": "Salvataggio delle risposte...",
+        "submitError": "Non è stato possibile salvare il post-assessment. Riprova."
+      }
     }
   }
 }

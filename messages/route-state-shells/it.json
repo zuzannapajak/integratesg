@@ -1,0 +1,39 @@
+{
+  "Protected": {
+    "RouteState": {
+      "dashboard": {
+        "loading": {
+          "title": "Caricamento della dashboard",
+          "description": "Stiamo preparando progressi, attività e riepilogo dell'apprendimento."
+        },
+        "error": {
+          "title": "Impossibile caricare la dashboard",
+          "description": "Si è verificato un errore durante la preparazione della dashboard. Riprova.",
+          "retry": "Riprova"
+        }
+      },
+      "eportfolio": {
+        "loading": {
+          "title": "Caricamento dell'ePortfolio",
+          "description": "Stiamo preparando i casi di studio e i tuoi progressi attuali."
+        },
+        "error": {
+          "title": "Impossibile caricare l'ePortfolio",
+          "description": "Si è verificato un errore durante la preparazione della libreria dei casi di studio. Riprova.",
+          "retry": "Riprova"
+        }
+      },
+      "application": {
+        "loading": {
+          "title": "Caricamento",
+          "description": "Stiamo preparando questa vista."
+        },
+        "error": {
+          "title": "Qualcosa è andato storto",
+          "description": "La pagina non può essere visualizzata correttamente. Riprova.",
+          "retry": "Riprova"
+        }
+      }
+    }
+  }
+}

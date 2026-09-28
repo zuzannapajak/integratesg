@@ -30,7 +30,8 @@ export default function LoginForm() {
       });
 
       if (error) {
-        setMessage(error.message);
+        console.error("[auth/login] Sign in failed", error);
+        setMessage(t("fallbackError"));
         return;
       }
 
@@ -39,7 +40,7 @@ export default function LoginForm() {
     } catch (error) {
       console.error("[auth/login] Sign in failed", error);
 
-      setMessage(error instanceof Error ? error.message : "Sign in failed. Please try again.");
+      setMessage(t("fallbackError"));
     } finally {
       setIsSubmitting(false);
     }

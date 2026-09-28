@@ -9,6 +9,7 @@ import {
   Search,
   SlidersHorizontal,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { type ChangeEvent, useMemo, useState } from "react";
 
@@ -34,25 +35,25 @@ function getCountryName(countryCode: string, locale: string) {
   }
 }
 
-function getProgressMeta(progress: EportfolioProgress) {
+function getProgressMeta(progress: EportfolioProgress, t: ReturnType<typeof useTranslations>) {
   switch (progress) {
     case "completed":
       return {
-        label: "Completed",
+        label: t("progress.completed"),
         icon: <CheckCircle2 className="h-4 w-4" />,
         className: "border-emerald-100 bg-emerald-50 text-emerald-700",
       };
 
     case "in_progress":
       return {
-        label: "In progress",
+        label: t("progress.inProgress"),
         icon: <CircleDashed className="h-4 w-4" />,
         className: "border-amber-100 bg-amber-50 text-amber-700",
       };
 
     default:
       return {
-        label: "Not started",
+        label: t("progress.notStarted"),
         icon: <BookOpen className="h-4 w-4" />,
         className: "border-slate-200 bg-slate-50 text-slate-600",
       };
@@ -64,6 +65,7 @@ function normaliseSearchValue(value: string) {
 }
 
 export default function EportfolioLibrary({ locale, items }: Props) {
+  const t = useTranslations("Protected.EportfolioLibrary");
   const [search, setSearch] = useState("");
   const [country, setCountry] = useState("all");
   const [industry, setIndustry] = useState("all");
@@ -131,41 +133,46 @@ export default function EportfolioLibrary({ locale, items }: Props) {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2 text-[0.78rem] font-semibold uppercase tracking-[0.14em] text-[#7b8794]">
             <SlidersHorizontal className="h-4 w-4" />
-            Refine case studies
+            {t("refineTitle")}
           </div>
 
           <p className="text-sm text-[#667180]">
-            {filteredItems.length} of {items.length}{" "}
-            {items.length === 1 ? "case study" : "case studies"}
+            {items.length === 1
+              ? t("showingCount.one", {
+                  filtered: filteredItems.length,
+                  total: items.length,
+                })
+              : t("showingCount.other", {
+                  filtered: filteredItems.length,
+                  total: items.length,
+                })}
           </p>
         </div>
 
         <div className="mt-5 grid gap-3 md:grid-cols-2 xl:grid-cols-[minmax(0,1.55fr)_repeat(3,minmax(0,0.85fr))]">
           <label className="flex min-w-0 items-center gap-3 rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 transition focus-within:border-[#0b9c72]/30 focus-within:shadow-[0_8px_24px_rgba(35,45,62,0.05)]">
             <Search className="h-4 w-4 shrink-0 text-[#98a2b3]" />
-
-            <span className="sr-only">Search case studies</span>
+            <span className="sr-only">{t("searchLabel")}</span>
 
             <input
               value={search}
               onChange={(event: ChangeEvent<HTMLInputElement>) => {
                 setSearch(event.target.value);
               }}
-              placeholder="Search company, industry, country or keyword..."
+              placeholder={t("searchPlaceholder")}
               className="w-full min-w-0 border-none bg-transparent text-[0.95rem] text-[#31425a] outline-none placeholder:text-[#9aa5b3]"
             />
           </label>
 
           <select
-            aria-label="Filter by country"
+            aria-label={t("filters.country.label")}
             value={country}
             onChange={(event: ChangeEvent<HTMLSelectElement>) => {
               setCountry(event.target.value);
             }}
             className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
           >
-            <option value="all">All countries</option>
-
+            <option value="all">{t("filters.country.all")}</option>
             {countryOptions.map((option) => (
               <option key={option.code} value={option.code}>
                 {option.label}
@@ -174,15 +181,14 @@ export default function EportfolioLibrary({ locale, items }: Props) {
           </select>
 
           <select
-            aria-label="Filter by industry"
+            aria-label={t("filters.industry.label")}
             value={industry}
             onChange={(event: ChangeEvent<HTMLSelectElement>) => {
               setIndustry(event.target.value);
             }}
             className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
           >
-            <option value="all">All industries</option>
-
+            <option value="all">{t("filters.industry.all")}</option>
             {industryOptions.map((option) => (
               <option key={option} value={option}>
                 {option}
@@ -191,17 +197,17 @@ export default function EportfolioLibrary({ locale, items }: Props) {
           </select>
 
           <select
-            aria-label="Filter by progress"
+            aria-label={t("filters.progress.label")}
             value={progress}
             onChange={(event: ChangeEvent<HTMLSelectElement>) => {
               setProgress(event.target.value as ProgressFilter);
             }}
             className="rounded-2xl border border-[#e8edf3] bg-white px-4 py-3.5 text-[0.95rem] text-[#31425a] outline-none focus:border-[#0b9c72]/30"
           >
-            <option value="all">All progress</option>
-            <option value="not_started">Not started</option>
-            <option value="in_progress">In progress</option>
-            <option value="completed">Completed</option>
+            <option value="all">{t("filters.progress.all")}</option>
+            <option value="not_started">{t("progress.notStarted")}</option>
+            <option value="in_progress">{t("progress.inProgress")}</option>
+            <option value="completed">{t("progress.completed")}</option>
           </select>
         </div>
 
@@ -212,7 +218,7 @@ export default function EportfolioLibrary({ locale, items }: Props) {
               onClick={clearFilters}
               className="text-sm font-semibold text-[#0b7f61] transition hover:text-[#096a52]"
             >
-              Clear filters
+              {t("clearFilters")}
             </button>
           </div>
         ) : null}
@@ -221,7 +227,7 @@ export default function EportfolioLibrary({ locale, items }: Props) {
       {filteredItems.length > 0 ? (
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {filteredItems.map((item) => {
-            const progressMeta = getProgressMeta(item.progress);
+            const progressMeta = getProgressMeta(item.progress, t);
             const countryName = getCountryName(item.countryCode, locale);
 
             return (
@@ -261,8 +267,7 @@ export default function EportfolioLibrary({ locale, items }: Props) {
                   </div>
 
                   <p className="mt-4 line-clamp-4 flex-1 text-sm leading-6 text-[#5f6c7b]">
-                    {item.summary ??
-                      "Open this case study to explore the organisation’s ESG approach and practical evidence."}
+                    {item.summary ?? t("fallbackSummary")}
                   </p>
 
                   <div className="mt-6 flex justify-end">
@@ -270,7 +275,7 @@ export default function EportfolioLibrary({ locale, items }: Props) {
                       href={`/${locale}/eportfolio/${item.slug}`}
                       className="inline-flex items-center gap-2 rounded-2xl bg-[#31425a] px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347]"
                     >
-                      {item.progress === "completed" ? "Review case study" : "Open case study"}
+                      {item.progress === "completed" ? t("actions.review") : t("actions.open")}
                       <ArrowRight className="h-4 w-4" />
                     </Link>
                   </div>
@@ -285,12 +290,10 @@ export default function EportfolioLibrary({ locale, items }: Props) {
             <Search className="h-5 w-5" />
           </div>
 
-          <h2 className="mt-5 text-xl font-semibold text-[#31425a]">
-            No case studies match your filters
-          </h2>
+          <h2 className="mt-5 text-xl font-semibold text-[#31425a]">{t("empty.title")}</h2>
 
           <p className="mx-auto mt-2 max-w-lg text-sm leading-6 text-[#667180]">
-            Try another company name, country, industry or progress status.
+            {t("empty.description")}
           </p>
 
           {hasActiveFilters ? (
@@ -299,7 +302,7 @@ export default function EportfolioLibrary({ locale, items }: Props) {
               onClick={clearFilters}
               className="mt-5 rounded-full border border-[#dbe4ec] bg-white px-4 py-2.5 text-sm font-semibold text-[#31425a] transition hover:bg-[#f7fafc]"
             >
-              Clear filters
+              {t("clearFilters")}
             </button>
           ) : null}
         </section>

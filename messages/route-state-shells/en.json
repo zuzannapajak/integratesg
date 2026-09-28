@@ -1,0 +1,39 @@
+{
+  "Protected": {
+    "RouteState": {
+      "dashboard": {
+        "loading": {
+          "title": "Loading dashboard",
+          "description": "Preparing your progress, activity and learning summary."
+        },
+        "error": {
+          "title": "The dashboard could not be loaded",
+          "description": "Something went wrong while preparing your dashboard. Please try again.",
+          "retry": "Try again"
+        }
+      },
+      "eportfolio": {
+        "loading": {
+          "title": "Loading ePortfolio",
+          "description": "Preparing case studies and your current progress."
+        },
+        "error": {
+          "title": "The ePortfolio could not be loaded",
+          "description": "Something went wrong while preparing the case-study library. Please try again.",
+          "retry": "Try again"
+        }
+      },
+      "application": {
+        "loading": {
+          "title": "Loading",
+          "description": "Preparing this view."
+        },
+        "error": {
+          "title": "Something went wrong",
+          "description": "The page could not be displayed correctly. Please try again.",
+          "retry": "Try again"
+        }
+      }
+    }
+  }
+}

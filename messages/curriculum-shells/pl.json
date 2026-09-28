@@ -276,6 +276,37 @@
         "description": "Najpierw ukończ co najmniej jeden moduł programu nauczania. Dzięki temu porównanie przed/po będzie miarodajne.",
         "locked": "Ukończone moduły"
       }
+    },
+    "CertificateDownload": {
+      "generating": "Generowanie PDF...",
+      "download": "Pobierz certyfikat",
+      "errors": {
+        "timeout": "Generowanie certyfikatu trwało zbyt długo. Spróbuj ponownie.",
+        "unavailable": "Nie można teraz wygenerować certyfikatu. Spróbuj ponownie później."
+      }
+    },
+    "CurriculumPilotAssessment": {
+      "common": {
+        "answered": "Udzielono odpowiedzi",
+        "required": "Wymagane",
+        "validationError": "Odpowiedz na wszystkie pytania przed przejściem dalej."
+      },
+      "pre": {
+        "eyebrow": "Pre-assessment pilotażowy",
+        "title": "Samoocena przed rozpoczęciem modułów IntegratESG",
+        "description": "Przed rozpoczęciem modułów IntegratESG wskaż, jak pewnie czujesz się w poniższych zadaniach związanych z ESG. Nie ma dobrych ani złych odpowiedzi. Twoje odpowiedzi pomogą zmierzyć postęp w nauce.",
+        "submit": "Zapisz pre-assessment i przejdź dalej",
+        "submitting": "Zapisywanie odpowiedzi...",
+        "submitError": "Nie udało się zapisać pre-assessmentu. Spróbuj ponownie."
+      },
+      "post": {
+        "eyebrow": "Post-assessment pilotażowy",
+        "title": "Samoocena po korzystaniu z modułów IntegratESG",
+        "description": "Po ukończeniu wybranych modułów IntegratESG wskaż, jak pewnie czujesz się teraz w poniższych zadaniach związanych z ESG. Odpowiedz ponownie na te same pytania, aby można było zmierzyć postęp w nauce.",
+        "submit": "Zapisz post-assessment i zakończ udział w pilotażu",
+        "submitting": "Zapisywanie odpowiedzi...",
+        "submitError": "Nie udało się zapisać post-assessmentu. Spróbuj ponownie."
+      }
     }
   }
 }

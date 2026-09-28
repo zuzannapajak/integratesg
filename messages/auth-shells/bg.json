@@ -9,7 +9,8 @@
     "ClientCallback": {
       "title": "Вход",
       "signingYouIn": "Вписваме ви...",
-      "signInFailed": "Вписването е неуспешно. Пренасочване към страницата за вход..."
+      "signInFailed": "Вписването е неуспешно. Пренасочване към страницата за вход...",
+      "redirecting": "Пренасочване..."
     },
     "LoginForm": {
       "emailLabel": "Имейл адрес",
@@ -18,7 +19,8 @@
       "passwordPlaceholder": "Въведете вашата парола",
       "submit": "Вход",
       "submitting": "Влизане...",
-      "forgotPassword": "Забравена парола?"
+      "forgotPassword": "Забравена парола?",
+      "fallbackError": "Влизането не бе успешно. Опитайте отново."
     },
     "SocialLogin": {
       "continueWithGoogle": "Продължете с Google"

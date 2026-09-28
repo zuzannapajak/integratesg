@@ -1,0 +1,122 @@
+{
+  "Protected": {
+    "CaseStudyLaunchShell": {
+      "area": {
+        "environmental": "Środowisko",
+        "social": "Społeczne",
+        "governance": "Ład korporacyjny",
+        "crossCutting": "Przekrojowe"
+      }
+    },
+    "EportfolioLibraryPage": {
+      "eyebrow": "ePortfolio",
+      "title": "Biblioteka studiów przypadków ESG",
+      "description": "Poznawaj rzeczywiste organizacje i sprawdzaj, jak zasady ESG są stosowane w działaniach środowiskowych, praktykach dotyczących ludzi, ładzie korporacyjnym, raportowaniu i decyzjach w łańcuchu wartości.",
+      "progress": {
+        "label": "Twój postęp",
+        "completedCount": "Ukończono {completed} z {total}",
+        "ariaLabel": "Ukończenie ePortfolio"
+      },
+      "empty": {
+        "title": "Nie ma jeszcze dostępnych studiów przypadków",
+        "description": "Opublikowane studia przypadków pojawią się tutaj po dodaniu ich do biblioteki ePortfolio."
+      }
+    },
+    "EportfolioLibrary": {
+      "refineTitle": "Filtruj studia przypadków",
+      "showingCount": {
+        "one": "{filtered} z {total} studium przypadku",
+        "other": "{filtered} z {total} studiów przypadków"
+      },
+      "searchLabel": "Szukaj studiów przypadków",
+      "searchPlaceholder": "Szukaj firmy, branży, kraju lub słowa kluczowego...",
+      "filters": {
+        "country": {
+          "label": "Filtruj według kraju",
+          "all": "Wszystkie kraje"
+        },
+        "industry": {
+          "label": "Filtruj według branży",
+          "all": "Wszystkie branże"
+        },
+        "progress": {
+          "label": "Filtruj według postępu",
+          "all": "Wszystkie stany postępu"
+        }
+      },
+      "progress": {
+        "notStarted": "Nie rozpoczęto",
+        "inProgress": "W trakcie",
+        "completed": "Ukończono"
+      },
+      "clearFilters": "Wyczyść filtry",
+      "fallbackSummary": "Otwórz to studium przypadku, aby poznać podejście organizacji do ESG i praktyczne dowody jego realizacji.",
+      "actions": {
+        "open": "Otwórz studium przypadku",
+        "review": "Przejrzyj studium przypadku"
+      },
+      "empty": {
+        "title": "Żadne studium przypadku nie pasuje do filtrów",
+        "description": "Spróbuj użyć innej nazwy firmy, kraju, branży lub statusu postępu."
+      }
+    },
+    "EportfolioDetail": {
+      "fallbackSectionTitle": "Studium przypadku",
+      "back": "Powrót do ePortfolio",
+      "stages": {
+        "overview": "Przegląd",
+        "environmental": "Środowisko",
+        "social": "Społeczne",
+        "governance": "Ład korporacyjny",
+        "evidence": "Dowody i zgodność",
+        "lessons": "Wnioski i źródła",
+        "lessonsTitle": "Kluczowe wnioski i źródła",
+        "caseStudy": "Studium przypadku"
+      },
+      "descriptions": {
+        "overview": "Jak organizacja podchodzi do ESG i integruje je ze swoją działalnością.",
+        "environmental": "Priorytety środowiskowe, działania i potwierdzające je dowody.",
+        "social": "Ludzie, interesariusze, społeczności i społeczne aspekty przypadku.",
+        "governance": "Struktury ładu korporacyjnego, nadzór i odpowiedzialność.",
+        "evidence": "Dowody zewnętrzne, kontekst regulacyjny i rekomendacje wynikające ze źródłowego przypadku.",
+        "lessons": "Najważniejsze wnioski z przypadku oraz źródła, które go potwierdzają."
+      },
+      "sections": {
+        "companyOverview": "Informacje o organizacji",
+        "esgIntegration": "Integracja ESG",
+        "ratings": "Oceny i dowody zewnętrzne",
+        "compliance": "Zgodność regulacyjna",
+        "recommendations": "Rekomendacje",
+        "keyLessons": "Kluczowe wnioski",
+        "sources": "Źródła i odwołania",
+        "sourcesDescription": "Źródła wykorzystane w tym studium przypadku."
+      },
+      "metadata": {
+        "country": "Kraj",
+        "industry": "Branża",
+        "reportingPeriod": "Okres raportowania",
+        "sourcePartner": "Partner źródłowy",
+        "notSpecified": "Nie podano"
+      },
+      "navigation": {
+        "previous": "Poprzednia",
+        "next": "Następna"
+      },
+      "readingProgress": "Postęp czytania studium przypadku"
+    },
+    "EportfolioCompletionPage": {
+      "back": "Powrót do ePortfolio"
+    },
+    "EportfolioProgressActions": {
+      "title": "Ukończ studium przypadku",
+      "completedTitle": "Ukończono: {title}",
+      "description": "Oznacz to studium przypadku jako ukończone, aby zapisać swój postęp.",
+      "completedDescription": "Twój postęp został zapisany.",
+      "error": "Nie udało się zapisać postępu. Spróbuj ponownie.",
+      "saving": "Zapisywanie...",
+      "markCompleted": "Oznacz jako ukończone",
+      "nextCaseStudy": "Następne studium przypadku",
+      "upNext": "Następnie:"
+    }
+  }
+}

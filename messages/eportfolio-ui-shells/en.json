@@ -1,0 +1,122 @@
+{
+  "Protected": {
+    "CaseStudyLaunchShell": {
+      "area": {
+        "environmental": "Environmental",
+        "social": "Social",
+        "governance": "Governance",
+        "crossCutting": "Cross-cutting"
+      }
+    },
+    "EportfolioLibraryPage": {
+      "eyebrow": "ePortfolio",
+      "title": "ESG case study library",
+      "description": "Explore real organisations and see how ESG principles are applied through environmental action, people practices, governance, reporting and value-chain decisions.",
+      "progress": {
+        "label": "Your progress",
+        "completedCount": "{completed} of {total} completed",
+        "ariaLabel": "ePortfolio completion"
+      },
+      "empty": {
+        "title": "No case studies are available yet",
+        "description": "Published case studies will appear here once they are added to the ePortfolio library."
+      }
+    },
+    "EportfolioLibrary": {
+      "refineTitle": "Refine case studies",
+      "showingCount": {
+        "one": "{filtered} of {total} case study",
+        "other": "{filtered} of {total} case studies"
+      },
+      "searchLabel": "Search case studies",
+      "searchPlaceholder": "Search company, industry, country or keyword...",
+      "filters": {
+        "country": {
+          "label": "Filter by country",
+          "all": "All countries"
+        },
+        "industry": {
+          "label": "Filter by industry",
+          "all": "All industries"
+        },
+        "progress": {
+          "label": "Filter by progress",
+          "all": "All progress"
+        }
+      },
+      "progress": {
+        "notStarted": "Not started",
+        "inProgress": "In progress",
+        "completed": "Completed"
+      },
+      "clearFilters": "Clear filters",
+      "fallbackSummary": "Open this case study to explore the organisation’s ESG approach and practical evidence.",
+      "actions": {
+        "open": "Open case study",
+        "review": "Review case study"
+      },
+      "empty": {
+        "title": "No case studies match your filters",
+        "description": "Try another company name, country, industry or progress status."
+      }
+    },
+    "EportfolioDetail": {
+      "fallbackSectionTitle": "Case study",
+      "back": "Back to ePortfolio",
+      "stages": {
+        "overview": "Overview",
+        "environmental": "Environmental",
+        "social": "Social",
+        "governance": "Governance",
+        "evidence": "Evidence & compliance",
+        "lessons": "Lessons & sources",
+        "lessonsTitle": "Key lessons & sources",
+        "caseStudy": "Case study"
+      },
+      "descriptions": {
+        "overview": "How the organisation approaches ESG and integrates it into its activities.",
+        "environmental": "Environmental priorities, actions and supporting evidence.",
+        "social": "People, stakeholders, communities and the social aspects of the case.",
+        "governance": "Governance structures, oversight and accountability.",
+        "evidence": "External evidence, regulatory context and recommendations from the source case.",
+        "lessons": "The main lessons from the case and the references supporting it."
+      },
+      "sections": {
+        "companyOverview": "Company overview",
+        "esgIntegration": "ESG integration",
+        "ratings": "Ratings and external evidence",
+        "compliance": "Regulatory compliance",
+        "recommendations": "Recommendations",
+        "keyLessons": "Key lessons",
+        "sources": "Sources and references",
+        "sourcesDescription": "References used for this case study."
+      },
+      "metadata": {
+        "country": "Country",
+        "industry": "Industry",
+        "reportingPeriod": "Reporting period",
+        "sourcePartner": "Source partner",
+        "notSpecified": "Not specified"
+      },
+      "navigation": {
+        "previous": "Previous",
+        "next": "Next"
+      },
+      "readingProgress": "Case study reading progress"
+    },
+    "EportfolioCompletionPage": {
+      "back": "Back to ePortfolio"
+    },
+    "EportfolioProgressActions": {
+      "title": "Complete case study",
+      "completedTitle": "{title} completed",
+      "description": "Mark this case study as completed to save your progress.",
+      "completedDescription": "Your progress has been saved.",
+      "error": "We could not save your progress. Please try again.",
+      "saving": "Saving...",
+      "markCompleted": "Mark as completed",
+      "nextCaseStudy": "Next case study",
+      "upNext": "Up next:"
+    }
+  }
+}
