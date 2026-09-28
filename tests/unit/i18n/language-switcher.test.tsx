@@ -93,4 +93,33 @@ describe("LanguageSwitcher locale navigation", () => {
       }),
     ).toHaveAttribute("href", "/pl/curriculum/module-slug/learn?lesson=2");
   });
+
+  it("can be opened with the keyboard and closed with Escape", async () => {
+    const user = userEvent.setup();
+
+    render(<LanguageSwitcher locale="en" />);
+
+    await user.tab();
+
+    const trigger = screen.getByRole("button", {
+      name: "Open language menu",
+    });
+
+    expect(trigger).toHaveFocus();
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+
+    await user.keyboard("{Enter}");
+
+    expect(trigger).toHaveAttribute("aria-expanded", "true");
+
+    const polishLink = screen.getByRole("link", {
+      name: "Switch to Polski",
+    });
+
+    expect(polishLink).toBeInTheDocument();
+
+    await user.keyboard("{Escape}");
+
+    expect(trigger).toHaveAttribute("aria-expanded", "false");
+  });
 });

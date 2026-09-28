@@ -340,7 +340,7 @@ function ContinueLearningHeroCard({
         <div className="flex shrink-0 justify-end md:pb-1">
           <Link
             href={continueLearning.href}
-            className="inline-flex items-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5"
+            className="inline-flex items-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold text-[#020617] transition-all duration-300 hover:-translate-y-0.5"
             style={{
               backgroundColor: roleConfig.accent,
               boxShadow: "0 12px 28px rgba(35,45,62,0.12)",
@@ -657,7 +657,7 @@ function CoreAreaCard({
 
       <div className="mt-6">
         <div
-          className="inline-flex items-center gap-2 rounded-2xl px-4 py-2.5 text-sm font-semibold text-white transition-all duration-300 group-hover:-translate-y-0.5"
+          className="inline-flex items-center gap-2 rounded-2xl px-4 py-2.5 text-sm font-semibold text-[#020617] transition-all duration-300 group-hover:-translate-y-0.5"
           style={{
             backgroundColor: accentColor,
             boxShadow: "0 10px 24px rgba(35,45,62,0.10)",

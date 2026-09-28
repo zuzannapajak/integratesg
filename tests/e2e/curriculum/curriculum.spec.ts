@@ -1,5 +1,7 @@
 import { expect, test, type Locator, type Page, type TestInfo } from "@playwright/test";
 
+import { expectNoSeriousAccessibilityViolations } from "../helpers/accessibility";
+
 import {
   cleanupCurriculumTestState,
   disconnectCurriculumTestDatabase,
@@ -112,6 +114,10 @@ test.describe("Curriculum persisted user journey", () => {
       ).toBeVisible();
 
       await expectNoDocumentOverflow(page, testInfo);
+
+      if (!isMobileProject(testInfo)) {
+        await expectNoSeriousAccessibilityViolations(page);
+      }
 
       await page
         .getByRole("button", {

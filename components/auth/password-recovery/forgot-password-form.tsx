@@ -62,6 +62,8 @@ export default function ForgotPasswordForm({ locale }: Props) {
           placeholder={t("emailPlaceholder")}
           className="w-full rounded-2xl border border-[#d9e1ea] bg-white px-4 py-3.5 text-[1rem] text-[#31425a] outline-none transition placeholder:text-[#98a2b3] focus:border-[#0d7fc2] focus:ring-4 focus:ring-[#0d7fc2]/10"
           value={email}
+          aria-invalid={message?.type === "error"}
+          aria-describedby={message ? "forgot-password-message" : undefined}
           onChange={(event) => {
             setEmail(event.target.value);
           }}
@@ -71,6 +73,9 @@ export default function ForgotPasswordForm({ locale }: Props) {
 
       {message ? (
         <div
+          id="forgot-password-message"
+          role={message.type === "error" ? "alert" : "status"}
+          aria-live={message.type === "error" ? "assertive" : "polite"}
           className={
             message.type === "success"
               ? "rounded-2xl border border-[#0d7fc2]/20 bg-[#0d7fc2]/8 px-4 py-3 text-[0.92rem] leading-6 text-[#31425a]"

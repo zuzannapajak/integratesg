@@ -149,13 +149,21 @@ export default function ResetPasswordForm({ locale }: Props) {
   };
 
   if (status === "checking") {
-    return <p className="text-[0.95rem] leading-7 text-[#5e6776]">{t("checkingLink")}</p>;
+    return (
+      <p role="status" aria-live="polite" className="text-[0.95rem] leading-7 text-[#5e6776]">
+        {t("checkingLink")}
+      </p>
+    );
   }
 
   if (status === "success") {
     return (
       <div className="space-y-5">
-        <div className="rounded-2xl border border-[#0d7fc2]/20 bg-[#0d7fc2]/8 px-4 py-3 text-[0.92rem] leading-6 text-[#31425a]">
+        <div
+          role="status"
+          aria-live="polite"
+          className="rounded-2xl border border-[#0d7fc2]/20 bg-[#0d7fc2]/8 px-4 py-3 text-[0.92rem] leading-6 text-[#31425a]"
+        >
           {t("success")}
         </div>
 
@@ -172,7 +180,11 @@ export default function ResetPasswordForm({ locale }: Props) {
   if (status === "error") {
     return (
       <div className="space-y-5">
-        <div className="rounded-2xl border border-[#ef6c23]/20 bg-[#ef6c23]/8 px-4 py-3 text-[0.92rem] leading-6 text-[#8a4a25]">
+        <div
+          role="alert"
+          aria-live="assertive"
+          className="rounded-2xl border border-[#ef6c23]/20 bg-[#ef6c23]/8 px-4 py-3 text-[0.92rem] leading-6 text-[#8a4a25]"
+        >
           {message ?? t("invalidLink")}
         </div>
 
@@ -202,6 +214,8 @@ export default function ResetPasswordForm({ locale }: Props) {
           placeholder={t("passwordPlaceholder")}
           className="w-full rounded-2xl border border-[#d9e1ea] bg-white px-4 py-3.5 text-[1rem] text-[#31425a] outline-none transition placeholder:text-[#98a2b3] focus:border-[#0d7fc2] focus:ring-4 focus:ring-[#0d7fc2]/10"
           value={password}
+          aria-invalid={Boolean(message)}
+          aria-describedby={message ? "reset-password-error" : undefined}
           onChange={(event) => {
             setPassword(event.target.value);
           }}
@@ -223,6 +237,8 @@ export default function ResetPasswordForm({ locale }: Props) {
           placeholder={t("confirmPasswordPlaceholder")}
           className="w-full rounded-2xl border border-[#d9e1ea] bg-white px-4 py-3.5 text-[1rem] text-[#31425a] outline-none transition placeholder:text-[#98a2b3] focus:border-[#0d7fc2] focus:ring-4 focus:ring-[#0d7fc2]/10"
           value={confirmPassword}
+          aria-invalid={Boolean(message)}
+          aria-describedby={message ? "reset-password-error" : undefined}
           onChange={(event) => {
             setConfirmPassword(event.target.value);
           }}
@@ -231,7 +247,12 @@ export default function ResetPasswordForm({ locale }: Props) {
       </div>
 
       {message ? (
-        <div className="rounded-2xl border border-[#ef6c23]/20 bg-[#ef6c23]/8 px-4 py-3 text-[0.92rem] leading-6 text-[#8a4a25]">
+        <div
+          id="reset-password-error"
+          role="alert"
+          aria-live="assertive"
+          className="rounded-2xl border border-[#ef6c23]/20 bg-[#ef6c23]/8 px-4 py-3 text-[0.92rem] leading-6 text-[#8a4a25]"
+        >
           {message}
         </div>
       ) : null}

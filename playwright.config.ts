@@ -49,7 +49,8 @@ if (!process.env.PLAYWRIGHT_BASE_URL && e2eDatabaseUrl) {
 }
 
 const smokeTestPattern = "**/smoke/**/*.spec.ts";
-const authTestPattern = "**/auth/**/*.spec.ts";
+const authTestPattern = "**/auth/auth.spec.ts";
+const accessibilityTestPattern = "**/auth/accessibility.spec.ts";
 const scenarioTestPattern = "**/scenarios/**/*.spec.ts";
 const scenarioCompletionTestPattern = "**/scenarios/scenario-completion.spec.ts";
 const eportfolioTestPattern = "**/eportfolio/**/*.spec.ts";
@@ -57,6 +58,7 @@ const curriculumTestPattern = "**/curriculum/**/*.spec.ts";
 
 const statefulTestPatterns = [
   authTestPattern,
+  accessibilityTestPattern,
   scenarioTestPattern,
   eportfolioTestPattern,
   curriculumTestPattern,
@@ -157,6 +159,19 @@ export default defineConfig({
     {
       name: "auth-chromium",
       testMatch: authTestPattern,
+
+      use: {
+        ...devices["Desktop Chrome"],
+      },
+    },
+
+    /*
+     * Accessibility ma osobny projekt, żeby cięższy axe scan
+     * nie współdzielił jednego długiego procesu Next.js z auth E2E.
+     */
+    {
+      name: "a11y-chromium",
+      testMatch: accessibilityTestPattern,
 
       use: {
         ...devices["Desktop Chrome"],
