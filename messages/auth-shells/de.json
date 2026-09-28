@@ -18,7 +18,8 @@
       "passwordPlaceholder": "Geben Sie Ihr Passwort ein",
       "submit": "Anmelden",
       "submitting": "Anmeldung läuft...",
-      "forgotPassword": "Passwort vergessen?"
+      "forgotPassword": "Passwort vergessen?",
+      "fallbackError": "Die Anmeldung ist fehlgeschlagen. Bitte versuchen Sie es erneut."
     },
     "SocialLogin": {
       "continueWithGoogle": "Mit Google fortfahren"

@@ -276,6 +276,37 @@
         "description": "Please complete at least one curriculum module first. This makes the pre/post comparison meaningful.",
         "locked": "Completed modules"
       }
+    },
+    "CertificateDownload": {
+      "generating": "Generating PDF...",
+      "download": "Download certificate",
+      "errors": {
+        "timeout": "Certificate generation took too long. Please try again.",
+        "unavailable": "Unable to generate the certificate right now."
+      }
+    },
+    "CurriculumPilotAssessment": {
+      "common": {
+        "answered": "Answered",
+        "required": "Required",
+        "validationError": "Please answer all questions before continuing."
+      },
+      "pre": {
+        "eyebrow": "Pilot pre-assessment",
+        "title": "Self-assessment before starting the IntegratESG modules",
+        "description": "Before starting the IntegratESG modules, please indicate how confident you currently feel about the following ESG-related tasks. There are no right or wrong answers. Your responses will help us measure learning progress.",
+        "submit": "Save pre-assessment and continue",
+        "submitting": "Saving answers...",
+        "submitError": "We could not save your pre-assessment. Please try again."
+      },
+      "post": {
+        "eyebrow": "Pilot post-assessment",
+        "title": "Self-assessment after using the IntegratESG modules",
+        "description": "After completing the IntegratESG modules, please indicate how confident you now feel about the following ESG-related tasks. Please answer the same questions again so that learning progress can be measured.",
+        "submit": "Save post-assessment and finish pilot participation",
+        "submitting": "Saving answers...",
+        "submitError": "We could not save your post-assessment. Please try again."
+      }
     }
   }
 }

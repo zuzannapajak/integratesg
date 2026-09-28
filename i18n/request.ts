@@ -9,6 +9,7 @@ const messageScopes = [
   "admin-stats-shells",
   "auth-shells",
   "curriculum-shells",
+  "curriculum-state-shells",
   "dashboard-shells",
   "eportfolio-shells",
   "eportfolio-ui-shells",

@@ -18,7 +18,8 @@
       "passwordPlaceholder": "Wpisz hasło",
       "submit": "Zaloguj się",
       "submitting": "Logowanie...",
-      "forgotPassword": "Nie pamiętasz hasła?"
+      "forgotPassword": "Nie pamiętasz hasła?",
+      "fallbackError": "Logowanie nie powiodło się. Spróbuj ponownie."
     },
     "SocialLogin": {
       "continueWithGoogle": "Kontynuuj z Google"

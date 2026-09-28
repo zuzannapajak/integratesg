@@ -18,7 +18,8 @@
       "passwordPlaceholder": "Enter your password",
       "submit": "Login",
       "submitting": "Signing in...",
-      "forgotPassword": "Forgot password?"
+      "forgotPassword": "Forgot password?",
+      "fallbackError": "Sign in failed. Please try again."
     },
     "SocialLogin": {
       "continueWithGoogle": "Continue with Google"

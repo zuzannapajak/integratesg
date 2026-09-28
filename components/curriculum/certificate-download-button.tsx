@@ -1,6 +1,7 @@
 "use client";
 
 import { Download, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 type Props = {
@@ -9,6 +10,7 @@ type Props = {
 };
 
 export default function CertificateDownloadButton({ slug, className }: Props) {
+  const t = useTranslations("Protected.CertificateDownload");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -30,7 +32,11 @@ export default function CertificateDownloadButton({ slug, className }: Props) {
       if (!response.ok) {
         const payload = (await response.json().catch(() => null)) as { error?: string } | null;
 
-        setError(payload?.error ?? "Unable to generate the certificate right now.");
+        console.error(
+          "[curriculum/certificate] generation failed",
+          payload?.error ?? response.status,
+        );
+        setError(t("errors.unavailable"));
         return;
       }
 
@@ -50,9 +56,9 @@ export default function CertificateDownloadButton({ slug, className }: Props) {
       console.error(downloadError);
 
       if (downloadError instanceof DOMException && downloadError.name === "AbortError") {
-        setError("Certificate generation took too long. Please try again.");
+        setError(t("errors.timeout"));
       } else {
-        setError("Unable to generate the certificate right now.");
+        setError(t("errors.unavailable"));
       }
     } finally {
       window.clearTimeout(timeoutId);
@@ -76,10 +82,14 @@ export default function CertificateDownloadButton({ slug, className }: Props) {
         ) : (
           <Download className="h-4.5 w-4.5" />
         )}
-        {isLoading ? "Generating PDF..." : "Download certificate"}
+        {isLoading ? t("generating") : t("download")}
       </button>
 
-      {error ? <p className="text-sm text-rose-600">{error}</p> : null}
+      {error ? (
+        <p className="text-sm text-rose-600" role="alert" aria-live="assertive">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }

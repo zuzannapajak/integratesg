@@ -18,7 +18,8 @@
       "passwordPlaceholder": "Inserisci la tua password",
       "submit": "Accedi",
       "submitting": "Accesso in corso...",
-      "forgotPassword": "Password dimenticata?"
+      "forgotPassword": "Password dimenticata?",
+      "fallbackError": "Accesso non riuscito. Riprova."
     },
     "SocialLogin": {
       "continueWithGoogle": "Continua con Google"

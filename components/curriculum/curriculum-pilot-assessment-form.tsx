@@ -6,6 +6,7 @@ import {
 } from "@/features/curriculum/pilot-actions";
 import type { CurriculumPilotAssessmentQuestionViewModel } from "@/lib/curriculum/pilot";
 import { ArrowRight, ClipboardCheck, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import type { SyntheticEvent } from "react";
 import { useMemo, useState, useTransition } from "react";
@@ -17,85 +18,8 @@ type Props = {
   questions: CurriculumPilotAssessmentQuestionViewModel[];
 };
 
-type AssessmentCopy = {
-  eyebrow: string;
-  title: string;
-  description: string;
-  scaleTitle: string;
-  submit: string;
-  submitting: string;
-  answered: string;
-  required: string;
-  validationError: string;
-  submitError: string;
-};
-
 const SURFACE =
   "rounded-[30px] border border-white/70 bg-white/88 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";
-
-function getAssessmentCopy(locale: string, assessmentType: "pre" | "post"): AssessmentCopy {
-  if (locale === "pl") {
-    if (assessmentType === "post") {
-      return {
-        eyebrow: "Post-assessment pilotażowy",
-        title: "Samoocena po korzystaniu z modułów IntegratESG",
-        description:
-          "Po ukończeniu wybranych modułów IntegratESG wskaż, jak pewnie czujesz się teraz w poniższych zadaniach związanych z ESG. Odpowiedz ponownie na te same pytania, aby można było zmierzyć postęp w nauce.",
-        scaleTitle: "Skala odpowiedzi",
-        submit: "Zapisz post-assessment i zakończ udział w pilotażu",
-        submitting: "Zapisywanie odpowiedzi...",
-        answered: "Udzielono odpowiedzi",
-        required: "Wymagane",
-        validationError: "Odpowiedz na wszystkie pytania przed przejściem dalej.",
-        submitError: "Nie udało się zapisać post-assessmentu. Spróbuj ponownie.",
-      };
-    }
-
-    return {
-      eyebrow: "Pre-assessment pilotażowy",
-      title: "Samoocena przed rozpoczęciem modułów IntegratESG",
-      description:
-        "Przed rozpoczęciem modułów IntegratESG wskaż, jak pewnie czujesz się w poniższych zadaniach związanych z ESG. Nie ma dobrych ani złych odpowiedzi. Twoje odpowiedzi pomogą zmierzyć postęp w nauce.",
-      scaleTitle: "Skala odpowiedzi",
-      submit: "Zapisz pre-assessment i przejdź dalej",
-      submitting: "Zapisywanie odpowiedzi...",
-      answered: "Udzielono odpowiedzi",
-      required: "Wymagane",
-      validationError: "Odpowiedz na wszystkie pytania przed przejściem dalej.",
-      submitError: "Nie udało się zapisać pre-assessmentu. Spróbuj ponownie.",
-    };
-  }
-
-  if (assessmentType === "post") {
-    return {
-      eyebrow: "Pilot post-assessment",
-      title: "Self-assessment after using the IntegratESG modules",
-      description:
-        "After completing the IntegratESG modules, please indicate how confident you now feel about the following ESG-related tasks. Please answer the same questions again so that learning progress can be measured.",
-      scaleTitle: "Response scale",
-      submit: "Save post-assessment and finish pilot participation",
-      submitting: "Saving answers...",
-      answered: "Answered",
-      required: "Required",
-      validationError: "Please answer all questions before continuing.",
-      submitError: "We could not save your post-assessment. Please try again.",
-    };
-  }
-
-  return {
-    eyebrow: "Pilot pre-assessment",
-    title: "Self-assessment before starting the IntegratESG modules",
-    description:
-      "Before starting the IntegratESG modules, please indicate how confident you currently feel about the following ESG-related tasks. There are no right or wrong answers. Your responses will help us measure learning progress.",
-    scaleTitle: "Response scale",
-    submit: "Save pre-assessment and continue",
-    submitting: "Saving answers...",
-    answered: "Answered",
-    required: "Required",
-    validationError: "Please answer all questions before continuing.",
-    submitError: "We could not save your pre-assessment. Please try again.",
-  };
-}
 
 export default function CurriculumPilotAssessmentForm({
   locale,
@@ -103,8 +27,35 @@ export default function CurriculumPilotAssessmentForm({
   assessmentType,
   questions,
 }: Props) {
+  const t = useTranslations("Protected.CurriculumPilotAssessment");
   const router = useRouter();
-  const copy = getAssessmentCopy(locale, assessmentType);
+
+  const sharedCopy = {
+    answered: t("common.answered"),
+    required: t("common.required"),
+    validationError: t("common.validationError"),
+  };
+
+  const copy =
+    assessmentType === "pre"
+      ? {
+          ...sharedCopy,
+          eyebrow: t("pre.eyebrow"),
+          title: t("pre.title"),
+          description: t("pre.description"),
+          submit: t("pre.submit"),
+          submitting: t("pre.submitting"),
+          submitError: t("pre.submitError"),
+        }
+      : {
+          ...sharedCopy,
+          eyebrow: t("post.eyebrow"),
+          title: t("post.title"),
+          description: t("post.description"),
+          submit: t("post.submit"),
+          submitting: t("post.submitting"),
+          submitError: t("post.submitError"),
+        };
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, number | string>>({});
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();

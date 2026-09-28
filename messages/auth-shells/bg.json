@@ -18,7 +18,8 @@
       "passwordPlaceholder": "Въведете вашата парола",
       "submit": "Вход",
       "submitting": "Влизане...",
-      "forgotPassword": "Забравена парола?"
+      "forgotPassword": "Забравена парола?",
+      "fallbackError": "Влизането не бе успешно. Опитайте отново."
     },
     "SocialLogin": {
       "continueWithGoogle": "Продължете с Google"

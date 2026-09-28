@@ -18,7 +18,8 @@
       "passwordPlaceholder": "Εισαγάγετε τον κωδικό πρόσβασής σας",
       "submit": "Σύνδεση",
       "submitting": "Γίνεται σύνδεση...",
-      "forgotPassword": "Ξεχάσατε τον κωδικό;"
+      "forgotPassword": "Ξεχάσατε τον κωδικό;",
+      "fallbackError": "Η σύνδεση απέτυχε. Δοκιμάστε ξανά."
     },
     "SocialLogin": {
       "continueWithGoogle": "Συνέχεια με Google"
