@@ -1,6 +1,7 @@
 "use client";
 
 import { createClient } from "@/lib/supabase/client";
+import { CircleAlert, LoaderCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 
@@ -49,7 +50,7 @@ function getAuthErrorDetails(error: unknown) {
 
 export default function ClientAuthCallback({ locale }: Props) {
   const t = useTranslations("Auth.ClientCallback");
-  const [message, setMessage] = useState(t("signingYouIn"));
+  const [hasError, setHasError] = useState(false);
   const hasRun = useRef(false);
 
   useEffect(() => {
@@ -70,7 +71,7 @@ export default function ClientAuthCallback({ locale }: Props) {
 
       if (oauthError) {
         console.error("[client-auth-callback] OAuth provider returned an error", oauthError);
-        setMessage(t("signInFailed"));
+        setHasError(true);
         window.location.replace(`/${locale}/auth/login`);
         return;
       }
@@ -87,7 +88,7 @@ export default function ClientAuthCallback({ locale }: Props) {
           "[client-auth-callback] exchangeCodeForSession failed",
           getAuthErrorDetails(error),
         );
-        setMessage(t("signInFailed"));
+        setHasError(true);
         window.location.replace(`/${locale}/auth/login`);
         return;
       }
@@ -96,13 +97,33 @@ export default function ClientAuthCallback({ locale }: Props) {
     };
 
     void finishLogin();
-  }, [locale, t]);
+  }, [locale]);
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-6">
-      <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold">{t("title")}</h1>
-        <p className="mt-3 text-sm text-muted-foreground">{message}</p>
+    <main className="relative isolate flex h-full min-h-[70dvh] items-center justify-center overflow-hidden bg-white px-6 py-16 md:px-8 lg:px-10">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_16%_18%,rgba(236,103,37,0.12),transparent_28%),radial-gradient(circle_at_86%_22%,rgba(13,127,194,0.15),transparent_32%),linear-gradient(180deg,#ffffff_0%,#f8fafc_55%,#ffffff_100%)]" />
+
+      <div className="relative z-10 w-full max-w-sm rounded-[2rem] border border-white/80 bg-white/90 px-8 py-12 text-center shadow-[0_20px_55px_rgba(35,45,62,0.10)] backdrop-blur-xl sm:px-10">
+        <div role="status" aria-live="polite">
+          <div
+            className={`mx-auto flex h-16 w-16 items-center justify-center rounded-2xl ${
+              hasError ? "bg-red-50 text-red-600" : "bg-[#eaf5fc] text-[#0d7fc2]"
+            }`}
+          >
+            {hasError ? (
+              <CircleAlert className="h-8 w-8" aria-hidden="true" />
+            ) : (
+              <LoaderCircle
+                className="h-8 w-8 animate-spin motion-reduce:animate-none"
+                aria-hidden="true"
+              />
+            )}
+          </div>
+
+          <h1 className="mt-6 text-[1.35rem] font-semibold leading-snug tracking-tight text-[#31425a]">
+            {hasError ? t("signInFailed") : t("signingYouIn")}
+          </h1>
+        </div>
       </div>
     </main>
   );
