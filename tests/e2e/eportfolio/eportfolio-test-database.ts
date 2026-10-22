@@ -151,7 +151,7 @@ async function verifyEportfolioSeed(): Promise<void> {
       [
         "The dedicated Playwright database is not ready for ePortfolio E2E tests.",
         ...problems,
-        "Apply the current migrations and seed the 8 ready ePortfolio case studies in the test database.",
+        "Apply the current migrations and seed the published ePortfolio case studies in the test database.",
       ].join(" "),
     );
   }

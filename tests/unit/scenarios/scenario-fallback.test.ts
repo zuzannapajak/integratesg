@@ -4,13 +4,13 @@ import { describe, expect, it } from "vitest";
 describe("scenario translation fallback", () => {
   it("returns the English scenario when the requested locale is unavailable", () => {
     const englishScenario = resolveScenarioBySlug("scenario-02", "en");
-    const polishScenario = resolveScenarioBySlug("scenario-02", "pl");
+    const italianScenario = resolveScenarioBySlug("scenario-02", "it");
 
     expect(englishScenario).not.toBeNull();
-    expect(polishScenario).not.toBeNull();
-    expect(polishScenario?.locale).toBe("en");
-    expect(polishScenario?.title).toBe(englishScenario?.title);
-    expect(polishScenario?.challenges[0]?.question).toBe(englishScenario?.challenges[0]?.question);
+    expect(italianScenario).not.toBeNull();
+    expect(italianScenario?.locale).toBe("en");
+    expect(italianScenario?.title).toBe(englishScenario?.title);
+    expect(italianScenario?.challenges[0]?.question).toBe(englishScenario?.challenges[0]?.question);
   });
 
   it("returns null for an unknown scenario slug", () => {

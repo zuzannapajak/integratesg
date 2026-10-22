@@ -159,7 +159,7 @@ test.describe("ePortfolio", () => {
       }),
     ).toBeVisible();
     await expect(
-      page.getByText("1 of 8 case studies", {
+      page.getByText("1 of 15 case studies", {
         exact: true,
       }),
     ).toBeVisible();
@@ -251,7 +251,7 @@ test.describe("ePortfolio", () => {
     ).toBeVisible();
 
     await expect(
-      page.getByText("0 of 8 case studies", {
+      page.getByText("0 of 15 case studies", {
         exact: true,
       }),
     ).toBeVisible();

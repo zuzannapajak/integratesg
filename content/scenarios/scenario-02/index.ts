@@ -3,6 +3,10 @@ import { parseScenarioData } from "@/lib/scenarios/simulator/schema";
 
 import { scenario02Definition, scenario02Ids } from "./definition";
 import { scenario02En } from "./locales/en";
+import { scenario02Bg } from "./locales/bg";
+import { scenario02El } from "./locales/el";
+import { scenario02De } from "./locales/de";
+import { scenario02Pl } from "./locales/pl";
 
 /**
  * Scenario 2 source data before runtime validation.
@@ -17,6 +21,22 @@ const sourceScenario02Data: ScenarioData<"scenario-02"> = defineScenarioData<"sc
     en: {
       ...scenario02En,
       locale: "en" as const,
+    },
+    pl: {
+      ...scenario02Pl,
+      locale: "pl" as const,
+    },
+    de: {
+      ...scenario02De,
+      locale: "de" as const,
+    },
+    el: {
+      ...scenario02El,
+      locale: "el" as const,
+    },
+    bg: {
+      ...scenario02Bg,
+      locale: "bg" as const,
     },
   },
 });
