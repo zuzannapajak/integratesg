@@ -1,0 +1,137 @@
+{
+  "language": "pl",
+  "modules": [
+    {
+      "title": "Moduł 1: Wprowadzenie do ESG (Environmental, Social, Governance – środowisko, społeczeństwo, ład korporacyjny) i zrównoważonego rozwoju",
+      "overview": "Ten moduł wyposaży Cię w podstawową wiedzę o ESG i jego ewolucji, umożliwiając zrozumienie kluczowych pojęć związanych z filarami środowiskowym, społecznym i ładu korporacyjnego. Pomoże Ci dostrzec strategiczną wartość integrowania ESG – niezależnie od tego, czy zarządzasz MŚP, czy dużym przedsiębiorstwem – oraz pokaże, jak Twoje działania łączą się bezpośrednio z globalnymi Celami Zrównoważonego Rozwoju (SDGs). Wiedza ta jest niezbędna do promowania zrównoważonego rozwoju.",
+      "units": [
+        {
+          "title": "Jednostka 1: Trzy filary ESG (środowiskowy, społeczny, ład korporacyjny)",
+          "summary": "Zdefiniowanie trzech podstawowych komponentów ESG (środowiskowego, społecznego i ładu korporacyjnego)."
+        },
+        {
+          "title": "Jednostka 2: Od filantropii korporacyjnej do konieczności biznesowej",
+          "summary": "Opisanie historycznej ewolucji ESG w krajobrazie biznesowym."
+        },
+        {
+          "title": "Jednostka 3: Dlaczego ESG jest Twoją przewagą strategiczną",
+          "summary": "Wskazanie strategicznego znaczenia ESG zarówno dla MŚP, jak i dużych przedsiębiorstw."
+        },
+        {
+          "title": "Jednostka 4: Powiązanie działań biznesowych z celami globalnymi",
+          "summary": "Wyjaśnienie powiązań między ramami ESG a Celami Zrównoważonego Rozwoju (SDGs)."
+        }
+      ]
+    },
+    {
+      "title": "Moduł 2: Strategia, wizja i spójność organizacyjna",
+      "overview": "Ten moduł analizuje dostosowanie strategii i wizji organizacji do zasad ESG. Dostarcza praktycznej wiedzy na temat włączania ESG do podstawowych procesów biznesowych, umożliwiając zrównoważone tworzenie wartości. Dzięki zrozumieniu związku między ESG a sukcesem organizacji uczestnicy będą przygotowani do promowania przejrzystych i wiarygodnych praktyk ESG, przyczyniając się do bardziej zrównoważonej przyszłości biznesu i interesariuszy.",
+      "units": [
+        {
+          "title": "Jednostka 1: Powiązanie ESG z misją, wartościami i strategią długoterminową",
+          "summary": "Przeanalizować obecną misję, wartości i strategię długoterminową swojej organizacji, aby zidentyfikować luki w spójności z zasadami ESG oraz możliwości ich integracji."
+        },
+        {
+          "title": "Jednostka 2: Ustalanie priorytetów i celów ESG",
+          "summary": "Ustalić priorytety wśród kwestii ESG istotnych dla Twojej organizacji, oceniając ich znaczenie dla interesariuszy i strategii biznesowej."
+        },
+        {
+          "title": "Jednostka 3: Budowanie zaangażowania przywództwa i kultury organizacyjnej",
+          "summary": "Zaprezentować strategie budowania zaangażowania kierownictwa w integrację ESG w Twojej organizacji."
+        },
+        {
+          "title": "Jednostka 4: Równoważenie ESG z wynikami finansowymi i operacyjnymi",
+          "summary": "Ocenić kompromisy między inicjatywami ESG a krótkoterminowymi wynikami finansowymi, aby podejmować świadome decyzje równoważące zrównoważony rozwój i rentowność."
+        }
+      ]
+    },
+    {
+      "title": "Moduł 3: Poruszanie się wśród ram ESG i unijnych standardów raportowania",
+      "overview": "Ten moduł pomoże Ci zrozumieć, jak kluczowe ramy ESG i europejskie standardy raportowania łączą się ze sobą i kształtują dzisiejszy krajobraz zrównoważonego rozwoju. Nauczysz się interpretować i stosować te ramy w swojej organizacji, przygotować się do unijnych wymogów raportowania oraz rozpoznawać ich praktyczne konsekwencje dla MŚP w różnych sektorach.",
+      "units": [
+        {
+          "title": "Jednostka 1: Kluczowe ramy – SDGs, GRI, SASB, TCFD, ESRS",
+          "summary": "Rozróżniać główne ramy ESG oraz opisywać ich kluczowe cele i obszary zainteresowania."
+        },
+        {
+          "title": "Jednostka 2: Unijna dyrektywa o sprawozdawczości przedsiębiorstw w zakresie zrównoważonego rozwoju (CSRD) i powiązane polityki UE",
+          "summary": "Wyjaśnić główny cel, zakres i wymogi CSRD."
+        },
+        {
+          "title": "Jednostka 3: Ratingi ESG, audyty, ujawnienia informacji i ich wpływ",
+          "summary": "Wyjaśnić, jak działają ratingi ESG, audyty i ujawnienia informacji oraz dlaczego mają znaczenie dla organizacji każdej wielkości."
+        },
+        {
+          "title": "Jednostka 4: Praktyczne konsekwencje dla MŚP i realia sektorowe",
+          "summary": "Zinterpretować, jak ramy ESG i obowiązki raportowe przekładają się na praktyczne działania MŚP."
+        }
+      ]
+    },
+    {
+      "title": "Moduł 4: Integrowanie ESG z działalnością operacyjną",
+      "overview": "Ten moduł pomoże Ci przekształcić ESG z ogólnej idei w praktyczne działanie w codziennej działalności biznesowej. Nauczysz się, jak poprawiać praktyki środowiskowe, społeczne i w zakresie ładu korporacyjnego dzięki prostym decyzjom operacyjnym oraz jak komunikować te działania wiarygodnie, aby Twoja firma budowała zaufanie, ograniczała ryzyko i unikała pustych deklaracji ESG.",
+      "units": [
+        {
+          "title": "Jednostka 1: Punkty styku ESG w kluczowych procesach operacyjnych",
+          "summary": "Przeanalizować kluczowe przepływy operacyjne, aby zidentyfikować najistotniejsze punkty oddziaływania ESG."
+        },
+        {
+          "title": "Jednostka 2: Odpowiedzialność społeczna wobec pracowników i w łańcuchu dostaw",
+          "summary": "Ocenić ryzyka i punkty do poprawy w zakresie odpowiedzialności społecznej w praktykach pracowniczych i relacjach z dostawcami."
+        },
+        {
+          "title": "Jednostka 3: Ład korporacyjny w operacyjnym podejmowaniu decyzji",
+          "summary": "skargi klientów i zwroty pieniędzy"
+        },
+        {
+          "title": "Jednostka 4: Wiarygodne ESG w komunikacji z klientami i deklaracjach",
+          "summary": "Ocenić kierowane do klientów deklaracje ESG i zmiany operacyjne pod kątem ryzyka greenwashingu lub social washingu."
+        }
+      ]
+    },
+    {
+      "title": "Moduł 5: Wdrażanie, dane i praktyka międzyfunkcyjna",
+      "overview": "Ten moduł traktuje ESG jako praktyczny proces biznesowy, a nie ćwiczenie sprawozdawcze. Na podstawie realistycznego scenariusza przeanalizujesz, jak organizacje porządkują odpowiedzialność za ESG, pracują z danymi i współpracują z partnerami zewnętrznymi. Celem jest pomoc w zrozumieniu, jak codzienne decyzje, koordynacja między zespołami i ustrukturyzowana współpraca kształtują skuteczną integrację ESG w czasie.",
+      "units": [
+        {
+          "title": "Jednostka 1: Cykl życia integracji ESG",
+          "summary": "Wskazać główne etapy cyklu życia wdrażania ESG."
+        },
+        {
+          "title": "Jednostka 2: Gromadzenie danych ESG, zarządzanie nimi i cyfryzacja",
+          "summary": "Rozpoznać kluczowe rodzaje danych ESG."
+        },
+        {
+          "title": "Jednostka 3: Osadzanie ESG w codziennych procesach i podejmowaniu decyzji",
+          "summary": "Włączać wartości ESG do codziennych przepływów pracy i podejmowania decyzji."
+        },
+        {
+          "title": "Jednostka 4: Współpraca międzyfunkcyjna i międzysektorowa",
+          "summary": "Wskazać możliwości współpracy wewnątrz organizacji i poza nią, wspierające wdrażanie ESG."
+        }
+      ]
+    },
+    {
+      "title": "Moduł 6: Monitorowanie, raportowanie i przyszłe trendy ESG",
+      "overview": "Ten moduł pomaga uczestnikom monitorować wdrażanie ESG za pomocą wartościowych wskaźników i KPI, wiarygodnie raportować wyniki ESG (w tym z uwzględnieniem kluczowych unijnych zasad sprawozdawczości) oraz wykorzystywać innowacje i analizę przyszłych trendów do ciągłego doskonalenia praktyk ESG. Na koniec uczestnicy potrafią przełożyć dane ESG na decyzje i komunikację budującą zaufanie interesariuszy.",
+      "units": [
+        {
+          "title": "Jednostka 1: Wskaźniki ESG i KPI: mierzenie tego, co ważne",
+          "summary": "Wskaźniki ESG i KPI są fundamentem skutecznego zarządzania zrównoważonym rozwojem"
+        },
+        {
+          "title": "Jednostka 2: Wiarygodne raportowanie i komunikowanie wyników ESG",
+          "summary": "Raportowanie nie służy wyłącznie zgodności z przepisami, lecz budowaniu zaufania"
+        },
+        {
+          "title": "Jednostka 3: Innowacje jako motor wyników ESG",
+          "summary": "Innowacje odgrywają kluczową rolę w umożliwianiu organizacjom skuteczniejszego i efektywniejszego osiągania celów ESG"
+        },
+        {
+          "title": "Jednostka 4: Ciągłe doskonalenie, przyszłe polityki UE i globalne trendy ESG",
+          "summary": "Zapewni przewidywalność obywatelom, przedsiębiorstwom i inwestorom"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2152 @@
+[
+  {
+    "slug": "module-1-introduction-to-esg-and-sustainable-development",
+    "quizzes": [
+      {
+        "sortOrder": 1,
+        "title": "PL - Samoocena 1",
+        "questions": [
+          {
+            "prompt": "Który z kluczowych elementów zalicza się do filaru ładu korporacyjnego (G) w ESG?",
+            "answers": [
+              {
+                "text": "Ograniczanie odpadów produkcyjnych.",
+                "feedbackText": "Błędnie (A): Ograniczanie odpadów produkcyjnych to kluczowy element filaru środowiskowego (E), ponieważ dotyczy bezpośredniego wpływu firmy na planetę."
+              },
+              {
+                "text": "Wdrażanie skutecznych polityk antykorupcyjnych.",
+                "feedbackText": "Poprawnie (B): Wdrażanie skutecznych polityk antykorupcyjnych należy do filaru ładu korporacyjnego (G), ponieważ wiąże się z wewnętrznymi zasadami, etycznym postępowaniem i odpowiedzialnością kierownictwa firmy."
+              },
+              {
+                "text": "Promowanie zdrowia i bezpieczeństwa pracowników.",
+                "feedbackText": "Błędnie (C): Promowanie zdrowia i bezpieczeństwa pracowników należy do filaru społecznego (S) i dotyczy traktowania oraz dobrostanu pracowników."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Zobowiązanie firmy do wdrażania gospodarki o obiegu zamkniętym mieści się przede wszystkim w którym filarze ESG?",
+            "answers": [
+              {
+                "text": "Filar społeczny",
+                "feedbackText": "Błędnie (A): Filar społeczny koncentruje się na ludziach i relacjach (np. dobrostan pracowników, różnorodność). Gospodarka o obiegu zamkniętym dotyczy wykorzystania materiałów i odpadów."
+              },
+              {
+                "text": "Filar ładu korporacyjnego",
+                "feedbackText": "Błędnie (B): Filar ładu korporacyjnego dotyczy przywództwa, przejrzystości i odpowiedzialności, a nie przepływów materiałowych czy procesów ograniczania odpadów."
+              },
+              {
+                "text": "Filar środowiskowy.",
+                "feedbackText": "Poprawnie (C): Zobowiązanie do gospodarki o obiegu zamkniętym – czyli utrzymywania materiałów w użyciu tak długo, jak to możliwe – należy przede wszystkim do filaru środowiskowego (E), ponieważ dotyczy gospodarowania zasobami i unikania zanieczyszczeń."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Który z poniższych elementów uznaje się za składnik filaru społecznego (S) w odniesieniu do kultury miejsca pracy?",
+            "answers": [
+              {
+                "text": "Efektywność zasobowa i gospodarowanie wodą.",
+                "feedbackText": "Błędnie (A): Gospodarowanie wodą i efektywność zasobowa wpisują się w filar środowiskowy (E), który koncentruje się na śladzie działalności operacyjnej."
+              },
+              {
+                "text": "Różnorodność, równość i włączenie (DEI).",
+                "feedbackText": "Poprawnie (B): DEI to podstawowy element filaru społecznego (S), ponieważ zapewnia, że miejsce pracy jest sprawiedliwe i dostępne dla osób o różnym pochodzeniu."
+              },
+              {
+                "text": "Przejrzystość i odpowiedzialność w podejmowaniu decyzji.",
+                "feedbackText": "Błędnie (C): Przejrzystość i odpowiedzialność to „wewnętrzny silnik” filaru ładu korporacyjnego (G)."
+              }
+            ],
+            "sortOrder": 3
+          },
+          {
+            "prompt": "Jaka jest główna rola filaru ładu korporacyjnego (G) w relacji do dwóch pozostałych filarów?",
+            "answers": [
+              {
+                "text": "Stanowi fundament, który zapewnia realizację zobowiązań E i S.",
+                "feedbackText": "Poprawnie (A): Ład korporacyjny dostarcza zasad i mechanizmów kontroli, które nadają działaniom ESG wiarygodność i zapewniają, że zobowiązania E i S są faktycznie realizowane."
+              },
+              {
+                "text": "Koncentruje się wyłącznie na ograniczaniu śladu węglowego firmy.",
+                "feedbackText": "Błędnie (B): Zarządzanie śladem węglowym i monitorowanie gazów cieplarnianych to zadania środowiskowe (E)."
+              },
+              {
+                "text": "Zajmuje się darowiznami na cele charytatywne i zaangażowaniem społecznym.",
+                "feedbackText": "Błędnie (C): Zaangażowanie społeczne i działalność charytatywna to działania w ramach filaru społecznego (S)."
+              }
+            ],
+            "sortOrder": 4
+          }
+        ]
+      },
+      {
+        "sortOrder": 2,
+        "title": "PL - Samoocena 2",
+        "questions": [
+          {
+            "prompt": "Co było kluczową cechą historycznego okresu inwestowania społecznie odpowiedzialnego (SRI)?",
+            "answers": [
+              {
+                "text": "Aktywne włączanie ESG do podstawowej strategii finansowej.",
+                "feedbackText": "Błędnie (A): Aktywne włączanie ESG do podstawowej strategii to cecha obecnej ery integracji, a nie wczesnego okresu SRI."
+              },
+              {
+                "text": "Koncentracja na wykluczaniu z portfeli firm nieetycznych.",
+                "feedbackText": "Poprawnie (B): Wczesne SRI opierało się przede wszystkim na pasywnym podejściu polegającym na wykluczaniu firm działających w określonych sektorach (np. tytoniowym, zbrojeniowym) w oparciu o przekonania etyczne."
+              },
+              {
+                "text": "Zarządzanie projektami społecznymi w oderwaniu od działalności biznesowej.",
+                "feedbackText": "Błędnie (C): Zarządzanie projektami społecznymi w oderwaniu od podstawowej działalności było cechą wyróżniającą późniejszą erę społecznej odpowiedzialności biznesu (CSR)."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Przejście od społecznej odpowiedzialności biznesu (CSR) do obecnych ram ESG było napędzane przede wszystkim przez:",
+            "answers": [
+              {
+                "text": "Oczekiwania inwestorów, by traktować E, S i G jako ryzyka finansowe.",
+                "feedbackText": "Poprawnie (A): Pojęcie ESG zyskało popularność, ponieważ inwestorzy i instytucje międzynarodowe uświadomili sobie, że kwestie E, S i G to ryzyka i szanse finansowe wpływające na długoterminową wartość firmy."
+              },
+              {
+                "text": "Potrzebę zwiększenia darowizn na cele charytatywne.",
+                "feedbackText": "Błędnie (B): CSR już wcześniej obejmowało działalność charytatywną. Przejście do ESG wynikało z potrzeby większej systematyczności i powiązania z finansami."
+              },
+              {
+                "text": "Koncentrację na unikaniu problemów ze zgodnością prawną.",
+                "feedbackText": "Błędnie (C): Choć zgodność z przepisami ma znaczenie, głównym motorem zmiany było oczekiwanie środowiska inwestycyjnego dotyczące zintegrowanego uwzględniania czynników pozafinansowych, wykraczającego poza samo przestrzeganie prawa."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Dlaczego tradycyjny model społecznej odpowiedzialności biznesu (CSR) był często uznawany za niewystarczający?",
+            "answers": [
+              {
+                "text": "Był zbyt skoncentrowany na zwrotach finansowych dla inwestorów.",
+                "feedbackText": "Błędnie (A): CSR napotykało trudności właśnie dlatego, że nie było zawsze powiązane z działalnością biznesową ani z decyzjami finansowymi."
+              },
+              {
+                "text": "Był często dobrowolny i oddzielony od podstawowej strategii biznesowej.",
+                "feedbackText": "Poprawnie (B): CSR postrzegano często jako filantropię lub dodatek; gdy zyski spadały, budżety CSR ograniczano w pierwszej kolejności."
+              },
+              {
+                "text": "Był zbyt mocno zintegrowany z codzienną działalnością firmy.",
+                "feedbackText": "Błędnie (C): To stwierdzenie jest nieprawdziwe, ponieważ CSR było historycznie oddzielone od podstawowej działalności – i właśnie dlatego potrzebna była „era integracji”."
+              }
+            ],
+            "sortOrder": 3
+          }
+        ]
+      },
+      {
+        "sortOrder": 3,
+        "title": "PL - Samoocena 3",
+        "questions": [
+          {
+            "prompt": "Który czynnik najlepiej pokazuje bezpośrednie strategiczne znaczenie dobrych wyników ESG dla MŚP?",
+            "answers": [
+              {
+                "text": "Otrzymywanie obowiązkowych raportów zgodności z regulacjami UE.",
+                "feedbackText": "Błędnie (A): Obowiązkowa zgodność z regulacjami UE (np. CSRD) to przede wszystkim kwestia strategiczna dla dużych przedsiębiorstw, a zwykle nie dla MŚP o ograniczonych zasobach."
+              },
+              {
+                "text": "Uzyskanie dostępu do łańcuchów dostaw i kontraktów dużych firm.",
+                "feedbackText": "Poprawnie (B): Dla MŚP dobre wyniki ESG stanowią kluczową przewagę strategiczną umożliwiającą uzyskanie dostępu do łańcuchów dostaw dużych firm, ponieważ duzi klienci coraz częściej weryfikują swoich dostawców pod kątem ESG."
+              },
+              {
+                "text": "Utrzymanie silnej reputacji marki globalnej w mediach.",
+                "feedbackText": "Błędnie (C): Choć jest to istotne, utrzymanie globalnej reputacji marki to zwykle kwestia dotycząca dużych przedsiębiorstw, a nie najbardziej bezpośrednie znaczenie dla MŚP."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Postrzeganie ESG jako ram długoterminowej odporności i tworzenia wartości, a nie krótkoterminowych zysków, jest przykładem którego procesu strategicznego?",
+            "answers": [
+              {
+                "text": "Traktowania ESG jako kosztu, który należy minimalizować.",
+                "feedbackText": "Błędnie (A): Postrzeganie ESG jako kosztu jest sprzeczne ze zmianą strategiczną, która zmierza do jego integracji w celu tworzenia wartości."
+              },
+              {
+                "text": "Przedkładania celów ESG nad wyniki finansowe.",
+                "feedbackText": "Błędnie (B): Strategiczne podejście do ESG ma na celu równoważenie ESG i wyników finansowych, a nie przedkładanie jednego nad drugie w oderwaniu od reszty."
+              },
+              {
+                "text": "Powiązania ESG z podstawową strategią biznesową i zarządzaniem ryzykiem.",
+                "feedbackText": "Poprawnie (C): Przejście do długoterminowej odporności osiąga się poprzez powiązanie ESG z podstawową strategią biznesową i traktowanie czynników E, S i G jako istotnych elementów zarządzania ryzykiem i szansami."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "W jaki sposób koncentracja na filarze środowiskowym (E) wspiera sukces finansowy MŚP?",
+            "answers": [
+              {
+                "text": "Zwiększa koszty materiałów i pracy.",
+                "feedbackText": "Błędnie (A): Choć początkowo nacisk kładzie się na monitorowanie, ostatecznym celem filaru „E” jest ograniczenie odpadów i nieefektywności."
+              },
+              {
+                "text": "Prowadzi do obniżenia kosztów dzięki efektywności energetycznej i zasobowej.",
+                "feedbackText": "Poprawnie (B): Koncentracja na efektywności energetycznej i zasobowej bezpośrednio obniża koszty operacyjne, zwiększając konkurencyjność i dając wymierną korzyść finansową."
+              },
+              {
+                "text": "Wymaga od MŚP zaprzestania wszelkich usług transportowych w celu oszczędzania paliwa.",
+                "feedbackText": "Błędnie (C): ESG koncentruje się na efektywności transportu (monitorowaniu śladu węglowego), a nie na wstrzymywaniu kluczowej działalności biznesowej."
+              }
+            ],
+            "sortOrder": 3
+          },
+          {
+            "prompt": "Jaki jest kluczowy pierwszy krok organizacji do włączenia ESG do działań strategicznych?",
+            "answers": [
+              {
+                "text": "Powiązanie celów ESG z podstawową misją biznesową.",
+                "feedbackText": "Poprawnie (A): Aby ESG było istotne strategicznie, firmy muszą zapewnić zgodność celów ESG ze swoją podstawową misją biznesową i strukturą organizacyjną."
+              },
+              {
+                "text": "Skupienie się wyłącznie na filarze „S”, aby uniknąć kosztów środowiskowych.",
+                "feedbackText": "Błędnie (B): Organizacje powinny nadawać priorytet czynnikom najistotniejszym dla swojego sektora, co często wymaga zrównoważenia wszystkich trzech filarów."
+              },
+              {
+                "text": "Zlecenie wszystkich decyzji ESG zewnętrznej agencji social media.",
+                "feedbackText": "Błędnie (C): Zaangażowanie i poparcie wewnętrznego kierownictwa mają kluczowe znaczenie dla tego, by ESG było traktowane poważnie we wszystkich działach."
+              }
+            ],
+            "sortOrder": 4
+          }
+        ]
+      },
+      {
+        "sortOrder": 4,
+        "title": "PL - Samoocena 4",
+        "questions": [
+          {
+            "prompt": "Które stwierdzenie najlepiej wyjaśnia relację między ESG a Celami Zrównoważonego Rozwoju (SDG)?",
+            "answers": [
+              {
+                "text": "SDG to „co” (cele globalne), a ESG to „jak” (ramy biznesowe).",
+                "feedbackText": "Poprawnie (A): SDG to cele globalne („co” świat stara się osiągnąć), a ESG to praktyczne ramy biznesowe („jak”) stosowane na poziomie firmy, aby przyczyniać się do realizacji tych celów."
+              },
+              {
+                "text": "ESG odpowiada celom globalnym, natomiast SDG stanowią ramy biznesowe.",
+                "feedbackText": "Błędnie (B): To stwierdzenie odwraca role. SDG to cele globalne, a ESG to ramy biznesowe."
+              },
+              {
+                "text": "ESG obejmuje wszystkie 17 celów, natomiast SDG dotyczą wyłącznie środowiska i społeczeństwa.",
+                "feedbackText": "Błędnie (C): SDG obejmują wszystkie 17 obszarów zrównoważonego rozwoju, co jest zakresem szerszym niż samo środowisko i społeczeństwo."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Silne zaangażowanie firmy w wewnętrzne działania na rzecz różnorodności, równości i włączenia (DEI) odpowiada przede wszystkim której parze Celów Zrównoważonego Rozwoju (SDG)?",
+            "answers": [
+              {
+                "text": "SDG 13 (działania w dziedzinie klimatu) i SDG 7 (czysta energia).",
+                "feedbackText": "Błędnie (A): Działania w dziedzinie klimatu i czysta energia wiążą się z filarem środowiskowym (E), a nie z wewnętrznymi działaniami DEI."
+              },
+              {
+                "text": "SDG 16 (silne instytucje) i SDG 12 (odpowiedzialna konsumpcja).",
+                "feedbackText": "Błędnie (B): Silne instytucje odnoszą się do ładu korporacyjnego (G), a odpowiedzialna konsumpcja do filaru środowiskowego (E)."
+              },
+              {
+                "text": "SDG 5 (równość płci) i SDG 10 (mniej nierówności).",
+                "feedbackText": "Poprawnie (C): Wewnętrzne działania DEI w ramach filaru społecznego (S), takie jak zapewnianie równych szans osobom o różnym pochodzeniu, bezpośrednio przyczyniają się do realizacji globalnych celów SDG 5 (równość płci) oraz SDG 10 (mniej nierówności)."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Pomiar i ograniczanie śladu węglowego firmy to działanie biznesowe, które bezpośrednio wspiera który cel SDG?",
+            "answers": [
+              {
+                "text": "SDG 13: Działania w dziedzinie klimatu.",
+                "feedbackText": "Poprawnie (A): Mierząc i ograniczając swój ślad węglowy w ramach filaru środowiskowego (E), bezpośrednio przyczyniasz się do przeciwdziałania zmianie klimatu (SDG 13)."
+              },
+              {
+                "text": "SDG 16: Pokój, sprawiedliwość i silne instytucje.",
+                "feedbackText": "Błędnie (B): SDG 16 wiąże się z filarem ładu korporacyjnego (G) i jego naciskiem na przejrzystość, odpowiedzialność i przeciwdziałanie korupcji."
+              },
+              {
+                "text": "SDG 3: Dobre zdrowie i jakość życia.",
+                "feedbackText": "Błędnie (C): SDG 3 wiąże się z filarem społecznym (S) i jego naciskiem na zdrowie, bezpieczeństwo i dobrostan pracowników."
+              }
+            ],
+            "sortOrder": 3
+          },
+          {
+            "prompt": "Dlaczego komunikowanie osiągnięć ESG językiem SDG jest korzystne dla MŚP?",
+            "answers": [
+              {
+                "text": "Jest to obowiązek, którego spełnienie pozwala uniknąć wysokich kar finansowych.",
+                "feedbackText": "Błędnie (A): Choć raportowanie staje się obowiązkowe dla dużych firm (CSRD), dla MŚP powiązanie z SDG jest obecnie narzędziem komunikacji strategicznej."
+              },
+              {
+                "text": "Daje klientom i partnerom jasny obraz tego, jak codzienne działania przyczyniają się do globalnej wizji.",
+                "feedbackText": "Poprawnie (B): Przedstawianie osiągnięć przez pryzmat SDG pokazuje, jak lokalne, codzienne działania przyczyniają się do realizacji globalnej wizji zrównoważonego rozwoju."
+              },
+              {
+                "text": "Pozwala firmie zaprzestać raportowania wyników finansowych.",
+                "feedbackText": "Błędnie (C): Czynniki ESG to czynniki „pozafinansowe”, które uzupełniają, a nie zastępują raportowanie wyników finansowych."
+              }
+            ],
+            "sortOrder": 4
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "module-2-strategy-vision-and-organisational-alignment",
+    "quizzes": [
+      {
+        "sortOrder": 1,
+        "title": "PL - Samoocena 1",
+        "questions": [
+          {
+            "prompt": "Analizujesz misję swojej firmy: „Dostarczanie przystępnych cenowo rozwiązań mieszkaniowych”. Jaką lukę dostrzegasz, zestawiając ją z zasadami ESG?",
+            "answers": [
+              {
+                "text": "Misja nie wspomina o zrównoważeniu środowiskowym ani o odpowiedzialności społecznej w praktykach budowlanych.",
+                "feedbackText": "Informacja zwrotna do A (poprawna): Świetnie! Zidentyfikowałeś kluczową lukę. Misja odpowiada na potrzebę społeczną (dostępne mieszkania), ale nie wspomina wyraźnie o kwestiach środowiskowych (zrównoważone materiały budowlane, efektywność energetyczna) ani o aspektach ładu korporacyjnego (etyczne praktyki zatrudnienia, przejrzystość). To dokładnie taki rodzaj analizy luk, jakiego uczy Jednostka 1."
+              },
+              {
+                "text": "Misja zbyt mocno koncentruje się na przystępności cenowej zamiast na rentowności.",
+                "feedbackText": "Informacja zwrotna do B (błędna): Rentowność jest ważna, ale nie jest to luka w obszarze ESG. Pytanie dotyczy identyfikacji luk w spójności z zasadami ESG. Przystępność cenowa w rzeczywistości wpisuje się w wymiar społeczny ESG. Skoncentruj się na tym, czego misja nie mówi o kwestiach środowiskowych, społecznych i ładu korporacyjnego."
+              },
+              {
+                "text": "Misja nie określa, które rynki geograficzne mają być obsługiwane.",
+                "feedbackText": "Informacja zwrotna do C (błędna): Zasięg geograficzny to szczegół strategiczny, a nie kwestia spójności z ESG. Luki ESG dotyczą tego, czy misja odnosi się do odpowiedzialności środowiskowej, wpływu społecznego lub zasad ładu korporacyjnego. Przeczytaj misję ponownie i zapytaj: czy wspomina o zrównoważonym rozwoju, dobrostanie interesariuszy lub etycznych praktykach?"
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Podstawową wartością Twojej organizacji jest „doskonałość obsługi klienta”. Analizując tę wartość pod kątem spójności z ESG, zauważasz, że nie odnosi się ona do uczciwych praktyk zatrudnienia ani do wpływu na społeczność lokalną. O czym świadczy ta luka?",
+            "answers": [
+              {
+                "text": "Wartość trzeba zastąpić nową wartością ukierunkowaną na ESG.",
+                "feedbackText": "Informacja zwrotna do A (błędna): Zastępowanie wartości nie jest rozwiązaniem. Twoje dotychczasowe wartości pozostają aktualne; wymagają jedynie pełniejszego wyrażenia. Celem jest zintegrowanie ESG z tym, co już reprezentujesz, a nie porzucenie fundamentów. Myśl o wzbogaceniu, a nie o zastąpieniu."
+              },
+              {
+                "text": "Wartość należy wzbogacić o wymiary odpowiedzialności społecznej.",
+                "feedbackText": "Informacja zwrotna do B (poprawna): Doskonale! Rozumiesz, że luki nie oznaczają, iż wartości są błędne – oznaczają, że wymagają dalszego rozwinięcia. „Doskonałość obsługi klienta” można wzbogacić o to, jak traktujesz pracowników, wspierasz społeczności i działasz etycznie. To właśnie proces przeformułowania, którego uczy Jednostka 1."
+              },
+              {
+                "text": "Organizacja nie dba o zasady ESG.",
+                "feedbackText": "Informacja zwrotna do C (błędna): Luka w obecnym sformułowaniu wartości nie oznacza, że organizacja nie dba o ESG. Oznacza po prostu, że kwestie ESG nie zostały jeszcze wyraźnie wplecione w sposób wyrażania tej wartości. Właśnie dlatego Jednostka 1 uczy procesu analizy luk – aby wskazać, gdzie potrzebna jest integracja."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Analizując strategię długoterminową „Zwiększenie udziału w rynku o 25% w ciągu pięciu lat”, jakie pytanie związane z ESG należy zadać?",
+            "answers": [
+              {
+                "text": "Jak ten wzrost wpłynie na środowisko, praktyki zatrudnienia i standardy ładu korporacyjnego?",
+                "feedbackText": "Informacja zwrotna do A (poprawna): Znakomita analiza! To właśnie myślenie krytyczne, które rozwija Jednostka 1. Zanim zdecydujesz się na wzrost, musisz zapytać: jakie są konsekwencje środowiskowe? Czy utrzymamy uczciwe praktyki zatrudnienia w miarę skalowania? Czy nasze struktury ładu korporacyjnego zapobiegną korupcji? Dzięki temu wzrost nie odbywa się kosztem ludzi ani planety."
+              },
+              {
+                "text": "Czy ta strategia zwiększy nasze marże zysku?",
+                "feedbackText": "Informacja zwrotna do B (błędna): Marże zysku mają znaczenie dla trwałości biznesu, ale nie jest to pytanie z obszaru ESG. Analiza ESG koncentruje się na wpływie na środowisko, odpowiedzialności społecznej i rzetelności ładu korporacyjnego – a nie na wskaźnikach finansowych. Analizując luki strategiczne, skup się ponownie na trzech wymiarach ESG."
+              },
+              {
+                "text": "Ilu nowych pracowników będziemy musieli zatrudnić?",
+                "feedbackText": "Informacja zwrotna do C (błędna): Planowanie zatrudnienia jest ważne, ale nie jest to analiza luk ESG, której uczy Jednostka 1. Pytania ESG sięgają głębiej: czy ci nowi pracownicy będą traktowani sprawiedliwie? Czy praktyki rekrutacyjne będą etyczne i przejrzyste? Czy wzrost zaszkodzi społecznościom lub środowisku? Pomyśl o szerszych konsekwencjach swojej strategii."
+              }
+            ],
+            "sortOrder": 3
+          },
+          {
+            "prompt": "Opracowujesz misję zintegrowaną z ESG. Twoja pierwotna misja brzmi: „Produkcja wysokiej jakości elektroniki w konkurencyjnych cenach”. Która zmieniona misja najlepiej odzwierciedla integrację ESG?",
+            "answers": [
+              {
+                "text": "Produkcja wysokiej jakości elektroniki w konkurencyjnych cenach przy jednoczesnym minimalizowaniu wpływu na środowisko, zapewnianiu uczciwych praktyk zatrudnienia i utrzymywaniu przejrzystego ładu korporacyjnego.",
+                "feedbackText": "Informacja zwrotna do A (poprawna): Doskonale! Ta zmiana wyraźnie wplata wszystkie trzy wymiary ESG w misję. Odnosi się do odpowiedzialności środowiskowej (minimalizowanie wpływu), odpowiedzialności społecznej (uczciwe praktyki zatrudnienia) oraz ładu korporacyjnego (przejrzyste praktyki). To dokładnie proces przeformułowania, którego uczy Jednostka 1 – wzbogacenie misji bez utraty jej podstawowego celu."
+              },
+              {
+                "text": "Produkcja wysokiej jakości elektroniki w konkurencyjnych cenach i przestrzeganie wszystkich przepisów.",
+                "feedbackText": "Informacja zwrotna do B (błędna): Zgodność z przepisami jest ważna, ale niewystarczająca. Integracja ESG wykracza poza spełnianie minimalnych wymogów prawnych. Twoja misja powinna dążyć do pozytywnego wpływu – ochrony środowiska, wspierania ludzi i działania w sposób uczciwy – a nie tylko do unikania naruszeń. Pomyśl o tym, co chcesz osiągnąć, a nie tylko o tym, czego musisz unikać."
+              },
+              {
+                "text": "Produkcja wysokiej jakości elektroniki w konkurencyjnych cenach i inwestowanie w szkolenia pracowników.",
+                "feedbackText": "Informacja zwrotna do C (błędna): Szkolenia pracowników są cenne, ale ta zmiana nie obejmuje pełnego zakresu integracji ESG. Kompletna misja zintegrowana z ESG odnosi się do zrównoważenia środowiskowego, odpowiedzialności społecznej wobec wszystkich interesariuszy (nie tylko pracowników) oraz zasad ładu korporacyjnego. Twoja propozycja powinna być bardziej kompleksowa."
+              }
+            ],
+            "sortOrder": 4
+          },
+          {
+            "prompt": "Dostosowujesz wartość „innowacyjność” do zasad ESG. Które stwierdzenie najlepiej wyraża tę wartość w sposób zintegrowany z ESG?",
+            "answers": [
+              {
+                "text": "Innowacyjność oznacza, że opracowujemy nowe produkty szybciej niż konkurenci.",
+                "feedbackText": "Informacja zwrotna do A (błędna): To sformułowanie koncentruje się wyłącznie na przewadze konkurencyjnej, a nie na integracji ESG. Szybkość i konkurencja to kwestie biznesowe, które nie odnoszą się do odpowiedzialności środowiskowej ani społecznej. Wartości zintegrowane z ESG muszą wyraźnie łączyć się ze zrównoważonym rozwojem, dobrostanem interesariuszy i etycznymi praktykami. Wyjdź w myśleniu poza rywalizację rynkową."
+              },
+              {
+                "text": "Innowacyjność oznacza, że nieustannie poszukujemy lepszych sposobów tworzenia wartości dla biznesu, społeczeństwa i środowiska, w tym zrównoważonych technologii i modeli gospodarki o obiegu zamkniętym.",
+                "feedbackText": "Informacja zwrotna do B (poprawna): Świetnie! Uchwyciłeś istotę wartości zintegrowanych z ESG. To sformułowanie łączy innowacyjność z odpowiedzialnością środowiskową (zrównoważone technologie, gospodarka o obiegu zamkniętym) i wpływem społecznym (tworzenie wartości dla społeczeństwa). Mówi pracownikom, co innowacyjność naprawdę oznacza w Twojej organizacji – nie tylko szybkość czy wydatki na B+R, lecz celową, zrównoważoną innowacyjność."
+              },
+              {
+                "text": "Innowacyjność oznacza, że intensywnie inwestujemy w badania i rozwój.",
+                "feedbackText": "Informacja zwrotna do C (błędna): Inwestycje w B+R są ważne, ale to sformułowanie nie wyraża integracji ESG. Opisujesz działanie biznesowe, a nie wartość. Wartość zintegrowana z ESG wyjaśnia, dlaczego wprowadzasz innowacje i jaki rodzaj innowacji ma znaczenie – innowacje korzystne dla ludzi i planety, a nie tylko dla wyniku finansowego."
+              }
+            ],
+            "sortOrder": 5
+          },
+          {
+            "prompt": "Twój pierwotny priorytet strategiczny brzmi: „Ekspansja na rynki wschodzące”. Właśnie integrujesz ESG. Który zmieniony priorytet najlepiej odzwierciedla tę integrację?",
+            "answers": [
+              {
+                "text": "Ekspansja na rynki wschodzące przy jednoczesnym budowaniu partnerstw ze społecznościami lokalnymi, zapewnieniu standardów środowiskowych wykraczających poza lokalne przepisy oraz wdrożeniu struktur ładu korporacyjnego zapobiegających korupcji.",
+                "feedbackText": "Informacja zwrotna do A (poprawna): Doskonale! Ta wersja utrzymuje cel strategiczny (ekspansję), a jednocześnie wyraźnie integruje wymiary ESG: odpowiedzialność społeczną (partnerstwa ze społecznościami), dbałość o środowisko (wykraczanie poza wymogi) oraz rzetelny ład korporacyjny (struktury antykorupcyjne). To właśnie integracja strategiczna, której uczy Jednostka 1 – wzrost, który nie podważa wartości."
+              },
+              {
+                "text": "Ekspansja na rynki wschodzące tak szybko, jak to możliwe, aby zmaksymalizować przewagę pierwszego gracza.",
+                "feedbackText": "Informacja zwrotna do B (błędna): Szybkość i przewaga pierwszego gracza to kwestie konkurencyjne, a nie ESG. Ta wersja pomija społeczne, środowiskowe i korporacyjne konsekwencje szybkiej ekspansji. Integracja ESG wymaga pytania: jakim kosztem dla społeczności i środowiska prowadzimy ekspansję? Jak utrzymamy standardy etyczne?"
+              },
+              {
+                "text": "Ekspansja na rynki wschodzące i zatrudnianie lokalnych pracowników w celu obniżenia kosztów pracy.",
+                "feedbackText": "Informacja zwrotna do C (błędna): Zatrudnianie lokalnych pracowników może być elementem strategii ESG, ale ta wersja jest niepełna i potencjalnie problematyczna. Wzmianka o „obniżeniu kosztów pracy” sugeruje wykorzystywanie niższych wynagrodzeń zamiast zapewniania uczciwych praktyk. Kompletna strategia zintegrowana z ESG odnosi się do wpływu na społeczności, odpowiedzialności środowiskowej i rzetelnego ładu korporacyjnego – a nie tylko do redukcji kosztów. Test modułowy: Jednostka 2 Jednostka 2: Tytuł Wyznaczanie priorytetów i celów ESG Jednostka 2: Cele szkoleniowe Po ukończeniu Jednostki 2 będziesz potrafić: Ustalić priorytety kwestii ESG istotnych dla Twojej organizacji poprzez ocenę ich znaczenia dla interesariuszy i strategii biznesowej. Sformułować jasne, mierzalne cele ESG, spójne z priorytetami organizacji i wspierające długoterminowe tworzenie wartości. Jednostka 2: Pytania"
+              }
+            ],
+            "sortOrder": 6
+          }
+        ]
+      },
+      {
+        "sortOrder": 2,
+        "title": "PL - Samoocena 2",
+        "questions": [
+          {
+            "prompt": "Które podejście najlepiej pomaga zidentyfikować najważniejsze priorytety ESG?",
+            "answers": [
+              {
+                "text": "Skupienie się na kwestiach najłatwiejszych do rozwiązania",
+                "feedbackText": "Informacja zwrotna do A (błędna): Łatwość wdrożenia nie gwarantuje istotności ani wpływu. Skup się na tym, co najważniejsze, a nie tylko na tym, co proste."
+              },
+              {
+                "text": "Nadanie priorytetu kwestiom ważnym zarówno dla interesariuszy, jak i dla strategii biznesowej",
+                "feedbackText": "Informacja zwrotna do B (poprawna): Zgadza się! Skuteczne ustalanie priorytetów uwzględnia zarówno oczekiwania interesariuszy, jak i wpływ na biznes, dzięki czemu Twoje działania mają realne znaczenie."
+              },
+              {
+                "text": "Wybór kwestii na podstawie działań konkurencji",
+                "feedbackText": "Informacja zwrotna do C (błędna): Działania konkurencji mogą być inspiracją, ale Twoje priorytety powinny wynikać z własnego kontekstu i potrzeb interesariuszy."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Co jest najważniejsze przy angażowaniu interesariuszy w ustalanie priorytetów ESG?",
+            "answers": [
+              {
+                "text": "Konsultowanie się wyłącznie z kierownictwem wewnętrznym",
+                "feedbackText": "Informacja zwrotna do A (błędna): Ograniczenie się do kierownictwa pomija kluczowe perspektywy. Szersze zaangażowanie prowadzi do trafniejszych priorytetów."
+              },
+              {
+                "text": "Zebranie opinii od różnorodnych grup interesariuszy",
+                "feedbackText": "Informacja zwrotna do B (poprawna): Zgadza się! Uwzględnienie pracowników, klientów, inwestorów i społeczności sprawia, że priorytety ESG odzwierciedlają rzeczywiste potrzeby i oczekiwania."
+              },
+              {
+                "text": "Skupienie się na krótkoterminowych korzyściach finansowych",
+                "feedbackText": "Informacja zwrotna do C (błędna): Ustalanie priorytetów ESG dotyczy wartości długoterminowej, a nie tylko bieżących zysków."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "W czym pomaga macierz istotności?",
+            "answers": [
+              {
+                "text": "W zobrazowaniu, które kwestie ESG są najważniejsze",
+                "feedbackText": "Informacja zwrotna do A (poprawna): Zgadza się! Macierz istotności pozwala zobaczyć, które kwestie mają największe znaczenie zarówno dla interesariuszy, jak i dla Twojej firmy."
+              },
+              {
+                "text": "W monitorowaniu wyników finansowych",
+                "feedbackText": "Informacja zwrotna do B (błędna): Monitorowanie finansów jest ważne, ale nie jest celem macierzy istotności."
+              },
+              {
+                "text": "W wypisaniu wszystkich możliwych tematów ESG",
+                "feedbackText": "Informacja zwrotna do C (błędna): Wypisanie tematów to pierwszy krok, ale macierz służy do ustalania priorytetów, a nie tylko do sporządzania listy."
+              }
+            ],
+            "sortOrder": 3
+          },
+          {
+            "prompt": "Który przykład najlepiej ilustruje mierzalny cel ESG?",
+            "answers": [
+              {
+                "text": "Poprawa dobrostanu pracowników",
+                "feedbackText": "Informacja zwrotna do A (błędna): To zbyt ogólne sformułowanie. Cele powinny być konkretne i mierzalne."
+              },
+              {
+                "text": "Ograniczenie wypadków przy pracy o 20% w ciągu dwóch lat",
+                "feedbackText": "Informacja zwrotna do B (poprawna): Zgadza się! Ten cel jest jasny, wymierny i określony w czasie, dzięki czemu można go realizować i monitorować."
+              },
+              {
+                "text": "Wspieranie lokalnych organizacji charytatywnych",
+                "feedbackText": "Informacja zwrotna do C (błędna): Wspieranie organizacji charytatywnych jest pozytywne, ale bez konkretów nie jest mierzalne."
+              }
+            ],
+            "sortOrder": 4
+          },
+          {
+            "prompt": "Dlaczego cele ESG powinny być spójne ze strategią organizacji?",
+            "answers": [
+              {
+                "text": "Aby zapewnić poparcie kierownictwa i integrację",
+                "feedbackText": "Informacja zwrotna do A (poprawna): Zgadza się! Spójność ze strategią sprawia, że cele ESG są istotne i mają wsparcie organizacji."
+              },
+              {
+                "text": "Aby zrobić wrażenie na audytorach zewnętrznych",
+                "feedbackText": "Informacja zwrotna do B (błędna): Zewnętrzna weryfikacja bywa przydatna, ale spójność dotyczy realnego wpływu, a nie pozorów."
+              },
+              {
+                "text": "Aby uniknąć wyznaczania jakichkolwiek celów",
+                "feedbackText": "Informacja zwrotna do C (błędna): Rezygnacja z celów podważa postęp i odpowiedzialność."
+              }
+            ],
+            "sortOrder": 5
+          },
+          {
+            "prompt": "Jaki jest kluczowy krok po wyznaczeniu celów ESG?",
+            "answers": [
+              {
+                "text": "Przypisanie odpowiedzialności i monitorowanie postępów",
+                "feedbackText": "Informacja zwrotna do A (poprawna): Zgadza się! Przypisanie odpowiedzialności i monitorowanie postępów zapewnia realizację celów i pomiar efektów."
+              },
+              {
+                "text": "Bierne oczekiwanie na wyniki bez monitorowania",
+                "feedbackText": "Informacja zwrotna do B (błędna): Bierne oczekiwanie prowadzi do utraty szans i braku odpowiedzialności."
+              },
+              {
+                "text": "Natychmiastowe wyznaczenie nowych celów",
+                "feedbackText": "Informacja zwrotna do C (błędna): Wyznaczanie nowych celów jest ważne, ale dopiero po ocenie dotychczasowych postępów. Test modułowy: Jednostka 3 Jednostka 3: Tytuł Budowanie zaangażowania kierownictwa i kultury organizacyjnej Jednostka 3: Cele szkoleniowe Po ukończeniu Jednostki 3 będziesz potrafić: Zaprezentować strategie budowania zaangażowania kierownictwa w integrację ESG w Twojej organizacji. Kształtować kulturę organizacyjną, która wspiera i utrwala wartości oraz praktyki ESG. Jednostka 3: Pytania"
+              }
+            ],
+            "sortOrder": 6
+          }
+        ]
+      },
+      {
+        "sortOrder": 3,
+        "title": "PL - Samoocena 3",
+        "questions": [
+          {
+            "prompt": "Która strategia najskuteczniej buduje zaangażowanie kierownictwa w ESG?",
+            "answers": [
+              {
+                "text": "Edukowanie kadry kierowniczej o trendach ESG i pokazywanie wartości biznesowej za pomocą danych i studiów przypadku.",
+                "feedbackText": "Informacja zwrotna do A (poprawna): Świetnie! Rozumiesz, że kadra kierownicza angażuje się wtedy, gdy widzi uzasadnienie biznesowe. Edukacja połączona z przykładami opartymi na danych pomaga liderom postrzegać ESG jako źródło wartości, a nie wyłącznie wymóg zgodności."
+              },
+              {
+                "text": "Zobowiązanie kadry kierowniczej do udziału w obowiązkowych szkoleniach ze zgodności ESG.",
+                "feedbackText": "Informacja zwrotna do B (błędna): Same obowiązkowe szkolenia nie budują autentycznego zaangażowania. Liderzy muszą rozumieć „dlaczego” stojące za ESG i dostrzegać wymierne korzyści. Postaw na zaangażowanie i edukację, a nie tylko na wymogi zgodności."
+              },
+              {
+                "text": "Wdrażanie inicjatyw ESG bez wcześniejszej konsultacji z kierownictwem.",
+                "feedbackText": "Informacja zwrotna do C (błędna): Wdrażanie ESG bez udziału kierownictwa rodzi opór i osłabia zaangażowanie. Liderzy muszą być włączeni na wczesnym etapie i rozumieć, jak ESG wpisuje się w strategię organizacji."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Z czym należy powiązać cele ESG, aby uzyskać poparcie kierownictwa?",
+            "answers": [
+              {
+                "text": "Z podstawową strategią biznesową i możliwościami wzrostu.",
+                "feedbackText": "Informacja zwrotna do A (poprawna): Doskonale! Gdy ESG jest spójne ze strategią biznesową, liderzy postrzegają je jako element niezbędny do sukcesu organizacji, a nie jako dodatek. To powiązanie napędza alokację zasobów i trwałe zaangażowanie."
+              },
+              {
+                "text": "Przedstawiać ESG jako inicjatywę odrębną od celów biznesowych.",
+                "feedbackText": "Informacja zwrotna do B (błędna): Traktowanie ESG w oderwaniu od strategii biznesowej sprawia, że łatwo zejść z nim na dalszy plan, gdy brakuje zasobów. Integracja z podstawowymi celami biznesowymi utrzymuje ESG wśród priorytetów."
+              },
+              {
+                "text": "Koncentrować komunikaty o ESG wyłącznie na wymogach regulacyjnych.",
+                "feedbackText": "Informacja zwrotna do C (błędna): Komunikaty ograniczone do zgodności z przepisami osłabiają entuzjazm kierownictwa. Liderzy angażują się bardziej, gdy postrzegają ESG jako szansę na wzrost i innowacje, a nie tylko jako obciążenie regulacyjne."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Jaką rolę powinni pełnić liderzy jako ambasadorzy ESG?",
+            "answers": [
+              {
+                "text": "Komunikować priorytety ESG na spotkaniach i w widoczny sposób dawać przykład postawami zgodnymi z ESG.",
+                "feedbackText": "Informacja zwrotna do A (poprawna): Zgadza się! Liderzy wzmacniają zaangażowanie w ESG poprzez widoczną komunikację i osobisty przykład. To sygnał dla całej organizacji, że ESG jest priorytetem, i buduje wiarygodność."
+              },
+              {
+                "text": "Delegować całą komunikację ESG do działu zrównoważonego rozwoju.",
+                "feedbackText": "Informacja zwrotna do B (błędna): Delegowanie komunikacji ESG do jednego działu osłabia zaangażowanie kierownictwa. Liderzy muszą aktywnie komunikować wartości ESG i dawać przykład, aby inspirować zmianę w organizacji."
+              },
+              {
+                "text": "Omawiać ESG wyłącznie w formalnych rocznych raportach zrównoważonego rozwoju.",
+                "feedbackText": "Informacja zwrotna do C (błędna): Same raporty roczne nie wystarczą. Konsekwentna, widoczna komunikacja przez cały rok utrzymuje ESG w centrum uwagi i świadczy o autentycznym zaangażowaniu kierownictwa."
+              }
+            ],
+            "sortOrder": 3
+          },
+          {
+            "prompt": "Jak najlepiej wpisać wartości ESG w codzienne praktyki organizacji?",
+            "answers": [
+              {
+                "text": "Zintegrować ESG z procesami wdrażania nowych pracowników, szkoleń i podejmowania decyzji.",
+                "feedbackText": "Informacja zwrotna do A (poprawna): Świetnie! Wpisanie ESG w codzienne procesy sprawia, że staje się ono częścią sposobu pracy, a nie odrębną inicjatywą. To prowadzi do trwałej zmiany kulturowej i utrzymania zaangażowania."
+              },
+              {
+                "text": "Przeprowadzać raz w roku kampanię podnoszącą świadomość ESG.",
+                "feedbackText": "Informacja zwrotna do B (błędna): Kampanie roczne budują świadomość, ale nie utrwalają zmiany kulturowej. Aby naprawdę kształtować kulturę organizacyjną, ESG musi być wplecione w codzienne rutyny i decyzje."
+              },
+              {
+                "text": "Omawiać ESG wyłącznie podczas kwartalnych przeglądów biznesowych.",
+                "feedbackText": "Informacja zwrotna do C (błędna): Kwartalne dyskusje są zbyt rzadkie, by budować kulturę. ESG musi być obecne w codziennej pracy – od rekrutacji, przez zatwierdzanie projektów, po decyzje zakupowe."
+              }
+            ],
+            "sortOrder": 4
+          },
+          {
+            "prompt": "Jaki jest najskuteczniejszy sposób doceniania ambasadorów ESG w organizacji?",
+            "answers": [
+              {
+                "text": "Publiczne wyróżnianie pracowników i tworzenie formalnych programów uznania.",
+                "feedbackText": "Informacja zwrotna do A (poprawna): Doskonale! Publiczne uznanie i formalne programy honorują zaangażowanie w ESG, inspirują innych i potwierdzają, że ESG jest cenione. To wzmacnia kulturę organizacyjną wokół zrównoważonego rozwoju."
+              },
+              {
+                "text": "Docenianie działań ESG wyłącznie w prywatnych rozmowach z przełożonymi.",
+                "feedbackText": "Informacja zwrotna do B (błędna): Prywatne podziękowanie jest miłe, ale nie buduje kultury. Publiczne uznanie sygnalizuje całej organizacji, że postawy zgodne z ESG są cenione i warte naśladowania."
+              },
+              {
+                "text": "Nagradzanie wkładu w ESG wyłącznie premiami finansowymi.",
+                "feedbackText": "Informacja zwrotna do C (błędna): Zachęty finansowe mają znaczenie, ale uznanie to coś więcej niż pieniądze. Publiczne docenianie ambasadorów ESG tworzy kulturowy impet i motywuje szersze grono do udziału."
+              }
+            ],
+            "sortOrder": 5
+          },
+          {
+            "prompt": "Jak organizacje powinny podchodzić do opinii pracowników na temat inicjatyw ESG?",
+            "answers": [
+              {
+                "text": "Tworzyć bezpieczną przestrzeń do dialogu i reagować na opinie, pokazując, że są cenione.",
+                "feedbackText": "Informacja zwrotna do A (poprawna): Zgadza się! Otwarty dialog i reagowanie na opinie budują zaufanie i poczucie współodpowiedzialności. Gdy pracownicy widzą, że ich głos kształtuje inicjatywy ESG, angażują się w ich powodzenie."
+              },
+              {
+                "text": "Wysłuchiwać opinii, ale podejmować decyzje bez udziału pracowników.",
+                "feedbackText": "Informacja zwrotna do B (błędna): Wysłuchiwanie bez działania podważa zaufanie i zaangażowanie. Pracownicy muszą widzieć, że ich opinie wpływają na decyzje – inaczej wycofają się z działań ESG."
+              },
+              {
+                "text": "Zniechęcać do zgłaszania opinii, aby utrzymać przejrzyste plany wdrażania ESG.",
+                "feedbackText": "Informacja zwrotna do C (błędna): Zniechęcanie do zgłaszania opinii tłumi innowacyjność i rodzi opór. Najsilniejsze kultury ESG zapraszają do wyrażania opinii, uczą się z nich i odpowiednio się dostosowują. Test modułowy: Jednostka 4 Jednostka 4: Tytuł Równoważenie ESG z wynikami finansowymi i operacyjnymi Jednostka 4: Cele szkoleniowe Po ukończeniu Jednostki 4 będziesz potrafić: Ocenić kompromisy między inicjatywami ESG a krótkoterminowymi wynikami finansowymi, aby podejmować świadome decyzje równoważące zrównoważony rozwój i rentowność. Zaprojektować strategie włączania kwestii ESG do procesów operacyjnych w celu zwiększenia efektywności, obniżenia kosztów i wzmocnienia długoterminowego tworzenia wartości. Jednostka 4: Pytania"
+              }
+            ],
+            "sortOrder": 6
+          }
+        ]
+      },
+      {
+        "sortOrder": 4,
+        "title": "PL - Samoocena 4",
+        "questions": [
+          {
+            "prompt": "Co należy uwzględnić przy ocenie wpływu finansowego inicjatywy ESG?",
+            "answers": [
+              {
+                "text": "Wyłącznie początkowe koszty wdrożenia.",
+                "feedbackText": "Informacja zwrotna do A (błędna): Skupienie się wyłącznie na kosztach początkowych pomija pełny obraz finansowy. Inwestycje ESG często zwracają się w ciągu 3–5 lat dzięki oszczędnościom, nowym rynkom i ograniczeniu ryzyka. Potrzebna jest pełna analiza zwrotu z inwestycji."
+              },
+              {
+                "text": "Zarówno koszty bieżące, jak i długoterminowe korzyści, w tym ograniczenie ryzyka i możliwości przychodowe.",
+                "feedbackText": "Informacja zwrotna do B (poprawna): Świetnie! Kompleksowa ocena obejmuje koszty początkowe, długoterminowe oszczędności operacyjne, ograniczenie ryzyka (uniknięcie kar czy utraty reputacji) oraz nowe możliwości przychodowe. Takie całościowe spojrzenie ujawnia rzeczywistą wartość finansową ESG."
+              },
+              {
+                "text": "Wyłącznie korzyści środowiskowe lub społeczne, bez analizy finansowej.",
+                "feedbackText": "Informacja zwrotna do C (błędna): Korzyści środowiskowe i społeczne mają znaczenie, ale nie można ignorować skutków finansowych. Organizacja musi rozumieć uzasadnienie biznesowe ESG, aby uzyskać poparcie kierownictwa i zapewnić trwałość działań."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Firma inwestuje 500 000 euro w energię odnawialną, ale w pierwszym roku nie odnotowuje zysku. Jak ocenić ten kompromis?",
+            "answers": [
+              {
+                "text": "Uznać inwestycję za błąd i z niej zrezygnować.",
+                "feedbackText": "Informacja zwrotna do A (błędna): Rezygnacja z inwestycji po roku pomija długoterminowy charakter zwrotów z ESG. Wiele inicjatyw ESG przynosi korzyści finansowe dopiero po latach. Kluczowe są cierpliwość i myślenie strategiczne."
+              },
+              {
+                "text": "Przeanalizować długoterminowe oszczędności, ograniczenie ryzyka regulacyjnego i wartość marki w perspektywie 3–5 lat.",
+                "feedbackText": "Informacja zwrotna do B (poprawna): Doskonale! To podejście właściwie ocenia inwestycję, uwzględniając oszczędności operacyjne, uniknięte kary regulacyjne, lepszą reputację marki i przyciąganie klientów w całym horyzoncie inwestycyjnym. Tak właśnie podejmuje się świadome decyzje kompromisowe."
+              },
+              {
+                "text": "Poczekać z oceną wartości inwestycji do momentu pojawienia się zysków.",
+                "feedbackText": "Informacja zwrotna do C (błędna): Bierne oczekiwanie nie pomoże zrozumieć wartości inwestycji. Potrzebna jest aktywna analiza, aby sprawdzić, czy inicjatywa przynosi oczekiwane zwroty, i w razie potrzeby skorygować strategię."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Jakie jest główne ryzyko skupiania się wyłącznie na krótkoterminowych wskaźnikach finansowych przy ocenie inicjatyw ESG?",
+            "answers": [
+              {
+                "text": "Inicjatywy ESG staną się zbyt kosztowne.",
+                "feedbackText": "Informacja zwrotna do A (błędna): Koszt nie jest tu głównym ryzykiem. Problemem jest perspektywa – krótkoterminowe myślenie może sprawić, że przegapisz szanse tworzące istotną wartość w dłuższym okresie."
+              },
+              {
+                "text": "Możesz odrzucić wartościowe inwestycje długoterminowe, które generują znaczącą przyszłą wartość.",
+                "feedbackText": "Informacja zwrotna do B (poprawna): Zgadza się! Krótkoterminowa perspektywa może prowadzić do odrzucenia inwestycji ESG, które zwróciłyby się z nawiązką w ciągu 3–5 lat. Taka krótkowzroczność kosztuje organizację pieniądze i przewagę konkurencyjną w dłuższej perspektywie."
+              },
+              {
+                "text": "Pracownicy stracą zainteresowanie działaniami na rzecz zrównoważonego rozwoju.",
+                "feedbackText": "Informacja zwrotna do C (błędna): Zaangażowanie pracowników ma znaczenie, ale głównym ryzykiem krótkoterminowego myślenia jest ryzyko finansowe – utrata wartościowych inwestycji i możliwości długoterminowego tworzenia wartości."
+              }
+            ],
+            "sortOrder": 3
+          },
+          {
+            "prompt": "Które podejście najlepiej integruje ESG z procesami operacyjnymi?",
+            "answers": [
+              {
+                "text": "Utworzenie odrębnego działu ESG zajmującego się inicjatywami zrównoważonego rozwoju.",
+                "feedbackText": "Informacja zwrotna do A (błędna): Wydzielenie ESG do osobnego działu izoluje je od podstawowej działalności. Prawdziwa integracja następuje wtedy, gdy ESG jest wplecione w sposób wykonywania pracy w całej organizacji."
+              },
+              {
+                "text": "Wbudowanie kwestii ESG w kluczowe procesy, takie jak projektowanie produktów, łańcuch dostaw i zakupy.",
+                "feedbackText": "Informacja zwrotna do B (poprawna): Świetnie! To prawdziwa integracja. Gdy ESG jest obecne w projektowaniu produktów, decyzjach dotyczących łańcucha dostaw i zakupach, staje się częścią codziennych operacji i napędza zarówno zrównoważony rozwój, jak i poprawę efektywności."
+              },
+              {
+                "text": "Wprowadzanie zmian ESG wyłącznie wtedy, gdy wymagają tego przepisy.",
+                "feedbackText": "Informacja zwrotna do C (błędna): Czekanie na przepisy to podejście reaktywne, a nie strategiczne. Proaktywna integracja ESG tworzy przewagi konkurencyjne, oszczędności i możliwości innowacji, zanim zmiana zostanie wymuszona regulacjami."
+              }
+            ],
+            "sortOrder": 4
+          },
+          {
+            "prompt": "Jak wspierać innowacyjność w poszukiwaniu rozwiązań łączących cele ESG i finansowe?",
+            "answers": [
+              {
+                "text": "Powierzyć odpowiedzialność za ESG wyłącznie kadrze zarządzającej wysokiego szczebla.",
+                "feedbackText": "Informacja zwrotna do A (błędna): Podejście odgórne pomija kreatywność i wiedzę pracowników pierwszej linii, którzy najlepiej rozumieją wyzwania operacyjne. Innowacyjność wymaga różnorodnych perspektyw i szerokiego udziału."
+              },
+              {
+                "text": "Tworzyć zespoły międzyfunkcyjne i konkursy innowacyjne zachęcające pracowników do rozwiązywania problemów.",
+                "feedbackText": "Informacja zwrotna do B (poprawna): Doskonale! Zespoły międzyfunkcyjne wnoszą różne kompetencje i punkty widzenia, a konkursy innowacyjne uwalniają kreatywność pracowników. Takie podejście generuje praktyczne rozwiązania łączące zrównoważony rozwój i rentowność."
+              },
+              {
+                "text": "Zatrudnić zewnętrznych konsultantów do opracowania wszystkich strategii ESG.",
+                "feedbackText": "Informacja zwrotna do C (błędna): Wiedza zewnętrzna jest cenna, ale poleganie wyłącznie na konsultantach pomija wiedzę wewnętrzną i osłabia poczucie współodpowiedzialności pracowników. Najlepsze rozwiązania powstają z połączenia ekspertyzy zewnętrznej z wiedzą wewnętrzną."
+              }
+            ],
+            "sortOrder": 5
+          },
+          {
+            "prompt": "Jaki jest główny cel jednoczesnego monitorowania wskaźników ESG i finansowych?",
+            "answers": [
+              {
+                "text": "Udowodnienie, że ESG jest ważniejsze niż wyniki finansowe.",
+                "feedbackText": "Informacja zwrotna do A (błędna): Celem nie jest stawianie ESG ponad wynikami finansowymi, lecz pokazanie, że są one ze sobą powiązane. Monitorowanie obu grup wskaźników ujawnia, jak ESG tworzy wartość finansową."
+              },
+              {
+                "text": "Wykazanie wartości inicjatyw ESG oraz wskazanie obszarów wymagających poprawy i optymalizacji.",
+                "feedbackText": "Informacja zwrotna do B (poprawna): Zgadza się! Zintegrowane monitorowanie wskaźników pokazuje interesariuszom, że ESG przynosi realną wartość, a jednocześnie pomaga określić, co działa, a co wymaga korekty. Takie podejście oparte na danych wspiera ciągłe doskonalenie."
+              },
+              {
+                "text": "Spełnienie wymogów regulacyjnych dotyczących raportowania zrównoważonego rozwoju.",
+                "feedbackText": "Informacja zwrotna do C (błędna): Zgodność z przepisami ma znaczenie, ale głównym celem jest cel strategiczny – zrozumienie zależności między ESG a wynikami finansowymi, aby optymalizować jedno i drugie oraz podejmować lepsze decyzje biznesowe. Podsumowanie Ukończyłeś test samooceny do Modułu 2. Wykorzystaj swoje wyniki, aby: Jeśli uzyskałeś 17–24 poprawnych odpowiedzi: Dobrze rozumiesz integrację ESG oraz jej strategię, wizję i spójność organizacyjną. Możesz przejść do Modułu 3. Jeśli uzyskałeś 9–16 poprawnych odpowiedzi: Przejrzyj informacje zwrotne do błędnych odpowiedzi i wróć do odpowiednich fragmentów jednostek Modułu 2, zanim przejdziesz dalej. Jeśli uzyskałeś 0–8 poprawnych odpowiedzi: Poświęć czas na ponowne przeczytanie Modułu 2, zwracając szczególną uwagę na fragmenty dotyczące strategii, wizji i spójności organizacyjnej w ramach zintegrowanych z ESG. Rozważ omówienie kluczowych pojęć ze współpracownikiem lub mentorem. Gdy przeanalizujesz swoje wyniki i poczujesz się pewnie, możesz zastosować te koncepcje we własnej organizacji. Rozważ wykonanie ćwiczeń praktycznych zaproponowanych w Module 2 przed przejściem do Modułu 3."
+              }
+            ],
+            "sortOrder": 6
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "module-3-navigating-esg-frameworks-and-eu-reporting-standards",
+    "quizzes": [
+      {
+        "sortOrder": 1,
+        "title": "PL - Samoocena 1",
+        "questions": [
+          {
+            "prompt": "Które z poniższych stwierdzeń najlepiej oddaje wyjątkowy charakter standardu SASB na tle innych ram ESG?",
+            "answers": [
+              {
+                "text": "Zapewnia podejście skoncentrowane na interesariuszach, służące raportowaniu szerokiego wpływu organizacji na ludzi i planetę.",
+                "feedbackText": "Błędnie. Standardy GRI są skoncentrowane na interesariuszach i obejmują wszystkich, na których wpływa Twoja działalność, natomiast SASB koncentruje się na istotności finansowej."
+              },
+              {
+                "text": "Koncentruje się na istotności finansowej kwestii ESG właściwych dla danego sektora branżowego.",
+                "feedbackText": "Poprawnie. SASB koncentruje się na istotności finansowej i oferuje szczegółowe standardy dla 77 branż."
+              },
+              {
+                "text": "Określa obowiązkowe wymogi prawne dotyczące ujawniania informacji o zrównoważonym rozwoju w UE.",
+                "feedbackText": "Błędnie. Choć w UE sporządzanie raportów według SASB nie jest obowiązkowe, standard ten pomaga zidentyfikować kwestie ESG, które najbardziej bezpośrednio wpływają na rentowność, takie jak efektywność energetyczna czy gospodarka odpadami."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Które z poniższych ram stanowią obowiązkowy standard raportowania dla firm działających na rynku UE lub z nim powiązanych?",
+            "answers": [
+              {
+                "text": "TCFD (Task Force on Climate-related Financial Disclosures)",
+                "feedbackText": "Błędnie. Rekomendacje TCFD są dobrowolne – wskazują, jak ujawniać informacje o tym, w jaki sposób zmiana klimatu może wpływać na model biznesowy, inwestycje i strategię firmy."
+              },
+              {
+                "text": "GRI (Global Reporting Initiative)",
+                "feedbackText": "Błędnie. Choć standardy GRI są najpowszechniej stosowanymi ramami raportowania zrównoważonego rozwoju, nie są obowiązkowe dla firm w UE."
+              },
+              {
+                "text": "ESRS (European Sustainability Reporting Standards)",
+                "feedbackText": "Poprawnie. Standardy ESRS zostały opracowane przez EFRAG w ramach unijnej dyrektywy o sprawozdawczości przedsiębiorstw w zakresie zrównoważonego rozwoju (CSRD), a zatem są obowiązkowe."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Mała firma logistyczna z siedzibą w UE chce przygotować się na przyszłe obowiązki raportowania zrównoważonego rozwoju i pokazać, jak zmiana klimatu może wpływać na koszty dostaw. Która kombinacja ram najlepiej odpowiada jej potrzebom?",
+            "answers": [
+              {
+                "text": "TCFD do oceny ryzyk klimatycznych oraz ESRS do spełnienia unijnych wymogów prawnych dotyczących ujawniania informacji.",
+                "feedbackText": "Poprawnie. TCFD najlepiej odzwierciedlają finansowe skutki zmian klimatu. ESRS to obowiązujące w UE wymogi prawne dotyczące ujawniania informacji."
+              },
+              {
+                "text": "SDG do wyboru celów globalnych oraz GRI do ogólnego raportowania wpływu.",
+                "feedbackText": "Błędnie. SDG to szerokie, globalne ambicje, a nie ramy raportowania, natomiast GRI koncentruje się na szerszym wpływie społecznym i środowiskowym."
+              },
+              {
+                "text": "SASB do branżowych wskaźników finansowych oraz GRI do danych o zaangażowaniu społecznym.",
+                "feedbackText": "Błędnie. Standardy SASB rzeczywiście koncentrują się na istotnych finansowo kwestiach ESG, ale są przeznaczone przede wszystkim do komunikacji z inwestorami. Połączenie z GRI pomija ukierunkowanie na ryzyko klimatyczne oraz obowiązkową strukturę, których wymaga ten scenariusz."
+              }
+            ],
+            "sortOrder": 3
+          },
+          {
+            "prompt": "Średniej wielkości firma produkcyjna chce pokazać inwestorom, jak jej działania na rzecz efektywności energetycznej poprawiają rentowność. Które ramy będą do tego najodpowiedniejsze?",
+            "answers": [
+              {
+                "text": "GRI – aby opisać wpływ społeczny i środowiskowy dla wszystkich interesariuszy.",
+                "feedbackText": "Błędnie. Ramy GRI pomagają organizacjom raportować szerszy wpływ społeczny, środowiskowy i gospodarczy. Nie koncentrują się na wynikach finansowych ani priorytetach inwestorów."
+              },
+              {
+                "text": "SASB – aby uwypuklić istotne finansowo kwestie ESG właściwe dla branży.",
+                "feedbackText": "Poprawnie. Ramy SASB koncentrują się na istotności finansowej."
+              },
+              {
+                "text": "SDG – aby powiązać działalność z globalnymi priorytetami społecznymi.",
+                "feedbackText": "Błędnie. SDG to zestaw globalnych celów zrównoważonego rozwoju, ale nie są ramami raportowania."
+              }
+            ],
+            "sortOrder": 4
+          },
+          {
+            "prompt": "Twoja organizacja chce rozpocząć raportowanie zrównoważonego rozwoju, ale liczba dostępnych ram ją przytłacza. Jaki powinien być pierwszy praktyczny krok, aby zapewnić zgodność z uznanymi standardami?",
+            "answers": [
+              {
+                "text": "Zacząć od przyporządkowania obecnych inicjatyw do SDG, aby stworzyć wstępną narrację o zrównoważonym rozwoju.",
+                "feedbackText": "Błędnie. Przyporządkowanie do SDG może być później przydatnym narzędziem komunikacji, ale pierwszym krokiem jest ustalenie, które ramy raportowania są najbardziej odpowiednie dla Twojej organizacji."
+              },
+              {
+                "text": "Zacząć od określenia, które ramy najlepiej odpowiadają celom, wielkości i branży organizacji, a następnie wdrażać je stopniowo.",
+                "feedbackText": "Poprawnie. Warto zacząć od małych kroków i wybrać ramy pasujące do organizacji, zamiast próbować stosować wszystko naraz. Zapewnia to skoncentrowane, wykonalne i strategiczne podejście do zgodności ze standardami."
+              },
+              {
+                "text": "Natychmiast przeprowadzić ocenę istotności, aby ustalić, które tematy ESG raportować, bez wcześniejszego wyboru ram.",
+                "feedbackText": "Błędnie. Ocena istotności to niezbędny krok, ale najpierw należy wybrać ramy odpowiednie dla organizacji. To wybrane ramy określają, w jaki sposób należy przeprowadzić ocenę istotności."
+              }
+            ],
+            "sortOrder": 5
+          },
+          {
+            "prompt": "Organizacja raportuje już według GRI i SASB, ale chce mieć pewność, że jej ujawnienia spełniają nowe wymogi UE. Jaki krok powinna podjąć jako następny, aby zapewnić zgodność z uznanymi standardami?",
+            "answers": [
+              {
+                "text": "Zintegrować dotychczasowe raporty GRI i SASB ze strukturą ESRS oraz przeprowadzić ocenę podwójnej istotności.",
+                "feedbackText": "Poprawnie. Standardy ESRS wymagają uwzględnienia zarówno perspektywy wpływu, jak i perspektywy finansowej – czyli tzw. podwójnej istotności"
+              },
+              {
+                "text": "Zastąpić wszystkie dotychczasowe ramy standardem ESRS, ponieważ ich łączenie prowadzi do niespójności.",
+                "feedbackText": "Błędnie. Poszczególne ramy mają się wzajemnie uzupełniać, a nie zastępować. Rozsądne łączenie ram pozwala stworzyć spójny i wiarygodny raport zrównoważonego rozwoju."
+              },
+              {
+                "text": "Skupić się na SDG, ponieważ obejmują one wszystkie tematy zrównoważonego rozwoju w skali globalnej.",
+                "feedbackText": "Błędnie. SDG określają ogólne cele globalne, ale nie precyzują standardów raportowania ani wskaźników. Są przydatne do wyznaczania kierunku strategicznego, lecz niewystarczające do ustrukturyzowanego ujawniania informacji czy zgodności regulacyjnej."
+              }
+            ],
+            "sortOrder": 6
+          }
+        ]
+      },
+      {
+        "sortOrder": 2,
+        "title": "PL - Samoocena 2",
+        "questions": [
+          {
+            "prompt": "Jaki jest główny cel dyrektywy CSRD?",
+            "answers": [
+              {
+                "text": "Wprowadzenie dobrowolnych ram, które pozwalają firmom eksponować osiągnięcia w zakresie zrównoważonego rozwoju wtedy, gdy same tego chcą.",
+                "feedbackText": "Błędnie. Inicjatywy dobrowolne wprawdzie istnieją, ale CSRD jest obowiązkowa i ma zapewnić, że firmy dostarczają ustrukturyzowane, wiarygodne dane o zrównoważonym rozwoju."
+              },
+              {
+                "text": "Sprawienie, by raportowanie zrównoważonego rozwoju było równie wiarygodne i porównywalne jak sprawozdawczość finansowa w szerszej grupie firm.",
+                "feedbackText": "Poprawnie. CSRD znacząco poszerza grono firm zobowiązanych do raportowania i ma sprawić, by informacje ESG były spójne, wiarygodne i porównywalne – podobnie jak dane finansowe."
+              },
+              {
+                "text": "Streszczenie innych ram, a przez to ograniczenie szczegółowości informacji wymaganych w raportowaniu.",
+                "feedbackText": "Błędnie. CSRD zastąpiła i rozszerzyła wcześniejszą dyrektywę o sprawozdawczości niefinansowej (NFRD) oraz znacząco zwiększa szczegółowość informacji, które firmy muszą przekazywać."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Firma przygotowująca się do raportowania zgodnego z CSRD chce zrozumieć, czego się od niej wymaga. Które z poniższych działań jest niezbędne do spełnienia wymogów CSRD?",
+            "answers": [
+              {
+                "text": "Raportowanie wpływu na środowisko, ponieważ ryzyka finansowe są objęte osobno taksonomią UE.",
+                "feedbackText": "Błędnie. CSRD wymaga podwójnej istotności, co oznacza, że firmy muszą raportować zarówno swój wpływ na ludzi i planetę, jak i to, jak kwestie zrównoważonego rozwoju wpływają na ich wyniki finansowe. Same tematy środowiskowe nie spełniają tego wymogu."
+              },
+              {
+                "text": "Skupienie się na danych, o które już proszą najwięksi klienci, ponieważ oczekiwania łańcucha dostaw wystarczą do przygotowania się na CSRD.",
+                "feedbackText": "Błędnie. Oczekiwania łańcucha dostaw mają znaczenie, ale zgodność z CSRD wymaga, aby Twoja firma sama oceniła tematy istotne, zebrała dane zgodne z ESRS oraz spełniła wymogi dotyczące ujawnień i atestacji."
+              },
+              {
+                "text": "Przeprowadzenie oceny podwójnej istotności i przygotowanie ujawnień zgodnie ze standardami ESRS.",
+                "feedbackText": "Poprawnie. Zgodność z CSRD obejmuje ocenę podwójnej istotności oraz stosowanie standardów ESRS."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Jak CSRD wiąże się z rozporządzeniem w sprawie taksonomii UE?",
+            "answers": [
+              {
+                "text": "CSRD wymaga od firm raportowania, jaka część ich działalności gospodarczej spełnia kryteria zrównoważenia środowiskowego określone w taksonomii UE.",
+                "feedbackText": "Poprawnie. Taksonomia UE określa, co uznaje się za działalność zrównoważoną środowiskowo, a raporty zgodne z CSRD muszą ujawniać stopień tej zgodności."
+              },
+              {
+                "text": "CSRD wykorzystuje taksonomię UE do ustalenia, którym tematom zrównoważonego rozwoju firmy muszą nadać priorytet w ocenie podwójnej istotności.",
+                "feedbackText": "Błędnie. Ocena podwójnej istotności jest wymagana na mocy CSRD, ale to nie taksonomia UE decyduje o tym, którym tematom nadaje się priorytet. Taksonomia definiuje działalność zrównoważoną środowiskowo."
+              },
+              {
+                "text": "Taksonomia UE zawiera kryteria oceny ryzyk i szans finansowych, które firmy mogą wykorzystać przy sporządzaniu raportu o istotności finansowej.",
+                "feedbackText": "Błędnie. Taksonomia UE definiuje działalność zrównoważoną środowiskowo, ale nie zawiera kryteriów raportowania istotności finansowej."
+              }
+            ],
+            "sortOrder": 3
+          },
+          {
+            "prompt": "Jaka jest relacja między CSRD a SFDR?",
+            "answers": [
+              {
+                "text": "SFDR wskazuje firmom, jak mają strukturyzować raporty zrównoważonego rozwoju składane na podstawie CSRD.",
+                "feedbackText": "Błędnie. SFDR nie określa, jak firmy mają strukturyzować swoje ujawnienia. Rozporządzenie to dotyczy instytucji finansowych."
+              },
+              {
+                "text": "Inwestorzy wykorzystują dane o zrównoważonym rozwoju raportowane na podstawie CSRD, aby spełnić własne obowiązki informacyjne wynikające z SFDR.",
+                "feedbackText": "Poprawnie. SFDR zobowiązuje instytucje finansowe do ujawniania ryzyk i wpływów związanych ze zrównoważonym rozwojem. Instytucje te korzystają z danych firm zgodnych z CSRD, aby wypełnić własne obowiązki sprawozdawcze."
+              },
+              {
+                "text": "CSRD i SFDR funkcjonują niezależnie i nie opierają się na wzajemnych ujawnieniach.",
+                "feedbackText": "Błędnie. Choć oba akty są skierowane do różnych grup, są ze sobą powiązane: SFDR opiera się na danych firm wytworzonych w ramach CSRD. Stanowią część skoordynowanego unijnego systemu zrównoważonych finansów."
+              }
+            ],
+            "sortOrder": 4
+          },
+          {
+            "prompt": "Jak CSRD wiąże się z CSDDD?",
+            "answers": [
+              {
+                "text": "CSRD eliminuje potrzebę należytej staranności, zobowiązując firmy do raportowania wewnętrznych wyników ESG.",
+                "feedbackText": "Błędnie. CSRD nie zastępuje należytej staranności. CSDDD wymaga od firm identyfikowania i ograniczania ryzyk dotyczących praw człowieka i środowiska w całym łańcuchu wartości."
+              },
+              {
+                "text": "Firmy muszą stosować CSDDD do raportowania o swoich łańcuchach wartości, a CSRD do raportowania wewnętrznego.",
+                "feedbackText": "Błędnie. CSDDD wymaga od firm przeciwdziałania ryzykom dotyczącym praw człowieka i środowiska w całym łańcuchu wartości, natomiast CSRD koncentruje się na wymogach raportowania."
+              },
+              {
+                "text": "CSDDD wymaga od firm podejmowania działań wobec ryzyk związanych ze zrównoważonym rozwojem, natomiast CSRD zapewnia przejrzyste raportowanie tych działań i ich skutków.",
+                "feedbackText": "Poprawnie. Oba akty wzajemnie się uzupełniają: CSDDD koncentruje się na identyfikacji ryzyk i zarządzaniu nimi, a CSRD wymaga ujawniania danych o tych ryzykach i podjętych działaniach."
+              }
+            ],
+            "sortOrder": 5
+          },
+          {
+            "prompt": "Twoja organizacja chce rozpocząć przygotowania do raportowania zgodnego z CSRD. Które z poniższych działań jest najwłaściwszym pierwszym krokiem?",
+            "answers": [
+              {
+                "text": "Natychmiast zacząć zbierać wszystkie możliwe dane ESG, aby niczego nie pominąć.",
+                "feedbackText": "Błędnie. Zbieranie danych jest ważne, ale organizacje powinny najpierw ustalić, czy i kiedy CSRD będzie ich dotyczyć. Pozwala to uniknąć zbędnego lub nietrafionego gromadzenia danych."
+              },
+              {
+                "text": "Opracować wstępny raport zrównoważonego rozwoju z wykorzystaniem dowolnych dostępnych ram.",
+                "feedbackText": "Błędnie. CSRD wymaga raportowania zgodnie ze standardami ESRS, a nie według dowolnych ram. Przygotowanie raportu bez znajomości wymogów ESRS nie zapewni zgodności z CSRD."
+              },
+              {
+                "text": "Sprawdzić, czy organizacja jest objęta zakresem CSRD, i ustalić harmonogram raportowania.",
+                "feedbackText": "Poprawnie. Pierwszym krokiem przygotowań jest zrozumienie swoich obowiązków, w tym tego, czy i kiedy firma musi raportować."
+              }
+            ],
+            "sortOrder": 6
+          },
+          {
+            "prompt": "Twoja firma potwierdziła, że CSRD obejmie ją w ciągu najbliższych dwóch lat. Jaki jest kolejny niezbędny krok w drodze do raportowania zgodnego z CSRD?",
+            "answers": [
+              {
+                "text": "Powierzenie odpowiedzialności za raportowanie zewnętrznemu konsultantowi, aby zapewnić bardziej obiektywne gromadzenie danych.",
+                "feedbackText": "Błędnie. Wsparcie zewnętrzne bywa pomocne, ale CSRD wymaga włączenia raportowania w system zarządzania z jasno przypisaną odpowiedzialnością wewnętrzną."
+              },
+              {
+                "text": "Przeprowadzenie oceny podwójnej istotności, aby ustalić, które tematy ESG są najistotniejsze dla firmy i jej interesariuszy.",
+                "feedbackText": "Poprawnie. Organizacje muszą przeprowadzić ocenę podwójnej istotności, która pomaga ustalić, które tematy ESRS należy uwzględnić w raporcie."
+              },
+              {
+                "text": "Skupienie się na zaangażowaniu dostawców w gromadzenie danych, ponieważ raportowanie łańcucha wartości to pierwszy element raportu.",
+                "feedbackText": "Błędnie. Zaangażowanie dostawców jest ważne, ale wymagane są również oceny wewnętrzne."
+              }
+            ],
+            "sortOrder": 7
+          }
+        ]
+      },
+      {
+        "sortOrder": 3,
+        "title": "PL - Samoocena 3",
+        "questions": [
+          {
+            "prompt": "Które stwierdzenie najlepiej opisuje wzajemne relacje między ratingami ESG, audytami i ujawnieniami?",
+            "answers": [
+              {
+                "text": "Ujawnienia ESG prezentują informacje o zrównoważonym rozwoju, audyty oceniają wiarygodność tych informacji, a ratingi oceniają, jak dobre wydają się wyniki firmy.",
+                "feedbackText": "Poprawnie. Ujawnienia ESG prezentują informacje o zrównoważonym rozwoju, audyty oceniają wiarygodność tych informacji, a ratingi oceniają, jak dobre wydają się wyniki firmy."
+              },
+              {
+                "text": "Ujawnienia ESG interpretują wyniki firmy, audyty porównują je z konkurencją, a ratingi weryfikują poprawność danych.",
+                "feedbackText": "Błędnie. Ujawnienia prezentują Twoje własne informacje ESG, audyty sprawdzają ich poprawność, a ratingi oceniają Twoje wyniki na tle innych."
+              },
+              {
+                "text": "Ratingi i audyty ESG dotyczą wyłącznie dużych korporacji, a ujawnienia są dobrowolne dla wszystkich MŚP.",
+                "feedbackText": "Błędnie. MŚP również korzystają na audytach i ratingach, a ujawnienia są coraz częściej oczekiwane w łańcuchach dostaw i procesach finansowania. Narzędzia ESG mają znaczenie dla organizacji każdej wielkości."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Dlaczego ratingi ESG i zaudytowane ujawnienia mają znaczenie dla organizacji, w tym dla MŚP?",
+            "answers": [
+              {
+                "text": "Zapewniają, że firmy otrzymują taką samą ocenę ESG we wszystkich agencjach ratingowych, tworząc jeden standard porównywania wyników.",
+                "feedbackText": "Błędnie. Każda agencja ratingowa stosuje inną metodykę, więc oceny się różnią."
+              },
+              {
+                "text": "Wpływają na dostęp do finansowania, wzmacniają relacje biznesowe i zwiększają zaufanie, potwierdzając przejrzyste i weryfikowalne wyniki w zakresie zrównoważonego rozwoju.",
+                "feedbackText": "Poprawnie. Ratingi ESG i zweryfikowane ujawnienia wpływają na finansowanie, partnerstwa, reputację i zgodność z przepisami. Nawet MŚP zyskują dzięki większej wiarygodności i konkurencyjności."
+              },
+              {
+                "text": "Audytorzy i agencje ratingowe samodzielnie zbierają wszystkie potrzebne informacje, więc firmy nie muszą monitorować ani gromadzić własnych danych ESG.",
+                "feedbackText": "Błędnie. Firmy muszą samodzielnie monitorować, dokumentować i aktualizować własne dane ESG. Agencje korzystają z informacji publicznie dostępnych, ale wewnętrzny monitoring pozostaje niezbędny."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "W jaki sposób dobre wyniki ESG, poparte przejrzystymi ujawnieniami, wpływają na zaufanie inwestorów?",
+            "answers": [
+              {
+                "text": "Upewniają inwestorów, że ryzyka związane ze zrównoważonym rozwojem są skutecznie zarządzane, dzięki czemu organizacja wydaje się mniej ryzykowna i bardziej atrakcyjna dla finansujących.",
+                "feedbackText": "Poprawnie. Dobre wyniki ESG świadczą o sprawnym zarządzaniu, zmniejszają postrzegane ryzyko i zwiększają zaufanie inwestorów."
+              },
+              {
+                "text": "Gwarantują, że organizacja otrzyma identyczne ratingi od wszystkich agencji, co upraszcza ocenę dokonywaną przez inwestorów.",
+                "feedbackText": "Błędnie. Agencje ratingowe stosują różne metodyki, więc identyczne oceny są mało prawdopodobne. Zaufanie inwestorów rośnie dzięki przejrzystości i rzetelności, a nie dzięki jednolitym ratingom."
+              },
+              {
+                "text": "Eliminują potrzebę analizowania przez inwestorów wyników finansowych, ponieważ oceny ESG obejmują tradycyjne wskaźniki finansowe.",
+                "feedbackText": "Błędnie. Oceny ESG uzupełniają, a nie zastępują analizę finansową. Inwestorzy nadal opierają się na wskaźnikach finansowych."
+              }
+            ],
+            "sortOrder": 3
+          },
+          {
+            "prompt": "Dlaczego dobre wyniki ESG przyczyniają się do długoterminowej konkurencyjności organizacji?",
+            "answers": [
+              {
+                "text": "Zmniejszają potrzebę audytów zewnętrznych, pozwalając firmom zaoszczędzić zasoby, które można przeznaczyć na innowacje.",
+                "feedbackText": "Błędnie. Dobre wyniki ESG nie znoszą obowiązku audytu wynikającego z regulacji takich jak CSRD."
+              },
+              {
+                "text": "Upraszczają raportowanie i ograniczają ryzyko reputacyjne, przyczyniając się tym samym do długoterminowej konkurencyjności.",
+                "feedbackText": "Błędnie. Dobre wyniki ESG nie upraszczają raportowania."
+              },
+              {
+                "text": "Wzmacniają reputację, przyciągają wiarygodnych partnerów biznesowych i pomagają uzyskać lepsze warunki finansowania.",
+                "feedbackText": "Poprawnie. Wyniki ESG zwiększają zaufanie do marki, poprawiają dostęp do finansowania i otwierają możliwości współpracy. Czynniki te bezpośrednio wspierają konkurencyjność, zwłaszcza na rynkach, na których oczekiwania wobec zrównoważonego rozwoju rosną."
+              }
+            ],
+            "sortOrder": 4
+          },
+          {
+            "prompt": "Jaki praktyczny krok należy wykonać jako pierwszy, przygotowując organizację do oceny ESG?",
+            "answers": [
+              {
+                "text": "Zacząć od wyznaczenia celów ESG.",
+                "feedbackText": "Błędnie. Cele są istotne, ale zacznij od zmapowania istniejących danych ESG, aby wiedzieć, co już monitorujesz."
+              },
+              {
+                "text": "Skupić się na gromadzeniu danych wykorzystywanych przez agencje ratingowe.",
+                "feedbackText": "Błędnie. Audyty ESG opierają się w dużej mierze na dowodach wewnętrznych, a nie wyłącznie na danych wymaganych przez agencje ratingowe."
+              },
+              {
+                "text": "Zmapować obecne dane ESG, aby ustalić, jakie informacje są już zbierane.",
+                "feedbackText": "Poprawnie. Pierwszym krokiem jest zmapowanie danych ESG, aby poznać punkt wyjścia, zanim wyznaczysz cele lub zaangażujesz audytorów."
+              }
+            ],
+            "sortOrder": 5
+          },
+          {
+            "prompt": "Twoja organizacja przygotowuje się po raz pierwszy do zewnętrznego audytu ESG. Który krok najskuteczniej wesprze sprawny przebieg tego procesu?",
+            "answers": [
+              {
+                "text": "Zgromadzenie wszystkich dokumentów związanych z ESG w jednym repozytorium, aby audytorzy mieli do nich łatwy dostęp.",
+                "feedbackText": "Błędnie. Centralizacja zwiększa efektywność, ale w procesie audytu najważniejsze są zweryfikowane, poprawne dane."
+              },
+              {
+                "text": "Zaangażowanie niezależnego recenzenta do sprawdzenia poprawności danych ESG.",
+                "feedbackText": "Poprawnie. Udokumentuj wszystkie dowody i przeprowadź uproszczony audyt zewnętrzny lub walidację przed pełnym audytem."
+              },
+              {
+                "text": "Nadanie priorytetu wskaźnikom, na których najbardziej skupiają się agencje ratingowe, ponieważ będą one również głównym przedmiotem zainteresowania audytora.",
+                "feedbackText": "Błędnie. Audytorzy weryfikują dane zgodnie ze standardami ESRS i Twoimi rzeczywistymi ujawnieniami, a nie według preferencji agencji ratingowych."
+              }
+            ],
+            "sortOrder": 6
+          }
+        ]
+      },
+      {
+        "sortOrder": 4,
+        "title": "PL - Samoocena 4",
+        "questions": [
+          {
+            "prompt": "MŚP chce zacząć włączać zasady ESG do codziennej działalności. Które podejście najlepiej pokazuje, jak ramy i obowiązki raportowe przekładają się na praktyczne, wykonalne działania mniejszych firm?",
+            "answers": [
+              {
+                "text": "Wskazanie kilku priorytetowych tematów ESG, zebranie podstawowych, już dostępnych danych i przejrzyste komunikowanie pierwszych postępów.",
+                "feedbackText": "Poprawnie. MŚP powinny skupić się na istotnych priorytetach, wykorzystać istniejące dane jako punkt wyjścia, działać małymi krokami i komunikować się w przejrzysty sposób."
+              },
+              {
+                "text": "Zastosowanie pełnych ram ESG, aby od początku zapewnić całkowitą zgodność, nawet jeśli wiele wskaźników nie jest jeszcze istotnych.",
+                "feedbackText": "Błędnie. MŚP nie powinny od razu wdrażać pełnych ram. Lepszym podejściem jest rozpoczęcie od prostych, istotnych kroków niż dążenie do kompleksowej zgodności."
+              },
+              {
+                "text": "Nadanie priorytetu długoterminowym obowiązkom raportowym ESG i sporządzenie raportu dopiero wtedy, gdy wymogi regulacyjne dla MŚP staną się jaśniejsze.",
+                "feedbackText": "Błędnie. Zrozumienie przyszłych obowiązków jest ważne, ale zaleca się podejmowanie wczesnych, praktycznych działań."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "MŚP chce dostosować się do ram ESG, ale obawia się ich złożoności. Jakie praktyczne kroki może podjąć, aby wdrożyć zasady ESG?",
+            "answers": [
+              {
+                "text": "Skonsultować z audytorami zewnętrznymi, jak najlepiej wdrożyć ramy ESG.",
+                "feedbackText": "Błędnie. Konsultacje z audytorami zewnętrznymi mogą być pomocne, ale pierwszym krokiem jest zrozumienie własnych priorytetów w firmie."
+              },
+              {
+                "text": "Przygotować strategię monitorowania wszystkich wskaźników objętych zasadami ESG.",
+                "feedbackText": "Błędnie. Monitorowanie wszystkich wskaźników ESG nie jest efektywne na początku. MŚP powinny najpierw określić swoje obszary priorytetowe."
+              },
+              {
+                "text": "Współpracować z partnerami w celu dzielenia się zasobami i szkoleniami z zakresu ESG.",
+                "feedbackText": "Poprawnie. Współpraca z partnerami w zakresie dzielenia się zasobami i szkoleniami może wesprzeć MŚP we wdrażaniu zasad ESG w działalności."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Mała firma produkcyjna chce włączyć ESG do codziennej działalności bez nadmiernego obciążania zasobów. Które podejście najlepiej odpowiada realistycznej integracji ESG dopasowanej do branży?",
+            "answers": [
+              {
+                "text": "Ograniczenie emisji z podróży służbowych i promowanie współpracy cyfrowej.",
+                "feedbackText": "Błędnie. Ograniczanie emisji z podróży i promowanie współpracy cyfrowej może być realistycznym sposobem integracji ESG, ale bardziej odpowiada firmom z sektora usług i turystyki."
+              },
+              {
+                "text": "Odpowiedzialne gospodarowanie wodą i glebą.",
+                "feedbackText": "Błędnie. Odpowiedzialne gospodarowanie wodą i glebą jest szczególnie właściwe dla firm z sektora rolnictwa i żywności."
+              },
+              {
+                "text": "Skupienie się na efektywności energetycznej, ograniczaniu odpadów i bezpieczeństwie pracowników.",
+                "feedbackText": "Poprawnie. Mała firma produkcyjna powinna skupić się na efektywności energetycznej, ograniczaniu odpadów i bezpieczeństwie pracowników."
+              }
+            ],
+            "sortOrder": 3
+          },
+          {
+            "prompt": "Wyobraź sobie, że zarządzasz MŚP z branży turystycznej i hotelarskiej i chcesz włączyć zasady ESG do codziennych decyzji. Które obszary priorytetowe wybierzesz?",
+            "answers": [
+              {
+                "text": "Monitorowanie wpływu świadczonych usług na bioróżnorodność, ponieważ jest to uniwersalne oczekiwanie ESG we wszystkich sektorach.",
+                "feedbackText": "Błędnie. Bioróżnorodność bywa istotna, ale w usługach i turystyce większe znaczenie mają emisje z podróży, włączający charakter miejsca pracy, etyczne zaopatrzenie i współpraca ze społecznością lokalną."
+              },
+              {
+                "text": "Ograniczanie emisji z podróży poprzez promowanie współpracy cyfrowej oraz wzmacnianie praktyk społecznych dzięki szkoleniom personelu i partnerstwom ze społecznością lokalną.",
+                "feedbackText": "Poprawnie. Te działania uznaje się za priorytety w ramach zasad ESG w sektorze usług i turystyki."
+              },
+              {
+                "text": "Wdrożenie zaawansowanych systemów ochrony danych jako główny priorytet.",
+                "feedbackText": "Błędnie. Ochrona danych ma kluczowe znaczenie w branży technologicznej i ICT, natomiast priorytety ESG w turystyce i hotelarstwie są inne."
+              }
+            ],
+            "sortOrder": 4
+          },
+          {
+            "prompt": "Które wyzwanie najczęściej dotyka MŚP przy wdrażaniu inicjatyw zrównoważonego rozwoju?",
+            "answers": [
+              {
+                "text": "Trudność w wyborze właściwych międzynarodowych ram ESG, ponieważ MŚP muszą raportować według wielu standardów.",
+                "feedbackText": "Błędnie. MŚP nie mają obowiązku stosowania wielu obowiązkowych ram. Wyzwaniem jest raczej brak dopasowanych wytycznych."
+              },
+              {
+                "text": "Ograniczone zasoby kadrowe i niepewność co do tego, które tematy i wskaźniki ESG są najistotniejsze.",
+                "feedbackText": "Poprawnie. MŚP często mierzą się z ograniczonym czasem, niejasnymi wytycznymi i trudnością w powiązaniu celów ESG z krótkoterminowymi priorytetami finansowymi."
+              },
+              {
+                "text": "Nadmiar branżowych narzędzi ESG przeznaczonych wyłącznie dla MŚP, co utrudnia wybór jednego podejścia.",
+                "feedbackText": "Błędnie. MŚP częściej odczuwają brak dopasowanych wytycznych niż nadmiar narzędzi przeznaczonych specjalnie dla nich."
+              }
+            ],
+            "sortOrder": 5
+          },
+          {
+            "prompt": "Które z poniższych stanowi realistyczną szansę dla MŚP wdrażających zrównoważony rozwój do modelu biznesowego?",
+            "answers": [
+              {
+                "text": "Lepsza reputacja i większa atrakcyjność dla klientów, partnerów i banków dzięki przejrzystym praktykom ESG.",
+                "feedbackText": "Poprawnie. Integracja ESG wzmacnia reputację, otwiera drogę do nowych partnerstw biznesowych i poprawia dostęp do finansowania – również w przypadku MŚP."
+              },
+              {
+                "text": "Oszczędności kosztów we wszystkich obszarach działalności, ponieważ działania ESG obniżają wydatki w krótkim okresie.",
+                "feedbackText": "Błędnie. ESG może zwiększyć efektywność i ograniczyć marnotrawstwo, ale nie gwarantuje krótkoterminowych oszczędności we wszystkich obszarach działalności."
+              },
+              {
+                "text": "Zwolnienie z przyszłych wymogów regulacyjnych, ponieważ oczekiwania dotyczące zrównoważonego rozwoju kierowane są głównie do dużych firm.",
+                "feedbackText": "Błędnie. MŚP będą coraz częściej zobowiązane do raportowania praktyk ESG, zwłaszcza ze względu na oczekiwania w łańcuchu dostaw i rozwijające się regulacje, takie jak CSRD."
+              }
+            ],
+            "sortOrder": 6
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "module-4-integrating-esg-into-business-operations",
+    "quizzes": [
+      {
+        "sortOrder": 1,
+        "title": "PL - Samoocena 1",
+        "questions": [
+          {
+            "prompt": "Postanowiłeś poprawiać ESG w codziennej działalności, ale nie chcesz tworzyć dodatkowej biurokracji ani zbyt wcześnie zbierać niepotrzebnych informacji. Jaki według tej jednostki jest najbardziej użyteczny pierwszy krok dla MŚP?",
+            "answers": [
+              {
+                "text": "Rozpoczęcie zbierania szczegółowych danych ESG dla każdej czynności i każdego pomieszczenia",
+                "feedbackText": "Błędnie. Szczegółowe gromadzenie danych może okazać się przydatne później, ale nie jest najlepszym punktem wyjścia dla małej firmy. Na początku może spowolnić proces i sprawić, że ESG będzie kojarzyć się z papierkową robotą. Celem pierwszego kroku jest szybkie wskazanie głównych punktów zapalnych, a nie budowa pełnego systemu pomiarowego."
+              },
+              {
+                "text": "Przeprowadzenie krótkiego obchodu w trakcie jednego zwykłego dnia pracy i wyszukanie środowiskowych punktów zapalnych",
+                "feedbackText": "Poprawnie. Krótki obchód pozwala skupić się na tym, co faktycznie dzieje się w zwykłej pracy. Umożliwia wskazanie, gdzie energia, materiały, woda i odpady mają największe praktyczne znaczenie. To dokładnie taki prosty, operacyjny punkt wyjścia, jaki zaleca ta jednostka."
+              },
+              {
+                "text": "Napisanie ogólnego oświadczenia o zrównoważonym rozwoju dla pracowników i klientów",
+                "feedbackText": "Błędnie. Ogólne oświadczenie może brzmieć dobrze, ale nie pokazuje, gdzie leżą rzeczywiste problemy. Nie pomaga ustalić, które działania generują odpady, koszty lub nieefektywność. W tej jednostce działanie zaczyna się od obserwacji operacji, a nie od formułowania ogólnych komunikatów."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Podczas obchodu chcesz ustalić, które obserwacje należy traktować jako rzeczywiste środowiskowe punkty zapalne, a które jedynie jako tło. Który z poniższych przykładów najwyraźniej wskazuje obszar problemowy wymagający dalszych działań?",
+            "answers": [
+              {
+                "text": "Maszyny i oświetlenie pozostają włączone po pracy w kilku miejscach",
+                "feedbackText": "Poprawnie. To bezpośredni przykład zbędnego zużycia energii w codziennej działalności. Powtarza się, generuje koszty i zwykle można go ograniczyć bez dużych inwestycji. Dzięki temu stanowi wyraźny punkt zapalny według kryteriów tej jednostki."
+              },
+              {
+                "text": "Logo firmy na opakowaniach wygląda staroświecko",
+                "feedbackText": "Błędnie. Przestarzałe logo może być kwestią wizerunkową, ale samo w sobie nie jest środowiskowym punktem zapalnym. Nie mówi nic istotnego o zużyciu energii, odpadach, wodzie czy materiałach. Ta jednostka koncentruje się na wpływie operacyjnym, a nie na identyfikacji wizualnej."
+              },
+              {
+                "text": "Pracownicy używają w kuchni różnych kubków",
+                "feedbackText": "Błędnie. Różne kubki nie są w tym kontekście istotnym wskaźnikiem efektywności środowiskowej. Nie wskazują na wyraźny wzorzec marnotrawstwa, kosztów ani nieefektywnego wykorzystania zasobów. Punkt zapalny powinien wskazywać praktyczny obszar problemowy, a nie nieszkodliwą różnicę w indywidualnych przyzwyczajeniach."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Mały magazyn przeprowadza obchód i zauważa trzy powtarzające się problemy: zbyt dużo wypełniacza w opakowaniach, odpady nadające się do recyklingu trafiają do odpadów zmieszanych, a ładowarki pozostają podłączone przez całą noc. Jaki będzie najwłaściwszy kolejny krok, jeśli firma chce pracować w sposób zalecany w tej jednostce?",
+            "answers": [
+              {
+                "text": "Uznać je za kluczowe obszary problemowe i przekształcić każdy z nich w konkretne działanie",
+                "feedbackText": "Poprawnie. Ta jednostka zaleca wybranie najistotniejszych obszarów problemowych i przełożenie ich na praktyczne, konkretne działania. Dzięki temu praca pozostaje wykonalna, a ludzie wiedzą dokładnie, co robić dalej. Pozwala to również uniknąć częstego błędu, jakim jest próba rozwiązania wszystkiego naraz."
+              },
+              {
+                "text": "Uruchomić pełną strategię ESG obejmującą jednocześnie wszystkie działy",
+                "feedbackText": "Błędnie. Pełna strategia ESG może być na tym etapie zbyt szeroka i zbyt obciążająca. Ta jednostka promuje skoncentrowane działania operacyjne, zwłaszcza dla MŚP dysponujących ograniczonym czasem i zasobami. Zbyt szeroki start może osłabić tempo działań i utrudnić wdrożenie."
+              },
+              {
+                "text": "Poczekać do przyszłego roku i przeanalizować wszystko po zakupie nowego sprzętu",
+                "feedbackText": "Błędnie. Czekanie na większą inwestycję nie jest tu konieczne. Opisane problemy można rozwiązać już teraz praktycznymi działaniami, takimi jak lepszy dobór opakowań, czytelniej oznaczone pojemniki i proste procedury wyłączania urządzeń. Jednostka wyraźnie pokazuje, że wartościowa poprawa środowiskowa często zaczyna się od drobnych zmian operacyjnych, a nie od kosztownych modernizacji."
+              }
+            ],
+            "sortOrder": 3
+          },
+          {
+            "prompt": "Masz już listę kilku możliwych działań usprawniających i musisz zdecydować, które wdrożyć jako pierwsze. Która opcja najlepiej wpisuje się w kategorię „duży efekt / mały nakład”, od której – zgodnie z tą jednostką – MŚP powinny zaczynać?",
+            "answers": [
+              {
+                "text": "Wymiana wszystkich maszyn i urządzeń w tym kwartale",
+                "feedbackText": "Błędnie. Wymiana wszystkich maszyn może mieć duży efekt, ale zwykle jest kosztowna i zakłóca pracę. To działanie lepiej nadaje się do późniejszego planowania niż na szybki, natychmiastowy sukces. Jednostka zachęca MŚP, by zaczynały od działań łatwiejszych do przeprowadzenia."
+              },
+              {
+                "text": "Wprowadzenie procedury wyłączania oświetlenia i kluczowych urządzeń na koniec dnia",
+                "feedbackText": "Poprawnie. Procedura wyłączania urządzeń to typowy szybki sukces: jest jasna, tania i łatwa do powtarzania. Pozwala ograniczyć zbędne zużycie energii bez dużych inwestycji czy zmian strukturalnych. To dokładnie taki rodzaj działania, który jednostka umieszcza w kategorii „zrób teraz”."
+              },
+              {
+                "text": "Przeprojektowanie całego układu magazynu i systemu składowania",
+                "feedbackText": "Błędnie. Pełne przeprojektowanie magazynu bywa pomocne, ale zwykle wymaga czasu, pieniędzy i koordynacji. To zbyt duże przedsięwzięcie jak na pierwsze działanie w większości MŚP. Jednostka zaleca rozpoczynanie od praktycznych zmian, które szybko przynoszą widoczne korzyści."
+              }
+            ],
+            "sortOrder": 4
+          },
+          {
+            "prompt": "Firma zidentyfikowała osiem możliwych usprawnień środowiskowych, ale dysponuje ograniczonym czasem i niewielkim zespołem do ich wdrożenia. Zgodnie z logiką ustalania priorytetów opisaną w tej jednostce, jak najrozsądniej postąpić?",
+            "answers": [
+              {
+                "text": "Wdrożyć wszystkie osiem pomysłów jednocześnie, aby niczego nie pominąć",
+                "feedbackText": "Błędnie. Próba zrobienia wszystkiego naraz często prowadzi do słabego wdrożenia i utraty koncentracji. Ludzie są przeciążeni, a ważne działania bywają realizowane tylko częściowo. Jednostka wyraźnie zaleca niewielką liczbę skoncentrowanych działań zamiast długiej listy."
+              },
+              {
+                "text": "Zacząć od 2–3 szybkich sukcesów, a 1 większe usprawnienie zaplanować na później",
+                "feedbackText": "Poprawnie. To podejście zalecane w tej jednostce, ponieważ łączy realizm z postępem. Kilka szybkich sukcesów buduje tempo, a jedno większe działanie można starannie przygotować na później. Dzięki temu proces pozostaje wykonalny i ma większe szanse utrzymać się w codziennej pracy."
+              },
+              {
+                "text": "Wybierać wyłącznie działania niewymagające niemal żadnego wysiłku, nawet jeśli niewiele zmieniają",
+                "feedbackText": "Błędnie. Działania wymagające bardzo małego wysiłku nie zawsze są najlepszym wyborem, jeśli mają niewielki realny efekt. Metoda opisana w tej jednostce każe uwzględniać zarówno nakład, jak i efekt, a nie wyłącznie nakład. Dobry zestaw początkowy powinien obejmować działania praktyczne, ale wciąż znaczące."
+              }
+            ],
+            "sortOrder": 5
+          }
+        ]
+      },
+      {
+        "sortOrder": 2,
+        "title": "PL - Samoocena 2",
+        "questions": [
+          {
+            "prompt": "Chcesz poprawić odpowiedzialność społeczną w MŚP, ale nie chcesz zaczynać od obszernych polityk ani formalnego systemu HR. Jaki według tej jednostki jest najbardziej użyteczny pierwszy krok do zidentyfikowania głównych ryzyk i obszarów do poprawy?",
+            "answers": [
+              {
+                "text": "Napisanie szczegółowej polityki odpowiedzialności społecznej dla całej firmy",
+                "feedbackText": "Błędnie. Szczegółowa polityka może wyglądać poważnie, ale nie pokazuje, gdzie tkwią rzeczywiste, codzienne problemy. W MŚP najpierw trzeba dostrzec praktyczne obszary ryzyka w normalnej działalności. Jednostka wyraźnie zaczyna od rutyn i punktów zapalnych, a nie od formalnych dokumentów."
+              },
+              {
+                "text": "Przegląd 3–5 rutynowych obszarów dotyczących pracowników i dostawców, w których najczęściej pojawiają się problemy związane z ludźmi",
+                "feedbackText": "Poprawnie. To podejście zalecane w tej jednostce, ponieważ kieruje uwagę tam, gdzie odpowiedzialność społeczna urzeczywistnia się w codziennej pracy. Przyjrzenie się wdrażaniu nowych pracowników, planowaniu zmian, podziałowi zadań, bezpieczeństwu, skargom czy relacjom z dostawcami pozwala dostrzec, gdzie już występuje niesprawiedliwość, przeciążenie, wykluczenie lub rozmyta odpowiedzialność. Jest to praktyczne, skoncentrowane i dopasowane do realiów MŚP."
+              },
+              {
+                "text": "Poczekanie, aż pracownik lub dostawca złoży formalną skargę",
+                "feedbackText": "Błędnie. Czekanie na formalną skargę oznacza zbyt późną reakcję. Wiele problemów z zakresu odpowiedzialności społecznej pozostaje niewidocznych, ponieważ ludzie nie wiedzą, jak je zgłaszać, albo nie czują się z tym bezpiecznie. Jednostka zachęca do wczesnej obserwacji i prostego przeglądu, a nie do biernego wyczekiwania."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Przeprowadzasz krótki obchód rutynowych praktyk dotyczących ludzi w swojej firmie. Który z poniższych sygnałów najwyraźniej wskazuje, że znalazłeś rzeczywisty punkt zapalny w obszarze odpowiedzialności społecznej, który należy potraktować priorytetowo?",
+            "answers": [
+              {
+                "text": "Ci sami pracownicy wielokrotnie pracują w nadgodzinach, a nowi otrzymują niewiele wskazówek",
+                "feedbackText": "Poprawnie. To silny sygnał ostrzegawczy, ponieważ łączy przeciążenie, możliwą niesprawiedliwość i słabe wsparcie nowych pracowników. Pokazuje, że problem nie jest przypadkowy, lecz wynika ze sposobu organizacji pracy. Jednostka wskazuje powtarzające się nadgodziny i słabe wdrażanie nowych osób jako istotne punkty zapalne w obszarze odpowiedzialności społecznej."
+              },
+              {
+                "text": "Poszczególni członkowie zespołu w różny sposób urządzają swoje stanowiska pracy",
+                "feedbackText": "Błędnie. Różny sposób urządzania stanowisk pracy może wynikać z osobistych preferencji, ale sam w sobie nie świadczy o istotnym ryzyku społecznym. Jednostka koncentruje się na sprawiedliwości, bezpieczeństwie, włączeniu, obciążeniu pracą i możliwości zgłaszania problemów. Ta opcja nie wskazuje wyraźnie na żaden z tych obszarów."
+              },
+              {
+                "text": "Część pracowników woli instrukcje drukowane, a część cyfrowe",
+                "feedbackText": "Błędnie. Różnica w preferowanym formacie sama w sobie nie stanowi wyraźnego punktu zapalnego w obszarze odpowiedzialności społecznej. Może mieć znaczenie później, dla dostępności lub jakości komunikacji, ale nie wskazuje bezpośrednio na nierówne traktowanie, przeciążenie czy brak wsparcia. Jednostka zaleca, by najpierw zająć się wyraźniejszymi sygnałami ostrzegawczymi."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Mały warsztat zauważa, że informacje o szkoleniach przekazywane są wyłącznie nieformalnie, lepsze zadania trafiają wciąż do tych samych osób, a od nowych pracowników oczekuje się, że „nauczą się, patrząc”. Jak – w świetle tej jednostki – najlepiej zinterpretować tę sytuację?",
+            "answers": [
+              {
+                "text": "To normalne zwyczaje w MŚP i nie stanowią problemu z zakresu odpowiedzialności społecznej",
+                "feedbackText": "Błędnie. Nieformalne zwyczaje bywają powszechne, ale jednostka jasno wskazuje, że mimo to mogą prowadzić do niesprawiedliwości i wykluczenia. Gdy możliwości nie są komunikowane w przejrzysty sposób, a nowi pracownicy pozostają bez wsparcia, ryzyko staje się operacyjne i społeczne. Powszechna praktyka to nie to samo co dobra praktyka."
+              },
+              {
+                "text": "To punkty zapalne w obszarze odpowiedzialności społecznej, związane ze sprawiedliwością, włączeniem i wdrażaniem nowych pracowników",
+                "feedbackText": "Poprawnie. Ta odpowiedź ściśle odpowiada treści jednostki, ponieważ trafnie wskazuje kluczowe ryzyka. Nieformalny dostęp do możliwości sprzyja faworyzowaniu, a słabe wdrażanie nowych osób zwiększa chaos i osłabia poczucie sprawiedliwości. Jednostka wprost przedstawia takie wzorce jako wczesne sygnały ostrzegawcze, którymi należy się zająć."
+              },
+              {
+                "text": "To przede wszystkim problemy marketingowe, wpływające na wizerunek pracodawcy",
+                "feedbackText": "Błędnie. Te kwestie mogą z czasem wpłynąć na wizerunek pracodawcy, ale nie o to tu przede wszystkim chodzi. Bezpośrednim problemem jest to, jak traktuje się ludzi w codziennej pracy i czy mają sprawiedliwy dostęp, wsparcie oraz jasność zasad. Jednostka skupia się najpierw na odpowiedzialności operacyjnej, a nie na wizerunku."
+              }
+            ],
+            "sortOrder": 3
+          },
+          {
+            "prompt": "Chcesz uczynić włączanie bardziej praktycznym w codziennej działalności, nie tworząc dodatkowej biurokracji. Które działanie najlepiej odpowiada zaleceniom tej jednostki?",
+            "answers": [
+              {
+                "text": "Pozwolić menedżerom przekazywać dobre możliwości tym osobom, które uznają za najbardziej odpowiednie",
+                "feedbackText": "Błędnie. Takie podejście uzależnia dostęp od nieformalnej oceny, co łatwo prowadzi do faworyzowania lub jego pozorów. Jednostka przestrzega przed systemami, w których jedni dowiadują się o możliwościach wcześniej niż inni. Sprawiedliwy proces wymaga widoczności i konsekwencji, a nie prywatnej selekcji."
+              },
+              {
+                "text": "Informować wszystkich o szkoleniach, lepszych zmianach i wartościowych zadaniach według jednej przejrzystej zasady",
+                "feedbackText": "Poprawnie. To jedna z najwyraźniej opisanych w tej jednostce praktyk włączających. Zmniejsza niesprawiedliwe bariery i sprawia, że ludzie czują się bardziej równo traktowani w codziennej pracy. Jest też na tyle prosta, że MŚP może ją stosować bez budowania rozbudowanego systemu formalnego."
+              },
+              {
+                "text": "Unikać rozmów o elastyczności, ponieważ może ona rodzić nierealistyczne oczekiwania",
+                "feedbackText": "Błędnie. Unikanie tematu nie usuwa problemu. Jednostka proponuje jedną przejrzystą zasadę dotyczącą elastyczności, na przykład zamianę zmian z wyprzedzeniem lub wcześniejsze publikowanie grafików, ponieważ czyni to traktowanie pracowników sprawiedliwszym i bardziej przewidywalnym. Pomijanie kwestii elastyczności może pozostawić niesprawiedliwość nierozwiązaną."
+              }
+            ],
+            "sortOrder": 4
+          },
+          {
+            "prompt": "Kluczowy dostawca dostarcza towar terminowo i oferuje dobrą cenę, ale zapytany o warunki pracy i odpowiedzialność za rozpatrywanie skarg udziela wymijających odpowiedzi. Wydaje się jednak otwarty na poprawę. Jaki według tej jednostki będzie najwłaściwszy kolejny krok?",
+            "answers": [
+              {
+                "text": "Zignorować problem, ponieważ cena i terminowość dostaw są obecnie akceptowalne",
+                "feedbackText": "Błędnie. Dobra cena i terminowość nie eliminują ryzyka w obszarze odpowiedzialności społecznej. Jeśli dostawca nie potrafi jasno potwierdzić bezpiecznych warunków pracy ani odpowiedzialności za problemy, sprawa pozostaje istotna. Jednostka podkreśla, że odpowiedzialna współpraca w łańcuchu dostaw musi wykraczać poza sam koszt."
+              },
+              {
+                "text": "Natychmiast zmienić dostawcę, nawet jeśli ma on istotne znaczenie dla działalności",
+                "feedbackText": "Błędnie. Natychmiastowa zmiana dostawcy nie zawsze jest najlepszym pierwszym krokiem, zwłaszcza gdy dostawca jest ważny i gotowy do poprawy. Jednostka promuje proporcjonalne podejście MŚP, w którym dostawcy mogą poprawiać się etapami, zamiast być automatycznie wykluczani. Zbyt sztywna reakcja może też niepotrzebnie zakłócić działalność."
+              },
+              {
+                "text": "Zaklasyfikować dostawcę do kategorii „do poprawy”, przekazać jedno jasne oczekiwanie i poprosić o jedno konkretne usprawnienie w ciągu 90 dni",
+                "feedbackText": "Poprawnie. To dokładnie logika zalecana w tej jednostce. Dostawca z brakami, ale gotowy do poprawy należy do grupy „do poprawy”, a nie do grupy „zatrzymać” ani „natychmiast zmienić”. Jasne oczekiwanie dotyczące poprawy i późniejsza weryfikacja budują odpowiedzialność, nie zamieniając procesu w rozbudowany audyt."
+              }
+            ],
+            "sortOrder": 5
+          }
+        ]
+      },
+      {
+        "sortOrder": 3,
+        "title": "PL - Samoocena 3",
+        "questions": [
+          {
+            "prompt": "Chcesz usprawnić ład korporacyjny w codziennej działalności, ale nie chcesz tworzyć rozbudowanego systemu, który wszyscy zignorują. Jaki według tej jednostki jest najbardziej użyteczny pierwszy krok do zwiększenia przejrzystości i odpowiedzialności w MŚP?",
+            "answers": [
+              {
+                "text": "Napisanie pełnego podręcznika ładu korporacyjnego obejmującego wszystkie możliwe sytuacje",
+                "feedbackText": "Błędnie. Pełny podręcznik może wyglądać kompleksowo, ale nie jest najlepszym punktem wyjścia dla małej firmy. Wymaga czasu, tworzy złożoność i może nigdy nie stać się częścią codziennej pracy. Jednostka zaleca rozpoczęcie od decyzji, które mają największe znaczenie, a nie dokumentowanie wszystkiego naraz."
+              },
+              {
+                "text": "Wypisanie kluczowych decyzji, które zapadają często lub wiążą się z ryzykiem, a następnie przypisanie ról i sposobów zatwierdzania",
+                "feedbackText": "Poprawnie. To praktyczne podejście opisane w tej jednostce. Identyfikując decyzje związane z pieniędzmi, dostawcami, skargami, bezpieczeństwem, danymi lub ludźmi, czynisz ład korporacyjny operacyjnym i widocznym. Prosta mapa decyzji, ról i sposobów zatwierdzania ogranicza zamieszanie i znacznie wyraźniej określa odpowiedzialność."
+              },
+              {
+                "text": "Pozostawienie menedżerom nieformalnego podejmowania decyzji, aby zachować elastyczność firmy",
+                "feedbackText": "Błędnie. Nieformalne podejmowanie decyzji może wydawać się szybkie, ale często prowadzi do niespójności i słabej przejrzystości. Gdy nie wiadomo, kto odpowiada za decyzję i jak powinna zostać zatwierdzona, rosną opóźnienia i skłonność do przerzucania winy. Jednostka przedstawia ład korporacyjny właśnie jako sposób na ograniczenie takiego zamieszania."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Tworzysz mapę decyzji na potrzeby ładu korporacyjnego w codziennej działalności. Które podejście najlepiej zapewnia długotrwałą przejrzystość i odpowiedzialność, gdy zmieniają się role lub gdy pracowników nie ma w pracy?",
+            "answers": [
+              {
+                "text": "Przypisanie decyzji najbardziej doświadczonemu pracownikowi, wskazanemu z imienia i nazwiska",
+                "feedbackText": "Błędnie. Wskazanie konkretnej osoby może wydawać się praktyczne w krótkim okresie, ale czyni system kruchym. Gdy ta osoba zmieni stanowisko, będzie nieobecna lub odejdzie z firmy, proces znów stanie się niejasny. Jednostka wyraźnie wskazuje, że odpowiedzialność należy wiązać z rolami, a nie z osobami."
+              },
+              {
+                "text": "Przypisanie odpowiedzialności do roli, takiej jak kierownik operacyjny lub właściciel",
+                "feedbackText": "Poprawnie. Przypisanie odpowiedzialności do roli zapewnia ciągłość i ułatwia zrozumienie systemu. Sprawia, że mapa ładu korporacyjnego działa nawet przy zmianach kadrowych. To jedna z podstawowych zasad operacyjnego ładu korporacyjnego w tej jednostce, ponieważ poprawia zarówno przejrzystość, jak i odpowiedzialność."
+              },
+              {
+                "text": "Pozwolenie, by w razie potrzeby decyzję podjęła dowolna dostępna osoba",
+                "feedbackText": "Błędnie. Pozwolenie, by decydował ktokolwiek dostępny, może rozwiązać doraźny problem, ale osłabia ład korporacyjny jako całość. Utrudnia późniejsze wyjaśnianie, porównywanie i przegląd decyzji. Jednostka podkreśla, że to jasność co do odpowiedzialności zapobiega zamieszaniu i niespójnemu postępowaniu."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Skarga klienta może prowadzić do zwrotu pieniędzy i potencjalnego ryzyka prawnego. Pracownik, który ją przyjął, nie wie, czy może sam zdecydować, kierownik zespołu jest zajęty, a sprawa pozostaje nierozwiązana przez kilka dni. Co według tej jednostki jest główną słabością ładu korporacyjnego w tej sytuacji?",
+            "answers": [
+              {
+                "text": "Firma potrzebuje więcej reklamy skierowanej do klientów",
+                "feedbackText": "Błędnie. Reklama nie ma nic wspólnego z wewnętrznym rozpatrywaniem ryzykownej skargi. Głównym problemem nie jest tu widoczność ani wizerunek, lecz jasność decyzji i kontrola procesu. Ta jednostka dotyczy tego, jak podejmowane są decyzje i co się dzieje, gdy zwykła ścieżka nie wystarcza."
+              },
+              {
+                "text": "Firma nie ma jasnej ścieżki eskalacji z określonymi rolami i czasem reakcji",
+                "feedbackText": "Poprawnie. Ta odpowiedź wprost odpowiada treści jednostki. Gdy sprawa jest ryzykowna, a ludzie nie wiedzą, kto i jak szybko powinien zareagować, problemem jest brak ścieżki eskalacji. Jednostka wyjaśnia, że to właśnie jasne kryteria uruchomienia, odpowiedzialność pierwszego poziomu, eskalacja na wyższy poziom i terminy zapobiegają takim opóźnieniom."
+              },
+              {
+                "text": "Klienta należy poprosić o cierpliwość do najbliższego comiesięcznego spotkania przeglądowego",
+                "feedbackText": "Błędnie. Odkładanie sprawy do późniejszego przeglądu nie jest rozwiązaniem z zakresu ładu korporacyjnego. Zwiększa opóźnienie i może pogłębić zarówno utratę zaufania klienta, jak i ryzyko operacyjne. Jednostka zaleca, by eskalacja była praktyczna i terminowa, zwłaszcza w sprawach dotyczących pieniędzy, skarg, bezpieczeństwa lub etyki."
+              }
+            ],
+            "sortOrder": 3
+          },
+          {
+            "prompt": "Chcesz ograniczyć ryzyko korupcji w decyzjach operacyjnych bez wprowadzania skomplikowanego systemu zgodności. Który z poniższych mechanizmów jest najsilniejszą podstawową kontrolą zakupów i obiegu faktur w MŚP?",
+            "answers": [
+              {
+                "text": "Dopuszczenie ustnego zatwierdzania, gdy zakup wydaje się pilny",
+                "feedbackText": "Błędnie. Ustne zatwierdzanie może wydawać się szybkie, ale ogranicza możliwość odtworzenia decyzji i utrudnia późniejszą weryfikację. Gdy decyzje o wydatkach nie są jasno udokumentowane, rośnie ryzyko błędnych ocen lub ukrytych nacisków. Jednostka wprost zaleca unikanie wyłącznie ustnego zatwierdzania istotnych wydatków."
+              },
+              {
+                "text": "Pozwolenie, by jedna osoba wybierała dostawcę, zatwierdzała zamówienie i potwierdzała fakturę",
+                "feedbackText": "Błędnie. Powierzenie jednej osobie kontroli nad całą transakcją tworzy wyraźne ryzyko dla uczciwości procesu. Czyni go podatnym na faworyzowanie, naciski lub złe decyzje ukrywane pod pretekstem pilności. Jednostka posługuje się właśnie tą logiką, wyjaśniając, dlaczego nawet małe firmy powinny stosować przynajmniej podstawowy rozdział ról."
+              },
+              {
+                "text": "Rozdzielenie ról: zgłaszania, zatwierdzania i kontroli transakcji",
+                "feedbackText": "Poprawnie. To silna minimalna zasada antykorupcyjna, ponieważ ułatwia kontrolę decyzji i utrudnia nadużycia. Nawet prosty rozdział ról zgłaszającej, zatwierdzającej i kontrolującej może znacząco zwiększyć uczciwość procesu. Jednostka przedstawia to jako realistyczny i praktyczny mechanizm kontroli, a nie rozwiązanie zarezerwowane dla dużych firm."
+              }
+            ],
+            "sortOrder": 4
+          },
+          {
+            "prompt": "Chcesz, aby pracownicy zgłaszali obawy dotyczące nieetycznych zachowań, niebezpiecznych skrótów czy nierównego traktowania, zanim sytuacja stanie się poważniejsza. Co według tej jednostki sprawia, że kanał zgłaszania nieprawidłowości jest najbardziej wiarygodny i użyteczny w MŚP?",
+            "answers": [
+              {
+                "text": "Proszenie pracowników o zgłaszanie obaw publicznie, na spotkaniach zespołu",
+                "feedbackText": "Błędnie. Publiczne zgłaszanie może zniechęcać do zabierania głosu, zwłaszcza gdy sprawa dotyczy przełożonego, współpracownika lub delikatnej sytuacji. Może też budzić lęk, wywoływać konflikty lub prowadzić do milczenia zamiast zaufania. Jednostka zaleca kanał, który jest bezpieczny, poufny i praktyczny."
+              },
+              {
+                "text": "Zapewnienie jednego kanału zgłoszeń, jednego zastępczego odbiorcy, obietnicy odpowiedzi oraz zasady zakazu działań odwetowych",
+                "feedbackText": "Poprawnie. Ta odpowiedź obejmuje dokładnie te elementy, które jednostka uznaje za niezbędne dla prostego, a jednocześnie wiarygodnego procesu zgłaszania nieprawidłowości. Jasny kanał, opcja zapasowa, termin odpowiedzi i ochrona przed działaniami odwetowymi ułatwiają zgłaszanie obaw i zarządzanie nimi. Dzięki temu ład korporacyjny staje się działającym narzędziem codziennej pracy, a nie abstrakcyjną zasadą."
+              },
+              {
+                "text": "Poinstruowanie pracowników, by zgłaszali sprawy tylko wtedy, gdy są bardzo poważne i w pełni udowodnione",
+                "feedbackText": "Błędnie. Wymaganie pełnych dowodów lub wyjątkowej wagi sprawy ustawia poprzeczkę zbyt wysoko. Drobniejsze obawy często mają znaczenie, ponieważ wcześnie ujawniają pewne wzorce, zanim przerodzą się w większe problemy operacyjne lub reputacyjne. Jednostka wyraźnie stwierdza, że kanał zgłoszeń przydaje się nie tylko przy skandalach, lecz także przy sprawach wymagających uwagi, zanim urosną."
+              }
+            ],
+            "sortOrder": 5
+          }
+        ]
+      },
+      {
+        "sortOrder": 4,
+        "title": "PL - Samoocena 4",
+        "questions": [
+          {
+            "prompt": "Firma chce komunikować klientom swoje działania ESG, ale nie ma pewności, czy obecny przekaz jest wiarygodny, czy zbyt promocyjny. Który rodzaj wypowiedzi według tej jednostki niesie największe ryzyko greenwashingu lub social washingu?",
+            "answers": [
+              {
+                "text": "Zmniejszyliśmy rozmiar opakowań trzech naszych najpopularniejszych produktów",
+                "feedbackText": "Błędnie. To stwierdzenie jest stosunkowo wiarygodne, ponieważ wskazuje konkretną zmianę operacyjną. Klient rozumie, co się zmieniło, a firma może to wyjaśnić, jeśli zostanie zapytana. Jednostka podkreśla, że konkretne działania są bezpieczniejsze niż ogólne deklaracje tożsamościowe."
+              },
+              {
+                "text": "Jesteśmy odpowiedzialną i zrównoważoną firmą",
+                "feedbackText": "Poprawnie. To ryzykowne stwierdzenie, ponieważ brzmi ogólnie i efektownie, ale nie opisuje żadnego konkretnego działania. Trudno je zweryfikować, łatwo przesadzić i nie pokazuje, co faktycznie zmieniło się w działalności. Jednostka traktuje takie sformułowania jako sygnał ostrzegawczy słabej komunikacji ESG."
+              },
+              {
+                "text": "Odpowiadamy teraz na skargi w ciągu pięciu dni roboczych",
+                "feedbackText": "Błędnie. To konkretne zobowiązanie dotyczące obsługi, powiązane z codzienną działalnością. Jest wąskie, zrozumiałe i możliwe do zweryfikowania w praktyce. Jednostka zaleca właśnie takie konkretne wypowiedzi zamiast ogólnikowego języka opartego na wartościach."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Chcesz ocenić, czy przekaz ESG kierowany do klientów odzwierciedla rzeczywistą poprawę, czy tylko dobrze brzmi w materiałach marketingowych. Jaki test według tej jednostki warto zastosować jako pierwszy?",
+            "answers": [
+              {
+                "text": "Sprawdzić, czy sformułowanie brzmi nowocześnie i pozytywnie",
+                "feedbackText": "Błędnie. Pozytywny lub nowoczesny język może uatrakcyjnić przekaz, ale nie czyni go wiarygodnym. Deklaracja może brzmieć mocno, a mimo to być słaba, jeśli w działalności nic istotnego się nie zmieniło. Jednostka przestrzega właśnie przed efektownymi słowami bez faktycznego pokrycia."
+              },
+              {
+                "text": "Sprawdzić, czy przekaz odzwierciedla rzeczywistą zmianę operacyjną, którą można wyjaśnić",
+                "feedbackText": "Poprawnie. To kluczowy test zalecany w tej jednostce. Pierwsze pytanie powinno zawsze brzmieć: czy rzeczywiście zmienił się jakiś proces, usługa, opakowanie, sposób naprawy, obsługa skarg lub praktyka komunikacyjna. Jeśli firma nie potrafi jasno wyjaśnić usprawnienia operacyjnego, przekaz jest prawdopodobnie zbyt mocny."
+              },
+              {
+                "text": "Sprawdzić, czy podobne deklaracje często pojawiają się na stronach konkurencji",
+                "feedbackText": "Błędnie. Praktyka konkurencji nie jest wiarygodnym testem rzetelności. Jeśli inni stosują ogólnikowe lub przesadzone sformułowania, kopiowanie ich tylko powiela ten sam problem. Jednostka koncentruje się na dowodach z Twojej własnej działalności, a nie na modzie rynkowej."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Firma dodaje na stronie internetowej „ekologicznie” wyglądające hasło i zmienia kolory etykiet na bardziej naturalne, ale nie zmienia opakowań, dostaw, napraw, obsługi skarg ani informacji dla klientów. Jakie jest według tej jednostki główne ryzyko w tej sytuacji?",
+            "answers": [
+              {
+                "text": "Przekaz może być zbyt krótki, by przyciągnąć uwagę",
+                "feedbackText": "Błędnie. Głównym problemem nie jest długość przekazu. Krótki komunikat również może być wiarygodny, jeśli opisuje rzeczywiste i konkretne usprawnienie. W tym przypadku problemem jest to, że firma komunikuje wizerunek zamiast treści."
+              },
+              {
+                "text": "Komunikacja jest mocniejsza niż rzeczywista zmiana operacyjna",
+                "feedbackText": "Poprawnie. To dokładnie taka rozbieżność, przed jaką przestrzega ta jednostka. Zmieniła się warstwa wizualna i promocyjna, ale nie zmieniły się rzeczywiste procesy obsługi klienta. Tworzy to poważne ryzyko greenwashingu lub social washingu, ponieważ firma wydaje się bardziej odpowiedzialna, niż wynika z jej faktycznych praktyk."
+              },
+              {
+                "text": "Firma może potrzebować większego budżetu marketingowego",
+                "feedbackText": "Błędnie. Większe wydatki na marketing nie rozwiążą problemu wiarygodności. Wręcz przeciwnie – silniejsza promocja bez zmian operacyjnych może jeszcze zwiększyć ryzyko. Jednostka wyraźnie oddziela rzeczywistą poprawę od czysto promocyjnej prezentacji."
+              }
+            ],
+            "sortOrder": 3
+          },
+          {
+            "prompt": "Firma chce przekazać klientom informację o jednym usprawnieniu związanym z ESG w sposób wiarygodny i proporcjonalny. Który z poniższych komunikatów najlepiej odpowiada zasadom komunikacji opisanym w tej jednostce?",
+            "answers": [
+              {
+                "text": "Głęboko zależy nam na ludziach i planecie",
+                "feedbackText": "Błędnie. Brzmi to pozytywnie, ale jest zbyt ogólne i nie wiąże się z żadną wyraźną zmianą operacyjną. Klient nie jest w stanie łatwo stwierdzić, co firma faktycznie zrobiła inaczej. Jednostka odradza język mocno nasycony wartościami, gdy nie opisuje się żadnego konkretnego działania."
+              },
+              {
+                "text": "Nasza usługa jest etyczna, zrównoważona i odpowiedzialna",
+                "feedbackText": "Błędnie. Ten komunikat posługuje się ogólnymi etykietami, ale nadal nie wyjaśnia, co zmieniło się w praktyce. Może brzmieć profesjonalnie, lecz pozostaje słaby, bo nie jest konkretny ani weryfikowalny. Jednostka preferuje komunikację opartą na działaniach, a nie na deklaracjach tożsamościowych."
+              },
+              {
+                "text": "Ograniczyliśmy liczbę powtórnych kursów dostawczych dzięki precyzyjniejszemu planowaniu i lepszemu informowaniu klientów",
+                "feedbackText": "Poprawnie. Ten komunikat jest mocny, ponieważ opisuje wyraźną zmianę operacyjną i widoczny rezultat. Jest na tyle konkretny, że można go zweryfikować, i proporcjonalny do podjętego działania. To dokładnie taki styl wiarygodnej komunikacji ESG, jaki promuje ta jednostka."
+              }
+            ],
+            "sortOrder": 4
+          },
+          {
+            "prompt": "Przed zakomunikowaniem działania ESG na zewnątrz firma chce upewnić się, że przekaz jest wiarygodny i nieprzesadzony. Jaki filtr powinna według tej jednostki zastosować przed publikacją deklaracji?",
+            "answers": [
+              {
+                "text": "Zapytać, czy przekaz jest konkretny, weryfikowalny i proporcjonalny",
+                "feedbackText": "Poprawnie. To podstawowy filtr komunikacyjny opisany w tej jednostce. Dobry przekaz powinien opisywać rzeczywiste działanie, dać się wyjaśnić lub zweryfikować i odpowiadać faktycznej skali zmiany. Te trzy sprawdziany pomagają ograniczyć ryzyko greenwashingu lub social washingu."
+              },
+              {
+                "text": "Zapytać, czy sformułowanie brzmi mocniej niż rzeczywista zmiana operacyjna",
+                "feedbackText": "Błędnie. Jeśli sformułowanie brzmi mocniej niż samo działanie, jest to sygnał ostrzegawczy, a nie cel. Jednostka wprost zaleca dopasowanie sformułowań do skali zmiany. Przesada osłabia wiarygodność nawet wtedy, gdy działanie jest realne."
+              },
+              {
+                "text": "Zapytać, czy przekaz unika podawania szczegółów operacyjnych",
+                "feedbackText": "Błędnie. Pomijanie szczegółów operacyjnych zwykle osłabia deklarację ESG, a nie ją wzmacnia. Bez szczegółów przekaz staje się ogólnikowy i trudniejszy do zaufania. Jednostka wielokrotnie podkreśla, że wiarygodność wynika z drobnych, udokumentowanych i osadzonych operacyjnie usprawnień."
+              }
+            ],
+            "sortOrder": 5
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "module-5-implementation-data-and-cross-functional-practice",
+    "quizzes": [
+      {
+        "sortOrder": 1,
+        "title": "PL - Samoocena 1",
+        "questions": [
+          {
+            "prompt": "Które z poniższych stwierdzeń najlepiej opisuje cykl życia ESG?",
+            "answers": [
+              {
+                "text": "Jednorazowy plan działania skupiony wyłącznie na poprawie stanu środowiska",
+                "feedbackText": "Błędnie. ESG nie jest działaniem jednorazowym ani ograniczonym do filaru środowiskowego. Obejmuje również aspekty społeczne i ład korporacyjny."
+              },
+              {
+                "text": "Ciągły proces planowania, realizacji i oceny",
+                "feedbackText": "Poprawnie. Cykl życia ESG to ciągły proces planowania, realizacji i oceny, prowadzący do nieustannego doskonalenia."
+              },
+              {
+                "text": "Lista kontrolna zgodności na potrzeby rocznego raportowania",
+                "feedbackText": "Błędnie. ESG wykracza poza zgodność z przepisami; wspiera długoterminowe tworzenie wartości, a nie tylko raportowanie."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Co jest najważniejsze na etapie planowania wdrażania ESG?",
+            "answers": [
+              {
+                "text": "Określenie jasnych i mierzalnych celów",
+                "feedbackText": "Poprawnie. Wyznaczanie mierzalnych i osiągalnych celów jest kluczowe na etapie planowania i ukierunkowuje wszystkie późniejsze działania."
+              },
+              {
+                "text": "Promowanie raportu ESG wśród interesariuszy",
+                "feedbackText": "Błędnie. Promocja następuje dopiero po osiągnięciu i ocenie wyników."
+              },
+              {
+                "text": "Przeprowadzenie wyłącznie wywiadów dotyczących satysfakcji pracowników",
+                "feedbackText": "Błędnie. Same wywiady, choć przydatne, nie dają pełnego obrazu punktu wyjścia w zakresie ESG."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Jaki jest główny cel etapu oceny we wdrażaniu ESG?",
+            "answers": [
+              {
+                "text": "Wskazanie obszarów do poprawy i ukierunkowanie przyszłego planowania",
+                "feedbackText": "Poprawnie. Ocena pomaga organizacjom uczyć się, korygować działania i stale doskonalić podejście do ESG."
+              },
+              {
+                "text": "Ostateczne zatwierdzenie polityki ESG do publikacji",
+                "feedbackText": "Błędnie. Ocena dostarcza informacji, ale nie zamyka prac nad polityką – prowadzi do jej udoskonalenia."
+              },
+              {
+                "text": "Całkowite zastąpienie dotychczasowych celów ESG",
+                "feedbackText": "Błędnie. Dotychczasowych celów się nie odrzuca; stanowią one podstawę do doskonalenia."
+              }
+            ],
+            "sortOrder": 3
+          }
+        ]
+      },
+      {
+        "sortOrder": 2,
+        "title": "PL - Samoocena 2",
+        "questions": [
+          {
+            "prompt": "Który z poniższych przykładów to dane środowiskowe?",
+            "answers": [
+              {
+                "text": "Wskaźnik rotacji pracowników",
+                "feedbackText": "Błędnie. Rotacja pracowników to wskaźnik społeczny."
+              },
+              {
+                "text": "Zróżnicowanie płci w zarządzie",
+                "feedbackText": "Błędnie. Zróżnicowanie płci w zarządzie to wskaźnik ładu korporacyjnego."
+              },
+              {
+                "text": "Zużycie energii w przeliczeniu na obiekt",
+                "feedbackText": "Poprawnie. Zużycie energii odzwierciedla efektywność środowiskową."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Co zapewnia porównywalność danych w zarządzaniu ESG?",
+            "answers": [
+              {
+                "text": "Częsta zmiana jednostek pomiaru, aby odzwierciedlać postęp",
+                "feedbackText": "Błędnie. Zmiana jednostek utrudnia porównywanie wyników."
+              },
+              {
+                "text": "Stosowanie tych samych wskaźników i jednostek w kolejnych okresach",
+                "feedbackText": "Poprawnie. Spójne wskaźniki i jednostki pomiaru zapewniają rzetelne porównania między okresami."
+              },
+              {
+                "text": "Zbieranie danych tylko raz w roku",
+                "feedbackText": "Błędnie. Same dane roczne nie odzwierciedlają bieżącej poprawy."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Dlaczego cyfryzacja jest ważna dla danych ESG?",
+            "answers": [
+              {
+                "text": "Automatyzuje gromadzenie danych, zwiększa ich dokładność i wspiera przejrzystość",
+                "feedbackText": "Poprawnie. Cyfryzacja upraszcza gromadzenie danych, zwiększa dokładność i umożliwia śledzenie w czasie rzeczywistym."
+              },
+              {
+                "text": "Eliminuje potrzebę nadzoru ze strony człowieka",
+                "feedbackText": "Błędnie. Ocena człowieka pozostaje kluczowa przy interpretacji danych."
+              },
+              {
+                "text": "Umożliwia dostęp do raportów wyłącznie audytorom zewnętrznym",
+                "feedbackText": "Błędnie. Przejrzystość służy zarówno zespołom wewnętrznym, jak i interesariuszom zewnętrznym."
+              }
+            ],
+            "sortOrder": 3
+          }
+        ]
+      },
+      {
+        "sortOrder": 3,
+        "title": "PL - Samoocena 3",
+        "questions": [
+          {
+            "prompt": "Co przede wszystkim oznacza „wplecenie ESG w codzienną pracę”?",
+            "answers": [
+              {
+                "text": "Stosowanie myślenia o zrównoważonym rozwoju i etyce w codziennych decyzjach",
+                "feedbackText": "Poprawnie. Wplecenie ESG oznacza dostosowanie codziennych działań i wyborów do wartości zrównoważonego rozwoju."
+              },
+              {
+                "text": "Przypisanie obowiązków ESG wyłącznie działowi zrównoważonego rozwoju",
+                "feedbackText": "Błędnie. Integracja ESG wymaga współodpowiedzialności wszystkich działów."
+              },
+              {
+                "text": "Skupienie się wyłącznie na marketingowym eksponowaniu osiągnięć ESG",
+                "feedbackText": "Błędnie. Komunikacja wspiera ESG, ale nie jest jego fundamentem."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Który czynnik najsilniej wspiera zakorzenienie ESG w kulturze firmy?",
+            "answers": [
+              {
+                "text": "Odgórne narzucenie bez konsultacji",
+                "feedbackText": "Błędnie. Narzucone ESG rzadko się utrzymuje bez zaangażowania ludzi."
+              },
+              {
+                "text": "Udział pracowników i przykład dawany przez kierownictwo",
+                "feedbackText": "Poprawnie. Gdy liderzy dają przykład wartości ESG, a pracownicy uczestniczą w działaniach, kultura organizacji naturalnie się do nich dostosowuje."
+              },
+              {
+                "text": "Ograniczenie informacji o ESG do kadry zarządzającej",
+                "feedbackText": "Błędnie. Prawdziwą zmianę kulturową napędzają przejrzystość i wspólne uczenie się."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Jak systemy zarządzania efektywnością mogą wzmocnić integrację ESG?",
+            "answers": [
+              {
+                "text": "Poprzez uwzględnianie celów ESG i docenianie osiągnięć w zakresie zrównoważonego rozwoju",
+                "feedbackText": "Poprawnie. Powiązanie celów ESG z oceną wyników czyni zrównoważony rozwój praktyczną odpowiedzialnością."
+              },
+              {
+                "text": "Poprzez mierzenie wyłącznie wzrostu sprzedaży i zysku",
+                "feedbackText": "Błędnie. Systemy oparte wyłącznie na finansach pomijają długoterminową wartość społeczną i środowiskową."
+              },
+              {
+                "text": "Poprzez pomijanie wskaźników pozafinansowych w celu uproszczenia oceny",
+                "feedbackText": "Błędnie. Wskaźniki pozafinansowe są niezbędne w ocenie ESG."
+              }
+            ],
+            "sortOrder": 3
+          }
+        ]
+      },
+      {
+        "sortOrder": 4,
+        "title": "PL - Samoocena 4",
+        "questions": [
+          {
+            "prompt": "Jaki jest główny cel współpracy międzyfunkcyjnej w ESG?",
+            "answers": [
+              {
+                "text": "Ukierunkowanie działań poszczególnych działów na wspólne cele zrównoważonego rozwoju",
+                "feedbackText": "Poprawnie. Współpraca międzyfunkcyjna zapewnia spójne działania ESG w całej organizacji."
+              },
+              {
+                "text": "Rozdzielenie obowiązków ESG w celu zwiększenia efektywności",
+                "feedbackText": "Błędnie. Rozdzielenie osłabia integrację ESG."
+              },
+              {
+                "text": "Ograniczenie komunikacji między działami",
+                "feedbackText": "Błędnie. Komunikacja jest podstawą skutecznej współpracy."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Które z poniższych najlepiej definiuje współpracę międzysektorową?",
+            "answers": [
+              {
+                "text": "Współpraca między działami wewnątrz jednej firmy",
+                "feedbackText": "Błędnie. To opis współpracy wewnętrznej."
+              },
+              {
+                "text": "Partnerstwa między przedsiębiorstwami, instytucjami publicznymi i społecznościami",
+                "feedbackText": "Poprawnie. Współpraca międzysektorowa oznacza partnerstwo z podmiotami zewnętrznymi, takimi jak samorządy czy organizacje pozarządowe, w celu osiągnięcia wspólnego efektu w zakresie zrównoważonego rozwoju."
+              },
+              {
+                "text": "Rywalizacja między branżami w zakresie celów ESG",
+                "feedbackText": "Błędnie. Wspólny postęp w ESG napędza współpraca, a nie rywalizacja."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Jaki jest najskuteczniejszy sposób utrzymania udanych partnerstw ESG?",
+            "answers": [
+              {
+                "text": "Uzgodnienie wspólnych celów, jasnych ról i przejrzystej komunikacji",
+                "feedbackText": "Poprawnie. Jasne ustalenia, określone obowiązki i otwarta komunikacja są niezbędne dla trwałych partnerstw."
+              },
+              {
+                "text": "Pozwolenie każdemu partnerowi na samodzielne działanie bez koordynacji",
+                "feedbackText": "Błędnie. Samodzielne działania bez koordynacji zmniejszają wspólny efekt."
+              },
+              {
+                "text": "Unikanie pomiaru postępów, aby zapobiec napięciom",
+                "feedbackText": "Błędnie. Regularny pomiar podtrzymuje odpowiedzialność i zaufanie."
+              }
+            ],
+            "sortOrder": 3
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "module-6-monitoring-reporting-and-future-trends-of-esg",
+    "quizzes": [
+      {
+        "sortOrder": 1,
+        "title": "PL - Samoocena 1",
+        "questions": [
+          {
+            "prompt": "Jesteś kierownikiem operacyjnym małego przedsiębiorstwa produkcyjnego. Twój prezes mówi: „Monitorujmy wszystko, co związane z ESG, żebyśmy wyglądali profesjonalnie”. Identyfikujesz 22 możliwe wskaźniki ESG. Jaka reakcja będzie najbardziej strategiczna?",
+            "answers": [
+              {
+                "text": "Zatwierdzić wszystkie 22 wskaźniki, aby pokazać zaangażowanie",
+                "feedbackText": "Skuteczne monitorowanie ESG koncentruje się na wskaźnikach istotnych i przydatnych przy podejmowaniu decyzji. Zbyt wiele wskaźników rozprasza uwagę i obniża efektywność."
+              },
+              {
+                "text": "Wybrać 4–6 KPI powiązanych z największymi ryzykami operacyjnymi i kosztami",
+                "feedbackText": "Skuteczne monitorowanie ESG koncentruje się na wskaźnikach istotnych i przydatnych przy podejmowaniu decyzji. Zbyt wiele wskaźników rozprasza uwagę i obniża efektywność."
+              },
+              {
+                "text": "Monitorować wyłącznie wskaźniki środowiskowe",
+                "feedbackText": "Skuteczne monitorowanie ESG koncentruje się na wskaźnikach istotnych i przydatnych przy podejmowaniu decyzji. Zbyt wiele wskaźników rozprasza uwagę i obniża efektywność."
+              },
+              {
+                "text": "Poczekać, aż raportowanie stanie się obowiązkowe",
+                "feedbackText": "Skuteczne monitorowanie ESG koncentruje się na wskaźnikach istotnych i przydatnych przy podejmowaniu decyzji. Zbyt wiele wskaźników rozprasza uwagę i obniża efektywność."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Twoja firma co miesiąc monitoruje zużycie energii elektrycznej. Po 3 miesiącach zużycie wzrosło o 6%, ale produkcja wzrosła o 15%. Jak najlepiej udoskonalić ten wskaźnik KPI?",
+            "answers": [
+              {
+                "text": "Nadal monitorować wyłącznie całkowite zużycie energii",
+                "feedbackText": "Wskaźnik KPI musi wspierać podejmowanie decyzji. Wskaźniki intensywności (na jednostkę) zwiększają porównywalność i przydatność danych."
+              },
+              {
+                "text": "Wprowadzić wskaźnik zużycia energii na jednostkę produktu",
+                "feedbackText": "Wskaźnik KPI musi wspierać podejmowanie decyzji. Wskaźniki intensywności (na jednostkę) zwiększają porównywalność i przydatność danych."
+              },
+              {
+                "text": "Zaprzestać pomiaru zużycia energii",
+                "feedbackText": "Wskaźnik KPI musi wspierać podejmowanie decyzji. Wskaźniki intensywności (na jednostkę) zwiększają porównywalność i przydatność danych."
+              },
+              {
+                "text": "Porównywać wyłącznie sumy roczne",
+                "feedbackText": "Wskaźnik KPI musi wspierać podejmowanie decyzji. Wskaźniki intensywności (na jednostkę) zwiększają porównywalność i przydatność danych."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Wybór zbyt wielu wskaźników KPI dotyczących ESG może obniżyć skuteczność monitorowania, zwłaszcza w MŚP.",
+            "answers": [
+              {
+                "text": "Prawda",
+                "feedbackText": "MŚP zyskują, gdy skupiają się na niewielkiej liczbie istotnych i praktycznych wskaźników KPI, zamiast próbować mierzyć wszystko. Jednostka 2: Raportowanie i komunikowanie wyników ESG"
+              },
+              {
+                "text": "Fałsz",
+                "feedbackText": "MŚP zyskują, gdy skupiają się na niewielkiej liczbie istotnych i praktycznych wskaźników KPI, zamiast próbować mierzyć wszystko. Jednostka 2: Raportowanie i komunikowanie wyników ESG"
+              }
+            ],
+            "sortOrder": 3
+          }
+        ]
+      },
+      {
+        "sortOrder": 2,
+        "title": "PL - Samoocena 2",
+        "questions": [
+          {
+            "prompt": "Jaki jest główny cel raportowania ESG?",
+            "answers": [
+              {
+                "text": "Marketingowe budowanie wizerunku firmy zrównoważonej",
+                "feedbackText": "Raportowanie ESG koncentruje się na przejrzystości i odpowiedzialności poprzez ustrukturyzowane, rzetelne informacje, a nie na promocji."
+              },
+              {
+                "text": "Dostarczanie ustrukturyzowanych i przejrzystych informacji o wynikach ESG",
+                "feedbackText": "Raportowanie ESG koncentruje się na przejrzystości i odpowiedzialności poprzez ustrukturyzowane, rzetelne informacje, a nie na promocji."
+              },
+              {
+                "text": "Zastąpienie sprawozdawczości finansowej",
+                "feedbackText": "Raportowanie ESG koncentruje się na przejrzystości i odpowiedzialności poprzez ustrukturyzowane, rzetelne informacje, a nie na promocji."
+              },
+              {
+                "text": "Komunikowanie wyłącznie przyszłych zamierzeń",
+                "feedbackText": "Raportowanie ESG koncentruje się na przejrzystości i odpowiedzialności poprzez ustrukturyzowane, rzetelne informacje, a nie na promocji."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Twój zespół marketingu publikuje: „Jesteśmy w pełni zrównoważoną firmą zaangażowaną w ochronę planety”. Nie podano żadnych danych, celów ani zakresu. Jakie jest główne ryzyko związane z takim komunikatem?",
+            "answers": [
+              {
+                "text": "Żadne, ponieważ zrównoważony rozwój jest czymś pozytywnym",
+                "feedbackText": "Niepoparte dowodami deklaracje pozbawione wskaźników i zakresu zwiększają ryzyko greenwashingu i obniżają wiarygodność."
+              },
+              {
+                "text": "Ryzyko greenwashingu wynikające z braku weryfikowalnych danych",
+                "feedbackText": "Niepoparte dowodami deklaracje pozbawione wskaźników i zakresu zwiększają ryzyko greenwashingu i obniżają wiarygodność."
+              },
+              {
+                "text": "Ryzyko straty finansowej",
+                "feedbackText": "Niepoparte dowodami deklaracje pozbawione wskaźników i zakresu zwiększają ryzyko greenwashingu i obniżają wiarygodność."
+              },
+              {
+                "text": "Automatyczne naruszenie przepisów",
+                "feedbackText": "Niepoparte dowodami deklaracje pozbawione wskaźników i zakresu zwiększają ryzyko greenwashingu i obniżają wiarygodność."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Inwestor pyta, jak ryzyka klimatyczne wpływają na Twoją długoterminową rentowność. Twój raport ESG opisuje jedynie inicjatywy w zakresie recyklingu. Czego brakuje?",
+            "answers": [
+              {
+                "text": "Inicjatyw społecznych",
+                "feedbackText": "Inwestorzy oczekują ujawnień dotyczących tego, jak kwestie zrównoważonego rozwoju wpływają na wyniki finansowe. Jednostka 3: Innowacje jako motor wyników ESG"
+              },
+              {
+                "text": "Ujawnień dotyczących ładu korporacyjnego",
+                "feedbackText": "Inwestorzy oczekują ujawnień dotyczących tego, jak kwestie zrównoważonego rozwoju wpływają na wyniki finansowe. Jednostka 3: Innowacje jako motor wyników ESG"
+              },
+              {
+                "text": "Perspektywy istotności finansowej (podwójna istotność)",
+                "feedbackText": "Inwestorzy oczekują ujawnień dotyczących tego, jak kwestie zrównoważonego rozwoju wpływają na wyniki finansowe. Jednostka 3: Innowacje jako motor wyników ESG"
+              },
+              {
+                "text": "Strategii marketingowej",
+                "feedbackText": "Inwestorzy oczekują ujawnień dotyczących tego, jak kwestie zrównoważonego rozwoju wpływają na wyniki finansowe. Jednostka 3: Innowacje jako motor wyników ESG"
+              }
+            ],
+            "sortOrder": 3
+          }
+        ]
+      },
+      {
+        "sortOrder": 3,
+        "title": "PL - Samoocena 3",
+        "questions": [
+          {
+            "prompt": "W kontekście ESG innowacje najlepiej opisać jako:",
+            "answers": [
+              {
+                "text": "Cel, który musi osiągnąć każda firma",
+                "feedbackText": "Innowacje wspierają cele ESG, poprawiając monitorowanie, efektywność i podejmowanie decyzji – są środkiem, a nie celem."
+              },
+              {
+                "text": "Kosztowną inwestycję technologiczną",
+                "feedbackText": "Innowacje wspierają cele ESG, poprawiając monitorowanie, efektywność i podejmowanie decyzji – są środkiem, a nie celem."
+              },
+              {
+                "text": "Czynnik wspierający wyniki ESG i efektywność",
+                "feedbackText": "Innowacje wspierają cele ESG, poprawiając monitorowanie, efektywność i podejmowanie decyzji – są środkiem, a nie celem."
+              },
+              {
+                "text": "Zamiennik strategii ESG",
+                "feedbackText": "Innowacje wspierają cele ESG, poprawiając monitorowanie, efektywność i podejmowanie decyzji – są środkiem, a nie celem."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Twoje MŚP chce ograniczyć ilość odpadów, ale dysponuje ograniczonym budżetem. Masz dwie możliwości: Zainwestować 80 000 euro w nową automatyczną sortownię odpadów Przeprowadzić 3-miesięczny pilotaż przeprojektowania opakowań w celu ograniczenia zużycia materiałów Które podejście do innowacji jest najodpowiedniejsze dla MŚP?",
+            "answers": [
+              {
+                "text": "Natychmiast wybrać maszynę",
+                "feedbackText": "MŚP zyskują, realizując niewielkie pilotaże powiązane z KPI przed dużymi inwestycjami kapitałowymi."
+              },
+              {
+                "text": "Przeprowadzić pilotaż opakowań powiązany ze wskaźnikiem KPI redukcji odpadów",
+                "feedbackText": "MŚP zyskują, realizując niewielkie pilotaże powiązane z KPI przed dużymi inwestycjami kapitałowymi."
+              },
+              {
+                "text": "Odłożyć innowacje na później",
+                "feedbackText": "MŚP zyskują, realizując niewielkie pilotaże powiązane z KPI przed dużymi inwestycjami kapitałowymi."
+              },
+              {
+                "text": "Skupić się wyłącznie na komunikacji ESG",
+                "feedbackText": "MŚP zyskują, realizując niewielkie pilotaże powiązane z KPI przed dużymi inwestycjami kapitałowymi."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Innowacja w obszarze ESG powinna być zawsze powiązana z co najmniej jednym mierzalnym wskaźnikiem KPI.",
+            "answers": [
+              {
+                "text": "Prawda",
+                "feedbackText": "Powiązanie innowacji ze wskaźnikami KPI zapewnia, że poprawę można mierzyć i oceniać w czasie. Jednostka 4: Ciągłe doskonalenie, przyszłe polityki UE i globalne trendy ESG"
+              },
+              {
+                "text": "Fałsz",
+                "feedbackText": "Powiązanie innowacji ze wskaźnikami KPI zapewnia, że poprawę można mierzyć i oceniać w czasie. Jednostka 4: Ciągłe doskonalenie, przyszłe polityki UE i globalne trendy ESG"
+              }
+            ],
+            "sortOrder": 3
+          }
+        ]
+      },
+      {
+        "sortOrder": 4,
+        "title": "PL - Samoocena 4",
+        "questions": [
+          {
+            "prompt": "Twoje MŚP dostarcza części dużemu producentowi z UE, który ogłasza plan osiągnięcia neutralności klimatycznej zgodny z unijnym celem klimatycznym na 2040 r. Jakie działanie będzie najbardziej strategiczne?",
+            "answers": [
+              {
+                "text": "Zignorować to, ponieważ MŚP nie podlegają bezpośrednio regulacjom",
+                "feedbackText": "Presja łańcucha dostaw i unijne cele klimatyczne będą pośrednio oddziaływać na MŚP. Wczesne mapowanie emisji zwiększa konkurencyjność."
+              },
+              {
+                "text": "Rozpocząć mapowanie emisji w zakresie 1, 2 oraz istotnych emisji w zakresie 3",
+                "feedbackText": "Presja łańcucha dostaw i unijne cele klimatyczne będą pośrednio oddziaływać na MŚP. Wczesne mapowanie emisji zwiększa konkurencyjność."
+              },
+              {
+                "text": "Poczekać na obowiązek prawny",
+                "feedbackText": "Presja łańcucha dostaw i unijne cele klimatyczne będą pośrednio oddziaływać na MŚP. Wczesne mapowanie emisji zwiększa konkurencyjność."
+              },
+              {
+                "text": "Opublikować hasło o zrównoważonym rozwoju",
+                "feedbackText": "Presja łańcucha dostaw i unijne cele klimatyczne będą pośrednio oddziaływać na MŚP. Wczesne mapowanie emisji zwiększa konkurencyjność."
+              }
+            ],
+            "sortOrder": 1
+          },
+          {
+            "prompt": "Które z poniższych stanowi dobrą rutynę przeglądu ESG w MŚP?",
+            "answers": [
+              {
+                "text": "Jeden przegląd ESG co pięć lat",
+                "feedbackText": "Regularne, proste rutyny przeglądowe pomagają utrzymać ESG w codziennym zarządzaniu bez nadmiernego obciążenia pracą."
+              },
+              {
+                "text": "Comiesięczna aktualizacja KPI i krótkie kwartalne spotkanie przeglądowe ESG",
+                "feedbackText": "Regularne, proste rutyny przeglądowe pomagają utrzymać ESG w codziennym zarządzaniu bez nadmiernego obciążenia pracą."
+              },
+              {
+                "text": "Przegląd ESG wyłącznie wtedy, gdy wymaga tego prawo",
+                "feedbackText": "Regularne, proste rutyny przeglądowe pomagają utrzymać ESG w codziennym zarządzaniu bez nadmiernego obciążenia pracą."
+              },
+              {
+                "text": "Przegląd ESG prowadzony wyłącznie przez konsultantów zewnętrznych",
+                "feedbackText": "Regularne, proste rutyny przeglądowe pomagają utrzymać ESG w codziennym zarządzaniu bez nadmiernego obciążenia pracą."
+              }
+            ],
+            "sortOrder": 2
+          },
+          {
+            "prompt": "Twoje wskaźniki KPI dotyczące ESG pozostają niezmienione od 2 lat. Nie odbywają się żadne formalne spotkania przeglądowe. Jakie jest główne ryzyko?",
+            "answers": [
+              {
+                "text": "Nadmierne raportowanie",
+                "feedbackText": "ESG jest dynamiczne. Bez rutyn przeglądowych wskaźniki KPI mogą stać się nieaktualne i strategicznie nieistotne."
+              },
+              {
+                "text": "Stagnacja KPI i ich rozejście się z nowymi trendami regulacyjnymi",
+                "feedbackText": "ESG jest dynamiczne. Bez rutyn przeglądowych wskaźniki KPI mogą stać się nieaktualne i strategicznie nieistotne."
+              },
+              {
+                "text": "Niepowodzenie audytu finansowego",
+                "feedbackText": "ESG jest dynamiczne. Bez rutyn przeglądowych wskaźniki KPI mogą stać się nieaktualne i strategicznie nieistotne."
+              },
+              {
+                "text": "Zbyt duża przejrzystość",
+                "feedbackText": "ESG jest dynamiczne. Bez rutyn przeglądowych wskaźniki KPI mogą stać się nieaktualne i strategicznie nieistotne."
+              }
+            ],
+            "sortOrder": 3
+          }
+        ]
+      }
+    ]
+  }
+]
