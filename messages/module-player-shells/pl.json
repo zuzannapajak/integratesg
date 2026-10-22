@@ -77,7 +77,7 @@
         "certificate": {
           "availableTitle": "Certyfikat ukończenia",
           "lockedTitle": "Status certyfikatu",
-          "availableDescription": "Twój angielski certyfikat jest gotowy do pobrania.",
+          "availableDescription": "Twój certyfikat jest gotowy do pobrania.",
           "lockedDescription": "Certyfikat zostanie wystawiony dopiero po zaliczeniu końcowego sprawdzianu. Powtórz moduł, aby odblokować certyfikat."
         }
       },

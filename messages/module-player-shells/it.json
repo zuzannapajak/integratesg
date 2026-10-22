@@ -77,7 +77,7 @@
         "certificate": {
           "availableTitle": "Certificato di completamento",
           "lockedTitle": "Stato del certificato",
-          "availableDescription": "Il tuo certificato in inglese è pronto per il download.",
+          "availableDescription": "Il tuo certificato è pronto per il download.",
           "lockedDescription": "I certificati vengono rilasciati solo dopo aver superato il checkpoint finale. Ripeti il modulo per sbloccare il certificato."
         }
       },

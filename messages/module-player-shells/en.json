@@ -77,7 +77,7 @@
         "certificate": {
           "availableTitle": "Completion certificate",
           "lockedTitle": "Certificate status",
-          "availableDescription": "Your English certificate is ready to download.",
+          "availableDescription": "Your certificate is ready to download.",
           "lockedDescription": "Certificates are issued only after passing the final checkpoint. Retake the module to unlock your certificate."
         }
       },

@@ -1,4 +1,5 @@
 import { APP_ROLES } from "@/lib/auth/roles";
+import { pickCertificateModuleTitle, resolveCertificateLocale } from "@/lib/curriculum/certificate-copy";
 import { getCurriculumModuleCertificateEligibility } from "@/lib/curriculum/certificate-eligibility";
 import { buildCurriculumCertificatePdf } from "@/lib/curriculum/certificate-pdf";
 import { logMeasuredOperation } from "@/lib/observability/performance";
@@ -12,10 +13,6 @@ export const runtime = "nodejs";
 type RouteContext = {
   params: Promise<{ slug: string }>;
 };
-
-function pickEnglishTitle(translations: Array<{ language: string; title: string }>, slug: string) {
-  return translations.find((translation) => translation.language === "en")?.title ?? slug;
-}
 
 function humanizeFallbackName(email: string) {
   const localPart = email.split("@")[0] ?? "Learner";
@@ -54,7 +51,7 @@ function buildDownloadFileName(slug: string) {
   return `integratesg-certificate-${normalizedSlug || "curriculum"}.pdf`;
 }
 
-export async function GET(_request: Request, { params }: RouteContext) {
+export async function GET(request: Request, { params }: RouteContext) {
   const startedAt = Date.now();
   let records = 0;
   let status: "ok" | "error" = "ok";
@@ -63,6 +60,7 @@ export async function GET(_request: Request, { params }: RouteContext) {
   try {
     const { slug } = await params;
     slugForLog = slug;
+    const locale = resolveCertificateLocale(new URL(request.url).searchParams.get("locale"));
 
     const supabase = await createClient();
     const {
@@ -102,7 +100,7 @@ export async function GET(_request: Request, { params }: RouteContext) {
         translations: {
           where: {
             language: {
-              in: ["en"],
+              in: [locale, "en"],
             },
           },
           select: {
@@ -166,7 +164,7 @@ export async function GET(_request: Request, { params }: RouteContext) {
       ? profile.fullName.trim()
       : humanizeFallbackName(profile.email);
 
-    const moduleTitle = pickEnglishTitle(course.translations, course.slug);
+    const moduleTitle = pickCertificateModuleTitle(course.translations, course.slug, locale);
     const certificateId = buildCertificateId(course.slug, attempt.id);
 
     const pdfBuffer = await buildCurriculumCertificatePdf({
@@ -175,6 +173,7 @@ export async function GET(_request: Request, { params }: RouteContext) {
       issuedAt: attempt.completedAt ?? new Date(),
       durationMinutes: course.estimatedDurationMinutes,
       certificateId,
+      locale,
     });
 
     const pdfBytes = pdfBuffer instanceof Uint8Array ? pdfBuffer : Uint8Array.from(pdfBuffer);

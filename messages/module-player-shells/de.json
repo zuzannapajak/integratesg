@@ -77,7 +77,7 @@
         "certificate": {
           "availableTitle": "Abschlusszertifikat",
           "lockedTitle": "Zertifikatsstatus",
-          "availableDescription": "Ihr englisches Zertifikat steht zum Download bereit.",
+          "availableDescription": "Ihr Zertifikat steht zum Download bereit.",
           "lockedDescription": "Zertifikate werden erst nach Bestehen des abschließenden Checkpoints ausgestellt. Wiederholen Sie das Modul, um Ihr Zertifikat freizuschalten."
         }
       },
