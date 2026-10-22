@@ -307,6 +307,12 @@
         "submitting": "Zapisywanie odpowiedzi...",
         "submitError": "Nie udało się zapisać post-assessmentu. Spróbuj ponownie."
       }
+    },
+    "CurriculumPilotFocusModules": {
+      "title": "Moduły priorytetowe pilotażu",
+      "description": "Aby rzetelnie ocenić wszystkie sześć modułów, proponujemy Ci skupić się na tych dwóch.",
+      "progress": "Ukończone moduły priorytetowe: {completed}/{total}",
+      "openAccess": "Wszystkie sześć modułów pozostaje dostępnych. Możesz również korzystać z pozostałych."
     }
   }
 }

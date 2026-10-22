@@ -307,6 +307,12 @@
         "submitting": "Antworten werden gespeichert...",
         "submitError": "Das Post-Assessment konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
       }
+    },
+    "CurriculumPilotFocusModules": {
+      "title": "Empfohlene Pilotmodule",
+      "description": "Damit alle sechs Module ausgewogen getestet werden, empfehlen wir Ihnen diese beiden Module.",
+      "progress": "Abgeschlossene empfohlene Module: {completed}/{total}",
+      "openAccess": "Alle sechs Module bleiben zugänglich. Sie können auch die anderen Module erkunden."
     }
   }
 }

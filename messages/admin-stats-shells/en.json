@@ -332,6 +332,25 @@
           "delta": "Delta",
           "modulesBeforePost": "Modules before post"
         }
+      },
+      "moduleCoverage": {
+        "title": "Coverage of the six modules",
+        "description": "Activity of formal pilot participants (with completed pre-assessment), grouped by module.",
+        "completedCoverage": "Modules completed by at least one participant",
+        "activeParticipants": "Participants with pre-assessment",
+        "startedModules": "Modules started",
+        "columns": {
+          "module": "Module",
+          "recommended": "Recommended to",
+          "started": "Started by",
+          "completed": "Completed by",
+          "recommendedCompleted": "Assigned & completed",
+          "covered": "Covered",
+          "focus": "Recommended modules"
+        },
+        "yes": "Yes",
+        "no": "No",
+        "methodology": "Coverage means at least one participant completed the module; views and starts are reported separately. Two recommended modules per participant are assigned in a stable round-robin order. Other modules remain accessible."
       }
     },
     "PlatformFeedbackAdminDashboard": {

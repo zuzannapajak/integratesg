@@ -307,6 +307,12 @@
         "submitting": "Salvataggio delle risposte...",
         "submitError": "Non è stato possibile salvare il post-assessment. Riprova."
       }
+    },
+    "CurriculumPilotFocusModules": {
+      "title": "Moduli prioritari del progetto pilota",
+      "description": "Per valutare in modo equilibrato tutti e sei i moduli, ti consigliamo di concentrarti su questi due.",
+      "progress": "Moduli consigliati completati: {completed}/{total}",
+      "openAccess": "Tutti e sei i moduli restano accessibili. Puoi esplorare anche gli altri."
     }
   }
 }
