@@ -9,7 +9,7 @@
       "officialNotice": "This additional platform feedback does not replace the official WP3 satisfaction questionnaire administered during the workshop.",
       "officialLink": "Open the WP3 questionnaire",
       "callout": "Share your experience after completing the learning activities.",
-      "open": "Share feedback",
+      "open": "Fill out survey",
       "notAvailable": "Survey is not available yet",
       "alreadySubmitted": "You have already submitted this survey.",
       "success": "Thank you for your feedback!",
@@ -52,7 +52,9 @@
         "responses": "Responses",
         "average": "Average satisfaction (1–5)",
         "export": "Export aggregate CSV"
-      }
+      },
+      "returnToCurriculum": "Explore more modules",
+      "returnToEportfolio": "Back to ePortfolio"
     }
   }
 }

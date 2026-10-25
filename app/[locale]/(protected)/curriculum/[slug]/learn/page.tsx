@@ -1,9 +1,11 @@
 import CurriculumPilotEntryGate from "@/components/curriculum/curriculum-pilot-entry-gate";
 import ModulePlayerShell from "@/components/curriculum/module-player-shell";
+import type { CurriculumCompletionStep } from "@/components/curriculum/curriculum-module-completion";
 import { requireRole } from "@/features/auth/requireRole";
 import { APP_ROLES } from "@/lib/auth/roles";
 import { getCurriculumPilotEntryGateState } from "@/lib/curriculum/pilot";
 import { getCurriculumModule } from "@/lib/curriculum/queries";
+import { getPilotSatisfactionAvailability } from "@/lib/pilot-satisfaction/queries";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -28,6 +30,17 @@ export default async function CourseLearnPage({ params }: Props) {
     userId: user.id,
   });
 
+  let completionStep: CurriculumCompletionStep = "explore";
+
+  if (pilotGate.postAssessmentCompletedAt) {
+    // This lookup is needed only for users who have already finished the pilot.
+    // Keep the questionnaire link hidden after their feedback has been submitted.
+    const availability = await getPilotSatisfactionAvailability(user.id, "curriculum", locale);
+    completionStep = availability.submittedAt ? "explore" : "feedback";
+  } else if (pilotGate.preAssessmentCompletedAt) {
+    completionStep = "assessment";
+  }
+
   const returnPath = `/${locale}/curriculum/${courseModuleResult.module.slug}/learn`;
 
   return (
@@ -43,7 +56,11 @@ export default async function CourseLearnPage({ params }: Props) {
             returnPath={returnPath}
           />
         ) : (
-          <ModulePlayerShell locale={locale} module={courseModuleResult.module} />
+          <ModulePlayerShell
+            locale={locale}
+            module={courseModuleResult.module}
+            completionStep={completionStep}
+          />
         )}
       </div>
     </main>

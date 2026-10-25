@@ -9,7 +9,7 @@
       "officialNotice": "Questo questionario aggiuntivo non sostituisce il sondaggio ufficiale WP3 da compilare durante il workshop.",
       "officialLink": "Apri il questionario WP3",
       "callout": "Condividi la tua esperienza al termine delle attività.",
-      "open": "Condividi il tuo feedback",
+      "open": "Compila il questionario",
       "notAvailable": "Questionario non ancora disponibile",
       "alreadySubmitted": "Hai già inviato questo questionario.",
       "success": "Grazie per il tuo contributo!",
@@ -52,7 +52,9 @@
         "responses": "Risposte",
         "average": "Soddisfazione media (1–5)",
         "export": "Esporta CSV aggregato"
-      }
+      },
+      "returnToCurriculum": "Esplora altri moduli",
+      "returnToEportfolio": "Torna all'ePortfolio"
     }
   }
 }

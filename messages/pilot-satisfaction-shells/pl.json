@@ -9,7 +9,7 @@
       "officialNotice": "Ta dodatkowa ankieta na platformie nie zastępuje oficjalnej ankiety satysfakcji WP3 przeprowadzanej podczas warsztatu.",
       "officialLink": "Otwórz ankietę WP3",
       "callout": "Podziel się opinią po ukończeniu części edukacyjnej.",
-      "open": "Przekaż opinię",
+      "open": "Wypełnij ankietę",
       "notAvailable": "Ankieta nie jest jeszcze dostępna",
       "alreadySubmitted": "Ankieta została już przesłana.",
       "success": "Dziękujemy za opinię!",
@@ -52,7 +52,9 @@
         "responses": "Odpowiedzi",
         "average": "Średnia satysfakcji (1–5)",
         "export": "Eksport zbiorczy CSV"
-      }
+      },
+      "returnToCurriculum": "Przeglądaj kolejne moduły",
+      "returnToEportfolio": "Powrót do ePortfolio"
     }
   }
 }

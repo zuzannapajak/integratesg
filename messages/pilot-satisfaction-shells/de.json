@@ -9,7 +9,7 @@
       "officialNotice": "Dieses zusätzliche Plattformfeedback ersetzt nicht die offizielle WP3-Befragung beim Workshop.",
       "officialLink": "WP3-Fragebogen öffnen",
       "callout": "Teilen Sie nach Abschluss Ihre Erfahrungen.",
-      "open": "Feedback geben",
+      "open": "Fragebogen ausfüllen",
       "notAvailable": "Befragung noch nicht verfügbar",
       "alreadySubmitted": "Sie haben diesen Fragebogen bereits eingereicht.",
       "success": "Vielen Dank für Ihr Feedback!",
@@ -52,7 +52,9 @@
         "responses": "Antworten",
         "average": "Mittlere Zufriedenheit (1–5)",
         "export": "Aggregierte CSV exportieren"
-      }
+      },
+      "returnToCurriculum": "Weitere Module erkunden",
+      "returnToEportfolio": "Zurück zum ePortfolio"
     }
   }
 }

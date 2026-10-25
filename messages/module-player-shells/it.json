@@ -79,6 +79,25 @@
           "lockedTitle": "Stato del certificato",
           "availableDescription": "Il tuo certificato è pronto per il download.",
           "lockedDescription": "I certificati vengono rilasciati solo dopo aver superato il checkpoint finale. Ripeti il modulo per sbloccare il certificato."
+        },
+        "savedSummary": "I tuoi progressi sono stati salvati.",
+        "nextStep": {
+          "eyebrow": "Cosa fare ora",
+          "assessment": {
+            "title": "Puoi completare la tua partecipazione al pilota",
+            "description": "Hai completato almeno un modulo, quindi la valutazione post è ora disponibile. Dopo averla inviata, avrai ancora accesso al corso e ai moduli.",
+            "action": "Completa la partecipazione al pilota"
+          },
+          "feedback": {
+            "title": "Questionario di soddisfazione — Curriculum",
+            "description": "Valuta i materiali e la facilità d’uso dopo il post-assessment.",
+            "action": "Compila il questionario"
+          },
+          "explore": {
+            "title": "Cosa fare ora",
+            "description": "La tua progressione nelle lezioni e la cronologia dei checkpoint sono state salvate. Ora puoi tornare alla panoramica del modulo o continuare a esplorare il resto del curriculum.",
+            "action": "Esplora altri moduli"
+          }
         }
       },
       "confirmSubmit": {

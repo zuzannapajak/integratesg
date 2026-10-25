@@ -79,6 +79,25 @@
           "lockedTitle": "Status certyfikatu",
           "availableDescription": "Twój certyfikat jest gotowy do pobrania.",
           "lockedDescription": "Certyfikat zostanie wystawiony dopiero po zaliczeniu końcowego sprawdzianu. Powtórz moduł, aby odblokować certyfikat."
+        },
+        "savedSummary": "Twój postęp został zapisany.",
+        "nextStep": {
+          "eyebrow": "Co dalej",
+          "assessment": {
+            "title": "Możesz zakończyć udział w pilotażu",
+            "description": "Ukończyłeś co najmniej jeden moduł, dlatego ocena końcowa jest już dostępna. Po jej przesłaniu nadal będziesz mieć dostęp do kursu i modułów.",
+            "action": "Zakończ udział w pilotażu"
+          },
+          "feedback": {
+            "title": "Ankieta satysfakcji — Curriculum",
+            "description": "Oceń materiały szkoleniowe i korzystanie z platformy po zakończeniu post-assessmentu.",
+            "action": "Wypełnij ankietę"
+          },
+          "explore": {
+            "title": "Co dalej",
+            "description": "Postęp lekcji i historia checkpointów zostały zapisane. Możesz teraz wrócić do overview modułu albo kontynuować przeglądanie curriculum.",
+            "action": "Przeglądaj kolejne moduły"
+          }
         }
       },
       "confirmSubmit": {

@@ -1,8 +1,9 @@
 "use client";
 
+import PilotSatisfactionResult from "@/components/pilot-satisfaction/pilot-satisfaction-result";
 import { submitPilotSatisfactionAction } from "@/features/pilot-satisfaction/actions";
 import { PILOT_COUNTRIES, type PilotCountry, type PilotRatings, type PilotSurveyScope } from "@/lib/pilot-satisfaction/validation";
-import { ArrowLeft, CheckCircle2, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -56,20 +57,16 @@ export default function PilotSatisfactionForm({ locale, scope, caseStudies }: Pr
     });
   };
 
+  if (done) {
+    return <PilotSatisfactionResult locale={locale} scope={scope} state="submitted" />;
+  }
+
   return (
     <section className="rounded-[30px] border border-white/80 bg-white px-6 py-8 shadow-[0_12px_34px_rgba(35,45,62,0.06)] md:px-10">
       <Link href={backHref} className="inline-flex items-center gap-2 text-sm text-[#536174] hover:underline">
         <ArrowLeft className="h-4 w-4" />{t("back")}
       </Link>
-      {done ? (
-        <div role="status" className="mt-8">
-          <CheckCircle2 className="h-11 w-11 text-emerald-600" />
-          <h1 className="mt-4 text-2xl font-bold text-[#31425a]">{t("success")}</h1>
-          <p className="mt-3 text-[#536174]">{t("saved")}</p>
-        </div>
-      ) : (
-        <>
-          <h1 className="mt-6 text-3xl font-bold text-[#31425a]">{t(`scope.${scope}.title`)}</h1>
+      <h1 className="mt-6 text-3xl font-bold text-[#31425a]">{t(`scope.${scope}.title`)}</h1>
           <p className="mt-3 max-w-2xl text-sm leading-7 text-[#536174]">{t(`scope.${scope}.description`)}</p>
           <p className="mt-3 max-w-2xl text-sm leading-6 text-[#536174]">{t("privacy")}</p>
           {scope === "curriculum" ? (
@@ -129,8 +126,6 @@ export default function PilotSatisfactionForm({ locale, scope, caseStudies }: Pr
               {pending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}{t("submit")}
             </button>
           </form>
-        </>
-      )}
     </section>
   );
 }
