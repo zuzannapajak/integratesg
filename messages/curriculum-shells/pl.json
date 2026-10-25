@@ -262,7 +262,8 @@
       "completed": {
         "eyebrow": "Pilotaż ukończony",
         "title": "Ocena końcowa została zapisana",
-        "description": "Dziękujemy za ukończenie części pilotażowej. Nadal możesz korzystać z modułów, zaliczać testy modułowe i pracować nad uzyskaniem certyfikatu."
+        "description": "Dziękujemy za ukończenie części pilotażowej. Nadal możesz korzystać z modułów, zaliczać testy modułowe i pracować nad uzyskaniem certyfikatu.",
+        "surveyAction": "Oceń pilotaż"
       },
       "available": {
         "eyebrow": "Ścieżka pilotażowa",

@@ -20,6 +20,7 @@ model Profile {
   curriculumPilot             CurriculumPilot?
   platformFeedbackSubmissions PlatformFeedbackSubmission[]
   platformFeedbackReminder    PlatformFeedbackReminder?
+  pilotSatisfactionSubmissions PilotSatisfactionSubmission[]
 }
 
 model CaseStudy {
@@ -36,6 +37,7 @@ model CaseStudy {
   updatedAt       DateTime                @updatedAt
   translations    CaseStudyTranslation[]
   userProgress    UserCaseStudyProgress[]
+  pilotSatisfactionSubmissions PilotSatisfactionSubmission[]
 
   @@index([status])
   @@index([area])
@@ -435,6 +437,31 @@ model AnswerTranslation {
   @@unique([answerId, language])
   @@index([answerId])
   @@index([language])
+}
+
+
+// Pilot feedback is separate from WP3's official external workshop survey.
+// One submission per user and area; official Google Forms results are not inferred here.
+model PilotSatisfactionSubmission {
+  id                    String   @id @default(cuid())
+  userId                String
+  scope                 String
+  countryCode           String   @db.VarChar(2)
+  caseStudyId           String?
+  contentClarity        Int
+  practicalRelevance    Int
+  usability             Int
+  overallSatisfaction   Int
+  strengths             String?
+  improvements          String?
+  submittedAt           DateTime @default(now())
+  user                  Profile  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  caseStudy             CaseStudy? @relation(fields: [caseStudyId], references: [id], onDelete: Restrict)
+
+  @@unique([userId, scope])
+  @@index([scope, countryCode])
+  @@index([submittedAt])
+  @@index([caseStudyId])
 }
 
 model PlatformFeedbackSubmission {

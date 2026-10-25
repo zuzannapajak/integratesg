@@ -1,3 +1,5 @@
+import PilotSatisfactionCallout from "@/components/pilot-satisfaction/pilot-satisfaction-callout";
+import { getPilotSatisfactionAvailability } from "@/lib/pilot-satisfaction/queries";
 import EportfolioLibrary from "@/components/eportfolio/eportfolio-library";
 import { requireRole } from "@/features/auth/requireRole";
 import { APP_ROLES } from "@/lib/auth/roles";
@@ -27,6 +29,10 @@ export default async function EportfolioPage({ params }: Props) {
   const completedCount = caseStudies.filter(
     (caseStudy) => caseStudy.progress === "completed",
   ).length;
+
+  const satisfaction = completedCount > 0
+    ? await getPilotSatisfactionAvailability(user.id, "eportfolio", locale)
+    : null;
 
   const progressPercent =
     caseStudies.length > 0 ? Math.round((completedCount / caseStudies.length) * 100) : 0;
@@ -94,6 +100,9 @@ export default async function EportfolioPage({ params }: Props) {
             </div>
           </div>
         </section>
+
+        {satisfaction ? <PilotSatisfactionCallout locale={locale} scope="eportfolio"
+          submitted={satisfaction.submittedAt !== null} /> : null}
 
         <section className="mt-7">
           {caseStudies.length > 0 ? (

@@ -262,7 +262,8 @@
       "completed": {
         "eyebrow": "Pilot completed",
         "title": "Post-assessment has been saved",
-        "description": "Thank you for completing the pilot part. You can still use the modules, complete module tests and work towards the certificate."
+        "description": "Thank you for completing the pilot part. You can still use the modules, complete module tests and work towards the certificate.",
+        "surveyAction": "Evaluate the pilot"
       },
       "available": {
         "eyebrow": "Pilot path",

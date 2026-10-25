@@ -123,7 +123,9 @@ export default function CurriculumPilotAssessmentForm({
                 answers,
               });
 
-        router.replace(result.nextPath);
+        router.replace(assessmentType === "post"
+          ? `/${locale}/pilot-satisfaction/curriculum`
+          : result.nextPath);
         router.refresh();
       } catch (caughtError) {
         console.error(caughtError);

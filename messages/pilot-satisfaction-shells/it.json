@@ -1,0 +1,58 @@
+{
+  "Protected": {
+    "PilotSatisfaction": {
+      "back": "Indietro",
+      "choose": "Seleziona...",
+      "country": "Paese del pilota",
+      "caseStudy": "Caso di studio valutato",
+      "privacy": "Le risposte sono collegate al tuo account per evitare duplicati e sono riportate in forma aggregata. Non inserire dati personali nei commenti.",
+      "officialNotice": "Questo questionario aggiuntivo non sostituisce il sondaggio ufficiale WP3 da compilare durante il workshop.",
+      "officialLink": "Apri il questionario WP3",
+      "callout": "Condividi la tua esperienza al termine delle attività.",
+      "open": "Condividi il tuo feedback",
+      "notAvailable": "Questionario non ancora disponibile",
+      "alreadySubmitted": "Hai già inviato questo questionario.",
+      "success": "Grazie per il tuo contributo!",
+      "saved": "Le tue risposte sono state salvate.",
+      "submit": "Invia le risposte",
+      "error": "Completa tutti i campi obbligatori. Se hai già inviato, aggiorna la pagina.",
+      "scale": "Scala: 1 = molto scarso, 5 = eccellente",
+      "strengths": "Cosa ha funzionato bene? (facoltativo)",
+      "improvements": "Cosa miglioreresti? (facoltativo)",
+      "scope": {
+        "curriculum": {
+          "title": "Questionario di soddisfazione — Curriculum",
+          "description": "Valuta i materiali e la facilità d’uso dopo il post-assessment.",
+          "eligibility": "Completa prima il post-assessment del pilota."
+        },
+        "eportfolio": {
+          "title": "Questionario di soddisfazione — ePortfolio",
+          "description": "Valuta un caso di studio che hai completato.",
+          "eligibility": "Completa prima almeno un caso di studio."
+        }
+      },
+      "questions": {
+        "contentClarity": "Quanto erano chiari i contenuti?",
+        "practicalRelevance": "Quanto sono utili nella pratica ESG?",
+        "usability": "Quanto è stato semplice usare le risorse?",
+        "overallSatisfaction": "Quanto sei soddisfatto nel complesso?"
+      },
+      "countries": {
+        "AT": "Austria",
+        "BG": "Bulgaria",
+        "CY": "Cipro",
+        "IT": "Italia",
+        "PL": "Polonia"
+      },
+      "admin": {
+        "title": "Soddisfazione del pilota — feedback interno",
+        "disclaimer": "I conteggi riguardano solo i questionari interni, per paese dichiarato dal partecipante (non verificato). I risultati ufficiali WP3 di Google Forms devono essere documentati separatamente. Il target di 15 per paese è operativo.",
+        "poland": "Polonia — rispondenti unici",
+        "remaining": "Mancanti al target interno",
+        "responses": "Risposte",
+        "average": "Soddisfazione media (1–5)",
+        "export": "Esporta CSV aggregato"
+      }
+    }
+  }
+}

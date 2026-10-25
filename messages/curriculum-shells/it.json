@@ -262,7 +262,8 @@
       "completed": {
         "eyebrow": "Pilota completato",
         "title": "La valutazione post è stata salvata",
-        "description": "Grazie per aver completato la parte pilota. Puoi continuare a usare i moduli, completare i test dei moduli e lavorare per ottenere il certificato."
+        "description": "Grazie per aver completato la parte pilota. Puoi continuare a usare i moduli, completare i test dei moduli e lavorare per ottenere il certificato.",
+        "surveyAction": "Valuta il pilota"
       },
       "available": {
         "eyebrow": "Percorso pilota",
