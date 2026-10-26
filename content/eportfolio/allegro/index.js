@@ -3,7 +3,7 @@ import { loadMarkdown } from "../helpers.js";
 export const AllegroCaseStudy = {
   slug: "allegro",
   area: "cross_cutting",
-  status: "draft",
+  status: "published",
   sortOrder: 90,
   isFeatured: false,
   countryCode: "PL",

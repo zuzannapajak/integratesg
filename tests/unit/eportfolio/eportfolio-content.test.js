@@ -49,6 +49,15 @@ describe("ePortfolio content catalogue", () => {
     }
   });
 
+  it("contains full German and Italian case-study translations", () => {
+    for (const caseStudy of caseStudies) {
+      const locales = caseStudy.translations.map((entry) => entry.language);
+
+      expect(locales, `${caseStudy.slug}: missing German translation`).toContain("de");
+      expect(locales, `${caseStudy.slug}: missing Italian translation`).toContain("it");
+    }
+  });
+
   it("uses unique slugs", () => {
     const slugs = caseStudies.map((caseStudy) => caseStudy.slug);
 
