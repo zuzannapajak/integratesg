@@ -147,6 +147,16 @@ describe("scenario pathway progress", () => {
     expect(items[1]?.status).toBe("available");
   });
 
+  it("shows Italian scenario names without changing unlocking or progress", async () => {
+    const items = await getScenarioPathwayItemsForUser("user-01", "it");
+
+    expect(items).toHaveLength(6);
+    expect(items[0]?.title).toBe("Introduzione ai criteri ESG e allo sviluppo sostenibile");
+    expect(items[1]?.title).toBe("Strategia, visione e allineamento organizzativo");
+    expect(items[0]?.status).toBe("available");
+    expect(items[1]?.status).toBe("locked");
+  });
+
   it("rejects starting a locked scenario on the server", async () => {
     await expect(assertScenarioCanStartForUser("user-01", "scenario-02")).rejects.toThrow(
       "Scenario is locked.",

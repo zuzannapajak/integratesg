@@ -45,12 +45,12 @@ describe("scenario locale selection", () => {
 
   it("falls back to English when the requested scenario translation is unavailable", () => {
     const english = resolveScenarioBySlug("scenario-01", "en");
-    const italian = resolveScenarioBySlug("scenario-01", "it");
+    const french = resolveScenarioBySlug("scenario-01", "fr");
 
     expect(english).not.toBeNull();
-    expect(italian).not.toBeNull();
-    expect(italian?.locale).toBe("en");
-    expect(italian?.title).toBe(english?.title);
-    expect(italian?.challenges[0]?.question).toBe(english?.challenges[0]?.question);
+    expect(french).not.toBeNull();
+    expect(french?.locale).toBe("en");
+    expect(french?.title).toBe(english?.title);
+    expect(french?.challenges[0]?.question).toBe(english?.challenges[0]?.question);
   });
 });

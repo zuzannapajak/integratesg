@@ -2,7 +2,7 @@ import { resolveScenarioBySlug } from "@/lib/scenarios/simulator/resolve-scenari
 import { SCENARIO_IDS } from "@/lib/scenarios/simulator/types";
 import { describe, expect, it } from "vitest";
 
-const availableLocales = ["pl", "de", "el", "bg"] as const;
+const availableLocales = ["pl", "de", "el", "bg", "it"] as const;
 
 describe("updated WP4 scenario translations", () => {
   it.each(SCENARIO_IDS)("has complete supported translations for %s", (scenarioId) => {

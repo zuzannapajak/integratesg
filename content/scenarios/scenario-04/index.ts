@@ -3,6 +3,7 @@ import { parseScenarioData } from "@/lib/scenarios/simulator/schema";
 
 import { scenario04Definition, scenario04Ids } from "./definition";
 import { scenario04En } from "./locales/en";
+import { scenario04It } from "./locales/it";
 import { scenario04Bg } from "./locales/bg";
 import { scenario04El } from "./locales/el";
 import { scenario04De } from "./locales/de";
@@ -12,6 +13,10 @@ const sourceScenario04Data: ScenarioData<"scenario-04"> = defineScenarioData<"sc
   definition: scenario04Definition,
 
   locales: {
+    it: {
+      ...scenario04It,
+      locale: "it" as const,
+    },
     en: {
       ...scenario04En,
       locale: "en" as const,

@@ -115,6 +115,7 @@ export function buildScenarioPathwayItems(
 
 export async function getScenarioPathwayItemsForUser(
   userId: string,
+  locale = "en",
 ): Promise<readonly ScenarioPathwayItem[]> {
   const currentVersions = getCurrentScenarioVersions();
 
@@ -143,7 +144,19 @@ export async function getScenarioPathwayItemsForUser(
     },
   });
 
-  return buildScenarioPathwayItems(scenarioPathwayDefinitions, currentVersions, attempts);
+  const items = buildScenarioPathwayItems(scenarioPathwayDefinitions, currentVersions, attempts);
+
+  if (locale === "en") {
+    return items;
+  }
+
+  return items.map((item) => {
+    const translated = resolveScenarioBySlug(item.slug, locale);
+
+    return translated
+      ? { ...item, title: translated.title, shortTitle: translated.shortTitle }
+      : item;
+  });
 }
 
 export async function getScenarioPathwayItemForUser(
