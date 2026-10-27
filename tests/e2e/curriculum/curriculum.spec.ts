@@ -95,7 +95,7 @@ test.describe("Curriculum persisted user journey", () => {
   test("logs in, completes both lessons and keeps progress after returning and reloading", async ({
     page,
   }, testInfo) => {
-    test.setTimeout(120_000);
+    test.setTimeout(180_000);
 
     let fixture: CurriculumE2EFixture | null = null;
 
@@ -154,14 +154,18 @@ test.describe("Curriculum persisted user journey", () => {
       await expect(page.getByText("0%", { exact: true })).toBeVisible();
       await expectNoDocumentOverflow(page, testInfo);
 
-      await page
-        .getByRole("link", {
-          name: "Start the module",
-          exact: true,
-        })
-        .click();
+      const learnPath = `/en/curriculum/${fixture.slug}/learn`;
+      const startModuleLink = page.getByRole("link", {
+        name: "Start the module",
+        exact: true,
+      });
 
-      await expect(page).toHaveURL(`/en/curriculum/${fixture.slug}/learn`);
+      await expect(startModuleLink).toHaveAttribute("href", learnPath);
+      await startModuleLink.click();
+
+      // First navigation may trigger a cold Next.js dev compilation before
+      // the App Router commits the URL. Keep the rest of the assertions strict.
+      await expect(page).toHaveURL(learnPath, { timeout: 30_000 });
 
       await expect(
         page.getByRole("button", {

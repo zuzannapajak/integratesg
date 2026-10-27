@@ -10,6 +10,14 @@ export const EPORTFOLIO_SLUGS = [
   "harmonica",
   "sonnentor",
   "verbund",
+  "allegro",
+  "grupa-azoty",
+  "bank-of-cyprus",
+  "eurobank-cyprus",
+  "hermes-airports",
+  "vassiliko-cement-works",
+  "kpmg-cyprus",
+  "pko-bank-polski",
 ] as const;
 
 let prisma: PrismaClient | null = null;

@@ -41,6 +41,24 @@ function caseStudyCard(page: Page, title: string): Locator {
   });
 }
 
+async function expectAllPublishedCaseLinks(page: Page): Promise<void> {
+  // The library paginates in groups of nine, so not every published card
+  // is present in the DOM on page one.
+  const seen = new Set<string>();
+  for (let pageNumber = 0; pageNumber < 5; pageNumber += 1) {
+    for (const slug of EPORTFOLIO_SLUGS) {
+      if (await page.locator(`a[href="/en/eportfolio/${slug}"]`).count()) {
+        seen.add(slug);
+      }
+    }
+    if (seen.size === EPORTFOLIO_SLUGS.length) break;
+    const next = page.getByRole("button", { name: "Next", exact: true });
+    await expect(next).toBeEnabled();
+    await next.click();
+  }
+  expect([...seen].sort()).toEqual([...EPORTFOLIO_SLUGS].sort());
+}
+
 function isMobileProject(testInfo: TestInfo) {
   return testInfo.project.name === "eportfolio-mobile";
 }
@@ -142,9 +160,7 @@ test.describe("ePortfolio", () => {
     ).toBeVisible();
 
     await expectMobileSafe(page, testInfo);
-    for (const slug of EPORTFOLIO_SLUGS) {
-      await expect(page.locator(`a[href="/en/eportfolio/${slug}"]`).first()).toBeVisible();
-    }
+    await expectAllPublishedCaseLinks(page);
 
     const search = page.getByRole("textbox", {
       name: "Search case studies",
@@ -159,7 +175,7 @@ test.describe("ePortfolio", () => {
       }),
     ).toBeVisible();
     await expect(
-      page.getByText("1 of 15 case studies", {
+      page.getByText("1 of 16 case studies", {
         exact: true,
       }),
     ).toBeVisible();
@@ -251,7 +267,7 @@ test.describe("ePortfolio", () => {
     ).toBeVisible();
 
     await expect(
-      page.getByText("0 of 15 case studies", {
+      page.getByText("0 of 16 case studies", {
         exact: true,
       }),
     ).toBeVisible();
@@ -261,9 +277,7 @@ test.describe("ePortfolio", () => {
       })
       .click();
 
-    for (const slug of EPORTFOLIO_SLUGS) {
-      await expect(page.locator(`a[href="/en/eportfolio/${slug}"]`).first()).toBeVisible();
-    }
+    await expectAllPublishedCaseLinks(page);
 
     await expectMobileSafe(page, testInfo);
   });
