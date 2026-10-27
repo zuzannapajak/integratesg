@@ -521,8 +521,12 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
               </SectionBlock>
             ) : null}
 
-            {additionalSections.map((section) => (
-              <SectionBlock key={section.heading} icon={<BookOpen />} title={section.heading}>
+            {additionalSections.map((section, index) => (
+              <SectionBlock
+                key={`${section.heading}-${index}`}
+                icon={<BookOpen />}
+                title={section.heading}
+              >
                 <MarkdownFrame>
                   <MarkdownContent content={section.content} />
                 </MarkdownFrame>

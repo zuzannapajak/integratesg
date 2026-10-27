@@ -17,7 +17,15 @@ export default function Logo({ locale, className = "", variant = "light", href }
 
   return (
     <Link href={href ?? `/${locale}`} className={`flex items-center ${className}`}>
-      <Image src={src} alt={t("alt")} width={210} height={50} priority className="h-auto w-full" />
+      <Image
+        src={src}
+        alt={t("alt")}
+        width={1000}
+        height={309}
+        sizes="228px"
+        priority
+        className="h-auto w-full"
+      />
     </Link>
   );
 }

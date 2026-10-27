@@ -20,8 +20,9 @@ export default async function PublicFooter({ locale }: Props) {
               <Image
                 src="/images/cofunder-eu.png"
                 alt={t("euAlt")}
-                width={220}
-                height={54}
+                width={2048}
+                height={430}
+                sizes="220px"
                 className="h-auto w-full max-w-55 object-contain"
               />
             </div>
