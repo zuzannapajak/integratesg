@@ -30,9 +30,10 @@ export default async function EportfolioPage({ params }: Props) {
     (caseStudy) => caseStudy.progress === "completed",
   ).length;
 
-  const satisfaction = completedCount > 0
-    ? await getPilotSatisfactionAvailability(user.id, "eportfolio", locale)
-    : null;
+  const satisfaction =
+    completedCount > 0
+      ? await getPilotSatisfactionAvailability(user.id, "eportfolio", locale)
+      : null;
 
   const progressPercent =
     caseStudies.length > 0 ? Math.round((completedCount / caseStudies.length) * 100) : 0;
@@ -101,8 +102,13 @@ export default async function EportfolioPage({ params }: Props) {
           </div>
         </section>
 
-        {satisfaction ? <PilotSatisfactionCallout locale={locale} scope="eportfolio"
-          submitted={satisfaction.submittedAt !== null} /> : null}
+        {satisfaction ? (
+          <PilotSatisfactionCallout
+            locale={locale}
+            scope="eportfolio"
+            submitted={satisfaction.submittedAt !== null}
+          />
+        ) : null}
 
         <section className="mt-7">
           {caseStudies.length > 0 ? (

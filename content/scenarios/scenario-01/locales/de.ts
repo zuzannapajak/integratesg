@@ -9,14 +9,19 @@ export const scenario01De = defineScenarioLocale<"scenario-01">({
   title: "Grundlagen von ESG und nachhaltiger Entwicklung",
   shortTitle: "Grundlagen von ESG und nachhaltiger Entwicklung",
   subtitle: "Grundlagen von ESG und nachhaltiger Entwicklung",
-  introduction: "Sie leiten „GreenTech Solutions“, ein KMU, das hocheffiziente Komponenten herstellt. Ein großer internationaler Konzern hat Kontakt aufgenommen und interessiert sich für einen mehrjährigen Vertrag. Vor der Unterzeichnung verlangt er jedoch, dass Sie einen „ESG-Integrationsfahrplan“ vorlegen, der über Ihre derzeitigen Spenden hinausgeht.",
-  objectives: ["Die drei Kernsäulen von ESG (Umwelt, Soziales, Governance) im unternehmerischen Kontext zu definieren und voneinander abzugrenzen.", "ESG-Grundsätze anzuwenden, um einen strategischen Vorteil zu sichern, insbesondere für den Zugang zu den Lieferketten von Großunternehmen."],
+  introduction:
+    "Sie leiten „GreenTech Solutions“, ein KMU, das hocheffiziente Komponenten herstellt. Ein großer internationaler Konzern hat Kontakt aufgenommen und interessiert sich für einen mehrjährigen Vertrag. Vor der Unterzeichnung verlangt er jedoch, dass Sie einen „ESG-Integrationsfahrplan“ vorlegen, der über Ihre derzeitigen Spenden hinausgeht.",
+  objectives: [
+    "Die drei Kernsäulen von ESG (Umwelt, Soziales, Governance) im unternehmerischen Kontext zu definieren und voneinander abzugrenzen.",
+    "ESG-Grundsätze anzuwenden, um einen strategischen Vorteil zu sichern, insbesondere für den Zugang zu den Lieferketten von Großunternehmen.",
+  ],
   boardAlt: "Drei zusammenhängende ESG-Herausforderungen mit Entscheidungsmöglichkeiten.",
   challenges: {
     [challenges.pillars]: {
       title: "Die Säulen für Kund:innen definieren",
       shortTitle: "Die Säulen für Kund:innen definieren",
-      context: "Die zuständige Person im Einkauf des Kunden bittet Sie zu erläutern, wie Ihr Unternehmen „nichtfinanzielle Risiken“ konkret in den Säulen E, S und G steuert. Sie müssen Ihre derzeitigen Aktivitäten korrekt zuordnen, um zu zeigen, dass Sie den Rahmen verstehen.",
+      context:
+        "Die zuständige Person im Einkauf des Kunden bittet Sie zu erläutern, wie Ihr Unternehmen „nichtfinanzielle Risiken“ konkret in den Säulen E, S und G steuert. Sie müssen Ihre derzeitigen Aktivitäten korrekt zuordnen, um zu zeigen, dass Sie den Rahmen verstehen.",
       question: "Welche Entscheidung ist in dieser Situation sinnvoll?",
       choices: {
         [choices.pillars.accurateCategorisation]: {
@@ -45,7 +50,8 @@ export const scenario01De = defineScenarioLocale<"scenario-01">({
     [challenges.csrToEsg]: {
       title: "Von CSR zur ESG-Integration",
       shortTitle: "Von CSR zur ESG-Integration",
-      context: "Ihre Geschäftsführung schlägt vor, die langjährige Tradition, 2 % des Gewinns an ein örtliches Kinderkrankenhaus zu spenden (CSR), in den Mittelpunkt des Fahrplans zu stellen. Sie müssen erklären, warum dies für einen großen Unternehmenspartner nicht mehr ausreicht.",
+      context:
+        "Ihre Geschäftsführung schlägt vor, die langjährige Tradition, 2 % des Gewinns an ein örtliches Kinderkrankenhaus zu spenden (CSR), in den Mittelpunkt des Fahrplans zu stellen. Sie müssen erklären, warum dies für einen großen Unternehmenspartner nicht mehr ausreicht.",
       question: "Welche Entscheidung ist in dieser Situation sinnvoll?",
       choices: {
         [choices.csrToEsg.integrationEra]: {
@@ -74,11 +80,13 @@ export const scenario01De = defineScenarioLocale<"scenario-01">({
     [challenges.sdgAlignment]: {
       title: "Maßnahmen mit globalen Zielen (SDGs) verknüpfen",
       shortTitle: "Maßnahmen mit globalen Zielen (SDGs) verknüpfen",
-      context: "Zum Abschluss des Fahrplans möchten Sie zeigen, wie Ihr produzierendes KMU zum „großen Ganzen“ beiträgt. Sie müssen Ihre konkrete Maßnahme der Reduzierung von Energieverschwendung mit dem richtigen globalen Ziel verknüpfen.",
+      context:
+        "Zum Abschluss des Fahrplans möchten Sie zeigen, wie Ihr produzierendes KMU zum „großen Ganzen“ beiträgt. Sie müssen Ihre konkrete Maßnahme der Reduzierung von Energieverschwendung mit dem richtigen globalen Ziel verknüpfen.",
       question: "Welche Entscheidung ist in dieser Situation sinnvoll?",
       choices: {
         [choices.sdgAlignment.preciseMapping]: {
-          label: "Die konkrete ESG-Maßnahme dem entsprechenden SDG zuordnen, insbesondere Energie-…",
+          label:
+            "Die konkrete ESG-Maßnahme dem entsprechenden SDG zuordnen, insbesondere Energie-…",
           text: "Die konkrete ESG-Maßnahme dem entsprechenden SDG zuordnen, insbesondere Energie- und Ressourceneffizienz mit SDG 12: Nachhaltige/r Konsum und Produktion oder SDG 7: Bezahlbare und saubere Energie verknüpfen.",
           feedback: {
             body: "Perfekt umgesetzt. Wenn Sie Ihren ESG-Rahmen (das „Wie“) den SDGs (dem „Was“) zuordnen, erhält Ihr KMU eine universelle Sprache. Insbesondere die Verknüpfung von Ressourceneffizienz mit SDG 12 oder SDG 7 zeigt ein fundiertes Verständnis dafür, wie kleine Maßnahmen zum globalen Bauplan beitragen.",
@@ -92,7 +100,8 @@ export const scenario01De = defineScenarioLocale<"scenario-01">({
           },
         },
         [choices.sdgAlignment.noStakeholderLink]: {
-          label: "Es versäumen, die Verknüpfung gegenüber Stakeholdern zu kommunizieren, und damit…",
+          label:
+            "Es versäumen, die Verknüpfung gegenüber Stakeholdern zu kommunizieren, und damit…",
           text: "Es versäumen, die Verknüpfung gegenüber Stakeholdern zu kommunizieren, und damit die Chance verpassen, eine universelle Sprache zu nutzen, die Vertrauen bei internationalen Kund:innen schafft.",
           feedback: {
             body: "Diese Verknüpfungen nicht zu kommunizieren, bedeutet einen verpassten strategischen Vorteil. Für ein KMU hilft die Nutzung der SDGs, Aufträge zu gewinnen, weil sie belegt, dass Sie sich an denselben globalen Standards orientieren wie Ihre großen Unternehmenskund:innen.",
@@ -103,6 +112,9 @@ export const scenario01De = defineScenarioLocale<"scenario-01">({
   },
   summary: {
     title: "Szenario abgeschlossen",
-    takeaways: ["Die drei Kernsäulen von ESG (Umwelt, Soziales, Governance) im unternehmerischen Kontext zu definieren und voneinander abzugrenzen.", "ESG-Grundsätze anzuwenden, um einen strategischen Vorteil zu sichern, insbesondere für den Zugang zu den Lieferketten von Großunternehmen."],
+    takeaways: [
+      "Die drei Kernsäulen von ESG (Umwelt, Soziales, Governance) im unternehmerischen Kontext zu definieren und voneinander abzugrenzen.",
+      "ESG-Grundsätze anzuwenden, um einen strategischen Vorteil zu sichern, insbesondere für den Zugang zu den Lieferketten von Großunternehmen.",
+    ],
   },
 });

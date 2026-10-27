@@ -8,4 +8,3 @@ export async function getPilotSatisfactionStats() {
   });
   return summarizePilotSatisfaction(rows);
 }
-

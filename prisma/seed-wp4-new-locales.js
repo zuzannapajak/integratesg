@@ -103,7 +103,9 @@ if (mode === "--check") {
         console.log(`SKIP  ${item.slug}/${item.language} (draft case study not present in DB)`);
       } else {
         missingPublished.push(item);
-        console.error(`MISSING ${item.slug}/${item.language} (published case study not present in DB)`);
+        console.error(
+          `MISSING ${item.slug}/${item.language} (published case study not present in DB)`,
+        );
       }
     }
 

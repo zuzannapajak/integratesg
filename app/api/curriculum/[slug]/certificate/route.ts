@@ -1,5 +1,8 @@
 import { APP_ROLES } from "@/lib/auth/roles";
-import { pickCertificateModuleTitle, resolveCertificateLocale } from "@/lib/curriculum/certificate-copy";
+import {
+  pickCertificateModuleTitle,
+  resolveCertificateLocale,
+} from "@/lib/curriculum/certificate-copy";
 import { getCurriculumModuleCertificateEligibility } from "@/lib/curriculum/certificate-eligibility";
 import { buildCurriculumCertificatePdf } from "@/lib/curriculum/certificate-pdf";
 import { logMeasuredOperation } from "@/lib/observability/performance";

@@ -24,7 +24,9 @@ const baseURL = "http://127.0.0.1:3000";
 // An externally started app cannot be verified to use the disposable DB;
 // refuse to bypass the managed local Next.js webServer.
 if (process.env.PLAYWRIGHT_BASE_URL) {
-  throw new Error("PLAYWRIGHT_BASE_URL is not supported for stateful E2E tests. Use the managed local test webServer.");
+  throw new Error(
+    "PLAYWRIGHT_BASE_URL is not supported for stateful E2E tests. Use the managed local test webServer.",
+  );
 }
 
 const configuredWebServerCommand = process.env.PLAYWRIGHT_SERVER_COMMAND?.trim();

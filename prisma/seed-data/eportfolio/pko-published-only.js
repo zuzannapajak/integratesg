@@ -31,7 +31,9 @@ function assertPkoSource(source) {
     PKO_REQUIRED_LOCALES.some((locale) => !languages.includes(locale)) ||
     languages.some((locale) => !PKO_AVAILABLE_LOCALES.includes(locale))
   ) {
-    throw new Error(`PKO translations must include ${PKO_REQUIRED_LOCALES.join(", ")}; optional bg is allowed.`);
+    throw new Error(
+      `PKO translations must include ${PKO_REQUIRED_LOCALES.join(", ")}; optional bg is allowed.`,
+    );
   }
   for (const translation of translations) {
     if (
@@ -56,14 +58,14 @@ function assertPkoSource(source) {
  * An existing draft is never promoted automatically.
  */
 export function planPkoPublishedOnly(caseStudies, dbParent) {
-  const source = assertPkoSource(
-    caseStudies.find((entry) => entry.slug === PKO_PUBLISHED_SLUG),
-  );
+  const source = assertPkoSource(caseStudies.find((entry) => entry.slug === PKO_PUBLISHED_SLUG));
   if (!dbParent) {
     return { action: "CREATE", source, present: false, missingLocales: [] };
   }
   if (dbParent.slug !== PKO_PUBLISHED_SLUG || dbParent.status !== "published") {
-    throw new Error("Existing PKO row has an unexpected slug/status. No automatic changes allowed.");
+    throw new Error(
+      "Existing PKO row has an unexpected slug/status. No automatic changes allowed.",
+    );
   }
   const presentLanguages = new Set(
     (dbParent.translations ?? []).map((translation) => translation.language),

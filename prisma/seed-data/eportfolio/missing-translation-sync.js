@@ -22,7 +22,7 @@ export function validatePublishedSources(sources) {
       throw new Error(`Duplicate/empty source case-study slug: ${source.slug}`);
     }
     seenSlugs.add(source.slug);
-    if (!(["published", "draft"].includes(source.status))) {
+    if (!["published", "draft"].includes(source.status)) {
       throw new Error(`Unknown source publication status: ${source.slug}/${source.status}`);
     }
     if (source.status !== "published") continue;
@@ -30,7 +30,9 @@ export function validatePublishedSources(sources) {
     const langs = new Set();
     for (const translation of source.translations ?? []) {
       if (!ALLOWED_LOCALES.has(translation.language) || langs.has(translation.language)) {
-        throw new Error(`Invalid/duplicate translation language: ${source.slug}/${translation.language}`);
+        throw new Error(
+          `Invalid/duplicate translation language: ${source.slug}/${translation.language}`,
+        );
       }
       langs.add(translation.language);
       if (!translation.title?.trim() || !translation.content?.trim()) {

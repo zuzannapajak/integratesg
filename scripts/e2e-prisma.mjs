@@ -26,16 +26,21 @@ if (!modes.has(operation)) {
 }
 
 const envPath = resolve(".env.test");
-if (!existsSync(envPath)) fail("Missing .env.test: create a dedicated disposable Supabase project first.");
+if (!existsSync(envPath))
+  fail("Missing .env.test: create a dedicated disposable Supabase project first.");
 const testEnv = parse(readFileSync(envPath));
 const dbString = (testEnv.PLAYWRIGHT_DATABASE_URL || testEnv.TEST_DATABASE_URL || "").trim();
 const apiString = (testEnv.NEXT_PUBLIC_SUPABASE_URL || "").trim();
 const projectRef = (testEnv.PLAYWRIGHT_TEST_PROJECT_REF || "").trim();
 if (!dbString || !apiString || !projectRef) {
-  fail("PLAYWRIGHT_DATABASE_URL, NEXT_PUBLIC_SUPABASE_URL and PLAYWRIGHT_TEST_PROJECT_REF are required in .env.test.");
+  fail(
+    "PLAYWRIGHT_DATABASE_URL, NEXT_PUBLIC_SUPABASE_URL and PLAYWRIGHT_TEST_PROJECT_REF are required in .env.test.",
+  );
 }
-if (testEnv.PLAYWRIGHT_ISOLATED_DB_ACK !== "DISPOSABLE_TEST_DATABASE" ||
-    testEnv.PLAYWRIGHT_ALLOW_DATABASE_RESET !== "true") {
+if (
+  testEnv.PLAYWRIGHT_ISOLATED_DB_ACK !== "DISPOSABLE_TEST_DATABASE" ||
+  testEnv.PLAYWRIGHT_ALLOW_DATABASE_RESET !== "true"
+) {
   fail("The disposable project acknowledgment is missing. Never use pilot data for E2E.");
 }
 
@@ -58,19 +63,23 @@ if ([projectRef, dbRef, apiRef].some((ref) => ref && BLOCKED_REFS.has(ref))) {
   fail("BLOCKED: requested project is the IntegratESG pilot database.");
 }
 if (!local && (!dbRef || !apiRef || dbRef !== apiRef || dbRef !== projectRef)) {
-  fail(`Project refs do not match (DB=${dbRef || "?"}, API=${apiRef || "?"}, expected=${projectRef}).`);
+  fail(
+    `Project refs do not match (DB=${dbRef || "?"}, API=${apiRef || "?"}, expected=${projectRef}).`,
+  );
 }
-if (operation === "--deploy" && (
-  !options.includes("--confirm-disposable") ||
-  !options.includes(`--project-ref=${projectRef}`)
-)) {
+if (
+  operation === "--deploy" &&
+  (!options.includes("--confirm-disposable") || !options.includes(`--project-ref=${projectRef}`))
+) {
   fail("Migration requires --confirm-disposable and --project-ref=<the verified E2E project ref>.");
 }
 if (operation !== "--deploy" && options.length > 0) {
   fail("Unexpected extra options for read-only operation.");
 }
 
-console.log(`Verified isolated E2E Supabase project: ${projectRef} (${local ? "local" : "remote"}).`);
+console.log(
+  `Verified isolated E2E Supabase project: ${projectRef} (${local ? "local" : "remote"}).`,
+);
 console.log(`Database host: ${database.hostname}; API host: ${api.hostname}.`);
 if (operation === "--verify-config") {
   console.log("Configuration check completed. No database connection or writes.");

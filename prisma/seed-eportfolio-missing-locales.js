@@ -17,12 +17,19 @@ import {
 
 const args = process.argv.slice(2);
 const modes = args.filter((arg) => ["--check", "--dry-run", "--apply"].includes(arg));
-const valid = args.every((arg) =>
-  ["--check", "--dry-run", "--apply", "--confirm-create-only"].includes(arg) ||
-  /^--project-ref=[a-z0-9]+$/.test(arg),
+const valid = args.every(
+  (arg) =>
+    ["--check", "--dry-run", "--apply", "--confirm-create-only"].includes(arg) ||
+    /^--project-ref=[a-z0-9]+$/.test(arg),
 );
-if (!valid || modes.length !== 1 || args.filter((arg) => arg.startsWith("--project-ref=")).length > 1) {
-  throw new Error("Usage: --check | --dry-run | --apply --project-ref=<SUPABASE_REF> --confirm-create-only");
+if (
+  !valid ||
+  modes.length !== 1 ||
+  args.filter((arg) => arg.startsWith("--project-ref=")).length > 1
+) {
+  throw new Error(
+    "Usage: --check | --dry-run | --apply --project-ref=<SUPABASE_REF> --confirm-create-only",
+  );
 }
 const mode = modes[0];
 const projectRefArg = args.find((arg) => arg.startsWith("--project-ref="));
@@ -33,7 +40,9 @@ if (mode !== "--apply" && (projectRefArg || confirmation)) {
 }
 
 const sourceStats = validatePublishedSources(caseStudies);
-console.log(`Source validation passed: ${sourceStats.publishedCount} published / ${sourceStats.sourceCount} total case studies.`);
+console.log(
+  `Source validation passed: ${sourceStats.publishedCount} published / ${sourceStats.sourceCount} total case studies.`,
+);
 if (mode === "--check") {
   console.log("Sources only. No database connection or writes.");
 } else {
@@ -44,8 +53,13 @@ if (mode === "--check") {
   console.log(`Database host: ${new URL(connectionString).hostname}`);
   console.log(`Supabase project ref: ${dbRef ?? "NOT IDENTIFIABLE"}`);
   console.log(`Mode: ${mode}`);
-  if (mode === "--apply" && (!dbRef || !userProjectRef || userProjectRef !== dbRef || !confirmation)) {
-    throw new Error("Apply blocked. Supply matching --project-ref and --confirm-create-only after backing up the target DB.");
+  if (
+    mode === "--apply" &&
+    (!dbRef || !userProjectRef || userProjectRef !== dbRef || !confirmation)
+  ) {
+    throw new Error(
+      "Apply blocked. Supply matching --project-ref and --confirm-create-only after backing up the target DB.",
+    );
   }
   const [{ PrismaClient }, { PrismaPg }] = await Promise.all([
     import("@prisma/client"),
@@ -66,7 +80,9 @@ if (mode === "--check") {
   function printPlan(plan) {
     for (const language of EXPECTED_SOURCE_LOCALES) {
       const creates = plan.missing.filter((item) => item.language === language).length;
-      console.log(`${language.toUpperCase()}: ${plan.covered[language]}/${plan.publishedDbCount} present; ${creates} to CREATE`);
+      console.log(
+        `${language.toUpperCase()}: ${plan.covered[language]}/${plan.publishedDbCount} present; ${creates} to CREATE`,
+      );
     }
     const other = plan.missing.filter((item) => !EXPECTED_SOURCE_LOCALES.includes(item.language));
     if (other.length) console.log(`Other locales to CREATE: ${other.length}`);
@@ -76,7 +92,7 @@ if (mode === "--check") {
     }
     console.log(
       `Plan: ${plan.missing.length} missing translations to CREATE; 0 to UPDATE; 0 parents to modify; ` +
-      `${plan.missingPublishedParents.length} published source parents absent from DB.`,
+        `${plan.missingPublishedParents.length} published source parents absent from DB.`,
     );
   }
   try {
@@ -85,11 +101,14 @@ if (mode === "--check") {
       printPlan(plan);
       console.log("Dry run finished: ZERO DATABASE WRITES.");
     } else {
-      const result = await prisma.$transaction(async (tx) => {
-        const plan = await readPlan(tx);
-        printPlan(plan);
-        return createOnlyMissingTranslations(tx, plan.missing);
-      }, { maxWait: 15000, timeout: 120000 });
+      const result = await prisma.$transaction(
+        async (tx) => {
+          const plan = await readPlan(tx);
+          printPlan(plan);
+          return createOnlyMissingTranslations(tx, plan.missing);
+        },
+        { maxWait: 15000, timeout: 120000 },
+      );
       console.log(`CREATED: ${result.count} missing translations. Existing entries untouched.`);
     }
   } finally {

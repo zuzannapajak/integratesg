@@ -25,10 +25,13 @@ export default function CertificateDownloadButton({ slug, className }: Props) {
       setIsLoading(true);
       setError(null);
 
-      const response = await fetch(`/api/curriculum/${encodeURIComponent(slug)}/certificate?locale=${encodeURIComponent(locale)}`, {
-        method: "GET",
-        signal: controller.signal,
-      });
+      const response = await fetch(
+        `/api/curriculum/${encodeURIComponent(slug)}/certificate?locale=${encodeURIComponent(locale)}`,
+        {
+          method: "GET",
+          signal: controller.signal,
+        },
+      );
 
       if (!response.ok) {
         const payload = (await response.json().catch(() => null)) as { error?: string } | null;

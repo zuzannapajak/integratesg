@@ -36,7 +36,9 @@ if (mode !== "--apply" && (confirmed || expectedRef)) {
 }
 
 const source = validateAllegroSource(caseStudies);
-console.log(`Allegro source: ${source.status}, ${source.translations.length} translations (${source.translations.map((t) => t.language).join(", ")}).`);
+console.log(
+  `Allegro source: ${source.status}, ${source.translations.length} translations (${source.translations.map((t) => t.language).join(", ")}).`,
+);
 if (mode === "--check") {
   console.log("Source-only check passed. No database connection or writes.");
 } else {
@@ -48,7 +50,9 @@ if (mode === "--check") {
   console.log(`Supabase project ref: ${dbRef ?? "NOT IDENTIFIABLE"}`);
   console.log(`Mode: ${mode}`);
   if (mode === "--apply" && (!confirmed || !expectedRef || !dbRef || dbRef !== expectedRef)) {
-    throw new Error("Apply blocked: verify backup and project, then provide matching --project-ref and --confirm-published.");
+    throw new Error(
+      "Apply blocked: verify backup and project, then provide matching --project-ref and --confirm-published.",
+    );
   }
 
   const [{ PrismaClient }, { PrismaPg }] = await Promise.all([
@@ -63,10 +67,16 @@ if (mode === "--check") {
     });
   }
   function planDescription(plan) {
-    const action = { CREATE: "CREATE Allegro published", PUBLISH: "PUBLISH existing Allegro draft", KEEP: "KEEP existing published Allegro" }[plan.action];
+    const action = {
+      CREATE: "CREATE Allegro published",
+      PUBLISH: "PUBLISH existing Allegro draft",
+      KEEP: "KEEP existing published Allegro",
+    }[plan.action];
     console.log(action);
     plan.missingLocales.forEach((locale) => console.log(`CREATE allegro/${locale}`));
-    console.log(`Plan: ${plan.action === "CREATE" ? 1 : 0} parent CREATE, ${plan.action === "PUBLISH" ? 1 : 0} parent status UPDATE, ${plan.missingLocales.length} translations CREATE, 0 translation UPDATE, 0 DELETE.`);
+    console.log(
+      `Plan: ${plan.action === "CREATE" ? 1 : 0} parent CREATE, ${plan.action === "PUBLISH" ? 1 : 0} parent status UPDATE, ${plan.missingLocales.length} translations CREATE, 0 translation UPDATE, 0 DELETE.`,
+    );
   }
   try {
     const original = await readParent(prisma);
@@ -75,16 +85,21 @@ if (mode === "--check") {
     if (mode === "--dry-run") {
       console.log("Dry run completed: ZERO DATABASE WRITES.");
     } else {
-      const result = await prisma.$transaction(async (tx) => {
-        const latest = await readParent(tx);
-        const latestPlan = planAllegroPublication(caseStudies, latest);
-        const signature = (item) => `${item.action}:${item.missingLocales.join(",")}`;
-        if (signature(plan) !== signature(latestPlan)) {
-          throw new Error("Allegro changed since the read-only plan. Nothing was written.");
-        }
-        return applyAllegroPublication(tx, latestPlan, latest);
-      }, { maxWait: 15000, timeout: 120000 });
-      console.log(`DONE: ${result.created} parent created, ${result.promoted} existing draft published, ${result.translationsCreated} translations created.`);
+      const result = await prisma.$transaction(
+        async (tx) => {
+          const latest = await readParent(tx);
+          const latestPlan = planAllegroPublication(caseStudies, latest);
+          const signature = (item) => `${item.action}:${item.missingLocales.join(",")}`;
+          if (signature(plan) !== signature(latestPlan)) {
+            throw new Error("Allegro changed since the read-only plan. Nothing was written.");
+          }
+          return applyAllegroPublication(tx, latestPlan, latest);
+        },
+        { maxWait: 15000, timeout: 120000 },
+      );
+      console.log(
+        `DONE: ${result.created} parent created, ${result.promoted} existing draft published, ${result.translationsCreated} translations created.`,
+      );
     }
   } finally {
     await prisma.$disconnect();

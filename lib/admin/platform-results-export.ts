@@ -1,5 +1,8 @@
 import { prisma } from "@/lib/prisma";
-import { buildPilotModuleCoverage, startedAfterPreAssessment } from "@/lib/curriculum/pilot-coverage";
+import {
+  buildPilotModuleCoverage,
+  startedAfterPreAssessment,
+} from "@/lib/curriculum/pilot-coverage";
 
 function exportValueToText(value: unknown) {
   if (value === null || value === undefined) return "";
@@ -132,7 +135,10 @@ export async function getPlatformResultsExportRows(locale: string) {
   const pilotByUser = new Map(pilots.map((pilot) => [pilot.userId, pilot]));
   const focusAssignments = buildPilotModuleCoverage({
     courses: courses.map((course) => ({ id: course.id, slug: course.slug, title: course.slug })),
-    pilots: pilots.map((pilot) => ({ userId: pilot.userId, preAssessmentCompletedAt: pilot.preAssessmentCompletedAt })),
+    pilots: pilots.map((pilot) => ({
+      userId: pilot.userId,
+      preAssessmentCompletedAt: pilot.preAssessmentCompletedAt,
+    })),
     attempts: courseAttempts.map((attempt) => ({
       userId: attempt.userId,
       courseId: attempt.courseId,
@@ -188,8 +194,11 @@ export async function getPlatformResultsExportRows(locale: string) {
     });
     const focusCompleted = focusIds.filter((id) => {
       const attempt = attemptsByUserCourse.get(`${user.id}:${id}`);
-      return !!attempt && startedAfterPreAssessment(attempt, pilot?.preAssessmentCompletedAt ?? null)
-        && (attempt.status === "completed" || attempt.completedAt !== null);
+      return (
+        !!attempt &&
+        startedAfterPreAssessment(attempt, pilot?.preAssessmentCompletedAt ?? null) &&
+        (attempt.status === "completed" || attempt.completedAt !== null)
+      );
     }).length;
 
     const row: Record<string, unknown> = {

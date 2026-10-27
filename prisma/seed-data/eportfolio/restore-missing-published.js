@@ -45,7 +45,9 @@ export function prepareMissingPublishedParents(sources, parents) {
     const parent = parentBySlug.get(slug);
     if (parent) {
       if (parent.status !== "published") {
-        throw new Error(`Existing ${slug} is ${parent.status}; will not change publication status.`);
+        throw new Error(
+          `Existing ${slug} is ${parent.status}; will not change publication status.`,
+        );
       }
       present.push({ slug, parentId: parent.id });
     } else {

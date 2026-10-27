@@ -80,8 +80,10 @@ export default function CurriculumPilotPostAssessmentCard({ locale, state }: Pro
                 <ArrowRight className="h-4 w-4" />
               </Link>
             ) : cardState === "completed" ? (
-              <Link href={`/${locale}/pilot-satisfaction/curriculum`}
-                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white lg:w-auto">
+              <Link
+                href={`/${locale}/pilot-satisfaction/curriculum`}
+                className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white lg:w-auto"
+              >
                 {t("completed.surveyAction")}
                 <ArrowRight className="h-4 w-4" />
               </Link>

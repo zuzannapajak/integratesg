@@ -125,9 +125,9 @@ export default function CurriculumPilotAssessmentForm({
 
         // Replacing the route already loads its next server state.
         // Refreshing immediately can race with navigation and keep the previous page mounted.
-        router.replace(assessmentType === "post"
-          ? `/${locale}/pilot-satisfaction/curriculum`
-          : result.nextPath);
+        router.replace(
+          assessmentType === "post" ? `/${locale}/pilot-satisfaction/curriculum` : result.nextPath,
+        );
       } catch (caughtError) {
         console.error(caughtError);
         setError(copy.submitError);

@@ -5,8 +5,12 @@ import { join } from "node:path";
 import { expect, test, type Page } from "@playwright/test";
 
 import {
-  scenario01Data, scenario02Data, scenario03Data,
-  scenario04Data, scenario05Data, scenario06Data,
+  scenario01Data,
+  scenario02Data,
+  scenario03Data,
+  scenario04Data,
+  scenario05Data,
+  scenario06Data,
 } from "../../../content/scenarios";
 import { assertSafeE2EEnvironment } from "../helpers/safe-test-environment";
 import { assertE2EDatabaseReady } from "../helpers/assert-e2e-database-ready";
@@ -16,15 +20,31 @@ import { PrismaClient } from "@prisma/client";
 type Locale = "en" | "pl" | "de" | "it" | "el" | "bg";
 const LOCALES: readonly Locale[] = ["en", "pl", "de", "it", "el", "bg"];
 const CASE_STUDIES = [
-  "allegro", "bank-of-cyprus", "barilla", "davines", "eurobank-cyprus",
-  "grupa-azoty", "harmonica", "hermes-airports", "kpmg-cyprus",
-  "pkn-orlen", "pko-bank-polski", "pzu", "sofiyska-voda", "sonnentor",
-  "vassiliko-cement-works", "verbund",
+  "allegro",
+  "bank-of-cyprus",
+  "barilla",
+  "davines",
+  "eurobank-cyprus",
+  "grupa-azoty",
+  "harmonica",
+  "hermes-airports",
+  "kpmg-cyprus",
+  "pkn-orlen",
+  "pko-bank-polski",
+  "pzu",
+  "sofiyska-voda",
+  "sonnentor",
+  "vassiliko-cement-works",
+  "verbund",
 ] as const;
 
 const LABELS: Record<Locale, string> = {
-  en: "English", pl: "Polski", de: "Deutsch", it: "Italiano",
-  el: "Ελληνικά", bg: "Български",
+  en: "English",
+  pl: "Polski",
+  de: "Deutsch",
+  it: "Italiano",
+  el: "Ελληνικά",
+  bg: "Български",
 };
 
 type CaseMetadata = {
@@ -34,11 +54,8 @@ type CaseMetadata = {
   industry?: string;
 };
 
-
 function json(path: string): unknown {
-  return JSON.parse(
-    readFileSync(join(process.cwd(), path), "utf8"),
-  ) as unknown;
+  return JSON.parse(readFileSync(join(process.cwd(), path), "utf8")) as unknown;
 }
 
 function switcherMessages(locale: Locale) {
@@ -102,7 +119,8 @@ function moduleTitles(locale: Locale): string[] {
   }
   return [1, 2, 3, 4, 5, 6].map((index) => {
     const source = readFileSync(
-      join(process.cwd(), `prisma/seed-data/curriculum/module-${index}.js`), "utf8",
+      join(process.cwd(), `prisma/seed-data/curriculum/module-${index}.js`),
+      "utf8",
     );
     const match = source.match(/translation\("en",\s*\{\s*title:\s*"([^"]+)"/);
     if (!match) throw new Error(`No EN source title for curriculum module ${index}`);
@@ -147,9 +165,7 @@ test.describe("Six-language end-to-end rendering (no silent EN fallback)", () =>
     for (const locale of LOCALES) {
       await page.goto("/en/about");
       await page.getByRole("button", { name: switcherMessages("en").open }).click();
-      const switchTo = switcherMessages("en").switchTo.replace(
-        "{language}", LABELS[locale],
-      );
+      const switchTo = switcherMessages("en").switchTo.replace("{language}", LABELS[locale]);
       await page.getByRole("link", { name: switchTo }).click();
       await expect(page).toHaveURL(new RegExp(`/${locale}/about(?:\\?.*)?$`));
       await expect(page.locator("html")).toHaveAttribute("lang", locale);
@@ -162,7 +178,9 @@ test.describe("Six-language end-to-end rendering (no silent EN fallback)", () =>
     }
   });
 
-  test("renders all six localized Curriculum module titles, not the English catalog", async ({ page }) => {
+  test("renders all six localized Curriculum module titles, not the English catalog", async ({
+    page,
+  }) => {
     test.setTimeout(240_000);
     await signIn(page);
     const en = moduleTitles("en");
@@ -186,7 +204,9 @@ test.describe("Six-language end-to-end rendering (no silent EN fallback)", () =>
   // Chromium or the Next.js dev server. Playwright closes the browser context
   // after each case study, while still checking all six locales per slug.
   for (const slug of CASE_STUDIES) {
-    test(`renders localized database-backed case studies for every language: ${slug}`, async ({ page }) => {
+    test(`renders localized database-backed case studies for every language: ${slug}`, async ({
+      page,
+    }) => {
       test.setTimeout(180_000);
       await signIn(page);
       const english = caseMetadata(slug, "en");
@@ -198,10 +218,9 @@ test.describe("Six-language end-to-end rendering (no silent EN fallback)", () =>
           `${slug}/${locale} has no source summary`,
         ).toBeGreaterThan(30);
         if (locale !== "en") {
-          expect(
-            expected.summary,
-            `${slug}/${locale} unexpectedly duplicates EN source`,
-          ).not.toBe(english.summary);
+          expect(expected.summary, `${slug}/${locale} unexpectedly duplicates EN source`).not.toBe(
+            english.summary,
+          );
         }
 
         // Keep the full navigation/load check; the new Playwright page context
@@ -210,7 +229,9 @@ test.describe("Six-language end-to-end rendering (no silent EN fallback)", () =>
         expect(response?.status(), `${locale}/${slug} route status`).toBeLessThan(400);
         await expect(page.locator("html")).toHaveAttribute("lang", locale);
         const title = page.getByRole("heading", {
-          name: expected.title, level: 1, exact: true,
+          name: expected.title,
+          level: 1,
+          exact: true,
         });
         await expect(title).toBeVisible();
 
@@ -230,8 +251,12 @@ test.describe("Six-language end-to-end rendering (no silent EN fallback)", () =>
     test.setTimeout(180_000);
     await signIn(page);
     const scenarios = [
-      scenario01Data, scenario02Data, scenario03Data,
-      scenario04Data, scenario05Data, scenario06Data,
+      scenario01Data,
+      scenario02Data,
+      scenario03Data,
+      scenario04Data,
+      scenario05Data,
+      scenario06Data,
     ];
     for (const locale of LOCALES) {
       await page.goto(`/${locale}/scenarios`);
@@ -258,16 +283,25 @@ test.describe("Six-language end-to-end rendering (no silent EN fallback)", () =>
       if (!expected) throw new Error(`Missing ${locale} scenario 01 data`);
       if (locale !== "en") {
         expect(expected.title, `${locale}: scenario title in English`).not.toBe(english.title);
-        expect(expected.introduction, `${locale}: scenario context in English`).not.toBe(english.introduction);
+        expect(expected.introduction, `${locale}: scenario context in English`).not.toBe(
+          english.introduction,
+        );
       }
       const response = await page.goto(`/${locale}/scenarios/scenario-01/play`);
       expect(response?.status(), `Scenario 01: ${locale}`).toBeLessThan(400);
       await expect(page.getByTestId("scenario-intro")).toBeVisible();
-      await expect(page.getByTestId("scenario-intro").getByRole("heading", {
-        name: expected.title, exact: true,
-      })).toBeVisible();
+      await expect(
+        page.getByTestId("scenario-intro").getByRole("heading", {
+          name: expected.title,
+          exact: true,
+        }),
+      ).toBeVisible();
       // Assert real localized scenario context, not only localized headings.
-      const contextLead = expected.introduction.replace(/[*_`]/g, "").split(/\s+/u).slice(0, 12).join(" ");
+      const contextLead = expected.introduction
+        .replace(/[*_`]/g, "")
+        .split(/\s+/u)
+        .slice(0, 12)
+        .join(" ");
       await expect(page.getByTestId("scenario-intro")).toContainText(contextLead);
       await expect(page.locator("html")).toHaveAttribute("lang", locale);
     }

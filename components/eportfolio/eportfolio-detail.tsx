@@ -89,7 +89,8 @@ function normaliseHeading(heading: string) {
  */
 function classifySection(section: MarkdownSection): SectionKey | null {
   const heading = normaliseHeading(section.heading);
-  const beginsWith = (...prefixes: string[]) => prefixes.some((prefix) => heading.startsWith(prefix));
+  const beginsWith = (...prefixes: string[]) =>
+    prefixes.some((prefix) => heading.startsWith(prefix));
 
   // The case studies use partner-provided headings. Match the six supported
   // languages rather than assuming all documents are written in English.
@@ -135,7 +136,15 @@ function classifySection(section: MarkdownSection): SectionKey | null {
     return "environmental";
   }
 
-  if (beginsWith("social", "praktyki społeczne", "soziale praktiken", "pratiche sociali", "κοινωνικές πρακτικές")) {
+  if (
+    beginsWith(
+      "social",
+      "praktyki społeczne",
+      "soziale praktiken",
+      "pratiche sociali",
+      "κοινωνικές πρακτικές",
+    )
+  ) {
     return "social";
   }
 

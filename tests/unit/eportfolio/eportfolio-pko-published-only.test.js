@@ -15,9 +15,16 @@ describe("PKO Bank Polski create-only publication", () => {
     expect(result.source.slug).toBe(PKO_PUBLISHED_SLUG);
     expect(result.source.status).toBe("published");
     expect(result.source.translations.map((translation) => translation.language).sort()).toEqual([
-      "bg", "de", "el", "en", "it", "pl",
+      "bg",
+      "de",
+      "el",
+      "en",
+      "it",
+      "pl",
     ]);
-    expect(result.source.translations.every((translation) => translation.content.length > 100)).toBe(true);
+    expect(
+      result.source.translations.every((translation) => translation.content.length > 100),
+    ).toBe(true);
   });
 
   it("is idempotent when all published translations already exist", () => {
@@ -39,9 +46,9 @@ describe("PKO Bank Polski create-only publication", () => {
       translations: [],
     };
     expect(() => planPkoPublishedOnly(caseStudies, existing)).toThrow(/unexpected slug\/status/);
-    expect(() =>
-      planPkoPublishedOnly(caseStudies, { ...existing, status: "published" }),
-    ).toThrow(/missing translations/);
+    expect(() => planPkoPublishedOnly(caseStudies, { ...existing, status: "published" })).toThrow(
+      /missing translations/,
+    );
   });
 
   it("creates one parent and all six source translations when no parent exists", async () => {
@@ -56,7 +63,11 @@ describe("PKO Bank Polski create-only publication", () => {
     expect(tx.caseStudy.create.mock.calls[0][0].data.slug).toBe("pko-bank-polski");
     expect(tx.caseStudy.create.mock.calls[0][0].data.status).toBe("published");
     expect(tx.caseStudyTranslation.createMany.mock.calls[0][0].data).toHaveLength(6);
-    expect(tx.caseStudyTranslation.createMany.mock.calls[0][0].data.every((row) => row.caseStudyId === "new-pko")).toBe(true);
+    expect(
+      tx.caseStudyTranslation.createMany.mock.calls[0][0].data.every(
+        (row) => row.caseStudyId === "new-pko",
+      ),
+    ).toBe(true);
   });
 
   it("identifies Supabase project refs without treating shared pooler host as a project", () => {

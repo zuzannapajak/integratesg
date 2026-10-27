@@ -6,12 +6,17 @@ import { getPilotSatisfactionAvailability } from "@/lib/pilot-satisfaction/queri
 import { isPilotSurveyScope } from "@/lib/pilot-satisfaction/validation";
 import { notFound } from "next/navigation";
 
-export default async function PilotSatisfactionPage({ params }:
-  { params: Promise<{ locale: string; scope: string }> }) {
+export default async function PilotSatisfactionPage({
+  params,
+}: {
+  params: Promise<{ locale: string; scope: string }>;
+}) {
   const { locale, scope } = await params;
   if (!isPilotSurveyScope(scope)) notFound();
-  const { user } = await requireRole(locale,
-    scope === "curriculum" ? APP_ROLES.educator : [APP_ROLES.educator, APP_ROLES.learner]);
+  const { user } = await requireRole(
+    locale,
+    scope === "curriculum" ? APP_ROLES.educator : [APP_ROLES.educator, APP_ROLES.learner],
+  );
   const availability = await getPilotSatisfactionAvailability(user.id, scope, locale);
   return (
     <main className="min-h-screen bg-[#f5f5f3] px-4 py-10">
@@ -19,7 +24,11 @@ export default async function PilotSatisfactionPage({ params }:
         {availability.submittedAt ? (
           <PilotSatisfactionResult locale={locale} scope={scope} state="already-submitted" />
         ) : availability.eligible ? (
-          <PilotSatisfactionForm locale={locale} scope={scope} caseStudies={availability.caseStudies} />
+          <PilotSatisfactionForm
+            locale={locale}
+            scope={scope}
+            caseStudies={availability.caseStudies}
+          />
         ) : (
           <PilotSatisfactionResult locale={locale} scope={scope} state="unavailable" />
         )}

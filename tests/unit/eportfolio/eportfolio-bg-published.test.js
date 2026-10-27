@@ -14,10 +14,12 @@ const parents = caseStudies.map((source) => ({
   slug: source.slug,
   status: "published",
 }));
-const existing = parents.flatMap((parent) => otherLanguages.map((language) => ({
-  caseStudyId: parent.id,
-  language,
-})));
+const existing = parents.flatMap((parent) =>
+  otherLanguages.map((language) => ({
+    caseStudyId: parent.id,
+    language,
+  })),
+);
 
 describe("Bulgarian ePortfolio translation completion", () => {
   it("has 16 published case studies with six unique languages and full BG metadata", () => {
@@ -25,7 +27,9 @@ describe("Bulgarian ePortfolio translation completion", () => {
     expect(validatePublishedSources(caseStudies).publishedCount).toBe(16);
     for (const source of caseStudies) {
       expect(source.status).toBe("published");
-      expect(source.translations.map((item) => item.language).sort()).toEqual([...languages].sort());
+      expect(source.translations.map((item) => item.language).sort()).toEqual(
+        [...languages].sort(),
+      );
       const english = source.translations.find((item) => item.language === "en");
       const bulgarian = source.translations.find((item) => item.language === "bg");
       expect(bulgarian.content).not.toBe(english.content);
@@ -62,10 +66,12 @@ describe("Bulgarian ePortfolio translation completion", () => {
   });
 
   it("is idempotent after all six language rows are present", () => {
-    const all = parents.flatMap((parent) => languages.map((language) => ({
-      caseStudyId: parent.id,
-      language,
-    })));
+    const all = parents.flatMap((parent) =>
+      languages.map((language) => ({
+        caseStudyId: parent.id,
+        language,
+      })),
+    );
     const plan = planMissingTranslations(caseStudies, parents, all);
     expect(plan.missing).toEqual([]);
     expect(plan.missingPublishedParents).toEqual([]);

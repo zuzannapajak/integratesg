@@ -53,6 +53,10 @@ if (issues.length > 0) {
   console.error("WP4 translations validation failed:\n" + issues.join("\n"));
   process.exitCode = 1;
 } else {
-  console.log(`WP4 locale validation passed: ${caseStudies.length}/16 ePortfolio DE+IT; 6/6 scenarios IT with 3 challenges and 9 stable choice IDs each.`);
-  console.log("This validates source files only. Run Vitest, typecheck, build and the database seed separately.");
+  console.log(
+    `WP4 locale validation passed: ${caseStudies.length}/16 ePortfolio DE+IT; 6/6 scenarios IT with 3 challenges and 9 stable choice IDs each.`,
+  );
+  console.log(
+    "This validates source files only. Run Vitest, typecheck, build and the database seed separately.",
+  );
 }

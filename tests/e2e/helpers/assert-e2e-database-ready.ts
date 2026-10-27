@@ -61,10 +61,12 @@ export async function assertE2EDatabaseReady(db: PrismaClient): Promise<void> {
   }
 
   // Previous interrupted E2E attempts may have left temporary courses.
-  const courses = (await db.course.findMany({
-    where: { status: "published" },
-    select: { slug: true, translations: { select: { language: true } } },
-  })).filter((course) => !course.slug.startsWith("playwright-e2e-"));
+  const courses = (
+    await db.course.findMany({
+      where: { status: "published" },
+      select: { slug: true, translations: { select: { language: true } } },
+    })
+  ).filter((course) => !course.slug.startsWith("playwright-e2e-"));
   const completeCourses = courses.filter((course) => {
     const languages = new Set(course.translations.map((translation) => translation.language));
     return LANGUAGES.every((locale) => languages.has(locale));

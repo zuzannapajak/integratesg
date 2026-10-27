@@ -87,7 +87,10 @@ export default function CurriculumModuleCompletion({
                 className="group mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#21624f] px-5 py-3.5 text-sm font-semibold text-white shadow-[0_8px_20px_rgba(33,98,79,0.16)] transition hover:bg-[#174b3c] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#21624f] sm:w-auto"
               >
                 {t(`completed.nextStep.${completionStep}.action`)}
-                <ArrowRight aria-hidden="true" className="h-4 w-4 transition-transform group-hover:translate-x-0.5 motion-reduce:transform-none" />
+                <ArrowRight
+                  aria-hidden="true"
+                  className="h-4 w-4 transition-transform group-hover:translate-x-0.5 motion-reduce:transform-none"
+                />
               </Link>
             </div>
 

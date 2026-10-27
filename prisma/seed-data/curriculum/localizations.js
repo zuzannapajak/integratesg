@@ -20,7 +20,9 @@ function readLocaleJson(folder, language) {
 
 function addQuestionTranslations(question, localized, language) {
   if (localized.answers.length !== question.answers.length) {
-    throw new Error(`Answer count mismatch for language ${language} and question ${question.sortOrder}.`);
+    throw new Error(
+      `Answer count mismatch for language ${language} and question ${question.sortOrder}.`,
+    );
   }
 
   return {
@@ -120,7 +122,9 @@ export function withCurriculumLocalizations(englishCourses) {
             const unit = modules[moduleIndex].units[unitIndex];
             const translatedQuiz = quizModules[moduleIndex].quizzes[unitIndex];
             if (translatedQuiz.questions.length !== quiz.questions.length) {
-              throw new Error(`Question count mismatch at ${moduleSlug}/quiz-${unitIndex + 1}/${language}.`);
+              throw new Error(
+                `Question count mismatch at ${moduleSlug}/quiz-${unitIndex + 1}/${language}.`,
+              );
             }
             return translation(language, {
               title: `${unit.title} — ${localeQuizLabels[language]}`,
@@ -131,7 +135,10 @@ export function withCurriculumLocalizations(englishCourses) {
         questions: quiz.questions.map((question, questionIndex) => {
           const translations = localized.map(({ language, quizModules }) => {
             const quizData = quizModules[moduleIndex].quizzes[unitIndex];
-            if (quizData.sortOrder !== quiz.sortOrder || quizData.questions.length !== quiz.questions.length) {
+            if (
+              quizData.sortOrder !== quiz.sortOrder ||
+              quizData.questions.length !== quiz.questions.length
+            ) {
               throw new Error(`Quiz structure mismatch at ${moduleSlug}/${language}.`);
             }
             const questionData = quizData.questions[questionIndex];
@@ -141,7 +148,8 @@ export function withCurriculumLocalizations(englishCourses) {
             return { language, questionData };
           });
           return translations.reduce(
-            (current, { language, questionData }) => addQuestionTranslations(current, questionData, language),
+            (current, { language, questionData }) =>
+              addQuestionTranslations(current, questionData, language),
             question,
           );
         }),

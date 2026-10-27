@@ -19,7 +19,9 @@ describe("Curriculum and quiz localizations", () => {
     expect(courses).toHaveLength(6);
     expect(courses.flatMap((course) => course.sections)).toHaveLength(24);
     expect(courses.flatMap((course) => course.quizzes)).toHaveLength(24);
-    expect(courses.flatMap((course) => course.quizzes.flatMap((quiz) => quiz.questions))).toHaveLength(108);
+    expect(
+      courses.flatMap((course) => course.quizzes.flatMap((quiz) => quiz.questions)),
+    ).toHaveLength(108);
   });
 
   it("provides source-based curriculum material for every supported language", () => {
@@ -78,7 +80,9 @@ describe("Curriculum and quiz localizations", () => {
         ...course.translations,
         ...course.sections.flatMap((section) => section.translations),
       ]) {
-        const matches = translation.content?.matchAll(/!\[[^\]]*\]\((\/curriculum\/media\/[^)]+)\)/g);
+        const matches = translation.content?.matchAll(
+          /!\[[^\]]*\]\((\/curriculum\/media\/[^)]+)\)/g,
+        );
         for (const match of matches ?? []) {
           const relative = match[1].replace(/^\//, "");
           expect(fs.existsSync(path.join(process.cwd(), "public", relative)), match[1]).toBe(true);

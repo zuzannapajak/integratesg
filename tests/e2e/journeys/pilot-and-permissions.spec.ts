@@ -7,7 +7,12 @@ import { expect, test, type Page } from "@playwright/test";
 import { assertSafeE2EEnvironment } from "../helpers/safe-test-environment";
 import { assertE2EDatabaseReady } from "../helpers/assert-e2e-database-ready";
 
-const RATINGS = ["contentClarity", "practicalRelevance", "usability", "overallSatisfaction"] as const;
+const RATINGS = [
+  "contentClarity",
+  "practicalRelevance",
+  "usability",
+  "overallSatisfaction",
+] as const;
 const LOCALES = ["en", "pl", "de", "it", "el", "bg"] as const;
 
 function connect(): PrismaClient {
@@ -54,13 +59,18 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
 
   test("rejects unauthenticated access to protected areas and certificates", async ({ page }) => {
     for (const path of [
-      "/en/curriculum", "/en/eportfolio", "/en/scenarios",
-      "/en/pilot-satisfaction/curriculum", "/en/platform-feedback",
+      "/en/curriculum",
+      "/en/eportfolio",
+      "/en/scenarios",
+      "/en/pilot-satisfaction/curriculum",
+      "/en/platform-feedback",
     ]) {
       await page.goto(path);
       await expect(page).toHaveURL(/\/en\/auth\/login(?:\?.*)?$/);
     }
-    const response = await page.request.get("/api/curriculum/module-1-introduction-to-esg-and-sustainable-development/certificate?locale=en");
+    const response = await page.request.get(
+      "/api/curriculum/module-1-introduction-to-esg-and-sustainable-development/certificate?locale=en",
+    );
     expect(response.status()).toBe(401);
   });
 
@@ -92,7 +102,9 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
     }
   });
 
-  test("submits both satisfaction surveys, persists ratings and prevents duplicates", async ({ page }) => {
+  test("submits both satisfaction surveys, persists ratings and prevents duplicates", async ({
+    page,
+  }) => {
     test.setTimeout(120_000);
     const profile = await testProfile(db);
     const caseStudy = await db.caseStudy.findUnique({ where: { slug: "barilla" } });
@@ -101,7 +113,9 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
     }
     const existing = await db.pilotSatisfactionSubmission.count({ where: { userId: profile.id } });
     if (existing > 0) {
-      throw new Error("Use a fresh disposable E2E test user without prior satisfaction submissions");
+      throw new Error(
+        "Use a fresh disposable E2E test user without prior satisfaction submissions",
+      );
     }
     const oldPilot = await db.curriculumPilot.findUnique({ where: { userId: profile.id } });
     const oldProgress = await db.userCaseStudyProgress.findUnique({
@@ -118,23 +132,34 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
       await db.userCaseStudyProgress.upsert({
         where: { userId_caseStudyId: { userId: profile.id, caseStudyId: caseStudy.id } },
         update: { status: "completed", completedAt: now, startedAt: now, lastOpenedAt: now },
-        create: { userId: profile.id, caseStudyId: caseStudy.id, status: "completed", completedAt: now, startedAt: now, lastOpenedAt: now },
+        create: {
+          userId: profile.id,
+          caseStudyId: caseStudy.id,
+          status: "completed",
+          completedAt: now,
+          startedAt: now,
+          lastOpenedAt: now,
+        },
       });
 
       await signIn(page);
       for (const scope of ["curriculum", "eportfolio"] as const) {
         await page.goto(`/en/pilot-satisfaction/${scope}`);
         await expect(page.locator("form")).toBeVisible();
-        await page.locator('select').first().selectOption("PL");
-        if (scope === "eportfolio") await page.locator('select').nth(1).selectOption(caseStudy.id);
+        await page.locator("select").first().selectOption("PL");
+        if (scope === "eportfolio") await page.locator("select").nth(1).selectOption(caseStudy.id);
         for (const rating of RATINGS) {
           await page.locator(`input[type="radio"][name="${rating}"][value="5"]`).check();
         }
         await page.locator('form button[type="submit"]').click();
         await expect(page.getByRole("status")).toBeVisible();
-        await expect.poll(async () => db.pilotSatisfactionSubmission.count({
-          where: { userId: profile.id, scope },
-        })).toBe(1);
+        await expect
+          .poll(async () =>
+            db.pilotSatisfactionSubmission.count({
+              where: { userId: profile.id, scope },
+            }),
+          )
+          .toBe(1);
         const saved = await db.pilotSatisfactionSubmission.findUnique({
           where: { userId_scope: { userId: profile.id, scope } },
         });
@@ -187,13 +212,19 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
     test.setTimeout(180_000);
     const profile = await testProfile(db);
     const previousPilot = await db.curriculumPilot.findUnique({
-      where: { userId: profile.id }, include: { submissions: true },
+      where: { userId: profile.id },
+      include: { submissions: true },
     });
     if (previousPilot?.submissions.length) {
-      throw new Error("Pre/post E2E requires a fresh disposable test account without earlier pilot submissions");
+      throw new Error(
+        "Pre/post E2E requires a fresh disposable test account without earlier pilot submissions",
+      );
     }
     const activeQuestions = await db.curriculumPilotQuestion.count({ where: { isActive: true } });
-    if (activeQuestions === 0) throw new Error("Test DB needs the official pilot assessment questions (seed only the isolated DB)");
+    if (activeQuestions === 0)
+      throw new Error(
+        "Test DB needs the official pilot assessment questions (seed only the isolated DB)",
+      );
     const slug = `playwright-e2e-pilot-module-${Date.now()}`;
     let courseId: string | null = null;
     try {
@@ -201,10 +232,14 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
       await db.curriculumPilot.upsert({
         where: { userId: profile.id },
         update: {
-          status: "pre_prompt_shown", preAssessmentSeenAt: new Date(),
-          preAssessmentSkippedAt: null, preAssessmentCompletedAt: null,
-          postAssessmentCompletedAt: null, preAssessmentAverageScore: null,
-          postAssessmentAverageScore: null, assessmentAverageScoreDelta: null,
+          status: "pre_prompt_shown",
+          preAssessmentSeenAt: new Date(),
+          preAssessmentSkippedAt: null,
+          preAssessmentCompletedAt: null,
+          postAssessmentCompletedAt: null,
+          preAssessmentAverageScore: null,
+          postAssessmentAverageScore: null,
+          assessmentAverageScoreDelta: null,
         },
         create: { userId: profile.id, status: "pre_prompt_shown", preAssessmentSeenAt: new Date() },
       });
@@ -213,74 +248,112 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
       await expect(page).toHaveURL(/\/en\/curriculum\/pilot\/pre-assessment/);
       const preFields = page.locator("form fieldset");
       expect(await preFields.count()).toBeGreaterThan(0);
-      for (let i = 0; i < await preFields.count(); i += 1) {
+      for (let i = 0; i < (await preFields.count()); i += 1) {
         await preFields.nth(i).locator('input[type="radio"]').first().check();
       }
       await page.locator('form button[type="submit"]').click();
       // A POST 200 is not enough: assert that the server action committed the pilot state.
-      await expect.poll(async () => {
-        const pilot = await db.curriculumPilot.findUnique({ where: { userId: profile.id } });
-        return { status: pilot?.status, completed: Boolean(pilot?.preAssessmentCompletedAt) };
-      }, { message: "Pre-assessment answers must be persisted before navigation", timeout: 15_000 })
+      await expect
+        .poll(
+          async () => {
+            const pilot = await db.curriculumPilot.findUnique({ where: { userId: profile.id } });
+            return { status: pilot?.status, completed: Boolean(pilot?.preAssessmentCompletedAt) };
+          },
+          {
+            message: "Pre-assessment answers must be persisted before navigation",
+            timeout: 15_000,
+          },
+        )
         .toEqual({ status: "pilot_active", completed: true });
-      await expect(page, "Pre-assessment must navigate to Curriculum after a successful save")
-        .toHaveURL(/\/en\/curriculum(?:\?.*)?$/, { timeout: 15_000 });
+      await expect(
+        page,
+        "Pre-assessment must navigate to Curriculum after a successful save",
+      ).toHaveURL(/\/en\/curriculum(?:\?.*)?$/, { timeout: 15_000 });
       const pilotAfterPre = await db.curriculumPilot.findUnique({ where: { userId: profile.id } });
       expect(pilotAfterPre?.preAssessmentCompletedAt).not.toBeNull();
       expect(pilotAfterPre?.status).toBe("pilot_active");
 
       const course = await db.course.create({
-        data: { slug, status: "published", area: "cross_cutting", difficulty: "foundation",
-          sortOrder: -99999, lessonsCount: 0,
-          translations: { create: [{ language: "en", title: "Playwright completed pilot module" }] },
+        data: {
+          slug,
+          status: "published",
+          area: "cross_cutting",
+          difficulty: "foundation",
+          sortOrder: -99999,
+          lessonsCount: 0,
+          translations: {
+            create: [{ language: "en", title: "Playwright completed pilot module" }],
+          },
         },
       });
       courseId = course.id;
       await db.userCourseAttempt.create({
-        data: { userId: profile.id, courseId: course.id,
-          status: "completed", currentStage: "completed", completedAt: new Date(),
-          startedAt: new Date(), lastOpenedAt: new Date(), progressPercent: 100,
+        data: {
+          userId: profile.id,
+          courseId: course.id,
+          status: "completed",
+          currentStage: "completed",
+          completedAt: new Date(),
+          startedAt: new Date(),
+          lastOpenedAt: new Date(),
+          progressPercent: 100,
         },
       });
       await page.goto("/en/curriculum/pilot/post-assessment");
       await expect(page).toHaveURL(/\/en\/curriculum\/pilot\/post-assessment/);
       const postFields = page.locator("form fieldset");
       expect(await postFields.count()).toBeGreaterThan(0);
-      for (let i = 0; i < await postFields.count(); i += 1) {
+      for (let i = 0; i < (await postFields.count()); i += 1) {
         const field = postFields.nth(i);
         const radio = field.locator('input[type="radio"]');
         if (await radio.count()) await radio.first().check();
-        else await field.locator('textarea').fill("Playwright pilot assessment test response");
+        else await field.locator("textarea").fill("Playwright pilot assessment test response");
       }
       await page.locator('form button[type="submit"]').click();
-      await expect.poll(async () => {
-        const pilot = await db.curriculumPilot.findUnique({ where: { userId: profile.id } });
-        return { status: pilot?.status, completed: Boolean(pilot?.postAssessmentCompletedAt) };
-      }, { message: "Post-assessment answers must be persisted before navigation", timeout: 15_000 })
+      await expect
+        .poll(
+          async () => {
+            const pilot = await db.curriculumPilot.findUnique({ where: { userId: profile.id } });
+            return { status: pilot?.status, completed: Boolean(pilot?.postAssessmentCompletedAt) };
+          },
+          {
+            message: "Post-assessment answers must be persisted before navigation",
+            timeout: 15_000,
+          },
+        )
         .toEqual({ status: "pilot_completed", completed: true });
-      await expect(page, "Post-assessment must navigate to Curriculum feedback after a successful save")
-        .toHaveURL(/\/en\/pilot-satisfaction\/curriculum$/, { timeout: 15_000 });
+      await expect(
+        page,
+        "Post-assessment must navigate to Curriculum feedback after a successful save",
+      ).toHaveURL(/\/en\/pilot-satisfaction\/curriculum$/, { timeout: 15_000 });
       const pilotAfterPost = await db.curriculumPilot.findUnique({
-        where: { userId: profile.id }, include: { submissions: true },
+        where: { userId: profile.id },
+        include: { submissions: true },
       });
       expect(pilotAfterPost?.status).toBe("pilot_completed");
       expect(pilotAfterPost?.postAssessmentCompletedAt).not.toBeNull();
-      expect(pilotAfterPost?.submissions.map((submission) => submission.type).sort()).toEqual(["post", "pre"]);
+      expect(pilotAfterPost?.submissions.map((submission) => submission.type).sort()).toEqual([
+        "post",
+        "pre",
+      ]);
     } finally {
       if (courseId) await db.course.deleteMany({ where: { id: courseId } });
       const pilot = await db.curriculumPilot.findUnique({ where: { userId: profile.id } });
       if (pilot) await db.curriculumPilotSubmission.deleteMany({ where: { pilotId: pilot.id } });
       if (previousPilot) {
-        await db.curriculumPilot.update({ where: { userId: profile.id }, data: {
-          status: previousPilot.status,
-          preAssessmentSeenAt: previousPilot.preAssessmentSeenAt,
-          preAssessmentSkippedAt: previousPilot.preAssessmentSkippedAt,
-          preAssessmentCompletedAt: previousPilot.preAssessmentCompletedAt,
-          postAssessmentCompletedAt: previousPilot.postAssessmentCompletedAt,
-          preAssessmentAverageScore: previousPilot.preAssessmentAverageScore,
-          postAssessmentAverageScore: previousPilot.postAssessmentAverageScore,
-          assessmentAverageScoreDelta: previousPilot.assessmentAverageScoreDelta,
-        } });
+        await db.curriculumPilot.update({
+          where: { userId: profile.id },
+          data: {
+            status: previousPilot.status,
+            preAssessmentSeenAt: previousPilot.preAssessmentSeenAt,
+            preAssessmentSkippedAt: previousPilot.preAssessmentSkippedAt,
+            preAssessmentCompletedAt: previousPilot.preAssessmentCompletedAt,
+            postAssessmentCompletedAt: previousPilot.postAssessmentCompletedAt,
+            preAssessmentAverageScore: previousPilot.preAssessmentAverageScore,
+            postAssessmentAverageScore: previousPilot.postAssessmentAverageScore,
+            assessmentAverageScoreDelta: previousPilot.assessmentAverageScoreDelta,
+          },
+        });
       } else {
         await db.curriculumPilot.deleteMany({ where: { userId: profile.id } });
       }
@@ -291,7 +364,9 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
   test("submits the platform-wide feedback survey and persists its answers", async ({ page }) => {
     test.setTimeout(120_000);
     const profile = await testProfile(db);
-    const existingFeedback = await db.platformFeedbackSubmission.count({ where: { userId: profile.id } });
+    const existingFeedback = await db.platformFeedbackSubmission.count({
+      where: { userId: profile.id },
+    });
     if (existingFeedback > 0) {
       throw new Error("Platform feedback E2E requires a fresh disposable test account");
     }
@@ -299,8 +374,12 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
       where: { userId: profile.id },
     });
     const fields = [
-      "easeOfUse", "moduleClarity", "navigation", "testsExperience",
-      "technicalProblems", "overallSatisfaction",
+      "easeOfUse",
+      "moduleClarity",
+      "navigation",
+      "testsExperience",
+      "technicalProblems",
+      "overallSatisfaction",
     ];
     try {
       await db.profile.update({ where: { id: profile.id }, data: { role: "educator" } });
@@ -311,16 +390,24 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
         await page.locator(`input[type="radio"][name="${name}"][value="5"]`).check();
       }
       await page.locator('form button[type="submit"]').click();
-      await expect.poll(async () => db.platformFeedbackSubmission.count({
-        where: { userId: profile.id },
-      })).toBe(1);
+      await expect
+        .poll(async () =>
+          db.platformFeedbackSubmission.count({
+            where: { userId: profile.id },
+          }),
+        )
+        .toBe(1);
       const saved = await db.platformFeedbackSubmission.findFirst({
         where: { userId: profile.id },
       });
       expect(saved).not.toBeNull();
       expect(saved).toMatchObject({
-        easeOfUse: 5, moduleClarity: 5, navigation: 5,
-        testsExperience: 5, technicalProblems: 5, overallSatisfaction: 5,
+        easeOfUse: 5,
+        moduleClarity: 5,
+        navigation: 5,
+        testsExperience: 5,
+        technicalProblems: 5,
+        overallSatisfaction: 5,
       });
       await expect(page.getByRole("heading", { level: 1 })).toContainText("Thank");
     } finally {
@@ -341,23 +428,33 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
     }
   });
 
-  test("rejects locked certificates and downloads localized PDFs in six languages", async ({ page }) => {
+  test("rejects locked certificates and downloads localized PDFs in six languages", async ({
+    page,
+  }) => {
     test.setTimeout(180_000);
     const profile = await testProfile(db);
     const slug = `playwright-e2e-certificate-${Date.now()}`;
     const oldRole = profile.role;
     const names: Record<(typeof LOCALES)[number], string> = {
-      en: "Certificate integration module", pl: "Moduł testowy certyfikatu",
-      de: "Zertifikat-Testmodul", it: "Modulo di prova del certificato",
-      el: "Δοκιμαστική ενότητα πιστοποιητικού", bg: "Тестов модул за сертификат",
+      en: "Certificate integration module",
+      pl: "Moduł testowy certyfikatu",
+      de: "Zertifikat-Testmodul",
+      it: "Modulo di prova del certificato",
+      el: "Δοκιμαστική ενότητα πιστοποιητικού",
+      bg: "Тестов модул за сертификат",
     };
     let courseId: string | null = null;
     try {
       await db.profile.update({ where: { id: profile.id }, data: { role: "educator" } });
       const course = await db.course.create({
         data: {
-          slug, status: "published", area: "cross_cutting", difficulty: "foundation",
-          lessonsCount: 0, estimatedDurationMinutes: 5, sortOrder: -99999,
+          slug,
+          status: "published",
+          area: "cross_cutting",
+          difficulty: "foundation",
+          lessonsCount: 0,
+          estimatedDurationMinutes: 5,
+          sortOrder: -99999,
           translations: {
             create: LOCALES.map((language) => ({ language, title: names[language] })),
           },
@@ -378,14 +475,28 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
       const now = new Date();
       await db.userCourseAttempt.create({
         data: {
-          userId: profile.id, courseId: course.id,
-          status: "completed", currentStage: "completed", progressPercent: 100,
-          startedAt: now, lastOpenedAt: now, completedAt: now,
-          postQuizAttempts: [{
-            quizId, quizType: "post", quizSortOrder: 1,
-            attemptNumber: 1, score: 100, correctCount: 1, totalQuestions: 1,
-            passed: true, submittedAt: now.toISOString(), flaggedQuestionIds: [],
-          }],
+          userId: profile.id,
+          courseId: course.id,
+          status: "completed",
+          currentStage: "completed",
+          progressPercent: 100,
+          startedAt: now,
+          lastOpenedAt: now,
+          completedAt: now,
+          postQuizAttempts: [
+            {
+              quizId,
+              quizType: "post",
+              quizSortOrder: 1,
+              attemptNumber: 1,
+              score: 100,
+              correctCount: 1,
+              totalQuestions: 1,
+              passed: true,
+              submittedAt: now.toISOString(),
+              flaggedQuestionIds: [],
+            },
+          ],
         },
       });
 

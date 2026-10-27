@@ -1,5 +1,8 @@
-import { buildPilotModuleCoverage, startedAfterPreAssessment } from '@/lib/curriculum/pilot-coverage';
-import { prisma } from '@/lib/prisma';
+import {
+  buildPilotModuleCoverage,
+  startedAfterPreAssessment,
+} from "@/lib/curriculum/pilot-coverage";
+import { prisma } from "@/lib/prisma";
 
 export type CurriculumPilotFocus = {
   modules: Array<{ slug: string; title: string; completed: boolean }>;
@@ -12,13 +15,13 @@ export async function getCurriculumPilotFocus(params: {
 }): Promise<CurriculumPilotFocus | null> {
   const [courses, pilots, attempts] = await Promise.all([
     prisma.course.findMany({
-      where: { status: 'published' },
-      orderBy: [{ sortOrder: 'asc' }, { createdAt: 'asc' }],
+      where: { status: "published" },
+      orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
       select: {
         id: true,
         slug: true,
         translations: {
-          where: { language: { in: [params.locale, 'en'] } },
+          where: { language: { in: [params.locale, "en"] } },
           select: { language: true, title: true },
         },
       },
@@ -43,16 +46,26 @@ export async function getCurriculumPilotFocus(params: {
   const ids = coverage.focusCourseIdsByUser.get(params.userId) ?? [];
   if (ids.length === 0) return null;
 
-  const preCompletedAt = pilots.find((pilot) => pilot.userId === params.userId)?.preAssessmentCompletedAt ?? null;
+  const preCompletedAt =
+    pilots.find((pilot) => pilot.userId === params.userId)?.preAssessmentCompletedAt ?? null;
   const modules = ids.flatMap((id) => {
     const course = courses.find((candidate) => candidate.id === id);
     if (!course) return [];
-    const title = course.translations.find((translation) => translation.language === params.locale)?.title
-      ?? course.translations.find((translation) => translation.language === 'en')?.title
-      ?? course.slug;
+    const title =
+      course.translations.find((translation) => translation.language === params.locale)?.title ??
+      course.translations.find((translation) => translation.language === "en")?.title ??
+      course.slug;
     const attempt = attempts.find((candidate) => candidate.courseId === id);
-    return [{ slug: course.slug, title, completed: !!attempt && startedAfterPreAssessment(attempt, preCompletedAt)
-      && (attempt.status === 'completed' || attempt.completedAt !== null) }];
+    return [
+      {
+        slug: course.slug,
+        title,
+        completed:
+          !!attempt &&
+          startedAfterPreAssessment(attempt, preCompletedAt) &&
+          (attempt.status === "completed" || attempt.completedAt !== null),
+      },
+    ];
   });
 
   return { modules, completedFocusCount: modules.filter((module) => module.completed).length };

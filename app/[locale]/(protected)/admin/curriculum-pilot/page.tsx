@@ -22,13 +22,17 @@ export default async function AdminCurriculumPilotPage({ params }: Props) {
     getTranslations({ locale, namespace: "Protected.PilotSatisfaction" }),
   ]);
 
-  return <>
-    <div className="mx-auto max-w-360 px-4 pt-6">
-      <Link href={`/${locale}/admin/pilot-satisfaction`}
-        className="inline-flex rounded-xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white">
-        {t("admin.title")}
-      </Link>
-    </div>
-    <CurriculumPilotAdminDashboard locale={locale} stats={stats} />
-  </>;
+  return (
+    <>
+      <div className="mx-auto max-w-360 px-4 pt-6">
+        <Link
+          href={`/${locale}/admin/pilot-satisfaction`}
+          className="inline-flex rounded-xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white"
+        >
+          {t("admin.title")}
+        </Link>
+      </div>
+      <CurriculumPilotAdminDashboard locale={locale} stats={stats} />
+    </>
+  );
 }

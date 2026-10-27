@@ -9,14 +9,19 @@ export const scenario04Pl = defineScenarioLocale<"scenario-04">({
   title: "Integracja ESG w Działalności Operacyjnej Przedsiębiorstwa",
   shortTitle: "Integracja ESG w Działalności Operacyjnej…",
   subtitle: "Integracja ESG w Działalności Operacyjnej Przedsiębiorstwa",
-  introduction: "Jesteś liderem ds. operacyjnych i zgodności (compliance) w firmie EcoPart Manufacturing – MŚP zatrudniającym 120 pracowników, dostarczającym komponenty do dwóch dużych klientów z UE. Obaj klienci zaczynają wymagać od dostawców informacji związanych z ESG, w tym danych dotyczących zużycia energii, odpadów, zawartości materiałów z recyklingu, podstawowych praktyk pracowniczych, standardów dla dostawców oraz dowodów na stosowanie gospodarki obiegu zamkniętego. Dane ESG w firmie są obecnie rozproszone pomiędzy działy finansów, HR, ochrony środowiska/BHP, produkcji i zakupów. Większość informacji jest przechowywana w arkuszach kalkulacyjnych, a firma ma ograniczony budżet na nowe technologie lub wsparcie doradcze. Kadra kierownicza wyższego szczebla oczekuje praktycznego planu działania (mapy drogowej), który spełni oczekiwania klientów, a jednocześnie usprawni działalność operacyjną. Musisz zdecydować, jak zintegrować ESG z codziennymi procesami biznesowymi w sposób wiarygodny, proporcjonalny i użyteczny dla firmy – a nie tylko jako dodatkowe obciążenie sprawozdawcze.",
-  objectives: ["Zrekonstruować łańcuch dostaw i przepływy operacyjne przy użyciu kryteriów gospodarki o obiegu zamkniętym w celu minimalizacji odpadów.", "Wdrożyć etyczne praktyki społeczne w codziennych usługach, aby dostosować zarządzanie operacyjne do wartości."],
+  introduction:
+    "Jesteś liderem ds. operacyjnych i zgodności (compliance) w firmie EcoPart Manufacturing – MŚP zatrudniającym 120 pracowników, dostarczającym komponenty do dwóch dużych klientów z UE. Obaj klienci zaczynają wymagać od dostawców informacji związanych z ESG, w tym danych dotyczących zużycia energii, odpadów, zawartości materiałów z recyklingu, podstawowych praktyk pracowniczych, standardów dla dostawców oraz dowodów na stosowanie gospodarki obiegu zamkniętego. Dane ESG w firmie są obecnie rozproszone pomiędzy działy finansów, HR, ochrony środowiska/BHP, produkcji i zakupów. Większość informacji jest przechowywana w arkuszach kalkulacyjnych, a firma ma ograniczony budżet na nowe technologie lub wsparcie doradcze. Kadra kierownicza wyższego szczebla oczekuje praktycznego planu działania (mapy drogowej), który spełni oczekiwania klientów, a jednocześnie usprawni działalność operacyjną. Musisz zdecydować, jak zintegrować ESG z codziennymi procesami biznesowymi w sposób wiarygodny, proporcjonalny i użyteczny dla firmy – a nie tylko jako dodatkowe obciążenie sprawozdawcze.",
+  objectives: [
+    "Zrekonstruować łańcuch dostaw i przepływy operacyjne przy użyciu kryteriów gospodarki o obiegu zamkniętym w celu minimalizacji odpadów.",
+    "Wdrożyć etyczne praktyki społeczne w codziennych usługach, aby dostosować zarządzanie operacyjne do wartości.",
+  ],
   boardAlt: "Trzy powiązane wyzwania ESG i dostępne decyzje.",
   challenges: {
     [challenges.dataSystem]: {
       title: "Budowa praktycznego systemu danych ESG",
       shortTitle: "Budowa praktycznego systemu danych ESG",
-      context: "Twoim pierwszym zadaniem jest uporządkowanie informacji ESG, aby firma mogła odpowiadać na zapytania klientów i identyfikować obszary do poprawy operacyjnej. Dyrektor Zarządzający chce, aby firma była „gotowa na raportowanie ESG”, ale możliwości IT są ograniczone, a kierownicy działów obawiają się dodatkowej pracy administracyjnej.",
+      context:
+        "Twoim pierwszym zadaniem jest uporządkowanie informacji ESG, aby firma mogła odpowiadać na zapytania klientów i identyfikować obszary do poprawy operacyjnej. Dyrektor Zarządzający chce, aby firma była „gotowa na raportowanie ESG”, ale możliwości IT są ograniczone, a kierownicy działów obawiają się dodatkowej pracy administracyjnej.",
       question: "Jakie działanie należy podjąć w tej sytuacji?",
       choices: {
         [choices.dataSystem.simpleRegister]: {
@@ -27,7 +32,8 @@ export const scenario04Pl = defineScenarioLocale<"scenario-04">({
           },
         },
         [choices.dataSystem.buyPlatform]: {
-          label: "Kup natychmiast kompleksową platformę oprogramowania ESG, aby od samego początku…",
+          label:
+            "Kup natychmiast kompleksową platformę oprogramowania ESG, aby od samego początku…",
           text: "Kup natychmiast kompleksową platformę oprogramowania ESG, aby od samego początku zarządzać wszystkimi raportami, pulpitami nawigacyjnymi (dashboards) i zapytaniami klientów w jednym centralnym systemie. Powinno to zmniejszyć ilość pracy ręcznej i pokazać klientom, że firma traktuje ESG poważnie.",
           feedback: {
             body: "Może to brzmieć profesjonalnie, ale samo oprogramowanie nie rozwiąże problemu braku odpowiedzialności za dane czy niejasnych procesów. Jeśli firma kupi platformę przed zdefiniowaniem wskaźników, zakresu odpowiedzialności i zasad jakości, może wygenerować koszty bez poprawy niezawodności. Rezultatem może być drogi system wypełniony niepełnymi lub niespójnymi danymi.",
@@ -45,7 +51,8 @@ export const scenario04Pl = defineScenarioLocale<"scenario-04">({
     [challenges.supplierCircularity]: {
       title: "Współpraca z dostawcami w zakresie gospodarki obiegu zamkniętego i dowodów ESG",
       shortTitle: "Współpraca z dostawcami w zakresie gospodarki…",
-      context: "Jeden z Twoich największych klientów prosi o dowody na to, że Twoja firma wdraża zasady gospodarki obiegu zamkniętego w łańcuchu dostaw. Dział zakupów wybiera obecnie dostawców głównie na podstawie ceny, niezawodności dostaw i jakości. Niektórzy dostawcy to małe firmy o ograniczonej wiedzy na temat ESG, a Twój zespół ds. zakupów obawia się, że dodatkowe wymagania mogą zwiększyć koszty lub ograniczyć elastyczność.",
+      context:
+        "Jeden z Twoich największych klientów prosi o dowody na to, że Twoja firma wdraża zasady gospodarki obiegu zamkniętego w łańcuchu dostaw. Dział zakupów wybiera obecnie dostawców głównie na podstawie ceny, niezawodności dostaw i jakości. Niektórzy dostawcy to małe firmy o ograniczonej wiedzy na temat ESG, a Twój zespół ds. zakupów obawia się, że dodatkowe wymagania mogą zwiększyć koszty lub ograniczyć elastyczność.",
       question: "Jakie działanie należy podjąć w tej sytuacji?",
       choices: {
         [choices.supplierCircularity.focusHighImpact]: {
@@ -74,7 +81,8 @@ export const scenario04Pl = defineScenarioLocale<"scenario-04">({
     [challenges.operationalImprovement]: {
       title: "Przekształcenie raportowania ESG w usprawnienia operacyjne",
       shortTitle: "Przekształcenie raportowania ESG w usprawnienia…",
-      context: "Po zebraniu wstępnych danych ESG zauważasz, że poziom odpadów produkcyjnych (złomu) i zużycie energii różnią się znacząco pomiędzy liniami produkcyjnymi. Dane HR wskazują również na wyższą rotację pracowników w jednym ze zespołów zmianowych. Zespół kierowniczy pyta, czy ESG powinno pozostać głównie działaniem sprawozdawczym, czy też stać się częścią procesu ciągłego doskonalenia.",
+      context:
+        "Po zebraniu wstępnych danych ESG zauważasz, że poziom odpadów produkcyjnych (złomu) i zużycie energii różnią się znacząco pomiędzy liniami produkcyjnymi. Dane HR wskazują również na wyższą rotację pracowników w jednym ze zespołów zmianowych. Zespół kierowniczy pyta, czy ESG powinno pozostać głównie działaniem sprawozdawczym, czy też stać się częścią procesu ciągłego doskonalenia.",
       question: "Jakie działanie należy podjąć w tej sytuacji?",
       choices: {
         [choices.operationalImprovement.focusedProjects]: {
@@ -103,6 +111,9 @@ export const scenario04Pl = defineScenarioLocale<"scenario-04">({
   },
   summary: {
     title: "Scenariusz ukończony",
-    takeaways: ["Zrekonstruować łańcuch dostaw i przepływy operacyjne przy użyciu kryteriów gospodarki o obiegu zamkniętym w celu minimalizacji odpadów.", "Wdrożyć etyczne praktyki społeczne w codziennych usługach, aby dostosować zarządzanie operacyjne do wartości."],
+    takeaways: [
+      "Zrekonstruować łańcuch dostaw i przepływy operacyjne przy użyciu kryteriów gospodarki o obiegu zamkniętym w celu minimalizacji odpadów.",
+      "Wdrożyć etyczne praktyki społeczne w codziennych usługach, aby dostosować zarządzanie operacyjne do wartości.",
+    ],
   },
 });

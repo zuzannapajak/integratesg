@@ -36,7 +36,9 @@ export function normalizePilotSatisfactionInput(input: PilotSatisfactionInput) {
     usability: input.usability,
     overallSatisfaction: input.overallSatisfaction,
   };
-  if (!Object.values(ratings).every((value) => Number.isInteger(value) && value >= 1 && value <= 5)) {
+  if (
+    !Object.values(ratings).every((value) => Number.isInteger(value) && value >= 1 && value <= 5)
+  ) {
     throw new Error("INVALID_PILOT_RATING");
   }
   if (input.caseStudyId !== undefined && typeof input.caseStudyId !== "string") {
@@ -44,8 +46,10 @@ export function normalizePilotSatisfactionInput(input: PilotSatisfactionInput) {
   }
   const trimmedCaseStudyId = input.caseStudyId?.trim() ?? "";
   const caseStudyId = trimmedCaseStudyId.length > 0 ? trimmedCaseStudyId : null;
-  if ((input.scope === "curriculum" && caseStudyId !== null) ||
-      (input.scope === "eportfolio" && (!caseStudyId || caseStudyId.length > 100))) {
+  if (
+    (input.scope === "curriculum" && caseStudyId !== null) ||
+    (input.scope === "eportfolio" && (!caseStudyId || caseStudyId.length > 100))
+  ) {
     throw new Error("INVALID_CASE_STUDY");
   }
   const optionalText = (value: string | undefined) => {

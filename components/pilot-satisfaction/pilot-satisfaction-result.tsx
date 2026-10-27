@@ -40,9 +40,7 @@ export default function PilotSatisfactionResult({ locale, scope, state }: Props)
           <CheckCircle2 aria-hidden="true" className="h-8 w-8" />
         )}
       </span>
-      <h1 className="mt-6 text-2xl font-bold tracking-tight text-[#31425a] sm:text-3xl">
-        {title}
-      </h1>
+      <h1 className="mt-6 text-2xl font-bold tracking-tight text-[#31425a] sm:text-3xl">{title}</h1>
       <p className="mx-auto mt-3 max-w-lg text-sm leading-7 text-[#667180] sm:text-base">
         {description}
       </p>

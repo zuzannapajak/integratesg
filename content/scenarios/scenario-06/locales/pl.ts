@@ -9,14 +9,19 @@ export const scenario06Pl = defineScenarioLocale<"scenario-06">({
   title: "Monitorowanie, raportowanie i przyszłe trendy w ESG",
   shortTitle: "Monitorowanie, raportowanie i przyszłe trendy w…",
   subtitle: "Monitorowanie, raportowanie i przyszłe trendy w ESG",
-  introduction: "W tym scenariuszu podejmiesz decyzje dotyczące wyboru wskaźników ESG, jakości danych oraz raportowania wyników różnym grupom interesariuszy.",
-  objectives: ["Wybierać konkretne wskaźniki i KPI ESG w celu monitorowania wyników w ramach podstawowej działalności przedsiębiorstwa.", "Kategoryzować dane ESG, aby generować przejrzyste raporty dostosowane do potrzeb różnych grup interesariuszy."],
+  introduction:
+    "W tym scenariuszu podejmiesz decyzje dotyczące wyboru wskaźników ESG, jakości danych oraz raportowania wyników różnym grupom interesariuszy.",
+  objectives: [
+    "Wybierać konkretne wskaźniki i KPI ESG w celu monitorowania wyników w ramach podstawowej działalności przedsiębiorstwa.",
+    "Kategoryzować dane ESG, aby generować przejrzyste raporty dostosowane do potrzeb różnych grup interesariuszy.",
+  ],
   boardAlt: "Trzy powiązane wyzwania ESG i dostępne decyzje.",
   challenges: {
     [challenges.kpiSelection]: {
       title: "Zbyt wiele wskaźników KPI, zbyt mała wartość",
       shortTitle: "Zbyt wiele wskaźników KPI, zbyt mała wartość",
-      context: "Mała firma chce rozpocząć monitorowanie swoich wyników ESG. Każdy dział proponuje własne wskaźniki, co daje listę 40 różnych KPI. Firma szybko zdaje sobie sprawę, że śledzenie ich wszystkich jest nierealistyczne i wprowadza zamieszanie.",
+      context:
+        "Mała firma chce rozpocząć monitorowanie swoich wyników ESG. Każdy dział proponuje własne wskaźniki, co daje listę 40 różnych KPI. Firma szybko zdaje sobie sprawę, że śledzenie ich wszystkich jest nierealistyczne i wprowadza zamieszanie.",
       question: "Jakie działanie należy podjąć w tej sytuacji?",
       choices: {
         [choices.kpiSelection.coreKpis]: {
@@ -45,7 +50,8 @@ export const scenario06Pl = defineScenarioLocale<"scenario-06">({
     [challenges.dataQuality]: {
       title: "Niespójne dane",
       shortTitle: "Niespójne dane",
-      context: "Dane dotyczące energii i odpadów pochodzą od różnych dostawców i są dostarczane w różnych formatach. Działy HR i zakupów używają oddzielnych arkuszy kalkulacyjnych, przez co brakuje jednego wiarygodnego źródła informacji.\n\nW rezultacie firma ma trudności z porównywaniem i łączeniem danych.",
+      context:
+        "Dane dotyczące energii i odpadów pochodzą od różnych dostawców i są dostarczane w różnych formatach. Działy HR i zakupów używają oddzielnych arkuszy kalkulacyjnych, przez co brakuje jednego wiarygodnego źródła informacji.\n\nW rezultacie firma ma trudności z porównywaniem i łączeniem danych.",
       question: "Jakie działanie należy podjąć w tej sytuacji?",
       choices: {
         [choices.dataQuality.dataModelAndGovernance]: {
@@ -74,7 +80,8 @@ export const scenario06Pl = defineScenarioLocale<"scenario-06">({
     [challenges.stakeholderReporting]: {
       title: "Jeden raport dla wszystkich?",
       shortTitle: "Jeden raport dla wszystkich?",
-      context: "Różni interesariusze oczekują różnych rodzajów informacji ESG:\n\n- Zarząd chce krótkiego raportu wspierającego podejmowanie decyzji.\n\n- Banki i partnerzy wymagają szczegółowych informacji oraz twardych danych.\n\n- Lokalna społeczność oczekuje jasnych i prostych wyjaśnień.\n\n- Dział marketingu preferuje silny, pozytywny przekaz.",
+      context:
+        "Różni interesariusze oczekują różnych rodzajów informacji ESG:\n\n- Zarząd chce krótkiego raportu wspierającego podejmowanie decyzji.\n\n- Banki i partnerzy wymagają szczegółowych informacji oraz twardych danych.\n\n- Lokalna społeczność oczekuje jasnych i prostych wyjaśnień.\n\n- Dział marketingu preferuje silny, pozytywny przekaz.",
       question: "Jakie działanie należy podjąć w tej sytuacji?",
       choices: {
         [choices.stakeholderReporting.tailoredReporting]: {
@@ -103,6 +110,9 @@ export const scenario06Pl = defineScenarioLocale<"scenario-06">({
   },
   summary: {
     title: "Scenariusz ukończony",
-    takeaways: ["Wybierać konkretne wskaźniki i KPI ESG w celu monitorowania wyników w ramach podstawowej działalności przedsiębiorstwa.", "Kategoryzować dane ESG, aby generować przejrzyste raporty dostosowane do potrzeb różnych grup interesariuszy."],
+    takeaways: [
+      "Wybierać konkretne wskaźniki i KPI ESG w celu monitorowania wyników w ramach podstawowej działalności przedsiębiorstwa.",
+      "Kategoryzować dane ESG, aby generować przejrzyste raporty dostosowane do potrzeb różnych grup interesariuszy.",
+    ],
   },
 });

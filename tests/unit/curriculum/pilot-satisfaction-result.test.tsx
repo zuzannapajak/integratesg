@@ -5,7 +5,10 @@ import { describe, expect, it } from "vitest";
 import PilotSatisfactionResult from "@/components/pilot-satisfaction/pilot-satisfaction-result";
 import messages from "@/messages/pilot-satisfaction-shells/en.json";
 
-function renderResult(scope: "curriculum" | "eportfolio", state: "submitted" | "already-submitted" | "unavailable") {
+function renderResult(
+  scope: "curriculum" | "eportfolio",
+  state: "submitted" | "already-submitted" | "unavailable",
+) {
   render(
     <NextIntlClientProvider locale="en" messages={messages}>
       <PilotSatisfactionResult locale="en" scope={scope} state={state} />
@@ -18,7 +21,8 @@ describe("Survey completion states", () => {
     renderResult("curriculum", "submitted");
     expect(screen.getByRole("heading", { name: "Thank you for your feedback!" })).toBeVisible();
     expect(screen.getByRole("link", { name: "Explore more modules" })).toHaveAttribute(
-      "href", "/en/curriculum",
+      "href",
+      "/en/curriculum",
     );
   });
 
@@ -26,7 +30,8 @@ describe("Survey completion states", () => {
     renderResult("eportfolio", "already-submitted");
     expect(screen.getByText("You have already submitted this survey.")).toBeVisible();
     expect(screen.getByRole("link", { name: "Back to ePortfolio" })).toHaveAttribute(
-      "href", "/en/eportfolio",
+      "href",
+      "/en/eportfolio",
     );
   });
 

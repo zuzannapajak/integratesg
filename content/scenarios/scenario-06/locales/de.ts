@@ -9,14 +9,19 @@ export const scenario06De = defineScenarioLocale<"scenario-06">({
   title: "Monitoring, Berichterstattung und Zukunftstrends von ESG",
   shortTitle: "Monitoring, Berichterstattung und Zukunftstrends…",
   subtitle: "Monitoring, Berichterstattung und Zukunftstrends von ESG",
-  introduction: "In diesem Szenario treffen Sie Entscheidungen zur Auswahl von ESG-Kennzahlen, zur Datenqualität und zur Berichterstattung an unterschiedliche Interessengruppen.",
-  objectives: ["konkrete ESG-Indikatoren und KPIs auszuwählen, um die Leistung in den zentralen Geschäftsaktivitäten zu überwachen.", "ESG-Daten zu kategorisieren, um klare, auf die Bedürfnisse verschiedener Stakeholder zugeschnittene Berichte zu erstellen."],
+  introduction:
+    "In diesem Szenario treffen Sie Entscheidungen zur Auswahl von ESG-Kennzahlen, zur Datenqualität und zur Berichterstattung an unterschiedliche Interessengruppen.",
+  objectives: [
+    "konkrete ESG-Indikatoren und KPIs auszuwählen, um die Leistung in den zentralen Geschäftsaktivitäten zu überwachen.",
+    "ESG-Daten zu kategorisieren, um klare, auf die Bedürfnisse verschiedener Stakeholder zugeschnittene Berichte zu erstellen.",
+  ],
   boardAlt: "Drei zusammenhängende ESG-Herausforderungen mit Entscheidungsmöglichkeiten.",
   challenges: {
     [challenges.kpiSelection]: {
       title: "Zu viele KPIs, zu wenig Nutzen",
       shortTitle: "Zu viele KPIs, zu wenig Nutzen",
-      context: "Ein kleines Unternehmen möchte beginnen, seine ESG-Leistung zu überwachen.\n Jede Abteilung schlägt eigene Indikatoren vor, und das Ergebnis ist eine Liste mit 40 verschiedenen KPIs.\n Das Unternehmen erkennt schnell, dass es unrealistisch und verwirrend ist, sie alle zu verfolgen.",
+      context:
+        "Ein kleines Unternehmen möchte beginnen, seine ESG-Leistung zu überwachen.\n Jede Abteilung schlägt eigene Indikatoren vor, und das Ergebnis ist eine Liste mit 40 verschiedenen KPIs.\n Das Unternehmen erkennt schnell, dass es unrealistisch und verwirrend ist, sie alle zu verfolgen.",
       question: "Welche Entscheidung ist in dieser Situation sinnvoll?",
       choices: {
         [choices.kpiSelection.coreKpis]: {
@@ -45,7 +50,8 @@ export const scenario06De = defineScenarioLocale<"scenario-06">({
     [challenges.dataQuality]: {
       title: "Daten, die nicht zusammenpassen",
       shortTitle: "Daten, die nicht zusammenpassen",
-      context: "Energie- und Abfalldaten stammen von verschiedenen Anbietern und liegen in unterschiedlichen Formaten vor.\nPersonalabteilung und Einkauf nutzen getrennte Tabellen, und es gibt keine einheitliche, verlässliche Informationsquelle.\n\nInfolgedessen fällt es dem Unternehmen schwer, die Daten zu vergleichen oder zusammenzuführen.",
+      context:
+        "Energie- und Abfalldaten stammen von verschiedenen Anbietern und liegen in unterschiedlichen Formaten vor.\nPersonalabteilung und Einkauf nutzen getrennte Tabellen, und es gibt keine einheitliche, verlässliche Informationsquelle.\n\nInfolgedessen fällt es dem Unternehmen schwer, die Daten zu vergleichen oder zusammenzuführen.",
       question: "Welche Entscheidung ist in dieser Situation sinnvoll?",
       choices: {
         [choices.dataQuality.dataModelAndGovernance]: {
@@ -74,7 +80,8 @@ export const scenario06De = defineScenarioLocale<"scenario-06">({
     [challenges.stakeholderReporting]: {
       title: "Ein Bericht für alle?",
       shortTitle: "Ein Bericht für alle?",
-      context: "Verschiedene Stakeholder wünschen sich unterschiedliche Arten von ESG-Informationen:\n\n- Die Geschäftsleitung möchte einen kurzen Bericht als Entscheidungsgrundlage.\n\n- Banken und Partner:innen verlangen detaillierte Informationen und Daten.\n\n- Die lokale Gemeinschaft möchte klare und einfache Erklärungen.\n\n- Das Marketing bevorzugt starke positive Botschaften.",
+      context:
+        "Verschiedene Stakeholder wünschen sich unterschiedliche Arten von ESG-Informationen:\n\n- Die Geschäftsleitung möchte einen kurzen Bericht als Entscheidungsgrundlage.\n\n- Banken und Partner:innen verlangen detaillierte Informationen und Daten.\n\n- Die lokale Gemeinschaft möchte klare und einfache Erklärungen.\n\n- Das Marketing bevorzugt starke positive Botschaften.",
       question: "Welche Entscheidung ist in dieser Situation sinnvoll?",
       choices: {
         [choices.stakeholderReporting.tailoredReporting]: {
@@ -103,6 +110,9 @@ export const scenario06De = defineScenarioLocale<"scenario-06">({
   },
   summary: {
     title: "Szenario abgeschlossen",
-    takeaways: ["konkrete ESG-Indikatoren und KPIs auszuwählen, um die Leistung in den zentralen Geschäftsaktivitäten zu überwachen.", "ESG-Daten zu kategorisieren, um klare, auf die Bedürfnisse verschiedener Stakeholder zugeschnittene Berichte zu erstellen."],
+    takeaways: [
+      "konkrete ESG-Indikatoren und KPIs auszuwählen, um die Leistung in den zentralen Geschäftsaktivitäten zu überwachen.",
+      "ESG-Daten zu kategorisieren, um klare, auf die Bedürfnisse verschiedener Stakeholder zugeschnittene Berichte zu erstellen.",
+    ],
   },
 });

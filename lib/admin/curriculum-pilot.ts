@@ -1,5 +1,9 @@
 import { prisma } from "@/lib/prisma";
-import { buildPilotModuleCoverage, startedAfterPreAssessment, type PilotModuleCoverageRow } from "@/lib/curriculum/pilot-coverage";
+import {
+  buildPilotModuleCoverage,
+  startedAfterPreAssessment,
+  type PilotModuleCoverageRow,
+} from "@/lib/curriculum/pilot-coverage";
 
 type PilotSubmissionType = "pre" | "post";
 
@@ -132,7 +136,14 @@ export async function getCurriculumPilotAdminStats(
     prisma.course.findMany({
       where: { status: "published" },
       orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
-      select: { id: true, slug: true, translations: { where: { language: { in: [locale, "en"] } }, select: { language: true, title: true } } },
+      select: {
+        id: true,
+        slug: true,
+        translations: {
+          where: { language: { in: [locale, "en"] } },
+          select: { language: true, title: true },
+        },
+      },
     }),
     prisma.userCourseAttempt.findMany({
       where: { user: { curriculumPilot: { is: { preAssessmentCompletedAt: { not: null } } } } },
@@ -144,11 +155,15 @@ export async function getCurriculumPilotAdminStats(
     courses: courses.map((course) => ({
       id: course.id,
       slug: course.slug,
-      title: course.translations.find((item) => item.language === locale)?.title
-        ?? course.translations.find((item) => item.language === "en")?.title
-        ?? course.slug,
+      title:
+        course.translations.find((item) => item.language === locale)?.title ??
+        course.translations.find((item) => item.language === "en")?.title ??
+        course.slug,
     })),
-    pilots: pilots.map((pilot) => ({ userId: pilot.userId, preAssessmentCompletedAt: pilot.preAssessmentCompletedAt })),
+    pilots: pilots.map((pilot) => ({
+      userId: pilot.userId,
+      preAssessmentCompletedAt: pilot.preAssessmentCompletedAt,
+    })),
     attempts,
   });
 
@@ -217,11 +232,15 @@ export async function getCurriculumPilotAdminStats(
       const course = moduleCoverage.modules.find((module) => module.id === id);
       return course ? [course.slug] : [];
     });
-    const focusCompleted = focusIds.filter((id) => attempts.some((attempt) =>
-      attempt.userId === pilot.userId && attempt.courseId === id
-        && startedAfterPreAssessment(attempt, pilot.preAssessmentCompletedAt)
-        && (attempt.status === "completed" || attempt.completedAt !== null),
-    )).length;
+    const focusCompleted = focusIds.filter((id) =>
+      attempts.some(
+        (attempt) =>
+          attempt.userId === pilot.userId &&
+          attempt.courseId === id &&
+          startedAfterPreAssessment(attempt, pilot.preAssessmentCompletedAt) &&
+          (attempt.status === "completed" || attempt.completedAt !== null),
+      ),
+    ).length;
 
     return {
       userId: pilot.userId,

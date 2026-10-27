@@ -27,7 +27,9 @@ function makeTx() {
 describe("Publish approved Allegro without changing existing content", () => {
   it("keeps Allegro published with six source locales", () => {
     expect(source.status).toBe("published");
-    expect(source.translations.map((item) => item.language).sort()).toEqual([...ALLEGRO_AVAILABLE_LOCALES].sort());
+    expect(source.translations.map((item) => item.language).sort()).toEqual(
+      [...ALLEGRO_AVAILABLE_LOCALES].sort(),
+    );
     expect(caseStudies.filter((item) => item.status === "published")).toHaveLength(16);
   });
 
@@ -37,16 +39,20 @@ describe("Publish approved Allegro without changing existing content", () => {
     const tx = makeTx();
     const result = await applyAllegroPublication(tx, plan, null);
     expect(result).toEqual({ created: 1, promoted: 0, translationsCreated: 5 });
-    expect(tx.caseStudy.create).toHaveBeenCalledWith(expect.objectContaining({
-      data: expect.objectContaining({ slug: "allegro", status: "published" }),
-    }));
+    expect(tx.caseStudy.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({ slug: "allegro", status: "published" }),
+      }),
+    );
     expect(tx.caseStudy.updateMany).not.toHaveBeenCalled();
     expect(tx.caseStudyTranslation.createMany).toHaveBeenCalledTimes(1);
   });
 
   it("publishes an existing draft and inserts only missing languages", async () => {
     const parent = {
-      id: "case-allegro", slug: "allegro", status: "draft",
+      id: "case-allegro",
+      slug: "allegro",
+      status: "draft",
       translations: [{ language: "en" }, { language: "pl" }],
     };
     const plan = planAllegroPublication(caseStudies, parent);
@@ -60,17 +66,24 @@ describe("Publish approved Allegro without changing existing content", () => {
       data: { status: "published" },
     });
     expect(tx.caseStudy.create).not.toHaveBeenCalled();
-    expect(tx.caseStudyTranslation.createMany.mock.calls[0][0].data.map((item) => item.language))
-      .toEqual(["de", "it", "el"]);
+    expect(
+      tx.caseStudyTranslation.createMany.mock.calls[0][0].data.map((item) => item.language),
+    ).toEqual(["de", "it", "el"]);
   });
 
   it("is idempotent when Allegro is already published and complete", async () => {
     const parent = {
-      id: "case-allegro", slug: "allegro", status: "published",
+      id: "case-allegro",
+      slug: "allegro",
+      status: "published",
       translations: ALLEGRO_LOCALES.map((language) => ({ language })),
     };
     const tx = makeTx();
-    const result = await applyAllegroPublication(tx, planAllegroPublication(caseStudies, parent), parent);
+    const result = await applyAllegroPublication(
+      tx,
+      planAllegroPublication(caseStudies, parent),
+      parent,
+    );
     expect(result).toEqual({ created: 0, promoted: 0, translationsCreated: 0 });
     expect(tx.caseStudy.create).not.toHaveBeenCalled();
     expect(tx.caseStudy.updateMany).not.toHaveBeenCalled();
@@ -78,15 +91,26 @@ describe("Publish approved Allegro without changing existing content", () => {
   });
 
   it("never promotes another slug or unexpected status", () => {
-    expect(() => planAllegroPublication(caseStudies, {
-      id: "x", slug: "different", status: "draft", translations: [],
-    })).toThrow(/Unexpected Allegro/);
+    expect(() =>
+      planAllegroPublication(caseStudies, {
+        id: "x",
+        slug: "different",
+        status: "draft",
+        translations: [],
+      }),
+    ).toThrow(/Unexpected Allegro/);
   });
 
   it("rejects unknown Supabase project references", () => {
-    expect(supabaseProjectRefFromAllegroUrl("postgresql://postgres.abcdefghijklmnopqrst:pw@aws-1-eu-central-2.pooler.supabase.com:5432/postgres"))
-      .toBe("abcdefghijklmnopqrst");
-    expect(supabaseProjectRefFromAllegroUrl("postgresql://postgres:pw@aws-1-eu-central-2.pooler.supabase.com:5432/postgres"))
-      .toBe(null);
+    expect(
+      supabaseProjectRefFromAllegroUrl(
+        "postgresql://postgres.abcdefghijklmnopqrst:pw@aws-1-eu-central-2.pooler.supabase.com:5432/postgres",
+      ),
+    ).toBe("abcdefghijklmnopqrst");
+    expect(
+      supabaseProjectRefFromAllegroUrl(
+        "postgresql://postgres:pw@aws-1-eu-central-2.pooler.supabase.com:5432/postgres",
+      ),
+    ).toBe(null);
   });
 });

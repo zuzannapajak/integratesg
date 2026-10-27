@@ -56,19 +56,27 @@ describe("targeted WP4 parent catalogue repair", () => {
     expect(tx.caseStudy.create).toHaveBeenCalledTimes(2);
     expect(tx.caseStudyTranslation.createMany).toHaveBeenCalledTimes(2);
     expect(tx.caseStudy.create.mock.calls[0][0].data.status).toBe("published");
-    expect(tx.caseStudyTranslation.createMany.mock.calls[0][0].data).toHaveLength(expectedLocales.length);
+    expect(tx.caseStudyTranslation.createMany.mock.calls[0][0].data).toHaveLength(
+      expectedLocales.length,
+    );
     expect(tx.caseStudyTranslation.createMany.mock.calls[0][0].data[0].caseStudyId).toBe("new-1");
   });
 
   it("extracts the Supabase project ID from the actual user/host, not the shared pooler hostname", () => {
     expect(
-      supabaseProjectRefFromUrl("postgresql://postgres.abcdefghijklmnopqrst:secret@aws-1-eu-central-2.pooler.supabase.com:6543/postgres"),
+      supabaseProjectRefFromUrl(
+        "postgresql://postgres.abcdefghijklmnopqrst:secret@aws-1-eu-central-2.pooler.supabase.com:6543/postgres",
+      ),
     ).toBe("abcdefghijklmnopqrst");
     expect(
-      supabaseProjectRefFromUrl("postgresql://postgres:secret@db.abcdefghijklmnopqrst.supabase.co:5432/postgres"),
+      supabaseProjectRefFromUrl(
+        "postgresql://postgres:secret@db.abcdefghijklmnopqrst.supabase.co:5432/postgres",
+      ),
     ).toBe("abcdefghijklmnopqrst");
     expect(
-      supabaseProjectRefFromUrl("postgresql://postgres:secret@aws-1-eu-central-2.pooler.supabase.com:6543/postgres"),
+      supabaseProjectRefFromUrl(
+        "postgresql://postgres:secret@aws-1-eu-central-2.pooler.supabase.com:6543/postgres",
+      ),
     ).toBe(null);
   });
 });

@@ -9,14 +9,19 @@ export const scenario04De = defineScenarioLocale<"scenario-04">({
   title: "ESG in die Geschäftsabläufe integrieren",
   shortTitle: "ESG in die Geschäftsabläufe integrieren",
   subtitle: "ESG in die Geschäftsabläufe integrieren",
-  introduction: "Sie sind für Betrieb und Compliance bei EcoPart Manufacturing verantwortlich, einem KMU mit 120 Beschäftigten, das Komponenten an zwei große EU-Kund:innen liefert. Beide Kund:innen beginnen, von ihren Lieferant:innen ESG-bezogene Informationen anzufordern, darunter Daten zu Energieverbrauch, Abfall, Recyclinganteil, grundlegenden Arbeitspraktiken, Lieferantenstandards und Nachweisen zur Kreislauffähigkeit. Die ESG-Daten des Unternehmens sind derzeit über Finanzen, Personal, Umwelt/Gesundheit/Sicherheit, Produktion und Einkauf verstreut. Die meisten Informationen liegen in Tabellen vor, und das Unternehmen hat nur ein begrenztes Budget für neue Technologien oder Beratungsleistungen. Die Geschäftsleitung wünscht sich einen praktischen Fahrplan, der die Erwartungen der Kund:innen erfüllt und zugleich die Abläufe verbessert. Sie müssen entscheiden, wie ESG so in die täglichen Geschäftsprozesse integriert werden kann, dass es glaubwürdig, verhältnismäßig und für das Unternehmen nützlich ist – und nicht bloß eine zusätzliche Berichtslast.",
-  objectives: ["Lieferketten und betriebliche Abläufe anhand von Kriterien der Kreislaufwirtschaft neu zu gestalten, um Abfall zu minimieren.", "ethische soziale Praktiken in alltägliche Dienstleistungen einzuführen, um die betriebliche Governance mit den Werten in Einklang zu bringen."],
+  introduction:
+    "Sie sind für Betrieb und Compliance bei EcoPart Manufacturing verantwortlich, einem KMU mit 120 Beschäftigten, das Komponenten an zwei große EU-Kund:innen liefert. Beide Kund:innen beginnen, von ihren Lieferant:innen ESG-bezogene Informationen anzufordern, darunter Daten zu Energieverbrauch, Abfall, Recyclinganteil, grundlegenden Arbeitspraktiken, Lieferantenstandards und Nachweisen zur Kreislauffähigkeit. Die ESG-Daten des Unternehmens sind derzeit über Finanzen, Personal, Umwelt/Gesundheit/Sicherheit, Produktion und Einkauf verstreut. Die meisten Informationen liegen in Tabellen vor, und das Unternehmen hat nur ein begrenztes Budget für neue Technologien oder Beratungsleistungen. Die Geschäftsleitung wünscht sich einen praktischen Fahrplan, der die Erwartungen der Kund:innen erfüllt und zugleich die Abläufe verbessert. Sie müssen entscheiden, wie ESG so in die täglichen Geschäftsprozesse integriert werden kann, dass es glaubwürdig, verhältnismäßig und für das Unternehmen nützlich ist – und nicht bloß eine zusätzliche Berichtslast.",
+  objectives: [
+    "Lieferketten und betriebliche Abläufe anhand von Kriterien der Kreislaufwirtschaft neu zu gestalten, um Abfall zu minimieren.",
+    "ethische soziale Praktiken in alltägliche Dienstleistungen einzuführen, um die betriebliche Governance mit den Werten in Einklang zu bringen.",
+  ],
   boardAlt: "Drei zusammenhängende ESG-Herausforderungen mit Entscheidungsmöglichkeiten.",
   challenges: {
     [challenges.dataSystem]: {
       title: "Ein praktikables ESG-Datensystem aufbauen",
       shortTitle: "Ein praktikables ESG-Datensystem aufbauen",
-      context: "Ihre erste Aufgabe besteht darin, die ESG-Informationen so zu organisieren, dass das Unternehmen auf Anfragen von Kund:innen reagieren und betriebliche Verbesserungen erkennen kann. Die Geschäftsführung möchte, dass das Unternehmen „bereit für die ESG-Berichterstattung“ ist, doch die IT-Kapazitäten sind begrenzt, und die Abteilungsleitungen befürchten zusätzlichen Verwaltungsaufwand.",
+      context:
+        "Ihre erste Aufgabe besteht darin, die ESG-Informationen so zu organisieren, dass das Unternehmen auf Anfragen von Kund:innen reagieren und betriebliche Verbesserungen erkennen kann. Die Geschäftsführung möchte, dass das Unternehmen „bereit für die ESG-Berichterstattung“ ist, doch die IT-Kapazitäten sind begrenzt, und die Abteilungsleitungen befürchten zusätzlichen Verwaltungsaufwand.",
       question: "Welche Entscheidung ist in dieser Situation sinnvoll?",
       choices: {
         [choices.dataSystem.simpleRegister]: {
@@ -45,7 +50,8 @@ export const scenario04De = defineScenarioLocale<"scenario-04">({
     [challenges.supplierCircularity]: {
       title: "Mit Lieferant:innen an Kreislauffähigkeit und ESG-Nachweisen arbeiten",
       shortTitle: "Mit Lieferant:innen an Kreislauffähigkeit und…",
-      context: "Einer Ihrer größten Kund:innen verlangt Nachweise dafür, dass Ihr Unternehmen die Kreislauffähigkeit in der Lieferkette verbessert. Der Einkauf wählt Lieferant:innen derzeit vor allem nach Preis, Liefertreue und Qualität aus. Einige Lieferant:innen sind kleine Unternehmen mit begrenztem ESG-Wissen, und Ihr Einkaufsteam befürchtet, dass zusätzliche Anforderungen die Kosten erhöhen oder die Flexibilität verringern könnten.",
+      context:
+        "Einer Ihrer größten Kund:innen verlangt Nachweise dafür, dass Ihr Unternehmen die Kreislauffähigkeit in der Lieferkette verbessert. Der Einkauf wählt Lieferant:innen derzeit vor allem nach Preis, Liefertreue und Qualität aus. Einige Lieferant:innen sind kleine Unternehmen mit begrenztem ESG-Wissen, und Ihr Einkaufsteam befürchtet, dass zusätzliche Anforderungen die Kosten erhöhen oder die Flexibilität verringern könnten.",
       question: "Welche Entscheidung ist in dieser Situation sinnvoll?",
       choices: {
         [choices.supplierCircularity.focusHighImpact]: {
@@ -74,11 +80,13 @@ export const scenario04De = defineScenarioLocale<"scenario-04">({
     [challenges.operationalImprovement]: {
       title: "ESG-Berichterstattung in betriebliche Verbesserung umwandeln",
       shortTitle: "ESG-Berichterstattung in betriebliche…",
-      context: "Nach der Erhebung erster ESG-Daten stellen Sie fest, dass Ausschussquoten und Energieverbrauch zwischen den Produktionslinien deutlich schwanken. Die Personaldaten zeigen zudem eine höhere Fluktuation in einem Schichtteam. Das Führungsteam fragt, ob ESG in erster Linie eine Berichtstätigkeit bleiben oder Teil der kontinuierlichen Verbesserung werden soll.",
+      context:
+        "Nach der Erhebung erster ESG-Daten stellen Sie fest, dass Ausschussquoten und Energieverbrauch zwischen den Produktionslinien deutlich schwanken. Die Personaldaten zeigen zudem eine höhere Fluktuation in einem Schichtteam. Das Führungsteam fragt, ob ESG in erster Linie eine Berichtstätigkeit bleiben oder Teil der kontinuierlichen Verbesserung werden soll.",
       question: "Welche Entscheidung ist in dieser Situation sinnvoll?",
       choices: {
         [choices.operationalImprovement.focusedProjects]: {
-          label: "Ausgewählte ESG-Indikatoren mit praktischen betrieblichen Verbesserungsprojekten…",
+          label:
+            "Ausgewählte ESG-Indikatoren mit praktischen betrieblichen Verbesserungsprojekten…",
           text: "Ausgewählte ESG-Indikatoren mit praktischen betrieblichen Verbesserungsprojekten verknüpfen. Zum Beispiel Ausschuss- und Energiedaten nutzen, um gezielte Kaizen-Aktivitäten zu starten, und Fluktuations- und Beinaheunfalldaten nutzen, um Teamroutinen, Führung und Arbeitsbedingungen zu verbessern. Die Zahl der Indikatoren überschaubar halten und sie in regelmäßigen Betriebsbesprechungen überprüfen, damit ESG Teil der täglichen Unternehmensführung wird.",
           feedback: {
             body: "Richtig. Dieser Ansatz macht ESG zu einer Quelle betrieblichen Nutzens. Durch die Verknüpfung von Indikatoren mit Verbesserungsprojekten kann das Unternehmen Kosten senken, Sicherheit und Arbeitsbedingungen verbessern und den Kund:innen zeigen, dass ESG im Betriebsalltag verankert ist und nicht als Papierkram behandelt wird.",
@@ -92,7 +100,8 @@ export const scenario04De = defineScenarioLocale<"scenario-04">({
           },
         },
         [choices.operationalImprovement.transformAllAtOnce]: {
-          label: "Ein unternehmensweites ESG-Transformationsprogramm starten, das alle Abteilungen…",
+          label:
+            "Ein unternehmensweites ESG-Transformationsprogramm starten, das alle Abteilungen…",
           text: "Ein unternehmensweites ESG-Transformationsprogramm starten, das alle Abteilungen gleichzeitig umfasst, mit neuen Zielen für Energie, Abfall, Arbeitspraktiken, Lieferantenstandards und Governance. Das zeigt starke Führung und beschleunigt den Kulturwandel.",
           feedback: {
             body: "Diese Option zeigt Ehrgeiz, kann die Organisation aber überlasten. Für ein KMU mit begrenzten Ressourcen können zu viele gleichzeitige ESG-Maßnahmen zu Verwirrung, Ermüdung und schwacher Umsetzung führen. Gezielte Pilotprojekte ermöglichen oft schnelleres Lernen und ein stärkeres langfristiges Engagement.",
@@ -103,6 +112,9 @@ export const scenario04De = defineScenarioLocale<"scenario-04">({
   },
   summary: {
     title: "Szenario abgeschlossen",
-    takeaways: ["Lieferketten und betriebliche Abläufe anhand von Kriterien der Kreislaufwirtschaft neu zu gestalten, um Abfall zu minimieren.", "ethische soziale Praktiken in alltägliche Dienstleistungen einzuführen, um die betriebliche Governance mit den Werten in Einklang zu bringen."],
+    takeaways: [
+      "Lieferketten und betriebliche Abläufe anhand von Kriterien der Kreislaufwirtschaft neu zu gestalten, um Abfall zu minimieren.",
+      "ethische soziale Praktiken in alltägliche Dienstleistungen einzuführen, um die betriebliche Governance mit den Werten in Einklang zu bringen.",
+    ],
   },
 });

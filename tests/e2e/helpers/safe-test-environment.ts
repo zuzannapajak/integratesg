@@ -30,7 +30,9 @@ export function assertSafeE2EEnvironment(env: NodeJS.ProcessEnv = process.env): 
     throw new Error("Set PLAYWRIGHT_ALLOW_DATABASE_RESET=true only for a disposable E2E database.");
   }
   if (env.PLAYWRIGHT_ISOLATED_DB_ACK !== "DISPOSABLE_TEST_DATABASE") {
-    throw new Error("Set PLAYWRIGHT_ISOLATED_DB_ACK=DISPOSABLE_TEST_DATABASE after verifying the dedicated test project.");
+    throw new Error(
+      "Set PLAYWRIGHT_ISOLATED_DB_ACK=DISPOSABLE_TEST_DATABASE after verifying the dedicated test project.",
+    );
   }
 
   let db: URL;
@@ -46,12 +48,14 @@ export function assertSafeE2EEnvironment(env: NodeJS.ProcessEnv = process.env): 
   const apiRef = extractApiRef(api);
   const isLocalDb = ["127.0.0.1", "localhost", "::1", "[::1]"].includes(db.hostname);
   const isLocalApi = ["127.0.0.1", "localhost", "::1", "[::1]"].includes(api.hostname);
-  const knownProduction = FORBIDDEN_E2E_SUPABASE_REFS.some(
-    (ref) => [expectedRef, dbRef, apiRef].includes(ref),
+  const knownProduction = FORBIDDEN_E2E_SUPABASE_REFS.some((ref) =>
+    [expectedRef, dbRef, apiRef].includes(ref),
   );
 
   if (knownProduction) {
-    throw new Error("BLOCKED: The configured Playwright environment references the real pilot Supabase project.");
+    throw new Error(
+      "BLOCKED: The configured Playwright environment references the real pilot Supabase project.",
+    );
   }
   if (isLocalDb && isLocalApi && expectedRef === "local") return;
   if (!dbRef || !apiRef || dbRef !== apiRef || dbRef !== expectedRef) {

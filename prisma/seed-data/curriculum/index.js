@@ -7,5 +7,12 @@ import { module6 } from "./module-6.js";
 import { curriculumPilotQuestions } from "./pilot-assessment.js";
 import { withCurriculumLocalizations } from "./localizations.js";
 
-export const courses = withCurriculumLocalizations([module1, module2, module3, module4, module5, module6]);
+export const courses = withCurriculumLocalizations([
+  module1,
+  module2,
+  module3,
+  module4,
+  module5,
+  module6,
+]);
 export { curriculumPilotQuestions };

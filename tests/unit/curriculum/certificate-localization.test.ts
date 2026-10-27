@@ -69,12 +69,20 @@ describe("certificate Unicode font selection", () => {
 
   it("normalizes decomposed characters without losing accents", () => {
     const name = "L\u0065\u0301a";
-    expect(segmentCertificateText(name).map((run) => run.text).join("")).toBe("Léa");
+    expect(
+      segmentCertificateText(name)
+        .map((run) => run.text)
+        .join(""),
+    ).toBe("Léa");
   });
 
   it("supports punctuation without using lossy ASCII transliteration", () => {
     const value = "„Dziękuję” — 100% ESG (€)";
-    expect(segmentCertificateText(value).map((run) => run.text).join("")).toBe(value);
+    expect(
+      segmentCertificateText(value)
+        .map((run) => run.text)
+        .join(""),
+    ).toBe(value);
   });
 
   it("fails explicitly for unsupported scripts and emoji", () => {
