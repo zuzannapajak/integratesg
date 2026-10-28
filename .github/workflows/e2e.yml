@@ -21,15 +21,27 @@ jobs:
     timeout-minutes: 35
     env:
       HUSKY: "0"
-      DATABASE_URL: ${{ secrets.E2E_TEST_DATABASE_URL }}
-      DIRECT_URL: ${{ secrets.E2E_TEST_DATABASE_URL }}
-      TEST_DATABASE_URL: ${{ secrets.E2E_TEST_DATABASE_URL }}
-      PLAYWRIGHT_DATABASE_URL: ${{ secrets.E2E_TEST_DATABASE_URL }}
-      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.E2E_SUPABASE_URL }}
-      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.E2E_SUPABASE_ANON_KEY }}
-      PLAYWRIGHT_TEST_EMAIL: ${{ secrets.E2E_TEST_EMAIL }}
-      PLAYWRIGHT_TEST_PASSWORD: ${{ secrets.E2E_TEST_PASSWORD }}
+
+      # Dedicated test database
+      DATABASE_URL: ${{ secrets.PLAYWRIGHT_DATABASE_URL }}
+      DIRECT_URL: ${{ secrets.DIRECT_URL }}
+      TEST_DATABASE_URL: ${{ secrets.PLAYWRIGHT_DATABASE_URL }}
+      PLAYWRIGHT_DATABASE_URL: ${{ secrets.PLAYWRIGHT_DATABASE_URL }}
+
+      # Test Supabase project
+      NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+      PLAYWRIGHT_TEST_PROJECT_REF: ${{ vars.PLAYWRIGHT_TEST_PROJECT_REF }}
+
+      # Test user
+      PLAYWRIGHT_TEST_EMAIL: ${{ vars.PLAYWRIGHT_TEST_EMAIL }}
+      PLAYWRIGHT_TEST_PASSWORD: ${{ secrets.PLAYWRIGHT_TEST_PASSWORD }}
+
+      # E2E safety
       PLAYWRIGHT_ALLOW_DATABASE_RESET: "true"
+      PLAYWRIGHT_ISOLATED_DB_ACK: "DISPOSABLE_TEST_DATABASE"
+
+      # Application
       PLAYWRIGHT_SERVER_COMMAND: npm run start
       NEXT_PUBLIC_SITE_URL: http://127.0.0.1:3000
     steps:
@@ -48,17 +60,43 @@ jobs:
       - name: Generate Prisma Client
         run: npx prisma generate
 
-      - name: Validate required E2E secrets
+      - name: Validate isolated E2E environment
         shell: bash
         run: |
-          missing=0
-          for name in DATABASE_URL NEXT_PUBLIC_SUPABASE_URL NEXT_PUBLIC_SUPABASE_ANON_KEY PLAYWRIGHT_TEST_EMAIL PLAYWRIGHT_TEST_PASSWORD; do
+          set -euo pipefail
+
+          for name in \
+            DATABASE_URL \
+            DIRECT_URL \
+            TEST_DATABASE_URL \
+            PLAYWRIGHT_DATABASE_URL \
+            NEXT_PUBLIC_SUPABASE_URL \
+            NEXT_PUBLIC_SUPABASE_ANON_KEY \
+            PLAYWRIGHT_TEST_PROJECT_REF \
+            PLAYWRIGHT_TEST_EMAIL \
+            PLAYWRIGHT_TEST_PASSWORD; do
+
             if [ -z "${!name:-}" ]; then
-              echo "::error::Missing required GitHub Actions secret for $name"
-              missing=1
+              echo "::error::Missing E2E configuration: $name"
+              exit 1
             fi
           done
-          exit "$missing"
+
+          expected_url="https://${PLAYWRIGHT_TEST_PROJECT_REF}.supabase.co"
+
+          if [ "$NEXT_PUBLIC_SUPABASE_URL" != "$expected_url" ]; then
+            echo "::error::Supabase URL does not match test project ref"
+            exit 1
+          fi
+
+          for name in DATABASE_URL DIRECT_URL TEST_DATABASE_URL PLAYWRIGHT_DATABASE_URL; do
+            if [[ "${!name}" != *"${PLAYWRIGHT_TEST_PROJECT_REF}"* ]]; then
+              echo "::error::$name does not reference the dedicated test project"
+              exit 1
+            fi
+          done
+
+          echo "E2E configuration validated"
 
       - name: Apply migrations to dedicated E2E database
         run: npx prisma migrate deploy
