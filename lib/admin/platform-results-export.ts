@@ -1,4 +1,8 @@
 import { prisma } from "@/lib/prisma";
+import {
+  buildPilotModuleCoverage,
+  startedAfterPreAssessment,
+} from "@/lib/curriculum/pilot-coverage";
 
 function exportValueToText(value: unknown) {
   if (value === null || value === undefined) return "";
@@ -129,6 +133,20 @@ export async function getPlatformResultsExportRows(locale: string) {
   }
 
   const pilotByUser = new Map(pilots.map((pilot) => [pilot.userId, pilot]));
+  const focusAssignments = buildPilotModuleCoverage({
+    courses: courses.map((course) => ({ id: course.id, slug: course.slug, title: course.slug })),
+    pilots: pilots.map((pilot) => ({
+      userId: pilot.userId,
+      preAssessmentCompletedAt: pilot.preAssessmentCompletedAt,
+    })),
+    attempts: courseAttempts.map((attempt) => ({
+      userId: attempt.userId,
+      courseId: attempt.courseId,
+      status: attempt.status,
+      startedAt: attempt.startedAt,
+      completedAt: attempt.completedAt,
+    })),
+  });
 
   const questionKeys = Array.from(
     new Set(
@@ -150,6 +168,8 @@ export async function getPlatformResultsExportRows(locale: string) {
     "post_average",
     "delta",
     "modules_completed_before_post",
+    "recommended_focus_modules",
+    "recommended_focus_completed",
     ...questionKeys.map((key) => `pre_${key}`),
     ...questionKeys.map((key) => `post_${key}`),
     ...courses.flatMap((course) => [
@@ -167,6 +187,20 @@ export async function getPlatformResultsExportRows(locale: string) {
     const preSubmission = pilot?.submissions.find((submission) => submission.type === "pre");
     const postSubmission = pilot?.submissions.find((submission) => submission.type === "post");
 
+    const focusIds = focusAssignments.focusCourseIdsByUser.get(user.id) ?? [];
+    const focusSlugs = focusIds.flatMap((id) => {
+      const course = courses.find((candidate) => candidate.id === id);
+      return course ? [course.slug] : [];
+    });
+    const focusCompleted = focusIds.filter((id) => {
+      const attempt = attemptsByUserCourse.get(`${user.id}:${id}`);
+      return (
+        !!attempt &&
+        startedAfterPreAssessment(attempt, pilot?.preAssessmentCompletedAt ?? null) &&
+        (attempt.status === "completed" || attempt.completedAt !== null)
+      );
+    }).length;
+
     const row: Record<string, unknown> = {
       user_email: user.email,
       user_name: user.fullName ?? "",
@@ -177,6 +211,8 @@ export async function getPlatformResultsExportRows(locale: string) {
       post_average: pilot?.postAssessmentAverageScore ?? "",
       delta: pilot?.assessmentAverageScoreDelta ?? "",
       modules_completed_before_post: postSubmission?.modulesCompletedBeforeSubmission ?? "",
+      recommended_focus_modules: focusSlugs.join("; "),
+      recommended_focus_completed: focusSlugs.length ? focusCompleted : "",
     };
 
     for (const key of questionKeys) {

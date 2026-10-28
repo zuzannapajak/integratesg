@@ -10,7 +10,7 @@ export type ScenariosPageProps = {
 
 export default async function ScenariosPage({ params }: ScenariosPageProps) {
   const [{ locale }, userId] = await Promise.all([params, requireAuthenticatedUserId()]);
-  const items = await getScenarioPathwayItemsForUser(userId);
+  const items = await getScenarioPathwayItemsForUser(userId, locale);
 
   return (
     <main className="min-h-full bg-[#f3f6f9] p-3 sm:p-5 md:h-full md:min-h-0 md:overflow-hidden lg:p-6">

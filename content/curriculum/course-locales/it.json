@@ -1,0 +1,137 @@
+{
+  "language": "it",
+  "modules": [
+    {
+      "title": "Modulo 1: Introduzione ai criteri ESG (ambientali, sociali e di governance) e allo sviluppo sostenibile",
+      "overview": "Questo modulo vi fornirà una comprensione fondamentale dei criteri ESG e della loro evoluzione, consentendovi di cogliere i concetti chiave dei pilastri Ambientale, Sociale e di Governance. Vi aiuterà a comprendere il valore strategico dell'integrazione dei criteri ESG, sia che gestiate una PMI o una grande impresa, e a mostrare come le vostre azioni siano direttamente collegate agli Obiettivi di Sviluppo Sostenibile (SDG) globali. Questa conoscenza è essenziale per promuovere lo sviluppo sostenibile.",
+      "units": [
+        {
+          "title": "Unità 1: I tre pilastri dell'ESG (ambientale, sociale e di governance)",
+          "summary": "Definire le tre componenti principali dell'ESG (ambientale, sociale e di governance)."
+        },
+        {
+          "title": "Unità 2: Dalla filantropia aziendale alla necessità aziendale",
+          "summary": "Descrivere l'evoluzione storica dei fattori ESG nel panorama aziendale."
+        },
+        {
+          "title": "Unità 3: Perché i criteri ESG sono il vostro vantaggio strategico",
+          "summary": "Individuare la rilevanza strategica dei fattori ESG sia per le PMI che per le grandi imprese."
+        },
+        {
+          "title": "Unità 4: Collegare le azioni aziendali agli obiettivi globali",
+          "summary": "Spiegare i collegamenti tra il quadro di riferimento ESG e gli Obiettivi di Sviluppo Sostenibile (SDG)."
+        }
+      ]
+    },
+    {
+      "title": "Modulo 2: Strategia, visione e allineamento organizzativo",
+      "overview": "Questo modulo esplora l'allineamento della strategia e della visione organizzativa con i principi ESG. Fornisce spunti pratici sull'integrazione dei principi ESG nei processi aziendali principali, consentendo la creazione di valore sostenibile. Comprendendo il legame tra ESG e successo organizzativo, i partecipanti saranno in grado di promuovere pratiche ESG trasparenti e credibili, contribuendo a un futuro più sostenibile per le imprese e i portatori di interesse.",
+      "units": [
+        {
+          "title": "Unità 1: Collegare i fattori ESG alla missione, ai valori e alla strategia a lungo termine",
+          "summary": "Analizzare la missione, i valori e la strategia a lungo termine della vostra organizzazione per individuare eventuali lacune di allineamento con i principi ESG e opportunità di integrazione."
+        },
+        {
+          "title": "Unità 2: Definizione delle priorità e degli obiettivi ESG",
+          "summary": "Dare priorità all'analisi delle problematiche ESG rilevanti per la vostra organizzazione, valutandone l'importanza per i portatori di interesse e la strategia aziendale."
+        },
+        {
+          "title": "Unità 3: Costruire l'impegno della dirigenza e la cultura organizzativa",
+          "summary": "Dimostrare strategie per promuovere l'impegno della dirigenza verso l'integrazione dei criteri ESG all'interno della vostra organizzazione."
+        },
+        {
+          "title": "Unità 4: Bilanciare i criteri ESG con le prestazioni finanziarie e operative",
+          "summary": "Valutare i compromessi tra le iniziative ESG e i risultati finanziari a breve termine, al fine di prendere decisioni informate che bilancino sostenibilità e redditività."
+        }
+      ]
+    },
+    {
+      "title": "Modulo 3: Orientarsi tra i quadri di riferimento ESG e gli standard di rendicontazione dell'UE",
+      "overview": "Questo modulo vi aiuterà a comprendere come i principali quadri di riferimento ESG e gli standard di rendicontazione europei si connettono e plasmano il panorama attuale della sostenibilità. Imparerai a interpretare e applicare questi framework alla vostra organizzazione, a prepararti per i requisiti di rendicontazione dell'UE e a riconoscerne le implicazioni pratiche per le PMI di diversi settori.",
+      "units": [
+        {
+          "title": "Unità 1: Quadri di riferimento principali – Obiettivi di sviluppo sostenibile (SDG), GRI, SASB, TCFD, ESRS",
+          "summary": "Differenziare e analizzare i principali quadri di riferimento ESG e descriverne gli scopi principali e le aree di intervento."
+        },
+        {
+          "title": "Unità 2: La Direttiva UE sulla rendicontazione della sostenibilità aziendale (CSRD) e le relative politiche UE",
+          "summary": "Spiegare lo scopo principale, ambito di applicazione e requisiti del CSRD."
+        },
+        {
+          "title": "Unità 3: Valutazione ESG, audit, informativa e il loro impatto",
+          "summary": "Spiegare come funzionano le valutazioni, gli audit e le informative ESG e perché sono importanti per le organizzazioni di tutte le dimensioni."
+        },
+        {
+          "title": "Unità 4: Implicazioni pratiche per le PMI e realtà specifiche del settore",
+          "summary": "Interpretare come i quadri di riferimento ESG e gli obblighi di rendicontazione si traducono in azioni concrete per le PMI."
+        }
+      ]
+    },
+    {
+      "title": "Modulo 4: Integrazione dei criteri ESG in Operazioni aziendali",
+      "overview": "Questo modulo vi aiuterà a trasformare l'ESG da un concetto astratto in azioni concrete nelle operazioni aziendali quotidiane. Imparerete come migliorare le pratiche ambientali, sociali e di governance attraverso semplici decisioni operative e come comunicare queste azioni in modo credibile, affinché la vostra azienda costruisca fiducia, riduca i rischi ed eviti dichiarazioni ESG prive di fondamento.",
+      "units": [
+        {
+          "title": "Unità 1: Punti di contatto ESG nei processi operativi principali",
+          "summary": "Analizza i vostri principali flussi di lavoro operativi per identificare i punti di impatto ESG più rilevanti."
+        },
+        {
+          "title": "Unità 2: Responsabilità sociale nella forza lavoro e nella catena di fornitura",
+          "summary": "Valuta i rischi e i punti di miglioramento in materia di responsabilità sociale nelle vostre pratiche relative al personale e nei rapporti con i fornitori."
+        },
+        {
+          "title": "Unità 3: La governance nel processo decisionale operativo",
+          "summary": "acquisti superiori a un determinato importo"
+        },
+        {
+          "title": "Unità 4: ESG credibile nella comunicazione con i clienti e nella gestione dei reclami",
+          "summary": "Valutare le dichiarazioni ESG rivolte ai clienti e le modifiche operative per identificare i rischi di greenwashing o social washing."
+        }
+      ]
+    },
+    {
+      "title": "Modulo 5: Implementazione, dati e pratica interfunzionale",
+      "overview": "Questo modulo si concentra sull'ESG come processo aziendale pratico, piuttosto che come mero esercizio di reporting. Attraverso uno scenario realistico, esplorerete come le organizzazioni strutturano le responsabilità ESG, gestiscono i dati e collaborano con partner esterni. L'obiettivo è aiutarvi a comprendere come le decisioni quotidiane, il coordinamento tra i team e la collaborazione strutturata contribuiscano a un'efficace integrazione ESG nel tempo.",
+      "units": [
+        {
+          "title": "Unità 1: Ciclo di vita dell'integrazione ESG",
+          "summary": "Identificare le fasi principali del ciclo di vita dell'attuazione dei criteri ESG."
+        },
+        {
+          "title": "Unità 2: Raccolta, gestione e digitalizzazione dei dati ESG",
+          "summary": "Riconoscere le principali tipologie di dati ESG."
+        },
+        {
+          "title": "Unità 3: Integrare i criteri ESG nei processi quotidiani e nel processo decisionale",
+          "summary": "Integrare i valori ESG nei flussi di lavoro quotidiani e nei processi decisionali."
+        },
+        {
+          "title": "Unità 4: Collaborazione interfunzionale e intersettoriale",
+          "summary": "Individuate le opportunità di collaborazione, sia all'interno che all'esterno della vostra organizzazione, per sostenere l'attuazione dei criteri ESG."
+        }
+      ]
+    },
+    {
+      "title": "Modulo 6: Monitoraggio, rendicontazione e tendenze future dell'ESG",
+      "overview": "Questo modulo aiuta i partecipanti a monitorare l'attuazione dei criteri ESG attraverso indicatori e KPI significativi, a rendicontare le prestazioni ESG in modo credibile (inclusi i principi chiave di rendicontazione dell'UE) e a utilizzare l'innovazione e l'analisi delle tendenze future per migliorare continuamente le pratiche ESG. Al termine del corso, i partecipanti saranno in grado di tradurre i dati ESG in decisioni e comunicazioni che rafforzino la fiducia con i portatori di interesse.",
+      "units": [
+        {
+          "title": "Unità 1: Indicatori e KPI ESG: misurare ciò che conta",
+          "summary": "Gli indicatori e i KPI ESG sono alla base di una gestione efficace della sostenibilità"
+        },
+        {
+          "title": "Unità 2: Come rendicontare e comunicare in modo credibile le prestazioni ESG",
+          "summary": "Unità 2 – Introduzione   La rendicontazione non riguarda solo la conformità, ma anche la costruzione della fiducia"
+        },
+        {
+          "title": "Unità 3: L'innovazione come motore per le prestazioni ESG",
+          "summary": "Gli sforzi generano impatti misurabili e benefici sulla società e sull'ambiente."
+        },
+        {
+          "title": "Unità 4: Miglioramento continuo, future politiche dell'UE e tendenze globali in materia di ESG",
+          "summary": "Garantire prevedibilità per cittadini, imprese e investitori."
+        }
+      ]
+    }
+  ]
+}

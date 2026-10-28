@@ -332,6 +332,25 @@
           "delta": "Delta",
           "modulesBeforePost": "Moduli prima del post"
         }
+      },
+      "moduleCoverage": {
+        "title": "Copertura dei sei moduli",
+        "description": "Attività dei partecipanti al progetto pilota con valutazione iniziale completata.",
+        "completedCoverage": "Moduli completati da almeno una persona",
+        "activeParticipants": "Partecipanti con valutazione iniziale",
+        "startedModules": "Moduli avviati",
+        "columns": {
+          "module": "Modulo",
+          "recommended": "Consigliato a",
+          "started": "Avviato da",
+          "completed": "Completato da",
+          "recommendedCompleted": "Consigliato e completato",
+          "covered": "Coperto",
+          "focus": "Moduli consigliati"
+        },
+        "yes": "Sì",
+        "no": "No",
+        "methodology": "Un modulo è considerato coperto dopo il completamento da parte di almeno un partecipante. Gli avvii sono conteggiati separatamente. Ogni partecipante riceve due consigli senza restrizioni di accesso."
       }
     },
     "PlatformFeedbackAdminDashboard": {

@@ -332,6 +332,25 @@
           "delta": "Zmiana",
           "modulesBeforePost": "Moduły przed post"
         }
+      },
+      "moduleCoverage": {
+        "title": "Pokrycie sześciu modułów",
+        "description": "Aktywność uczestników formalnego pilotażu (z ukończonym pre-assessment), osobno dla każdego modułu.",
+        "completedCoverage": "Moduły ukończone przez co najmniej jedną osobę",
+        "activeParticipants": "Uczestnicy z pre-assessment",
+        "startedModules": "Moduły rozpoczęte",
+        "columns": {
+          "module": "Moduł",
+          "recommended": "Rekomendowany dla",
+          "started": "Rozpoczęty przez",
+          "completed": "Ukończony przez",
+          "recommendedCompleted": "Przydzielony i ukończony",
+          "covered": "Pokryty",
+          "focus": "Moduły priorytetowe"
+        },
+        "yes": "Tak",
+        "no": "Nie",
+        "methodology": "Moduł uznajemy za pokryty po ukończeniu przez co najmniej jedną osobę. Wyświetlenia i rozpoczęcia liczymy osobno. Każdy uczestnik otrzymuje dwie rekomendacje według stałej rotacji, ale ma dostęp do wszystkich modułów."
       }
     },
     "PlatformFeedbackAdminDashboard": {

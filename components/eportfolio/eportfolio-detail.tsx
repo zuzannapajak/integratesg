@@ -89,44 +89,139 @@ function normaliseHeading(heading: string) {
  */
 function classifySection(section: MarkdownSection): SectionKey | null {
   const heading = normaliseHeading(section.heading);
+  const beginsWith = (...prefixes: string[]) =>
+    prefixes.some((prefix) => heading.startsWith(prefix));
 
-  if (heading.startsWith("company overview")) {
+  // The case studies use partner-provided headings. Match the six supported
+  // languages rather than assuming all documents are written in English.
+  if (
+    beginsWith(
+      "company overview",
+      "informacje o firmie",
+      "informaacje o firmie",
+      "przegląd firmy",
+      "unternehmensüberblick",
+      "panoramica dell azienda",
+      "επισκόπηση της εταιρείας",
+    )
+  ) {
     return "company";
   }
 
-  if (heading.startsWith("esg integration")) {
+  if (
+    beginsWith(
+      "esg integration",
+      "esg practices integrated",
+      "zintegrowane praktyki esg",
+      "integrierte esg praktiken",
+      "pratiche esg integrate",
+      "pratiche esgmetodi",
+      "ενσωματωμένες πρακτικές esg",
+      "ενσωμάτωση πρακτικών esg",
+      "ενσωμάτωση των πρακτικών esg",
+    )
+  ) {
     return "integration";
   }
 
-  if (heading.startsWith("environmental")) {
+  if (
+    beginsWith(
+      "environmental",
+      "praktyki środowiskowe",
+      "umweltpraktiken",
+      "pratiche ambientali",
+      "περιβαλλοντικές πρακτικές",
+    )
+  ) {
     return "environmental";
   }
 
-  if (heading.startsWith("social")) {
+  if (
+    beginsWith(
+      "social",
+      "praktyki społeczne",
+      "soziale praktiken",
+      "pratiche sociali",
+      "κοινωνικές πρακτικές",
+    )
+  ) {
     return "social";
   }
 
-  if (heading.startsWith("governance")) {
+  if (
+    beginsWith(
+      "governance",
+      "ład korporacyjny",
+      "praktyki ładu korporacyjnego",
+      "praktyki zarządzania i ładu",
+      "zarządzanie esg",
+      "pratiche di governance",
+      "governance aziendale",
+      "πρακτικές διακυβέρνησης",
+      "διακυβέρνηση esg",
+      "εταιρική διακυβέρνηση",
+    )
+  ) {
     return "governance";
   }
 
   if (
-    heading.startsWith("ratings") ||
-    heading.startsWith("indices scoring") ||
-    heading.startsWith("external evidence")
+    beginsWith(
+      "ratings",
+      "indices scoring",
+      "information on indices",
+      "external evidence",
+      "informacje o ocenach i indeksach",
+      "informationen zu index",
+      "informazioni sul punteggio",
+      "πληροφορίες σχετικά με τη βαθμολογία",
+      "πληροφορίες σχετικά με δείκτες",
+    )
   ) {
     return "ratings";
   }
 
-  if (heading.startsWith("regulatory compliance")) {
+  if (
+    beginsWith(
+      "regulatory compliance",
+      "success in regulatory compliance",
+      "sukcesy w zakresie zgodności",
+      "sukces w zakresie zgodności",
+      "erfolg bei der einhaltung",
+      "successo nella conformità",
+      "επιτυχής συμμόρφωση",
+      "επιτυχία στη συμμόρφωση",
+    )
+  ) {
     return "compliance";
   }
 
-  if (heading.startsWith("recommendations")) {
+  if (
+    beginsWith(
+      "recommendations",
+      "rekomendowane obszary do poprawy",
+      "empfehlungen",
+      "suggerimenti",
+      "συστάσεις",
+    )
+  ) {
     return "recommendations";
   }
 
-  if (heading.startsWith("sources") || heading.startsWith("references")) {
+  if (
+    beginsWith(
+      "sources",
+      "references",
+      "źródła",
+      "żródła",
+      "bibliografia",
+      "literatur",
+      "riferimenti",
+      "παραπομπές",
+      "αναφορές",
+      "βιβλιογραφικές αναφορές",
+    )
+  ) {
     return "sources";
   }
 
@@ -435,8 +530,12 @@ export default function EportfolioDetail({ locale, caseStudy }: Props) {
               </SectionBlock>
             ) : null}
 
-            {additionalSections.map((section) => (
-              <SectionBlock key={section.heading} icon={<BookOpen />} title={section.heading}>
+            {additionalSections.map((section, index) => (
+              <SectionBlock
+                key={`${section.heading}-${index}`}
+                icon={<BookOpen />}
+                title={section.heading}
+              >
                 <MarkdownFrame>
                   <MarkdownContent content={section.content} />
                 </MarkdownFrame>

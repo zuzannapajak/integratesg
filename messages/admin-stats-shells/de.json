@@ -332,6 +332,25 @@
           "delta": "Delta",
           "modulesBeforePost": "Module vor Post"
         }
+      },
+      "moduleCoverage": {
+        "title": "Abdeckung der sechs Module",
+        "description": "Aktivität der Pilot-Teilnehmenden mit abgeschlossener Vorerhebung nach Modul.",
+        "completedCoverage": "Von mindestens einer Person abgeschlossene Module",
+        "activeParticipants": "Teilnehmende mit Vorerhebung",
+        "startedModules": "Begonnene Module",
+        "columns": {
+          "module": "Modul",
+          "recommended": "Empfohlen für",
+          "started": "Begonnen von",
+          "completed": "Abgeschlossen von",
+          "recommendedCompleted": "Empfohlen und abgeschlossen",
+          "covered": "Abgedeckt",
+          "focus": "Empfohlene Module"
+        },
+        "yes": "Ja",
+        "no": "Nein",
+        "methodology": "Ein Modul gilt als abgedeckt, wenn es mindestens eine Person abgeschlossen hat. Begonnene Module werden separat gezählt. Zwei Module werden pro Person empfohlen; alle bleiben zugänglich."
       }
     },
     "PlatformFeedbackAdminDashboard": {

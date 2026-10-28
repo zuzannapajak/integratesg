@@ -1,0 +1,137 @@
+{
+  "language": "de",
+  "modules": [
+    {
+      "title": "Modul 1: Einführung in ESG (Environmental, Social, Governance) und nachhaltige Entwicklung",
+      "overview": "Dieses Modul vermittelt Ihnen ein grundlegendes Verständnis von ESG und seiner Entwicklung und befähigt Sie, die Kernkonzepte der Säulen Umwelt, Soziales und Unternehmensführung zu erfassen. Es hilft Ihnen, den strategischen Wert der ESG-Integration zu erkennen – unabhängig davon, ob Sie ein KMU oder ein Großunternehmen leiten – und zeigt, wie Ihr Handeln direkt mit den globalen Zielen für nachhaltige Entwicklung (SDGs) verknüpft ist. Dieses Wissen ist unerlässlich, um nachhaltige Entwicklung zu fördern.",
+      "units": [
+        {
+          "title": "Einheit 1: Die drei Säulen von ESG (Umwelt, Soziales, Unternehmensführung)",
+          "summary": "Die drei Kernkomponenten von ESG (Umwelt, Soziales, Unternehmensführung) definieren."
+        },
+        {
+          "title": "Einheit 2: Von unternehmerischer Philanthropie zur geschäftlichen Notwendigkeit",
+          "summary": "Die historische Entwicklung von ESG in der Unternehmenslandschaft beschreiben."
+        },
+        {
+          "title": "Einheit 3: Warum ESG Ihr strategischer Vorteil ist",
+          "summary": "Die strategische Relevanz von ESG sowohl für KMU als auch für Großunternehmen erkennen."
+        },
+        {
+          "title": "Einheit 4: Ihr unternehmerisches Handeln mit globalen Zielen verknüpfen",
+          "summary": "Die Zusammenhänge zwischen dem ESG-Rahmen und den Zielen für nachhaltige Entwicklung (SDGs) erklären."
+        }
+      ]
+    },
+    {
+      "title": "Modul 2: Strategie, Vision und organisatorische Ausrichtung",
+      "overview": "Dieses Modul untersucht die Ausrichtung von Organisationsstrategie und Vision an ESG-Grundsätzen. Es bietet praxisnahe Einblicke in die Integration von ESG in zentrale Geschäftsprozesse und ermöglicht so nachhaltige Wertschöpfung. Indem sie den Zusammenhang zwischen ESG und Unternehmenserfolg verstehen, werden die Lernenden befähigt, transparente und glaubwürdige ESG-Praktiken voranzutreiben und so zu einer nachhaltigeren Zukunft für Unternehmen und Stakeholder beizutragen.",
+      "units": [
+        {
+          "title": "Einheit 1: ESG mit Mission, Werten und langfristiger Strategie verknüpfen",
+          "summary": "Die bestehende Mission, Werte und die langfristige Strategie Ihrer Organisation analysieren, um Lücken in der Übereinstimmung mit ESG-Grundsätzen sowie Integrationsmöglichkeiten zu erkennen."
+        },
+        {
+          "title": "Einheit 2: ESG-Prioritäten und -Ziele festlegen",
+          "summary": "Die für Ihre Organisation relevanten ESG-Themen priorisieren, indem Sie deren Bedeutung für Stakeholder und Unternehmensstrategie bewerten."
+        },
+        {
+          "title": "Einheit 3: Engagement der Führung und Organisationskultur aufbauen",
+          "summary": "Strategien aufzeigen, um das Engagement der Führung für die ESG-Integration in Ihrer Organisation zu fördern."
+        },
+        {
+          "title": "Einheit 4: ESG mit finanzieller und operativer Leistung in Einklang bringen",
+          "summary": "Zielkonflikte zwischen ESG-Initiativen und kurzfristiger finanzieller Leistung bewerten, um fundierte Entscheidungen zu treffen, die Nachhaltigkeit und Rentabilität in Einklang bringen."
+        }
+      ]
+    },
+    {
+      "title": "Modul 3: Orientierung in ESG-Rahmenwerken und EU-Berichtsstandards",
+      "overview": "Dieses Modul hilft Ihnen zu verstehen, wie zentrale ESG-Rahmenwerke und europäische Berichtsstandards zusammenhängen und die heutige Nachhaltigkeitslandschaft prägen. Sie lernen, diese Rahmenwerke zu interpretieren und auf Ihre Organisation anzuwenden, sich auf die EU-Berichtspflichten vorzubereiten und deren praktische Auswirkungen auf KMU in verschiedenen Branchen zu erkennen.",
+      "units": [
+        {
+          "title": "Einheit 1: Zentrale Rahmenwerke – SDGs, GRI, SASB, TCFD, ESRS",
+          "summary": "zwischen den wichtigsten ESG-Rahmenwerken zu unterscheiden und ihre zentralen Zwecke und Schwerpunkte zu beschreiben."
+        },
+        {
+          "title": "Einheit 2: Die EU-Richtlinie zur Nachhaltigkeitsberichterstattung von Unternehmen (CSRD) und verwandte EU-Politiken",
+          "summary": "Den Hauptzweck, den Anwendungsbereich und die Anforderungen der CSRD zu erklären."
+        },
+        {
+          "title": "Einheit 3: ESG-Ratings, Audits, Offenlegungen und ihre Auswirkungen",
+          "summary": "Zu erklären, wie ESG-Ratings, Audits und Offenlegungen funktionieren und warum sie für Organisationen jeder Größe wichtig sind."
+        },
+        {
+          "title": "Einheit 4: Praktische Auswirkungen für KMU und branchenspezifische Gegebenheiten",
+          "summary": "Zu interpretieren, wie ESG-Rahmenwerke und Berichtspflichten in praktische Maßnahmen für KMU übersetzt werden."
+        }
+      ]
+    },
+    {
+      "title": "Modul 4: ESG in die Geschäftsabläufe integrieren",
+      "overview": "Dieses Modul hilft Ihnen, ESG von einer allgemeinen Idee in praktisches Handeln im betrieblichen Alltag zu überführen. Sie lernen, wie Sie ökologische, soziale und Governance-Praktiken durch einfache betriebliche Entscheidungen verbessern und wie Sie diese Maßnahmen glaubwürdig kommunizieren, damit Ihr Unternehmen Vertrauen aufbaut, Risiken verringert und leere ESG-Versprechen vermeidet.",
+      "units": [
+        {
+          "title": "Einheit 1: ESG-Berührungspunkte in zentralen Betriebsprozessen",
+          "summary": "Ihre zentralen betrieblichen Abläufe analysieren, um die wesentlichsten ESG-Auswirkungspunkte zu erkennen."
+        },
+        {
+          "title": "Einheit 2: Soziale Verantwortung bei Belegschaft und Lieferkette",
+          "summary": "Risiken und Verbesserungspotenziale der sozialen Verantwortung in Ihren Personalpraktiken und Lieferantenbeziehungen zu bewerten."
+        },
+        {
+          "title": "Einheit 3: Governance bei betrieblichen Entscheidungen",
+          "summary": "Einkäufe über einem festgelegten Betrag"
+        },
+        {
+          "title": "Einheit 4: Glaubwürdiges ESG in Kundenkommunikation und Aussagen",
+          "summary": "Kundenbezogene ESG-Aussagen und betriebliche Veränderungen zu bewerten, um Risiken von Greenwashing oder Social Washing zu erkennen."
+        }
+      ]
+    },
+    {
+      "title": "Modul 5: Umsetzung, Daten und funktionsübergreifende Praxis",
+      "overview": "Dieses Modul betrachtet ESG als praktischen Geschäftsprozess und nicht als Berichtsübung. Anhand eines realistischen Szenarios erkunden Sie, wie Organisationen ESG-Zuständigkeiten organisieren, mit Daten arbeiten und mit externen Partner:innen zusammenarbeiten. Ziel ist es, Ihnen verständlich zu machen, wie alltägliche Entscheidungen, die Abstimmung zwischen Teams und strukturierte Zusammenarbeit eine wirksame ESG-Integration im Lauf der Zeit prägen.",
+      "units": [
+        {
+          "title": "Einheit 1: Lebenszyklus der ESG-Integration",
+          "summary": "die wichtigsten Phasen des Lebenszyklus der ESG-Umsetzung zu benennen."
+        },
+        {
+          "title": "Einheit 2: ESG-Datenerhebung, -Management und Digitalisierung",
+          "summary": "die wichtigsten Arten von ESG-Daten zu erkennen."
+        },
+        {
+          "title": "Einheit 3: ESG in tägliche Prozesse und Entscheidungen einbetten",
+          "summary": "ESG-Werte in tägliche Arbeitsabläufe und Entscheidungen zu integrieren."
+        },
+        {
+          "title": "Einheit 4: Funktions- und sektorübergreifende Zusammenarbeit",
+          "summary": "Kooperationsmöglichkeiten innerhalb und außerhalb Ihrer Organisation zu erkennen, die die ESG-Umsetzung unterstützen."
+        }
+      ]
+    },
+    {
+      "title": "Modul 6: Monitoring, Berichterstattung und Zukunftstrends von ESG",
+      "overview": "Dieses Modul hilft den Lernenden, die ESG-Umsetzung anhand aussagekräftiger Indikatoren und KPIs zu überwachen, über ESG-Leistung glaubwürdig zu berichten (einschließlich zentraler EU-Berichtsgrundsätze) und Innovation sowie die Beobachtung künftiger Trends zu nutzen, um ESG-Praktiken kontinuierlich zu verbessern. Am Ende können die Lernenden ESG-Daten in Entscheidungen und Kommunikation übersetzen, die Vertrauen bei den Stakeholdern schaffen.",
+      "units": [
+        {
+          "title": "Einheit 1: ESG-Indikatoren und KPIs: Messen, was zählt",
+          "summary": "ESG-Indikatoren und KPIs sind die Grundlage eines wirksamen Nachhaltigkeitsmanagements"
+        },
+        {
+          "title": "Einheit 2: ESG-Leistung glaubwürdig berichten und kommunizieren",
+          "summary": "Einheit 2 – Einführung   Bei der Berichterstattung geht es nicht nur um Compliance, sondern um den Aufbau von Vertrauen"
+        },
+        {
+          "title": "Einheit 3: Innovation als Treiber der ESG-Leistung",
+          "summary": "Innovation spielt eine entscheidende Rolle dabei, Organisationen zu ermöglichen, ESG-Ziele wirksamer und effizienter zu erreichen"
+        },
+        {
+          "title": "Einheit 4: Kontinuierliche Verbesserung, künftige EU-Politiken und globale ESG-Trends",
+          "summary": "Planbarkeit für Bürger:innen, Unternehmen und Investor:innen sicherstellen"
+        }
+      ]
+    }
+  ]
+}

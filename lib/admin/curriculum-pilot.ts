@@ -1,4 +1,9 @@
 import { prisma } from "@/lib/prisma";
+import {
+  buildPilotModuleCoverage,
+  startedAfterPreAssessment,
+  type PilotModuleCoverageRow,
+} from "@/lib/curriculum/pilot-coverage";
 
 type PilotSubmissionType = "pre" | "post";
 
@@ -24,6 +29,8 @@ export type CurriculumPilotUserRow = {
   postAverage: number | null;
   delta: number | null;
   modulesBeforePost: number | null;
+  focusModules: string[];
+  focusCompleted: number;
 };
 
 export type CurriculumPilotAdminStats = {
@@ -37,6 +44,13 @@ export type CurriculumPilotAdminStats = {
     averagePostScore: number | null;
     averageDelta: number | null;
     averageModulesBeforePost: number | null;
+  };
+  moduleCoverage: {
+    expectedModules: number;
+    coveredModules: number;
+    startedModules: number;
+    activeParticipants: number;
+    modules: PilotModuleCoverageRow[];
   };
   questionStats: CurriculumPilotQuestionStat[];
   userRows: CurriculumPilotUserRow[];
@@ -73,7 +87,7 @@ function getLearnerName(user: { fullName: string | null; email: string }) {
 export async function getCurriculumPilotAdminStats(
   locale: string,
 ): Promise<CurriculumPilotAdminStats> {
-  const [pilots, questions] = await Promise.all([
+  const [pilots, questions, courses, attempts] = await Promise.all([
     prisma.curriculumPilot.findMany({
       orderBy: [{ updatedAt: "desc" }],
       include: {
@@ -119,7 +133,39 @@ export async function getCurriculumPilotAdminStats(
         },
       },
     }),
+    prisma.course.findMany({
+      where: { status: "published" },
+      orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
+      select: {
+        id: true,
+        slug: true,
+        translations: {
+          where: { language: { in: [locale, "en"] } },
+          select: { language: true, title: true },
+        },
+      },
+    }),
+    prisma.userCourseAttempt.findMany({
+      where: { user: { curriculumPilot: { is: { preAssessmentCompletedAt: { not: null } } } } },
+      select: { userId: true, courseId: true, status: true, startedAt: true, completedAt: true },
+    }),
   ]);
+
+  const moduleCoverage = buildPilotModuleCoverage({
+    courses: courses.map((course) => ({
+      id: course.id,
+      slug: course.slug,
+      title:
+        course.translations.find((item) => item.language === locale)?.title ??
+        course.translations.find((item) => item.language === "en")?.title ??
+        course.slug,
+    })),
+    pilots: pilots.map((pilot) => ({
+      userId: pilot.userId,
+      preAssessmentCompletedAt: pilot.preAssessmentCompletedAt,
+    })),
+    attempts,
+  });
 
   const postSubmissions = pilots
     .flatMap((pilot) => pilot.submissions)
@@ -181,8 +227,25 @@ export async function getCurriculumPilotAdminStats(
   const userRows = pilots.map((pilot) => {
     const postSubmission = pilot.submissions.find((submission) => submission.type === "post");
 
+    const focusIds = moduleCoverage.focusCourseIdsByUser.get(pilot.userId) ?? [];
+    const focusModules = focusIds.flatMap((id) => {
+      const course = moduleCoverage.modules.find((module) => module.id === id);
+      return course ? [course.slug] : [];
+    });
+    const focusCompleted = focusIds.filter((id) =>
+      attempts.some(
+        (attempt) =>
+          attempt.userId === pilot.userId &&
+          attempt.courseId === id &&
+          startedAfterPreAssessment(attempt, pilot.preAssessmentCompletedAt) &&
+          (attempt.status === "completed" || attempt.completedAt !== null),
+      ),
+    ).length;
+
     return {
       userId: pilot.userId,
+      focusModules,
+      focusCompleted,
       learnerName: getLearnerName(pilot.user),
       learnerEmail: pilot.user.email,
       status: pilot.status,
@@ -206,6 +269,13 @@ export async function getCurriculumPilotAdminStats(
       averagePostScore: average(postScores),
       averageDelta: average(deltas),
       averageModulesBeforePost: average(modulesBeforePost),
+    },
+    moduleCoverage: {
+      expectedModules: moduleCoverage.expectedModules,
+      coveredModules: moduleCoverage.coveredModules,
+      startedModules: moduleCoverage.startedModules,
+      activeParticipants: moduleCoverage.activeParticipants,
+      modules: moduleCoverage.modules,
     },
     questionStats,
     userRows,

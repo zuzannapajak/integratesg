@@ -262,7 +262,8 @@
       "completed": {
         "eyebrow": "Pilotaż ukończony",
         "title": "Ocena końcowa została zapisana",
-        "description": "Dziękujemy za ukończenie części pilotażowej. Nadal możesz korzystać z modułów, zaliczać testy modułowe i pracować nad uzyskaniem certyfikatu."
+        "description": "Dziękujemy za ukończenie części pilotażowej. Nadal możesz korzystać z modułów, zaliczać testy modułowe i pracować nad uzyskaniem certyfikatu.",
+        "surveyAction": "Oceń pilotaż"
       },
       "available": {
         "eyebrow": "Ścieżka pilotażowa",
@@ -307,6 +308,12 @@
         "submitting": "Zapisywanie odpowiedzi...",
         "submitError": "Nie udało się zapisać post-assessmentu. Spróbuj ponownie."
       }
+    },
+    "CurriculumPilotFocusModules": {
+      "title": "Moduły priorytetowe pilotażu",
+      "description": "Aby rzetelnie ocenić wszystkie sześć modułów, proponujemy Ci skupić się na tych dwóch.",
+      "progress": "Ukończone moduły priorytetowe: {completed}/{total}",
+      "openAccess": "Wszystkie sześć modułów pozostaje dostępnych. Możesz również korzystać z pozostałych."
     }
   }
 }

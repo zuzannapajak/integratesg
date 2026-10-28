@@ -1,6 +1,8 @@
 "use client";
 
-import CertificateDownloadButton from "@/components/curriculum/certificate-download-button";
+import CurriculumModuleCompletion, {
+  type CurriculumCompletionStep,
+} from "@/components/curriculum/curriculum-module-completion";
 import MarkdownContent from "@/components/ui/markdown-content";
 import {
   completeLessonAction,
@@ -30,6 +32,7 @@ import { useMemo, useState, useTransition } from "react";
 type Props = {
   locale: string;
   module: CurriculumModuleViewModel;
+  completionStep?: CurriculumCompletionStep;
 };
 
 type ReviewState = {
@@ -61,7 +64,11 @@ function splitMarkdownIntoPages(content: string | null | undefined): string[] {
   return pages.length > 0 ? pages : [content.trim()];
 }
 
-export default function ModulePlayerShell({ locale, module: initialModule }: Props) {
+export default function ModulePlayerShell({
+  locale,
+  module: initialModule,
+  completionStep = "explore",
+}: Props) {
   const t = useTranslations("Protected.ModulePlayerShell");
   const [module, setModule] = useState(initialModule);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
@@ -795,93 +802,16 @@ export default function ModulePlayerShell({ locale, module: initialModule }: Pro
       ) : null}
 
       {stage === "completed" && !reviewState ? (
-        <section className={`${SURFACE} overflow-hidden p-6 md:p-7`}>
-          <div className="relative overflow-hidden rounded-[30px] border border-[#e8edf3] bg-white/82 p-6 md:p-8">
-            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(11,156,114,0.14),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(49,66,90,0.08),transparent_30%),linear-gradient(180deg,rgba(255,255,255,0.78)_0%,rgba(255,255,255,0.98)_100%)]" />
-
-            <div className="relative grid gap-6 xl:grid-cols-[minmax(0,1.2fr)_320px] xl:items-end">
-              <div className="max-w-3xl">
-                <div className="inline-flex items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1.5 text-[0.72rem] font-bold uppercase tracking-[0.14em] text-emerald-700">
-                  <CheckCircle2 className="h-4 w-4" />
-                  {t("completed.badge")}
-                </div>
-
-                <h2 className="mt-4 text-3xl font-bold tracking-[-0.03em] text-[#31425a] md:text-[2.35rem]">
-                  {t("completed.title")}
-                </h2>
-
-                <p className="mt-4 max-w-2xl text-[0.98rem] leading-8 text-[#667180]">
-                  {t("completed.description")}
-                </p>
-
-                <div className="mt-6 flex flex-wrap gap-3">
-                  {certificateAvailable ? <CertificateDownloadButton slug={module.slug} /> : null}
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setRetakeConfirmOpen(true);
-                    }}
-                    disabled={isPending}
-                    className="inline-flex items-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#253347] disabled:opacity-60"
-                  >
-                    <RotateCcw className="h-4.5 w-4.5" />
-                    {t("completed.retake")}
-                  </button>
-
-                  <Link
-                    href={`/${locale}/curriculum/${module.slug}`}
-                    className="inline-flex items-center gap-2 rounded-2xl border border-[#d9e2ec] bg-white px-5 py-3 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc]"
-                  >
-                    {t("completed.reviewOverview")}
-                  </Link>
-
-                  <Link
-                    href={`/${locale}/curriculum`}
-                    className="inline-flex items-center gap-2 rounded-2xl border border-[#d9e2ec] bg-white px-5 py-3 text-sm font-semibold text-[#31425a] transition hover:bg-[#f8fafc]"
-                  >
-                    {t("completed.exploreMore")}
-                  </Link>
-                </div>
-              </div>
-
-              <div className="grid gap-3">
-                <div className="rounded-3xl border border-[#e8edf3] bg-white/90 p-5 shadow-[0_10px_28px_rgba(35,45,62,0.05)]">
-                  <p className="text-[0.72rem] font-bold uppercase tracking-[0.14em] text-[#8a97a6]">
-                    {t("completed.finalProgress")}
-                  </p>
-                  <div className="mt-2 text-3xl font-bold tracking-tight text-[#31425a]">100%</div>
-                  <div className="mt-4 h-2.5 overflow-hidden rounded-full bg-[#edf2f7]">
-                    <div className="h-full w-full rounded-full bg-[#0b9c72]" />
-                  </div>
-                </div>
-
-                <div className="rounded-3xl border border-[#e8edf3] bg-white/90 p-5 shadow-[0_10px_28px_rgba(35,45,62,0.05)]">
-                  <p className="text-sm font-semibold text-[#31425a]">
-                    {certificateAvailable
-                      ? t("completed.certificate.availableTitle")
-                      : t("completed.certificate.lockedTitle")}
-                  </p>
-
-                  <p className="mt-2 text-sm leading-6 text-[#667180]">
-                    {certificateAvailable
-                      ? t("completed.certificate.availableDescription")
-                      : t("completed.certificate.lockedDescription")}
-                  </p>
-                </div>
-
-                <div className="rounded-3xl border border-[#e8edf3] bg-white/90 p-5 shadow-[0_10px_28px_rgba(35,45,62,0.05)]">
-                  <p className="text-sm font-semibold text-[#31425a]">
-                    {t("completed.whatsNextTitle")}
-                  </p>
-                  <p className="mt-2 text-sm leading-6 text-[#667180]">
-                    {t("completed.whatsNextDescription")}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <CurriculumModuleCompletion
+          locale={locale}
+          slug={module.slug}
+          completionStep={completionStep}
+          certificateAvailable={certificateAvailable}
+          isPending={isPending}
+          onRetake={() => {
+            setRetakeConfirmOpen(true);
+          }}
+        />
       ) : null}
 
       <AnimatePresence>

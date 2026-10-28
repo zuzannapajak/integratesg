@@ -262,7 +262,8 @@
       "completed": {
         "eyebrow": "Pilot abgeschlossen",
         "title": "Die Nachbewertung wurde gespeichert",
-        "description": "Vielen Dank, dass Sie den Pilotteil abgeschlossen haben. Sie können die Module weiterhin nutzen, Modultests absolvieren und auf das Zertifikat hinarbeiten."
+        "description": "Vielen Dank, dass Sie den Pilotteil abgeschlossen haben. Sie können die Module weiterhin nutzen, Modultests absolvieren und auf das Zertifikat hinarbeiten.",
+        "surveyAction": "Pilot bewerten"
       },
       "available": {
         "eyebrow": "Pilotpfad",
@@ -307,6 +308,12 @@
         "submitting": "Antworten werden gespeichert...",
         "submitError": "Das Post-Assessment konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
       }
+    },
+    "CurriculumPilotFocusModules": {
+      "title": "Empfohlene Pilotmodule",
+      "description": "Damit alle sechs Module ausgewogen getestet werden, empfehlen wir Ihnen diese beiden Module.",
+      "progress": "Abgeschlossene empfohlene Module: {completed}/{total}",
+      "openAccess": "Alle sechs Module bleiben zugänglich. Sie können auch die anderen Module erkunden."
     }
   }
 }

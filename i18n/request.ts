@@ -17,6 +17,7 @@ const messageScopes = [
   "module-player-shells",
   "metadata-shells",
   "platform-feedback-shells",
+  "pilot-satisfaction-shells",
   "protected-list-shells",
   "public-content-shells",
   "route-state-shells",

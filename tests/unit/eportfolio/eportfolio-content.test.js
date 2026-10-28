@@ -17,6 +17,14 @@ const REQUIRED_READY_SLUGS = [
   "harmonica",
   "sonnentor",
   "verbund",
+  "allegro",
+  "grupa-azoty",
+  "bank-of-cyprus",
+  "eurobank-cyprus",
+  "hermes-airports",
+  "vassiliko-cement-works",
+  "kpmg-cyprus",
+  "pko-bank-polski",
 ];
 
 function getEnglishTranslation(caseStudy) {
@@ -30,6 +38,24 @@ describe("ePortfolio content catalogue", () => {
     const slugs = caseStudies.map((caseStudy) => caseStudy.slug);
 
     expect(slugs).toEqual(expect.arrayContaining(REQUIRED_READY_SLUGS));
+    expect(slugs).toHaveLength(16);
+  });
+
+  it("has complete Polish and Greek case-study translations", () => {
+    for (const caseStudy of caseStudies) {
+      const locales = caseStudy.translations.map((entry) => entry.language);
+      expect(locales, `${caseStudy.slug}: missing Polish translation`).toContain("pl");
+      expect(locales, `${caseStudy.slug}: missing Greek translation`).toContain("el");
+    }
+  });
+
+  it("contains full German and Italian case-study translations", () => {
+    for (const caseStudy of caseStudies) {
+      const locales = caseStudy.translations.map((entry) => entry.language);
+
+      expect(locales, `${caseStudy.slug}: missing German translation`).toContain("de");
+      expect(locales, `${caseStudy.slug}: missing Italian translation`).toContain("it");
+    }
   });
 
   it("uses unique slugs", () => {

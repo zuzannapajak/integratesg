@@ -1,3 +1,5 @@
+import CurriculumPilotFocusModules from "@/components/curriculum/curriculum-pilot-focus-modules";
+import { getCurriculumPilotFocus } from "@/lib/curriculum/pilot-focus";
 import CurriculumPilotPostAssessmentCard from "@/components/curriculum/curriculum-pilot-post-assessment-form";
 import CurriculumSwitcher from "@/components/curriculum/curriculum-switcher";
 import { requireRole } from "@/features/auth/requireRole";
@@ -65,7 +67,7 @@ async function getCurriculumPageData({ params, searchParams }: Props) {
       requireRole(locale, APP_ROLES.educator),
     ]);
 
-    const [modules, pilotPostAssessment, recommendedSlug] = await Promise.all([
+    const [modules, pilotPostAssessment, recommendedSlug, pilotFocus] = await Promise.all([
       getCurriculumModules({
         userId: user.id,
         locale,
@@ -77,6 +79,7 @@ async function getCurriculumPageData({ params, searchParams }: Props) {
       getCurriculumRecommendedModuleSlug({
         userId: user.id,
       }),
+      getCurriculumPilotFocus({ userId: user.id, locale }),
     ]);
 
     const myCourses = activeView === "my-courses" ? modules : [];
@@ -93,6 +96,7 @@ async function getCurriculumPageData({ params, searchParams }: Props) {
       myCourses,
       allCourses,
       pilotPostAssessment,
+      pilotFocus,
       recommendedSlug,
       title: t("title"),
       subtitle: t("subtitle"),
@@ -125,6 +129,7 @@ export default async function CurriculumPage(props: Props) {
     myCourses,
     allCourses,
     pilotPostAssessment,
+    pilotFocus,
     recommendedSlug,
     title,
     subtitle,
@@ -146,6 +151,7 @@ export default async function CurriculumPage(props: Props) {
           </div>
         </header>
 
+        <CurriculumPilotFocusModules locale={locale} focus={pilotFocus} />
         <CurriculumPilotPostAssessmentCard locale={locale} state={pilotPostAssessment} />
 
         <CurriculumSwitcher

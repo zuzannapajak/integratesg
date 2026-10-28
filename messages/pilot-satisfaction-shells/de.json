@@ -1,0 +1,60 @@
+{
+  "Protected": {
+    "PilotSatisfaction": {
+      "back": "Zurück",
+      "choose": "Bitte auswählen...",
+      "country": "Pilotland",
+      "caseStudy": "Bewertete Fallstudie",
+      "privacy": "Antworten sind zur Vermeidung von Duplikaten mit Ihrem Konto verknüpft und werden nur aggregiert dargestellt. Bitte keine personenbezogenen Daten in Freitextfeldern angeben.",
+      "officialNotice": "Dieses zusätzliche Plattformfeedback ersetzt nicht die offizielle WP3-Befragung beim Workshop.",
+      "officialLink": "WP3-Fragebogen öffnen",
+      "callout": "Teilen Sie nach Abschluss Ihre Erfahrungen.",
+      "open": "Fragebogen ausfüllen",
+      "notAvailable": "Befragung noch nicht verfügbar",
+      "alreadySubmitted": "Sie haben diesen Fragebogen bereits eingereicht.",
+      "success": "Vielen Dank für Ihr Feedback!",
+      "saved": "Ihr Feedback wurde gespeichert.",
+      "submit": "Feedback senden",
+      "error": "Bitte füllen Sie alle Pflichtfelder aus. Nach einer bereits erfolgten Einsendung laden Sie die Seite neu.",
+      "scale": "Skala: 1 = sehr schlecht, 5 = ausgezeichnet",
+      "strengths": "Was war besonders gelungen? (optional)",
+      "improvements": "Was sollte verbessert werden? (optional)",
+      "scope": {
+        "curriculum": {
+          "title": "Zufriedenheitsbefragung — Curriculum",
+          "description": "Bewerten Sie Lerninhalte und Nutzbarkeit nach dem Post-Assessment.",
+          "eligibility": "Bitte zuerst das Pilot-Post-Assessment abschließen."
+        },
+        "eportfolio": {
+          "title": "Zufriedenheitsbefragung — ePortfolio",
+          "description": "Bewerten Sie eine abgeschlossene Fallstudie.",
+          "eligibility": "Bitte zuerst mindestens eine Fallstudie abschließen."
+        }
+      },
+      "questions": {
+        "contentClarity": "Wie verständlich waren die Inhalte?",
+        "practicalRelevance": "Wie relevant sind sie für die ESG-Praxis?",
+        "usability": "Wie einfach war die Nutzung der Lernangebote?",
+        "overallSatisfaction": "Wie zufrieden sind Sie insgesamt?"
+      },
+      "countries": {
+        "AT": "Österreich",
+        "BG": "Bulgarien",
+        "CY": "Zypern",
+        "IT": "Italien",
+        "PL": "Polen"
+      },
+      "admin": {
+        "title": "Pilotzufriedenheit — internes Feedback",
+        "disclaimer": "Diese Zahlen zählen nur interne Plattformantworten nach selbst angegebenem Land; sie sind nicht unabhängig geprüft. Die offizielle WP3-Workshopbefragung in Google Forms muss separat nachgewiesen werden. 15 pro Land ist ein operatives Planungsziel.",
+        "poland": "Polen — eindeutige Antwortende",
+        "remaining": "Bis zum internen Ziel",
+        "responses": "Antworten",
+        "average": "Mittlere Zufriedenheit (1–5)",
+        "export": "Aggregierte CSV exportieren"
+      },
+      "returnToCurriculum": "Weitere Module erkunden",
+      "returnToEportfolio": "Zurück zum ePortfolio"
+    }
+  }
+}

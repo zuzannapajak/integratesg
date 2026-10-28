@@ -1,0 +1,60 @@
+{
+  "Protected": {
+    "PilotSatisfaction": {
+      "back": "Powrót",
+      "choose": "Wybierz...",
+      "country": "Kraj pilotażu",
+      "caseStudy": "Oceniane studium przypadku",
+      "privacy": "Odpowiedzi są powiązane z kontem, aby zapobiec wielokrotnemu przesyłaniu. W raportach prezentujemy wyniki zbiorcze. Nie podawaj danych osobowych w komentarzach.",
+      "officialNotice": "Ta dodatkowa ankieta na platformie nie zastępuje oficjalnej ankiety satysfakcji WP3 przeprowadzanej podczas warsztatu.",
+      "officialLink": "Otwórz ankietę WP3",
+      "callout": "Podziel się opinią po ukończeniu części edukacyjnej.",
+      "open": "Wypełnij ankietę",
+      "notAvailable": "Ankieta nie jest jeszcze dostępna",
+      "alreadySubmitted": "Ankieta została już przesłana.",
+      "success": "Dziękujemy za opinię!",
+      "saved": "Twoje odpowiedzi zostały zapisane.",
+      "submit": "Prześlij opinię",
+      "error": "Uzupełnij wymagane pola. Jeśli ankieta została już przesłana, odśwież stronę.",
+      "scale": "Skala: 1 = bardzo słabo, 5 = doskonale",
+      "strengths": "Co było najbardziej wartościowe? (opcjonalnie)",
+      "improvements": "Co należałoby poprawić? (opcjonalnie)",
+      "scope": {
+        "curriculum": {
+          "title": "Ankieta satysfakcji — Curriculum",
+          "description": "Oceń materiały szkoleniowe i korzystanie z platformy po zakończeniu post-assessmentu.",
+          "eligibility": "Najpierw ukończ post-assessment pilotażowy."
+        },
+        "eportfolio": {
+          "title": "Ankieta satysfakcji — ePortfolio",
+          "description": "Oceń jedno z ukończonych studiów przypadku.",
+          "eligibility": "Najpierw ukończ co najmniej jedno studium przypadku."
+        }
+      },
+      "questions": {
+        "contentClarity": "Czy treści były zrozumiałe i przejrzyste?",
+        "practicalRelevance": "Na ile treści są przydatne w praktyce ESG?",
+        "usability": "Jak oceniasz wygodę korzystania z materiałów?",
+        "overallSatisfaction": "Jak oceniasz ogólne zadowolenie?"
+      },
+      "countries": {
+        "AT": "Austria",
+        "BG": "Bułgaria",
+        "CY": "Cypr",
+        "IT": "Włochy",
+        "PL": "Polska"
+      },
+      "admin": {
+        "title": "Satysfakcja uczestników — ankiety wewnętrzne",
+        "disclaimer": "Liczniki dotyczą tylko ankiet na platformie, według kraju wybranego przez uczestnika (bez niezależnej weryfikacji). WP3 wymaga osobnych wyników z oficjalnej ankiety Google Forms po warsztacie — tych odpowiedzi NIE można raportować jako oficjalnej realizacji WP3. Cel 15 na kraj ma charakter operacyjny.",
+        "poland": "Polska — unikalni respondenci",
+        "remaining": "Pozostało do celu wewnętrznego",
+        "responses": "Odpowiedzi",
+        "average": "Średnia satysfakcji (1–5)",
+        "export": "Eksport zbiorczy CSV"
+      },
+      "returnToCurriculum": "Przeglądaj kolejne moduły",
+      "returnToEportfolio": "Powrót do ePortfolio"
+    }
+  }
+}

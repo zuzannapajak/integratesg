@@ -77,8 +77,27 @@
         "certificate": {
           "availableTitle": "Completion certificate",
           "lockedTitle": "Certificate status",
-          "availableDescription": "Your English certificate is ready to download.",
+          "availableDescription": "Your certificate is ready to download.",
           "lockedDescription": "Certificates are issued only after passing the final checkpoint. Retake the module to unlock your certificate."
+        },
+        "savedSummary": "Your progress has been saved.",
+        "nextStep": {
+          "eyebrow": "What’s next",
+          "assessment": {
+            "title": "You can finish your pilot participation",
+            "description": "You have completed at least one module, so the post-assessment is now available. After submitting it, you will still have access to the course and modules.",
+            "action": "Finish pilot participation"
+          },
+          "feedback": {
+            "title": "Curriculum satisfaction survey",
+            "description": "Evaluate the learning materials and usability after completing your pilot post-assessment.",
+            "action": "Fill out survey"
+          },
+          "explore": {
+            "title": "What’s next",
+            "description": "Your lesson progression and checkpoint history have been saved. You can now return to the module overview, or continue exploring the rest of the curriculum.",
+            "action": "Explore more modules"
+          }
         }
       },
       "confirmSubmit": {

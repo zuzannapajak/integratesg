@@ -77,8 +77,27 @@
         "certificate": {
           "availableTitle": "Abschlusszertifikat",
           "lockedTitle": "Zertifikatsstatus",
-          "availableDescription": "Ihr englisches Zertifikat steht zum Download bereit.",
+          "availableDescription": "Ihr Zertifikat steht zum Download bereit.",
           "lockedDescription": "Zertifikate werden erst nach Bestehen des abschließenden Checkpoints ausgestellt. Wiederholen Sie das Modul, um Ihr Zertifikat freizuschalten."
+        },
+        "savedSummary": "Ihr Fortschritt wurde gespeichert.",
+        "nextStep": {
+          "eyebrow": "Wie es weitergeht",
+          "assessment": {
+            "title": "Sie können Ihre Pilotteilnahme abschließen",
+            "description": "Sie haben mindestens ein Modul abgeschlossen, daher ist die Nachbewertung jetzt verfügbar. Nach dem Absenden haben Sie weiterhin Zugriff auf den Kurs und die Module.",
+            "action": "Pilotteilnahme abschließen"
+          },
+          "feedback": {
+            "title": "Zufriedenheitsbefragung — Curriculum",
+            "description": "Bewerten Sie Lerninhalte und Nutzbarkeit nach dem Post-Assessment.",
+            "action": "Fragebogen ausfüllen"
+          },
+          "explore": {
+            "title": "Wie es weitergeht",
+            "description": "Ihr Lektionsfortschritt und Ihr Checkpoint-Verlauf wurden gespeichert. Sie können nun zur Modulübersicht zurückkehren oder den Rest des Lehrplans weiter erkunden.",
+            "action": "Weitere Module erkunden"
+          }
         }
       },
       "confirmSubmit": {

@@ -1,7 +1,7 @@
 "use client";
 
 import type { CurriculumPilotAdminStats } from "@/lib/admin/curriculum-pilot";
-import { BarChart3, ClipboardCheck, Users } from "lucide-react";
+import { BarChart3, BookOpenCheck, ClipboardCheck, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 type Props = {
@@ -93,6 +93,80 @@ export default function CurriculumPilotAdminDashboard({ locale, stats }: Props) 
           />
         </section>
 
+        <section
+          className="mt-8 rounded-3xl border border-white/70 bg-white/90 p-5 shadow-[0_12px_34px_rgba(35,45,62,0.06)]"
+          aria-labelledby="pilot-module-coverage"
+        >
+          <div className="mb-5 flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-2">
+                <BookOpenCheck className="h-5 w-5 text-[#0b9c72]" />
+                <h2 id="pilot-module-coverage" className="text-xl font-bold text-[#31425a]">
+                  {t("moduleCoverage.title")}
+                </h2>
+              </div>
+              <p className="mt-2 text-sm text-[#667180]">{t("moduleCoverage.description")}</p>
+            </div>
+            <div className="rounded-2xl bg-[#eaf5fc] px-4 py-3 text-right text-[#31425a]">
+              <p className="text-xs font-semibold">{t("moduleCoverage.completedCoverage")}</p>
+              <p className="text-2xl font-bold tabular-nums">
+                {stats.moduleCoverage.coveredModules}/{stats.moduleCoverage.expectedModules}
+              </p>
+            </div>
+          </div>
+          <div className="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+            <SummaryCard
+              label={t("moduleCoverage.activeParticipants")}
+              value={stats.moduleCoverage.activeParticipants}
+            />
+            <SummaryCard
+              label={t("moduleCoverage.startedModules")}
+              value={`${stats.moduleCoverage.startedModules}/${stats.moduleCoverage.expectedModules}`}
+            />
+            <SummaryCard
+              label={t("moduleCoverage.completedCoverage")}
+              value={`${stats.moduleCoverage.coveredModules}/${stats.moduleCoverage.expectedModules}`}
+            />
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[720px] text-left text-sm">
+              <thead>
+                <tr className="border-b border-[#e2e8f0] text-xs font-bold uppercase text-[#667180]">
+                  <th className="px-3 py-3">{t("moduleCoverage.columns.module")}</th>
+                  <th className="px-3 py-3">{t("moduleCoverage.columns.recommended")}</th>
+                  <th className="px-3 py-3">{t("moduleCoverage.columns.started")}</th>
+                  <th className="px-3 py-3">{t("moduleCoverage.columns.completed")}</th>
+                  <th className="px-3 py-3">{t("moduleCoverage.columns.recommendedCompleted")}</th>
+                  <th className="px-3 py-3">{t("moduleCoverage.columns.covered")}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {stats.moduleCoverage.modules.map((module, index) => (
+                  <tr key={module.id} className="border-b border-[#edf1f4] text-[#31425a]">
+                    <td className="px-3 py-3 font-semibold">
+                      {index + 1}. {module.title}
+                    </td>
+                    <td className="px-3 py-3 tabular-nums">{module.recommendedTo}</td>
+                    <td className="px-3 py-3 tabular-nums">{module.startedBy}</td>
+                    <td className="px-3 py-3 tabular-nums">{module.completedBy}</td>
+                    <td className="px-3 py-3 tabular-nums">{module.completedByRecommended}</td>
+                    <td className="px-3 py-3">
+                      <span
+                        className={
+                          module.completedBy ? "font-semibold text-emerald-700" : "text-[#667180]"
+                        }
+                      >
+                        {module.completedBy ? t("moduleCoverage.yes") : t("moduleCoverage.no")}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="mt-4 text-xs leading-5 text-[#667180]">{t("moduleCoverage.methodology")}</p>
+        </section>
+
         <section className="mt-8 rounded-3xl border border-white/70 bg-white/90 p-5 shadow-[0_12px_34px_rgba(35,45,62,0.06)]">
           <div className="mb-5 flex items-center gap-2">
             <BarChart3 className="h-5 w-5 text-[#0b9c72]" />
@@ -146,6 +220,7 @@ export default function CurriculumPilotAdminDashboard({ locale, stats }: Props) 
                   <th className="px-4 py-2">{t("users.columns.postAverage")}</th>
                   <th className="px-4 py-2">{t("users.columns.delta")}</th>
                   <th className="px-4 py-2">{t("users.columns.modulesBeforePost")}</th>
+                  <th className="px-4 py-2">{t("moduleCoverage.columns.focus")}</th>
                 </tr>
               </thead>
 
@@ -162,7 +237,12 @@ export default function CurriculumPilotAdminDashboard({ locale, stats }: Props) 
                     <td className="px-4 py-3">{formatValue(row.preAverage)}</td>
                     <td className="px-4 py-3">{formatValue(row.postAverage)}</td>
                     <td className="px-4 py-3">{formatValue(row.delta)}</td>
-                    <td className="rounded-r-2xl px-4 py-3">{row.modulesBeforePost ?? "—"}</td>
+                    <td className="px-4 py-3">{row.modulesBeforePost ?? "—"}</td>
+                    <td className="rounded-r-2xl px-4 py-3">
+                      {row.focusModules.length
+                        ? `${row.focusModules.join(", ")} (${row.focusCompleted}/${row.focusModules.length})`
+                        : "—"}
+                    </td>
                   </tr>
                 ))}
               </tbody>

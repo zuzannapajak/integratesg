@@ -2,15 +2,21 @@ import { resolveScenarioBySlug } from "@/lib/scenarios/simulator/resolve-scenari
 import { describe, expect, it } from "vitest";
 
 describe("scenario translation fallback", () => {
-  it("returns the English scenario when the requested locale is unavailable", () => {
-    const englishScenario = resolveScenarioBySlug("scenario-02", "en");
-    const polishScenario = resolveScenarioBySlug("scenario-02", "pl");
+  it("returns the Italian scenario when the translation exists", () => {
+    const italian = resolveScenarioBySlug("scenario-02", "it");
+    const english = resolveScenarioBySlug("scenario-02", "en");
 
-    expect(englishScenario).not.toBeNull();
-    expect(polishScenario).not.toBeNull();
-    expect(polishScenario?.locale).toBe("en");
-    expect(polishScenario?.title).toBe(englishScenario?.title);
-    expect(polishScenario?.challenges[0]?.question).toBe(englishScenario?.challenges[0]?.question);
+    expect(italian).not.toBeNull();
+    expect(italian?.locale).toBe("it");
+    expect(italian?.title).not.toBe(english?.title);
+    expect(italian?.challenges[0]?.question).not.toBe(english?.challenges[0]?.question);
+  });
+
+  it("keeps an English fallback for unavailable languages", () => {
+    const english = resolveScenarioBySlug("scenario-02", "en");
+    const french = resolveScenarioBySlug("scenario-02", "fr");
+
+    expect(french).toEqual(english);
   });
 
   it("returns null for an unknown scenario slug", () => {

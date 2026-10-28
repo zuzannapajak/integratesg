@@ -1,0 +1,60 @@
+{
+  "Protected": {
+    "PilotSatisfaction": {
+      "back": "Back",
+      "choose": "Select...",
+      "country": "Pilot country",
+      "caseStudy": "Case study you evaluated",
+      "privacy": "Your responses are linked to your account to prevent duplicate submissions and are presented as aggregated statistics. Avoid including personal data in comments.",
+      "officialNotice": "This additional platform feedback does not replace the official WP3 satisfaction questionnaire administered during the workshop.",
+      "officialLink": "Open the WP3 questionnaire",
+      "callout": "Share your experience after completing the learning activities.",
+      "open": "Fill out survey",
+      "notAvailable": "Survey is not available yet",
+      "alreadySubmitted": "You have already submitted this survey.",
+      "success": "Thank you for your feedback!",
+      "saved": "Your feedback has been recorded.",
+      "submit": "Send feedback",
+      "error": "Please complete all required fields. If you already submitted, refresh the page.",
+      "scale": "Scale: 1 = very poor, 5 = excellent",
+      "strengths": "What worked well? (optional)",
+      "improvements": "What should be improved? (optional)",
+      "scope": {
+        "curriculum": {
+          "title": "Curriculum satisfaction survey",
+          "description": "Evaluate the learning materials and usability after completing your pilot post-assessment.",
+          "eligibility": "Complete the pilot post-assessment first."
+        },
+        "eportfolio": {
+          "title": "ePortfolio satisfaction survey",
+          "description": "Evaluate one case study you have completed.",
+          "eligibility": "Complete at least one case study first."
+        }
+      },
+      "questions": {
+        "contentClarity": "How clear and understandable was the content?",
+        "practicalRelevance": "How useful is it for practical ESG work?",
+        "usability": "How easy was the learning experience to use?",
+        "overallSatisfaction": "How satisfied are you overall?"
+      },
+      "countries": {
+        "AT": "Austria",
+        "BG": "Bulgaria",
+        "CY": "Cyprus",
+        "IT": "Italy",
+        "PL": "Poland"
+      },
+      "admin": {
+        "title": "Pilot satisfaction — internal feedback",
+        "disclaimer": "Counts reflect internal platform surveys only, grouped by participant-selected country (not independently verified). WP3 requires its own official post-workshop Google Forms evidence; these counts must NOT be reported as official WP3 completion figures. The 15-per-country figure is an operational planning target.",
+        "poland": "Poland — unique respondents",
+        "remaining": "Remaining to internal target",
+        "responses": "Responses",
+        "average": "Average satisfaction (1–5)",
+        "export": "Export aggregate CSV"
+      },
+      "returnToCurriculum": "Explore more modules",
+      "returnToEportfolio": "Back to ePortfolio"
+    }
+  }
+}

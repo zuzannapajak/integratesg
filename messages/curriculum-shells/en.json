@@ -262,7 +262,8 @@
       "completed": {
         "eyebrow": "Pilot completed",
         "title": "Post-assessment has been saved",
-        "description": "Thank you for completing the pilot part. You can still use the modules, complete module tests and work towards the certificate."
+        "description": "Thank you for completing the pilot part. You can still use the modules, complete module tests and work towards the certificate.",
+        "surveyAction": "Evaluate the pilot"
       },
       "available": {
         "eyebrow": "Pilot path",
@@ -307,6 +308,12 @@
         "submitting": "Saving answers...",
         "submitError": "We could not save your post-assessment. Please try again."
       }
+    },
+    "CurriculumPilotFocusModules": {
+      "title": "Pilot focus modules",
+      "description": "To help us evaluate all six modules fairly, these two are your recommended focus.",
+      "progress": "Recommended modules completed: {completed}/{total}",
+      "openAccess": "All six modules remain available. These recommendations do not prevent you from exploring others."
     }
   }
 }

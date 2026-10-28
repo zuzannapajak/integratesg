@@ -1,7 +1,7 @@
 "use client";
 
 import { Download, Loader2 } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
 type Props = {
@@ -11,6 +11,7 @@ type Props = {
 
 export default function CertificateDownloadButton({ slug, className }: Props) {
   const t = useTranslations("Protected.CertificateDownload");
+  const locale = useLocale();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -24,10 +25,13 @@ export default function CertificateDownloadButton({ slug, className }: Props) {
       setIsLoading(true);
       setError(null);
 
-      const response = await fetch(`/api/curriculum/${slug}/certificate`, {
-        method: "GET",
-        signal: controller.signal,
-      });
+      const response = await fetch(
+        `/api/curriculum/${encodeURIComponent(slug)}/certificate?locale=${encodeURIComponent(locale)}`,
+        {
+          method: "GET",
+          signal: controller.signal,
+        },
+      );
 
       if (!response.ok) {
         const payload = (await response.json().catch(() => null)) as { error?: string } | null;
