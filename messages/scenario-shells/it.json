@@ -78,7 +78,9 @@
       "completion": {
         "title": "Scenario completato",
         "description": "Lo scenario è stato completato con successo.",
-        "leaveScenario": "Torna agli scenari"
+        "leaveScenario": "Torna agli scenari",
+        "feedbackInvitation": "Condividi la tua esperienza con il simulatore di scenari per aiutarci a migliorarlo.",
+        "shareFeedback": "Invia feedback"
       },
       "loading": {
         "title": "Caricamento dello scenario",

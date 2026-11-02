@@ -709,12 +709,14 @@ it("completes the scenario only after confirming the summary", async () => {
   const user = userEvent.setup();
 
   const onScenarioCompleted = vi.fn();
+  const onGiveFeedback = vi.fn();
 
   render(
     <ScenarioPlayer
       scenario={testScenario}
       initialView="board"
       onScenarioCompleted={onScenarioCompleted}
+      onGiveFeedback={onGiveFeedback}
     />,
   );
 
@@ -743,6 +745,7 @@ it("completes the scenario only after confirming the summary", async () => {
   expect(await screen.findByTestId("scenario-summary")).toBeVisible();
 
   expect(onScenarioCompleted).not.toHaveBeenCalled();
+  expect(screen.queryByRole("button", { name: "Share feedback" })).not.toBeInTheDocument();
 
   await user.click(
     screen.getByRole("button", {
@@ -764,10 +767,20 @@ it("completes the scenario only after confirming the summary", async () => {
       name: "Scenario completed",
     }),
   ).toBeVisible();
+
+  await user.click(screen.getByRole("button", { name: "Share feedback" }));
+  expect(onGiveFeedback).toHaveBeenCalledOnce();
+});
+
+it("does not offer feedback without educator access", () => {
+  render(<ScenarioPlayer scenario={testScenario} initialView="completion" />);
+
+  expect(screen.queryByRole("button", { name: "Share feedback" })).not.toBeInTheDocument();
 });
 
 it("stays on the summary when scenario completion fails", async () => {
   const user = userEvent.setup();
+  const onGiveFeedback = vi.fn();
 
   const onScenarioCompleted = vi
     .fn()
@@ -778,6 +791,7 @@ it("stays on the summary when scenario completion fails", async () => {
       scenario={testScenario}
       initialView="board"
       onScenarioCompleted={onScenarioCompleted}
+      onGiveFeedback={onGiveFeedback}
     />,
   );
 
@@ -820,6 +834,8 @@ it("stays on the summary when scenario completion fails", async () => {
       name: "Complete scenario",
     }),
   ).toBeEnabled();
+  expect(screen.queryByRole("button", { name: "Share feedback" })).not.toBeInTheDocument();
+  expect(onGiveFeedback).not.toHaveBeenCalled();
 });
 
 it("uses a forward transition when opening a challenge", async () => {

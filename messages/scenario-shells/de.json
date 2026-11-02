@@ -78,7 +78,9 @@
       "completion": {
         "title": "Szenario abgeschlossen",
         "description": "Das Szenario wurde erfolgreich abgeschlossen.",
-        "leaveScenario": "Zurück zu den Szenarien"
+        "leaveScenario": "Zurück zu den Szenarien",
+        "feedbackInvitation": "Teilen Sie Ihre Erfahrungen mit dem Szenario-Simulator, damit wir ihn verbessern können.",
+        "shareFeedback": "Feedback geben"
       },
       "loading": {
         "title": "Szenario wird geladen",

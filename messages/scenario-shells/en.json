@@ -78,7 +78,9 @@
       "completion": {
         "title": "Scenario completed",
         "description": "Your progress has been completed successfully.",
-        "leaveScenario": "Back to scenarios"
+        "leaveScenario": "Back to scenarios",
+        "feedbackInvitation": "Share your experience with the Scenario Simulator to help us improve it.",
+        "shareFeedback": "Share feedback"
       },
       "loading": {
         "title": "Loading scenario",

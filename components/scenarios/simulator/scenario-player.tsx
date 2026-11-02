@@ -111,6 +111,8 @@ export type ScenarioPlayerLabels = {
   readonly locked: string;
   readonly scenarioCompleted: string;
   readonly scenarioCompletedDescription: string;
+  readonly feedbackInvitation: string;
+  readonly shareFeedback: string;
   readonly progress: string;
   readonly loading: string;
   readonly starting: string;
@@ -174,6 +176,8 @@ const DEFAULT_LABELS: ScenarioPlayerLabels = {
   locked: "Locked",
   scenarioCompleted: "Scenario completed",
   scenarioCompletedDescription: "Your progress has been completed successfully.",
+  feedbackInvitation: "Share your Scenario Simulator experience to help us improve it.",
+  shareFeedback: "Share feedback",
   progress: "Progress",
   loading: "Saving…",
   starting: "Starting…",
@@ -197,6 +201,7 @@ export type ScenarioPlayerProps = {
   readonly onChoiceConfirmed?: (event: ScenarioChoiceConfirmedEvent) => void | Promise<void>;
   readonly onChallengeCompleted?: (event: ScenarioChallengeCompletedEvent) => void | Promise<void>;
   readonly onScenarioCompleted?: (event: ScenarioCompletedEvent) => void | Promise<void>;
+  readonly onGiveFeedback?: () => void;
   readonly onExit?: () => void;
 };
 
@@ -241,6 +246,7 @@ export function ScenarioPlayer({
   onChoiceConfirmed,
   onChallengeCompleted,
   onScenarioCompleted,
+  onGiveFeedback,
   onExit,
 }: ScenarioPlayerProps) {
   const labels = {
@@ -758,15 +764,33 @@ export function ScenarioPlayer({
             {labels.scenarioCompletedDescription}
           </p>
 
-          {onExit ? (
-            <button
-              type="button"
-              className="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-[#0d6fe8] px-6 text-sm font-semibold text-white transition hover:bg-[#095fc8]"
-              onClick={onExit}
-            >
-              {labels.leaveScenario}
-            </button>
+          {onGiveFeedback ? (
+            <p className="mt-4 text-sm leading-6 text-[#596170]">
+              {labels.feedbackInvitation}
+            </p>
           ) : null}
+
+          <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            {onGiveFeedback ? (
+              <button
+                type="button"
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-[#0b9c72] px-6 text-sm font-semibold text-white transition hover:bg-[#087658] sm:w-auto"
+                onClick={onGiveFeedback}
+              >
+                {labels.shareFeedback}
+              </button>
+            ) : null}
+
+            {onExit ? (
+              <button
+                type="button"
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-[#0d6fe8] px-6 text-sm font-semibold text-white transition hover:bg-[#095fc8] sm:w-auto"
+                onClick={onExit}
+              >
+                {labels.leaveScenario}
+              </button>
+            ) : null}
+          </div>
         </div>
       </div>
     );
