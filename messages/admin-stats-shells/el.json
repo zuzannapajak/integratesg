@@ -217,7 +217,9 @@
         "subtitle": "Πρόσφατη δραστηριότητα εκπαιδευόμενων στον προσομοιωτή σεναρίων, συμπεριλαμβανομένων κατάστασης, βαθμολογίας και χρόνου.",
         "records": "{count} εγγραφές",
         "exportCsv": "Εξαγωγή CSV",
-        "exportExcel": "Εξαγωγή Excel"
+        "exportExcel": "Εξαγωγή Excel",
+        "exportParticipantSummary": "Σύνοψη συμμετεχόντων CSV",
+        "participantSummaryNote": "Τα στοιχεία αφορούν δραστηριότητα στην πλατφόρμα, όχι επαληθευμένους συμμετέχοντες ή χώρες του WP4."
       },
       "curriculumAttempts": {
         "title": "Προσπάθειες curriculum χρηστών",

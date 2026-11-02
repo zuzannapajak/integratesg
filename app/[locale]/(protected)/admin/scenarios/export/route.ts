@@ -1,7 +1,9 @@
 import { requireRole } from "@/features/auth/requireRole";
+import { buildScenarioParticipantSummaryCsv } from "@/lib/admin/scenario-participant-summary";
 import {
   buildScenarioResultsCsv,
   buildScenarioResultsExcelHtml,
+  getScenarioParticipantSummaryRows,
   getScenarioResultsExportRows,
 } from "@/lib/admin/scenario-results-export";
 import { APP_ROLES } from "@/lib/auth/roles";
@@ -26,6 +28,17 @@ export async function GET(request: NextRequest, { params }: RouteContext): Promi
   const locale = localeParam;
 
   await requireRole(locale, APP_ROLES.admin);
+
+  if (request.nextUrl.searchParams.get("report") === "participants") {
+    const summary = await getScenarioParticipantSummaryRows();
+
+    return new Response(buildScenarioParticipantSummaryCsv(summary), {
+      headers: {
+        "Content-Type": "text/csv; charset=utf-8",
+        "Content-Disposition": 'attachment; filename="scenario-participant-summary.csv"',
+      },
+    });
+  }
 
   const format = request.nextUrl.searchParams.get("format") === "xls" ? "xls" : "csv";
 
