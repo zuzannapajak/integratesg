@@ -98,7 +98,7 @@
       "hero": {
         "eyebrow": "For educators",
         "title": "Structured ESG learning tools designed to support teaching, guidance, and classroom practice.",
-        "description": "Educators can use the platform to access curriculum-aligned resources, track learning progress, and integrate ESG topics into structured educational pathways.",
+        "description": "Educators can access curriculum modules, explore ePortfolio case studies, and run the Scenario Simulator to connect ESG theory with practical decisions.",
         "primaryCta": "Register",
         "secondaryCta": "Learn more"
       },
@@ -107,7 +107,7 @@
         "card1Description": "Access organised ESG modules and educational pathways prepared for guided teaching.",
         "card2Badge": "Real-World Ready",
         "card2Title": "Practical teaching support",
-        "card2Description": "Use case studies and scenario-based materials to connect theory with applied learning.",
+        "card2Description": "Use ePortfolio case studies and the Scenario Simulator to connect theory with applied learning.",
         "card3Title": "Flexible classroom use",
         "card3Description": "Integrate platform resources into different learning groups, contexts, and teaching formats."
       },
@@ -126,7 +126,7 @@
           },
           "3": {
             "title": "Work with case studies and scenarios",
-            "description": "Integrate practical cases and scenario-based activities into educational processes and discussions."
+            "description": "Explore ePortfolio case studies and use the Scenario Simulator for interactive ESG decision-making."
           },
           "4": {
             "title": "Connect theory with practical learning",
@@ -143,7 +143,7 @@
         },
         "2": {
           "title": "Teaching support through scenarios",
-          "description": "Scenario-based materials allow educators to connect ESG knowledge with practical decision-making contexts and classroom reflection."
+          "description": "Run the Scenario Simulator to explore ESG decisions and discuss the outcomes with learners."
         },
         "3": {
           "title": "Flexible educational use",
@@ -153,7 +153,7 @@
       "cta": {
         "eyebrow": "Join the platform",
         "title": "Access ESG learning resources prepared for educators.",
-        "description": "Register to explore curriculum materials, case studies, and scenario-based learning opportunities.",
+        "description": "Register to access curriculum modules, the ePortfolio, and the Scenario Simulator.",
         "primaryCta": "Register",
         "secondaryCta": "Sign in"
       }
@@ -162,7 +162,7 @@
       "hero": {
         "eyebrow": "For learners",
         "title": "Explore ESG topics through interactive scenarios, case studies, and guided learning materials.",
-        "description": "Learners can use the platform to build practical understanding of ESG issues through self-paced exploration, structured resources, and applied learning experiences.",
+        "description": "Learners can explore ESG case studies in the ePortfolio and practise decisions in the Scenario Simulator at their own pace.",
         "primaryCta": "Register",
         "secondaryCta": "Learn more"
       },
@@ -170,7 +170,7 @@
         "card1Title": "Interactive scenarios",
         "card1Description": "Explore ESG topics through realistic decision-making activities and guided practice.",
         "card2Badge": "Self-paced learning",
-        "card2Title": "Case studies and examples",
+        "card2Title": "ePortfolio case studies",
         "card2Description": "Use structured examples to understand how ESG appears in practical educational and professional contexts.",
         "card3Title": "Accessible learning flow",
         "card3Description": "Move through multilingual content designed to support reflection, clarity, and gradual progress."
@@ -217,7 +217,7 @@
       "cta": {
         "eyebrow": "Start learning",
         "title": "Create your account and access practical ESG resources.",
-        "description": "Register to explore scenarios, case studies, and guided learning content prepared for learner users.",
+        "description": "Register to explore ePortfolio case studies and interactive ESG scenarios in the Scenario Simulator.",
         "primaryCta": "Register",
         "secondaryCta": "Sign in"
       }

@@ -23,13 +23,13 @@
     "cards": {
       "learners": {
         "eyebrow": "Für Lernende",
-        "title": "Szenario-Simulator",
-        "description": "Erkunden Sie ESG-Themen durch interaktive Entscheidungsszenarien und praktische Lernpfade."
+        "title": "ePortfolio und Szenario-Simulator",
+        "description": "Erkunden Sie ESG-Fallstudien im ePortfolio und üben Sie Entscheidungen im Szenario-Simulator."
       },
       "educators": {
         "eyebrow": "Für Lehrende",
-        "title": "Lehrplan und Selbsteinschätzung",
-        "description": "Greifen Sie auf strukturierte Lernmodule, Pre- und Post-Quizzes sowie feedbackgesteuerte Unterrichtsressourcen zu."
+        "title": "Curriculum und Praxiswerkzeuge",
+        "description": "Nutzen Sie Curriculum-Module, Fallstudien im ePortfolio und den Szenario-Simulator."
       },
       "allUsers": {
         "eyebrow": "Für alle Benutzer",

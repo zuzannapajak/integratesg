@@ -98,7 +98,7 @@
       "hero": {
         "eyebrow": "Per gli educatori",
         "title": "Strumenti di apprendimento ESG strutturati, progettati per supportare l'insegnamento, l'orientamento e la pratica in aula.",
-        "description": "Gli educatori possono utilizzare la piattaforma per accedere a risorse allineate al curriculum, monitorare i progressi di apprendimento e integrare i temi ESG in percorsi formativi strutturati.",
+        "description": "Gli educatori possono accedere ai moduli del curriculum, esplorare i casi di studio nell'ePortfolio e usare il Simulatore di scenari per collegare la teoria ESG alle decisioni pratiche.",
         "primaryCta": "Registrati",
         "secondaryCta": "Scopri di più"
       },
@@ -107,7 +107,7 @@
         "card1Description": "Accedi a moduli ESG organizzati e percorsi formativi preparati per l'insegnamento guidato.",
         "card2Badge": "Pronto per il mondo reale",
         "card2Title": "Supporto pratico all'insegnamento",
-        "card2Description": "Utilizza casi di studio e materiali basati su scenari per collegare la teoria con l'apprendimento applicato.",
+        "card2Description": "Usa i casi di studio dell'ePortfolio e il Simulatore di scenari per collegare la teoria all'apprendimento pratico.",
         "card3Title": "Uso flessibile in aula",
         "card3Description": "Integra le risorse della piattaforma in diversi gruppi di apprendimento, contesti e formati di insegnamento."
       },
@@ -126,7 +126,7 @@
           },
           "3": {
             "title": "Lavorare con casi di studio e scenari",
-            "description": "Integra casi pratici e attività basate su scenari nei processi educativi e nelle discussioni."
+            "description": "Esplora i casi di studio nell'ePortfolio e usa il Simulatore di scenari per prendere decisioni ESG in modo interattivo."
           },
           "4": {
             "title": "Collegare la teoria con l'apprendimento pratico",
@@ -143,7 +143,7 @@
         },
         "2": {
           "title": "Supporto all'insegnamento tramite scenari",
-          "description": "I materiali basati su scenari consentono agli educatori di collegare le conoscenze ESG con contesti decisionali pratici e riflessioni in aula."
+          "description": "Usa il Simulatore di scenari per esplorare le decisioni ESG e discutere i risultati con gli studenti."
         },
         "3": {
           "title": "Uso educativo flessibile",
@@ -153,7 +153,7 @@
       "cta": {
         "eyebrow": "Unisciti alla piattaforma",
         "title": "Accedi alle risorse di apprendimento ESG preparate per gli educatori.",
-        "description": "Registrati per esplorare materiali didattici, casi di studio e opportunità di apprendimento basate su scenari.",
+        "description": "Registrati per accedere ai moduli del curriculum, all'ePortfolio e al Simulatore di scenari.",
         "primaryCta": "Registrati",
         "secondaryCta": "Accedi"
       }
@@ -162,7 +162,7 @@
       "hero": {
         "eyebrow": "Per gli studenti",
         "title": "Esplora i temi ESG attraverso scenari interattivi, casi di studio e materiali didattici guidati.",
-        "description": "Gli studenti possono utilizzare la piattaforma per costruire una comprensione pratica delle questioni ESG attraverso l'esplorazione autonoma, risorse strutturate ed esperienze di apprendimento applicato.",
+        "description": "Gli studenti possono esplorare i casi di studio ESG nell'ePortfolio e sperimentare decisioni nel Simulatore di scenari al proprio ritmo.",
         "primaryCta": "Registrati",
         "secondaryCta": "Scopri di più"
       },
@@ -170,7 +170,7 @@
         "card1Title": "Scenari interattivi",
         "card1Description": "Esplora i temi ESG attraverso attività decisionali realistiche e pratica guidata.",
         "card2Badge": "Apprendimento autonomo",
-        "card2Title": "Casi di studio ed esempi",
+        "card2Title": "Casi di studio nell'ePortfolio",
         "card2Description": "Utilizza esempi strutturati per capire come l'ESG si manifesta in contesti educativi e professionali pratici.",
         "card3Title": "Flusso di apprendimento accessibile",
         "card3Description": "Naviga tra contenuti multilingue progettati per supportare la riflessione, la chiarezza e il progresso graduale."
@@ -217,7 +217,7 @@
       "cta": {
         "eyebrow": "Inizia a imparare",
         "title": "Crea il tuo account e accedi alle risorse pratiche ESG.",
-        "description": "Registrati per esplorare scenari, casi di studio e contenuti didattici guidati preparati per gli studenti.",
+        "description": "Registrati per esplorare i casi di studio nell'ePortfolio e gli scenari ESG interattivi nel Simulatore di scenari.",
         "primaryCta": "Registrati",
         "secondaryCta": "Accedi"
       }

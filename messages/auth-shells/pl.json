@@ -29,8 +29,8 @@
       "title": "Uzupełnij profil",
       "eyebrow": "Konfiguracja profilu",
       "chooseRole": "Wybierz swoją rolę",
-      "learnerDescription": "Dostęp do case studies i scenariuszy",
-      "educatorDescription": "Dostęp do curriculum i materiałów dydaktycznych",
+      "learnerDescription": "Dostęp do ePortfolio i Symulatora scenariuszy",
+      "educatorDescription": "Dostęp do curriculum, ePortfolio i Symulatora scenariuszy",
       "error": "Nie udało się zapisać profilu.",
       "submit": "Kontynuuj",
       "submitting": "Zapisywanie..."
@@ -76,8 +76,8 @@
       "eyebrow": "Utwórz konto",
       "title": "Wybierz swoją rolę",
       "subtitle": "Wybierz, w jaki sposób będziesz korzystać z platformy.",
-      "learnerDescription": "Case studies, scenariusze i samoocena.",
-      "educatorDescription": "Narzędzia curriculum i materiały dydaktyczne.",
+      "learnerDescription": "Poznawaj studia przypadków w ePortfolio i ćwicz w Symulatorze scenariuszy.",
+      "educatorDescription": "Korzystaj z curriculum, ePortfolio i Symulatora scenariuszy.",
       "continue": "Kontynuuj"
     },
     "DetailsStep": {
