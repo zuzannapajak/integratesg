@@ -114,6 +114,12 @@ export default function AppSidebar({ locale, role }: Props) {
       icon: BookOpen,
     },
     {
+      href: `/${locale}/scenarios`,
+      labelKey: "scenario",
+      match: "prefix",
+      icon: PlayCircle,
+    },
+    {
       href: `/${locale}/eportfolio`,
       labelKey: "eportfolio",
       match: "prefix",
