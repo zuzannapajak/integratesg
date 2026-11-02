@@ -388,6 +388,31 @@ function LearnerDashboard({
 }) {
   const t = useTranslations("Protected.DashboardShell");
 
+  const scenarioCard = {
+    icon: <PlayCircle className="h-5 w-5" />,
+    title: t("coreArea.learner.primary.title"),
+    description: t("coreArea.learner.primary.description"),
+    meta: t("coreArea.learner.primary.meta"),
+    href: `/${locale}/scenarios`,
+    accentColor: ESG_colors.GREEN,
+    buttonColor: CTA_COLORS.green,
+    buttonLabel: t("coreArea.buttons.openScenarios"),
+    backgroundStyle: {
+      background:
+        "linear-gradient(180deg, rgba(243,251,247,0.98) 0%, rgba(255,255,255,0.96) 100%)",
+      borderColor: "rgba(30,155,115,0.20)",
+    },
+    iconStyle: {
+      backgroundColor: "rgba(30,155,115,0.14)",
+      color: ESG_colors.GREEN,
+    },
+    metaStyle: {
+      borderColor: "rgba(30,155,115,0.22)",
+      backgroundColor: "rgba(30,155,115,0.10)",
+      color: ESG_colors.GREEN,
+    },
+  };
+
   const primaryCard =
     role === "educator"
       ? {
@@ -416,32 +441,7 @@ function LearnerDashboard({
             color: ESG_colors.BLUE,
           },
         }
-      : {
-          icon: <PlayCircle className="h-5 w-5" />,
-          title: t("coreArea.learner.primary.title"),
-          description: t("coreArea.learner.primary.description"),
-          meta: t("coreArea.learner.primary.meta"),
-          href: `/${locale}/scenarios`,
-          accentColor: ESG_colors.GREEN,
-          buttonColor: CTA_COLORS.green,
-          buttonLabel: t("coreArea.buttons.openScenarios"),
-          backgroundStyle: {
-            background:
-              "linear-gradient(180deg, rgba(243,251,247,0.98) 0%, rgba(255,255,255,0.96) 100%)",
-            borderColor: "rgba(30,155,115,0.20)",
-          },
-
-          iconStyle: {
-            backgroundColor: "rgba(30,155,115,0.14)",
-            color: ESG_colors.GREEN,
-          },
-
-          metaStyle: {
-            borderColor: "rgba(30,155,115,0.22)",
-            backgroundColor: "rgba(30,155,115,0.10)",
-            color: ESG_colors.GREEN,
-          },
-        };
+      : scenarioCard;
 
   const secondaryCard =
     role === "educator"
@@ -498,7 +498,9 @@ function LearnerDashboard({
     <div className="grid grid-cols-1 gap-4 xl:grid-cols-12">
       <motion.div
         variants={FADE_UP}
-        className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:col-span-12"
+        className={`grid grid-cols-1 gap-4 sm:grid-cols-2 xl:col-span-12 ${
+          role === "educator" ? "xl:grid-cols-3" : ""
+        }`}
       >
         <CoreAreaCard
           icon={primaryCard.icon}
@@ -513,6 +515,22 @@ function LearnerDashboard({
           iconStyle={primaryCard.iconStyle}
           metaStyle={primaryCard.metaStyle}
         />
+
+        {role === "educator" && (
+          <CoreAreaCard
+            icon={scenarioCard.icon}
+            title={scenarioCard.title}
+            description={scenarioCard.description}
+            meta={scenarioCard.meta}
+            href={scenarioCard.href}
+            accentColor={scenarioCard.accentColor}
+            buttonColor={scenarioCard.buttonColor}
+            buttonLabel={scenarioCard.buttonLabel}
+            backgroundStyle={scenarioCard.backgroundStyle}
+            iconStyle={scenarioCard.iconStyle}
+            metaStyle={scenarioCard.metaStyle}
+          />
+        )}
 
         <CoreAreaCard
           icon={secondaryCard.icon}
