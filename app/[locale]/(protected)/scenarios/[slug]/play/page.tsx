@@ -1,7 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 
 import { requireAuthenticatedUserId } from "@/lib/auth/require-authenticated-user-id";
-import { APP_ROLES } from "@/lib/auth/roles";
+import { isSelfServiceRole } from "@/lib/auth/roles";
 import { prisma } from "@/lib/prisma";
 import { resolveScenarioBySlug } from "@/lib/scenarios/simulator/resolve-scenario";
 import { getScenarioPathwayItemForUser } from "@/lib/scenarios/simulator/server/scenario-pathway";
@@ -66,7 +66,7 @@ export default async function ScenarioPlayPage({ params, searchParams }: Scenari
       scenario={scenario}
       mode={mode}
       runtimeState={runtimeState}
-      canGivePlatformFeedback={profile?.role === APP_ROLES.educator}
+      canGivePlatformFeedback={profile !== null && isSelfServiceRole(profile.role)}
     />
   );
 }

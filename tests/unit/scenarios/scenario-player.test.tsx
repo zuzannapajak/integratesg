@@ -772,7 +772,7 @@ it("completes the scenario only after confirming the summary", async () => {
   expect(onGiveFeedback).toHaveBeenCalledOnce();
 });
 
-it("does not offer feedback without educator access", () => {
+it("does not offer feedback unless the caller supplies an authorised feedback action", () => {
   render(<ScenarioPlayer scenario={testScenario} initialView="completion" />);
 
   expect(screen.queryByRole("button", { name: "Share feedback" })).not.toBeInTheDocument();

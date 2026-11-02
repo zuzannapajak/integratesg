@@ -83,6 +83,8 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
       await expect(page).toHaveURL(/\/en\/eportfolio$/);
       await page.goto("/en/curriculum");
       await expect(page).toHaveURL(/\/en\/dashboard$/);
+      await page.goto("/en/platform-feedback");
+      await expect(page.locator("form")).toBeVisible();
       await page.goto("/en/admin/stats");
       await expect(page).toHaveURL(/\/en\/dashboard$/);
 
@@ -96,6 +98,8 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
       await page.goto("/en/admin/stats");
       await expect(page).toHaveURL(/\/en\/admin\/stats$/);
       await page.goto("/en/curriculum");
+      await expect(page).toHaveURL(/\/en\/dashboard$/);
+      await page.goto("/en/platform-feedback");
       await expect(page).toHaveURL(/\/en\/dashboard$/);
     } finally {
       await db.profile.update({ where: { id: profile.id }, data: { role: profile.role } });
