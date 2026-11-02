@@ -172,7 +172,9 @@ export function ScenarioPlayClient({
           }}
           onGiveFeedback={
             canGivePlatformFeedback
-              ? () => { router.push(`/${locale}/platform-feedback`); }
+              ? () => {
+                  router.push(`/${locale}/platform-feedback`);
+                }
               : undefined
           }
           onExit={() => {

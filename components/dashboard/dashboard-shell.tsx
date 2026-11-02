@@ -398,8 +398,7 @@ function LearnerDashboard({
     buttonColor: CTA_COLORS.green,
     buttonLabel: t("coreArea.buttons.openScenarios"),
     backgroundStyle: {
-      background:
-        "linear-gradient(180deg, rgba(243,251,247,0.98) 0%, rgba(255,255,255,0.96) 100%)",
+      background: "linear-gradient(180deg, rgba(243,251,247,0.98) 0%, rgba(255,255,255,0.96) 100%)",
       borderColor: "rgba(30,155,115,0.20)",
     },
     iconStyle: {

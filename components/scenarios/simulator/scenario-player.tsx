@@ -765,9 +765,7 @@ export function ScenarioPlayer({
           </p>
 
           {onGiveFeedback ? (
-            <p className="mt-4 text-sm leading-6 text-[#596170]">
-              {labels.feedbackInvitation}
-            </p>
+            <p className="mt-4 text-sm leading-6 text-[#596170]">{labels.feedbackInvitation}</p>
           ) : null}
 
           <div className="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row">
