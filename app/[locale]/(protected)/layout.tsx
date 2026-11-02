@@ -36,7 +36,7 @@ export default async function ProtectedOverviewLayout({ children, params }: Prop
         </main>
       </div>
 
-      <PlatformFeedbackBubble locale={locale} />
+      <PlatformFeedbackBubble locale={locale} role={profile.role} />
     </div>
   );
 }
