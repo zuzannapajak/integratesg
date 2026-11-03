@@ -157,6 +157,12 @@ describe("DashboardShell empty states", () => {
 
     expect(
       screen.getByRole("link", {
+        name: /coreArea\.buttons\.openScenarios/,
+      }),
+    ).toHaveAttribute("href", "/pl/scenarios");
+
+    expect(
+      screen.getByRole("link", {
         name: /coreArea\.buttons\.openEportfolio/,
       }),
     ).toHaveAttribute("href", "/pl/eportfolio");

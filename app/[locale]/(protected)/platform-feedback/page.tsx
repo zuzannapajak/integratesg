@@ -11,7 +11,7 @@ type Props = {
 export default async function PlatformFeedbackPage({ params }: Props) {
   const { locale } = await params;
 
-  await requireRole(locale, APP_ROLES.educator);
+  await requireRole(locale, [APP_ROLES.educator, APP_ROLES.learner]);
 
   return (
     <main className="relative min-h-screen bg-[#f5f5f3] pb-20">

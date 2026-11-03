@@ -78,7 +78,9 @@
       "completion": {
         "title": "Scenariusz ukończony",
         "description": "Scenariusz został pomyślnie ukończony.",
-        "leaveScenario": "Wróć do scenariuszy"
+        "leaveScenario": "Wróć do scenariuszy",
+        "feedbackInvitation": "Podziel się opinią o symulatorze scenariuszy, aby pomóc nam go ulepszać.",
+        "shareFeedback": "Przekaż opinię"
       },
       "loading": {
         "title": "Ładowanie scenariusza",

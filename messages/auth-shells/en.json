@@ -29,8 +29,8 @@
       "title": "Complete your profile",
       "eyebrow": "Profile setup",
       "chooseRole": "Choose your role",
-      "learnerDescription": "Access case studies and scenarios",
-      "educatorDescription": "Access curriculum and teaching resources",
+      "learnerDescription": "Access the ePortfolio and Scenario Simulator",
+      "educatorDescription": "Access the curriculum, ePortfolio, and Scenario Simulator",
       "error": "Failed to save profile.",
       "submit": "Continue",
       "submitting": "Saving..."
@@ -76,8 +76,8 @@
       "eyebrow": "Create your account",
       "title": "Choose your role",
       "subtitle": "Select how you will use the platform.",
-      "learnerDescription": "Case studies, scenarios, and self-assessment.",
-      "educatorDescription": "Curriculum tools and teaching resources.",
+      "learnerDescription": "Explore ePortfolio case studies and the Scenario Simulator.",
+      "educatorDescription": "Access curriculum modules, the ePortfolio, and the Scenario Simulator.",
       "continue": "Continue"
     },
     "DetailsStep": {

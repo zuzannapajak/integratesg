@@ -217,7 +217,9 @@
         "subtitle": "Последна активност на обучаемите в симулатора на сценарии, включително статус, резултат и време.",
         "records": "{count} записа",
         "exportCsv": "Експорт CSV",
-        "exportExcel": "Експорт Excel"
+        "exportExcel": "Експорт Excel",
+        "exportParticipantSummary": "Обобщение на участниците CSV",
+        "participantSummaryNote": "Данните показват активност в платформата, а не потвърдени участници или държави по WP4."
       },
       "curriculumAttempts": {
         "title": "Потребителски опити по curriculum",

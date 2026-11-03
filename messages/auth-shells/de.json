@@ -29,8 +29,8 @@
       "title": "Vervollständigen Sie Ihr Profil",
       "eyebrow": "Profil-Setup",
       "chooseRole": "Wählen Sie Ihre Rolle",
-      "learnerDescription": "Zugriff auf Fallstudien und Szenarien",
-      "educatorDescription": "Zugriff auf Curriculum und Lehrressourcen",
+      "learnerDescription": "Zugriff auf das ePortfolio und den Szenario-Simulator",
+      "educatorDescription": "Zugriff auf Curriculum, ePortfolio und Szenario-Simulator",
       "error": "Profil konnte nicht gespeichert werden.",
       "submit": "Weiter",
       "submitting": "Wird gespeichert..."
@@ -76,8 +76,8 @@
       "eyebrow": "Erstellen Sie Ihr Konto",
       "title": "Wählen Sie Ihre Rolle",
       "subtitle": "Wählen Sie aus, wie Sie die Plattform nutzen werden.",
-      "learnerDescription": "Fallstudien, Szenarien und Selbstbewertung.",
-      "educatorDescription": "Curriculum-Tools und Lehrressourcen.",
+      "learnerDescription": "ESG-Fallstudien im ePortfolio erkunden und im Szenario-Simulator Entscheidungen üben.",
+      "educatorDescription": "Curriculum, ePortfolio und Szenario-Simulator nutzen.",
       "continue": "Weiter"
     },
     "DetailsStep": {

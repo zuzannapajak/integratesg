@@ -23,13 +23,13 @@
     "cards": {
       "learners": {
         "eyebrow": "Per i discenti",
-        "title": "Simulatore di Scenari",
-        "description": "Esplora i temi ESG attraverso scenari decisionali interattivi e percorsi di apprendimento pratici."
+        "title": "ePortfolio e Simulatore di scenari",
+        "description": "Esplora casi di studio ESG nell'ePortfolio e sperimenta decisioni nel Simulatore di scenari."
       },
       "educators": {
         "eyebrow": "Per gli educatori",
-        "title": "Curriculum e autovalutazione",
-        "description": "Accedi a moduli di apprendimento strutturati, pre e post-quiz e risorse didattiche basate sul feedback."
+        "title": "Curriculum e strumenti pratici",
+        "description": "Accedi ai moduli del curriculum, ai casi di studio nell'ePortfolio e al Simulatore di scenari."
       },
       "allUsers": {
         "eyebrow": "Per tutti gli utenti",

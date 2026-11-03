@@ -23,6 +23,8 @@ export type ScenarioPlayClientProps = {
   readonly mode: ScenarioPlayerMode;
 
   readonly runtimeState: ScenarioRuntimeState;
+
+  readonly canGivePlatformFeedback: boolean;
 };
 
 export function ScenarioPlayClient({
@@ -30,6 +32,7 @@ export function ScenarioPlayClient({
   scenario,
   mode,
   runtimeState,
+  canGivePlatformFeedback,
 }: ScenarioPlayClientProps) {
   const router = useRouter();
   const t = useTranslations("Protected.ScenarioSimulator");
@@ -128,6 +131,8 @@ export function ScenarioPlayClient({
 
             scenarioCompleted: t("completion.title"),
             scenarioCompletedDescription: t("completion.description"),
+            feedbackInvitation: t("completion.feedbackInvitation"),
+            shareFeedback: t("completion.shareFeedback"),
             unexpectedError: t("errors.unexpected"),
           }}
           onScenarioStarted={async (event) => {
@@ -165,6 +170,13 @@ export function ScenarioPlayClient({
 
             router.refresh();
           }}
+          onGiveFeedback={
+            canGivePlatformFeedback
+              ? () => {
+                  router.push(`/${locale}/platform-feedback`);
+                }
+              : undefined
+          }
           onExit={() => {
             router.push(`/${locale}/scenarios`);
             router.refresh();

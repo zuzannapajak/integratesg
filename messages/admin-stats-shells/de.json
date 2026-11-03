@@ -217,7 +217,9 @@
         "subtitle": "Aktuelle Lernaktivität im Szenario-Simulator, einschließlich Status, Bewertung und Zeitpunkt.",
         "records": "{count} Datensätze",
         "exportCsv": "CSV exportieren",
-        "exportExcel": "Excel exportieren"
+        "exportExcel": "Excel exportieren",
+        "exportParticipantSummary": "Teilnehmerübersicht CSV",
+        "participantSummaryNote": "Die Zahlen zeigen Plattformaktivitäten, keine verifizierten WP4-Teilnehmenden oder Länder."
       },
       "curriculumAttempts": {
         "title": "Curriculum-Versuche der Nutzer",

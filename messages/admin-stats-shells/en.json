@@ -217,7 +217,9 @@
         "subtitle": "Latest learner activity across the scenario simulator, including status, score, and timing.",
         "records": "{count} records",
         "exportCsv": "Export CSV",
-        "exportExcel": "Export Excel"
+        "exportExcel": "Export Excel",
+        "exportParticipantSummary": "Participant summary CSV",
+        "participantSummaryNote": "Counts reflect platform activity, not verified WP4 participants or countries."
       },
       "curriculumAttempts": {
         "title": "User curriculum attempts",

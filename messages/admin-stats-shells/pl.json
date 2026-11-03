@@ -217,7 +217,9 @@
         "subtitle": "Najnowsza aktywność uczestników w symulatorze scenariuszy, wraz ze statusem, wynikiem i czasem.",
         "records": "{count} rekordów",
         "exportCsv": "Eksport CSV",
-        "exportExcel": "Eksport Excel"
+        "exportExcel": "Eksport Excel",
+        "exportParticipantSummary": "Podsumowanie uczestników CSV",
+        "participantSummaryNote": "Dane dotyczą aktywności na platformie, a nie zweryfikowanych uczestników WP4 i ich krajów."
       },
       "curriculumAttempts": {
         "title": "Próby curriculum użytkowników",

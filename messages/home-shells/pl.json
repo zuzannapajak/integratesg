@@ -23,13 +23,13 @@
     "cards": {
       "learners": {
         "eyebrow": "Dla kursantów",
-        "title": "Symulator scenariuszy",
-        "description": "Poznawaj zagadnienia ESG poprzez interaktywne scenariusze decyzyjne i praktyczne ścieżki uczenia się."
+        "title": "ePortfolio i Symulator scenariuszy",
+        "description": "Analizuj studia przypadków ESG w ePortfolio i ćwicz podejmowanie decyzji w Symulatorze scenariuszy."
       },
       "educators": {
         "eyebrow": "Dla dydaktyków",
-        "title": "Curriculum i samoocena",
-        "description": "Korzystaj z uporządkowanych modułów edukacyjnych, quizów pre- i post-test oraz materiałów dydaktycznych opartych na informacji zwrotnej."
+        "title": "Curriculum i narzędzia praktyczne",
+        "description": "Korzystaj z modułów curriculum, studiów przypadków w ePortfolio i Symulatora scenariuszy."
       },
       "allUsers": {
         "eyebrow": "Dla wszystkich użytkowników",

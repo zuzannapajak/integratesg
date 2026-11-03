@@ -23,13 +23,13 @@
     "cards": {
       "learners": {
         "eyebrow": "For learners",
-        "title": "Scenario Simulator",
-        "description": "Explore ESG topics through interactive decision-making scenarios and practical learning paths."
+        "title": "ePortfolio and Scenario Simulator",
+        "description": "Explore ESG case studies in the ePortfolio and practise decisions in the Scenario Simulator."
       },
       "educators": {
         "eyebrow": "For educators",
-        "title": "Curriculum and self-assessment",
-        "description": "Access structured learning modules, pre- and post-quizzes, and feedback-driven teaching resources."
+        "title": "Curriculum and practical tools",
+        "description": "Access curriculum modules, ePortfolio case studies, and the Scenario Simulator."
       },
       "allUsers": {
         "eyebrow": "For all users",

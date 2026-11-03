@@ -29,8 +29,8 @@
       "title": "Completa il tuo profilo",
       "eyebrow": "Configurazione del profilo",
       "chooseRole": "Scegli il tuo ruolo",
-      "learnerDescription": "Accedi a casi di studio e scenari",
-      "educatorDescription": "Accedi al curriculum e alle risorse didattiche",
+      "learnerDescription": "Accedi all'ePortfolio e al Simulatore di scenari",
+      "educatorDescription": "Accedi al curriculum, all'ePortfolio e al Simulatore di scenari",
       "error": "Impossibile salvare il profilo.",
       "submit": "Continua",
       "submitting": "Salvataggio in corso..."
@@ -76,8 +76,8 @@
       "eyebrow": "Crea il tuo account",
       "title": "Scegli il tuo ruolo",
       "subtitle": "Seleziona come utilizzerai la piattaforma.",
-      "learnerDescription": "Casi di studio, scenari e autovalutazione.",
-      "educatorDescription": "Strumenti per il curriculum e risorse didattiche.",
+      "learnerDescription": "Esplora i casi di studio nell'ePortfolio e prendi decisioni nel Simulatore di scenari.",
+      "educatorDescription": "Accedi ai moduli del curriculum, all'ePortfolio e al Simulatore di scenari.",
       "continue": "Continua"
     },
     "DetailsStep": {

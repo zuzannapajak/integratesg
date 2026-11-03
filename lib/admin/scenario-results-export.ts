@@ -1,4 +1,5 @@
 import { scenarioPathwayItems } from "@/content/scenarios/pathway";
+import { buildScenarioParticipantSummary } from "@/lib/admin/scenario-participant-summary";
 import type { AppLocale } from "@/lib/i18n/locales";
 import { prisma } from "@/lib/prisma";
 import { resolveScenarioBySlug } from "@/lib/scenarios/simulator/resolve-scenario";
@@ -14,6 +15,7 @@ type ChoiceLookup = {
 const scenarioExportHeaders = [
   "user_email",
   "user_name",
+  "user_role",
   "scenario_id",
   "scenario_title",
   "scenario_version",
@@ -118,6 +120,7 @@ export async function getScenarioResultsExportRows(locale: AppLocale) {
         select: {
           email: true,
           fullName: true,
+          role: true,
         },
       },
       choiceAttempts: {
@@ -143,6 +146,7 @@ export async function getScenarioResultsExportRows(locale: AppLocale) {
     const baseRow = {
       user_email: attempt.user.email,
       user_name: attempt.user.fullName ?? "",
+      user_role: attempt.user.role,
       scenario_id: attempt.scenarioId,
       scenario_title: scenarioTitle,
       scenario_version: attempt.scenarioVersion,
@@ -221,4 +225,25 @@ ${rows
 </table>
 </body>
 </html>`;
+}
+
+/** A lightweight, anonymised activity summary for pilot reporting checks. */
+export async function getScenarioParticipantSummaryRows() {
+  const attempts = await prisma.userScenarioAttempt.findMany({
+    select: {
+      userId: true,
+      status: true,
+      completedAt: true,
+      user: { select: { role: true } },
+    },
+  });
+
+  return buildScenarioParticipantSummary(
+    attempts.map((attempt) => ({
+      userId: attempt.userId,
+      role: attempt.user.role,
+      status: attempt.status,
+      completedAt: attempt.completedAt,
+    })),
+  );
 }

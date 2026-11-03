@@ -98,7 +98,7 @@
       "hero": {
         "eyebrow": "Für Lehrkräfte",
         "title": "Strukturierte ESG-Lernwerkzeuge zur Unterstützung von Unterricht, Beratung und Unterrichtspraxis.",
-        "description": "Lehrkräfte können die Plattform nutzen, um auf lehrplankonforme Ressourcen zuzugreifen, Lernfortschritte zu verfolgen und ESG-Themen in strukturierte Bildungswege zu integrieren.",
+        "description": "Lehrkräfte können Curriculum-Module nutzen, Fallstudien im ePortfolio erkunden und im Szenario-Simulator ESG-Entscheidungen praxisnah erproben.",
         "primaryCta": "Registrieren",
         "secondaryCta": "Mehr erfahren"
       },
@@ -107,7 +107,7 @@
         "card1Description": "Zugriff auf organisierte ESG-Module und Bildungswege, die für den geführten Unterricht vorbereitet wurden.",
         "card2Badge": "Praxisnah",
         "card2Title": "Praktische Unterstützung beim Lehren",
-        "card2Description": "Nutzen Sie Fallstudien und szenariobasierte Materialien, um Theorie mit angewandtem Lernen zu verbinden.",
+        "card2Description": "Nutzen Sie Fallstudien aus dem ePortfolio und den Szenario-Simulator, um Theorie und Praxis zu verbinden.",
         "card3Title": "Flexibler Einsatz im Unterricht",
         "card3Description": "Integrieren Sie Plattform-Ressourcen in verschiedene Lerngruppen, Kontexte und Unterrichtsformate."
       },
@@ -126,7 +126,7 @@
           },
           "3": {
             "title": "Arbeiten mit Fallstudien und Szenarien",
-            "description": "Integrieren Sie praktische Fälle und szenariobasierte Aktivitäten in Bildungsprozesse und Diskussionen."
+            "description": "Erkunden Sie Fallstudien im ePortfolio und erproben Sie ESG-Entscheidungen interaktiv im Szenario-Simulator."
           },
           "4": {
             "title": "Verbindung von Theorie und praktischem Lernen",
@@ -143,7 +143,7 @@
         },
         "2": {
           "title": "Unterstützung des Unterrichts durch Szenarien",
-          "description": "Szenariobasierte Materialien ermöglichen es Lehrkräften, ESG-Wissen mit praktischen Entscheidungskontexten und Reflexionen im Unterricht zu verknüpfen."
+          "description": "Nutzen Sie den Szenario-Simulator, um ESG-Entscheidungen zu erproben und die Ergebnisse mit Lernenden zu besprechen."
         },
         "3": {
           "title": "Flexibler pädagogischer Einsatz",
@@ -153,7 +153,7 @@
       "cta": {
         "eyebrow": "Plattform beitreten",
         "title": "Zugriff auf ESG-Lernressourcen für Lehrkräfte.",
-        "description": "Registrieren Sie sich, um Lehrplanmaterialien, Fallstudien und szenariobasierte Lernmöglichkeiten zu erkunden.",
+        "description": "Registrieren Sie sich für den Zugriff auf Curriculum, ePortfolio und Szenario-Simulator.",
         "primaryCta": "Registrieren",
         "secondaryCta": "Anmelden"
       }
@@ -162,7 +162,7 @@
       "hero": {
         "eyebrow": "Für Lernende",
         "title": "Erkunden Sie ESG-Themen durch interaktive Szenarien, Fallstudien und geführte Lernmaterialien.",
-        "description": "Lernende können die Plattform nutzen, um ein praktisches Verständnis von ESG-Fragen durch selbstgesteuerte Erkundung, strukturierte Ressourcen und angewandte Lernerfahrungen aufzubauen.",
+        "description": "Lernende können ESG-Fallstudien im ePortfolio erkunden und im Szenario-Simulator selbstständig Entscheidungen üben.",
         "primaryCta": "Registrieren",
         "secondaryCta": "Mehr erfahren"
       },
@@ -170,7 +170,7 @@
         "card1Title": "Interaktive Szenarien",
         "card1Description": "Erforschen Sie ESG-Themen durch realistische Entscheidungsaufgaben und geführte Übungen.",
         "card2Badge": "Selbstgesteuertes Lernen",
-        "card2Title": "Fallstudien und Beispiele",
+        "card2Title": "Fallstudien im ePortfolio",
         "card2Description": "Nutzen Sie strukturierte Beispiele, um zu verstehen, wie ESG in der praktischen Ausbildung und im Berufskontext erscheint.",
         "card3Title": "Barrierefreier Lernfluss",
         "card3Description": "Navigieren Sie durch mehrsprachige Inhalte, die Reflexion, Klarheit und schrittweisen Fortschritt fördern."
@@ -217,7 +217,7 @@
       "cta": {
         "eyebrow": "Lernen starten",
         "title": "Erstellen Sie Ihr Konto und greifen Sie auf praktische ESG-Ressourcen zu.",
-        "description": "Registrieren Sie sich, um Szenarien, Fallstudien und geführte Lerninhalte für Lernende zu erkunden.",
+        "description": "Registrieren Sie sich, um ESG-Fallstudien im ePortfolio und interaktive Szenarien im Szenario-Simulator zu erkunden.",
         "primaryCta": "Registrieren",
         "secondaryCta": "Anmelden"
       }
