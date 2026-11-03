@@ -20,7 +20,7 @@ export default async function ProtectedOverviewLayout({ children, params }: Prop
   if (!user) redirect(`/${locale}/auth/login`);
 
   const profile = await prisma.profile.findUnique({ where: { id: user.id } });
-  if (!profile) redirect(`/${locale}/auth/login`);
+  if (!profile) redirect(`/${locale}/auth/complete-profile`);
 
   return (
     <div className="flex h-dvh flex-col overflow-hidden bg-[#f5f5f3]">

@@ -241,7 +241,7 @@ async function getDashboardPageData({ params }: Props) {
     });
 
     if (!profile) {
-      redirect(`/${locale}/auth/login`);
+      redirect(`/${locale}/auth/complete-profile`);
     }
 
     const role = profile.role;

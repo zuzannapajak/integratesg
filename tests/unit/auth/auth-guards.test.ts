@@ -214,10 +214,10 @@ describe("authentication guards", () => {
       prismaMocks.findUnique.mockResolvedValue(null);
 
       await expect(requireRole("el", [APP_ROLES.learner, APP_ROLES.educator])).rejects.toThrow(
-        "NEXT_REDIRECT:/el/dashboard",
+        "NEXT_REDIRECT:/el/auth/complete-profile",
       );
 
-      expect(navigationMocks.redirect).toHaveBeenCalledWith("/el/dashboard");
+      expect(navigationMocks.redirect).toHaveBeenCalledWith("/el/auth/complete-profile");
     });
 
     it("allows an educator to access educator-only curriculum resources", async () => {

@@ -1,3 +1,4 @@
+import { APP_ROLES, isSelfServiceRole } from "@/lib/auth/roles";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { createClient } from "../../../../../lib/supabase/server";
@@ -28,6 +29,11 @@ export default async function CompleteProfilePage({ params }: Props) {
   }
 
   const email = user.email ?? "";
+  const requestedRole: unknown = user.user_metadata.role;
+  const initialRole =
+    typeof requestedRole === "string" && isSelfServiceRole(requestedRole)
+      ? requestedRole
+      : APP_ROLES.learner;
 
-  return <CompleteProfileForm locale={locale} email={email} />;
+  return <CompleteProfileForm locale={locale} email={email} initialRole={initialRole} />;
 }

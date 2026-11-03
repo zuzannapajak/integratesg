@@ -19,7 +19,11 @@ export async function requireRole(locale: string, allowedRoles: AppRole | AppRol
 
   const roles = Array.isArray(allowedRoles) ? allowedRoles : [allowedRoles];
 
-  if (!profile || !roles.includes(profile.role)) {
+  if (!profile) {
+    redirect(`/${locale}/auth/complete-profile`);
+  }
+
+  if (!roles.includes(profile.role)) {
     redirect(`/${locale}/dashboard`);
   }
 

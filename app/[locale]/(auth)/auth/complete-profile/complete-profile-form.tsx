@@ -10,15 +10,16 @@ import { useState, useTransition } from "react";
 type Props = {
   locale: string;
   email: string;
+  initialRole: SelfServiceRole;
 };
 
-export default function CompleteProfileForm({ locale, email }: Props) {
+export default function CompleteProfileForm({ locale, email, initialRole }: Props) {
   const t = useTranslations("Auth.CompleteProfile");
   const roles = useTranslations("Roles");
   const common = useTranslations("Common");
   const router = useRouter();
 
-  const [role, setRole] = useState<SelfServiceRole>(APP_ROLES.learner);
+  const [role, setRole] = useState<SelfServiceRole>(initialRole);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
