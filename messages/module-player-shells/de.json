@@ -84,13 +84,13 @@
         "nextStep": {
           "eyebrow": "Wie es weitergeht",
           "assessment": {
-            "title": "Sie können Ihre Pilotteilnahme abschließen",
+            "title": "Lernen abschließen? Jetzt POST ausfüllen",
             "description": "Sie haben mindestens ein Modul abgeschlossen, daher ist die Nachbewertung jetzt verfügbar. Nach dem Absenden haben Sie weiterhin Zugriff auf den Kurs und die Module.",
-            "action": "Pilotteilnahme abschließen"
+            "action": "Lernen beenden und POST ausfüllen"
           },
           "feedback": {
-            "title": "Zufriedenheitsbefragung — Curriculum",
-            "description": "Bewerten Sie Lerninhalte und Nutzbarkeit nach dem Post-Assessment.",
+            "title": "Plattform-Zufriedenheitsbefragung",
+            "description": "Bewerten Sie als Teilnehmende des WP3-Piloten die Werkzeuge, Inhalte und die Nutzung der Plattform.",
             "action": "Fragebogen ausfüllen"
           },
           "explore": {

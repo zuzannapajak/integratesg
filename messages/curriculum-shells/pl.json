@@ -245,36 +245,36 @@
       "description": "Przed pierwszym wejściem do materiałów możesz wypełnić krótką ankietę startową. Pomoże ona porównać poziom samooceny przed i po korzystaniu z curriculum.",
       "moduleLabel": "Wybrany moduł",
       "fillTitle": "Wypełnij ankietę wstępną",
-      "fillDescription": "Wybierz tę opcję, jeśli bierzesz udział w pilotażu i chcesz zapisać punkt startowy przed korzystaniem z modułów.",
+      "fillDescription": "Wypełnij ocenę wstępną, aby zapisać swój poziom pewności przed korzystaniem z modułów. Ten krok jest opcjonalny dla wszystkich.",
       "fillAction": "Wypełnij ankietę wstępną",
-      "skipLink": "Pomiń i przejdź bez udziału w pilotażu",
+      "skipLink": "Pomiń PRE i kontynuuj",
       "back": "Powrót do modułu",
       "error": "Nie udało się zapisać decyzji. Spróbuj ponownie.",
       "skipPending": "Zapisywanie decyzji...",
       "skipModal": {
-        "title": "Pominąć udział w pilotażu?",
-        "description": "Decyzję zapisujemy tylko raz. Po pominięciu ankietы wstęnej nie będzie możliwości powrotu do niego w ramach tej samej ścieżki pilotażowej.",
+        "title": "Pominąć ocenę wstępną?",
+        "description": "Nie będzie można później wypełnić PRE w tym cyklu nauki, ale po ukończeniu co najmniej jednego modułu nadal będzie dostępna ocena POST. Nie będzie możliwe porównanie PRE/POST.",
         "confirm": "Pomiń i przejdź dalej",
         "cancel": "Wróć"
       }
     },
     "CurriculumPilotPostAssessmentCard": {
       "completed": {
-        "eyebrow": "Pilotaż ukończony",
+        "eyebrow": "Ocena końcowa ukończona",
         "title": "Ocena końcowa została zapisana",
-        "description": "Dziękujemy za ukończenie części pilotażowej. Nadal możesz korzystać z modułów, zaliczać testy modułowe i pracować nad uzyskaniem certyfikatu.",
-        "surveyAction": "Oceń pilotaż"
+        "description": "Ocena końcowa została zapisana. Nadal możesz korzystać z pozostałych modułów i zdobywać certyfikaty.",
+        "surveyAction": "Oceń platformę"
       },
       "available": {
-        "eyebrow": "Ścieżka pilotażowa",
-        "title": "Możesz zakończyć udział w pilotażu",
-        "description": "Ukończyłeś co najmniej jeden moduł, dlatego ocena końcowa jest już dostępna. Po jej przesłaniu nadal będziesz mieć dostęp do kursu i modułów.",
-        "action": "Zakończ udział w pilotażu"
+        "eyebrow": "Samoocena WP3",
+        "title": "Kończysz naukę? Przejdź do POST",
+        "description": "Ukończono co najmniej jeden moduł. Gdy zdecydujesz się zakończyć ten etap nauki, wypełnij ocenę końcową. Pozostałe moduły nadal będą dostępne.",
+        "action": "Zakończ naukę i przejdź do POST"
       },
       "locked": {
-        "eyebrow": "Ścieżka pilotażowa",
+        "eyebrow": "Samoocena WP3",
         "title": "Ocena końcowa będzie dostępna po ukończeniu co najmniej jednego modułu",
-        "description": "Najpierw ukończ co najmniej jeden moduł programu nauczania. Dzięki temu porównanie przed/po będzie miarodajne.",
+        "description": "Aby przejść do oceny końcowej, ukończ co najmniej jeden moduł.",
         "locked": "Ukończone moduły"
       }
     },
@@ -293,7 +293,7 @@
         "validationError": "Odpowiedz na wszystkie pytania przed przejściem dalej."
       },
       "pre": {
-        "eyebrow": "Pre-assessment pilotażowy",
+        "eyebrow": "Ocena wstępna (PRE)",
         "title": "Samoocena przed rozpoczęciem modułów IntegratESG",
         "description": "Przed rozpoczęciem modułów IntegratESG wskaż, jak pewnie czujesz się w poniższych zadaniach związanych z ESG. Nie ma dobrych ani złych odpowiedzi. Twoje odpowiedzi pomogą zmierzyć postęp w nauce.",
         "submit": "Zapisz pre-assessment i przejdź dalej",
@@ -301,10 +301,10 @@
         "submitError": "Nie udało się zapisać pre-assessmentu. Spróbuj ponownie."
       },
       "post": {
-        "eyebrow": "Post-assessment pilotażowy",
+        "eyebrow": "Ocena końcowa (POST)",
         "title": "Samoocena po korzystaniu z modułów IntegratESG",
-        "description": "Po ukończeniu wybranych modułów IntegratESG wskaż, jak pewnie czujesz się teraz w poniższych zadaniach związanych z ESG. Odpowiedz ponownie na te same pytania, aby można było zmierzyć postęp w nauce.",
-        "submit": "Zapisz post-assessment i zakończ udział w pilotażu",
+        "description": "Po skorzystaniu z modułów IntegratESG oceń swoją pewność w realizacji poniższych zadań ESG. Jeżeli pominięto PRE, wynik POST zostanie zapisany bez porównania PRE/POST.",
+        "submit": "Zapisz ocenę końcową",
         "submitting": "Zapisywanie odpowiedzi...",
         "submitError": "Nie udało się zapisać post-assessmentu. Spróbuj ponownie."
       }

@@ -110,5 +110,7 @@ export function pickCertificateModuleTitle(
 ): string {
   const selected = translations.find((entry) => entry.language === locale)?.title.trim();
   const english = translations.find((entry) => entry.language === "en")?.title.trim();
-  return selected || english || slug;
+  if (selected) return selected;
+  if (english) return english;
+  return slug;
 }

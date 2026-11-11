@@ -1,6 +1,8 @@
 import PlatformFeedbackForm from "@/components/platform-feedback/platform-feedback-form";
 import { requireRole } from "@/features/auth/requireRole";
 import { APP_ROLES } from "@/lib/auth/roles";
+import { getWp3PlatformFeedbackEligibility } from "@/lib/platform-feedback/wp3-eligibility";
+import { redirect } from "next/navigation";
 
 type Props = {
   params: Promise<{
@@ -11,7 +13,11 @@ type Props = {
 export default async function PlatformFeedbackPage({ params }: Props) {
   const { locale } = await params;
 
-  await requireRole(locale, [APP_ROLES.educator, APP_ROLES.learner]);
+  const { user } = await requireRole(locale, APP_ROLES.educator);
+  const { eligible } = await getWp3PlatformFeedbackEligibility(user.id);
+  if (!eligible) {
+    redirect(`/${locale}/curriculum`);
+  }
 
   return (
     <main className="relative min-h-screen bg-[#f5f5f3] pb-20">

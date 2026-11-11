@@ -84,13 +84,13 @@
         "nextStep": {
           "eyebrow": "Cosa fare ora",
           "assessment": {
-            "title": "Puoi completare la tua partecipazione al pilota",
+            "title": "Vuoi concludere lo studio? Compila POST",
             "description": "Hai completato almeno un modulo, quindi la valutazione post è ora disponibile. Dopo averla inviata, avrai ancora accesso al corso e ai moduli.",
-            "action": "Completa la partecipazione al pilota"
+            "action": "Concludi lo studio e compila POST"
           },
           "feedback": {
-            "title": "Questionario di soddisfazione — Curriculum",
-            "description": "Valuta i materiali e la facilità d’uso dopo il post-assessment.",
+            "title": "Questionario di soddisfazione sulla piattaforma",
+            "description": "Come partecipante al pilota WP3, valuta gli strumenti, i contenuti e l’esperienza d’uso della piattaforma.",
             "action": "Compila il questionario"
           },
           "explore": {

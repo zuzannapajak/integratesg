@@ -34,7 +34,7 @@ describe("platform feedback bubble", () => {
   });
 
   it("routes educators to the educator-only platform feedback form", () => {
-    render(<PlatformFeedbackBubble locale="en" role="educator" />);
+    render(<PlatformFeedbackBubble locale="en" role="educator" canGiveWp3Feedback />);
 
     expect(screen.getByRole("link", { name: "label" })).toHaveAttribute(
       "href",
@@ -42,7 +42,12 @@ describe("platform feedback bubble", () => {
     );
   });
 
-  it("routes learners to the ePortfolio pilot survey, not the educator-only form", () => {
+  it("hides the platform survey from regular educators", () => {
+    render(<PlatformFeedbackBubble locale="en" role="educator" />);
+    expect(screen.queryByRole("link")).not.toBeInTheDocument();
+  });
+
+  it("routes learners to the existing ePortfolio survey until the WP4 update", () => {
     render(<PlatformFeedbackBubble locale="pl" role="learner" />);
 
     expect(screen.getByRole("link", { name: "label" })).toHaveAttribute(
@@ -73,7 +78,7 @@ describe("platform feedback bubble", () => {
 
   it("stays hidden on the educator feedback form itself", () => {
     state.pathname = "/en/platform-feedback";
-    render(<PlatformFeedbackBubble locale="en" role="educator" />);
+    render(<PlatformFeedbackBubble locale="en" role="educator" canGiveWp3Feedback />);
 
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });

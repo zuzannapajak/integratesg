@@ -245,36 +245,36 @@
       "description": "Prima del primo accesso ai materiali didattici, puoi completare una breve autovalutazione iniziale. Aiuta a confrontare la tua autovalutazione prima e dopo l’utilizzo del curriculum.",
       "moduleLabel": "Modulo selezionato",
       "fillTitle": "Completa il pre-assessment",
-      "fillDescription": "Scegli questa opzione se partecipi al pilota e vuoi salvare il tuo punto di partenza prima di utilizzare i moduli.",
+      "fillDescription": "Compila l’autovalutazione iniziale per registrare il tuo livello di sicurezza prima di usare i moduli. È facoltativa per tutti.",
       "fillAction": "Completa il pre-assessment",
-      "skipLink": "Salta e continua senza partecipare al pilota",
+      "skipLink": "Salta PRE e continua",
       "back": "Torna al modulo",
       "error": "Non è stato possibile salvare la tua decisione. Riprova.",
       "skipPending": "Salvataggio della decisione...",
       "skipModal": {
-        "title": "Saltare la partecipazione al pilota?",
-        "description": "Questa decisione viene salvata una sola volta. Dopo aver saltato il pre-assessment, non sarà possibile tornarci nello stesso percorso pilota.",
+        "title": "Saltare l’autovalutazione iniziale?",
+        "description": "Non potrai compilare PRE in seguito in questo percorso, ma potrai completare POST dopo almeno un modulo. Non sarà possibile confrontare PRE e POST.",
         "confirm": "Salta e continua",
         "cancel": "Torna indietro"
       }
     },
     "CurriculumPilotPostAssessmentCard": {
       "completed": {
-        "eyebrow": "Pilota completato",
+        "eyebrow": "Autovalutazione completata",
         "title": "La valutazione post è stata salvata",
-        "description": "Grazie per aver completato la parte pilota. Puoi continuare a usare i moduli, completare i test dei moduli e lavorare per ottenere il certificato.",
-        "surveyAction": "Valuta il pilota"
+        "description": "L’autovalutazione finale è stata salvata. Puoi continuare a studiare gli altri moduli e ottenere certificati.",
+        "surveyAction": "Valuta la piattaforma"
       },
       "available": {
-        "eyebrow": "Percorso pilota",
-        "title": "Puoi completare la tua partecipazione al pilota",
-        "description": "Hai completato almeno un modulo, quindi la valutazione post è ora disponibile. Dopo averla inviata, avrai ancora accesso al corso e ai moduli.",
-        "action": "Completa la partecipazione al pilota"
+        "eyebrow": "Autovalutazione WP3",
+        "title": "Vuoi concludere lo studio? Compila POST",
+        "description": "Hai completato almeno un modulo. Quando decidi di terminare questa fase, compila l’autovalutazione finale. Gli altri moduli resteranno disponibili.",
+        "action": "Concludi lo studio e compila POST"
       },
       "locked": {
-        "eyebrow": "Percorso pilota",
+        "eyebrow": "Autovalutazione WP3",
         "title": "La valutazione post sarà disponibile dopo aver completato almeno un modulo",
-        "description": "Completa prima almeno un modulo del curriculum. Questo rende significativo il confronto pre/post.",
+        "description": "Completa almeno un modulo prima dell’autovalutazione finale.",
         "locked": "Moduli completati"
       }
     },
@@ -293,7 +293,7 @@
         "validationError": "Rispondi a tutte le domande prima di continuare."
       },
       "pre": {
-        "eyebrow": "Pre-assessment pilota",
+        "eyebrow": "Autovalutazione iniziale (PRE)",
         "title": "Autovalutazione prima di iniziare i moduli IntegratESG",
         "description": "Prima di iniziare i moduli IntegratESG, indica quanto ti senti sicuro nello svolgere le seguenti attività relative all’ESG. Non ci sono risposte giuste o sbagliate. Le tue risposte ci aiuteranno a misurare i progressi di apprendimento.",
         "submit": "Salva il pre-assessment e continua",
@@ -301,10 +301,10 @@
         "submitError": "Non è stato possibile salvare il pre-assessment. Riprova."
       },
       "post": {
-        "eyebrow": "Post-assessment pilota",
+        "eyebrow": "Autovalutazione finale (POST)",
         "title": "Autovalutazione dopo l’utilizzo dei moduli IntegratESG",
-        "description": "Dopo aver completato i moduli IntegratESG, indica quanto ti senti sicuro nello svolgere ora le seguenti attività relative all’ESG. Rispondi nuovamente alle stesse domande per consentire la misurazione dei progressi di apprendimento.",
-        "submit": "Salva il post-assessment e termina la partecipazione al pilota",
+        "description": "Dopo aver usato i moduli IntegratESG, valuta la tua sicurezza nello svolgimento di queste attività ESG. Se hai saltato PRE, POST verrà salvato senza confronto PRE/POST.",
+        "submit": "Salva l’autovalutazione finale",
         "submitting": "Salvataggio delle risposte...",
         "submitError": "Non è stato possibile salvare il post-assessment. Riprova."
       }

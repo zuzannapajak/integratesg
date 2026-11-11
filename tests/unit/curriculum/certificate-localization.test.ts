@@ -40,6 +40,19 @@ describe("curriculum certificate localization", () => {
     expect(pickCertificateModuleTitle(translations, "course-1", "pl")).toBe("Podstawy ESG");
     expect(pickCertificateModuleTitle(translations, "course-1", "de")).toBe("Foundations of ESG");
     expect(pickCertificateModuleTitle([], "course-1", "de")).toBe("course-1");
+    expect(
+      pickCertificateModuleTitle(
+        [
+          { language: "pl", title: "   " },
+          { language: "en", title: "Foundations of ESG" },
+        ],
+        "course-1",
+        "pl",
+      ),
+    ).toBe("Foundations of ESG");
+    expect(
+      pickCertificateModuleTitle([{ language: "pl", title: "   " }], "course-1", "pl"),
+    ).toBe("course-1");
   });
 
   it("formats dates for all six locales deterministically in UTC", () => {

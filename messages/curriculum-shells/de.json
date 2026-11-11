@@ -245,36 +245,36 @@
       "description": "Vor dem ersten Zugriff auf die Lernmaterialien können Sie eine kurze Selbsteinschätzung ausfüllen. Sie hilft dabei, Ihre Selbsteinschätzung vor und nach der Nutzung des Curriculums zu vergleichen.",
       "moduleLabel": "Ausgewähltes Modul",
       "fillTitle": "Pre-Assessment ausfüllen",
-      "fillDescription": "Wählen Sie diese Option, wenn Sie am Pilotprojekt teilnehmen und Ihren Ausgangspunkt vor der Nutzung der Module speichern möchten.",
+      "fillDescription": "Mit der freiwilligen Selbsteinschätzung erfassen Sie Ihren Ausgangspunkt, bevor Sie die Module nutzen.",
       "fillAction": "Pre-Assessment ausfüllen",
-      "skipLink": "Überspringen und ohne Teilnahme am Pilotprojekt fortfahren",
+      "skipLink": "PRE überspringen und fortfahren",
       "back": "Zurück zum Modul",
       "error": "Ihre Entscheidung konnte nicht gespeichert werden. Bitte versuchen Sie es erneut.",
       "skipPending": "Entscheidung wird gespeichert...",
       "skipModal": {
-        "title": "Teilnahme am Pilotprojekt überspringen?",
-        "description": "Diese Entscheidung wird nur einmal gespeichert. Wenn Sie das Pre-Assessment überspringen, können Sie innerhalb desselben Pilotpfads nicht mehr dazu zurückkehren.",
+        "title": "Eingangs-Selbsteinschätzung überspringen?",
+        "description": "PRE kann in diesem Lernzyklus später nicht nachgeholt werden. Nach mindestens einem abgeschlossenen Modul bleibt POST dennoch verfügbar; ein PRE/POST-Vergleich ist dann nicht möglich.",
         "confirm": "Überspringen und fortfahren",
         "cancel": "Zurück"
       }
     },
     "CurriculumPilotPostAssessmentCard": {
       "completed": {
-        "eyebrow": "Pilot abgeschlossen",
+        "eyebrow": "Selbsteinschätzung abgeschlossen",
         "title": "Die Nachbewertung wurde gespeichert",
-        "description": "Vielen Dank, dass Sie den Pilotteil abgeschlossen haben. Sie können die Module weiterhin nutzen, Modultests absolvieren und auf das Zertifikat hinarbeiten.",
-        "surveyAction": "Pilot bewerten"
+        "description": "Ihre abschließende Selbsteinschätzung wurde gespeichert. Sie können weiterlernen und Zertifikate erwerben.",
+        "surveyAction": "Plattform bewerten"
       },
       "available": {
-        "eyebrow": "Pilotpfad",
-        "title": "Sie können Ihre Pilotteilnahme abschließen",
-        "description": "Sie haben mindestens ein Modul abgeschlossen, daher ist die Nachbewertung jetzt verfügbar. Nach dem Absenden haben Sie weiterhin Zugriff auf den Kurs und die Module.",
-        "action": "Pilotteilnahme abschließen"
+        "eyebrow": "WP3-Selbsteinschätzung",
+        "title": "Lernen abschließen? Jetzt POST ausfüllen",
+        "description": "Sie haben mindestens ein Modul abgeschlossen. Wenn Sie diesen Lernabschnitt beenden möchten, füllen Sie die abschließende Selbsteinschätzung aus. Die Module bleiben weiterhin verfügbar.",
+        "action": "Lernen beenden und POST ausfüllen"
       },
       "locked": {
-        "eyebrow": "Pilotpfad",
+        "eyebrow": "WP3-Selbsteinschätzung",
         "title": "Die Nachbewertung wird nach Abschluss von mindestens einem Modul verfügbar sein",
-        "description": "Bitte schließen Sie zuerst mindestens ein Curriculum-Modul ab. Dadurch wird der Vorher/Nachher-Vergleich aussagekräftig.",
+        "description": "Schließen Sie mindestens ein Modul ab, bevor Sie die abschließende Selbsteinschätzung ausfüllen.",
         "locked": "Abgeschlossene Module"
       }
     },
@@ -293,7 +293,7 @@
         "validationError": "Bitte beantworten Sie alle Fragen, bevor Sie fortfahren."
       },
       "pre": {
-        "eyebrow": "Pilot-Pre-Assessment",
+        "eyebrow": "Eingangs-Selbsteinschätzung (PRE)",
         "title": "Selbsteinschätzung vor Beginn der IntegratESG-Module",
         "description": "Bevor Sie mit den IntegratESG-Modulen beginnen, geben Sie bitte an, wie sicher Sie sich derzeit bei den folgenden ESG-bezogenen Aufgaben fühlen. Es gibt keine richtigen oder falschen Antworten. Ihre Antworten helfen uns, den Lernfortschritt zu messen.",
         "submit": "Pre-Assessment speichern und fortfahren",
@@ -301,10 +301,10 @@
         "submitError": "Das Pre-Assessment konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
       },
       "post": {
-        "eyebrow": "Pilot-Post-Assessment",
+        "eyebrow": "Abschließende Selbsteinschätzung (POST)",
         "title": "Selbsteinschätzung nach Nutzung der IntegratESG-Module",
-        "description": "Nachdem Sie die IntegratESG-Module abgeschlossen haben, geben Sie bitte an, wie sicher Sie sich jetzt bei den folgenden ESG-bezogenen Aufgaben fühlen. Beantworten Sie dieselben Fragen erneut, damit der Lernfortschritt gemessen werden kann.",
-        "submit": "Post-Assessment speichern und Pilotteilnahme abschließen",
+        "description": "Bewerten Sie nach der Nutzung der IntegratESG-Module Ihre Sicherheit bei diesen ESG-Aufgaben. Wenn Sie PRE übersprungen haben, wird POST ohne PRE/POST-Vergleich gespeichert.",
+        "submit": "Abschließende Selbsteinschätzung speichern",
         "submitting": "Antworten werden gespeichert...",
         "submitError": "Das Post-Assessment konnte nicht gespeichert werden. Bitte versuchen Sie es erneut."
       }

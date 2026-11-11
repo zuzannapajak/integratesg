@@ -84,13 +84,13 @@
         "nextStep": {
           "eyebrow": "Co dalej",
           "assessment": {
-            "title": "Możesz zakończyć udział w pilotażu",
+            "title": "Kończysz naukę? Przejdź do POST",
             "description": "Ukończyłeś co najmniej jeden moduł, dlatego ocena końcowa jest już dostępna. Po jej przesłaniu nadal będziesz mieć dostęp do kursu i modułów.",
-            "action": "Zakończ udział w pilotażu"
+            "action": "Zakończ naukę i przejdź do POST"
           },
           "feedback": {
-            "title": "Ankieta satysfakcji — Curriculum",
-            "description": "Oceń materiały szkoleniowe i korzystanie z platformy po zakończeniu post-assessmentu.",
+            "title": "Ankieta oceny platformy",
+            "description": "Jako uczestnik pilotażu WP3 oceń narzędzia, treści edukacyjne i działanie platformy.",
             "action": "Wypełnij ankietę"
           },
           "explore": {

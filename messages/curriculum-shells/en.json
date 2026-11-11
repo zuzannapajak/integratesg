@@ -245,36 +245,36 @@
       "description": "Before your first access to the learning materials, you can complete a short starting self-assessment. It helps compare your self-assessment before and after using the curriculum.",
       "moduleLabel": "Selected module",
       "fillTitle": "Complete the pre-assessment",
-      "fillDescription": "Choose this if you are taking part in the pilot and want to save your starting point before using the modules.",
+      "fillDescription": "Complete the starting self-assessment to record your confidence before using the modules. This step is optional for everyone.",
       "fillAction": "Complete pre-assessment",
-      "skipLink": "Skip and continue without pilot participation",
+      "skipLink": "Skip pre-assessment and continue",
       "back": "Back to module",
       "error": "We could not save your decision. Please try again.",
       "skipPending": "Saving decision...",
       "skipModal": {
-        "title": "Skip pilot participation?",
-        "description": "This decision is saved only once. After skipping the pre-assessment, you will not be able to return to it within the same pilot path.",
+        "title": "Skip the starting self-assessment?",
+        "description": "You cannot complete PRE later in this learning cycle, but you can still take POST after completing at least one module. A PRE/POST comparison will not be available.",
         "confirm": "Skip and continue",
         "cancel": "Go back"
       }
     },
     "CurriculumPilotPostAssessmentCard": {
       "completed": {
-        "eyebrow": "Pilot completed",
+        "eyebrow": "Self-assessment complete",
         "title": "Post-assessment has been saved",
-        "description": "Thank you for completing the pilot part. You can still use the modules, complete module tests and work towards the certificate.",
-        "surveyAction": "Evaluate the pilot"
+        "description": "Your closing self-assessment has been saved. You can continue studying the remaining modules and working towards a certificate.",
+        "surveyAction": "Evaluate the platform"
       },
       "available": {
-        "eyebrow": "Pilot path",
-        "title": "You can finish your pilot participation",
-        "description": "You have completed at least one module, so the post-assessment is now available. After submitting it, you will still have access to the course and modules.",
-        "action": "Finish pilot participation"
+        "eyebrow": "Curriculum self-assessment",
+        "title": "Ready to finish learning? Take POST",
+        "description": "You have completed at least one module. When you are ready to finish this learning cycle, submit the closing self-assessment. You can still study more modules afterwards.",
+        "action": "Finish learning and take POST"
       },
       "locked": {
-        "eyebrow": "Pilot path",
+        "eyebrow": "Curriculum self-assessment",
         "title": "Post-assessment will be available after completing at least one module",
-        "description": "Please complete at least one curriculum module first. This makes the pre/post comparison meaningful.",
+        "description": "Complete at least one module before taking the closing self-assessment.",
         "locked": "Completed modules"
       }
     },
@@ -293,7 +293,7 @@
         "validationError": "Please answer all questions before continuing."
       },
       "pre": {
-        "eyebrow": "Pilot pre-assessment",
+        "eyebrow": "Starting self-assessment (PRE)",
         "title": "Self-assessment before starting the IntegratESG modules",
         "description": "Before starting the IntegratESG modules, please indicate how confident you currently feel about the following ESG-related tasks. There are no right or wrong answers. Your responses will help us measure learning progress.",
         "submit": "Save pre-assessment and continue",
@@ -301,10 +301,10 @@
         "submitError": "We could not save your pre-assessment. Please try again."
       },
       "post": {
-        "eyebrow": "Pilot post-assessment",
+        "eyebrow": "Closing self-assessment (POST)",
         "title": "Self-assessment after using the IntegratESG modules",
-        "description": "After completing the IntegratESG modules, please indicate how confident you now feel about the following ESG-related tasks. Please answer the same questions again so that learning progress can be measured.",
-        "submit": "Save post-assessment and finish pilot participation",
+        "description": "After using the IntegratESG modules, indicate how confident you feel about these ESG tasks. If you skipped PRE, your POST result will be saved without a PRE/POST comparison.",
+        "submit": "Save closing self-assessment",
         "submitting": "Saving answers...",
         "submitError": "We could not save your post-assessment. Please try again."
       }

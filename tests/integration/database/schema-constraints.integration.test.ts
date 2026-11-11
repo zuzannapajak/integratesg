@@ -97,6 +97,8 @@ describe("database schema constraints", () => {
       uniqueKey("QuestionTranslation", ["questionId", "language"]),
       uniqueKey("AnswerTranslation", ["answerId", "language"]),
       uniqueKey("PlatformFeedbackReminder", ["userId"]),
+      uniqueKey("PilotParticipation", ["userId", "track", "cohortCode"]),
+      uniqueKey("SurveySubmission", ["userId", "surveyType", "roundKey"]),
     ];
 
     for (const expectedKey of expectedKeys) {
@@ -169,6 +171,8 @@ describe("database schema constraints", () => {
       "AnswerTranslation.answerId->Answer.id:CASCADE",
       "PlatformFeedbackSubmission.userId->Profile.id:CASCADE",
       "PlatformFeedbackReminder.userId->Profile.id:CASCADE",
+      "PilotParticipation.userId->Profile.id:CASCADE",
+      "SurveySubmission.userId->Profile.id:CASCADE",
     ];
 
     for (const expectedRelation of expectedRelations) {

@@ -9,13 +9,14 @@ import { usePathname } from "next/navigation";
 type Props = {
   locale: string;
   role: AppRole;
+  canGiveWp3Feedback?: boolean;
 };
 
 function isScenarioModulePath(pathname: string): boolean {
   return /^\/[^/]+\/scenarios(?:\/|$)/.test(pathname);
 }
 
-export default function PlatformFeedbackBubble({ locale, role }: Props) {
+export default function PlatformFeedbackBubble({ locale, role, canGiveWp3Feedback = false }: Props) {
   const pathname = usePathname();
   const t = useTranslations("Protected.PlatformFeedbackBubble");
   const feedbackHref =
@@ -23,7 +24,12 @@ export default function PlatformFeedbackBubble({ locale, role }: Props) {
       ? `/${locale}/pilot-satisfaction/eportfolio`
       : `/${locale}/platform-feedback`;
 
-  if (role === APP_ROLES.admin || isScenarioModulePath(pathname) || pathname === feedbackHref) {
+  if (
+    role === APP_ROLES.admin ||
+    (role === APP_ROLES.educator && !canGiveWp3Feedback) ||
+    isScenarioModulePath(pathname) ||
+    pathname === feedbackHref
+  ) {
     return null;
   }
 

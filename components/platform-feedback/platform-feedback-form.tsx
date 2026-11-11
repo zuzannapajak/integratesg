@@ -4,7 +4,6 @@ import { submitPlatformFeedbackAction } from "@/features/platform-feedback/actio
 import { ArrowLeft, CheckCircle2, Loader2, Send } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { type SyntheticEvent, useMemo, useState, useTransition } from "react";
 
 type Props = {
@@ -57,7 +56,6 @@ function getCompleteRatings(ratings: Partial<Record<RatingKey, number>>): Comple
 
 export default function PlatformFeedbackForm({ locale }: Props) {
   const t = useTranslations("Protected.PlatformFeedbackForm");
-  const router = useRouter();
   const [ratings, setRatings] = useState<Partial<Record<RatingKey, number>>>({});
   const [suggestions, setSuggestions] = useState("");
   const [technicalNotes, setTechnicalNotes] = useState("");
@@ -86,13 +84,13 @@ export default function PlatformFeedbackForm({ locale }: Props) {
     startTransition(async () => {
       try {
         await submitPlatformFeedbackAction({
+          locale,
           ...completeRatings,
           suggestions,
           technicalNotes,
         });
 
         setSubmitted(true);
-        router.refresh();
       } catch (caughtError) {
         console.error(caughtError);
         setError(t("validation.submitError"));

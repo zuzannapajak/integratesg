@@ -4,7 +4,7 @@ import { requireRole } from "@/features/auth/requireRole";
 import { APP_ROLES } from "@/lib/auth/roles";
 import { getPilotSatisfactionAvailability } from "@/lib/pilot-satisfaction/queries";
 import { isPilotSurveyScope } from "@/lib/pilot-satisfaction/validation";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export default async function PilotSatisfactionPage({
   params,
@@ -13,9 +13,10 @@ export default async function PilotSatisfactionPage({
 }) {
   const { locale, scope } = await params;
   if (!isPilotSurveyScope(scope)) notFound();
+  if (scope === "curriculum") redirect(`/${locale}/curriculum`);
   const { user } = await requireRole(
     locale,
-    scope === "curriculum" ? APP_ROLES.educator : [APP_ROLES.educator, APP_ROLES.learner],
+    [APP_ROLES.educator, APP_ROLES.learner],
   );
   const availability = await getPilotSatisfactionAvailability(user.id, scope, locale);
   return (

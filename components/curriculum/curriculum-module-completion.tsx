@@ -43,7 +43,7 @@ export default function CurriculumModuleCompletion({
     completionStep === "assessment"
       ? `/${locale}/curriculum/pilot/post-assessment?next=${encodeURIComponent(`/${locale}/curriculum`)}`
       : completionStep === "feedback"
-        ? `/${locale}/pilot-satisfaction/curriculum`
+        ? `/${locale}/platform-feedback`
         : `/${locale}/curriculum`;
 
   return (

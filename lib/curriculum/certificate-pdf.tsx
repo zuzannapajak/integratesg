@@ -7,7 +7,7 @@ import {
 import type { AppLocale } from "@/lib/i18n/locales";
 import {
   Document,
-  Image,
+  Image as PdfImage,
   Line,
   Page,
   Rect,
@@ -274,9 +274,9 @@ export async function buildCurriculumCertificatePdf(
   return renderToBuffer(
     <Document title={`IntegratESG - ${copy.title}`} author="IntegratESG">
       <Page size={{ width: PAGE_WIDTH, height: PAGE_HEIGHT }} style={styles.page} wrap={false}>
-        {backdrop ? <Image src={backdrop} style={styles.backdrop} /> : null}
+        {backdrop ? <PdfImage src={backdrop} style={styles.backdrop} /> : null}
         {logo ? (
-          <Image src={logo} style={styles.logo} />
+          <PdfImage src={logo} style={styles.logo} />
         ) : (
           <UnicodeText
             value="IntegratESG"
