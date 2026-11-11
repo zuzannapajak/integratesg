@@ -16,17 +16,20 @@ function isScenarioModulePath(pathname: string): boolean {
   return /^\/[^/]+\/scenarios(?:\/|$)/.test(pathname);
 }
 
-export default function PlatformFeedbackBubble({ locale, role, canGiveWp3Feedback = false }: Props) {
+export default function PlatformFeedbackBubble({
+  locale,
+  role,
+  canGiveWp3Feedback = false,
+}: Props) {
   const pathname = usePathname();
   const t = useTranslations("Protected.PlatformFeedbackBubble");
-  const feedbackHref =
-    role === APP_ROLES.learner
-      ? `/${locale}/pilot-satisfaction/eportfolio`
-      : `/${locale}/platform-feedback`;
+  const feedbackHref = `/${locale}/platform-feedback`;
 
+  // WP4 evaluations have contextual reminders on the ePortfolio and Scenarios pages.
+  // The global floating button is reserved for the explicitly assigned WP3 pilot.
   if (
-    role === APP_ROLES.admin ||
-    (role === APP_ROLES.educator && !canGiveWp3Feedback) ||
+    role !== APP_ROLES.educator ||
+    !canGiveWp3Feedback ||
     isScenarioModulePath(pathname) ||
     pathname === feedbackHref
   ) {

@@ -1,0 +1,56 @@
+{
+  "Protected": {
+    "Wp4Survey": {
+      "back": "Torna ai materiali",
+      "privacy": "Le risposte sono collegate al tuo account per evitare invii duplicati. I risultati sono presentati in forma aggregata. Evita di inserire dati personali.",
+      "open": "Compila il questionario",
+      "submit": "Invia il questionario",
+      "sending": "Invio in corso...",
+      "error": "Compila tutte le domande obbligatorie. Se hai già inviato il questionario, aggiorna la pagina.",
+      "submitted": "Grazie per il tuo contributo!",
+      "saved": "Le risposte sono state salvate. Puoi continuare a utilizzare i materiali.",
+      "unavailable": "Questionario non ancora disponibile",
+      "eligibility": "Completa almeno un’attività pertinente. Il questionario sugli scenari è riservato ai formatori.",
+      "reminder": "Hai completato un materiale didattico. Ti invitiamo a compilare il questionario di valutazione.",
+      "ratingScale": "1 = Per niente buono; 5 = Eccellente",
+      "multiSelect": "Seleziona una o più risposte.",
+      "noneHint": "Se non ne hai, scrivi «Nessuno».",
+      "autoCountNote": "Calcolato automaticamente dai casi di studio pubblicati e completati, senza duplicati. Le visite ripetute non aumentano il conteggio.",
+      "platformTitle": "Aiutaci a valutare la piattaforma",
+      "platformReminder": "Hai completato le valutazioni dei contenuti. Come partecipante al pilota, valuta anche la piattaforma.",
+      "platformFeedback": "Valuta la piattaforma",
+      "scope": {
+        "case-studies": {
+          "title": "WP4 – Valutazione dei casi di studio",
+          "description": "Questionario approvato sui casi di studio per il personale delle imprese e delle PMI. Il numero viene calcolato automaticamente."
+        },
+        "scenarios": {
+          "title": "WP4 – Valutazione degli scenari",
+          "description": "Questionario approvato sugli scenari per i formatori professionali."
+        }
+      },
+      "skills": {
+        "systems_thinking": "Pensiero sistemico e per processi",
+        "decision_making": "Processo decisionale",
+        "data_literacy": "Alfabetizzazione dei dati"
+      },
+      "caseStudies": {
+        "q1": "Quanti casi di studio hai testato?",
+        "engagementEase": "Quanto è stato facile interagire con i casi di studio durante questa attività? Scegli la risposta che descrive meglio la tua opinione.",
+        "greenTransitionUnderstanding": "In base alla tua esperienza, quanto sono stati efficaci i casi di studio nel migliorare la comprensione del significato della transizione verde?",
+        "esgEcosystemUnderstanding": "Quanto sono stati efficaci i casi di studio nel migliorare la comprensione dell’ESG come processo nel più ampio ecosistema di imprese, società e ambiente?",
+        "skills": "Quali competenze trasversali chiave hai sviluppato utilizzando i casi di studio? Seleziona una o più opzioni.",
+        "challenges": "Quali difficoltà, se presenti, hai incontrato durante l’utilizzo dei casi di studio?",
+        "improvements": "Quali miglioramenti, se necessari, suggeriresti?"
+      },
+      "scenarios": {
+        "incorporationEase": "Quanto sarebbe facile integrare gli scenari nelle tue attività lavorative abituali? Scegli la risposta che rappresenta meglio la tua opinione.",
+        "participantEngagement": "Quanto possono essere efficaci gli scenari nel coinvolgere i partecipanti e aiutarli a comprendere l’ESG come processo nell’ecosistema di imprese, società e ambiente?",
+        "skills": "In quali ambiti questi scenari potrebbero essere più utili per i formatori? Seleziona una o più opzioni.",
+        "challenges": "Quali difficoltà, se presenti, hai incontrato durante l’utilizzo degli scenari?",
+        "implementationChallenges": "Quali difficoltà prevedi nell’integrare gli scenari nelle tue attività lavorative abituali?",
+        "improvements": "Quali miglioramenti suggeriresti per aumentarne l’utilità nelle sessioni future?"
+      }
+    }
+  }
+}

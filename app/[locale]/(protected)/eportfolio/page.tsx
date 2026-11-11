@@ -1,5 +1,6 @@
-import PilotSatisfactionCallout from "@/components/pilot-satisfaction/pilot-satisfaction-callout";
-import { getPilotSatisfactionAvailability } from "@/lib/pilot-satisfaction/queries";
+import Wp4SurveyCallout from "@/components/wp4-surveys/wp4-survey-callout";
+import { getWp4SurveyAvailability } from "@/lib/wp4-surveys/queries";
+import { getWp4PlatformFeedbackEligibility } from "@/lib/platform-feedback/wp4-eligibility";
 import EportfolioLibrary from "@/components/eportfolio/eportfolio-library";
 import { requireRole } from "@/features/auth/requireRole";
 import { APP_ROLES } from "@/lib/auth/roles";
@@ -30,10 +31,10 @@ export default async function EportfolioPage({ params }: Props) {
     (caseStudy) => caseStudy.progress === "completed",
   ).length;
 
-  const satisfaction =
-    completedCount > 0
-      ? await getPilotSatisfactionAvailability(user.id, "eportfolio", locale)
-      : null;
+  const [survey, platform] = await Promise.all([
+    getWp4SurveyAvailability(user.id, "case-studies"),
+    getWp4PlatformFeedbackEligibility(user.id),
+  ]);
 
   const progressPercent =
     caseStudies.length > 0 ? Math.round((completedCount / caseStudies.length) * 100) : 0;
@@ -102,13 +103,12 @@ export default async function EportfolioPage({ params }: Props) {
           </div>
         </section>
 
-        {satisfaction ? (
-          <PilotSatisfactionCallout
-            locale={locale}
-            scope="eportfolio"
-            submitted={satisfaction.submittedAt !== null}
-          />
-        ) : null}
+        <Wp4SurveyCallout
+          locale={locale}
+          scope="case-studies"
+          canCompleteSurvey={survey.eligible}
+          canGivePlatformFeedback={platform.eligible}
+        />
 
         <section className="mt-7">
           {caseStudies.length > 0 ? (

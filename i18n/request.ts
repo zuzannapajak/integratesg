@@ -18,6 +18,7 @@ const messageScopes = [
   "metadata-shells",
   "platform-feedback-shells",
   "pilot-satisfaction-shells",
+  "wp4-survey-shells",
   "protected-list-shells",
   "public-content-shells",
   "route-state-shells",

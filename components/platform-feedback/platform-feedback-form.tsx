@@ -8,6 +8,7 @@ import { type SyntheticEvent, useMemo, useState, useTransition } from "react";
 
 type Props = {
   locale: string;
+  context?: "wp3" | "wp4";
 };
 
 type RatingKey =
@@ -54,7 +55,7 @@ function getCompleteRatings(ratings: Partial<Record<RatingKey, number>>): Comple
   };
 }
 
-export default function PlatformFeedbackForm({ locale }: Props) {
+export default function PlatformFeedbackForm({ locale, context = "wp3" }: Props) {
   const t = useTranslations("Protected.PlatformFeedbackForm");
   const [ratings, setRatings] = useState<Partial<Record<RatingKey, number>>>({});
   const [suggestions, setSuggestions] = useState("");
@@ -85,6 +86,7 @@ export default function PlatformFeedbackForm({ locale }: Props) {
       try {
         await submitPlatformFeedbackAction({
           locale,
+          context,
           ...completeRatings,
           suggestions,
           technicalNotes,

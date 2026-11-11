@@ -1,39 +1,15 @@
-import PilotSatisfactionForm from "@/components/pilot-satisfaction/pilot-satisfaction-form";
-import PilotSatisfactionResult from "@/components/pilot-satisfaction/pilot-satisfaction-result";
-import { requireRole } from "@/features/auth/requireRole";
-import { APP_ROLES } from "@/lib/auth/roles";
-import { getPilotSatisfactionAvailability } from "@/lib/pilot-satisfaction/queries";
 import { isPilotSurveyScope } from "@/lib/pilot-satisfaction/validation";
 import { notFound, redirect } from "next/navigation";
 
-export default async function PilotSatisfactionPage({
+/** Retired questionnaire: preserve existing URLs without collecting obsolete answers. */
+export default async function LegacyPilotSatisfactionPage({
   params,
 }: {
   params: Promise<{ locale: string; scope: string }>;
 }) {
   const { locale, scope } = await params;
   if (!isPilotSurveyScope(scope)) notFound();
-  if (scope === "curriculum") redirect(`/${locale}/curriculum`);
-  const { user } = await requireRole(
-    locale,
-    [APP_ROLES.educator, APP_ROLES.learner],
-  );
-  const availability = await getPilotSatisfactionAvailability(user.id, scope, locale);
-  return (
-    <main className="min-h-screen bg-[#f5f5f3] px-4 py-10">
-      <div className="mx-auto max-w-3xl">
-        {availability.submittedAt ? (
-          <PilotSatisfactionResult locale={locale} scope={scope} state="already-submitted" />
-        ) : availability.eligible ? (
-          <PilotSatisfactionForm
-            locale={locale}
-            scope={scope}
-            caseStudies={availability.caseStudies}
-          />
-        ) : (
-          <PilotSatisfactionResult locale={locale} scope={scope} state="unavailable" />
-        )}
-      </div>
-    </main>
+  redirect(
+    scope === "eportfolio" ? `/${locale}/wp4-surveys/case-studies` : `/${locale}/curriculum`,
   );
 }

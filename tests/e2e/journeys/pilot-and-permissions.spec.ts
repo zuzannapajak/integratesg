@@ -4,18 +4,9 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 import { expect, test, type Page } from "@playwright/test";
 
-import {
-  assertSafeE2EEnvironment,
-  getE2EDatabaseUrl,
-} from "../helpers/safe-test-environment";
+import { assertSafeE2EEnvironment, getE2EDatabaseUrl } from "../helpers/safe-test-environment";
 import { assertE2EDatabaseReady } from "../helpers/assert-e2e-database-ready";
 
-const RATINGS = [
-  "contentClarity",
-  "practicalRelevance",
-  "usability",
-  "overallSatisfaction",
-] as const;
 const LOCALES = ["en", "pl", "de", "it", "el", "bg"] as const;
 
 function connect(): PrismaClient {
@@ -111,21 +102,29 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
     }
   });
 
-  test("preserves the existing ePortfolio survey until WP4 is migrated", async ({ page }) => {
+  test("WP4 Case Studies evaluation uses automatic counts and prevents resubmission", async ({
+    page,
+  }) => {
     test.setTimeout(120_000);
     const profile = await testProfile(db);
     const caseStudy = await db.caseStudy.findUnique({ where: { slug: "barilla" } });
     if (caseStudy?.status !== "published") throw new Error("Published Barilla case study required");
-    const existing = await db.pilotSatisfactionSubmission.findUnique({
-      where: { userId_scope: { userId: profile.id, scope: "eportfolio" } },
+    const previous = await db.surveySubmission.findUnique({
+      where: {
+        userId_surveyType_roundKey: {
+          userId: profile.id,
+          surveyType: "wp4_case_studies",
+          roundKey: "initial",
+        },
+      },
     });
-    if (existing) throw new Error("Use an isolated test account without an earlier ePortfolio survey");
+    if (previous) throw new Error("Use a disposable account without previous WP4 submissions");
     const oldProgress = await db.userCaseStudyProgress.findUnique({
       where: { userId_caseStudyId: { userId: profile.id, caseStudyId: caseStudy.id } },
     });
     try {
       const now = new Date();
-      await db.profile.update({ where: { id: profile.id }, data: { role: "educator" } });
+      await db.profile.update({ where: { id: profile.id }, data: { role: "learner" } });
       await db.userCaseStudyProgress.upsert({
         where: { userId_caseStudyId: { userId: profile.id, caseStudyId: caseStudy.id } },
         update: { status: "completed", completedAt: now, startedAt: now, lastOpenedAt: now },
@@ -139,25 +138,45 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
         },
       });
       await signIn(page);
-      await page.goto("/en/pilot-satisfaction/curriculum");
-      await expect(page).toHaveURL(/\/en\/curriculum$/);
       await page.goto("/en/pilot-satisfaction/eportfolio");
+      await expect(page).toHaveURL(/\/en\/wp4-surveys\/case-studies$/);
       await expect(page.locator("form")).toBeVisible();
-      await page.locator("select").first().selectOption("PL");
-      await page.locator("select").nth(1).selectOption(caseStudy.id);
-      for (const rating of RATINGS) {
+      await expect(page.getByTestId("wp4-completed-count")).not.toHaveText("0");
+      for (const rating of [
+        "engagementEase",
+        "greenTransitionUnderstanding",
+        "esgEcosystemUnderstanding",
+      ]) {
         await page.locator(`input[type="radio"][name="${rating}"][value="5"]`).check();
       }
+      await page.locator('input[type="checkbox"]').first().check();
+      await page.locator("textarea").nth(0).fill("No challenges");
+      await page.locator("textarea").nth(1).fill("No changes needed");
       await page.locator('form button[type="submit"]').click();
-      await expect(page.getByRole("status")).toBeVisible();
-      await expect.poll(async () => db.pilotSatisfactionSubmission.count({
-        where: { userId: profile.id, scope: "eportfolio" },
-      })).toBe(1);
+      await expect
+        .poll(async () =>
+          db.surveySubmission.count({
+            where: { userId: profile.id, surveyType: "wp4_case_studies", roundKey: "initial" },
+          }),
+        )
+        .toBe(1);
+      const saved = await db.surveySubmission.findUnique({
+        where: {
+          userId_surveyType_roundKey: {
+            userId: profile.id,
+            surveyType: "wp4_case_studies",
+            roundKey: "initial",
+          },
+        },
+      });
+      expect(saved).toMatchObject({ surveyVersion: 1, locale: "en", isPilotAtSubmission: false });
+      expect(saved?.answers).toMatchObject({ engagementEase: 5, greenTransitionUnderstanding: 5 });
+      expect(saved?.activitySnapshot).toMatchObject({ caseStudiesCompleted: expect.any(Number) });
       await page.reload();
       await expect(page.locator("form")).toHaveCount(0);
     } finally {
-      await db.pilotSatisfactionSubmission.deleteMany({
-        where: { userId: profile.id, scope: "eportfolio" },
+      await db.surveySubmission.deleteMany({
+        where: { userId: profile.id, surveyType: "wp4_case_studies", roundKey: "initial" },
       });
       if (oldProgress) {
         await db.userCaseStudyProgress.update({
@@ -174,6 +193,81 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
           where: { userId: profile.id, caseStudyId: caseStudy.id },
         });
       }
+      await db.profile.update({ where: { id: profile.id }, data: { role: profile.role } });
+    }
+  });
+
+  test("WP4 Scenarios evaluation is available only to educators after completion", async ({
+    page,
+  }) => {
+    test.setTimeout(120_000);
+    const profile = await testProfile(db);
+    const existingSurvey = await db.surveySubmission.findUnique({
+      where: {
+        userId_surveyType_roundKey: {
+          userId: profile.id,
+          surveyType: "wp4_scenarios",
+          roundKey: "initial",
+        },
+      },
+    });
+    if (existingSurvey)
+      throw new Error("Use an isolated account without previous Scenarios evaluation");
+    let createdAttemptId: string | null = null;
+    try {
+      await db.profile.update({ where: { id: profile.id }, data: { role: "learner" } });
+      await signIn(page);
+      await page.goto("/en/wp4-surveys/scenarios");
+      await expect(page).toHaveURL(/\/en\/dashboard$/);
+
+      await db.profile.update({ where: { id: profile.id }, data: { role: "educator" } });
+      const previous = await db.userScenarioAttempt.findFirst({
+        where: { userId: profile.id, scenarioId: "scenario-01", scenarioVersion: 1 },
+        orderBy: { attemptNumber: "desc" },
+        select: { attemptNumber: true },
+      });
+      const attempt = await db.userScenarioAttempt.create({
+        data: {
+          userId: profile.id,
+          scenarioId: "scenario-01",
+          scenarioVersion: 1,
+          locale: "en",
+          attemptNumber: (previous?.attemptNumber ?? 0) + 1,
+          status: "completed",
+          completedAt: new Date(),
+        },
+      });
+      createdAttemptId = attempt.id;
+      await page.goto("/en/wp4-surveys/scenarios");
+      await expect(page.locator("form")).toBeVisible();
+      for (const key of ["incorporationEase", "participantEngagement"]) {
+        await page.locator(`input[type="radio"][name="${key}"][value="4"]`).check();
+      }
+      await page.locator('input[type="checkbox"]').first().check();
+      for (const textArea of await page.locator("textarea").all()) {
+        await textArea.fill("No problems");
+      }
+      await page.locator('form button[type="submit"]').click();
+      await expect
+        .poll(async () =>
+          db.surveySubmission.count({
+            where: { userId: profile.id, surveyType: "wp4_scenarios", roundKey: "initial" },
+          }),
+        )
+        .toBe(1);
+      const saved = await db.surveySubmission.findFirst({
+        where: { userId: profile.id, surveyType: "wp4_scenarios", roundKey: "initial" },
+      });
+      expect(saved?.answers).toMatchObject({ incorporationEase: 4, participantEngagement: 4 });
+      expect(saved?.activitySnapshot).toMatchObject({ scenariosCompleted: expect.any(Number) });
+      await page.reload();
+      await expect(page.locator("form")).toHaveCount(0);
+    } finally {
+      await db.surveySubmission.deleteMany({
+        where: { userId: profile.id, surveyType: "wp4_scenarios", roundKey: "initial" },
+      });
+      if (createdAttemptId)
+        await db.userScenarioAttempt.delete({ where: { id: createdAttemptId } });
       await db.profile.update({ where: { id: profile.id }, data: { role: profile.role } });
     }
   });
@@ -331,17 +425,25 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
     }
   });
 
-  test("accepts platform feedback only for assigned WP3 pilot educators after POST", async ({ page }) => {
+  test("accepts platform feedback only for assigned WP3 pilot educators after POST", async ({
+    page,
+  }) => {
     test.setTimeout(120_000);
     const profile = await testProfile(db);
     const priorAssessment = await db.curriculumPilot.findUnique({ where: { userId: profile.id } });
     const activeAssignment = await db.pilotParticipation.findFirst({
       where: { userId: profile.id, track: "wp3_curriculum", status: "active" },
     });
-    if (activeAssignment) throw new Error("Use an isolated WP3 pilot account without active assignment");
+    if (activeAssignment)
+      throw new Error("Use an isolated WP3 pilot account without active assignment");
     const cohortCode = `e2e-wp3-${Date.now()}`;
     const fields = [
-      "easeOfUse", "moduleClarity", "navigation", "testsExperience", "technicalProblems", "overallSatisfaction",
+      "easeOfUse",
+      "moduleClarity",
+      "navigation",
+      "testsExperience",
+      "technicalProblems",
+      "overallSatisfaction",
     ];
     try {
       await db.profile.update({ where: { id: profile.id }, data: { role: "educator" } });
@@ -357,7 +459,11 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
 
       await db.curriculumPilot.upsert({
         where: { userId: profile.id },
-        create: { userId: profile.id, status: "pilot_completed", postAssessmentCompletedAt: new Date() },
+        create: {
+          userId: profile.id,
+          status: "pilot_completed",
+          postAssessmentCompletedAt: new Date(),
+        },
         update: { status: "pilot_completed", postAssessmentCompletedAt: new Date() },
       });
       await page.goto("/en/platform-feedback");
@@ -366,23 +472,36 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
         await page.locator(`input[type="radio"][name="${name}"][value="5"]`).check();
       }
       await page.locator('form button[type="submit"]').click();
-      await expect.poll(async () => db.surveySubmission.count({
-        where: { userId: profile.id, surveyType: "platform_wp3", roundKey: cohortCode },
-      })).toBe(1);
+      await expect
+        .poll(async () =>
+          db.surveySubmission.count({
+            where: { userId: profile.id, surveyType: "platform_wp3", roundKey: cohortCode },
+          }),
+        )
+        .toBe(1);
       const saved = await db.surveySubmission.findUnique({
-        where: { userId_surveyType_roundKey: {
-          userId: profile.id, surveyType: "platform_wp3", roundKey: cohortCode,
-        } },
+        where: {
+          userId_surveyType_roundKey: {
+            userId: profile.id,
+            surveyType: "platform_wp3",
+            roundKey: cohortCode,
+          },
+        },
       });
       expect(saved).toMatchObject({
-        surveyVersion: 1, isPilotAtSubmission: true, countryCode: "PL", locale: "en",
+        surveyVersion: 1,
+        isPilotAtSubmission: true,
+        countryCode: "PL",
+        locale: "en",
       });
       expect(saved?.answers).toMatchObject({ easeOfUse: 5, overallSatisfaction: 5 });
       await page.goto("/en/platform-feedback");
       await expect(page).toHaveURL(/\/en\/curriculum$/);
-      await expect(db.surveySubmission.count({
-        where: { userId: profile.id, surveyType: "platform_wp3", roundKey: cohortCode },
-      })).resolves.toBe(1);
+      await expect(
+        db.surveySubmission.count({
+          where: { userId: profile.id, surveyType: "platform_wp3", roundKey: cohortCode },
+        }),
+      ).resolves.toBe(1);
     } finally {
       await db.surveySubmission.deleteMany({
         where: { userId: profile.id, surveyType: "platform_wp3", roundKey: cohortCode },

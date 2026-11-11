@@ -47,13 +47,9 @@ describe("platform feedback bubble", () => {
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
 
-  it("routes learners to the existing ePortfolio survey until the WP4 update", () => {
+  it("does not offer WP4 learners the unrelated WP3 platform survey", () => {
     render(<PlatformFeedbackBubble locale="pl" role="learner" />);
-
-    expect(screen.getByRole("link", { name: "label" })).toHaveAttribute(
-      "href",
-      "/pl/pilot-satisfaction/eportfolio",
-    );
+    expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
 
   it("does not advertise the educator-only form to admins", () => {
