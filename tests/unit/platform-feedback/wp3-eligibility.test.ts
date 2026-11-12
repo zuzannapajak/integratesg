@@ -9,20 +9,24 @@ import {
 
 type DB = NonNullable<Parameters<typeof getWp3PlatformFeedbackEligibility>[1]>;
 
-function database(options: {
-  role?: string;
-  assignment?: { cohortCode: string; countryCode: string } | null;
-  post?: Date | null;
-  submitted?: boolean;
-} = {}) {
+function database(
+  options: {
+    role?: string;
+    assignment?: { cohortCode: string; countryCode: string } | null;
+    post?: Date | null;
+    submitted?: boolean;
+  } = {},
+) {
   return {
     profile: { findUnique: vi.fn().mockResolvedValue({ role: options.role ?? "educator" }) },
     pilotParticipation: {
-      findFirst: vi.fn().mockResolvedValue(
-        options.assignment === undefined
-          ? { cohortCode: "round-1", countryCode: "PL" }
-          : options.assignment,
-      ),
+      findFirst: vi
+        .fn()
+        .mockResolvedValue(
+          options.assignment === undefined
+            ? { cohortCode: "round-1", countryCode: "PL" }
+            : options.assignment,
+        ),
     },
     curriculumPilot: {
       findUnique: vi.fn().mockResolvedValue({
@@ -49,18 +53,31 @@ describe("WP3 pilot platform feedback", () => {
     ).toBe(true);
     for (const role of ["learner", "admin"]) {
       expect(
-        isWp3PlatformSurveyEligible({ role, assignment, postSubmitted: true, alreadySubmitted: false }),
+        isWp3PlatformSurveyEligible({
+          role,
+          assignment,
+          postSubmitted: true,
+          alreadySubmitted: false,
+        }),
       ).toBe(false);
     }
     expect(
-      isWp3PlatformSurveyEligible({ role: "educator", assignment: null, postSubmitted: true, alreadySubmitted: false }),
+      isWp3PlatformSurveyEligible({
+        role: "educator",
+        assignment: null,
+        postSubmitted: true,
+        alreadySubmitted: false,
+      }),
     ).toBe(false);
   });
 
   it("passes only the authenticated user's track, cohort and version to the lookup", async () => {
     const db = database();
     const result = await getWp3PlatformFeedbackEligibility("user-1", db as unknown as DB);
-    expect(result).toEqual({ eligible: true, assignment: { cohortCode: "round-1", countryCode: "PL" } });
+    expect(result).toEqual({
+      eligible: true,
+      assignment: { cohortCode: "round-1", countryCode: "PL" },
+    });
     expect(db.pilotParticipation.findFirst).toHaveBeenCalledWith({
       where: { userId: "user-1", track: "wp3_curriculum", status: "active" },
       select: { cohortCode: true, countryCode: true },
@@ -84,7 +101,10 @@ describe("WP3 pilot platform feedback", () => {
       { post: null },
       { submitted: true },
     ]) {
-      const result = await getWp3PlatformFeedbackEligibility("user-1", database(options) as unknown as DB);
+      const result = await getWp3PlatformFeedbackEligibility(
+        "user-1",
+        database(options) as unknown as DB,
+      );
       expect(result.eligible).toBe(false);
     }
   });

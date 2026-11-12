@@ -128,9 +128,7 @@ function average(values: number[]) {
 }
 
 function asRecord(value: Prisma.JsonValue): Record<string, unknown> | null {
-  return value !== null && typeof value === "object" && !Array.isArray(value)
-    ? value
-    : null;
+  return value !== null && typeof value === "object" && !Array.isArray(value) ? value : null;
 }
 
 function validRating(value: unknown): value is number {

@@ -43,7 +43,11 @@ export async function getWp3PlatformFeedbackEligibility(
     }),
   ]);
 
-  if (profile?.role !== APP_ROLES.educator || !assignment || !assessment?.postAssessmentCompletedAt) {
+  if (
+    profile?.role !== APP_ROLES.educator ||
+    !assignment ||
+    !assessment?.postAssessmentCompletedAt
+  ) {
     return { eligible: false, assignment: null };
   }
 

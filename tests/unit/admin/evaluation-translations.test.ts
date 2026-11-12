@@ -38,7 +38,9 @@ describe("evaluation and approved platform feedback translations", () => {
     for (const locale of languages) {
       const messages = readTranslations("platform-feedback-shells", locale) as {
         Protected: {
-          PlatformFeedbackForm: { questions: Partial<Record<string, { label: string; hint: string }>> };
+          PlatformFeedbackForm: {
+            questions: Partial<Record<string, { label: string; hint: string }>>;
+          };
         };
       };
       for (const key of PLATFORM_RATING_KEYS) {

@@ -50,9 +50,9 @@ describe("curriculum certificate localization", () => {
         "pl",
       ),
     ).toBe("Foundations of ESG");
-    expect(
-      pickCertificateModuleTitle([{ language: "pl", title: "   " }], "course-1", "pl"),
-    ).toBe("course-1");
+    expect(pickCertificateModuleTitle([{ language: "pl", title: "   " }], "course-1", "pl")).toBe(
+      "course-1",
+    );
   });
 
   it("formats dates for all six locales deterministically in UTC", () => {

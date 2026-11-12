@@ -9,7 +9,13 @@ export function getWp3PostEligibility(
   completedModulesCount: number,
 ): {
   eligible: boolean;
-  reason: "no_pilot" | "pre_missing" | "post_completed" | "pilot_not_active" | "no_completed_module" | null;
+  reason:
+    | "no_pilot"
+    | "pre_missing"
+    | "post_completed"
+    | "pilot_not_active"
+    | "no_completed_module"
+    | null;
 } {
   if (!assessment) return { eligible: false, reason: "no_pilot" };
   if (!assessment.preAssessmentCompletedAt && !assessment.preAssessmentSkippedAt) {

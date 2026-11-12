@@ -30,13 +30,11 @@ function db(
       ),
     },
     surveySubmission: {
-      findMany: vi
-        .fn()
-        .mockResolvedValue(
-          (options.submitted ?? ["wp4_case_studies", "wp4_scenarios"]).map((surveyType) => ({
-            surveyType,
-          })),
-        ),
+      findMany: vi.fn().mockResolvedValue(
+        (options.submitted ?? ["wp4_case_studies", "wp4_scenarios"]).map((surveyType) => ({
+          surveyType,
+        })),
+      ),
       findUnique: vi.fn().mockResolvedValue(options.alreadySubmitted ? { id: "previous" } : null),
     },
   };
