@@ -22,7 +22,8 @@
         "scenarios": "Scenarios",
         "courses": "Curriculum",
         "eportfolio": "ePortfolio",
-        "platformFeedback": "Platform feedback"
+        "platformFeedback": "Platform feedback",
+        "evaluation": "WP3 / WP4 evaluation"
       },
       "curriculumViews": {
         "all": "All",

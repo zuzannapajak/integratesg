@@ -1,6 +1,7 @@
 "use client";
 
 import { submitPlatformFeedbackAction } from "@/features/platform-feedback/actions";
+import { PLATFORM_RATING_KEYS, type PlatformRatingKey } from "@/lib/platform-feedback/definition";
 import { ArrowLeft, CheckCircle2, Loader2, Send } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -11,24 +12,10 @@ type Props = {
   context?: "wp3" | "wp4";
 };
 
-type RatingKey =
-  | "easeOfUse"
-  | "moduleClarity"
-  | "navigation"
-  | "testsExperience"
-  | "technicalProblems"
-  | "overallSatisfaction";
-
+type RatingKey = PlatformRatingKey;
 type CompleteRatings = Record<RatingKey, number>;
 
-const ratingKeys: RatingKey[] = [
-  "easeOfUse",
-  "moduleClarity",
-  "navigation",
-  "testsExperience",
-  "technicalProblems",
-  "overallSatisfaction",
-];
+const ratingKeys = PLATFORM_RATING_KEYS;
 
 const SURFACE =
   "rounded-[30px] border border-white/70 bg-white/88 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";

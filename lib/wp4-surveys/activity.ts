@@ -55,7 +55,7 @@ export function buildWp4ActivitySnapshot(
   };
 }
 
-function currentScenarioFilters() {
+export function currentScenarioFilters() {
   return scenarioPathwayDefinitions.map((definition) => {
     const scenario = resolveScenarioBySlug(definition.slug, "en");
     if (!scenario) throw new Error(`Missing current scenario ${definition.id}`);

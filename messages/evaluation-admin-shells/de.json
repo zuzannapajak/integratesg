@@ -1,0 +1,69 @@
+{
+  "Protected": {
+    "EvaluationAdmin": {
+      "title": "WP3-/WP4-Evaluierung",
+      "description": "Inhaltsbefragungen, Plattformfeedback, Lernaktivitäten und Pilotgruppen. Es werden nur aggregierte Daten angezeigt.",
+      "privacyNotice": "Der Standard-CSV-Export enthält keine Namen, E-Mail-Adressen, Konto-IDs oder Freitextantworten. Der separate qualitative Export enthält von Teilnehmenden verfasste Texte, möglicherweise mit personenbezogenen Daten. Vor der Weitergabe prüfen.",
+      "breakdownTitle": "Aufschlüsselung nach Arbeitspaket, Land und Gruppe",
+      "filterNote": "Filter gelten nur für die Tabelle. CSV-Dateien enthalten alle Gruppen.",
+      "methodology": "Ressourcen werden pro Person einmal gezählt, wiederholte Versuche nicht. Eine Person kann in mehreren WP-Bereichen erscheinen. Die WP3-PRE/POST-Zuordnung basiert auf der aktuellen Pilotzuordnung; neuere Antworten speichern Status und Land zum Zeitpunkt der Abgabe. Das Land wird nicht aus der Sprache abgeleitet. Durchschnittswerte schließen fehlende Bewertungen aus.",
+      "all": "Alle",
+      "unknown": "Nicht angegeben",
+      "empty": "Keine passenden Ergebnisse",
+      "export": {
+        "summary": "Zusammenfassung als CSV",
+        "responses": "Antworten als CSV",
+        "qualitative": "Freitext exportieren (sensibel)"
+      },
+      "summary": {
+        "participants": "Eindeutige Teilnehmende",
+        "pilotParticipants": "Pilot-Teilnehmende",
+        "responses": "Eingereichte Fragebögen",
+        "contentResponses": "WP4-Inhaltsantworten",
+        "platformResponses": "Plattformbewertungen",
+        "materialsCompleted": "Abgeschlossene Materialien"
+      },
+      "area": {
+        "wp3": "WP3 · Curriculum",
+        "wp4_case_studies": "WP4 · Fallstudien",
+        "wp4_scenarios": "WP4 · Szenarien",
+        "wp4_platform": "WP4 · Plattform"
+      },
+      "group": {
+        "pilot": "Pilot",
+        "standard": "Standard"
+      },
+      "role": {
+        "educator": "Lehrkraft",
+        "learner": "Lernende",
+        "admin": "Administration"
+      },
+      "filters": {
+        "area": "Arbeitspaket",
+        "countryCode": "Land",
+        "cohortCode": "Pilotgruppe",
+        "group": "Gruppe",
+        "role": "Rolle"
+      },
+      "columns": {
+        "area": "Arbeitspaket",
+        "country": "Land",
+        "cohort": "Kohorte",
+        "group": "Gruppe",
+        "role": "Rolle",
+        "participants": "Teilnehmende",
+        "respondents": "Antwortende",
+        "pre": "PRE",
+        "post": "POST",
+        "content": "WP4-Umfragen",
+        "platform": "Plattformumfragen",
+        "started": "Begonnen",
+        "completed": "Abgeschlossen",
+        "averagePre": "Ø PRE",
+        "averagePost": "Ø POST",
+        "averageContent": "Ø Inhalt (1–5)",
+        "averagePlatform": "Ø Plattform (1–5)"
+      }
+    }
+  }
+}

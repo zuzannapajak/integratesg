@@ -22,7 +22,8 @@
         "scenarios": "Сценарии",
         "courses": "Curriculum",
         "eportfolio": "ePortfolio",
-        "platformFeedback": "Обратна връзка за платформата"
+        "platformFeedback": "Обратна връзка за платформата",
+        "evaluation": "Оценяване WP3 / WP4"
       },
       "curriculumViews": {
         "all": "Всички",

@@ -7,6 +7,7 @@ type Messages = Record<string, unknown>;
 
 const messageScopes = [
   "admin-stats-shells",
+  "evaluation-admin-shells",
   "auth-shells",
   "curriculum-shells",
   "curriculum-state-shells",

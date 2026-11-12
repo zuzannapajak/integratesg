@@ -1,6 +1,7 @@
 "use server";
 
 import { isAppLocale } from "@/lib/i18n/locales";
+import { PLATFORM_RATING_KEYS } from "@/lib/platform-feedback/definition";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import {
@@ -64,14 +65,7 @@ export async function submitPlatformFeedbackAction(input: SubmitPlatformFeedback
     throw new Error("INVALID_LOCALE");
   }
 
-  const ratings = [
-    input.easeOfUse,
-    input.moduleClarity,
-    input.navigation,
-    input.testsExperience,
-    input.technicalProblems,
-    input.overallSatisfaction,
-  ];
+  const ratings = PLATFORM_RATING_KEYS.map((key) => input[key]);
 
   if (!ratings.every(validateRating)) {
     throw new Error("INVALID_RATING");

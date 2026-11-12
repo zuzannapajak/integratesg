@@ -102,6 +102,32 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
     }
   });
 
+  test("restricts WP3/WP4 evaluation reports and exports to administrators", async ({ page }) => {
+    const profile = await testProfile(db);
+    try {
+      await db.profile.update({ where: { id: profile.id }, data: { role: "learner" } });
+      await signIn(page);
+      const deniedExport = await page.request.get("/en/admin/evaluation/export?kind=responses", {
+        maxRedirects: 0,
+      });
+      expect(deniedExport.status()).not.toBe(200);
+
+      await db.profile.update({ where: { id: profile.id }, data: { role: "admin" } });
+      await page.goto("/en/admin/stats");
+      await page.getByRole("button", { name: "WP3 / WP4 evaluation" }).click();
+      await expect(page.getByText("Breakdown by work package, country and group")).toBeVisible();
+      const allowedExport = await page.request.get("/en/admin/evaluation/export?kind=responses");
+      expect(allowedExport.status()).toBe(200);
+      expect(allowedExport.headers()["cache-control"]).toContain("no-store");
+      const body = await allowedExport.text();
+      expect(body).toContain("survey_type");
+      expect(body).not.toContain(profile.email);
+      expect(body).not.toContain(profile.id);
+    } finally {
+      await db.profile.update({ where: { id: profile.id }, data: { role: profile.role } });
+    }
+  });
+
   test("WP4 Case Studies evaluation uses automatic counts and prevents resubmission", async ({
     page,
   }) => {
