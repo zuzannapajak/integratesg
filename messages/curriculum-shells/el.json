@@ -198,6 +198,38 @@
       }
     },
     "CourseQuizPanel": {
+      "empty": {
+        "eyebrow": "Κουίζ εξάσκησης",
+        "title": "Δεν υπάρχει διαθέσιμο κουίζ",
+        "description": "Δεν έχει προστεθεί ακόμη κουίζ σε αυτή την ενότητα."
+      },
+      "hero": {
+        "eyebrow": "Έλεγχος γνώσεων",
+        "openingCheckpoint": "Πριν από τη μάθηση",
+        "finalCheckpoint": "Μετά τη μάθηση",
+        "title": "Ελέγξτε τις γνώσεις σας",
+        "description": "Επιλέξτε μία απάντηση για κάθε ερώτηση για να δείτε σχόλια."
+      },
+      "stats": {
+        "answered": "Απαντημένες",
+        "correct": "Σωστές",
+        "score": "Βαθμολογία"
+      },
+      "reset": "Επαναφορά απαντήσεων",
+      "questionLabel": "Ερώτηση {number}",
+      "result": {
+        "correct": "Σωστό",
+        "incorrect": "Λάθος"
+      },
+      "feedback": {
+        "title": "Μπράβο!",
+        "correctionTitle": "Ελέγξτε αυτή την απάντηση",
+        "correctDefault": "Αυτή είναι η σωστή απάντηση.",
+        "incorrectDefault": "Αυτή η απάντηση δεν είναι σωστή.",
+        "whyCorrect": "Επεξήγηση",
+        "correctAnswer": "Σωστή απάντηση",
+        "correctAnswerIs": "Σωστή απάντηση: {answer}"
+      },
       "quizLabels": {
         "pre": "Pre-test",
         "post": "Post-test"
@@ -206,7 +238,9 @@
         "start": "Έναρξη κουίζ",
         "submit": "Υποβολή απαντήσεων",
         "retry": "Προσπάθησε ξανά",
-        "continue": "Συνέχεια"
+        "continue": "Συνέχεια",
+        "showFeedback": "Έλεγχος απάντησης",
+        "chooseOneAnswer": "Επιλέξτε μία απάντηση για να συνεχίσετε."
       },
       "status": {
         "passed": "Επιτυχία",

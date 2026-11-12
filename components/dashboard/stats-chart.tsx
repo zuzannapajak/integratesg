@@ -17,7 +17,7 @@ type Props = {
 };
 
 export default function StatsChart({ accentColor, data, height = 240, valueLabel }: Props) {
-  const t = useTranslations("Protected.DashboardShell.StatsChart");
+  const t = useTranslations("Protected.StatsChart");
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [containerWidth, setContainerWidth] = useState(0);
 

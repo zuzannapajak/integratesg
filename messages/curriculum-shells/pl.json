@@ -198,6 +198,38 @@
       }
     },
     "CourseQuizPanel": {
+      "empty": {
+        "eyebrow": "Quiz ćwiczeniowy",
+        "title": "Brak dostępnego quizu",
+        "description": "Do tego modułu nie dodano jeszcze quizu."
+      },
+      "hero": {
+        "eyebrow": "Sprawdzenie wiedzy",
+        "openingCheckpoint": "Przed nauką",
+        "finalCheckpoint": "Po nauce",
+        "title": "Sprawdź swoją wiedzę",
+        "description": "Wybierz odpowiedź na każde pytanie, aby zobaczyć informację zwrotną."
+      },
+      "stats": {
+        "answered": "Odpowiedzi",
+        "correct": "Poprawne",
+        "score": "Wynik"
+      },
+      "reset": "Wyczyść odpowiedzi",
+      "questionLabel": "Pytanie {number}",
+      "result": {
+        "correct": "Poprawna",
+        "incorrect": "Niepoprawna"
+      },
+      "feedback": {
+        "title": "Dobra robota!",
+        "correctionTitle": "Sprawdź tę odpowiedź",
+        "correctDefault": "To poprawna odpowiedź.",
+        "incorrectDefault": "Ta odpowiedź jest niepoprawna.",
+        "whyCorrect": "Wyjaśnienie",
+        "correctAnswer": "Poprawna odpowiedź",
+        "correctAnswerIs": "Poprawna odpowiedź: {answer}"
+      },
       "quizLabels": {
         "pre": "Pre-test",
         "post": "Post-test"
@@ -206,7 +238,9 @@
         "start": "Rozpocznij quiz",
         "submit": "Wyślij odpowiedzi",
         "retry": "Spróbuj ponownie",
-        "continue": "Kontynuuj"
+        "continue": "Kontynuuj",
+        "showFeedback": "Sprawdź odpowiedź",
+        "chooseOneAnswer": "Wybierz jedną odpowiedź, aby kontynuować."
       },
       "status": {
         "passed": "Zaliczony",

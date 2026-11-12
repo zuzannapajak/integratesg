@@ -198,6 +198,38 @@
       }
     },
     "CourseQuizPanel": {
+      "empty": {
+        "eyebrow": "Practice quiz",
+        "title": "No quiz available",
+        "description": "This module does not have a quiz yet."
+      },
+      "hero": {
+        "eyebrow": "Knowledge check",
+        "openingCheckpoint": "Before learning",
+        "finalCheckpoint": "After learning",
+        "title": "Check your knowledge",
+        "description": "Select an answer to each question to see feedback."
+      },
+      "stats": {
+        "answered": "Answered",
+        "correct": "Correct",
+        "score": "Score"
+      },
+      "reset": "Reset answers",
+      "questionLabel": "Question {number}",
+      "result": {
+        "correct": "Correct",
+        "incorrect": "Incorrect"
+      },
+      "feedback": {
+        "title": "Well done!",
+        "correctionTitle": "Review this answer",
+        "correctDefault": "That's the correct answer.",
+        "incorrectDefault": "That answer isn't correct.",
+        "whyCorrect": "Explanation",
+        "correctAnswer": "Correct answer",
+        "correctAnswerIs": "Correct answer: {answer}"
+      },
       "quizLabels": {
         "pre": "Pre-test",
         "post": "Post-test"
@@ -206,7 +238,9 @@
         "start": "Start quiz",
         "submit": "Submit answers",
         "retry": "Try again",
-        "continue": "Continue"
+        "continue": "Continue",
+        "showFeedback": "Check answer",
+        "chooseOneAnswer": "Choose one answer to continue."
       },
       "status": {
         "passed": "Passed",

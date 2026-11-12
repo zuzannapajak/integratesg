@@ -5,7 +5,9 @@
         "environmental": "Ambientale",
         "social": "Sociale",
         "governance": "Governance",
-        "crossCutting": "Trasversale"
+        "crossCutting": "Trasversale",
+        "strategy": "Strategia",
+        "reporting": "Rendicontazione"
       },
       "window": {
         "24h": "Ultime 24 ore",

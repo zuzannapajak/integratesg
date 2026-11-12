@@ -5,7 +5,9 @@
         "environmental": "Περιβαλλοντικό",
         "social": "Κοινωνικό",
         "governance": "Διακυβέρνηση",
-        "crossCutting": "Οριζόντιο"
+        "crossCutting": "Οριζόντιο",
+        "strategy": "Στρατηγική",
+        "reporting": "Υποβολή εκθέσεων"
       },
       "window": {
         "24h": "Τελευταίες 24 ώρες",

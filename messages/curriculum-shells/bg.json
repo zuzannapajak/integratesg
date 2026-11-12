@@ -198,6 +198,38 @@
       }
     },
     "CourseQuizPanel": {
+      "empty": {
+        "eyebrow": "Упражнителен тест",
+        "title": "Няма наличен тест",
+        "description": "Към този модул все още няма добавен тест."
+      },
+      "hero": {
+        "eyebrow": "Проверка на знанията",
+        "openingCheckpoint": "Преди обучението",
+        "finalCheckpoint": "След обучението",
+        "title": "Проверете знанията си",
+        "description": "Изберете отговор на всеки въпрос, за да видите обратна връзка."
+      },
+      "stats": {
+        "answered": "Отговорени",
+        "correct": "Верни",
+        "score": "Резултат"
+      },
+      "reset": "Изчисти отговорите",
+      "questionLabel": "Въпрос {number}",
+      "result": {
+        "correct": "Вярно",
+        "incorrect": "Невярно"
+      },
+      "feedback": {
+        "title": "Браво!",
+        "correctionTitle": "Прегледайте този отговор",
+        "correctDefault": "Това е правилният отговор.",
+        "incorrectDefault": "Този отговор е неправилен.",
+        "whyCorrect": "Обяснение",
+        "correctAnswer": "Правилен отговор",
+        "correctAnswerIs": "Правилен отговор: {answer}"
+      },
       "quizLabels": {
         "pre": "Предварителен тест",
         "post": "Финален тест"
@@ -206,7 +238,9 @@
         "start": "Стартиране на теста",
         "submit": "Изпращане на отговорите",
         "retry": "Опитай отново",
-        "continue": "Продължи"
+        "continue": "Продължи",
+        "showFeedback": "Проверете отговора",
+        "chooseOneAnswer": "Изберете един отговор, за да продължите."
       },
       "status": {
         "passed": "Издържан",

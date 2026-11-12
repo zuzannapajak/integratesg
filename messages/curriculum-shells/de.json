@@ -198,6 +198,38 @@
       }
     },
     "CourseQuizPanel": {
+      "empty": {
+        "eyebrow": "Übungsquiz",
+        "title": "Kein Quiz verfügbar",
+        "description": "Für dieses Modul ist noch kein Quiz verfügbar."
+      },
+      "hero": {
+        "eyebrow": "Wissenscheck",
+        "openingCheckpoint": "Vor dem Lernen",
+        "finalCheckpoint": "Nach dem Lernen",
+        "title": "Teste dein Wissen",
+        "description": "Wähle zu jeder Frage eine Antwort aus, um Feedback zu erhalten."
+      },
+      "stats": {
+        "answered": "Beantwortet",
+        "correct": "Richtig",
+        "score": "Ergebnis"
+      },
+      "reset": "Antworten zurücksetzen",
+      "questionLabel": "Frage {number}",
+      "result": {
+        "correct": "Richtig",
+        "incorrect": "Falsch"
+      },
+      "feedback": {
+        "title": "Gut gemacht!",
+        "correctionTitle": "Überprüfe diese Antwort",
+        "correctDefault": "Das ist die richtige Antwort.",
+        "incorrectDefault": "Diese Antwort ist nicht richtig.",
+        "whyCorrect": "Erklärung",
+        "correctAnswer": "Richtige Antwort",
+        "correctAnswerIs": "Richtige Antwort: {answer}"
+      },
       "quizLabels": {
         "pre": "Pre-Test",
         "post": "Post-Test"
@@ -206,7 +238,9 @@
         "start": "Quiz starten",
         "submit": "Antworten absenden",
         "retry": "Wiederholen",
-        "continue": "Fortsetzen"
+        "continue": "Fortsetzen",
+        "showFeedback": "Antwort prüfen",
+        "chooseOneAnswer": "Wähle eine Antwort, um fortzufahren."
       },
       "status": {
         "passed": "Bestanden",

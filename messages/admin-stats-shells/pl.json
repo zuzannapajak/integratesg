@@ -5,7 +5,9 @@
         "environmental": "Środowisko",
         "social": "Społeczeństwo",
         "governance": "Ład korporacyjny",
-        "crossCutting": "Przekrojowe"
+        "crossCutting": "Przekrojowe",
+        "strategy": "Strategia",
+        "reporting": "Raportowanie"
       },
       "window": {
         "24h": "Ostatnie 24 godziny",

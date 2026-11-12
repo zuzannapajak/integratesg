@@ -198,6 +198,38 @@
       }
     },
     "CourseQuizPanel": {
+      "empty": {
+        "eyebrow": "Quiz di esercitazione",
+        "title": "Nessun quiz disponibile",
+        "description": "Questo modulo non ha ancora un quiz."
+      },
+      "hero": {
+        "eyebrow": "Verifica delle conoscenze",
+        "openingCheckpoint": "Prima dell'apprendimento",
+        "finalCheckpoint": "Dopo l'apprendimento",
+        "title": "Metti alla prova le tue conoscenze",
+        "description": "Seleziona una risposta per ogni domanda per visualizzare il feedback."
+      },
+      "stats": {
+        "answered": "Risposte date",
+        "correct": "Corrette",
+        "score": "Punteggio"
+      },
+      "reset": "Reimposta le risposte",
+      "questionLabel": "Domanda {number}",
+      "result": {
+        "correct": "Corretta",
+        "incorrect": "Errata"
+      },
+      "feedback": {
+        "title": "Ottimo lavoro!",
+        "correctionTitle": "Rivedi questa risposta",
+        "correctDefault": "Questa è la risposta corretta.",
+        "incorrectDefault": "Questa risposta non è corretta.",
+        "whyCorrect": "Spiegazione",
+        "correctAnswer": "Risposta corretta",
+        "correctAnswerIs": "Risposta corretta: {answer}"
+      },
       "quizLabels": {
         "pre": "Pre-test",
         "post": "Post-test"
@@ -206,7 +238,9 @@
         "start": "Inizia quiz",
         "submit": "Invia risposte",
         "retry": "Riprova",
-        "continue": "Continua"
+        "continue": "Continua",
+        "showFeedback": "Verifica la risposta",
+        "chooseOneAnswer": "Scegli una risposta per continuare."
       },
       "status": {
         "passed": "Superato",

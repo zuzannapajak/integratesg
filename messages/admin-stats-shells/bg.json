@@ -5,7 +5,9 @@
         "environmental": "Екологично",
         "social": "Социално",
         "governance": "Управление",
-        "crossCutting": "Хоризонтално"
+        "crossCutting": "Хоризонтално",
+        "strategy": "Стратегия",
+        "reporting": "Отчитане"
       },
       "window": {
         "24h": "Последните 24 часа",

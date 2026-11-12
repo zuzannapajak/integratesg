@@ -5,7 +5,9 @@
         "environmental": "Environmental",
         "social": "Social",
         "governance": "Governance",
-        "crossCutting": "Cross-cutting"
+        "crossCutting": "Cross-cutting",
+        "strategy": "Strategy",
+        "reporting": "Reporting"
       },
       "window": {
         "24h": "Last 24 hours",
