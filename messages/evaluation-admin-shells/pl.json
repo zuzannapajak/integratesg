@@ -1,0 +1,69 @@
+{
+  "Protected": {
+    "EvaluationAdmin": {
+      "title": "Ewaluacja WP3 / WP4",
+      "description": "Ankiety merytoryczne, opinie o platformie, aktywność uczestników i edycje pilotażu. Widoczne są wyłącznie dane zbiorcze.",
+      "privacyNotice": "Standardowy CSV nie zawiera nazwisk, adresów e-mail, identyfikatorów kont ani odpowiedzi otwartych. Osobny eksport jakościowy zawiera tekst wpisany przez uczestników, który może zawierać dane osobowe — sprawdź go przed udostępnieniem.",
+      "breakdownTitle": "Podział według WP, kraju i grupy",
+      "filterNote": "Filtry dotyczą poniższej tabeli. Pliki CSV obejmują wszystkie grupy, nie tylko aktualny filtr.",
+      "methodology": "Materiały liczone są unikalnie dla uczestnika, bez powtarzanych podejść. Uczestnik może występować w kilku obszarach WP. Przypisanie PRE/POST do pilotażu WP3 wynika z aktualnego przypisania, a nowsze ankiety zachowują status i kraj z chwili wysłania. Kraj nie wynika z języka interfejsu. Średnie pomijają brakujące oceny.",
+      "all": "Wszystkie",
+      "unknown": "Nie określono",
+      "empty": "Brak wyników dla wybranych filtrów",
+      "export": {
+        "summary": "Eksport podsumowania CSV",
+        "responses": "Eksport odpowiedzi CSV",
+        "qualitative": "Eksport odpowiedzi otwartych (wrażliwe)"
+      },
+      "summary": {
+        "participants": "Unikalni uczestnicy",
+        "pilotParticipants": "Uczestnicy pilotażu",
+        "responses": "Przesłane ankiety",
+        "contentResponses": "Odpowiedzi merytoryczne WP4",
+        "platformResponses": "Oceny platformy",
+        "materialsCompleted": "Ukończone materiały"
+      },
+      "area": {
+        "wp3": "WP3 · Curriculum",
+        "wp4_case_studies": "WP4 · Case Studies",
+        "wp4_scenarios": "WP4 · Scenarios",
+        "wp4_platform": "WP4 · Platforma"
+      },
+      "group": {
+        "pilot": "Pilotaż",
+        "standard": "Standardowa"
+      },
+      "role": {
+        "educator": "Edukator",
+        "learner": "Uczestnik",
+        "admin": "Administrator"
+      },
+      "filters": {
+        "area": "Obszar WP",
+        "countryCode": "Kraj",
+        "cohortCode": "Edycja pilotażu",
+        "group": "Grupa",
+        "role": "Rola"
+      },
+      "columns": {
+        "area": "Obszar WP",
+        "country": "Kraj",
+        "cohort": "Edycja",
+        "group": "Grupa",
+        "role": "Rola",
+        "participants": "Uczestnicy",
+        "respondents": "Respondenci",
+        "pre": "PRE",
+        "post": "POST",
+        "content": "Ankiety WP4",
+        "platform": "Ocena platformy",
+        "started": "Rozpoczęte",
+        "completed": "Ukończone",
+        "averagePre": "Śr. PRE",
+        "averagePost": "Śr. POST",
+        "averageContent": "Śr. treści (1–5)",
+        "averagePlatform": "Śr. platformy (1–5)"
+      }
+    }
+  }
+}

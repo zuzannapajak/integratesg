@@ -1,0 +1,69 @@
+{
+  "Protected": {
+    "EvaluationAdmin": {
+      "title": "WP3 / WP4 evaluation",
+      "description": "Content questionnaires, platform feedback, participant activity and pilot cohorts. Results contain aggregate metrics only.",
+      "privacyNotice": "Standard CSV excludes names, email addresses, account identifiers and open-text answers. The separate qualitative export includes respondent-provided text, which may contain personal data: review before sharing.",
+      "breakdownTitle": "Breakdown by work package, country and group",
+      "filterNote": "Filters apply to the breakdown below. Export files cover all groups, not only the selected filters.",
+      "methodology": "Counts use unique resources per participant, not repeated attempts. A participant may appear in multiple WP areas. WP3 PRE/POST pilot grouping reflects current assignment; structured responses preserve the pilot status and country recorded at submission. Unknown country is not inferred from interface language. Averages exclude missing ratings.",
+      "all": "All",
+      "unknown": "Not specified",
+      "empty": "No matching results",
+      "export": {
+        "summary": "Export summary CSV",
+        "responses": "Export responses CSV",
+        "qualitative": "Export open answers (sensitive)"
+      },
+      "summary": {
+        "participants": "Unique participants",
+        "pilotParticipants": "Assigned pilot participants",
+        "responses": "Submitted questionnaires",
+        "contentResponses": "WP4 content responses",
+        "platformResponses": "Platform feedback responses",
+        "materialsCompleted": "Completed materials"
+      },
+      "area": {
+        "wp3": "WP3 · Curriculum",
+        "wp4_case_studies": "WP4 · Case Studies",
+        "wp4_scenarios": "WP4 · Scenarios",
+        "wp4_platform": "WP4 · Platform"
+      },
+      "group": {
+        "pilot": "Pilot",
+        "standard": "Standard"
+      },
+      "role": {
+        "educator": "Educator",
+        "learner": "Learner",
+        "admin": "Admin"
+      },
+      "filters": {
+        "area": "Work package",
+        "countryCode": "Country",
+        "cohortCode": "Pilot cohort",
+        "group": "Group",
+        "role": "Role"
+      },
+      "columns": {
+        "area": "Work package",
+        "country": "Country",
+        "cohort": "Cohort",
+        "group": "Group",
+        "role": "Role",
+        "participants": "Participants",
+        "respondents": "Respondents",
+        "pre": "PRE",
+        "post": "POST",
+        "content": "WP4 surveys",
+        "platform": "Platform surveys",
+        "started": "Started",
+        "completed": "Completed",
+        "averagePre": "Avg. PRE",
+        "averagePost": "Avg. POST",
+        "averageContent": "Avg. content (1–5)",
+        "averagePlatform": "Avg. platform (1–5)"
+      }
+    }
+  }
+}

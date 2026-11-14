@@ -16,8 +16,14 @@ function extractApiRef(url: URL): string | null {
   return match?.[1] ?? null;
 }
 
+export function getE2EDatabaseUrl(env: NodeJS.ProcessEnv = process.env): string | undefined {
+  const preferred = env.PLAYWRIGHT_DATABASE_URL?.trim();
+  if (preferred) return preferred;
+  return env.TEST_DATABASE_URL?.trim();
+}
+
 export function assertSafeE2EEnvironment(env: NodeJS.ProcessEnv = process.env): void {
-  const dbString = env.PLAYWRIGHT_DATABASE_URL?.trim() || env.TEST_DATABASE_URL?.trim();
+  const dbString = getE2EDatabaseUrl(env);
   const apiString = env.NEXT_PUBLIC_SUPABASE_URL?.trim();
   const expectedRef = env.PLAYWRIGHT_TEST_PROJECT_REF?.trim();
 

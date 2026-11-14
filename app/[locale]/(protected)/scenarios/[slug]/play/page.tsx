@@ -1,11 +1,10 @@
 import { notFound, redirect } from "next/navigation";
 
 import { requireAuthenticatedUserId } from "@/lib/auth/require-authenticated-user-id";
-import { isSelfServiceRole } from "@/lib/auth/roles";
-import { prisma } from "@/lib/prisma";
 import { resolveScenarioBySlug } from "@/lib/scenarios/simulator/resolve-scenario";
 import { getScenarioPathwayItemForUser } from "@/lib/scenarios/simulator/server/scenario-pathway";
 import { getScenarioRuntimeState } from "@/lib/scenarios/simulator/server/scenario-progress";
+import { getWp4SurveyAvailability } from "@/lib/wp4-surveys/queries";
 import type { ScenarioPlayerMode } from "@/lib/scenarios/simulator/types";
 import { ScenarioPlayClient } from "./scenario-play-client";
 
@@ -40,10 +39,7 @@ export default async function ScenarioPlayPage({ params, searchParams }: Scenari
     notFound();
   }
 
-  const [pathwayItem, profile] = await Promise.all([
-    getScenarioPathwayItemForUser(userId, scenario.id),
-    prisma.profile.findUnique({ where: { id: userId }, select: { role: true } }),
-  ]);
+  const pathwayItem = await getScenarioPathwayItemForUser(userId, scenario.id);
 
   const cannotOpenPlayMode = !pathwayItem || pathwayItem.status === "locked";
   const cannotOpenReviewMode = mode === "review" && pathwayItem?.status !== "completed";
@@ -52,13 +48,16 @@ export default async function ScenarioPlayPage({ params, searchParams }: Scenari
     redirect(`/${locale}/scenarios`);
   }
 
-  const runtimeState = await getScenarioRuntimeState({
-    userId,
-    scenarioId: scenario.id,
-    scenarioVersion: scenario.version,
-    locale: scenario.locale,
-    mode,
-  });
+  const [runtimeState, survey] = await Promise.all([
+    getScenarioRuntimeState({
+      userId,
+      scenarioId: scenario.id,
+      scenarioVersion: scenario.version,
+      locale: scenario.locale,
+      mode,
+    }),
+    getWp4SurveyAvailability(userId, "scenarios"),
+  ]);
 
   return (
     <ScenarioPlayClient
@@ -66,7 +65,7 @@ export default async function ScenarioPlayPage({ params, searchParams }: Scenari
       scenario={scenario}
       mode={mode}
       runtimeState={runtimeState}
-      canGivePlatformFeedback={profile !== null && isSelfServiceRole(profile.role)}
+      canGiveWp4Survey={survey.canOfferOnCompletion}
     />
   );
 }

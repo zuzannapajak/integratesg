@@ -1,0 +1,69 @@
+{
+  "Protected": {
+    "EvaluationAdmin": {
+      "title": "Valutazione WP3 / WP4",
+      "description": "Questionari sui contenuti, feedback sulla piattaforma, attività dei partecipanti e gruppi pilota. Sono mostrati solo dati aggregati.",
+      "privacyNotice": "Il CSV standard esclude nomi, e-mail, identificativi degli account e risposte aperte. L’esportazione qualitativa separata contiene testi dei partecipanti che potrebbero includere dati personali: verificarli prima di condividerli.",
+      "breakdownTitle": "Ripartizione per WP, paese e gruppo",
+      "filterNote": "I filtri si applicano solo alla tabella. I CSV includono tutti i gruppi.",
+      "methodology": "Le risorse vengono contate una sola volta per partecipante, escludendo i tentativi ripetuti. Un partecipante può figurare in più aree WP. La classificazione PRE/POST WP3 usa l’assegnazione pilota corrente; i nuovi questionari conservano paese e stato al momento dell’invio. Il paese non viene dedotto dalla lingua. Le medie escludono i valori mancanti.",
+      "all": "Tutti",
+      "unknown": "Non specificato",
+      "empty": "Nessun risultato",
+      "export": {
+        "summary": "Esporta riepilogo CSV",
+        "responses": "Esporta risposte CSV",
+        "qualitative": "Esporta risposte aperte (sensibili)"
+      },
+      "summary": {
+        "participants": "Partecipanti unici",
+        "pilotParticipants": "Partecipanti pilota",
+        "responses": "Questionari inviati",
+        "contentResponses": "Risposte WP4 sui contenuti",
+        "platformResponses": "Valutazioni della piattaforma",
+        "materialsCompleted": "Materiali completati"
+      },
+      "area": {
+        "wp3": "WP3 · Curriculum",
+        "wp4_case_studies": "WP4 · Casi studio",
+        "wp4_scenarios": "WP4 · Scenari",
+        "wp4_platform": "WP4 · Piattaforma"
+      },
+      "group": {
+        "pilot": "Pilota",
+        "standard": "Standard"
+      },
+      "role": {
+        "educator": "Formatore",
+        "learner": "Discente",
+        "admin": "Amministratore"
+      },
+      "filters": {
+        "area": "Work package",
+        "countryCode": "Paese",
+        "cohortCode": "Gruppo pilota",
+        "group": "Gruppo",
+        "role": "Ruolo"
+      },
+      "columns": {
+        "area": "Work package",
+        "country": "Paese",
+        "cohort": "Coorte",
+        "group": "Gruppo",
+        "role": "Ruolo",
+        "participants": "Partecipanti",
+        "respondents": "Rispondenti",
+        "pre": "PRE",
+        "post": "POST",
+        "content": "Questionari WP4",
+        "platform": "Questionari piattaforma",
+        "started": "Avviati",
+        "completed": "Completati",
+        "averagePre": "Media PRE",
+        "averagePost": "Media POST",
+        "averageContent": "Media contenuti (1–5)",
+        "averagePlatform": "Media piattaforma (1–5)"
+      }
+    }
+  }
+}

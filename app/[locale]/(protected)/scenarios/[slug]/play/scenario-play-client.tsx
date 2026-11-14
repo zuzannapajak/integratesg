@@ -14,6 +14,7 @@ import {
 } from "@/features/scenarios/actions";
 import type { ScenarioRuntimeState } from "@/lib/scenarios/simulator/runtime-state";
 import type { ResolvedScenario, ScenarioPlayerMode } from "@/lib/scenarios/simulator/types";
+import { wp4SurveyHref } from "@/lib/wp4-surveys/definition";
 
 export type ScenarioPlayClientProps = {
   readonly locale: string;
@@ -24,7 +25,7 @@ export type ScenarioPlayClientProps = {
 
   readonly runtimeState: ScenarioRuntimeState;
 
-  readonly canGivePlatformFeedback: boolean;
+  readonly canGiveWp4Survey: boolean;
 };
 
 export function ScenarioPlayClient({
@@ -32,7 +33,7 @@ export function ScenarioPlayClient({
   scenario,
   mode,
   runtimeState,
-  canGivePlatformFeedback,
+  canGiveWp4Survey,
 }: ScenarioPlayClientProps) {
   const router = useRouter();
   const t = useTranslations("Protected.ScenarioSimulator");
@@ -171,9 +172,9 @@ export function ScenarioPlayClient({
             router.refresh();
           }}
           onGiveFeedback={
-            canGivePlatformFeedback
+            canGiveWp4Survey
               ? () => {
-                  router.push(`/${locale}/platform-feedback`);
+                  router.push(wp4SurveyHref(locale, "scenarios"));
                 }
               : undefined
           }

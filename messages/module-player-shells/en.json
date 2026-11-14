@@ -84,13 +84,13 @@
         "nextStep": {
           "eyebrow": "What’s next",
           "assessment": {
-            "title": "You can finish your pilot participation",
+            "title": "Ready to finish learning? Take POST",
             "description": "You have completed at least one module, so the post-assessment is now available. After submitting it, you will still have access to the course and modules.",
-            "action": "Finish pilot participation"
+            "action": "Finish learning and take POST"
           },
           "feedback": {
-            "title": "Curriculum satisfaction survey",
-            "description": "Evaluate the learning materials and usability after completing your pilot post-assessment.",
+            "title": "Platform satisfaction survey",
+            "description": "As a WP3 pilot participant, share feedback on the tools, learning content and platform experience.",
             "action": "Fill out survey"
           },
           "explore": {

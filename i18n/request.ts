@@ -7,6 +7,7 @@ type Messages = Record<string, unknown>;
 
 const messageScopes = [
   "admin-stats-shells",
+  "evaluation-admin-shells",
   "auth-shells",
   "curriculum-shells",
   "curriculum-state-shells",
@@ -18,6 +19,7 @@ const messageScopes = [
   "metadata-shells",
   "platform-feedback-shells",
   "pilot-satisfaction-shells",
+  "wp4-survey-shells",
   "protected-list-shells",
   "public-content-shells",
   "route-state-shells",

@@ -5,7 +5,9 @@
         "environmental": "Umwelt",
         "social": "Soziales",
         "governance": "Governance",
-        "crossCutting": "Übergreifend"
+        "crossCutting": "Übergreifend",
+        "strategy": "Strategie",
+        "reporting": "Berichterstattung"
       },
       "window": {
         "24h": "Letzte 24 Stunden",
@@ -22,7 +24,8 @@
         "scenarios": "Szenarien",
         "courses": "Curriculum",
         "eportfolio": "ePortfolio",
-        "platformFeedback": "Plattform-Feedback"
+        "platformFeedback": "Plattform-Feedback",
+        "evaluation": "WP3-/WP4-Evaluierung"
       },
       "curriculumViews": {
         "all": "Alle",

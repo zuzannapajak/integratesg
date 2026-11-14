@@ -1,12 +1,16 @@
 "use client";
 
+import GeneralFeedbackAdminSection from "@/components/platform-feedback/general-feedback-admin-section";
+
 import StatsChart from "@/components/dashboard/stats-chart";
+import WpEvaluationAdminDashboard from "@/components/stats/wp-evaluation-admin-dashboard";
 import ScenarioResponseStats from "@/components/stats/scenario-response-stats";
 import UserCurriculumAttemptsTable from "@/components/stats/user-curriculum-attempts-table";
 import UserEportfolioProgressTable from "@/components/stats/user-eportfolio-progress-table";
 import UserScenarioAttemptsTable from "@/components/stats/user-scenario-attempts-table";
 import type { CurriculumPilotAdminStats } from "@/lib/admin/curriculum-pilot";
 import type { PlatformFeedbackAdminStats } from "@/lib/admin/platform-feedback";
+import type { EvaluationReport } from "@/lib/admin/evaluation";
 import type {
   AdminCourseStat,
   AdminLanguageStat,
@@ -42,6 +46,7 @@ type Props = {
   stats: BasicAdminStats;
   pilotStats: CurriculumPilotAdminStats;
   feedbackStats: PlatformFeedbackAdminStats;
+  evaluationReport: EvaluationReport;
 };
 
 type Segment =
@@ -50,7 +55,8 @@ type Segment =
   | "scenarios"
   | "courses"
   | "eportfolio"
-  | "platformFeedback";
+  | "platformFeedback"
+  | "evaluation";
 
 type CurriculumView = "all" | "mainPath" | "pilotPath" | "prePost";
 type ActivityWindow = "24h" | "7d" | "30d";
@@ -902,7 +908,13 @@ function ActivityChartSection({
   );
 }
 
-export default function AdminStatsShell({ locale, stats, pilotStats, feedbackStats }: Props) {
+export default function AdminStatsShell({
+  locale,
+  stats,
+  pilotStats,
+  feedbackStats,
+  evaluationReport,
+}: Props) {
   const t = useTranslations("Protected.AdminStatsShell");
   const pilotT = useTranslations("Protected.CurriculumPilotAdminDashboard");
   const feedbackT = useTranslations("Protected.PlatformFeedbackAdminDashboard");
@@ -1171,6 +1183,14 @@ export default function AdminStatsShell({ locale, stats, pilotStats, feedbackSta
             label={t("segments.eportfolio")}
             onClick={() => {
               setSegment("eportfolio");
+            }}
+          />
+          <SegmentButton
+            active={segment === "evaluation"}
+            icon={<ClipboardCheck className="h-4 w-4" />}
+            label={t("segments.evaluation")}
+            onClick={() => {
+              setSegment("evaluation");
             }}
           />
           <SegmentButton
@@ -1868,6 +1888,10 @@ export default function AdminStatsShell({ locale, stats, pilotStats, feedbackSta
           </>
         )}
 
+        {segment === "evaluation" && (
+          <WpEvaluationAdminDashboard locale={locale} report={evaluationReport} />
+        )}
+
         {segment === "platformFeedback" && (
           <>
             <Surface className="mt-8 p-4 sm:p-6">
@@ -1977,6 +2001,7 @@ export default function AdminStatsShell({ locale, stats, pilotStats, feedbackSta
                 </table>
               </div>
             </Surface>
+            <GeneralFeedbackAdminSection locale={locale} feedback={feedbackStats.generalFeedback} />
           </>
         )}
       </motion.div>

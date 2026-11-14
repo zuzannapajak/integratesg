@@ -13,6 +13,12 @@ export async function getCurriculumPilotFocus(params: {
   userId: string;
   locale: string;
 }): Promise<CurriculumPilotFocus | null> {
+  const assignment = await prisma.pilotParticipation.findFirst({
+    where: { userId: params.userId, track: "wp3_curriculum", status: "active" },
+    select: { cohortCode: true },
+  });
+  if (!assignment) return null;
+
   const [courses, pilots, attempts] = await Promise.all([
     prisma.course.findMany({
       where: { status: "published" },
@@ -27,7 +33,18 @@ export async function getCurriculumPilotFocus(params: {
       },
     }),
     prisma.curriculumPilot.findMany({
-      where: { preAssessmentCompletedAt: { not: null } },
+      where: {
+        preAssessmentCompletedAt: { not: null },
+        user: {
+          pilotParticipations: {
+            some: {
+              track: "wp3_curriculum",
+              status: "active",
+              cohortCode: assignment.cohortCode,
+            },
+          },
+        },
+      },
       select: { userId: true, preAssessmentCompletedAt: true },
     }),
     prisma.userCourseAttempt.findMany({

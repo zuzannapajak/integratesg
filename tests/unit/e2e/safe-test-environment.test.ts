@@ -1,7 +1,10 @@
 // @vitest-environment node
 
 import { describe, expect, it } from "vitest";
-import { assertSafeE2EEnvironment } from "../../e2e/helpers/safe-test-environment";
+import {
+  assertSafeE2EEnvironment,
+  getE2EDatabaseUrl,
+} from "../../e2e/helpers/safe-test-environment";
 
 const TEST_REF = "e2eabcd123456789abcd";
 const OTHER_REF = "different987654321abc";
@@ -23,6 +26,29 @@ describe("Playwright database isolation guard", () => {
     expect(() => {
       assertSafeE2EEnvironment(env());
     }).not.toThrow();
+  });
+
+  it("falls back to the test URL if the preferred URL is empty or whitespace", () => {
+    const base = env();
+    const fallbackEnv = {
+      ...base,
+      PLAYWRIGHT_DATABASE_URL: "   ",
+      TEST_DATABASE_URL: base.PLAYWRIGHT_DATABASE_URL,
+    };
+    expect(getE2EDatabaseUrl(fallbackEnv)).toBe(base.PLAYWRIGHT_DATABASE_URL);
+    expect(() => {
+      assertSafeE2EEnvironment(fallbackEnv);
+    }).not.toThrow();
+  });
+
+  it("rejects a forbidden pilot URL even when reached through the fallback", () => {
+    expect(() => {
+      assertSafeE2EEnvironment({
+        ...env(),
+        PLAYWRIGHT_DATABASE_URL: "   ",
+        TEST_DATABASE_URL: env(PILOT_REF).PLAYWRIGHT_DATABASE_URL,
+      });
+    }).toThrow(/BLOCKED/);
   });
 
   it("rejects the known live pilot project even with acknowledgment", () => {

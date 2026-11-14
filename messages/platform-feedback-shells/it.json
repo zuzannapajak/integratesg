@@ -73,6 +73,47 @@
         "remindLater": "Ricordamelo più tardi",
         "dismiss": "Ignora"
       }
+    },
+    "GeneralFeedbackForm": {
+      "back": "Torna alla dashboard",
+      "title": "Aiutaci a migliorare la piattaforma",
+      "description": "Il tuo feedback ci aiuta a migliorare i materiali didattici, la navigazione, i test e l’esperienza tecnica in tutta la piattaforma.",
+      "category": "Argomento del feedback",
+      "categories": {
+        "bug": "Problema tecnico",
+        "suggestion": "Suggerimento",
+        "content": "Contenuti didattici",
+        "other": "Altro"
+      },
+      "message": "Il tuo messaggio",
+      "placeholder": "Condividi suggerimenti per migliorare i contenuti, la navigazione, i test o l’esperienza di apprendimento in generale.",
+      "privacyNote": "Il messaggio è collegato al tuo account e non è incluso nei risultati dei questionari pilota.",
+      "submit": "Invia feedback",
+      "sending": "Invio del feedback...",
+      "error": "Non siamo riusciti a salvare il tuo feedback. Riprova.",
+      "success": {
+        "title": "Grazie per il tuo feedback",
+        "description": "La tua risposta è stata salvata. Puoi continuare a usare la piattaforma come al solito.",
+        "backToDashboard": "Torna alla dashboard"
+      }
+    },
+    "GeneralFeedbackAdmin": {
+      "title": "Feedback generale",
+      "description": "Messaggi inviati tramite il pulsante mobile, separati dalla valutazione pilota WP3/WP4.",
+      "recentCount": "Segnalazioni totali: {count}",
+      "empty": "Nessun feedback generale inviato.",
+      "columns": {
+        "user": "Utente",
+        "date": "Inviato",
+        "category": "Argomento del feedback",
+        "message": "Il tuo messaggio"
+      },
+      "categories": {
+        "bug": "Problema tecnico",
+        "suggestion": "Suggerimento",
+        "content": "Contenuti didattici",
+        "other": "Altro"
+      }
     }
   },
   "PlatformFeedbackAdminDashboard": {

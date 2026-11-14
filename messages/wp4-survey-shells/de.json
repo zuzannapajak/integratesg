@@ -1,0 +1,56 @@
+{
+  "Protected": {
+    "Wp4Survey": {
+      "back": "Zurück zu den Materialien",
+      "privacy": "Ihre Antworten sind mit Ihrem Konto verknüpft, um doppelte Einreichungen zu vermeiden. Die Ergebnisse werden aggregiert dargestellt. Bitte geben Sie keine personenbezogenen Daten ein.",
+      "open": "Fragebogen ausfüllen",
+      "submit": "Fragebogen absenden",
+      "sending": "Wird gesendet ...",
+      "error": "Bitte beantworten Sie alle Pflichtfragen. Wenn Sie bereits teilgenommen haben, laden Sie die Seite neu.",
+      "submitted": "Vielen Dank für Ihr Feedback!",
+      "saved": "Ihre Antworten wurden gespeichert. Sie können die Materialien weiter nutzen.",
+      "unavailable": "Fragebogen noch nicht verfügbar",
+      "eligibility": "Schließen Sie mindestens eine passende Lernaktivität ab, um auf diese Evaluation zugreifen zu können.",
+      "reminder": "Sie haben eine Lernaktivität abgeschlossen. Bitte füllen Sie den Bewertungsfragebogen aus.",
+      "ratingScale": "1 = Überhaupt nicht gut; 5 = Ausgezeichnet",
+      "multiSelect": "Wählen Sie eine oder mehrere Antworten.",
+      "noneHint": "Falls keine, geben Sie „Keine“ ein.",
+      "autoCountNote": "Automatisch anhand unterschiedlicher abgeschlossener, veröffentlichter Fallstudien berechnet. Wiederholte Besuche erhöhen die Anzahl nicht.",
+      "platformTitle": "Helfen Sie uns, die Plattform zu bewerten",
+      "platformReminder": "Ihre Inhaltsbewertungen sind abgeschlossen. Bewerten Sie als Pilot-Teilnehmende bitte auch die Plattform selbst.",
+      "platformFeedback": "Plattform bewerten",
+      "scope": {
+        "case-studies": {
+          "title": "WP4 – Bewertung der Fallstudien",
+          "description": "Freigegebener Fragebogen zu Fallstudien für Beschäftigte in Unternehmen und KMU. Die Anzahl wird automatisch ermittelt."
+        },
+        "scenarios": {
+          "title": "WP4 – Bewertung der Szenarien",
+          "description": "Freigegebener Szenario-Fragebogen für Lehrkräfte und Lernende."
+        }
+      },
+      "skills": {
+        "systems_thinking": "System- und Prozessdenken",
+        "decision_making": "Entscheidungsfindung",
+        "data_literacy": "Datenkompetenz"
+      },
+      "caseStudies": {
+        "q1": "Wie viele Fallstudien haben Sie getestet?",
+        "engagementEase": "Wie leicht fiel es Ihnen, während dieser Aktivität mit den Fallstudien zu arbeiten? Wählen Sie die Antwort, die Ihre Meinung am besten beschreibt.",
+        "greenTransitionUnderstanding": "Wie wirksam waren die Fallstudien Ihrer Erfahrung nach, um Ihr Verständnis für die Bedeutung der grünen Transformation zu verbessern?",
+        "esgEcosystemUnderstanding": "Wie wirksam waren die Fallstudien, um Ihr Verständnis von ESG als Prozess im größeren Ökosystem aus Wirtschaft, Gesellschaft und Umwelt zu verbessern?",
+        "skills": "Welche übergreifenden Schlüsselkompetenzen haben Sie durch die Fallstudien weiterentwickelt? Wählen Sie eine oder mehrere Antworten.",
+        "challenges": "Welche Schwierigkeiten traten gegebenenfalls bei der Nutzung der Fallstudien auf?",
+        "improvements": "Welche Verbesserungen würden Sie gegebenenfalls vorschlagen?"
+      },
+      "scenarios": {
+        "incorporationEase": "Wie einfach ließen sich die Szenarien Ihrer Meinung nach in Ihre bisherigen beruflichen Aktivitäten integrieren?",
+        "participantEngagement": "Wie wirksam können die Szenarien Ihrer Erfahrung nach Teilnehmende einbeziehen und ihnen helfen, ESG als Prozess im größeren Ökosystem aus Wirtschaft, Gesellschaft und Umwelt zu verstehen?",
+        "skills": "In welchen Bereichen könnten diese Szenarien für Lehrkräfte besonders hilfreich sein? Wählen Sie eine oder mehrere Antworten.",
+        "challenges": "Welche Schwierigkeiten traten gegebenenfalls bei der Nutzung der Szenarien auf?",
+        "implementationChallenges": "Welche Schwierigkeiten erwarten Sie bei der Integration in Ihre bisherigen beruflichen Aktivitäten?",
+        "improvements": "Welche Verbesserungen würden Sie zur besseren Nutzbarkeit in künftigen Veranstaltungen vorschlagen?"
+      }
+    }
+  }
+}

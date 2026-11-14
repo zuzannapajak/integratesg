@@ -1,34 +1,21 @@
 "use client";
 
 import { submitPlatformFeedbackAction } from "@/features/platform-feedback/actions";
+import { PLATFORM_RATING_KEYS, type PlatformRatingKey } from "@/lib/platform-feedback/definition";
 import { ArrowLeft, CheckCircle2, Loader2, Send } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { type SyntheticEvent, useMemo, useState, useTransition } from "react";
 
 type Props = {
   locale: string;
+  context?: "wp3" | "wp4";
 };
 
-type RatingKey =
-  | "easeOfUse"
-  | "moduleClarity"
-  | "navigation"
-  | "testsExperience"
-  | "technicalProblems"
-  | "overallSatisfaction";
-
+type RatingKey = PlatformRatingKey;
 type CompleteRatings = Record<RatingKey, number>;
 
-const ratingKeys: RatingKey[] = [
-  "easeOfUse",
-  "moduleClarity",
-  "navigation",
-  "testsExperience",
-  "technicalProblems",
-  "overallSatisfaction",
-];
+const ratingKeys = PLATFORM_RATING_KEYS;
 
 const SURFACE =
   "rounded-[30px] border border-white/70 bg-white/88 shadow-[0_12px_34px_rgba(35,45,62,0.06)] backdrop-blur-xl";
@@ -55,9 +42,8 @@ function getCompleteRatings(ratings: Partial<Record<RatingKey, number>>): Comple
   };
 }
 
-export default function PlatformFeedbackForm({ locale }: Props) {
+export default function PlatformFeedbackForm({ locale, context = "wp3" }: Props) {
   const t = useTranslations("Protected.PlatformFeedbackForm");
-  const router = useRouter();
   const [ratings, setRatings] = useState<Partial<Record<RatingKey, number>>>({});
   const [suggestions, setSuggestions] = useState("");
   const [technicalNotes, setTechnicalNotes] = useState("");
@@ -86,13 +72,14 @@ export default function PlatformFeedbackForm({ locale }: Props) {
     startTransition(async () => {
       try {
         await submitPlatformFeedbackAction({
+          locale,
+          context,
           ...completeRatings,
           suggestions,
           technicalNotes,
         });
 
         setSubmitted(true);
-        router.refresh();
       } catch (caughtError) {
         console.error(caughtError);
         setError(t("validation.submitError"));

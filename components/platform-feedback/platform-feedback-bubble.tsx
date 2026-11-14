@@ -1,6 +1,6 @@
 "use client";
 
-import { APP_ROLES, type AppRole } from "@/lib/auth/roles";
+import { isSelfServiceRole, type AppRole } from "@/lib/auth/roles";
 import { MessageSquareHeart } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -9,23 +9,18 @@ import { usePathname } from "next/navigation";
 type Props = {
   locale: string;
   role: AppRole;
+  // Kept for compatibility with the existing protected layout. General feedback
+  // is independent of WP3 pilot eligibility.
+  canGiveWp3Feedback?: boolean;
 };
-
-function isScenarioModulePath(pathname: string): boolean {
-  return /^\/[^/]+\/scenarios(?:\/|$)/.test(pathname);
-}
 
 export default function PlatformFeedbackBubble({ locale, role }: Props) {
   const pathname = usePathname();
   const t = useTranslations("Protected.PlatformFeedbackBubble");
-  const feedbackHref =
-    role === APP_ROLES.learner
-      ? `/${locale}/pilot-satisfaction/eportfolio`
-      : `/${locale}/platform-feedback`;
+  const feedbackHref = `/${locale}/feedback`;
 
-  if (role === APP_ROLES.admin || isScenarioModulePath(pathname) || pathname === feedbackHref) {
-    return null;
-  }
+  // General comments are welcome throughout the platform, not tied to a pilot.
+  if (!isSelfServiceRole(role) || pathname === feedbackHref) return null;
 
   return (
     <Link

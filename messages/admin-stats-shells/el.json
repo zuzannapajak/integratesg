@@ -5,7 +5,9 @@
         "environmental": "Περιβαλλοντικό",
         "social": "Κοινωνικό",
         "governance": "Διακυβέρνηση",
-        "crossCutting": "Οριζόντιο"
+        "crossCutting": "Οριζόντιο",
+        "strategy": "Στρατηγική",
+        "reporting": "Υποβολή εκθέσεων"
       },
       "window": {
         "24h": "Τελευταίες 24 ώρες",
@@ -22,7 +24,8 @@
         "scenarios": "Σενάρια",
         "courses": "Curriculum",
         "eportfolio": "ePortfolio",
-        "platformFeedback": "Ανατροφοδότηση πλατφόρμας"
+        "platformFeedback": "Ανατροφοδότηση πλατφόρμας",
+        "evaluation": "Αξιολόγηση WP3 / WP4"
       },
       "curriculumViews": {
         "all": "Όλα",
