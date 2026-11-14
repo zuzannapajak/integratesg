@@ -13,23 +13,20 @@ describe("WP4 content survey access", () => {
       ).toBe(true);
     }
   });
-  it("limits Scenarios questionnaires to educators", () => {
-    expect(
-      isWp4SurveyEligible({ scope: "scenarios", role: "educator", completed: 1, submitted: false }),
-    ).toBe(true);
-    expect(
-      isWp4SurveyEligible({ scope: "scenarios", role: "learner", completed: 1, submitted: false }),
-    ).toBe(false);
+  it("offers Scenarios questionnaires to learners and educators after completion", () => {
+    for (const role of ["learner", "educator"]) {
+      expect(
+        isWp4SurveyEligible({ scope: "scenarios", role, completed: 1, submitted: false }),
+      ).toBe(true);
+    }
   });
   it("blocks zero completions, admins and duplicate submissions", () => {
     for (const scope of ["case-studies", "scenarios"] as const) {
-      expect(isWp4SurveyEligible({ scope, role: "educator", completed: 0, submitted: false })).toBe(
-        false,
-      );
+      for (const role of ["learner", "educator"]) {
+        expect(isWp4SurveyEligible({ scope, role, completed: 0, submitted: false })).toBe(false);
+        expect(isWp4SurveyEligible({ scope, role, completed: 2, submitted: true })).toBe(false);
+      }
       expect(isWp4SurveyEligible({ scope, role: "admin", completed: 2, submitted: false })).toBe(
-        false,
-      );
-      expect(isWp4SurveyEligible({ scope, role: "educator", completed: 2, submitted: true })).toBe(
         false,
       );
     }

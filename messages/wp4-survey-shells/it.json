@@ -10,7 +10,7 @@
       "submitted": "Grazie per il tuo contributo!",
       "saved": "Le risposte sono state salvate. Puoi continuare a utilizzare i materiali.",
       "unavailable": "Questionario non ancora disponibile",
-      "eligibility": "Completa almeno un’attività pertinente. Il questionario sugli scenari è riservato ai formatori.",
+      "eligibility": "Completa almeno un’attività formativa pertinente per accedere a questa valutazione.",
       "reminder": "Hai completato un materiale didattico. Ti invitiamo a compilare il questionario di valutazione.",
       "ratingScale": "1 = Per niente buono; 5 = Eccellente",
       "multiSelect": "Seleziona una o più risposte.",
@@ -26,7 +26,7 @@
         },
         "scenarios": {
           "title": "WP4 – Valutazione degli scenari",
-          "description": "Questionario approvato sugli scenari per i formatori professionali."
+          "description": "Questionario approvato sugli scenari per formatori e partecipanti."
         }
       },
       "skills": {

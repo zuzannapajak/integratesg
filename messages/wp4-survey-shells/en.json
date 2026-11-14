@@ -10,7 +10,7 @@
       "submitted": "Thank you for your feedback!",
       "saved": "Your evaluation has been recorded. You can continue using the materials.",
       "unavailable": "Evaluation not available yet",
-      "eligibility": "Complete at least one relevant learning activity to access this evaluation. The Scenarios evaluation is available to educators.",
+      "eligibility": "Complete at least one relevant learning activity to access this evaluation.",
       "reminder": "You have completed learning material. Please complete the evaluation questionnaire.",
       "ratingScale": "1 = Not good at all; 5 = Excellent",
       "multiSelect": "Select one or more answers.",
@@ -26,7 +26,7 @@
         },
         "scenarios": {
           "title": "WP4 – Scenarios evaluation",
-          "description": "Approved Scenarios questionnaire for VET educators."
+          "description": "Approved Scenarios questionnaire for educators and learners."
         }
       },
       "skills": {

@@ -70,11 +70,20 @@ describe("WP4 platform feedback eligibility", () => {
     );
     expect(result.eligible).toBe(true);
   });
+  it("allows learners in Scenarios-only and joint WP4 pilots after evaluation", async () => {
+    const trackSets: Track[][] = [["wp4_scenarios"], ["wp4_case_studies", "wp4_scenarios"]];
+    for (const tracks of trackSets) {
+      const result = await getWp4PlatformFeedbackEligibility(
+        "user-1",
+        db({ role: "learner", tracks }) as unknown as DB,
+      );
+      expect(result.eligible).toBe(true);
+    }
+  });
   it("blocks missing questionnaires, duplicate, invalid role and conflicting cohorts", async () => {
     for (const options of [
       { submitted: ["wp4_case_studies"] },
       { alreadySubmitted: true },
-      { role: "learner" },
       { role: "admin" },
       { tracks: [] },
       { differentCohorts: true },

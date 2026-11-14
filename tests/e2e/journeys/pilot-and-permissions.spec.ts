@@ -223,80 +223,82 @@ test.describe("Pilot integration, permissions and certificates (isolated DB only
     }
   });
 
-  test("WP4 Scenarios evaluation is available only to educators after completion", async ({
-    page,
-  }) => {
-    test.setTimeout(120_000);
-    const profile = await testProfile(db);
-    const existingSurvey = await db.surveySubmission.findUnique({
-      where: {
-        userId_surveyType_roundKey: {
-          userId: profile.id,
-          surveyType: "wp4_scenarios",
-          roundKey: "initial",
+  for (const role of ["learner", "educator"] as const) {
+    test(`WP4 Scenarios evaluation is available to ${role}s after completion`, async ({ page }) => {
+      test.setTimeout(120_000);
+      const profile = await testProfile(db);
+      const existingSurvey = await db.surveySubmission.findUnique({
+        where: {
+          userId_surveyType_roundKey: {
+            userId: profile.id,
+            surveyType: "wp4_scenarios",
+            roundKey: "initial",
+          },
         },
-      },
-    });
-    if (existingSurvey)
-      throw new Error("Use an isolated account without previous Scenarios evaluation");
-    let createdAttemptId: string | null = null;
-    try {
-      await db.profile.update({ where: { id: profile.id }, data: { role: "learner" } });
-      await signIn(page);
-      await page.goto("/en/wp4-surveys/scenarios");
-      await expect(page).toHaveURL(/\/en\/dashboard$/);
+      });
+      if (existingSurvey)
+        throw new Error("Use an isolated account without previous Scenarios evaluation");
+      let createdAttemptId: string | null = null;
+      try {
+        await db.profile.update({ where: { id: profile.id }, data: { role } });
+        await signIn(page);
+        await page.goto("/en/wp4-surveys/scenarios");
+        await expect(page).toHaveURL(/\/en\/wp4-surveys\/scenarios$/);
 
-      await db.profile.update({ where: { id: profile.id }, data: { role: "educator" } });
-      const previous = await db.userScenarioAttempt.findFirst({
-        where: { userId: profile.id, scenarioId: "scenario-01", scenarioVersion: 1 },
-        orderBy: { attemptNumber: "desc" },
-        select: { attemptNumber: true },
-      });
-      const attempt = await db.userScenarioAttempt.create({
-        data: {
-          userId: profile.id,
-          scenarioId: "scenario-01",
-          scenarioVersion: 1,
-          locale: "en",
-          attemptNumber: (previous?.attemptNumber ?? 0) + 1,
-          status: "completed",
-          completedAt: new Date(),
-        },
-      });
-      createdAttemptId = attempt.id;
-      await page.goto("/en/wp4-surveys/scenarios");
-      await expect(page.locator("form")).toBeVisible();
-      for (const key of ["incorporationEase", "participantEngagement"]) {
-        await page.locator(`input[type="radio"][name="${key}"][value="4"]`).check();
+        const previous = await db.userScenarioAttempt.findFirst({
+          where: { userId: profile.id, scenarioId: "scenario-01", scenarioVersion: 1 },
+          orderBy: { attemptNumber: "desc" },
+          select: { attemptNumber: true },
+        });
+        const attempt = await db.userScenarioAttempt.create({
+          data: {
+            userId: profile.id,
+            scenarioId: "scenario-01",
+            scenarioVersion: 1,
+            locale: "en",
+            attemptNumber: (previous?.attemptNumber ?? 0) + 1,
+            status: "completed",
+            completedAt: new Date(),
+          },
+        });
+        createdAttemptId = attempt.id;
+        await page.goto("/en/scenarios");
+        await page.getByRole("link", { name: "Complete evaluation" }).click();
+        await expect(page).toHaveURL(/\/en\/wp4-surveys\/scenarios$/);
+        await expect(page.locator("form")).toBeVisible();
+        for (const key of ["incorporationEase", "participantEngagement"]) {
+          await page.locator(`input[type="radio"][name="${key}"][value="4"]`).check();
+        }
+        await page.locator('input[type="checkbox"]').first().check();
+        for (const textArea of await page.locator("textarea").all()) {
+          await textArea.fill("No problems");
+        }
+        await page.locator('form button[type="submit"]').click();
+        await expect
+          .poll(async () =>
+            db.surveySubmission.count({
+              where: { userId: profile.id, surveyType: "wp4_scenarios", roundKey: "initial" },
+            }),
+          )
+          .toBe(1);
+        const saved = await db.surveySubmission.findFirst({
+          where: { userId: profile.id, surveyType: "wp4_scenarios", roundKey: "initial" },
+        });
+        expect(saved?.roleAtSubmission).toBe(role);
+        expect(saved?.answers).toMatchObject({ incorporationEase: 4, participantEngagement: 4 });
+        expect(saved?.activitySnapshot).toMatchObject({ scenariosCompleted: expect.any(Number) });
+        await page.reload();
+        await expect(page.locator("form")).toHaveCount(0);
+      } finally {
+        await db.surveySubmission.deleteMany({
+          where: { userId: profile.id, surveyType: "wp4_scenarios", roundKey: "initial" },
+        });
+        if (createdAttemptId)
+          await db.userScenarioAttempt.delete({ where: { id: createdAttemptId } });
+        await db.profile.update({ where: { id: profile.id }, data: { role: profile.role } });
       }
-      await page.locator('input[type="checkbox"]').first().check();
-      for (const textArea of await page.locator("textarea").all()) {
-        await textArea.fill("No problems");
-      }
-      await page.locator('form button[type="submit"]').click();
-      await expect
-        .poll(async () =>
-          db.surveySubmission.count({
-            where: { userId: profile.id, surveyType: "wp4_scenarios", roundKey: "initial" },
-          }),
-        )
-        .toBe(1);
-      const saved = await db.surveySubmission.findFirst({
-        where: { userId: profile.id, surveyType: "wp4_scenarios", roundKey: "initial" },
-      });
-      expect(saved?.answers).toMatchObject({ incorporationEase: 4, participantEngagement: 4 });
-      expect(saved?.activitySnapshot).toMatchObject({ scenariosCompleted: expect.any(Number) });
-      await page.reload();
-      await expect(page.locator("form")).toHaveCount(0);
-    } finally {
-      await db.surveySubmission.deleteMany({
-        where: { userId: profile.id, surveyType: "wp4_scenarios", roundKey: "initial" },
-      });
-      if (createdAttemptId)
-        await db.userScenarioAttempt.delete({ where: { id: createdAttemptId } });
-      await db.profile.update({ where: { id: profile.id }, data: { role: profile.role } });
-    }
-  });
+    });
+  }
 
   test("completes the pilot pre-/post-assessments and persists the results", async ({ page }) => {
     test.setTimeout(180_000);

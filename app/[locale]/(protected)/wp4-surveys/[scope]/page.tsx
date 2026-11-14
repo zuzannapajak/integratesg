@@ -16,9 +16,7 @@ export default async function Wp4SurveyPage({
   const { locale, scope } = await params;
   if (!isAppLocale(locale)) notFound();
   if (!isWp4SurveyScope(scope)) notFound();
-  const roles =
-    scope === "scenarios" ? APP_ROLES.educator : [APP_ROLES.learner, APP_ROLES.educator];
-  const { user } = await requireRole(locale, roles);
+  const { user } = await requireRole(locale, [APP_ROLES.learner, APP_ROLES.educator]);
   const availability = await getWp4SurveyAvailability(user.id, scope);
 
   if (availability.submittedAt) {

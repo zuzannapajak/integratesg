@@ -1,4 +1,4 @@
-import { APP_ROLES } from "@/lib/auth/roles";
+import { isSelfServiceRole } from "@/lib/auth/roles";
 import { prisma } from "@/lib/prisma";
 import { WP4_SURVEY_ROUND, WP4_SURVEY_TYPES } from "@/lib/wp4-surveys/definition";
 import type { Prisma } from "@prisma/client";
@@ -29,15 +29,13 @@ export async function getWp4PlatformFeedbackEligibility(
     }),
   ]);
 
-  if (!profile || profile.role === APP_ROLES.admin || participations.length === 0) {
+  if (!profile || !isSelfServiceRole(profile.role) || participations.length === 0) {
     return { eligible: false, assignment: null };
   }
   // A joint WP4 pilot must use one cohort and country for both tracks.
   if (
     new Set(participations.map((item) => item.cohortCode)).size !== 1 ||
-    new Set(participations.map((item) => item.countryCode)).size !== 1 ||
-    (profile.role !== APP_ROLES.educator &&
-      participations.some((item) => item.track === "wp4_scenarios"))
+    new Set(participations.map((item) => item.countryCode)).size !== 1
   ) {
     return { eligible: false, assignment: null };
   }

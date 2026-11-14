@@ -1,4 +1,4 @@
-import { APP_ROLES } from "@/lib/auth/roles";
+import { isSelfServiceRole } from "@/lib/auth/roles";
 import { prisma } from "@/lib/prisma";
 import { getWp4ActivitySnapshot } from "@/lib/wp4-surveys/activity";
 import {
@@ -23,10 +23,7 @@ export function isWp4SurveyEligible(params: {
   completed: number;
   submitted: boolean;
 }) {
-  const allowedRole =
-    params.scope === "case-studies"
-      ? params.role === APP_ROLES.learner || params.role === APP_ROLES.educator
-      : params.role === APP_ROLES.educator;
+  const allowedRole = params.role !== null && isSelfServiceRole(params.role);
   return allowedRole && params.completed > 0 && !params.submitted;
 }
 
@@ -55,12 +52,17 @@ export async function getWp4SurveyAvailability(
   ]);
   const completed =
     scope === "case-studies" ? activity.caseStudiesCompleted : activity.scenariosCompleted;
+  const role = profile?.role ?? null;
+  const submitted = Boolean(previous);
   return {
-    eligible: isWp4SurveyEligible({
+    eligible: isWp4SurveyEligible({ scope, role, completed, submitted }),
+    // The completion screen is displayed only AFTER the scenario has been saved.
+    // It may offer the survey even when the first completion occurs in this session.
+    canOfferOnCompletion: isWp4SurveyEligible({
       scope,
-      role: profile?.role ?? null,
-      completed,
-      submitted: Boolean(previous),
+      role,
+      completed: Math.max(completed, 1),
+      submitted,
     }),
     submittedAt: previous?.submittedAt.toISOString() ?? null,
     activity,

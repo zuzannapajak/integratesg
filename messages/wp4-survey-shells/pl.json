@@ -10,7 +10,7 @@
       "submitted": "Dziękujemy za opinię!",
       "saved": "Odpowiedzi zostały zapisane. Możesz dalej korzystać z materiałów.",
       "unavailable": "Ankieta nie jest jeszcze dostępna",
-      "eligibility": "Ukończ przynajmniej jeden odpowiedni materiał. Ankieta scenariuszy jest przeznaczona dla edukatorów.",
+      "eligibility": "Ukończ co najmniej jedną odpowiednią aktywność edukacyjną, aby uzyskać dostęp do ankiety.",
       "reminder": "Ukończono materiał edukacyjny. Prosimy o wypełnienie ankiety oceniającej.",
       "ratingScale": "1 = Bardzo źle; 5 = Doskonale",
       "multiSelect": "Wybierz co najmniej jedną odpowiedź.",
@@ -26,7 +26,7 @@
         },
         "scenarios": {
           "title": "WP4 – Ocena scenariuszy",
-          "description": "Zatwierdzona ankieta Scenarios dla edukatorów kształcenia zawodowego."
+          "description": "Zatwierdzona ankieta Scenarios dla edukatorów i uczestników."
         }
       },
       "skills": {

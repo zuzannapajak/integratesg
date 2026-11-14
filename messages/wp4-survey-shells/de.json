@@ -10,7 +10,7 @@
       "submitted": "Vielen Dank für Ihr Feedback!",
       "saved": "Ihre Antworten wurden gespeichert. Sie können die Materialien weiter nutzen.",
       "unavailable": "Fragebogen noch nicht verfügbar",
-      "eligibility": "Schließen Sie mindestens eine passende Lernaktivität ab. Der Szenario-Fragebogen richtet sich an Lehrkräfte.",
+      "eligibility": "Schließen Sie mindestens eine passende Lernaktivität ab, um auf diese Evaluation zugreifen zu können.",
       "reminder": "Sie haben eine Lernaktivität abgeschlossen. Bitte füllen Sie den Bewertungsfragebogen aus.",
       "ratingScale": "1 = Überhaupt nicht gut; 5 = Ausgezeichnet",
       "multiSelect": "Wählen Sie eine oder mehrere Antworten.",
@@ -26,7 +26,7 @@
         },
         "scenarios": {
           "title": "WP4 – Bewertung der Szenarien",
-          "description": "Freigegebener Szenario-Fragebogen für Lehrkräfte in der beruflichen Bildung."
+          "description": "Freigegebener Szenario-Fragebogen für Lehrkräfte und Lernende."
         }
       },
       "skills": {
