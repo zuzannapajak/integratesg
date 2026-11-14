@@ -27,6 +27,10 @@ jobs:
       TEST_DATABASE_URL: ${{ secrets.E2E_TEST_DATABASE_URL }}
       PLAYWRIGHT_DATABASE_URL: ${{ secrets.E2E_TEST_DATABASE_URL }}
 
+      # Supabase session pooler is capped at 15 active sessions in this project.
+      # The Next.js process and the E2E fixtures each own a separate pg pool.
+      PRISMA_PG_POOL_MAX: "3"
+
       NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.E2E_SUPABASE_URL }}
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.E2E_SUPABASE_ANON_KEY }}
 

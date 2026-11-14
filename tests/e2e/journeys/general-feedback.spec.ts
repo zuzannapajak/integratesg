@@ -3,13 +3,17 @@ import { PrismaClient } from "@prisma/client";
 import { expect, test, type Page } from "@playwright/test";
 
 import { assertE2EDatabaseReady } from "../helpers/assert-e2e-database-ready";
+import { E2E_PG_POOL_MAX } from "../helpers/database-pool";
 import { assertSafeE2EEnvironment, getE2EDatabaseUrl } from "../helpers/safe-test-environment";
 
 function connect(): PrismaClient {
   assertSafeE2EEnvironment();
   const url = getE2EDatabaseUrl();
   if (!url) throw new Error("Missing isolated test database");
-  return new PrismaClient({ adapter: new PrismaPg({ connectionString: url }), log: ["error"] });
+  return new PrismaClient({
+    adapter: new PrismaPg({ connectionString: url, max: E2E_PG_POOL_MAX }),
+    log: ["error"],
+  });
 }
 
 async function signIn(page: Page) {

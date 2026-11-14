@@ -1,6 +1,8 @@
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 
+import { E2E_PG_POOL_MAX } from "../helpers/database-pool";
+
 const SCENARIO_ID = "scenario-02";
 const SCENARIO_VERSION = 1;
 
@@ -50,6 +52,7 @@ function getDatabaseClient(): PrismaClient {
 
   const adapter = new PrismaPg({
     connectionString: databaseUrl,
+    max: E2E_PG_POOL_MAX,
   });
 
   prisma = new PrismaClient({
