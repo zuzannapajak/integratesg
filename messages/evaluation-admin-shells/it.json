@@ -63,6 +63,44 @@
         "averagePost": "Media POST",
         "averageContent": "Media contenuti (1–5)",
         "averagePlatform": "Media piattaforma (1–5)"
+      },
+      "individualResponses": "Risposte individuali"
+    },
+    "IndividualEvaluation": {
+      "title": "Risposte individuali WP3/WP4",
+      "back": "Torna alle statistiche",
+      "description": "Consultazione senza identificativi diretti degli account dei partecipanti. Il paese dei PRE/POST storici può derivare dall’assegnazione attuale al pilota.",
+      "country": "Paese",
+      "survey": "Questionario",
+      "group": "Gruppo",
+      "role": "Ruolo",
+      "all": "Tutti",
+      "unknown": "Sconosciuto",
+      "apply": "Applica filtri",
+      "count": "{count} risposte · Pagina {page} di {pages}",
+      "export": "Esporta CSV filtrato",
+      "exportQualitative": "Esporta con risposte testuali",
+      "privacyNote": "Le risposte aperte possono contenere dati personali. Limita l’accesso agli export ed elimina le copie non necessarie.",
+      "empty": "Nessuna risposta corrisponde ai filtri.",
+      "date": "Data invio",
+      "details": "Dettagli",
+      "viewDetails": "Visualizza risposte",
+      "version": "Versione",
+      "language": "Lingua",
+      "cohort": "Gruppo pilota",
+      "answers": "Risposte",
+      "activity": "Attività all’invio",
+      "qualitative": "Risposte aperte (possibili dati personali)",
+      "pagination": "Pagine delle risposte",
+      "previous": "Precedente",
+      "next": "Successiva",
+      "surveyTypes": {
+        "wp3_pre": "WP3 PRE",
+        "wp3_post": "WP3 POST",
+        "wp4_case_studies": "WP4 Casi studio",
+        "wp4_scenarios": "WP4 Scenari",
+        "platform_wp3": "Valutazione piattaforma WP3",
+        "platform_wp4": "Valutazione piattaforma WP4"
       }
     }
   }

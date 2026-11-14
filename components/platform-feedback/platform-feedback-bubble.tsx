@@ -9,9 +9,6 @@ import { usePathname } from "next/navigation";
 type Props = {
   locale: string;
   role: AppRole;
-  // Kept for compatibility with the existing protected layout. General feedback
-  // is independent of WP3 pilot eligibility.
-  canGiveWp3Feedback?: boolean;
 };
 
 export default function PlatformFeedbackBubble({ locale, role }: Props) {

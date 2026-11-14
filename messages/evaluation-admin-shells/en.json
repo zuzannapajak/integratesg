@@ -63,6 +63,44 @@
         "averagePost": "Avg. POST",
         "averageContent": "Avg. content (1–5)",
         "averagePlatform": "Avg. platform (1–5)"
+      },
+      "individualResponses": "Individual responses"
+    },
+    "IndividualEvaluation": {
+      "title": "Individual WP3/WP4 evaluation responses",
+      "back": "Back to statistics",
+      "description": "Response-level review without direct account identifiers. PRE/POST country for historic records may reflect current pilot membership, not a saved country snapshot.",
+      "country": "Country",
+      "survey": "Survey",
+      "group": "Group",
+      "role": "Role",
+      "all": "All",
+      "unknown": "Unknown",
+      "apply": "Apply filters",
+      "count": "{count} responses · Page {page} of {pages}",
+      "export": "Export filtered CSV",
+      "exportQualitative": "Export with text answers",
+      "privacyNote": "Text answers may contain personal data. Keep qualitative exports restricted and delete copies when no longer needed.",
+      "empty": "No responses match these filters.",
+      "date": "Submitted",
+      "details": "Details",
+      "viewDetails": "View answers",
+      "version": "Version",
+      "language": "Language",
+      "cohort": "Pilot cohort",
+      "answers": "Answers",
+      "activity": "Activity at submission",
+      "qualitative": "Open-text answers (may contain personal data)",
+      "pagination": "Response pages",
+      "previous": "Previous",
+      "next": "Next",
+      "surveyTypes": {
+        "wp3_pre": "WP3 PRE",
+        "wp3_post": "WP3 POST",
+        "wp4_case_studies": "WP4 Case Studies",
+        "wp4_scenarios": "WP4 Scenarios",
+        "platform_wp3": "WP3 platform feedback",
+        "platform_wp4": "WP4 platform feedback"
       }
     }
   }

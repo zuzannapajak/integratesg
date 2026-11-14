@@ -499,3 +499,54 @@ export async function loadEvaluationData(): Promise<EvaluationData> {
 export async function getEvaluationReport(): Promise<EvaluationReport> {
   return buildEvaluationReport(await loadEvaluationData());
 }
+
+/** Lean query for individual response review and filtered export (no learning-progress scan). */
+export async function loadEvaluationResponseData(): Promise<
+  Pick<EvaluationData, "roles" | "participations" | "curriculum" | "surveys">
+> {
+  const [roles, participations, curriculum, surveys] = await Promise.all([
+    prisma.profile.findMany({ select: { id: true, role: true } }),
+    prisma.pilotParticipation.findMany({
+      select: { userId: true, track: true, countryCode: true, cohortCode: true, status: true },
+    }),
+    prisma.curriculumPilot.findMany({
+      select: {
+        userId: true,
+        preAssessmentCompletedAt: true,
+        postAssessmentCompletedAt: true,
+        preAssessmentAverageScore: true,
+        postAssessmentAverageScore: true,
+        submissions: {
+          select: {
+            type: true,
+            submittedAt: true,
+            modulesCompletedBeforeSubmission: true,
+            answers: {
+              select: { valueInt: true, valueText: true, question: { select: { key: true } } },
+            },
+          },
+        },
+      },
+    }),
+    prisma.surveySubmission.findMany({
+      where: {
+        surveyType: { in: ["wp4_case_studies", "wp4_scenarios", "platform_wp3", "platform_wp4"] },
+      },
+      select: {
+        surveyType: true,
+        surveyVersion: true,
+        roundKey: true,
+        userId: true,
+        locale: true,
+        countryCode: true,
+        roleAtSubmission: true,
+        isPilotAtSubmission: true,
+        pilotCohortCode: true,
+        answers: true,
+        activitySnapshot: true,
+        submittedAt: true,
+      },
+    }),
+  ]);
+  return { roles, participations, curriculum, surveys };
+}

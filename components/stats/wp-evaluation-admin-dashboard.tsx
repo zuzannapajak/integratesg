@@ -7,6 +7,7 @@ import type {
   EvaluationRole,
 } from "@/lib/admin/evaluation";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { useMemo, useState, type ChangeEvent } from "react";
 
 type Props = { locale: string; report: EvaluationReport };
@@ -70,6 +71,12 @@ export default function WpEvaluationAdminDashboard({ locale, report }: Props) {
             <p className="mt-2 max-w-3xl text-sm leading-6 text-[#667180]">{t("description")}</p>
           </div>
           <div className="flex flex-wrap gap-2">
+            <Link
+              href={`/${locale}/admin/evaluation/responses`}
+              className="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-900"
+            >
+              {t("individualResponses")}
+            </Link>
             <a
               className="rounded-xl bg-[#31425a] px-4 py-2 text-sm font-semibold text-white"
               href={`/${locale}/admin/evaluation/export?kind=summary`}

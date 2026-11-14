@@ -63,6 +63,44 @@
         "averagePost": "Ø POST",
         "averageContent": "Ø Inhalt (1–5)",
         "averagePlatform": "Ø Plattform (1–5)"
+      },
+      "individualResponses": "Einzelantworten"
+    },
+    "IndividualEvaluation": {
+      "title": "Einzelantworten zu WP3/WP4",
+      "back": "Zurück zur Statistik",
+      "description": "Antworten ohne direkte Kontokennungen der Teilnehmenden. Das Land älterer PRE/POST-Antworten kann auf der aktuellen Pilotzuordnung beruhen.",
+      "country": "Land",
+      "survey": "Fragebogen",
+      "group": "Gruppe",
+      "role": "Rolle",
+      "all": "Alle",
+      "unknown": "Unbekannt",
+      "apply": "Filter anwenden",
+      "count": "{count} Antworten · Seite {page} von {pages}",
+      "export": "Gefilterte CSV exportieren",
+      "exportQualitative": "Mit Freitext exportieren",
+      "privacyNote": "Freitextantworten können personenbezogene Daten enthalten. Exporte geschützt aufbewahren und nicht mehr benötigte Kopien löschen.",
+      "empty": "Keine Antworten für diese Filter.",
+      "date": "Eingereicht",
+      "details": "Details",
+      "viewDetails": "Antworten anzeigen",
+      "version": "Version",
+      "language": "Sprache",
+      "cohort": "Pilotgruppe",
+      "answers": "Antworten",
+      "activity": "Aktivität bei Abgabe",
+      "qualitative": "Freitextantworten (möglicherweise personenbezogen)",
+      "pagination": "Antwortseiten",
+      "previous": "Zurück",
+      "next": "Weiter",
+      "surveyTypes": {
+        "wp3_pre": "WP3 PRE",
+        "wp3_post": "WP3 POST",
+        "wp4_case_studies": "WP4 Fallstudien",
+        "wp4_scenarios": "WP4 Szenarien",
+        "platform_wp3": "WP3 Plattformbewertung",
+        "platform_wp4": "WP4 Plattformbewertung"
       }
     }
   }

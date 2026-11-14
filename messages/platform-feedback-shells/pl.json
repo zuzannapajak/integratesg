@@ -87,7 +87,7 @@
       },
       "message": "Twoja wiadomość",
       "placeholder": "Podziel się sugestiami dotyczącymi ulepszenia treści, nawigacji, testów lub ogólnego doświadczenia edukacyjnego.",
-      "privacyNote": "Zgłoszenie jest powiązane z Twoim kontem. Nie jest wliczane do wyników ankiet pilotażowych.",
+      "privacyNote": "Twoja opinia jest powiązana z kontem w bazie danych, ale standardowy widok administratora nie pokazuje imienia ani adresu e-mail. Nie jest wliczana do ankiet pilotażowych.",
       "submit": "Prześlij opinię",
       "sending": "Przesyłanie opinii...",
       "error": "Nie udało się zapisać Twojej opinii. Spróbuj ponownie.",
@@ -95,7 +95,8 @@
         "title": "Dziękujemy za Twoją opinię",
         "description": "Twoja odpowiedź została zapisana. Możesz dalej korzystać z platformy jak zwykle.",
         "backToDashboard": "Powrót do panelu"
-      }
+      },
+      "rateLimited": "Ostatnio wysłano już zgłoszenie. Spróbuj ponownie później (co najmniej minuta między zgłoszeniami)."
     },
     "GeneralFeedbackAdmin": {
       "title": "Ogólne opinie",
@@ -106,14 +107,28 @@
         "user": "Użytkownik",
         "date": "Przesłano",
         "category": "Temat zgłoszenia",
-        "message": "Twoja wiadomość"
+        "message": "Twoja wiadomość",
+        "context": "Rola / język",
+        "actions": "Działania"
       },
       "categories": {
         "bug": "Problem techniczny",
         "suggestion": "Sugestia",
         "content": "Treści edukacyjne",
         "other": "Inne"
-      }
+      },
+      "viewAll": "Przeglądaj zgłoszenia",
+      "backToStats": "Powrót do statystyk",
+      "privacyReminder": "Zgłoszenia mogą zawierać dane osobowe podane przez użytkowników. Dostęp jest ograniczony do administratorów.",
+      "filterCategory": "Filtruj według kategorii",
+      "allCategories": "Wszystkie kategorie",
+      "filter": "Filtruj",
+      "pageCount": "Zgłoszenia: {count} · Strona {page} z {pages}",
+      "pagination": "Strony zgłoszeń",
+      "previous": "Poprzednia",
+      "next": "Następna",
+      "confirmDelete": "Trwale usunąć zgłoszenie? Tej operacji nie można cofnąć.",
+      "delete": "Usuń"
     }
   },
   "PlatformFeedbackAdminDashboard": {

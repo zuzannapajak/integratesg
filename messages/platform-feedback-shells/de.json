@@ -87,7 +87,7 @@
       },
       "message": "Ihre Nachricht",
       "placeholder": "Teilen Sie Vorschläge zur Verbesserung von Inhalten, Navigation, Tests oder der allgemeinen Lernerfahrung.",
-      "privacyNote": "Ihre Nachricht ist Ihrem Konto zugeordnet. Sie wird nicht in den Ergebnissen der Pilotumfrage berücksichtigt.",
+      "privacyNote": "Ihre Rückmeldung ist zur Missbrauchsprävention mit Ihrem Konto gespeichert. In der Standardansicht sehen Administratoren weder Namen noch E-Mail-Adresse. Pilotumfragen bleiben getrennt.",
       "submit": "Feedback senden",
       "sending": "Feedback wird gesendet...",
       "error": "Wir konnten Ihr Feedback nicht speichern. Bitte versuchen Sie es erneut.",
@@ -95,7 +95,8 @@
         "title": "Vielen Dank für Ihr Feedback",
         "description": "Ihre Antwort wurde gespeichert. Sie können die Plattform wie gewohnt weiter nutzen.",
         "backToDashboard": "Zurück zum Dashboard"
-      }
+      },
+      "rateLimited": "Sie haben kürzlich Feedback gesendet. Bitte versuchen Sie es später erneut (mindestens eine Minute Abstand)."
     },
     "GeneralFeedbackAdmin": {
       "title": "Allgemeines Feedback",
@@ -106,14 +107,28 @@
         "user": "Nutzer",
         "date": "Eingereicht",
         "category": "Thema der Rückmeldung",
-        "message": "Ihre Nachricht"
+        "message": "Ihre Nachricht",
+        "context": "Rolle / Sprache",
+        "actions": "Aktionen"
       },
       "categories": {
         "bug": "Technisches Problem",
         "suggestion": "Vorschlag",
         "content": "Lerninhalte",
         "other": "Sonstiges"
-      }
+      },
+      "viewAll": "Rückmeldungen verwalten",
+      "backToStats": "Zurück zur Statistik",
+      "privacyReminder": "Nachrichten können personenbezogene Daten enthalten. Der Zugriff ist auf Administratoren beschränkt.",
+      "filterCategory": "Nach Thema filtern",
+      "allCategories": "Alle Themen",
+      "filter": "Anwenden",
+      "pageCount": "{count} Meldungen · Seite {page} von {pages}",
+      "pagination": "Feedbackseiten",
+      "previous": "Zurück",
+      "next": "Weiter",
+      "confirmDelete": "Diese Rückmeldung endgültig löschen? Dies kann nicht rückgängig gemacht werden.",
+      "delete": "Löschen"
     }
   },
   "PlatformFeedbackAdminDashboard": {

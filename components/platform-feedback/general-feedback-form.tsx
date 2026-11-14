@@ -19,23 +19,27 @@ export default function GeneralFeedbackForm({ locale }: Props) {
   const t = useTranslations("Protected.GeneralFeedbackForm");
   const [category, setCategory] = useState<GeneralFeedbackCategory>("suggestion");
   const [message, setMessage] = useState("");
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<"invalid" | "failed" | "rateLimited" | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [pending, startTransition] = useTransition();
 
   const onSubmit = (event: SyntheticEvent<HTMLFormElement, SubmitEvent>) => {
     event.preventDefault();
     if (!message.trim() || message.trim().length > GENERAL_FEEDBACK_MAX_LENGTH) {
-      setError(true);
+      setError("invalid");
       return;
     }
-    setError(false);
+    setError(null);
     startTransition(async () => {
       try {
-        await submitGeneralFeedbackAction({ locale, category, message });
-        setSubmitted(true);
+        const result = await submitGeneralFeedbackAction({ locale, category, message });
+        if (result.ok) {
+          setSubmitted(true);
+        } else {
+          setError("rateLimited");
+        }
       } catch {
-        setError(true);
+        setError("failed");
       }
     });
   };
@@ -109,7 +113,7 @@ export default function GeneralFeedbackForm({ locale }: Props) {
             <p className="text-xs text-[#667180]">{t("privacyNote")}</p>
             {error && (
               <p role="alert" className="text-sm text-rose-700">
-                {t("error")}
+                {t(error === "rateLimited" ? "rateLimited" : "error")}
               </p>
             )}
             <button

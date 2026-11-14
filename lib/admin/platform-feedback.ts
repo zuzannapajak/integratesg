@@ -1,26 +1,10 @@
-import {
-  GENERAL_FEEDBACK_SURVEY_TYPE,
-  isGeneralFeedbackCategory,
-  type GeneralFeedbackCategory,
-} from "@/lib/platform-feedback/general-definition";
+import { GENERAL_FEEDBACK_SURVEY_TYPE } from "@/lib/platform-feedback/general-definition";
 import { prisma } from "@/lib/prisma";
 import { WP3_PLATFORM_SURVEY_TYPE } from "@/lib/platform-feedback/wp3-eligibility";
-
-export type GeneralFeedbackAdminRecord = {
-  id: string;
-  userName: string;
-  userEmail: string;
-  category: GeneralFeedbackCategory;
-  message: string;
-  locale: string;
-  role: string;
-  submittedAt: string;
-};
 
 export type PlatformFeedbackAdminStats = {
   generalFeedback: {
     totalSubmissions: number;
-    rows: GeneralFeedbackAdminRecord[];
   };
   summary: {
     totalSubmissions: number;
@@ -85,19 +69,13 @@ function optionalText(record: Record<string, unknown>, key: string) {
 }
 
 export async function getPlatformFeedbackAdminStats(): Promise<PlatformFeedbackAdminStats> {
-  const [legacy, structured, general, generalTotal] = await Promise.all([
+  const [legacy, structured, generalTotal] = await Promise.all([
     prisma.platformFeedbackSubmission.findMany({
       include: { user: { select: { email: true, fullName: true } } },
     }),
     prisma.surveySubmission.findMany({
       where: { surveyType: WP3_PLATFORM_SURVEY_TYPE },
       include: { user: { select: { email: true, fullName: true } } },
-    }),
-    prisma.surveySubmission.findMany({
-      where: { surveyType: GENERAL_FEEDBACK_SURVEY_TYPE },
-      include: { user: { select: { email: true, fullName: true } } },
-      orderBy: { submittedAt: "desc" },
-      take: 100,
     }),
     prisma.surveySubmission.count({ where: { surveyType: GENERAL_FEEDBACK_SURVEY_TYPE } }),
   ]);
@@ -150,24 +128,8 @@ export async function getPlatformFeedbackAdminStats(): Promise<PlatformFeedbackA
     }),
   ].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
 
-  const generalRows: GeneralFeedbackAdminRecord[] = general.map((item) => {
-    const answers = jsonRecord(item.answers);
-    const category = answers.category;
-    const message = answers.message;
-    return {
-      id: item.id,
-      userEmail: item.user.email,
-      userName: getUserName(item.user),
-      category: isGeneralFeedbackCategory(category) ? category : "other",
-      message: typeof message === "string" ? message : "",
-      locale: item.locale,
-      role: item.roleAtSubmission,
-      submittedAt: item.submittedAt.toISOString(),
-    };
-  });
-
   return {
-    generalFeedback: { totalSubmissions: generalTotal, rows: generalRows },
+    generalFeedback: { totalSubmissions: generalTotal },
     summary: {
       totalSubmissions: rows.length,
       averageEaseOfUse: average(rows.map((item) => item.easeOfUse)),

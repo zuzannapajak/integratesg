@@ -110,6 +110,10 @@ jobs:
         if: github.event_name == 'pull_request'
         run: npm run test:e2e:smoke
 
+      - name: Evaluation journeys on pull requests
+        if: github.event_name == 'pull_request'
+        run: npm run test:e2e:journeys
+
       - name: Full E2E on main or manual run
         if: github.event_name != 'pull_request'
         run: npm run test:e2e
