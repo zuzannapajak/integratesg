@@ -1,0 +1,56 @@
+{
+  "Protected": {
+    "Wp4Survey": {
+      "back": "Wróć do materiałów",
+      "privacy": "Odpowiedzi są powiązane z Twoim kontem, aby zapobiec ponownemu wysłaniu ankiety. Wyniki są prezentowane zbiorczo. Nie podawaj danych osobowych w komentarzach.",
+      "open": "Wypełnij ankietę",
+      "submit": "Wyślij ankietę",
+      "sending": "Wysyłanie...",
+      "error": "Wypełnij wszystkie wymagane pola. Jeśli ankieta została już wysłana, odśwież stronę.",
+      "submitted": "Dziękujemy za opinię!",
+      "saved": "Odpowiedzi zostały zapisane. Możesz dalej korzystać z materiałów.",
+      "unavailable": "Ankieta nie jest jeszcze dostępna",
+      "eligibility": "Ukończ co najmniej jedną odpowiednią aktywność edukacyjną, aby uzyskać dostęp do ankiety.",
+      "reminder": "Ukończono materiał edukacyjny. Prosimy o wypełnienie ankiety oceniającej.",
+      "ratingScale": "1 = Bardzo źle; 5 = Doskonale",
+      "multiSelect": "Wybierz co najmniej jedną odpowiedź.",
+      "noneHint": "Jeśli brak uwag, wpisz „Brak”.",
+      "autoCountNote": "Liczba obliczona automatycznie na podstawie unikalnych ukończonych i opublikowanych studiów przypadku. Ponowne otwarcie nie zwiększa wyniku.",
+      "platformTitle": "Pomóż nam ocenić platformę",
+      "platformReminder": "Ankiety dotyczące treści zostały wypełnione. Jako uczestnik pilotażu oceń również działanie platformy.",
+      "platformFeedback": "Oceń platformę",
+      "scope": {
+        "case-studies": {
+          "title": "WP4 – Ocena studiów przypadku",
+          "description": "Zatwierdzona ankieta Case Studies dla pracowników firm i MŚP. Liczba przetestowanych materiałów jest uzupełniana automatycznie."
+        },
+        "scenarios": {
+          "title": "WP4 – Ocena scenariuszy",
+          "description": "Zatwierdzona ankieta Scenarios dla edukatorów i uczestników."
+        }
+      },
+      "skills": {
+        "systems_thinking": "Myślenie systemowe i procesowe",
+        "decision_making": "Podejmowanie decyzji",
+        "data_literacy": "Umiejętność pracy z danymi"
+      },
+      "caseStudies": {
+        "q1": "Ile studiów przypadku przetestowano?",
+        "engagementEase": "Jak łatwo było Ci pracować ze studiami przypadku podczas tego ćwiczenia? Wybierz odpowiedź najlepiej oddającą Twoją opinię.",
+        "greenTransitionUnderstanding": "Na ile studia przypadku pomogły Ci lepiej zrozumieć znaczenie zielonej transformacji? Wybierz odpowiedź najlepiej oddającą Twoją opinię.",
+        "esgEcosystemUnderstanding": "Na ile studia przypadku pomogły Ci lepiej zrozumieć ESG jako proces w szerszym ekosystemie biznesu, społeczeństwa i środowiska? Wybierz odpowiedź najlepiej oddającą Twoją opinię.",
+        "skills": "Które kluczowe kompetencje przekrojowe udało Ci się rozwinąć podczas korzystania ze studiów przypadku? Wybierz jedną lub kilka odpowiedzi.",
+        "challenges": "Jakie trudności, jeśli w ogóle, napotkano podczas korzystania ze studiów przypadku?",
+        "improvements": "Jakie usprawnienia, jeśli w ogóle, proponujesz?"
+      },
+      "scenarios": {
+        "incorporationEase": "Jak łatwo byłoby Ci włączyć scenariusze do swoich dotychczasowych działań zawodowych? Wybierz odpowiedź najlepiej oddającą Twoją opinię.",
+        "participantEngagement": "Na ile scenariusze mogą skutecznie angażować uczestników i pomagać im rozumieć ESG jako proces w szerszym ekosystemie biznesu, społeczeństwa i środowiska? Wybierz odpowiedź najlepiej oddającą Twoją opinię.",
+        "skills": "W których z poniższych obszarów scenariusze mogą być najbardziej pomocne edukatorom? Wybierz jedną lub kilka odpowiedzi.",
+        "challenges": "Jakie trudności, jeśli w ogóle, napotkano podczas korzystania ze scenariuszy?",
+        "implementationChallenges": "Jakie trudności przewidujesz przy wdrażaniu scenariuszy do swoich dotychczasowych działań zawodowych?",
+        "improvements": "Jakie usprawnienia proponujesz, aby zwiększyć ich użyteczność podczas przyszłych zajęć?"
+      }
+    }
+  }
+}

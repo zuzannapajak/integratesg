@@ -18,7 +18,6 @@ const FORBIDDEN_REFS = new Set(["ysctjfuiytpxmgyapgqj"]);
 const root = process.cwd();
 const envPath = resolve(root, ".env.test");
 const [mode, ...flags] = process.argv.slice(2);
-const expectedFlags = ["--confirm-disposable"];
 
 function fail(message) {
   console.error(`E2E fixtures: ${message}`);

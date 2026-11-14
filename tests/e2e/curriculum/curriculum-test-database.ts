@@ -1,6 +1,8 @@
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient, type UserRole } from "@prisma/client";
 
+import { E2E_PG_POOL_MAX } from "../helpers/database-pool";
+
 let prisma: PrismaClient | null = null;
 
 function requireEnvironmentVariable(name: string): string {
@@ -40,6 +42,7 @@ function getDatabaseClient(): PrismaClient {
 
   const adapter = new PrismaPg({
     connectionString: databaseUrl,
+    max: E2E_PG_POOL_MAX,
   });
 
   prisma = new PrismaClient({

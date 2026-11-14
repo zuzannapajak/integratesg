@@ -18,6 +18,8 @@ async function readEnum(enumName: string) {
 describe("database enum contracts", () => {
   it("matches every PostgreSQL enum used by the Prisma schema", async () => {
     const expectedEnums: Record<string, readonly string[]> = {
+      PilotTrack: ["wp3_curriculum", "wp4_case_studies", "wp4_scenarios"],
+      PilotParticipationStatus: ["active", "completed", "withdrawn"],
       CurriculumPilotStatus: ["pre_prompt_shown", "pre_skipped", "pilot_active", "pilot_completed"],
       CurriculumPilotAssessmentType: ["pre", "post"],
       CurriculumPilotQuestionType: ["likert", "single_choice", "open_text"],

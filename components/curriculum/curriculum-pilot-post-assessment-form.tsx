@@ -79,14 +79,19 @@ export default function CurriculumPilotPostAssessmentCard({ locale, state }: Pro
                 {t("available.action")}
                 <ArrowRight className="h-4 w-4" />
               </Link>
-            ) : cardState === "completed" ? (
+            ) : cardState === "completed" && state.platformFeedbackAvailable ? (
               <Link
-                href={`/${locale}/pilot-satisfaction/curriculum`}
+                href={`/${locale}/platform-feedback`}
                 className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#31425a] px-5 py-3 text-sm font-semibold text-white lg:w-auto"
               >
                 {t("completed.surveyAction")}
                 <ArrowRight className="h-4 w-4" />
               </Link>
+            ) : cardState === "completed" ? (
+              <span className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-emerald-100 bg-emerald-50 px-5 py-3 text-sm font-semibold text-emerald-800 lg:w-auto">
+                <CheckCircle2 className="h-4 w-4" />
+                {t("completed.title")}
+              </span>
             ) : (
               <div className="inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-[#d9e2ec] bg-white px-5 py-3 text-sm font-semibold text-[#667180] lg:w-auto">
                 <LockKeyhole className="h-4 w-4" />

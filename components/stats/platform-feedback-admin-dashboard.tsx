@@ -1,5 +1,7 @@
 "use client";
 
+import GeneralFeedbackAdminSection from "@/components/platform-feedback/general-feedback-admin-section";
+
 import type { PlatformFeedbackAdminStats } from "@/lib/admin/platform-feedback";
 import { MessageSquareHeart } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -148,6 +150,7 @@ export default function PlatformFeedbackAdminDashboard({ locale, stats }: Props)
             </table>
           </div>
         </section>
+        <GeneralFeedbackAdminSection locale={locale} feedback={stats.generalFeedback} />
       </div>
     </main>
   );

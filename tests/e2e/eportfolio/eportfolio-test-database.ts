@@ -1,6 +1,8 @@
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 
+import { E2E_PG_POOL_MAX } from "../helpers/database-pool";
+
 export const EPORTFOLIO_SLUGS = [
   "barilla",
   "davines",
@@ -59,6 +61,7 @@ function getDatabaseClient(): PrismaClient {
 
   const adapter = new PrismaPg({
     connectionString: databaseUrl,
+    max: E2E_PG_POOL_MAX,
   });
 
   prisma = new PrismaClient({

@@ -21,6 +21,8 @@ model Profile {
   platformFeedbackSubmissions PlatformFeedbackSubmission[]
   platformFeedbackReminder    PlatformFeedbackReminder?
   pilotSatisfactionSubmissions PilotSatisfactionSubmission[]
+  pilotParticipations         PilotParticipation[]
+  surveySubmissions           SurveySubmission[]
 }
 
 model CaseStudy {
@@ -464,6 +466,44 @@ model PilotSatisfactionSubmission {
   @@index([caseStudyId])
 }
 
+// Participation is assigned explicitly; CurriculumPilot records do not prove pilot membership.
+model PilotParticipation {
+  id          String                   @id @default(cuid())
+  userId      String
+  track       PilotTrack
+  cohortCode  String                   @default("initial")
+  countryCode String                   @db.VarChar(2)
+  status      PilotParticipationStatus @default(active)
+  joinedAt    DateTime                 @default(now())
+  finishedAt  DateTime?
+  user        Profile                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, track, cohortCode])
+  @@index([userId, status])
+  @@index([track, cohortCode, countryCode])
+}
+
+// New questionnaires are versioned independently of historical WP3 and feedback records.
+model SurveySubmission {
+  id                  String   @id @default(cuid())
+  userId              String
+  surveyType          String
+  surveyVersion       Int
+  roundKey            String
+  locale              String
+  countryCode         String?  @db.VarChar(2)
+  roleAtSubmission    UserRole
+  isPilotAtSubmission Boolean  @default(false)
+  pilotCohortCode     String?
+  answers             Json
+  activitySnapshot    Json
+  submittedAt         DateTime @default(now())
+  user                Profile  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, surveyType, roundKey])
+  @@index([surveyType, roundKey, submittedAt])
+}
+
 model PlatformFeedbackSubmission {
   id                  String   @id @default(cuid())
   userId              String
@@ -498,6 +538,18 @@ model PlatformFeedbackReminder {
   @@index([dismissedAt])
   @@index([remindLaterAt])
   @@index([submittedAt])
+}
+
+enum PilotTrack {
+  wp3_curriculum
+  wp4_case_studies
+  wp4_scenarios
+}
+
+enum PilotParticipationStatus {
+  active
+  completed
+  withdrawn
 }
 
 enum CurriculumPilotStatus {

@@ -32,7 +32,7 @@ function renderPanel(completionStep: CurriculumCompletionStep, certificateAvaila
 describe("Curriculum completion journey", () => {
   it("prompts the pilot post-assessment before requesting feedback", () => {
     renderPanel("assessment");
-    expect(screen.getByRole("link", { name: "Finish pilot participation" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Finish learning and take POST" })).toHaveAttribute(
       "href",
       "/en/curriculum/pilot/post-assessment?next=%2Fen%2Fcurriculum",
     );
@@ -44,7 +44,7 @@ describe("Curriculum completion journey", () => {
     renderPanel("feedback", true);
     expect(screen.getByRole("link", { name: "Fill out survey" })).toHaveAttribute(
       "href",
-      "/en/pilot-satisfaction/curriculum",
+      "/en/platform-feedback",
     );
     expect(screen.getByRole("button", { name: "Download certificate" })).toBeInTheDocument();
   });

@@ -1,0 +1,56 @@
+{
+  "Protected": {
+    "Wp4Survey": {
+      "back": "Back to materials",
+      "privacy": "Your responses are linked to your account to prevent duplicate submissions. Results are reported in aggregate; please avoid entering personal data.",
+      "open": "Complete evaluation",
+      "submit": "Submit evaluation",
+      "sending": "Submitting...",
+      "error": "Please complete all required questions. If you have already submitted this evaluation, refresh the page.",
+      "submitted": "Thank you for your feedback!",
+      "saved": "Your evaluation has been recorded. You can continue using the materials.",
+      "unavailable": "Evaluation not available yet",
+      "eligibility": "Complete at least one relevant learning activity to access this evaluation.",
+      "reminder": "You have completed learning material. Please complete the evaluation questionnaire.",
+      "ratingScale": "1 = Not good at all; 5 = Excellent",
+      "multiSelect": "Select one or more answers.",
+      "noneHint": "If none, write \"None\".",
+      "autoCountNote": "Calculated automatically from unique completed, published Case Studies. Repeated visits do not increase the count.",
+      "platformTitle": "Help us evaluate the platform",
+      "platformReminder": "Your content evaluations are complete. As a pilot participant, please also evaluate the platform itself.",
+      "platformFeedback": "Evaluate the platform",
+      "scope": {
+        "case-studies": {
+          "title": "WP4 – Case Studies evaluation",
+          "description": "Approved Case Studies questionnaire for Business/SME staff. The number of tested Case Studies is filled in automatically."
+        },
+        "scenarios": {
+          "title": "WP4 – Scenarios evaluation",
+          "description": "Approved Scenarios questionnaire for educators and learners."
+        }
+      },
+      "skills": {
+        "systems_thinking": "Systems and process thinking",
+        "decision_making": "Decision-making",
+        "data_literacy": "Data literacy"
+      },
+      "caseStudies": {
+        "q1": "How many Case studies did you test?",
+        "engagementEase": "How easy was it for you to engage with the Case studies during this activity? Please choose the option that best describes your views.",
+        "greenTransitionUnderstanding": "In your experience, how effective was the case studies in increasing your understanding of the meaning of green transition? Please choose the option that best describes your views.",
+        "esgEcosystemUnderstanding": "In your experience, how effective was the case studies in increasing your understanding of ESG as a process within the wider ecosystem of business, society and environment? Please choose the option that best describes your views.",
+        "skills": "Which Key Transversal Skills did you enhance while using the Case studies? Please select one or more than one of the options below.",
+        "challenges": "What challenges, if any, did you face during the use of the Case studies?",
+        "improvements": "What improvements, if any, would you suggest?"
+      },
+      "scenarios": {
+        "incorporationEase": "How easy do you think it would be for you to incorporate the Scenarios into your existing work activities? Please choose the option that best describes your views.",
+        "participantEngagement": "In your experience, how effective can the scenarios be in engaging participants and helping them understand the of ESG as a process within the wider ecosystem of business, society and environment? Please choose the option that best describes your views.",
+        "skills": "In which of the following areas could these Scenarios be most helpful for educators? Please select one or more options below.",
+        "challenges": "What challenges, if any, did you face during the use of the Scenarios?",
+        "implementationChallenges": "Which challenges, if any, do you foresee during their implementation into your existing work activities?",
+        "improvements": "What improvements, if any, would you suggest enhancing its usability in future sessions?"
+      }
+    }
+  }
+}

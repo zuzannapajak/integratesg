@@ -5,7 +5,7 @@ import { requireRole } from "@/features/auth/requireRole";
 import { APP_ROLES } from "@/lib/auth/roles";
 import { getCurriculumPilotEntryGateState } from "@/lib/curriculum/pilot";
 import { getCurriculumModule } from "@/lib/curriculum/queries";
-import { getPilotSatisfactionAvailability } from "@/lib/pilot-satisfaction/queries";
+import { getWp3PlatformFeedbackEligibility } from "@/lib/platform-feedback/wp3-eligibility";
 import { notFound } from "next/navigation";
 
 type Props = {
@@ -33,11 +33,9 @@ export default async function CourseLearnPage({ params }: Props) {
   let completionStep: CurriculumCompletionStep = "explore";
 
   if (pilotGate.postAssessmentCompletedAt) {
-    // This lookup is needed only for users who have already finished the pilot.
-    // Keep the questionnaire link hidden after their feedback has been submitted.
-    const availability = await getPilotSatisfactionAvailability(user.id, "curriculum", locale);
-    completionStep = availability.submittedAt ? "explore" : "feedback";
-  } else if (pilotGate.preAssessmentCompletedAt) {
+    const availability = await getWp3PlatformFeedbackEligibility(user.id);
+    completionStep = availability.eligible ? "feedback" : "explore";
+  } else if (pilotGate.preAssessmentCompletedAt || pilotGate.preAssessmentSkippedAt) {
     completionStep = "assessment";
   }
 

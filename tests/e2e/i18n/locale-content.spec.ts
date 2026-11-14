@@ -16,6 +16,7 @@ import { assertSafeE2EEnvironment } from "../helpers/safe-test-environment";
 import { assertE2EDatabaseReady } from "../helpers/assert-e2e-database-ready";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
+import { E2E_PG_POOL_MAX } from "../helpers/database-pool";
 
 type Locale = "en" | "pl" | "de" | "it" | "el" | "bg";
 const LOCALES: readonly Locale[] = ["en", "pl", "de", "it", "el", "bg"];
@@ -150,7 +151,9 @@ test.describe("Six-language end-to-end rendering (no silent EN fallback)", () =>
     assertSafeE2EEnvironment();
     const databaseUrl = process.env.PLAYWRIGHT_DATABASE_URL ?? process.env.TEST_DATABASE_URL;
     if (!databaseUrl) throw new Error("Missing isolated test database URL");
-    db = new PrismaClient({ adapter: new PrismaPg({ connectionString: databaseUrl }) });
+    db = new PrismaClient({
+      adapter: new PrismaPg({ connectionString: databaseUrl, max: E2E_PG_POOL_MAX }),
+    });
     await assertE2EDatabaseReady(db);
     expect([...EN_CASE_STUDIES.keys()].sort()).toEqual([...CASE_STUDIES].sort());
   });

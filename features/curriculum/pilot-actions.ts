@@ -1,6 +1,9 @@
 "use server";
 
 import { getSafeCurriculumNextPath } from "@/lib/curriculum/pilot";
+import { isAppLocale } from "@/lib/i18n/locales";
+import { getWp3PostEligibility } from "@/lib/curriculum/wp3-assessment-eligibility";
+import { getWp3PlatformFeedbackEligibility } from "@/lib/platform-feedback/wp3-eligibility";
 import { prisma } from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
 import type { Prisma } from "@prisma/client";
@@ -38,6 +41,15 @@ async function getAuthedUserId() {
     throw new Error("Unauthorized");
   }
 
+  const profile = await prisma.profile.findUnique({
+    where: { id: user.id },
+    select: { role: true },
+  });
+
+  if (profile?.role !== "educator") {
+    throw new Error("Forbidden");
+  }
+
   return user.id;
 }
 
@@ -51,6 +63,7 @@ async function getCourseProgressSnapshots(tx: Prisma.TransactionClient, userId: 
   const courseAttempts = await tx.userCourseAttempt.findMany({
     where: {
       userId,
+      course: { status: "published" },
     },
     select: {
       courseId: true,
@@ -143,6 +156,7 @@ export async function submitCurriculumPilotPreAssessmentAction(
   input: SubmitCurriculumPilotPreAssessmentInput,
 ) {
   const userId = await getAuthedUserId();
+  if (!isAppLocale(input.locale)) throw new Error("Invalid locale.");
   const safeNextPath = getSafeCurriculumNextPath(input.locale, input.nextPath);
 
   if (input.answers.length === 0) {
@@ -313,6 +327,7 @@ export async function submitCurriculumPilotPostAssessmentAction(
   input: SubmitCurriculumPilotPostAssessmentInput,
 ) {
   const userId = await getAuthedUserId();
+  if (!isAppLocale(input.locale)) throw new Error("Invalid locale.");
   const safeNextPath = getSafeCurriculumNextPath(input.locale, input.nextPath);
 
   if (input.answers.length === 0) {
@@ -342,30 +357,10 @@ export async function submitCurriculumPilotPostAssessmentAction(
       },
     });
 
-    if (!pilot) {
-      throw new Error("Pilot path has not been started.");
-    }
-
-    if (pilot.preAssessmentSkippedAt || pilot.status === "pre_skipped") {
-      throw new Error("Post-assessment is not available after skipping pre-assessment.");
-    }
-
-    if (!pilot.preAssessmentCompletedAt) {
-      throw new Error("Pre-assessment must be completed before post-assessment.");
-    }
-
-    if (pilot.postAssessmentCompletedAt || pilot.status === "pilot_completed") {
-      throw new Error("Post-assessment has already been submitted.");
-    }
-
-    if (pilot.status !== "pilot_active") {
-      throw new Error("Post-assessment is not currently available.");
-    }
-
     const { startedCourseIds, completedCourseIds } = await getCourseProgressSnapshots(tx, userId);
-
-    if (completedCourseIds.length < 1) {
-      throw new Error("At least one module must be completed before post-assessment.");
+    const eligibility = getWp3PostEligibility(pilot, completedCourseIds.length);
+    if (!eligibility.eligible || !pilot) {
+      throw new Error(`Post-assessment is unavailable: ${eligibility.reason ?? "unknown"}`);
     }
 
     const questions = await tx.curriculumPilotQuestion.findMany({
@@ -474,7 +469,7 @@ export async function submitCurriculumPilotPostAssessmentAction(
     const totalScore = scoredAnswers.reduce((sum, answer) => sum + answer.scoreValue, 0);
     const averageScore = Number((totalScore / scoredAnswers.length).toFixed(2));
     const averageDelta =
-      pilot.preAssessmentAverageScore === null
+      !pilot.preAssessmentCompletedAt || pilot.preAssessmentAverageScore === null
         ? null
         : Number((averageScore - pilot.preAssessmentAverageScore).toFixed(2));
 
@@ -523,9 +518,11 @@ export async function submitCurriculumPilotPostAssessmentAction(
     };
   });
 
+  const platformFeedback = await getWp3PlatformFeedbackEligibility(userId);
+
   return {
     ok: true,
-    nextPath: safeNextPath,
+    nextPath: platformFeedback.eligible ? `/${input.locale}/platform-feedback` : safeNextPath,
     averageScore: result.averageScore,
     totalScore: result.totalScore,
     averageDelta: result.averageDelta,

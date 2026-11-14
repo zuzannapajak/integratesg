@@ -3,6 +3,7 @@ import { requireRole } from "@/features/auth/requireRole";
 import { getCurriculumPilotAdminStats } from "@/lib/admin/curriculum-pilot";
 import { getPlatformFeedbackAdminStats } from "@/lib/admin/platform-feedback";
 import { getBasicAdminStats } from "@/lib/admin/queries";
+import { getEvaluationReport } from "@/lib/admin/evaluation";
 import { APP_ROLES } from "@/lib/auth/roles";
 import type { AppLocale } from "@/lib/i18n/locales";
 
@@ -15,10 +16,11 @@ export default async function AdminStatsPage({ params }: Props) {
 
   await requireRole(locale, APP_ROLES.admin);
 
-  const [stats, pilotStats, feedbackStats] = await Promise.all([
+  const [stats, pilotStats, feedbackStats, evaluationReport] = await Promise.all([
     getBasicAdminStats(locale),
     getCurriculumPilotAdminStats(locale),
     getPlatformFeedbackAdminStats(),
+    getEvaluationReport(),
   ]);
 
   return (
@@ -27,6 +29,7 @@ export default async function AdminStatsPage({ params }: Props) {
       stats={stats}
       pilotStats={pilotStats}
       feedbackStats={feedbackStats}
+      evaluationReport={evaluationReport}
     />
   );
 }

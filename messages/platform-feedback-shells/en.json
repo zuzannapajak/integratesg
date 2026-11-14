@@ -73,6 +73,62 @@
         "remindLater": "Remind me later",
         "dismiss": "Dismiss"
       }
+    },
+    "GeneralFeedbackForm": {
+      "back": "Back to dashboard",
+      "title": "Help us improve the platform",
+      "description": "Your feedback helps us improve the learning materials, navigation, tests and technical experience across the platform.",
+      "category": "Feedback topic",
+      "categories": {
+        "bug": "Technical issue",
+        "suggestion": "Suggestion",
+        "content": "Learning content",
+        "other": "Other"
+      },
+      "message": "Your message",
+      "placeholder": "Share suggestions for improving content, navigation, tests or the general learning experience.",
+      "privacyNote": "Your report is linked to your account in storage to prevent misuse, but the standard administrator view does not show your name or email. It is separate from pilot surveys.",
+      "submit": "Submit feedback",
+      "sending": "Submitting feedback...",
+      "error": "We could not save your feedback. Please try again.",
+      "success": {
+        "title": "Thank you for your feedback",
+        "description": "Your response has been saved. You can continue using the platform as usual.",
+        "backToDashboard": "Back to dashboard"
+      },
+      "rateLimited": "You have sent feedback recently. Please try again later (at least one minute between submissions)."
+    },
+    "GeneralFeedbackAdmin": {
+      "title": "General feedback",
+      "description": "Messages sent through the floating feedback button. Separate from WP3/WP4 pilot evaluation.",
+      "recentCount": "Total feedback reports: {count}",
+      "empty": "No general feedback submitted yet.",
+      "columns": {
+        "user": "User",
+        "date": "Submitted",
+        "category": "Feedback topic",
+        "message": "Your message",
+        "context": "Role / language",
+        "actions": "Actions"
+      },
+      "categories": {
+        "bug": "Technical issue",
+        "suggestion": "Suggestion",
+        "content": "Learning content",
+        "other": "Other"
+      },
+      "viewAll": "View and manage feedback",
+      "backToStats": "Back to statistics",
+      "privacyReminder": "Messages may contain personal data entered by respondents. Access is restricted to administrators.",
+      "filterCategory": "Filter by topic",
+      "allCategories": "All topics",
+      "filter": "Apply filter",
+      "pageCount": "{count} reports · Page {page} of {pages}",
+      "pagination": "Feedback pages",
+      "previous": "Previous",
+      "next": "Next",
+      "confirmDelete": "Permanently delete this feedback? This cannot be undone.",
+      "delete": "Delete"
     }
   },
   "PlatformFeedbackAdminDashboard": {

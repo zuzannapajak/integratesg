@@ -12,6 +12,12 @@ const headers = [
   "overall_satisfaction",
   "suggestions",
   "technical_notes",
+  "survey_type",
+  "survey_version",
+  "pilot_cohort",
+  "country_code",
+  "locale",
+  "modules_completed",
 ] as const;
 
 type PlatformFeedbackExportHeader = (typeof headers)[number];
@@ -56,6 +62,12 @@ export async function buildPlatformFeedbackExportRows(): Promise<PlatformFeedbac
     overall_satisfaction: row.overallSatisfaction,
     suggestions: row.suggestions,
     technical_notes: row.technicalNotes,
+    survey_type: row.surveyType,
+    survey_version: row.surveyVersion,
+    pilot_cohort: row.pilotCohortCode,
+    country_code: row.countryCode,
+    locale: row.locale,
+    modules_completed: row.modulesCompleted,
   }));
 }
 

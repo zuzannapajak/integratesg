@@ -12,6 +12,7 @@ import { revalidatePath } from "next/cache";
 export async function submitPilotSatisfactionAction(input: PilotSatisfactionInput) {
   const userId = await requireAuthenticatedUserId();
   if (!isAppLocale(input.locale)) throw new Error("INVALID_LOCALE");
+  if (input.scope === "curriculum") throw new Error("SURVEY_NOT_AVAILABLE");
   const data = normalizePilotSatisfactionInput(input);
 
   await prisma.$transaction(async (tx) => {

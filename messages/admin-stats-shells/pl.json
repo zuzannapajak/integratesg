@@ -5,7 +5,9 @@
         "environmental": "Środowisko",
         "social": "Społeczeństwo",
         "governance": "Ład korporacyjny",
-        "crossCutting": "Przekrojowe"
+        "crossCutting": "Przekrojowe",
+        "strategy": "Strategia",
+        "reporting": "Raportowanie"
       },
       "window": {
         "24h": "Ostatnie 24 godziny",
@@ -22,7 +24,8 @@
         "scenarios": "Scenariusze",
         "courses": "Curriculum",
         "eportfolio": "ePortfolio",
-        "platformFeedback": "Feedback platformy"
+        "platformFeedback": "Feedback platformy",
+        "evaluation": "Ewaluacja WP3 / WP4"
       },
       "curriculumViews": {
         "all": "Wszystko",

@@ -27,6 +27,10 @@ jobs:
       TEST_DATABASE_URL: ${{ secrets.E2E_TEST_DATABASE_URL }}
       PLAYWRIGHT_DATABASE_URL: ${{ secrets.E2E_TEST_DATABASE_URL }}
 
+      # Supabase session pooler is capped at 15 active sessions in this project.
+      # The Next.js process and the E2E fixtures each own a separate pg pool.
+      PRISMA_PG_POOL_MAX: "3"
+
       NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.E2E_SUPABASE_URL }}
       NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.E2E_SUPABASE_ANON_KEY }}
 
@@ -109,6 +113,10 @@ jobs:
       - name: PR smoke tests on production build
         if: github.event_name == 'pull_request'
         run: npm run test:e2e:smoke
+
+      - name: Evaluation journeys on pull requests
+        if: github.event_name == 'pull_request'
+        run: npm run test:e2e:journeys
 
       - name: Full E2E on main or manual run
         if: github.event_name != 'pull_request'

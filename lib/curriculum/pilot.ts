@@ -1,4 +1,6 @@
 import { prisma } from "@/lib/prisma";
+import { getWp3PlatformFeedbackEligibility } from "@/lib/platform-feedback/wp3-eligibility";
+import { getWp3PostEligibility } from "@/lib/curriculum/wp3-assessment-eligibility";
 
 type CurriculumPilotStatusValue =
   | "pre_prompt_shown"
@@ -66,7 +68,6 @@ export type CurriculumPilotPostAssessmentViewModel =
       status: "unavailable";
       reason:
         | "no_pilot"
-        | "pre_skipped"
         | "pre_missing"
         | "post_completed"
         | "no_completed_module"
@@ -78,6 +79,7 @@ export type CurriculumPilotPostAssessmentCalloutViewModel = {
   shouldShow: boolean;
   isAvailable: boolean;
   isCompleted: boolean;
+  platformFeedbackAvailable: boolean;
   completedModulesCount: number;
   postAssessmentCompletedAt: string | null;
 };
@@ -226,6 +228,7 @@ async function getCompletedCurriculumModulesCount(userId: string) {
   return prisma.userCourseAttempt.count({
     where: {
       userId,
+      course: { status: "published" },
       OR: [
         {
           status: "completed",
@@ -366,50 +369,11 @@ export async function getCurriculumPilotPostAssessmentViewModel(params: {
     getCompletedCurriculumModulesCount(params.userId),
   ]);
 
-  if (!pilot) {
+  const eligibility = getWp3PostEligibility(pilot, completedModulesCount);
+  if (!eligibility.eligible) {
     return {
       status: "unavailable",
-      reason: "no_pilot",
-      completedModulesCount,
-    };
-  }
-
-  if (pilot.preAssessmentSkippedAt || pilot.status === "pre_skipped") {
-    return {
-      status: "unavailable",
-      reason: "pre_skipped",
-      completedModulesCount,
-    };
-  }
-
-  if (!pilot.preAssessmentCompletedAt) {
-    return {
-      status: "unavailable",
-      reason: "pre_missing",
-      completedModulesCount,
-    };
-  }
-
-  if (pilot.postAssessmentCompletedAt || pilot.status === "pilot_completed") {
-    return {
-      status: "unavailable",
-      reason: "post_completed",
-      completedModulesCount,
-    };
-  }
-
-  if (pilot.status !== "pilot_active") {
-    return {
-      status: "unavailable",
-      reason: "pilot_not_active",
-      completedModulesCount,
-    };
-  }
-
-  if (completedModulesCount < 1) {
-    return {
-      status: "unavailable",
-      reason: "no_completed_module",
+      reason: eligibility.reason ?? "pilot_not_active",
       completedModulesCount,
     };
   }
@@ -477,17 +441,19 @@ export async function getCurriculumPilotPostAssessmentCalloutViewModel(params: {
       select: {
         status: true,
         preAssessmentCompletedAt: true,
+        preAssessmentSkippedAt: true,
         postAssessmentCompletedAt: true,
       },
     }),
     getCompletedCurriculumModulesCount(params.userId),
   ]);
 
-  if (!pilot?.preAssessmentCompletedAt) {
+  if (!pilot || (!pilot.preAssessmentCompletedAt && !pilot.preAssessmentSkippedAt)) {
     return {
       shouldShow: false,
       isAvailable: false,
       isCompleted: false,
+      platformFeedbackAvailable: false,
       completedModulesCount,
       postAssessmentCompletedAt: null,
     };
@@ -495,12 +461,16 @@ export async function getCurriculumPilotPostAssessmentCalloutViewModel(params: {
 
   const isCompleted =
     pilot.status === "pilot_completed" || Boolean(pilot.postAssessmentCompletedAt);
-  const isAvailable = pilot.status === "pilot_active" && !isCompleted && completedModulesCount >= 1;
+  const isAvailable = getWp3PostEligibility(pilot, completedModulesCount).eligible;
+  const platformFeedbackAvailable = isCompleted
+    ? (await getWp3PlatformFeedbackEligibility(params.userId)).eligible
+    : false;
 
   return {
-    shouldShow: pilot.status === "pilot_active" || isCompleted,
+    shouldShow: pilot.status === "pilot_active" || pilot.status === "pre_skipped" || isCompleted,
     isAvailable,
     isCompleted,
+    platformFeedbackAvailable,
     completedModulesCount,
     postAssessmentCompletedAt: pilot.postAssessmentCompletedAt?.toISOString() ?? null,
   };
