@@ -73,6 +73,47 @@
         "remindLater": "Remind me later",
         "dismiss": "Dismiss"
       }
+    },
+    "GeneralFeedbackForm": {
+      "back": "Back to dashboard",
+      "title": "Help us improve the platform",
+      "description": "Your feedback helps us improve the learning materials, navigation, tests and technical experience across the platform.",
+      "category": "Feedback topic",
+      "categories": {
+        "bug": "Technical issue",
+        "suggestion": "Suggestion",
+        "content": "Learning content",
+        "other": "Other"
+      },
+      "message": "Your message",
+      "placeholder": "Share suggestions for improving content, navigation, tests or the general learning experience.",
+      "privacyNote": "Your report is linked to your account for follow-up. It is not included in pilot survey statistics.",
+      "submit": "Submit feedback",
+      "sending": "Submitting feedback...",
+      "error": "We could not save your feedback. Please try again.",
+      "success": {
+        "title": "Thank you for your feedback",
+        "description": "Your response has been saved. You can continue using the platform as usual.",
+        "backToDashboard": "Back to dashboard"
+      }
+    },
+    "GeneralFeedbackAdmin": {
+      "title": "General feedback",
+      "description": "Messages sent through the floating feedback button. Separate from WP3/WP4 pilot evaluation.",
+      "recentCount": "Total feedback reports: {count}",
+      "empty": "No general feedback submitted yet.",
+      "columns": {
+        "user": "User",
+        "date": "Submitted",
+        "category": "Feedback topic",
+        "message": "Your message"
+      },
+      "categories": {
+        "bug": "Technical issue",
+        "suggestion": "Suggestion",
+        "content": "Learning content",
+        "other": "Other"
+      }
     }
   },
   "PlatformFeedbackAdminDashboard": {

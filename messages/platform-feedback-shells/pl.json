@@ -73,6 +73,47 @@
         "remindLater": "Przypomnij mi później",
         "dismiss": "Ukryj"
       }
+    },
+    "GeneralFeedbackForm": {
+      "back": "Powrót do panelu",
+      "title": "Pomóż nam ulepszyć platformę",
+      "description": "Twoja opinia pomaga nam ulepszać materiały edukacyjne, nawigację, testy oraz doświadczenie techniczne na całej platformie.",
+      "category": "Temat zgłoszenia",
+      "categories": {
+        "bug": "Problem techniczny",
+        "suggestion": "Sugestia",
+        "content": "Treści edukacyjne",
+        "other": "Inne"
+      },
+      "message": "Twoja wiadomość",
+      "placeholder": "Podziel się sugestiami dotyczącymi ulepszenia treści, nawigacji, testów lub ogólnego doświadczenia edukacyjnego.",
+      "privacyNote": "Zgłoszenie jest powiązane z Twoim kontem. Nie jest wliczane do wyników ankiet pilotażowych.",
+      "submit": "Prześlij opinię",
+      "sending": "Przesyłanie opinii...",
+      "error": "Nie udało się zapisać Twojej opinii. Spróbuj ponownie.",
+      "success": {
+        "title": "Dziękujemy za Twoją opinię",
+        "description": "Twoja odpowiedź została zapisana. Możesz dalej korzystać z platformy jak zwykle.",
+        "backToDashboard": "Powrót do panelu"
+      }
+    },
+    "GeneralFeedbackAdmin": {
+      "title": "Ogólne opinie",
+      "description": "Zgłoszenia wysłane przez pływający przycisk, oddzielone od wyników pilotażu WP3/WP4.",
+      "recentCount": "Łączna liczba zgłoszeń: {count}",
+      "empty": "Nie ma jeszcze zgłoszeń.",
+      "columns": {
+        "user": "Użytkownik",
+        "date": "Przesłano",
+        "category": "Temat zgłoszenia",
+        "message": "Twoja wiadomość"
+      },
+      "categories": {
+        "bug": "Problem techniczny",
+        "suggestion": "Sugestia",
+        "content": "Treści edukacyjne",
+        "other": "Inne"
+      }
     }
   },
   "PlatformFeedbackAdminDashboard": {

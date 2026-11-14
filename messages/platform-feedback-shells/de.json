@@ -73,6 +73,47 @@
         "remindLater": "Später erinnern",
         "dismiss": "Ausblenden"
       }
+    },
+    "GeneralFeedbackForm": {
+      "back": "Zurück zum Dashboard",
+      "title": "Helfen Sie uns, die Plattform zu verbessern",
+      "description": "Ihr Feedback hilft uns, die Lernmaterialien, Navigation, Tests und die technische Erfahrung auf der gesamten Plattform zu verbessern.",
+      "category": "Thema der Rückmeldung",
+      "categories": {
+        "bug": "Technisches Problem",
+        "suggestion": "Vorschlag",
+        "content": "Lerninhalte",
+        "other": "Sonstiges"
+      },
+      "message": "Ihre Nachricht",
+      "placeholder": "Teilen Sie Vorschläge zur Verbesserung von Inhalten, Navigation, Tests oder der allgemeinen Lernerfahrung.",
+      "privacyNote": "Ihre Nachricht ist Ihrem Konto zugeordnet. Sie wird nicht in den Ergebnissen der Pilotumfrage berücksichtigt.",
+      "submit": "Feedback senden",
+      "sending": "Feedback wird gesendet...",
+      "error": "Wir konnten Ihr Feedback nicht speichern. Bitte versuchen Sie es erneut.",
+      "success": {
+        "title": "Vielen Dank für Ihr Feedback",
+        "description": "Ihre Antwort wurde gespeichert. Sie können die Plattform wie gewohnt weiter nutzen.",
+        "backToDashboard": "Zurück zum Dashboard"
+      }
+    },
+    "GeneralFeedbackAdmin": {
+      "title": "Allgemeines Feedback",
+      "description": "Meldungen über die schwebende Feedback-Schaltfläche, getrennt von der WP3/WP4-Pilotauswertung.",
+      "recentCount": "Feedback-Meldungen insgesamt: {count}",
+      "empty": "Noch kein allgemeines Feedback vorhanden.",
+      "columns": {
+        "user": "Nutzer",
+        "date": "Eingereicht",
+        "category": "Thema der Rückmeldung",
+        "message": "Ihre Nachricht"
+      },
+      "categories": {
+        "bug": "Technisches Problem",
+        "suggestion": "Vorschlag",
+        "content": "Lerninhalte",
+        "other": "Sonstiges"
+      }
     }
   },
   "PlatformFeedbackAdminDashboard": {

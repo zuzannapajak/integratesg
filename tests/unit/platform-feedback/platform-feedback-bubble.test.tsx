@@ -28,54 +28,33 @@ vi.mock("next/link", () => ({
 
 import PlatformFeedbackBubble from "@/components/platform-feedback/platform-feedback-bubble";
 
-describe("platform feedback bubble", () => {
+describe("general platform feedback bubble", () => {
   beforeEach(() => {
     state.pathname = "/en/dashboard";
   });
 
-  it("routes educators to the educator-only platform feedback form", () => {
-    render(<PlatformFeedbackBubble locale="en" role="educator" canGiveWp3Feedback />);
+  it.each(["educator", "learner"] as const)(
+    "offers voluntary feedback to %s outside the pilot",
+    (role) => {
+      render(<PlatformFeedbackBubble locale="en" role={role} />);
+      expect(screen.getByRole("link", { name: "label" })).toHaveAttribute("href", "/en/feedback");
+    },
+  );
 
-    expect(screen.getByRole("link", { name: "label" })).toHaveAttribute(
-      "href",
-      "/en/platform-feedback",
-    );
-  });
-
-  it("hides the platform survey from regular educators", () => {
-    render(<PlatformFeedbackBubble locale="en" role="educator" />);
-    expect(screen.queryByRole("link")).not.toBeInTheDocument();
-  });
-
-  it("does not offer WP4 learners the unrelated WP3 platform survey", () => {
+  it("is available on Scenarios pages and does not lead to a pilot questionnaire", () => {
+    state.pathname = "/pl/scenarios/sample/play";
     render(<PlatformFeedbackBubble locale="pl" role="learner" />);
-    expect(screen.queryByRole("link")).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "label" })).toHaveAttribute("href", "/pl/feedback");
   });
 
-  it("does not advertise the educator-only form to admins", () => {
+  it("does not offer general feedback to administrators", () => {
     render(<PlatformFeedbackBubble locale="en" role="admin" />);
-
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
 
-  it("stays hidden on scenario module pages", () => {
-    state.pathname = "/en/scenarios/sample/play";
-    render(<PlatformFeedbackBubble locale="en" role="learner" />);
-
-    expect(screen.queryByRole("link")).not.toBeInTheDocument();
-  });
-
-  it("stays hidden on the learner survey itself", () => {
-    state.pathname = "/en/pilot-satisfaction/eportfolio";
-    render(<PlatformFeedbackBubble locale="en" role="learner" />);
-
-    expect(screen.queryByRole("link")).not.toBeInTheDocument();
-  });
-
-  it("stays hidden on the educator feedback form itself", () => {
-    state.pathname = "/en/platform-feedback";
-    render(<PlatformFeedbackBubble locale="en" role="educator" canGiveWp3Feedback />);
-
+  it("does not duplicate the floating link on its own form", () => {
+    state.pathname = "/en/feedback";
+    render(<PlatformFeedbackBubble locale="en" role="educator" />);
     expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
 });

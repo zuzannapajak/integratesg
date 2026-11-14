@@ -1,5 +1,7 @@
 "use client";
 
+import GeneralFeedbackAdminSection from "@/components/platform-feedback/general-feedback-admin-section";
+
 import StatsChart from "@/components/dashboard/stats-chart";
 import WpEvaluationAdminDashboard from "@/components/stats/wp-evaluation-admin-dashboard";
 import ScenarioResponseStats from "@/components/stats/scenario-response-stats";
@@ -1999,6 +2001,7 @@ export default function AdminStatsShell({
                 </table>
               </div>
             </Surface>
+            <GeneralFeedbackAdminSection locale={locale} feedback={feedbackStats.generalFeedback} />
           </>
         )}
       </motion.div>
